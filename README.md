@@ -16,8 +16,10 @@ Use [VS Code](https://github.com/microsoft/vscode) as a design template while pr
 - [LSP](https://microsoft.github.io/language-server-protocol) support 🏃
 
 ## What we've achieved
-- Monaco Editor integration
-- Partial Support for Version Control (Git clone, commits, diff editor) (Push & pulls, authentication are not yet supported)
+- Monaco Editor integration, with Intellisence for HTML, Javascript, JSON, TypeScript<br/>
+![Screenshot](screenshots/IMG_0059.PNG)
+- Partial Support for Version Control (Git clone, commits, diff editor) (Push & pulls, authentication are not yet supported)<br/>
+![Screenshot](screenshots/IMG_EC689E2B126B-1.jpeg)
 - Server-side multi-file compiling for 40+ languages
 - Markdown file preview
 - Built in web server
