@@ -1,7 +1,7 @@
 # Code App
 Bringing desktop-like editing expereince to iPad, available on App Store: https://apps.apple.com/us/app/code-app/id1512938504
 
-[![Code App Screenshot](https://thebaselab.com/code/1.png)]
+![Code App Screenshot](https://thebaselab.com/code/1.png)
 
 ## About the repositroy
 This repository does not contain any source code for the app. Instead, we work on issues, listen to your feedback and publish our development plan here.
