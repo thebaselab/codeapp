@@ -3,7 +3,7 @@ Bringing desktop-like editing expereince to iPad, available on App Store: https:
 
 ![Code App Screenshot](https://thebaselab.com/code/1.png)
 
-## About the repositroy
+## About the repository
 This repository does not contain any source code for the app. Instead, we work on issues, listen to your feedback and publish our development plan here.
 
 ## The Plan
