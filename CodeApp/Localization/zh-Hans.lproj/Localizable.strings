@@ -1,0 +1,304 @@
+/* 
+  Localizable.strings
+  Code App
+
+  Created by Ken Chung on 6/12/2020.
+  
+*/
+
+"Welcome Message" =
+"# Code App
+##### **v1.2.5 (June 2021)**
+#### 开始
+[新文件](https://thebaselab.com/code/newfile)
+[打开文件](https://thebaselab.com/code/openfile)
+[打开文件夹](https://thebaselab.com/code/openfolder)
+[Git Clone](https://thebaselab.com/code/clone)
+
+#### 支援
+[说明文件](https://github.com/thebaselab/codeapp/tree/main/documentation)
+[GitHub](https://github.com/thebaselab/codeapp)
+[电邮](mailto:support@thebaselab.com)
+[推特](https://twitter.com/thebaselab)
+";
+
+"Changelog.message" =
+"
+### v1.2.5 (July 2021)
+- 终端
+ - 修正了关于Clang / Clang ++的一些问题
+### v1.2.4（June 2021）
+- 编辑器
+ - 解决了鼠标/触控板选择不起作用的问题
+ - 更新到TypeScript 4.2.4
+- 界面
+  - 新的iPhone侧边栏设计
+  - 能够对编辑器标签进行重新排序
+  - 改进了Xcode主题的可读性
+  - 能够在Context Menu中复制文件
+- 性能
+  - 从Files App打开SMB时增强了性能
+- Git
+  - 改善与Azure DevOps存储库的兼容性
+  - Gutter indicators
+  - Git CLI 命令 (暂不支持远程操作)
+- 终端
+  - 自动完成文件路径
+  - 在编辑器中使用 `code <file>` 打开代码
+- C / C++
+  - Clang（使用 `clang main.c` 和 `./a.out` 运行 C 程序）
+  - Clang++（使用 `clang++ main.cpp` 和 `./a.out` 运行 C++ 程序）
+- PHP
+  - php（使用 `php` 运行 PHP 程序和使用 `php -S localhost:<port>` 运行开发服务器）
+
+---
+
+### v1.2.3 (April 2021)
+- 编辑器
+  - 6个颜色主题
+  - 只读模式
+  - Node.js的内置类型
+  - 支持@types定义
+- 资源管理器
+  - 多文件搜索
+- Python
+  - 内置 Matplotlib，Pandas
+- 其他
+  - UI 状态恢复
+  - 德语的本地化
+  - 错误修复和其他改进
+
+---
+
+### v1.2.1（March 2021）
+- Node.js
+  - 离线运行 Javascript
+  - 安装模块命令 (npm install) (tsc, prettier etc.)
+  - 新的终端命令：npm, npx, node
+- Python 3.9.2
+  - 离线运行 Python
+  - 安装模块命令 (pip install)
+  - 新的终端命令：pip, python, python3
+- 编辑
+  -`问题`标签
+  - 新的Markdown风格
+  - Vue的语法突出显示
+  - 平滑滚动选项 (适用于 iPad Pro)
+- 终端
+  - 现在支持浅色模式
+- 文件管理器
+  - 减少行高
+- Bug修复
+
+---
+
+### v1.1.9 (February 2021)
+- Bug修复
+
+---
+
+### v1.1.8 (February 2021)
+- 文本编辑器
+  - 迁移到TextMate语法（更高级语法突出显示）
+  - 支持更多语言（Groovy，HLSL，Log，Makefile，Shaderlab，Fortran和Matlab）
+  - 修复了编辑器有时没有反应的错误
+  - 新的键盘工具栏
+- 版本控制
+  - 改进的性能和可靠性
+  - 分期变更
+  - 切换分支
+  - 分离头模式
+  - 恢复更改
+- 语言
+  - 支持 Groovy
+- 内置终端
+  - Bug修复
+- 资源管理器
+  - 现在在关闭侧边栏时保留目录的折叠状态
+  - 能够通过点击文件夹名称来扩展文件夹
+- 其他
+  - 侧边栏的宽度减小
+  - 现在暂时删除了主题，以支持新的语法突出显示系统
+  - 暂时禁用了JSON Intellisense
+
+---
+
+### v1.1.7 (January 2021)
+- 编辑器
+  - 当运行代码或关闭键盘时，编辑器会保存文件
+  - 解决了有时无法显示虚拟键盘的问题
+- 版本控制
+  - 克隆私人存储库
+  - Git push, pull 和 sync
+  - 修复了克隆存储库命名不正确的问题
+- 内置终端
+  - 70+ Linux 指令 (ls, cd, nslookup等)
+  - 类似于Bash的功能，例如Piping，历史记录和完成
+  - 按Tab键显示所有可用命令
+- 资源管理器
+  - 文件和目录现在按字母顺序排序
+  - 现在默认隐藏以点开头的文件或目录
+  - 能够以两指平移手势选择项目
+- 其他改進
+  - 您可以直接从文件应用程序或其他应用程序中使用Code App打开文件
+  - 可以在主屏幕上按住应用程序图标以打开最近文档
+";
+
+"licenses" =
+"
+### Licenses
+---
+#### GCDWebServer
+ - [GCDWebServer](https://github.com/swisspol/GCDWebServer) is licensed under [Custom License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
+#### libgit2
+ - [libgit2](https://github.com/libgit2/libgit2) is licensed under [MIT License](https://github.com/libgit2/libgit2/blob/main/COPYING).
+#### highlight.js
+ - [highlight.js](https://github.com/highlightjs/highlight.js) is licensed under [BSD-3-Clause License](https://github.com/highlightjs/highlight.js/blob/master/LICENSE).
+#### ios_system
+ - [ios_system](https://github.com/holzschu/ios_system) is licensed under [BSD-3-Clause license](https://github.com/holzschu/ios_system/blob/master/LICENSE).
+#### judge0
+ - [judge0](https://github.com/judge0/judge0) is licensed under [GNU General Public License v3.0](https://github.com/judge0/judge0/blob/master/LICENSE).
+#### libssh2
+ - [libssh2](https://github.com/libssh2/libssh2) is licensed under [BSD-3-Clause License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
+#### MarkdownView
+ - [MarkdownView](https://github.com/keitaoouchi/MarkdownView) is licensed under [MIT License](https://github.com/keitaoouchi/MarkdownView/blob/master/LICENSE).
+#### Monaco Editor
+ - [Monaco Editor](https://github.com/microsoft/monaco-editor) is licensed under [MIT License](https://github.com/microsoft/monaco-editor/blob/master/LICENSE.md).
+#### Various Linux commands
+ - `egrep, fgrep, grep, gzip, gunzip, cat, chflag, compress, cp, date, echo, env, link, ln, printenv, pwd, ed, sed, tar, uncompress, uptime, chgrp, chksum, chmod, chown, df, du, groups, id, ls, mkdir, mv, readlink, rm, rmdir, stat, sum, touch, tr, uname, wc, whoami`
+are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_licenses).
+#### ZIPFoundation
+ - [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) is licensed under [MIT License](https://github.com/weichsel/ZIPFoundation/blob/development/LICENSE).
+---
+> This project would not have been possible without the above open source projects.
+> Happy coding from Hong Kong 🇭🇰
+";
+
+"Send us an email" = "给我们发电邮";
+"Open an issue on GitHub" = "在GitHub上发布问题";
+"Clear console" = "清除终端";
+"Kill Process" = "中止命令";
+"Sync" = "同步";
+"Synchronize Changes" = "同步远程变更 (Git pull & push)";
+"You don't have any open editor." = "没有打开的编辑器。";
+"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "这将会远程更改下拉到本地存储库，然后将本地提交推送到远程分支。冲突将被本地副本合并和覆盖。";
+"Remote Credentials (For Git pull, push and clone)" = "远程凭证（用于Git pull，push和clone）";
+"Password / Personal Access Token" = "密码/个人访问令牌";
+"User Name" = "用户名";
+"Show hidden files" = "显示隐藏文件";
+"Erase" = "清除";
+"This will erase all user settings, including author identity and credentials." = "这将清除所有用户设置，包括作者身份和凭据。";
+"Erase all settings" = "清除所有设置";
+"Release Notes" = "版本的新功能";
+
+"New File" = "新建文件";
+"Open File" = "打开文件";
+"Open Folder" = "打開文件夾￼";
+"Open Editors" = "打开的编辑器￼￼";
+"EXPLORER" = "资源管理器￼￼";
+"SEARCH" = "搜索";
+"Search" = "搜索";
+"Results" = "结果";
+"Search Text" = "搜索文字";
+"Search File" = "搜索文件";
+"Quick add" = "新建文件";
+"Custom" = "自定义";
+"Where" = "￼路徑";
+"Current Folder" = "当前文件夹";
+"Add File" = "新建文件";
+"INPUT" = "输入";
+"PROBLEMS" = "问题";
+"OUTPUT" = "输出";
+"Options" = "选项";
+"Close All" = "全部关闭";
+"Preview in Safari" = "在Safari中预览";
+"Mini Map" = "小地图";
+"Line Numbers" = "行号";
+"OTHERS" = "其他";
+"Tab Size" = "Tab宽度";
+
+"Settings" = "设置";
+"General" = "一般";
+"Editor" = "编辑器";
+"Compiler" = "编译器";
+"Accent" = "主題";
+"Font Size" = "字体大小";
+"Editor Font Size" = "编辑器字体大小";
+"Terminal Font Size" = "控制台字体大小";
+"Bracket Completion" = "自动输入括号￼￼￼";
+"Theme" = "主题";
+"Rate Code App" = "给Code App打个分";
+"About" = "关于";
+"Version" = "版本";
+
+"Done" = "完成￼";
+
+"Recent" = "最近";
+"Show in Files App" = "在「档案」App中打開￼";
+"Copy Relative Path" = "复制相对路径";
+"Delete" = "删除";
+"Color Scheme" = "颜色主题";
+"Dark Theme" = "黑暗主题";
+"Light Theme" = "浅色主题";
+"Text Wrap" = "换行";
+"Render Whitespace" = "呈现空白";
+
+"Share" = "分享";
+"Rename" = "重新命名";
+"Assign as workplace folder" = "设置为工作文件夹";
+"Select for compare" = "选择进行比较";
+"Compare with selected" = "与选定的比较";
+"Version Control" = "版本控制";
+"Author Identity" = "作者身份";
+"Authentication" = "凭据";
+"Name" = "名字";
+"Email address" = "电子邮件";
+"Save" = "保存";
+"Close Editor" = "关闭编辑器";
+"Zoom in" = "放大";
+"Zoom out" = "缩小";
+"Show Explorer" = "显示资源管理器";
+"Show Search" = "显示搜寻";
+"Show Source Control" = "显示源代码控制";
+"User Settings" = "用户设置";
+"Show Panel" = "显示终端";
+"Run Code" = "运行代码";
+"New Folder" = "新建文件夾";
+
+"Source Control" = "源码管理";
+"The folder currently opened doesn't have a git repository." = "当前打开的文件夹没有Git存储库。";
+"Example: https://github.com/thebaselab/codeapp.git" = "例子: https://github.com/thebaselab/codeapp.git";
+"Initialize Repository" = "初始化存储库";
+"Clone Repository" = "克隆存储库";
+"TERMINAL" = "终端";
+"Keyboard Toolbar" = "键盘工具栏";
+"Always Open In New Tab" = "总是在新标签页中打开";
+"Changes" = "变更";
+"There are no staged changes." = "没有任何缓存变更。";
+"Message (⌘Enter to commit)" = "提交备注 (⌘Enter 以提交)";
+"Staged Changes" = "缓存变更";
+"No changes are made in the working directory" = "没有任何未缓存的变更。";
+"Git checkout: Uncommitted Changes" = "Git checkout: 未提交的更改 ";
+"Uncommited changes will be lost. Do you wish to proceed?" = "未提交的更改将丢失。 你要继续吗？";
+"Commit message cannot be empty" = "备注不能为空";
+"Commit succeeded" = "提交成功";
+"Pushing to remote" = "推送到远程";
+"Push succeeded" = "推送成功";
+"No changes are made in this file" = "没有任何变更。";
+
+"Smooth Scrolling" = "平滑滚动";
+"Stage All Changes" = "缓存全部变更";
+"Push" = "推送 (Push)";
+"Fetch" = "获取 (Fetch)";
+
+"Welcome" = "欢迎";
+"Themes" = "主题";
+"Read-only Mode" = "只读模式";
+"Show Welcome Page" = "显示欢迎页面";
+"UI State Restoration" = "UI 状态恢复";
+"Open in Tab" = "在标签页中打开";
+"Show Terminal Command" = "在终端中显示命令";
+"Languages (Local)" = "编程语言 (本地)";
+"Languages (Remote)" = "编程语言 (远程)";
+"Duplicate" = "复制";
+"Console Font Size" = "终端字体大小";

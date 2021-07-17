@@ -1,0 +1,10 @@
+[distutils.commands]
+build_rust = setuptools_rust:build_rust
+check_rust = setuptools_rust.check:check_rust
+clean_rust = setuptools_rust:clean_rust
+test_rust = setuptools_rust:test_rust
+tomlgen_rust = setuptools_rust:tomlgen_rust
+
+[distutils.setup_keywords]
+rust_extensions = setuptools_rust.setuptools_ext:rust_extensions
+

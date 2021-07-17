@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ios_system",
+        "repositoryURL": "https://github.com/holzschu/ios_system.git",
+        "state": {
+          "branch": "master",
+          "revision": "29b2af11f3219e016a8ce9a4ee39daee0832246a",
+          "version": null
+        }
+      },
+      {
+        "package": "network_ios",
+        "repositoryURL": "https://github.com/holzschu/network_ios.git",
+        "state": {
+          "branch": "master",
+          "revision": "23e3aa2cef944e332b6b0554ad868ac36ebdff8e",
+          "version": null
+        }
+      },
+      {
+        "package": "ZIPFoundation",
+        "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
+        "state": {
+          "branch": null,
+          "revision": "ec32d62d412578542c0ffb7a6ce34d3e64b43b94",
+          "version": "0.9.11"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

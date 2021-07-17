@@ -1,0 +1,57 @@
+# Clean previous downloads
+rm -rf Resources
+
+mkdir Resources
+cd Resources
+
+# Python
+curl -OL https://github.com/bummoblizard/cpython/releases/download/1.0.1/cpython.zip
+unzip -q cpython.zip
+rm -f cpython.zip
+
+# llvm
+for lib in ar link libLLVM lld clang nm dis llc lli opt; do
+    curl -OL https://github.com/holzschu/llvm/releases/download/1.0/$lib.xcframework.zip
+    unzip -q $lib.xcframework.zip -d llvm
+    rm -f $lib.xcframework.zip 
+done 
+
+# ios_system
+for lib in files curl_ios awk text shell tar ios_system; do
+    curl -OL https://github.com/holzschu/ios_system/releases/download/v2.9.0/$lib.xcframework.zip
+    unzip -q $lib.xcframework.zip -d Term
+    rm -f $lib.xcframework.zip 
+done
+
+# network_ios
+curl -OL https://github.com/holzschu/network_ios/releases/download/v0.2/network_ios.xcframework.zip
+unzip -q network_ios.xcframework.zip -d Term
+rm -f network_ios.xcframework.zip 
+
+# We are using an older version of SSH / SFTP
+curl -OL https://github.com/holzschu/ios_system/releases/download/v2.7.0/ssh_cmd.xcframework.zip
+unzip -q ssh_cmd.xcframework.zip -d Term
+rm -f ssh_cmd.xcframework.zip
+
+curl -OL https://github.com/blinksh/openssl-apple/releases/download/v1.1.1i/openssl-dynamic.xcframework.zip
+unzip -q openssl-dynamic.xcframework.zip -d Term
+rm -f openssl-dynamic.xcframework.zip
+
+# Python auxiliaries
+for lib in harfbuzz freetype libpng; do
+    curl -OL https://github.com/holzschu/Python-aux/releases/download/1.0/$lib.xcframework.zip
+    unzip -q $lib.xcframework.zip -d PythonAux
+    rm -f $lib.xcframework.zip 
+done
+
+# Node.js
+curl -OL https://github.com/JaneaSystems/nodejs-mobile/releases/download/nodejs-mobile-v0.3.2/nodejs-mobile-v0.3.2-ios.zip
+unzip -q nodejs-mobile-v0.3.2-ios.zip -d NodeJS
+rm -f nodejs-mobile-v0.3.2-ios.zip
+
+# PHP
+curl -OL https://github.com/bummoblizard/php-src/releases/download/v0.2/php.xcframework.zip
+unzip -q php.xcframework -d PHP
+rm -f php.xcframework.zip
+
+echo "Done!"

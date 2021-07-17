@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  Code
+
+  Created by Ken Chung on 2/5/2021.
+  
+*/
+"NSPhotoLibraryAddUsageDescription" = "Zum Speichern von Bildern ist Zugriff auf die Fotobibliothek erforderlich.";

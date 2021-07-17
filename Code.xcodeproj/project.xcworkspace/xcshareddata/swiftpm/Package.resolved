@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Dynamic",
+        "repositoryURL": "https://github.com/mhdhejazi/Dynamic.git",
+        "state": {
+          "branch": null,
+          "revision": "ab9a2570862d54aed2663691bb767f881226a12f",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "ZIPFoundation",
+        "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
+        "state": {
+          "branch": null,
+          "revision": "ec32d62d412578542c0ffb7a6ce34d3e64b43b94",
+          "version": "0.9.11"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

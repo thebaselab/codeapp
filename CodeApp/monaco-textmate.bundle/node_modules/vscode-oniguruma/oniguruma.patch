@@ -1,0 +1,27 @@
+diff --git a/deps/oniguruma/src/regcomp.c b/deps/oniguruma/src/regcomp.c
+index 4d5b78f..4f9a6b6 100644
+--- a/deps/oniguruma/src/regcomp.c
++++ b/deps/oniguruma/src/regcomp.c
+@@ -4723,14 +4723,14 @@ tune_look_behind(Node* node, regex_t* reg, int state, ScanEnv* env)
+       return ONIGERR_INVALID_LOOK_BEHIND_PATTERN;
+     }
+
+-    if (ci.min == 0 && ci.min_is_sure != 0 && used == FALSE) {
+-      if (an->type == ANCR_LOOK_BEHIND_NOT)
+-        r = onig_node_reset_fail(node);
+-      else
+-        r = onig_node_reset_empty(node);
+-
+-      return r;
+-    }
++    // if (ci.min == 0 && ci.min_is_sure != 0 && used == FALSE) {
++    //   if (an->type == ANCR_LOOK_BEHIND_NOT)
++    //     r = onig_node_reset_fail(node);
++    //   else
++    //     r = onig_node_reset_empty(node);
++    //
++    //   return r;
++    // }
+
+     if (r == CHAR_LEN_TOP_ALT_FIXED) {
+       if (IS_SYNTAX_BV(env->syntax, ONIG_SYN_DIFFERENT_LEN_ALT_LOOK_BEHIND)) {

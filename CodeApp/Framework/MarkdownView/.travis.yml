@@ -1,0 +1,12 @@
+osx_image: xcode11.6
+language: swift
+before_install:
+  - brew update
+  - brew outdated carthage || brew upgrade carthage
+install:
+- gem install xcpretty
+script:
+- set -o pipefail && cd Example && bundle install && bundle exec pod install && cd ../ && xcodebuild build -workspace Example/Example.xcworkspace -scheme Example -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
+- pod lib lint --quick
+- carthage build --platform iOS --no-skip-current
+- swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios14.0-simulator"

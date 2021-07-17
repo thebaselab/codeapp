@@ -1,0 +1,31 @@
+img { max-width: 100%; }
+* {
+    -webkit-touch-callout: none;
+}
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: -apple-system-background;
+  --color: -apple-system-label;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  a {
+    color: #2997ff;
+  }
+  a:hover,
+  a:focus {
+    color: #006dd3;
+  }
+}
+
+body {
+    background-color: var(--background);
+    color: var(--color);
+}

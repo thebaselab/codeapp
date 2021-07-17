@@ -1,0 +1,12 @@
+{
+    "base_template": "lab",
+    "mimetypes": {
+        "text/html": true
+    },
+    "preprocessors": {
+        "500-reveal": {
+            "type": "nbconvert.exporters.slides._RevealMetadataPreprocessor",
+            "enabled": true
+        }
+    }
+}

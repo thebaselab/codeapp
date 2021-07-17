@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^4.3.0",
+    "css-minimizer-webpack-plugin": "^1.1.4",
+    "file-loader": "^6.1.0",
+    "mini-css-extract-plugin": "^0.11.3",
+    "style-loader": "^1.2.1",
+    "terser-webpack-plugin": "^4.2.2",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "highlight.js": "^10.2.0",
+    "markdown-it": "^11.0.1",
+    "markdown-it-emoji": "^1.4.0"
+  }
+}

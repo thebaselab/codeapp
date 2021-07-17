@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxa-ev-Voq">
+                                <rect key="frame" x="0.0" y="1004" width="768" height="20"/>
+                                <color key="backgroundColor" name="statusBar.background"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Oor-be-HDq"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y4T-3a-cvK">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="1004"/>
+                                <color key="backgroundColor" name="activityBar.background"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="dai-9n-Dsh"/>
+                                    <constraint firstAttribute="width" constant="50" id="gO1-T2-Pxv"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="dai-9n-Dsh"/>
+                                        <exclude reference="gO1-T2-Pxv"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="gO1-T2-Pxv"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="dai-9n-Dsh"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wff-fw-jKg">
+                                <rect key="frame" x="50" y="0.0" width="718" height="40"/>
+                                <color key="backgroundColor" name="sideBar.background"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="U7M-Wi-ogz"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" name="editor.background"/>
+                        <constraints>
+                            <constraint firstItem="wff-fw-jKg" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="3r7-gl-Cgn"/>
+                            <constraint firstItem="rxa-ev-Voq" firstAttribute="trailing" secondItem="wff-fw-jKg" secondAttribute="trailing" id="Fmp-ey-9ac"/>
+                            <constraint firstItem="wff-fw-jKg" firstAttribute="leading" secondItem="y4T-3a-cvK" secondAttribute="trailing" id="Joz-Xg-avf"/>
+                            <constraint firstItem="y4T-3a-cvK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="RHR-8F-hNg"/>
+                            <constraint firstItem="rxa-ev-Voq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aVY-6f-5ne"/>
+                            <constraint firstItem="rxa-ev-Voq" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="dYg-3j-Jgq"/>
+                            <constraint firstItem="wff-fw-jKg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="gFr-1v-yiX"/>
+                            <constraint firstAttribute="bottom" secondItem="y4T-3a-cvK" secondAttribute="bottom" constant="20" id="hie-Vv-IEy"/>
+                            <constraint firstItem="y4T-3a-cvK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hin-jn-kfT"/>
+                            <constraint firstItem="wff-fw-jKg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="og8-pS-Jrc"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Joz-Xg-avf"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="Joz-Xg-avf"/>
+                                <exclude reference="og8-pS-Jrc"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <exclude reference="y4T-3a-cvK"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="51.5625" y="374.67057101024886"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="activityBar.background">
+            <color red="0.88627450980392153" green="0.90196078431372551" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="editor.background">
+            <color red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="sideBar.background">
+            <color red="0.93699997663497925" green="0.94099998474121094" blue="0.93699997663497925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="statusBar.background">
+            <color red="0.0" green="0.4779999852180481" blue="0.80000001192092896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Monaco TextMate Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="index.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <style>
+      body { margin:0; }
+      #overlay {width: 0;height:0;position:absolute;}
+      .addedBackground, .deletedBackground, .modifiedBackground {
+          width: 3px !important;
+          margin-left: 6px;
+          transform: translate(-50%, 0);
+          transition: 0.1s;
+        }
+    .addedBackground {
+        background: rgb(129, 184, 139);
+    }
+    .deletedBackground {
+        background: rgb(202, 75, 81);
+    }
+    .modifiedBackground {
+        background: rgb(102, 175, 224);
+    }
+    .addedBackground:hover, .deletedBackground:hover, .modifiedBackground:hover {width: 8px !important;}
+    @media (prefers-color-scheme: dark) {
+        .addedBackground {background:rgb(88, 124, 12)};
+        .deletedBackground {background:rgb(148, 21, 27)};
+        .modifiedBackground {background:rgb(12, 125, 157)};
+    }
+  </style>
+  <body>
+    <div tabindex="0" id="overlay"></div>
+    <div id="container" style="width: 100%; height: 100vh; overflow: hidden;"></div>
+    <script src="app.bundle.js"></script>
+    <script defer>
+        var states = {};
+        
+        var customDarkTheme = null;
+        var customLightTheme = null;
+        var customDarkThemeName = null;
+        var customLightThemeName = null;
+        var previousDecoration = [];
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            const newColorScheme = e.matches ? "dark" : "light";
+            
+            if (newColorScheme == "dark") {
+                if (customDarkTheme === null){
+                    changeTheme('vs-dark')
+                }else{
+                    setTheme(customDarkThemeName, customDarkTheme)
+                }
+            }else {
+                if (customLightTheme === null){
+                    changeTheme('vs')
+                }else{
+                    setTheme(customLightThemeName, customLightTheme)
+                }
+            }
+        });
+        
+        function getChangeType(change) {
+            if (change.originalEndLineNumber === 0) {
+                return "added"; // Add
+            } else if (change.modifiedEndLineNumber === 0) {
+                return "deleted"; // Delete
+            } else {
+                return "modified"; // Modify
+            }
+        }
+        
+        function invalidateDecorations(){
+            previousDecoration = editor.deltaDecorations(previousDecoration, []);
+        }
+
+        function computeDiffForURI(uri){
+            monaco.editor.computeDirtyDiff("original://" + uri, uri, true).then (
+                function(result){
+                    var changes = result;
+                    var jsonChanges = [];
+                    for (const x in changes){
+                        var change = changes[x];
+                        var decoration = {};
+
+                        const startLineNumber = change.modifiedStartLineNumber;
+                        const endLineNumber = change.modifiedEndLineNumber || startLineNumber;
+
+                        switch (getChangeType(change)){
+                            case "modified":
+                                decoration = {
+                                    range: new monaco.Range(startLineNumber,1,endLineNumber,1),
+                                    options: {
+                                        isWholeLine: true,
+                                        linesDecorationsClassName: "modifiedBackground",
+                                        minimap: {color: "#66afe0", darkColor: "#0c7d9d", position: 2 }
+                                    }
+                                        // Position: 1 - Inline, 2 - Gutter
+                                }
+                                break;
+                            case "added":
+                                decoration = {
+                                    range: new monaco.Range(startLineNumber,1,endLineNumber,1),
+                                    options: {
+                                        isWholeLine: true,
+                                        linesDecorationsClassName: "addedBackground",
+                                        minimap: {color: "#81b88b", darkColor: "#587c0c", position: 2 }
+                                    },
+                                    
+                                }
+                                break;
+                            case "deleted":
+                                decoration = {
+                                    range: new monaco.Range(startLineNumber,Number.MAX_VALUE,endLineNumber,Number.MAX_VALUE),
+                                    options: {
+                                        isWholeLine: false,
+                                        linesDecorationsClassName: "deletedBackground",
+                                        minimap: {color: "#ca4b51", darkColor: "#94151b", position: 2 }
+                                    },
+                                    
+                                }
+                                break;
+                        }
+                        jsonChanges.push(decoration)
+                    }
+                    // console.log(jsonChanges);
+                    previousDecoration = editor.deltaDecorations(previousDecoration, jsonChanges);
+                },
+                function(error){
+                    console.log(error);
+                }
+            )
+        }
+    
+        function provideOriginalTextForUri(uri, value){
+
+            var decodedContent = decodeURIComponent(escape(window.atob(value)));
+
+            var originalUri = monaco.Uri.parse("original://" + uri);
+
+            if (monaco.editor.getModel(originalUri)){
+                monaco.editor.getModel(originalUri).setValue(decodedContent);
+            }else{
+                monaco.editor.createModel(decodedContent, "plaintext", originalUri);
+            }
+
+            computeDiffForURI(uri);
+        }
+
+        function updateTheme(){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                if (customDarkTheme === null){
+                    changeTheme('vs-dark')
+                }else{
+                    setTheme(customDarkThemeName, customDarkTheme)
+                }
+            }else{
+                if (customLightTheme === null){
+                    changeTheme('vs')
+                }else{
+                    setTheme(customLightThemeName, customLightTheme)
+                }
+            }
+        }
+    
+        function resetTheme(isDark){
+            if (isDark){
+                customDarkTheme = null;
+                customLightThemeName = null;
+            }else{
+                customLightTheme = null;
+                customLightThemeName = null;
+            }
+            updateTheme()
+        }
+
+        function applyBase64AsTheme(string, themeName, isDark){
+            var decodedString = decodeURIComponent(escape(window.atob(string)));
+            var data = JSON.parse(decodedString);
+            
+            if (isDark) {
+                customDarkTheme = data;
+                customDarkThemeName = themeName;
+            }else{
+                customLightTheme = data;
+                customLightThemeName = themeName;
+            }
+            updateTheme()
+        }
+
+        function applyListeners(instance){
+            
+            if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                if (customLightTheme === null){
+                    changeTheme('vs')
+                }else{
+                    setTheme(customLightThemeName, customLightTheme)
+                }
+            }
+            
+            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toggleMessageHandler) {
+                window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+                    "Event": "Editor Initialising"
+                });
+            }
+
+            instance.onDidChangeModel((event) => {
+                var currentModel = instance.getModel();
+                var modelPath = currentModel._associatedResource._formatted;
+                
+                window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+                    "Event": "Request Diff Update",
+                    "URI": modelPath
+                });
+
+                var position = instance.getPosition();
+                window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+                    "Event": "Crusor Position changed",
+                    "Column": position.column,
+                    "lineNumber": position.lineNumber
+                });
+            })
+
+            instance.onDidChangeCursorPosition((event) => {
+                var position = instance.getPosition();
+                // console.log(position)
+                var message = "Crusor Position changed";
+                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toggleMessageHandler) {
+                    window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+                        "Event": message,
+                        "Column": position.column,
+                        "lineNumber": position.lineNumber
+                    });
+                }
+            });
+
+            instance.onDidChangeModelContent((event) => {
+                var currentModel = instance.getModel();
+                var versionID = currentModel.getAlternativeVersionId();
+                var modelPath = currentModel._associatedResource._formatted;
+                var position = instance.getPosition();
+                var content = instance.getValue()
+
+                var message = "Content changed";
+                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toggleMessageHandler) {
+                    window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+                        "Event": message,
+                        "VersionID": versionID,
+                        "URI": modelPath,
+                        "currentContent": content
+                    });
+                }
+
+                var originalUri = monaco.Uri.parse("original://" + modelPath);
+
+                if (monaco.editor.getModel(originalUri)){
+                    computeDiffForURI(modelPath);
+                }
+            });
+            
+            monaco.editor.onDidChangeMarkers((markers) => {
+                var message = "Markers updated";
+                if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toggleMessageHandler) {
+                    window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+                        "Event": message,
+                        "Markers": monaco.editor.getModelMarkers()
+                    });
+                }
+            });
+        }
+
+        var lastOpenedURI = "";
+        var navi = null;
+
+        function switchToDiffView(originalContent, modifiedContent, url1, url2){
+            // lastOpenedURI = editor.getModel().uri.path.substring(1);
+            
+            var original = decodeURIComponent(escape(window.atob(originalContent)));
+            var modified = decodeURIComponent(escape(window.atob(modifiedContent)));
+            
+            var originalModel = null;
+            var modifiedModel = null;
+
+            if (monaco.editor.getModel(monaco.Uri.parse(url1))){
+                originalModel = monaco.editor.getModel(monaco.Uri.parse(url1))
+            }else{
+                originalModel = monaco.editor.createModel(original, undefined, monaco.Uri.parse(url1));
+            }
+
+            if (monaco.editor.getModel(monaco.Uri.parse(url2))){
+                modifiedModel = monaco.editor.getModel(monaco.Uri.parse(url2))
+            }else{
+                modifiedModel = monaco.editor.createModel(modified, undefined, monaco.Uri.parse(url2));
+            }
+            
+            editor.dispose();
+            editor = null;
+
+            editor = monaco.editor.createDiffEditor(document.getElementById("container"), {
+                // You can optionally disable the resizing
+                enableSplitViewResizing: false,
+                automaticLayout: true,
+
+                // Render the diff inline
+                renderSideBySide: true
+            });
+            navi = monaco.editor.createDiffNavigator(editor, {
+                followsCaret: true, // resets the navigator state when the user selects something in the editor
+                ignoreCharChanges: true // jump from line to line
+            });
+            editor.setModel({
+                original: originalModel,
+                modified: modifiedModel
+            });
+            applyListeners(editor.getOriginalEditor())
+            applyListeners(editor.getModifiedEditor())
+        }
+
+        function switchToNormalView(){
+            editor.dispose();
+            editor = null;
+            editor = monaco.editor.create(document.getElementById('container'), {theme: "vs-dark", automaticLayout: true});
+            editor.getModel().dispose();
+            applyListeners(editor)
+            // editor.setModel(monaco.editor.getModel(monaco.Uri.parse(lastOpenedURI)));
+        }
+
+        function renameModel(oldURL, newURL){
+            var model1 = monaco.editor.getModel(monaco.Uri.parse(oldURL));
+            var model2 = monaco.editor.createModel(model1.getValue(), undefined, monaco.Uri.parse(newURL));
+
+            var cm2 = model2._commandManager;
+            var cm1 = model1._commandManager;
+
+            cm2.currentOpenStackElement = cm1.currentOpenStackElement;
+            cm2.past = cm1.past;
+            cm2.future = cm1.future;
+            model1.dispose();
+        }
+    </script>
+  </body>
+</html>
+

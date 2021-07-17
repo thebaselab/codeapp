@@ -1,0 +1,141 @@
+.TH "NPM\-VIEW" "1" "February 2021" "" ""
+.SH "NAME"
+\fBnpm-view\fR \- View registry info
+.SS Synopsis
+.P
+.RS 2
+.nf
+npm view [<@scope>/]<name>[@<version>] [<field>[\.<subfield>]\.\.\.]
+
+aliases: info, show, v
+.fi
+.RE
+.SS Description
+.P
+This command shows data about a package and prints it to the stream
+referenced by the \fBoutfd\fP config, which defaults to stdout\.
+.P
+As an example, to view information about the \fBconnect\fP package from the registry, you would run:
+.P
+.RS 2
+.nf
+npm view connect
+.fi
+.RE
+.P
+The default version is \fB"latest"\fP if unspecified\.
+.P
+Field names can be specified after the package descriptor\.
+For example, to show the dependencies of the \fBronn\fP package at version
+\fB0\.3\.5\fP, you could do the following:
+.P
+.RS 2
+.nf
+npm view ronn@0\.3\.5 dependencies
+.fi
+.RE
+.P
+You can view child fields by separating them with a period\.
+To view the git repository URL for the latest version of \fBnpm\fP, you would run the following command:
+.P
+.RS 2
+.nf
+npm view npm repository\.url
+.fi
+.RE
+.P
+This makes it easy to view information about a dependency with a bit of
+shell scripting\. For example, to view all the data about the version of
+\fBopts\fP that \fBronn\fP depends on, you could write the following:
+.P
+.RS 2
+.nf
+npm view opts@$(npm view ronn dependencies\.opts)
+.fi
+.RE
+.P
+For fields that are arrays, requesting a non\-numeric field will return
+all of the values from the objects in the list\. For example, to get all
+the contributor names for the \fBexpress\fP package, you would run:
+.P
+.RS 2
+.nf
+npm view express contributors\.email
+.fi
+.RE
+.P
+You may also use numeric indices in square braces to specifically select
+an item in an array field\. To just get the email address of the first
+contributor in the list, you can run:
+.P
+.RS 2
+.nf
+npm view express contributors[0]\.email
+.fi
+.RE
+.P
+Multiple fields may be specified, and will be printed one after another\.
+For example, to get all the contributor names and email addresses, you
+can do this:
+.P
+.RS 2
+.nf
+npm view express contributors\.name contributors\.email
+.fi
+.RE
+.P
+"Person" fields are shown as a string if they would be shown as an
+object\.  So, for example, this will show the list of \fBnpm\fP contributors in
+the shortened string format\.  (See npm help \fBpackage\.json\fP for more on this\.)
+.P
+.RS 2
+.nf
+npm view npm contributors
+.fi
+.RE
+.P
+If a version range is provided, then data will be printed for every
+matching version of the package\.  This will show which version of \fBjsdom\fP
+was required by each matching version of \fByui3\fP:
+.P
+.RS 2
+.nf
+npm view yui3@'>0\.5\.4' dependencies\.jsdom
+.fi
+.RE
+.P
+To show the \fBconnect\fP package version history, you can do
+this:
+.P
+.RS 2
+.nf
+npm view connect versions
+.fi
+.RE
+.SS Output
+.P
+If only a single string field for a single version is output, then it
+will not be colorized or quoted, to enable piping the output to
+another command\. If the field is an object, it will be output as a JavaScript object literal\.
+.P
+If the \fB\-\-json\fP flag is given, the outputted fields will be JSON\.
+.P
+If the version range matches multiple versions then each printed value
+will be prefixed with the version it applies to\.
+.P
+If multiple fields are requested, then each of them is prefixed with
+the field name\.
+.SS See Also
+.RS 0
+.IP \(bu 2
+npm help search
+.IP \(bu 2
+npm help registry
+.IP \(bu 2
+npm help config
+.IP \(bu 2
+npm help npmrc
+.IP \(bu 2
+npm help docs
+
+.RE

@@ -1,0 +1,8 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '13.0'
+
+target 'Example' do
+  use_modular_headers!
+
+  pod 'MarkdownView', path: '../'
+end

@@ -1,0 +1,38 @@
+.TH "NPM\-ROOT" "1" "January 2021" "" ""
+.SH "NAME"
+\fBnpm-root\fR \- Display npm root
+.SS Synopsis
+.P
+.RS 2
+.nf
+npm root [\-g]
+.fi
+.RE
+.SS Description
+.P
+Print the effective \fBnode_modules\fP folder to standard out\.
+.P
+Useful for using npm in shell scripts that do things with the
+\fBnode_modules\fP folder\.  For example:
+.P
+.RS 2
+.nf
+#!/bin/bash
+global_node_modules="$(npm root \-\-global)"
+echo "Global packages installed in: ${global_node_modules}"
+.fi
+.RE
+.SS See Also
+.RS 0
+.IP \(bu 2
+npm help prefix
+.IP \(bu 2
+npm help bin
+.IP \(bu 2
+npm help folders
+.IP \(bu 2
+npm help config
+.IP \(bu 2
+npm help npmrc
+
+.RE
