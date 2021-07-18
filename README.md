@@ -19,10 +19,20 @@ Use [VS Code](https://github.com/microsoft/vscode) as a design template while pr
 - SSH Support 🏃
 - [LSP](https://microsoft.github.io/language-server-protocol) support 🏃
 
-### Building the project
-- `sh downloadFrameworks.sh`
-- Open Code.xcworkspace
-- Select project from file navigator
-- Signing & Capabilities -> select your own team
-- Change Bundle Identifier if needed
-- Build and install on a real device
+## Building the project
+1. `sh downloadFrameworks.sh`
+2. Open Code.xcworkspace
+3. Select project from file navigator
+4. Signing & Capabilities -> select your own team
+5. Change Bundle Identifier if needed
+6. Build and install on a real device
+
+The source code of the built-in languages are hosted on these repositories.
+| Language        | Repository        |
+|-----------------|-------------------|
+| Python 3.9.0    | [cpython](https://github.com/holzschu/cpython)|
+| Clang 13.0.0    | [llvm-project](https://github.com/holzschu/llvm-project)|
+| PHP 8.0.8       | [php-src](https://github.com/bummoblizard/php-src/tree/PHP-8.0.8)|
+| Node.js 12.19.0 | [nodejs-mobile](https://github.com/JaneaSystems/nodejs-mobile)|
+
+
