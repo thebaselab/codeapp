@@ -11,7 +11,7 @@ rm -f cpython.zip
 
 # llvm
 for lib in ar link libLLVM lld clang nm dis llc lli opt; do
-    curl -OL https://github.com/holzschu/llvm/releases/download/1.0/$lib.xcframework.zip
+    curl -OL https://github.com/holzschu/llvm-project/releases/download/13.0.0/$lib.xcframework.zip
     unzip -q $lib.xcframework.zip -d llvm
     rm -f $lib.xcframework.zip 
 done 
