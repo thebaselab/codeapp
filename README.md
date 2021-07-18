@@ -30,7 +30,7 @@ Use [VS Code](https://github.com/microsoft/vscode) as a design template while pr
 The source code of the built-in languages are hosted on these repositories.
 | Language        | Repository        |
 |-----------------|-------------------|
-| Python 3.9.0    | [cpython](https://github.com/holzschu/cpython)|
+| Python 3.9.2    | [cpython](https://github.com/holzschu/cpython/tree/3.9)|
 | Clang 13.0.0    | [llvm-project](https://github.com/holzschu/llvm-project)|
 | PHP 8.0.8       | [php-src](https://github.com/bummoblizard/php-src/tree/PHP-8.0.8)|
 | Node.js 12.19.0 | [nodejs-mobile](https://github.com/JaneaSystems/nodejs-mobile)|
