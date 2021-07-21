@@ -10,6 +10,8 @@ import SwiftUI
 struct editorTab: View {
     
     @State var currentEditor: EditorInstance
+    // This is used for force updating the view.
+    @State private var lastUpdateTime: Date = Date()
     
     var isActive: Bool
     var index: Int
@@ -25,7 +27,7 @@ struct editorTab: View {
     }
     
     var body: some View {
-        if isActive {
+        if isActive && lastUpdateTime > Date.distantPast{
             HStack(){
                 fileIcon(url: currentEditor.url, iconSize: 14, type: currentEditor.type)
                 Button(action: {}){
@@ -56,6 +58,9 @@ struct editorTab: View {
                 }
                 
             }.frame(height: 40).padding(.leading, 15).padding(.trailing, 15).background(Color.init(id: "tab.activeBackground")).cornerRadius(10, corners: [.topLeft, .topRight])
+                .onReceive(NotificationCenter.default.publisher(for: Notification.Name("monaco.editor.currentContent.changed"), object: nil), perform: { notification in
+                    lastUpdateTime = Date()
+                })
         }else{
             Button(action: {onOpenEditor()}){
                 HStack(){

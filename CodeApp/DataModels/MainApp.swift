@@ -18,8 +18,6 @@ class MainApp: ObservableObject {
     
     @Published var isShowingCompilerLanguage = false
     @Published var activeEditor: EditorInstance? = nil
-    @Published var currentLine = 0
-    @Published var currentColumn = 0
     @Published var selectedForCompare = ""
     
     @Published var languageEnabled: [Bool] = langListInit()

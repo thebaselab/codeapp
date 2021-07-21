@@ -340,11 +340,20 @@ struct monacoEditor: UIViewRepresentable {
                     requestDiffUpdate(modelUri: modelUri, force: true)
                 }
             case "Crusor Position changed":
-                control.status.currentLine = result["lineNumber"] as! Int
-                control.status.currentColumn = result["Column"] as! Int
+                let lineNumber = result["lineNumber"] as! Int
+                let column = result["Column"] as! Int
+                NotificationCenter.default.post(name: Notification.Name("monaco.cursor.position.changed"), object: nil, userInfo: ["lineNumber":lineNumber, "column": column])
             case "Content changed":
-                control.status.activeEditor?.currentVersionId = result["VersionID"] as! Int
-                control.status.activeEditor?.content = result["currentContent"] as! String
+                let version = result["VersionID"] as! Int
+                let content = result["currentContent"] as! String
+                if (control.status.activeEditor?.lastSavedVersionId == control.status.activeEditor?.currentVersionId && // Saved -> Unsaved
+                   version != control.status.activeEditor?.lastSavedVersionId) ||
+                   (control.status.activeEditor?.lastSavedVersionId != control.status.activeEditor?.currentVersionId && // Unsaved -> Saved
+                   version == control.status.activeEditor?.lastSavedVersionId){
+                    NotificationCenter.default.post(name: Notification.Name("monaco.editor.currentContent.changed"), object: nil, userInfo: nil)
+                }
+                control.status.activeEditor?.currentVersionId = version
+                control.status.activeEditor?.content = content
                 if let modelUri = result["URI"] as? String {
                     requestDiffUpdate(modelUri: modelUri)
                 }

@@ -15,6 +15,8 @@ struct bottomBar: View {
     @State var selectedBranch: GitServiceProvider.checkoutDest? = nil
     @State var checkoutDetached: Bool = false
     @State var showChangeLog: Bool
+    @State var currentLine = 0
+    @State var currentColumn = 0
     @Binding var showingNewFileSheet: Bool
     @Binding var showSafari: Bool
     @Binding var showsFilePicker: Bool
@@ -245,12 +247,16 @@ struct bottomBar: View {
                     
                     if App.activeEditor?.type == .file || App.activeEditor?.type == .diff{
                                                             
-                        Text("Ln \(String(App.currentLine)), Col \(String(App.currentColumn))")
+                        Text("Ln \(String(currentLine)), Col \(String(currentColumn))")
                             .font(.system(size: 12))
                             .foregroundColor(Color.init(id: "statusBar.foreground"))
                             .onTapGesture{
                                 App.monacoInstance.executeJavascript(command: "editor.focus();editor.trigger('', 'editor.action.gotoLine')")
                             }
+                            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("monaco.cursor.position.changed"), object: nil), perform: { notification in
+                                currentLine = notification.userInfo?["lineNumber"] as! Int
+                                currentColumn = notification.userInfo?["column"] as! Int
+                            })
                         
                         if editorReadOnly {
                             Text("READ-ONLY").font(.system(size: 12)).foregroundColor(Color.init(id: "statusBar.foreground"))
