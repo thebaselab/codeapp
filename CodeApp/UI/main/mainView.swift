@@ -276,17 +276,7 @@ struct mainView: View{
                             
                             if isShowingDirectory && horizontalSizeClass == .compact {
                                 HStack(spacing: 0){
-                                    ZStack(alignment: .topLeading){
-                                        
-                                        Group{
-                                            if self.currentDirectory == 0 {
-                                                explorer(showingNewFileSheet: $showingNewFileSheet, showsDirectoryPicker: $showsDirectoryPicker)
-                                            }else if self.currentDirectory == 1 {
-                                                search()
-                                            }else if self.currentDirectory == 3 {
-                                                git()
-                                            }
-                                        }.background(Color.init(id: "sideBar.background"))
+                                    VStack{
                                         
                                         HStack{
                                             Button(action: {
@@ -326,6 +316,15 @@ struct mainView: View{
                                         .background(Color.init(id: "sideBar.background").ignoresSafeArea(.container, edges: .top))
                                         .frame(height: 40)
                                         
+                                        Group{
+                                            if self.currentDirectory == 0 {
+                                                explorer(showingNewFileSheet: $showingNewFileSheet, showsDirectoryPicker: $showsDirectoryPicker)
+                                            }else if self.currentDirectory == 1 {
+                                                search()
+                                            }else if self.currentDirectory == 3 {
+                                                git()
+                                            }
+                                        }.background(Color.init(id: "sideBar.background"))
                                         
                                     }
                                     .frame(width: 280.0, height: geometry.size.height - 20).background(Color.init(id: "sideBar.background"))
