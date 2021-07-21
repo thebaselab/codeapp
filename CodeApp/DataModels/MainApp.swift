@@ -621,7 +621,7 @@ class MainApp: ObservableObject {
             compilerCode = 1
             isShowingCompilerLanguage = true
         }else{
-            for i in languageList{
+            for i in languageList.sorted(by: {$0.key < $1.key}){
                 if i.value[1] == pathExtension && languageEnabled[i.key]{
                     compilerCode = i.key
                     isShowingCompilerLanguage = true
