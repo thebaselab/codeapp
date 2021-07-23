@@ -208,11 +208,15 @@
 
             instance.onDidChangeModel((event) => {
                 var currentModel = instance.getModel();
-                var modelPath = currentModel._associatedResource._formatted;
+                var newModel = event.newModelUrl._formatted;
+                
+                if(newModel in states){
+                    editor.restoreViewState(states[newModel]);
+                }
                 
                 window.webkit.messageHandlers.toggleMessageHandler.postMessage({
                     "Event": "Request Diff Update",
-                    "URI": modelPath
+                    "URI": newModel
                 });
 
                 var position = instance.getPosition();
