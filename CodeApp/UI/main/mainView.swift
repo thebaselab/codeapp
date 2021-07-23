@@ -53,7 +53,7 @@ struct mainView: View{
         if UserDefaults.standard.object(forKey: "mainView.panelIndex") != nil {
             _currentPanelTab = State.init(initialValue: UserDefaults.standard.integer(forKey: "mainView.panelIndex"))
         }else{
-            _currentPanelTab = State.init(initialValue: 1)
+            _currentPanelTab = State.init(initialValue: 2)
         }
         
         if let lastReadVersion = UserDefaults.standard.string(forKey: "changelog.lastread"){
