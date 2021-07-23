@@ -274,33 +274,39 @@ class GitServiceProvider {
                 result = Repository.clone(from: from, to: to, checkoutProgress: { (message, current, total) in
                     DispatchQueue.main.async{
                         print("[Git Checkout] current: \(current) total: \(total)")
+                        progress?.localizedDescription = "Updating files"
                         progress?.totalUnitCount = Int64(total)
                         progress?.completedUnitCount = Int64(current)
                     }
                 }
-//                , fetchProgress: { current, total in
-//                    DispatchQueue.main.async{
-//                        print("[Git Fetch] current: \(current) total: \(total)")
-//                        progress?.totalUnitCount = Int64(total)
-//                        progress?.completedUnitCount = Int64(current)
-//                    }
-//                }
+                , fetchProgress: { current, total in
+                    DispatchQueue.main.async{
+                        print("[Git Fetch] current: \(current) total: \(total)")
+                        progress?.localizedDescription = "Receiving objects"
+                        progress?.fileOperationKind = .downloading
+                        progress?.totalUnitCount = Int64(total)
+                        progress?.completedUnitCount = Int64(current)
+                    }
+                }
                 )
             }else{
                 result = Repository.clone(from: from, to: to, credentials: self.credential!, checkoutProgress: { (message, current, total) in
                     DispatchQueue.main.async{
                         print("[Git Checkout] current: \(current) total: \(total)")
+                        progress?.localizedDescription = "Updating files"
                         progress?.totalUnitCount = Int64(total)
                         progress?.completedUnitCount = Int64(current)
                     }
                 }
-//                , fetchProgress: { current, total in
-//                    DispatchQueue.main.async{
-//                        print("[Git Fetch] current: \(current) total: \(total)")
-//                        progress?.totalUnitCount = Int64(total)
-//                        progress?.completedUnitCount = Int64(current)
-//                    }
-//                }
+                , fetchProgress: { current, total in
+                    DispatchQueue.main.async{
+                        print("[Git Fetch] current: \(current) total: \(total)")
+                        progress?.localizedDescription = "Receiving objects"
+                        progress?.fileOperationKind = .downloading
+                        progress?.totalUnitCount = Int64(total)
+                        progress?.completedUnitCount = Int64(current)
+                    }
+                }
                 )
             }
             switch result {

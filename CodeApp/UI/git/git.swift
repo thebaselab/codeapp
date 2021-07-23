@@ -287,7 +287,7 @@ struct git: View {
                                             return
                                         }
                                         let progress = Progress(totalUnitCount: 100)
-                                        App.notificationManager.postProgressNotification(title: "Cloning \(repo)", progress: progress)
+                                        App.notificationManager.postProgressNotification(title: "Cloning into \(repo)", progress: progress)
                                         
                                         App.gitServiceProvider?.clone(from: gitURL, to: dirURL, progress: progress, error: {
                                             App.notificationManager.showErrorMessage("Clone error: \($0.localizedDescription)")
@@ -333,7 +333,7 @@ struct git: View {
                                 try FileManager.default.createDirectory(atPath: dirURL.path, withIntermediateDirectories: true, attributes: nil)
                                 
                                 let progress = Progress(totalUnitCount: 100)
-                                App.notificationManager.postProgressNotification(title: "Cloning \(gitURL.absoluteString)", progress: progress)
+                                App.notificationManager.postProgressNotification(title: "Cloning into \(gitURL.absoluteString)", progress: progress)
                                 
                                 App.gitServiceProvider?.clone(from: gitURL, to: dirURL, progress: progress, error: {
                                     App.notificationManager.showErrorMessage("Clone error: \($0.localizedDescription)")

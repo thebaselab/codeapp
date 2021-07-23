@@ -1,21 +1,22 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
-// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name SwiftGit2
+// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.24.13 clang-1300.0.25.10)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SwiftGit2
 import Clibgit2
 import Foundation
 import Swift
 @_exported import SwiftGit2
+import _Concurrency
 public struct OID {
   public init?(string: Swift.String)
   public init(_ oid: Clibgit2.git_oid)
   public var oid: Clibgit2.git_oid
 }
-extension OID : Swift.CustomStringConvertible {
+extension SwiftGit2.OID : Swift.CustomStringConvertible {
   public var description: Swift.String {
     get
   }
 }
-extension OID : Swift.Hashable {
+extension SwiftGit2.OID : Swift.Hashable {
   public func hash(into hasher: inout Swift.Hasher)
   public static func == (lhs: SwiftGit2.OID, rhs: SwiftGit2.OID) -> Swift.Bool
   public var hashValue: Swift.Int {
@@ -45,26 +46,26 @@ public struct CheckoutStrategy : Swift.OptionSet {
   public var gitCheckoutStrategy: Clibgit2.git_checkout_strategy_t {
     get
   }
-  public static var None: SwiftGit2.CheckoutStrategy
-  public static var Safe: SwiftGit2.CheckoutStrategy
-  public static var Force: SwiftGit2.CheckoutStrategy
-  public static var RecreateMissing: SwiftGit2.CheckoutStrategy
-  public static var AllowConflicts: SwiftGit2.CheckoutStrategy
-  public static var RemoveUntracked: SwiftGit2.CheckoutStrategy
-  public static var RemoveIgnored: SwiftGit2.CheckoutStrategy
-  public static var UpdateOnly: SwiftGit2.CheckoutStrategy
-  public static var DontUpdateIndex: SwiftGit2.CheckoutStrategy
-  public static var NoRefresh: SwiftGit2.CheckoutStrategy
-  public static var SkipUnmerged: SwiftGit2.CheckoutStrategy
-  public static var UseOurs: SwiftGit2.CheckoutStrategy
-  public static var UseTheirs: SwiftGit2.CheckoutStrategy
-  public static var DisablePathspecMatch: SwiftGit2.CheckoutStrategy
-  public static var SkipLockedDirectories: SwiftGit2.CheckoutStrategy
-  public static var DontOverwriteIgnored: SwiftGit2.CheckoutStrategy
-  public static var ConflictStyleMerge: SwiftGit2.CheckoutStrategy
-  public static var ConflictStyleDiff3: SwiftGit2.CheckoutStrategy
-  public static var DontRemoveExisting: SwiftGit2.CheckoutStrategy
-  public static var DontWriteIndex: SwiftGit2.CheckoutStrategy
+  public static let None: SwiftGit2.CheckoutStrategy
+  public static let Safe: SwiftGit2.CheckoutStrategy
+  public static let Force: SwiftGit2.CheckoutStrategy
+  public static let RecreateMissing: SwiftGit2.CheckoutStrategy
+  public static let AllowConflicts: SwiftGit2.CheckoutStrategy
+  public static let RemoveUntracked: SwiftGit2.CheckoutStrategy
+  public static let RemoveIgnored: SwiftGit2.CheckoutStrategy
+  public static let UpdateOnly: SwiftGit2.CheckoutStrategy
+  public static let DontUpdateIndex: SwiftGit2.CheckoutStrategy
+  public static let NoRefresh: SwiftGit2.CheckoutStrategy
+  public static let SkipUnmerged: SwiftGit2.CheckoutStrategy
+  public static let UseOurs: SwiftGit2.CheckoutStrategy
+  public static let UseTheirs: SwiftGit2.CheckoutStrategy
+  public static let DisablePathspecMatch: SwiftGit2.CheckoutStrategy
+  public static let SkipLockedDirectories: SwiftGit2.CheckoutStrategy
+  public static let DontOverwriteIgnored: SwiftGit2.CheckoutStrategy
+  public static let ConflictStyleMerge: SwiftGit2.CheckoutStrategy
+  public static let ConflictStyleDiff3: SwiftGit2.CheckoutStrategy
+  public static let DontRemoveExisting: SwiftGit2.CheckoutStrategy
+  public static let DontWriteIndex: SwiftGit2.CheckoutStrategy
   public typealias ArrayLiteralElement = SwiftGit2.CheckoutStrategy
   public typealias Element = SwiftGit2.CheckoutStrategy
   public typealias RawValue = Swift.UInt
@@ -127,7 +128,7 @@ public protocol ObjectType {
   var oid: SwiftGit2.OID { get }
   init(_ pointer: Swift.OpaquePointer)
 }
-extension ObjectType {
+extension SwiftGit2.ObjectType {
   public static func == (lhs: Self, rhs: Self) -> Swift.Bool
   public func hash(into hasher: inout Swift.Hasher)
 }
@@ -139,7 +140,7 @@ public struct Signature {
   public init(name: Swift.String, email: Swift.String, time: Foundation.Date = Date(), timeZone: Foundation.TimeZone = TimeZone.autoupdatingCurrent)
   public init(_ signature: Clibgit2.git_signature)
 }
-extension Signature : Swift.Hashable {
+extension SwiftGit2.Signature : Swift.Hashable {
   public func hash(into hasher: inout Swift.Hasher)
   public static func == (a: SwiftGit2.Signature, b: SwiftGit2.Signature) -> Swift.Bool
   public var hashValue: Swift.Int {
@@ -147,7 +148,7 @@ extension Signature : Swift.Hashable {
   }
 }
 public struct Commit : SwiftGit2.ObjectType, Swift.Hashable {
-  public static var type: Clibgit2.git_object_t
+  public static let type: Clibgit2.git_object_t
   public let oid: SwiftGit2.OID
   public let tree: SwiftGit2.PointerTo<SwiftGit2.Tree>
   public let parents: [SwiftGit2.PointerTo<SwiftGit2.Commit>]
@@ -160,7 +161,7 @@ public struct Commit : SwiftGit2.ObjectType, Swift.Hashable {
   }
 }
 public struct Tree : SwiftGit2.ObjectType, Swift.Hashable {
-  public static var type: Clibgit2.git_object_t
+  public static let type: Clibgit2.git_object_t
   public struct Entry : Swift.Hashable {
     public let attributes: Swift.Int32
     public let object: SwiftGit2.Pointer
@@ -180,13 +181,13 @@ public struct Tree : SwiftGit2.ObjectType, Swift.Hashable {
     get
   }
 }
-extension Tree.Entry : Swift.CustomStringConvertible {
+extension SwiftGit2.Tree.Entry : Swift.CustomStringConvertible {
   public var description: Swift.String {
     get
   }
 }
 public struct Blob : SwiftGit2.ObjectType, Swift.Hashable {
-  public static var type: Clibgit2.git_object_t
+  public static let type: Clibgit2.git_object_t
   public let oid: SwiftGit2.OID
   public let data: Foundation.Data
   public init(_ pointer: Swift.OpaquePointer)
@@ -195,7 +196,7 @@ public struct Blob : SwiftGit2.ObjectType, Swift.Hashable {
   }
 }
 public struct Tag : SwiftGit2.ObjectType, Swift.Hashable {
-  public static var type: Clibgit2.git_object_t
+  public static let type: Clibgit2.git_object_t
   public let oid: SwiftGit2.OID
   public let target: SwiftGit2.Pointer
   public let name: Swift.String
@@ -215,7 +216,7 @@ public struct StatusEntry {
 public struct Diff {
   public var deltas: [SwiftGit2.Diff.Delta]
   public struct Delta {
-    public static var type: Clibgit2.git_object_t
+    public static let type: Clibgit2.git_object_t
     public var status: SwiftGit2.Diff.Status
     public var flags: SwiftGit2.Diff.Flags
     public var oldFile: SwiftGit2.Diff.File?
@@ -232,20 +233,20 @@ public struct Diff {
   public struct Status : Swift.OptionSet {
     public init(rawValue: Swift.UInt32)
     public let rawValue: Swift.UInt32
-    public static var current: SwiftGit2.Diff.Status
-    public static var indexNew: SwiftGit2.Diff.Status
-    public static var indexModified: SwiftGit2.Diff.Status
-    public static var indexDeleted: SwiftGit2.Diff.Status
-    public static var indexRenamed: SwiftGit2.Diff.Status
-    public static var indexTypeChange: SwiftGit2.Diff.Status
-    public static var workTreeNew: SwiftGit2.Diff.Status
-    public static var workTreeModified: SwiftGit2.Diff.Status
-    public static var workTreeDeleted: SwiftGit2.Diff.Status
-    public static var workTreeTypeChange: SwiftGit2.Diff.Status
-    public static var workTreeRenamed: SwiftGit2.Diff.Status
-    public static var workTreeUnreadable: SwiftGit2.Diff.Status
-    public static var ignored: SwiftGit2.Diff.Status
-    public static var conflicted: SwiftGit2.Diff.Status
+    public static let current: SwiftGit2.Diff.Status
+    public static let indexNew: SwiftGit2.Diff.Status
+    public static let indexModified: SwiftGit2.Diff.Status
+    public static let indexDeleted: SwiftGit2.Diff.Status
+    public static let indexRenamed: SwiftGit2.Diff.Status
+    public static let indexTypeChange: SwiftGit2.Diff.Status
+    public static let workTreeNew: SwiftGit2.Diff.Status
+    public static let workTreeModified: SwiftGit2.Diff.Status
+    public static let workTreeDeleted: SwiftGit2.Diff.Status
+    public static let workTreeTypeChange: SwiftGit2.Diff.Status
+    public static let workTreeRenamed: SwiftGit2.Diff.Status
+    public static let workTreeUnreadable: SwiftGit2.Diff.Status
+    public static let ignored: SwiftGit2.Diff.Status
+    public static let conflicted: SwiftGit2.Diff.Status
     public typealias ArrayLiteralElement = SwiftGit2.Diff.Status
     public typealias Element = SwiftGit2.Diff.Status
     public typealias RawValue = Swift.UInt32
@@ -253,10 +254,10 @@ public struct Diff {
   public struct Flags : Swift.OptionSet {
     public init(rawValue: Swift.UInt32)
     public let rawValue: Swift.UInt32
-    public static var binary: SwiftGit2.Diff.Flags
-    public static var notBinary: SwiftGit2.Diff.Flags
-    public static var validId: SwiftGit2.Diff.Flags
-    public static var exists: SwiftGit2.Diff.Flags
+    public static let binary: SwiftGit2.Diff.Flags
+    public static let notBinary: SwiftGit2.Diff.Flags
+    public static let validId: SwiftGit2.Diff.Flags
+    public static let exists: SwiftGit2.Diff.Flags
     public typealias ArrayLiteralElement = SwiftGit2.Diff.Flags
     public typealias Element = SwiftGit2.Diff.Flags
     public typealias RawValue = Swift.UInt32
@@ -266,11 +267,11 @@ public struct Diff {
 public struct MergeAnalysisResult : Swift.OptionSet {
   public let rawValue: Swift.UInt32
   public init(rawValue: Swift.UInt32)
-  public static var none: SwiftGit2.MergeAnalysisResult
-  public static var normal: SwiftGit2.MergeAnalysisResult
-  public static var upToDate: SwiftGit2.MergeAnalysisResult
-  public static var unborn: SwiftGit2.MergeAnalysisResult
-  public static var fastForward: SwiftGit2.MergeAnalysisResult
+  public static let none: SwiftGit2.MergeAnalysisResult
+  public static let normal: SwiftGit2.MergeAnalysisResult
+  public static let upToDate: SwiftGit2.MergeAnalysisResult
+  public static let unborn: SwiftGit2.MergeAnalysisResult
+  public static let fastForward: SwiftGit2.MergeAnalysisResult
   public typealias ArrayLiteralElement = SwiftGit2.MergeAnalysisResult
   public typealias Element = SwiftGit2.MergeAnalysisResult
   public typealias RawValue = Swift.UInt32
@@ -280,7 +281,7 @@ public protocol ReferenceType {
   var shortName: Swift.String? { get }
   var oid: SwiftGit2.OID { get }
 }
-extension ReferenceType {
+extension SwiftGit2.ReferenceType {
   public static func == (lhs: Self, rhs: Self) -> Swift.Bool
   public func hash(into hasher: inout Swift.Hasher)
 }
@@ -338,7 +339,7 @@ public protocol PointerType : Swift.Hashable {
   var oid: SwiftGit2.OID { get }
   var type: Clibgit2.git_object_t { get }
 }
-extension PointerType {
+extension SwiftGit2.PointerType {
   public static func == (lhs: Self, rhs: Self) -> Swift.Bool
   public func hash(into hasher: inout Swift.Hasher)
 }
@@ -357,7 +358,7 @@ public enum Pointer : SwiftGit2.PointerType {
     get
   }
 }
-extension Pointer : Swift.CustomStringConvertible {
+extension SwiftGit2.Pointer : Swift.CustomStringConvertible {
   public var description: Swift.String {
     get
   }
@@ -372,36 +373,36 @@ public struct PointerTo<T> : SwiftGit2.PointerType where T : SwiftGit2.ObjectTyp
     get
   }
 }
-extension Array where Element == Swift.String {
+extension Swift.Array where Element == Swift.String {
   public func stringsToCStrings() -> Swift.UnsafeMutablePointer<Swift.UnsafeMutablePointer<Swift.CChar>?>
 }
-extension String {
+extension Swift.String {
   public func stringToCString() -> Swift.UnsafePointer<Swift.CChar>?
 }
 public struct StatusOptions : Swift.OptionSet {
   public let rawValue: Swift.UInt32
   public init(rawValue: Swift.UInt32)
-  public static var includeUntracked: SwiftGit2.StatusOptions
-  public static var includeIgnored: SwiftGit2.StatusOptions
-  public static var includeUnmodified: SwiftGit2.StatusOptions
-  public static var excludeSubmodules: SwiftGit2.StatusOptions
-  public static var recurseUntrackedDirs: SwiftGit2.StatusOptions
-  public static var disablePathSpecMatch: SwiftGit2.StatusOptions
-  public static var recurseIgnoredDirs: SwiftGit2.StatusOptions
-  public static var renamesHeadToIndex: SwiftGit2.StatusOptions
-  public static var renamesIndexToWorkDir: SwiftGit2.StatusOptions
-  public static var sortCasesSensitively: SwiftGit2.StatusOptions
-  public static var sortCasesInSensitively: SwiftGit2.StatusOptions
-  public static var renamesFromRewrites: SwiftGit2.StatusOptions
-  public static var noRefresh: SwiftGit2.StatusOptions
-  public static var updateIndex: SwiftGit2.StatusOptions
-  public static var includeUnreadable: SwiftGit2.StatusOptions
-  public static var includeUnreadableAsUntracked: SwiftGit2.StatusOptions
+  public static let includeUntracked: SwiftGit2.StatusOptions
+  public static let includeIgnored: SwiftGit2.StatusOptions
+  public static let includeUnmodified: SwiftGit2.StatusOptions
+  public static let excludeSubmodules: SwiftGit2.StatusOptions
+  public static let recurseUntrackedDirs: SwiftGit2.StatusOptions
+  public static let disablePathSpecMatch: SwiftGit2.StatusOptions
+  public static let recurseIgnoredDirs: SwiftGit2.StatusOptions
+  public static let renamesHeadToIndex: SwiftGit2.StatusOptions
+  public static let renamesIndexToWorkDir: SwiftGit2.StatusOptions
+  public static let sortCasesSensitively: SwiftGit2.StatusOptions
+  public static let sortCasesInSensitively: SwiftGit2.StatusOptions
+  public static let renamesFromRewrites: SwiftGit2.StatusOptions
+  public static let noRefresh: SwiftGit2.StatusOptions
+  public static let updateIndex: SwiftGit2.StatusOptions
+  public static let includeUnreadable: SwiftGit2.StatusOptions
+  public static let includeUnreadableAsUntracked: SwiftGit2.StatusOptions
   public typealias ArrayLiteralElement = SwiftGit2.StatusOptions
   public typealias Element = SwiftGit2.StatusOptions
   public typealias RawValue = Swift.UInt32
 }
-public var libGit2ErrorDomain: Swift.String
+public let libGit2ErrorDomain: Swift.String
 @_hasMissingDesignatedInitializers public class CommitIterator : Swift.IteratorProtocol, Swift.Sequence {
   public typealias Iterator = SwiftGit2.CommitIterator
   public typealias Element = Swift.Result<SwiftGit2.Commit, Foundation.NSError>
