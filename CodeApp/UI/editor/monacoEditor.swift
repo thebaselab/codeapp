@@ -167,8 +167,8 @@ struct monacoEditor: UIViewRepresentable {
     }
     
     func removeModel(url: String){
+        self.executeJavascript(command: "states['\(url)'] = editor.saveViewState()")
         self.executeJavascript(command: "monaco.editor.getModel(monaco.Uri.parse('\(url)')).dispose();")
-        self.executeJavascript(command: "delete states['\(url)'];")
     }
     
     func updateModelContent(url: String, content: String){
@@ -202,6 +202,7 @@ struct monacoEditor: UIViewRepresentable {
         let encoded = content.base64Encoded()!
         self.executeJavascript(command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
         self.executeJavascript(command: "editor.setModel(monaco.editor.createModel(decodedCommand, undefined, monaco.Uri.parse('\(url)')));")
+        self.executeJavascript(command: "if('\(url)' in states){editor.restoreViewState(states['\(url)'])}")
     }
     
     func switchToDiffView(originalContent: String, modifiedContent: String, url: String, url2: String){

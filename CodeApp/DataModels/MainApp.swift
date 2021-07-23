@@ -754,8 +754,8 @@ class MainApp: ObservableObject {
                         }
                     }
                     self.activeEditor = newEditor
-                    monacoInstance.newModel(url: url.absoluteString, content: content)
                     monacoInstance.removeModel(url: oldurl)
+                    monacoInstance.newModel(url: url.absoluteString, content: content)
                     return
                 }
             }
