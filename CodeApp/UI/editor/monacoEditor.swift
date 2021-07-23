@@ -15,6 +15,16 @@ let monacoWebView = editorWebView()
 
 class editorWebView: WKWebView {
     
+    init(){
+        let config = WKWebViewConfiguration()
+        config.preferences.setValue(true as Bool, forKey: "allowFileAccessFromFileURLs")
+        super.init(frame: .zero, configuration: config)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func addInputAccessoryView(toolbar: UIView?) {
         guard let toolbar = toolbar else { return }
         objc_setAssociatedObject(self, &ToolbarHandle, toolbar, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -493,17 +503,9 @@ struct monacoEditor: UIViewRepresentable {
     
     
     func makeUIView(context: Context) -> WKWebView {
-//        let scrollViewDelegate = monacoScrollViewDelegate()
-        
-//        webView.scrollView.delegate = scrollViewDelegate
-//        monacoWebView.scrollView.isScrollEnabled = false
         monacoWebView.isOpaque = false
         monacoWebView.scrollView.bounces = false
-        //        webView.setKeyboardRequiresUserInteraction(false)
-        monacoWebView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko)"
-        //        if editorShowKeyboardButtonEnabled{
-        //            webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) iPad"
-        //        }
+        monacoWebView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         
         if #available(iOS 14.5, *) {} else{
             monacoWebView.scrollView.isScrollEnabled = false
@@ -532,32 +534,6 @@ struct monacoEditor: UIViewRepresentable {
         }
         
         NotificationCenter.default.addObserver(context.coordinator, selector: #selector(context.coordinator.handleToolbarChanges(notification:)), name: Notification.Name("toolbarSettingChanged"), object: nil)
-        
-        //        if let bundlePath = Bundle.main.path(forResource: "monaco-final", ofType: "bundle"),
-        //           let bundle = Bundle(path: bundlePath),
-        //           let url = bundle.url(forResource: "index", withExtension: "html", subdirectory: "browser-amd-editor") {
-        //            webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent().deletingLastPathComponent())
-        //            let request = URLRequest(url: url)
-        //            webView.load(request)
-        //        }
-        
-        // XmlHttpRequests with local files is not allowed in WKWebView
-        // Editor will not load with this method
-        
-        //        if let bundlePath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle"),
-        //            let bundle = Bundle(path: bundlePath),
-        //            let url = bundle.url(forResource: "index", withExtension: "html") {
-        //            webView.loadFileURL(url, allowingReadAccessTo: url.appendingPathComponent("node_modules"))
-        //            let request = URLRequest(url: url)
-        //            webView.load(request)
-        //        }
-        
-        //        if let url = URL(string: "http://localhost:8000/index.html") {
-        //            let request = URLRequest(url: url)
-        //            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-        //                webView.load(request)
-        //            }
-        //        }
         
         return monacoWebView
     }

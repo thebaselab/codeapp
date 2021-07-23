@@ -52,7 +52,6 @@ class MainApp: ObservableObject {
     let terminalInstance: TerminalInstance
     let monacoInstance = monacoEditor()
     let webServer = GCDWebServer()
-    let monacoServer = GCDWebServer()
     var editorTypesMonitor: FolderMonitor? = nil
     let readmeMessage = NSLocalizedString("Welcome Message", comment: "")
     
@@ -151,18 +150,10 @@ class MainApp: ObservableObject {
             activeEditor = newEditor
         }
         
-        // WKWebView does not load monaco-textmate with local files
-        monacoServer.addGETHandler(forBasePath: "/", directoryPath: Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")!, indexFilename: "index.html", cacheAge: 10, allowRangeRequests: true)
-        
-        do{
-            try monacoServer.start(options: [GCDWebServerOption_AutomaticallySuspendInBackground: true, GCDWebServerOption_Port: 2001])
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                let request = URLRequest(url: URL(string: "http://127.0.0.1:2001")!)
-                monacoWebView.load(request)
-            }
-            
-        } catch let error {
-            print(error)
+        let monacoPath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")
+
+        DispatchQueue.main.async {
+            monacoWebView.loadFileURL(URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"), allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
         }
         
         webServer.addGETHandler(forBasePath: "/", directoryPath: rootDir.path, indexFilename: "index.html", cacheAge: 10, allowRangeRequests: true)
