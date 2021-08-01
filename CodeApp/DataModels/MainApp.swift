@@ -317,8 +317,8 @@ class MainApp: ObservableObject {
                 return
             }
         }else{
-            if let link = URL(string: url){
-                compileManager.runCode(directoryURL: link, source: readURL(url: url)!, language: lang)
+            if let link = URL(string: url), let source = readURL(url: url)?.0{
+                compileManager.runCode(directoryURL: link, source: source, language: lang)
             }
         }
     }
@@ -350,7 +350,7 @@ class MainApp: ObservableObject {
         gitServiceProvider?.previous(path: url.absoluteString, error: {
             self.notificationManager.showErrorMessage($0.localizedDescription)
         }){previousText in
-            guard let content = self.readURL(url: url.absoluteString) else{
+            guard let content = self.readURL(url: url.absoluteString)?.0 else{
                 return
             }
             let newEditor = EditorInstance(url: url.absoluteString, content: content, type: .diff, compareTo: "file://previous/\(url.path)")
@@ -361,7 +361,7 @@ class MainApp: ObservableObject {
     }
     
     func compareWithSelected(url: String){
-        guard let originalContent = readURL(url: url), let diffContent = readURL(url: selectedForCompare) else {
+        guard let originalContent = readURL(url: url)?.0, let diffContent = readURL(url: selectedForCompare)?.0 else {
             return
         }
         let newEditor = EditorInstance(url: url, content: originalContent, type: .diff, compareTo: selectedForCompare)
@@ -373,7 +373,7 @@ class MainApp: ObservableObject {
     func reloadCurrentFileWithEncoding(encoding: String.Encoding){
         if let url = URL(string: currentURL()){
             do {
-                let data = try Data(contentsOf: url)
+                let data = try workSpaceStorage.fs.contents(at: url)
                 if let string = String(data: data, encoding: encoding){
                     activeEditor?.encoding = encoding
                     activeEditor?.content = string
@@ -387,16 +387,16 @@ class MainApp: ObservableObject {
         }
     }
     
-    private func readURL(url: String) -> String?{
+    private func readURL(url: String) -> (String, String.Encoding)?{
+        guard let url = URL(string: url) else {
+            return nil
+        }
         do{
-            let data = try Data(contentsOf: URL(string: url)!)
-            if let string = String(data: data, encoding: .utf8){
-                return string
-            }
-            let encodings: [String.Encoding] = [.windowsCP1252, .gb_18030_2000, .EUC_KR, .ascii]
+            let data = try workSpaceStorage.fs.contents(at: url)
+            let encodings: [String.Encoding] = [.utf8, .windowsCP1252, .gb_18030_2000, .EUC_KR, .ascii]
             for encoding in encodings {
                 if let string = String(data: data, encoding: encoding){
-                    return string
+                    return (string, encoding)
                 }
             }
         }catch{
@@ -688,22 +688,6 @@ class MainApp: ObservableObject {
             return
         }
         
-//        guard supertypes.contains(.data) || supertypes.contains(.text) || supertypes.contains(.plainText) || supertypes.contains(.sourceCode) else {
-//            notificationManager.showErrorMessage("Unsupported file: \(supertypes)")
-//            return
-//        }
-        
-        let data: Data
-        
-        do{
-            data = try Data(contentsOf: url)
-        }catch{
-            notificationManager.showErrorMessage(error.localizedDescription)
-            print(url)
-            print(error)
-            return
-        }
-        
         func newTab(editor: EditorInstance){
             if let activeEditor = activeEditor, !alwaysOpenInNewTab && !inNewTab{
                 if activeEditor.currentVersionId == 1{
@@ -755,13 +739,9 @@ class MainApp: ObservableObject {
             monacoInstance.newModel(url: url.absoluteString, content: content)
         }
         
-        if let string = String(data: data, encoding: .utf8) {
-            newEditor(content: string, encoding: .utf8)
-        }else if let string = String(data: data, encoding: .gb_18030_2000){
-            newEditor(content: string, encoding: .gb_18030_2000)
-        }else if let string = String(data: data, encoding: .EUC_KR){
-            newEditor(content: string, encoding: .EUC_KR)
-        }else if let image = UIImage(data: data){
+        if let result = readURL(url: url.absoluteString){
+            newEditor(content: result.0, encoding: result.1)
+        }else if let data = try? workSpaceStorage.fs.contents(at: url), let image = UIImage(data: data){
             let newEditor = EditorInstance(url: url.absoluteString, content: "Image", type: .image, image: Image(uiImage: image))
             newTab(editor: newEditor)
         }else{

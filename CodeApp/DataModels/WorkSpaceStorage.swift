@@ -20,6 +20,7 @@ protocol FileSystemProvider {
     func createDirectory(at: URL, withIntermediateDirectories: Bool) throws
     func copyItem(at: URL, to: URL) throws
     func removeItem(at: URL) throws
+    func contents(at: URL) throws -> Data
 }
 
 class SSHFileSystemProvider: FileSystemProvider {
@@ -62,6 +63,9 @@ class SSHFileSystemProvider: FileSystemProvider {
         throw FSError.notImplemented
     }
     
+    func contents(at: URL) throws -> Data {
+        throw FSError.notImplemented
+    }
     
 }
 
@@ -73,7 +77,7 @@ class LocalFileSystemProvider: FileSystemProvider {
     }
     
     func fileExists(atPath path: String) -> Bool {
-        return fileExists(atPath: path)
+        return FileManager.default.fileExists(atPath: path)
     }
     
     func createDirectory(at: URL, withIntermediateDirectories: Bool) throws {
@@ -88,6 +92,10 @@ class LocalFileSystemProvider: FileSystemProvider {
         try FileManager.default.removeItem(at: at)
     }
     
+    func contents(at: URL) throws -> Data {
+        return try Data(contentsOf: at)
+    }
+    
 }
 
 class WorkSpaceStorage: ObservableObject{
@@ -98,8 +106,7 @@ class WorkSpaceStorage: ObservableObject{
     private var cachedDirectory = Set<String>()
     private var onDirectoryChangeAction: ((String) -> Void)? = nil
     
-    let localFS = LocalFileSystemProvider()
-    var sshFS: SSHFileSystemProvider? = nil
+    var fs: FileSystemProvider = LocalFileSystemProvider()
     
     func onDirectoryChange(_ action: @escaping ((String) -> Void)){
         onDirectoryChangeAction = action
@@ -207,7 +214,7 @@ class WorkSpaceStorage: ObservableObject{
         var files: [fileItemRepresentable] = []
 
         do {
-            let fileURLs = try localFS.contentsOfDirectory(at: url)
+            let fileURLs = try fs.contentsOfDirectory(at: url)
 
             for i in fileURLs{
 
