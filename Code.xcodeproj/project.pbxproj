@@ -372,6 +372,7 @@
 		948D12222583F2A5008F877A /* executor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D12212583F2A5008F877A /* executor.swift */; };
 		948D127C2583F734008F877A /* terminal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 948D12202583F24E008F877A /* terminal.bundle */; };
 		948E478226502B6900A6110D /* editorTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E478126502B6900A6110D /* editorTab.swift */; };
+		948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 948F174726B6A5AB00B277FC /* MarkdownView */; };
 		9494A3A52587479F004A103E /* name_email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9494A3A42587479F004A103E /* name_email.swift */; };
 		9494A3A725879657004A103E /* focusableTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9494A3A625879657004A103E /* focusableTextfield.swift */; };
 		949B3CB925DADCB900BC83B5 /* URL+relativePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CB825DADCB900BC83B5 /* URL+relativePath.swift */; };
@@ -453,7 +454,6 @@
 		94CF58DD265E4E0F00CB6A4B /* URL+isDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CF58DC265E4E0F00CB6A4B /* URL+isDirectory.swift */; };
 		94CF58DF265E51B100CB6A4B /* ClangLib in Resources */ = {isa = PBXBuildFile; fileRef = 94CF58DE265E51B100CB6A4B /* ClangLib */; };
 		94CF58E1265E8A4B00CB6A4B /* wasm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CF58E0265E8A4B00CB6A4B /* wasm.swift */; };
-		94D0A49D2594DDDE00C4572D /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 94D0A49C2594DDDE00C4572D /* MarkdownView */; };
 		94D721DF268DA2B8007A63BD /* tabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D721DE268DA2B8007A63BD /* tabBar.swift */; };
 		94D721E5268DBB9D007A63BD /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94E3B96B25866C79006AC043 /* String.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E3B96A25866C79006AC043 /* String.Encoding.swift */; };
@@ -1820,7 +1820,6 @@
 		94CF58DC265E4E0F00CB6A4B /* URL+isDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+isDirectory.swift"; sourceTree = "<group>"; };
 		94CF58DE265E51B100CB6A4B /* ClangLib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ClangLib; sourceTree = "<group>"; };
 		94CF58E0265E8A4B00CB6A4B /* wasm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wasm.swift; sourceTree = "<group>"; };
-		94D0A49B2594DDCD00C4572D /* MarkdownView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MarkdownView; path = CodeApp/Framework/MarkdownView; sourceTree = "<group>"; };
 		94D721DE268DA2B8007A63BD /* tabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBar.swift; sourceTree = "<group>"; };
 		94D721E3268DBB94007A63BD /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = openssl.xcframework; sourceTree = "<group>"; };
 		94D7DEC02631D0CA00FA0760 /* libpng.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libpng.xcframework; sourceTree = "<group>"; };
@@ -1856,7 +1855,7 @@
 			files = (
 				94A7781C257BC452008FE7B2 /* ZIPFoundation in Frameworks */,
 				94B7C4C825F551F800F1EF4E /* ios_system.xcframework in Frameworks */,
-				94D0A49D2594DDDE00C4572D /* MarkdownView in Frameworks */,
+				948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */,
 				94A7418C25F74A85007A9728 /* Dynamic in Frameworks */,
 				9469AC9826A33BD2003F569F /* NodeMobile.framework in Frameworks */,
 				EE1687E70064F15DC8BB6399 /* Pods_Code.framework in Frameworks */,
@@ -1884,7 +1883,6 @@
 			children = (
 				94638D8B268243B800DDD7FC /* git.xcframework */,
 				9407A758266F31DF00581E9D /* SwiftGit2.framework */,
-				94D0A49B2594DDCD00C4572D /* MarkdownView */,
 				3E1E8079C05894592C2F09D9 /* Pods_Code.framework */,
 			);
 			name = Frameworks;
@@ -6618,8 +6616,8 @@
 			name = Code;
 			packageProductDependencies = (
 				94A7781B257BC452008FE7B2 /* ZIPFoundation */,
-				94D0A49C2594DDDE00C4572D /* MarkdownView */,
 				94A7418B25F74A85007A9728 /* Dynamic */,
+				948F174726B6A5AB00B277FC /* MarkdownView */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -6656,9 +6654,9 @@
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
-				94A777E5257B8F8A008FE7B2 /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */,
+				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -7179,20 +7177,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/thebaselab/MarkdownView";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mhdhejazi/Dynamic.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.0;
-			};
-		};
-		94A777E5257B8F8A008FE7B2 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/keitaoouchi/MarkdownView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.7.1;
 			};
 		};
 		94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
@@ -7206,6 +7204,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		948F174726B6A5AB00B277FC /* MarkdownView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */;
+			productName = MarkdownView;
+		};
 		94A7418B25F74A85007A9728 /* Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */;
@@ -7215,10 +7218,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
-		};
-		94D0A49C2594DDDE00C4572D /* MarkdownView */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MarkdownView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
