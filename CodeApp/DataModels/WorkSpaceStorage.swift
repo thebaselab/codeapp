@@ -103,8 +103,9 @@ class WorkSpaceStorage: ObservableObject{
     @Published var expansionStates: [AnyHashable:Bool] = [:]
     
     private var directoryMonitor = DirectoryMonitor()
-    private var cachedDirectory = Set<String>()
+    private var trackedDirectory = Set<String>()
     private var onDirectoryChangeAction: ((String) -> Void)? = nil
+    private var directoryStorage: [String: [(fileItemRepresentable)]] = [:]
     
     var fs: FileSystemProvider = LocalFileSystemProvider()
     
@@ -112,94 +113,45 @@ class WorkSpaceStorage: ObservableObject{
         onDirectoryChangeAction = action
     }
     
-    struct fileItemRepresentable: Identifiable {
-        var id: String {
-            self.url
-        }
-        var name: String
-        var url: String
-        var subFolderItems: [fileItemRepresentable]?
-
-        var isDownloading = false
-
-        init(name: String, url: String, isDirectory: Bool){
-            self.name = name
-            self.url = url
-            if isDirectory {
-                subFolderItems = []
-            }else{
-                subFolderItems = nil
-            }
-        }
-    }
-    
+    /// Reload the whole directory and invalidate all existing cache
     func updateDirectory(name: String, url: String){
-        cachedDirectory.removeAll()
+        trackedDirectory.removeAll()
         DispatchQueue.main.async {
             self.currentDirectory = fileItemRepresentable(name: name, url: url, isDirectory: true)
             self.requestDirectoryUpdateAt(id: url)
         }
     }
-
+    
+    /// Reload a specific subdirectory
     func requestDirectoryUpdateAt(id: String, forceUpdate: Bool = false){
-        if !cachedDirectory.contains(id) || forceUpdate{
-            let newItems = self.updateSubFolderItemsForId(id: id, item: self.currentDirectory)
-            
+        guard forceUpdate || !directoryStorage.keys.contains(id) else {
+            return
+        }
+        if !directoryStorage.keys.contains(id) {
+            directoryMonitor.monitorURL(url: id){
+                self.onDirectoryChangeAction?(id)
+                self.requestDirectoryUpdateAt(id: id, forceUpdate: true)
+            }
+        }
+        
+        if let items = loadURL(url: id) {
+            directoryStorage[id] = items
             DispatchQueue.main.async {
                 withAnimation(.easeInOut){
-                    self.currentDirectory = newItems
-                }
-            }
-            
-            if !cachedDirectory.contains(id){
-                directoryMonitor.monitorURL(url: id){
-                    self.onDirectoryChangeAction?(id)
-                    self.requestDirectoryUpdateAt(id: id, forceUpdate: true)
+                    self.currentDirectory = self.buildTree(at: self.currentDirectory.url)
                 }
             }
         }
-        
-        cachedDirectory.insert(id)
     }
 
-    private func updateSubFolderItemsForId(id: String, item: fileItemRepresentable) -> fileItemRepresentable{
-        
-        var item = item
-        
-        if item.id == id {
-            // It has been cached
-            if !(item.subFolderItems?.isEmpty ?? true) {
-                let retainedFolders = item.subFolderItems?.filter({$0.subFolderItems != nil}) ?? []
-                var new = loadURL(url: item.url) ?? []
-                for i in new.indices {
-                    if new[i].subFolderItems != nil {
-                        for retainedItem in retainedFolders {
-//                            print("\(retainedItem.id) vs \(new[i].id)")
-                            if retainedItem.id == new[i].id {
-                                new[i].subFolderItems = retainedItem.subFolderItems
-                            }
-                        }
-                    }
-                }
-                item.subFolderItems = new
-            }else{
-                var new = loadURL(url: item.url) ?? []
-                // Sometimes a folder is expanded but the cache has been removed, we need to update the expanded folders recursively
-                for i in new.indices {
-                    if (expansionStates[new[i].id] ?? false && new[i].subFolderItems?.isEmpty ?? false) {
-                        new[i] = updateSubFolderItemsForId(id: new[i].id, item: new[i])
-                    }
-                }
-                item.subFolderItems = new
-            }
-            
-            return item
+    private func buildTree(at base: String) -> fileItemRepresentable{
+        let items = directoryStorage[base]
+        guard items != nil else {
+            return fileItemRepresentable(url: base, isDirectory: true)
         }
-        
-        if let subItems = item.subFolderItems {
-            item.subFolderItems = subItems.map{updateSubFolderItemsForId(id: id, item: $0)}
-        }
-        
+        let subItems = items!.filter{$0.subFolderItems != nil}.map{buildTree(at: $0.url)} + items!.filter{$0.subFolderItems == nil}
+        var item = fileItemRepresentable(url: base, isDirectory: true)
+        item.subFolderItems = subItems
         return item
     }
 
@@ -243,4 +195,33 @@ class WorkSpaceStorage: ObservableObject{
         self.requestDirectoryUpdateAt(id: url)
     }
 
+}
+
+extension WorkSpaceStorage {
+    struct fileItemRepresentable: Identifiable {
+        var id: String {
+            self.url
+        }
+        var name: String
+        var url: String
+        var subFolderItems: [fileItemRepresentable]?
+
+        var isDownloading = false
+
+        init(name: String? = nil, url: String, isDirectory: Bool){
+            if name != nil {
+                self.name = name!
+            }else if let url = URL(string: url){
+                self.name = url.lastPathComponent.removingPercentEncoding ?? ""
+            }else{
+                self.name = ""
+            }
+            self.url = url
+            if isDirectory {
+                subFolderItems = []
+            }else{
+                subFolderItems = nil
+            }
+        }
+    }
 }
