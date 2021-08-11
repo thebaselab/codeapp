@@ -37,6 +37,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Authentication with Face ID</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Access to Photo Library is required to save images.</string>
 	<key>UIApplicationSceneManifest</key>

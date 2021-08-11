@@ -15,8 +15,6 @@ struct mainView: View{
     @EnvironmentObject var App: MainApp
     
     @State var showChangeLog: Bool
-    
-    // SceneStorage should be used here. Unfortunately, as of 19/5/2020, SceneStorage is not working at all. (Probably due to disabled multi-scene support)
     @State var isShowingDirectory: Bool
     @State var currentDirectory: Int
     @State var showsPanel: Bool
@@ -44,7 +42,7 @@ struct mainView: View{
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("compilerShowPath") var compilerShowPath = false
     
-    let sections: [Int:[String]] = [0: ["Files", "doc.on.doc"], 1: ["Search", "magnifyingglass"], 3: ["Source Control", "point.topleft.down.curvedto.point.bottomright.up"]]
+    let sections: [Int:[String]] = [0: ["Files", "doc.on.doc"], 1: ["Search", "magnifyingglass"], 3: ["Source Control", "point.topleft.down.curvedto.point.bottomright.up"], 4: ["Remotes", "rectangle.connected.to.line.below"]]
     
     init(){
         _isShowingDirectory = State.init(initialValue: UserDefaults.standard.bool(forKey: "mainView.sideBarEnabled"))
@@ -172,8 +170,6 @@ struct mainView: View{
                                         }
 
                                     }
-                                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                    .hoverEffect(.highlight)
 
                                     Button(action: {
                                         self.openSidePanel(index: 1)
@@ -185,9 +181,7 @@ struct mainView: View{
                                         }.frame(maxWidth: .infinity, minHeight: 60.0)
                                     }
                                     .keyboardShortcut("f", modifiers: [.command, .shift])
-                                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                    .hoverEffect(.highlight)
-
+                                    
                                     ZStack{
                                         Button(action: {self.openSidePanel(index: 3)}) {
                                             ZStack{
@@ -202,9 +196,16 @@ struct mainView: View{
                                             }.padding(.horizontal, 3).background(Color.init(id: "statusBar.background")).cornerRadius(5).offset(x: 10, y: -10)
                                         }
                                     }
-                                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                    .hoverEffect(.highlight)
-
+                                    
+                                    Button(action: {
+                                        self.openSidePanel(index: 4)
+                                    }) {
+                                        ZStack{
+                                            Text("Remotes").foregroundColor(.clear).font(.system(size: 1))
+                                            Image(systemName: "rectangle.connected.to.line.below").font(.system(size: 20, weight: .light)).foregroundColor(Color.init(id: (self.currentDirectory == 4 && isShowingDirectory) ? "activityBar.foreground" : "activityBar.inactiveForeground")).padding(5)
+                                        }.frame(maxWidth: .infinity, minHeight: 60.0)
+                                    }
+                                    
                                     Button(action: {self.openConsolePanel()}) {
                                         ZStack{
                                             Text("Show Panel").foregroundColor(.clear).font(.system(size: 1))
@@ -213,9 +214,9 @@ struct mainView: View{
 
                                     }
                                     .keyboardShortcut("j", modifiers: .command)
-                                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                    .hoverEffect(.highlight)
                                 }
+                                .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                                .hoverEffect(.highlight)
                                 .frame(minWidth: 0, maxWidth: self.returnBarSize(), minHeight: 0, maxHeight: 60.0)
 
                                 ZStack {
@@ -249,6 +250,8 @@ struct mainView: View{
                                         search()
                                     }else if self.currentDirectory == 3 {
                                         git()
+                                    }else if self.currentDirectory == 4 {
+                                        remote()
                                     }
                                 }.background(Color.init(id: "sideBar.background"))
                                 
@@ -298,7 +301,7 @@ struct mainView: View{
                                                 Spacer()
                                                 Menu {
                                                     Picker(selection: $currentDirectory, label: Text("Section")){
-                                                        ForEach([0,1,3], id: \.self){value in
+                                                        ForEach([0,1,3,4], id: \.self){value in
                                                             Label(sections[value]![0], systemImage: sections[value]![1])
                                                         }
                                                     }
@@ -357,7 +360,7 @@ struct mainView: View{
                                                     Spacer()
                                                     Menu {
                                                         Picker(selection: $currentDirectory, label: Text("Section")){
-                                                            ForEach([0,1,3], id: \.self){value in
+                                                            ForEach([0,1,3,4], id: \.self){value in
                                                                 Label(sections[value]![0], systemImage: sections[value]![1])
                                                             }
                                                         }

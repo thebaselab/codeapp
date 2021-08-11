@@ -9,7 +9,12 @@ import Foundation
 
 class DirectoryMonitor {
     private var monitors: [String:FolderMonitor] = [:]
-    private var numberOfFilesMonitored = 0
+    private var numberOfFilesMonitored: Int {
+        monitors.count
+    }
+    var keys : Dictionary<String, FolderMonitor>.Keys {
+        monitors.keys
+    }
     
     func monitorURL(url: String, directoryDidUpdate: @escaping () -> Void){
         guard let url = URL(string: url), !monitors.keys.contains(url.absoluteString), self.numberOfFilesMonitored < 100 else {
@@ -24,6 +29,10 @@ class DirectoryMonitor {
     
     func removeMonitorAt(url: String){
         monitors.removeValue(forKey: url)
+    }
+    
+    func removeAll() {
+        monitors.removeAll()
     }
 }
 

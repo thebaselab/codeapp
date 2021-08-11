@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "FilesProvider",
+        "repositoryURL": "https://github.com/amosavian/FileProvider",
+        "state": {
+          "branch": "master",
+          "revision": "abf68a62541a4193c8d106367ddb3648e8ab693f",
+          "version": null
+        }
+      },
+      {
         "package": "MarkdownView",
         "repositoryURL": "https://github.com/thebaselab/MarkdownView",
         "state": {

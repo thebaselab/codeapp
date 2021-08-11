@@ -59,11 +59,21 @@ struct bottomBar: View {
         ZStack(alignment: .center){
             Color.init(id: "statusBar.background").frame(maxHeight: 20)
             HStack(){
-                
-                
                 HStack{
+                    if App.workSpaceStorage.remoteConnected {
+                        HStack {
+                            Image(systemName: "rectangle.connected.to.line.below")
+                                .font(.system(size: 10))
+                            Text(App.workSpaceStorage.remoteAddress ?? "")
+                                .font(.system(size: 12))
+                        }
+                        .frame(maxHeight: .infinity)
+                        .padding(.horizontal, 3)
+                        .foregroundColor(Color.init(id: "statusBarItem.remoteForeground"))
+                        .background(Color.init(id: "statusBarItem.remoteBackground"))
+                    }
+                    
                     if (App.branch) != "" {
-                        
                         HStack{
                             Image(systemName: "arrow.triangle.branch").font(.system(size: 10)).foregroundColor(Color.init(id: "statusBar.foreground"))
                             Text("\(App.branch)").font(.system(size: 12)).foregroundColor(Color.init(id: "statusBar.foreground"))

@@ -120,6 +120,7 @@ struct keyboardToolBar: View {
         .frame(maxWidth: .infinity, maxHeight: horizontalSizeClass == .compact ? 35 : 40)
         .padding(.horizontal, horizontalSizeClass == .compact ? 5 : 10)
         .background(Color.init(id: "activityBar.background"))
+        .ignoresSafeArea()
     }
 }
 

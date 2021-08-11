@@ -169,21 +169,23 @@ struct newFileView: View {
             content = ""
         }
         
-//        guard let escapedName = name.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-//            return
-//        }
         let url = URL(string: targetUrl)!.appendingPathComponent(name)
         do {
-            try content.write(to: url, atomically: true, encoding: .utf8)
-            let newEditor = EditorInstance(url: url.absoluteString, content: content, type: .file)
-            App.editors.append(newEditor)
-            App.activeEditor = newEditor
-            App.monacoInstance.newModel(url: url.absoluteString, content: content)
-            App.git_status()
-            App.updateCompilerCode(pathExtension: name.components(separatedBy: ".").last ?? "")
-            self.presentationMode.wrappedValue.dismiss()
-        } catch {
-            App.notificationManager.showErrorMessage(error.localizedDescription)
+            App.workSpaceStorage.write(at: url, content: content.data(using: .utf8)!, atomically: true, overwrite: false){ error in
+                if let error = error {
+                    App.notificationManager.showErrorMessage(error.localizedDescription)
+                    return
+                }
+                DispatchQueue.main.async {
+                    let newEditor = EditorInstance(url: url.absoluteString, content: content, type: .file)
+                    App.editors.append(newEditor)
+                    App.activeEditor = newEditor
+                    App.monacoInstance.newModel(url: url.absoluteString, content: content)
+                    App.git_status()
+                    App.updateCompilerCode(pathExtension: name.components(separatedBy: ".").last ?? "")
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }
         }
     }
     

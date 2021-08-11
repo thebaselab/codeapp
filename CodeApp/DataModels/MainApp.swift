@@ -17,7 +17,13 @@ class MainApp: ObservableObject {
     @Published var editors: [EditorInstance] = []
     
     @Published var isShowingCompilerLanguage = false
-    @Published var activeEditor: EditorInstance? = nil
+    @Published var activeEditor: EditorInstance? = nil {
+        willSet {
+            if let pathextension = newValue?.url.split(separator: ".").last{
+                updateCompilerCode(pathExtension: String(pathextension))
+            }
+        }
+    }
     @Published var selectedForCompare = ""
     
     @Published var languageEnabled: [Bool] = langListInit()
@@ -317,8 +323,14 @@ class MainApp: ObservableObject {
                 return
             }
         }else{
-            if let link = URL(string: url), let source = readURL(url: url)?.0{
-                compileManager.runCode(directoryURL: link, source: source, language: lang)
+            if let link = URL(string: url){
+                readURL(url: url) { result, error in
+                    guard let result = result else {
+                        return
+                    }
+                    self.compileManager.runCode(directoryURL: link, source: result.0, language: lang)
+                }
+                
             }
         }
     }
@@ -350,75 +362,100 @@ class MainApp: ObservableObject {
         gitServiceProvider?.previous(path: url.absoluteString, error: {
             self.notificationManager.showErrorMessage($0.localizedDescription)
         }){previousText in
-            guard let content = self.readURL(url: url.absoluteString)?.0 else{
-                return
+            self.readURL(url: url.absoluteString){ result, error in
+                guard let content = result?.0 else {
+                    if let error = error {
+                        self.notificationManager.showErrorMessage(error.localizedDescription)
+                    }
+                    return
+                }
+                let newEditor = EditorInstance(url: url.absoluteString, content: content, type: .diff, compareTo: "file://previous/\(url.path)")
+                self.editors.append(newEditor)
+                self.monacoInstance.switchToDiffView(originalContent: previousText , modifiedContent: content, url: newEditor.compareTo! , url2: url.absoluteString)
+                self.activeEditor = newEditor
             }
-            let newEditor = EditorInstance(url: url.absoluteString, content: content, type: .diff, compareTo: "file://previous/\(url.path)")
-            self.editors.append(newEditor)
-            self.monacoInstance.switchToDiffView(originalContent: previousText , modifiedContent: content, url: newEditor.compareTo! , url2: url.absoluteString)
-            self.activeEditor = newEditor
         }
     }
     
     func compareWithSelected(url: String){
-        guard let originalContent = readURL(url: url)?.0, let diffContent = readURL(url: selectedForCompare)?.0 else {
-            return
+        readURL(url: url){ result, error in
+            if let error = error {
+                self.notificationManager.showErrorMessage(error.localizedDescription)
+                return
+            }
+            guard let originalContent = result?.0 else { return }
+            self.readURL(url: self.selectedForCompare){ result, error in
+                if let error = error {
+                    self.notificationManager.showErrorMessage(error.localizedDescription)
+                    return
+                }
+                guard let diffContent = result?.0 else { return }
+                let newEditor = EditorInstance(url: url, content: originalContent, type: .diff, compareTo: self.selectedForCompare)
+                self.editors.append(newEditor)
+                self.activeEditor = newEditor
+                self.monacoInstance.switchToDiffView(originalContent: diffContent, modifiedContent: originalContent, url: self.selectedForCompare, url2: url)
+            }
         }
-        let newEditor = EditorInstance(url: url, content: originalContent, type: .diff, compareTo: selectedForCompare)
-        editors.append(newEditor)
-        activeEditor = newEditor
-        monacoInstance.switchToDiffView(originalContent: diffContent, modifiedContent: originalContent, url: selectedForCompare, url2: url)
     }
     
     func reloadCurrentFileWithEncoding(encoding: String.Encoding){
-        if let url = URL(string: currentURL()){
-            do {
-                let data = try workSpaceStorage.fs.contents(at: url)
-                if let string = String(data: data, encoding: encoding){
-                    activeEditor?.encoding = encoding
-                    activeEditor?.content = string
-                    self.monacoInstance.setCurrentModelValue(value: string)
-                }else{
-                    notificationManager.showErrorMessage("Failed to read file as \(encodingTable[encoding]!)")
-                }
-            } catch {
-                notificationManager.showErrorMessage(error.localizedDescription)
-            }
+        guard let url = URL(string: currentURL()) else {
+            return
         }
+        workSpaceStorage.contents(at: url, completionHandler: { data, error in
+            guard let data = data else {
+                if let error = error {
+                    self.notificationManager.showErrorMessage(error.localizedDescription)
+                }
+                return
+            }
+            if let string = String(data: data, encoding: encoding){
+                self.activeEditor?.encoding = encoding
+                self.activeEditor?.content = string
+                self.monacoInstance.setCurrentModelValue(value: string)
+            }else{
+                self.notificationManager.showErrorMessage("Failed to read file with \(encodingTable[encoding]!)")
+            }
+        })
     }
     
-    private func readURL(url: String) -> (String, String.Encoding)?{
+    private func readURL(url: String, completionHandler: @escaping ((String, String.Encoding)?, Error?) -> Void){
         guard let url = URL(string: url) else {
-            return nil
+            return
         }
-        do{
-            let data = try workSpaceStorage.fs.contents(at: url)
-            let encodings: [String.Encoding] = [.utf8, .windowsCP1252, .gb_18030_2000, .EUC_KR, .ascii]
+        workSpaceStorage.contents(at: url){ data, error in
+            guard let data = data else {
+                if let error = error {
+                    completionHandler(nil, error)
+                }
+                return
+            }
+            let encodings: [String.Encoding] = [.utf8, .windowsCP1252, .gb_18030_2000, .EUC_KR]
             for encoding in encodings {
                 if let string = String(data: data, encoding: encoding){
-                    return (string, encoding)
+                    completionHandler((string, encoding), nil)
+                    return
                 }
             }
-        }catch{
-            print(url)
-            print(error.localizedDescription)
+            completionHandler(nil, FSError.unsupportedEncoding)
         }
-        return nil
     }
     
     func saveEditor(editor: EditorInstance){
-        if let url = URL(string: editor.url){
-            do {
-                try editor.content.write(to: url, atomically: true, encoding: editor.encoding)
-                DispatchQueue.main.async {
-                    editor.lastSavedVersionId = editor.currentVersionId
-                    editor.isDeleted = false
-                }
-                DispatchQueue.global(qos: .utility).async{
-                    self.git_status()
-                }
-            } catch {
-                notificationManager.showErrorMessage(error.localizedDescription)
+        guard let url = URL(string: editor.url), let data = editor.content.data(using: editor.encoding) else {
+            return
+        }
+        self.workSpaceStorage.write(at: url, content: data, atomically: true, overwrite: true){ error in
+            if let error = error {
+                self.notificationManager.showErrorMessage(error.localizedDescription)
+                return
+            }
+            DispatchQueue.main.async {
+                editor.lastSavedVersionId = editor.currentVersionId
+                editor.isDeleted = false
+            }
+            DispatchQueue.global(qos: .utility).async{
+                self.git_status()
             }
         }
     }
@@ -428,15 +465,8 @@ class MainApp: ObservableObject {
         if activeEditor?.type != .file && activeEditor?.type != .diff {return}
         if activeEditor?.lastSavedVersionId == activeEditor?.currentVersionId && !(activeEditor?.isDeleted ?? false) {return}
         
-        if let activeEditor = activeEditor, let url = URL(string: activeEditor.url){
-            do {
-                try activeEditor.content.write(to: url, atomically: true, encoding: activeEditor.encoding)
-                activeEditor.lastSavedVersionId = activeEditor.currentVersionId
-                activeEditor.isDeleted = false
-                git_status()
-            } catch {
-                notificationManager.showErrorMessage(error.localizedDescription)
-            }
+        if let activeEditor = activeEditor{
+            saveEditor(editor: activeEditor)
         }
         
     }
@@ -550,7 +580,7 @@ class MainApp: ObservableObject {
         ios_setDirectoryURL(url)
         scanForTypes()
         
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .userInitiated).async {
             self.workSpaceStorage.updateDirectory(name: url.lastPathComponent, url: url.absoluteString)
         }
         
@@ -630,10 +660,6 @@ class MainApp: ObservableObject {
     
     func openEditor(urlString: String, type: EditorInstance.tabType, inNewTab: Bool = false) {
         
-        if let pathextension = urlString.split(separator: ".").last{
-            updateCompilerCode(pathExtension: String(pathextension))
-        }
-        
         for editor in editors {
             if type == .any && editor.type == .diff{
                 continue
@@ -677,15 +703,17 @@ class MainApp: ObservableObject {
             return
         }
         
-        guard let typeID = try? url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier, let supertypes = UTType(typeID)?.supertypes else {
-            return
-        }
-        
-        if supertypes.contains(.mpeg4Movie) || supertypes.contains(.movie){
-            let newEditor = EditorInstance(url: url.absoluteString, content: "Video", type: .video)
-            editors.append(newEditor)
-            activeEditor = newEditor
-            return
+        if url.scheme == "file" {
+            guard let typeID = try? url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier, let supertypes = UTType(typeID)?.supertypes else {
+                return
+            }
+            
+            if supertypes.contains(.mpeg4Movie) || supertypes.contains(.movie){
+                let newEditor = EditorInstance(url: url.absoluteString, content: "Video", type: .video)
+                editors.append(newEditor)
+                activeEditor = newEditor
+                return
+            }
         }
         
         func newTab(editor: EditorInstance){
@@ -739,13 +767,23 @@ class MainApp: ObservableObject {
             monacoInstance.newModel(url: url.absoluteString, content: content)
         }
         
-        if let result = readURL(url: url.absoluteString){
-            newEditor(content: result.0, encoding: result.1)
-        }else if let data = try? workSpaceStorage.fs.contents(at: url), let image = UIImage(data: data){
-            let newEditor = EditorInstance(url: url.absoluteString, content: "Image", type: .image, image: Image(uiImage: image))
-            newTab(editor: newEditor)
-        }else{
-            notificationManager.showErrorMessage("Unsupported file")
+        readURL(url: url.absoluteString){ result, error in
+            if let error = error {
+                self.notificationManager.showErrorMessage(error.localizedDescription)
+                return
+            }
+            if let content = result?.0, let encoding = result?.1 {
+                newEditor(content: content, encoding: encoding)
+            }else{
+                self.workSpaceStorage.contents(at: url){ data, error in
+                    if let data = data, let image = UIImage(data: data){
+                        let newEditor = EditorInstance(url: url.absoluteString, content: "Image", type: .image, image: Image(uiImage: image))
+                        newTab(editor: newEditor)
+                    }else{
+                        self.notificationManager.showErrorMessage("Unsupported file")
+                    }
+                }
+            }
         }
     }
     

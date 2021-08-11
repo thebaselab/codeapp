@@ -351,6 +351,8 @@
 		94369B1325E3DE02008419A0 /* NodeRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94369B1225E3DE02008419A0 /* NodeRunner.mm */; };
 		94369B4725E7FF18008419A0 /* terminalToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94369B4525E7FD36008419A0 /* terminalToolBar.swift */; };
 		94369B4A25EAB262008419A0 /* npm.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94369B4925EAB175008419A0 /* npm.bundle */; };
+		9437153F26BF9FC3000376FB /* remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437153E26BF9FC3000376FB /* remote.swift */; };
+		9437155B26C3C745000376FB /* ftpauth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437155A26C3C745000376FB /* ftpauth.swift */; };
 		9438C9A225CBD25F00335E82 /* keyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438C9A125CBD25F00335E82 /* keyboardToolBar.swift */; };
 		944EEBF42563C381009D77FE /* CodeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EEBF32563C381009D77FE /* CodeApp.swift */; };
 		944EEBF82563C386009D77FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBF72563C386009D77FE /* Assets.xcassets */; };
@@ -373,6 +375,7 @@
 		948D127C2583F734008F877A /* terminal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 948D12202583F24E008F877A /* terminal.bundle */; };
 		948E478226502B6900A6110D /* editorTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948E478126502B6900A6110D /* editorTab.swift */; };
 		948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 948F174726B6A5AB00B277FC /* MarkdownView */; };
+		948F174E26B91C2600B277FC /* FilesProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 948F174D26B91C2600B277FC /* FilesProvider */; };
 		9494A3A52587479F004A103E /* name_email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9494A3A42587479F004A103E /* name_email.swift */; };
 		9494A3A725879657004A103E /* focusableTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9494A3A625879657004A103E /* focusableTextfield.swift */; };
 		949B3CB925DADCB900BC83B5 /* URL+relativePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CB825DADCB900BC83B5 /* URL+relativePath.swift */; };
@@ -1228,6 +1231,8 @@
 		94369B1B25E3EDFC008419A0 /* extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = extension.entitlements; sourceTree = "<group>"; };
 		94369B4525E7FD36008419A0 /* terminalToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = terminalToolBar.swift; sourceTree = "<group>"; };
 		94369B4925EAB175008419A0 /* npm.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = npm.bundle; sourceTree = "<group>"; };
+		9437153E26BF9FC3000376FB /* remote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = remote.swift; sourceTree = "<group>"; };
+		9437155A26C3C745000376FB /* ftpauth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ftpauth.swift; sourceTree = "<group>"; };
 		9438C9A125CBD25F00335E82 /* keyboardToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = keyboardToolBar.swift; sourceTree = "<group>"; };
 		944EEBF02563C381009D77FE /* Code.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Code.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		944EEBF32563C381009D77FE /* CodeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeApp.swift; sourceTree = "<group>"; };
@@ -1853,6 +1858,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948F174E26B91C2600B277FC /* FilesProvider in Frameworks */,
 				94A7781C257BC452008FE7B2 /* ZIPFoundation in Frameworks */,
 				94B7C4C825F551F800F1EF4E /* ios_system.xcframework in Frameworks */,
 				948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */,
@@ -1919,6 +1925,15 @@
 				94369B1625E3DE29008419A0 /* NodeRunner.h */,
 			);
 			path = NodeRunner;
+			sourceTree = "<group>";
+		};
+		9437153D26BF9F98000376FB /* remote */ = {
+			isa = PBXGroup;
+			children = (
+				9437153E26BF9FC3000376FB /* remote.swift */,
+				9437155A26C3C745000376FB /* ftpauth.swift */,
+			);
+			path = remote;
 			sourceTree = "<group>";
 		};
 		944EEBE72563C381009D77FE = {
@@ -6049,6 +6064,7 @@
 		94A7778C257AB79A008FE7B2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9437153D26BF9F98000376FB /* remote */,
 				941CF5FC264633D8001199C0 /* main */,
 				94A4438C25A392C7006643FF /* tabs */,
 				94A4438B25A3929A006643FF /* web */,
@@ -6618,6 +6634,7 @@
 				94A7781B257BC452008FE7B2 /* ZIPFoundation */,
 				94A7418B25F74A85007A9728 /* Dynamic */,
 				948F174726B6A5AB00B277FC /* MarkdownView */,
+				948F174D26B91C2600B277FC /* FilesProvider */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -6657,6 +6674,7 @@
 				94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */,
 				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
+				948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -6794,9 +6812,11 @@
 				94CF58DD265E4E0F00CB6A4B /* URL+isDirectory.swift in Sources */,
 				94E3B96B25866C79006AC043 /* String.Encoding.swift in Sources */,
 				94B3DDF82604F90800C4F2B1 /* theme.swift in Sources */,
+				9437153F26BF9FC3000376FB /* remote.swift in Sources */,
 				94A77819257BC332008FE7B2 /* CloudCodeExecutionManager.swift in Sources */,
 				949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */,
 				948D12222583F2A5008F877A /* executor.swift in Sources */,
+				9437155B26C3C745000376FB /* ftpauth.swift in Sources */,
 				944EEBF42563C381009D77FE /* CodeApp.swift in Sources */,
 				94A777DC257B8C99008FE7B2 /* openFilesApp.swift in Sources */,
 				94B3DDFA260526D200C4F2B1 /* View+If.swift in Sources */,
@@ -7185,6 +7205,14 @@
 				kind = branch;
 			};
 		};
+		948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amosavian/FileProvider";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mhdhejazi/Dynamic.git";
@@ -7208,6 +7236,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */;
 			productName = MarkdownView;
+		};
+		948F174D26B91C2600B277FC /* FilesProvider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */;
+			productName = FilesProvider;
 		};
 		94A7418B25F74A85007A9728 /* Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
