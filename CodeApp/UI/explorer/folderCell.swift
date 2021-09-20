@@ -249,7 +249,10 @@ struct folderCell: View{
         .if(item.subFolderItems != nil && URL(string: item.url) != nil){view in
             view.onDrop(of: [UTType.url], delegate: FilesDropDelegate(destination: URL(string: item.url)!, hoverAction: {App.workSpaceStorage.expansionStates[item.url] = true}))
         }
-        
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)){ _ in
+            isRenaming = false
+            newname = item.name.removingPercentEncoding!
+        }
     }
 }
 
