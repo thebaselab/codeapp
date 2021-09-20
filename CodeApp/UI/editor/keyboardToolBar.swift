@@ -12,6 +12,7 @@ struct keyboardToolBar: View {
     
     @EnvironmentObject var App: MainApp
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @State var pasteBoardHasContent = false
     
     var needTabKey: Bool {
         let deviceModel = UIDevice.current.model
@@ -49,10 +50,10 @@ struct keyboardToolBar: View {
                 }, label: {
                     Image(systemName: "arrow.uturn.right")
                 })
-                if UIPasteboard.general.hasStrings {
+                if UIPasteboard.general.hasStrings || pasteBoardHasContent {
                     Button(action: {
                         if let string = UIPasteboard.general.string?.base64Encoded() {
-                            App.monacoInstance.executeJavascript(command: "editor.trigger('keyboard', 'type', {text: decodeURIComponent(escape(window.atob('\(string)')))})")
+                            App.monacoInstance.executeJavascript(command: "editor.executeEdits('source',[{identifier: {major: 1, minor: 1}, range: editor.getSelection(), text: decodeURIComponent(escape(window.atob('\(string)'))), forceMoveMarkers: true}])")
                         }
                     }, label: {
                         Image(systemName: "doc.on.clipboard")
@@ -121,6 +122,13 @@ struct keyboardToolBar: View {
         .padding(.horizontal, horizontalSizeClass == .compact ? 5 : 10)
         .background(Color.init(id: "activityBar.background"))
         .ignoresSafeArea()
+        .onReceive(NotificationCenter.default.publisher(for: UIPasteboard.changedNotification), perform: { val in
+            if UIPasteboard.general.hasStrings {
+                pasteBoardHasContent = true
+            }else {
+                pasteBoardHasContent = false
+            }
+        })
     }
 }
 

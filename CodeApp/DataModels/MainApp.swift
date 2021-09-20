@@ -147,7 +147,9 @@ class MainApp: ObservableObject {
             self?.objectWillChange.send()
         }
         workSpaceCancellable = workSpaceStorage.objectWillChange.sink { [weak self] (_) in
-            self?.objectWillChange.send()
+            DispatchQueue.main.async {
+                self?.objectWillChange.send()
+            }
         }
         
         if urlQueue.isEmpty {

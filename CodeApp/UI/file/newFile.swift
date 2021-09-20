@@ -171,7 +171,7 @@ struct newFileView: View {
         
         let url = URL(string: targetUrl)!.appendingPathComponent(name)
         do {
-            App.workSpaceStorage.write(at: url, content: content.data(using: .utf8)!, atomically: true, overwrite: false){ error in
+            App.workSpaceStorage.write(at: url, content: content.data(using: .utf8)!, atomically: true, overwrite: true){ error in
                 if let error = error {
                     App.notificationManager.showErrorMessage(error.localizedDescription)
                     return

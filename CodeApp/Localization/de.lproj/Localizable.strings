@@ -24,6 +24,9 @@
 
 "Changelog.message" =
 "
+### v1.2.6 (September 2021)
+- Compatibility with the latest iOS version
+- Other improvements
 ### v1.2.5 (July 2021)
 - Terminal
   - Fixed some problems regarding clang / clang++

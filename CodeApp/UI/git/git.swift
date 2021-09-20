@@ -339,7 +339,9 @@ struct git: View {
                                     App.notificationManager.showErrorMessage("Clone error: \($0.localizedDescription)")
                                 }){
                                     self.gitURL = ""
-                                    App.notificationManager.postActionNotification(title: "Clone succeeded", level: .success, primary: {App.loadFolder(url: dirURL)}, primaryTitle: "Open Folder", source: repo)
+                                    App.notificationManager.postActionNotification(title: "Clone succeeded", level: .success, primary: {
+                                        App.loadFolder(url: dirURL)
+                                    }, primaryTitle: "Open Folder", source: repo)
                                 }
                             } catch{
                                 App.notificationManager.showErrorMessage("Clone error: \(error.localizedDescription)")

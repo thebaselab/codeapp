@@ -197,14 +197,14 @@ struct mainView: View{
                                         }
                                     }
                                     
-                                    Button(action: {
-                                        self.openSidePanel(index: 4)
-                                    }) {
-                                        ZStack{
-                                            Text("Remotes").foregroundColor(.clear).font(.system(size: 1))
-                                            Image(systemName: "rectangle.connected.to.line.below").font(.system(size: 20, weight: .light)).foregroundColor(Color.init(id: (self.currentDirectory == 4 && isShowingDirectory) ? "activityBar.foreground" : "activityBar.inactiveForeground")).padding(5)
-                                        }.frame(maxWidth: .infinity, minHeight: 60.0)
-                                    }
+//                                    Button(action: {
+//                                        self.openSidePanel(index: 4)
+//                                    }) {
+//                                        ZStack{
+//                                            Text("Remotes").foregroundColor(.clear).font(.system(size: 1))
+//                                            Image(systemName: "rectangle.connected.to.line.below").font(.system(size: 20, weight: .light)).foregroundColor(Color.init(id: (self.currentDirectory == 4 && isShowingDirectory) ? "activityBar.foreground" : "activityBar.inactiveForeground")).padding(5)
+//                                        }.frame(maxWidth: .infinity, minHeight: 60.0)
+//                                    }
                                     
                                     Button(action: {self.openConsolePanel()}) {
                                         ZStack{

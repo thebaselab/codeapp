@@ -92,10 +92,16 @@ class FTPFileSystemProvider: FileSystemProvider {
 
 class LocalFileSystemProvider: FileSystemProvider {
     
-    let fs = LocalFileProvider()
-    
     func write(at: URL, content: Data, atomically: Bool, overwrite: Bool, completionHandler: @escaping (Error?) -> Void) {
-        fs.writeContents(path: at.path, contents: content, atomically: atomically, overwrite: overwrite, completionHandler: completionHandler)
+        do {
+            var options: Data.WritingOptions = []
+            if atomically {options.update(with: .atomic)}
+            if !overwrite {options.update(with: .withoutOverwriting)}
+            try content.write(to: at, options: options)
+            completionHandler(nil)
+        }catch {
+            completionHandler(error)
+        }
     }
     
     static var registeredScheme: String = "file"
