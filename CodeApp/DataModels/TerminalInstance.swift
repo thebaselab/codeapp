@@ -58,7 +58,6 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             return
         }
         self.executeScript( #"term.write('\033c"# + "\(prompt)' + localEcho._input)")
-//        self.executeScript( "term.reset();readLine('\(prompt)' + localEcho._input)")
     }
     
     func applyTheme(rawTheme: Dictionary<String, Any>){
@@ -192,6 +191,9 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                     return
                 }
                 openEditor?(fileUrl.absoluteString)
+                self.readLine()
+            case "clear":
+                self.executeScript("localEcho._input='';" + #"term.write('\033c')"#)
                 self.readLine()
             case "files":
                 guard let dir = self.executor?.currentWorkingDirectory.absoluteString else{
