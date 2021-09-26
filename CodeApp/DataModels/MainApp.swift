@@ -771,20 +771,18 @@ class MainApp: ObservableObject {
         
         readURL(url: url.absoluteString){ result, error in
             if let error = error {
-                self.notificationManager.showErrorMessage(error.localizedDescription)
-                return
-            }
-            if let content = result?.0, let encoding = result?.1 {
-                newEditor(content: content, encoding: encoding)
-            }else{
-                self.workSpaceStorage.contents(at: url){ data, error in
+                self.workSpaceStorage.contents(at: url){ data, _ in
                     if let data = data, let image = UIImage(data: data){
                         let newEditor = EditorInstance(url: url.absoluteString, content: "Image", type: .image, image: Image(uiImage: image))
                         newTab(editor: newEditor)
                     }else{
-                        self.notificationManager.showErrorMessage("Unsupported file")
+                        self.notificationManager.showErrorMessage(error.localizedDescription)
                     }
                 }
+                return
+            }
+            if let content = result?.0, let encoding = result?.1 {
+                newEditor(content: content, encoding: encoding)
             }
         }
     }
