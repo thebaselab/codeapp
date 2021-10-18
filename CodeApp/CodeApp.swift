@@ -256,7 +256,7 @@ struct CodeApp: App {
         
         // clang options:
         setenv("SYSROOT", libraryURL.path + "/usr", 1) // sysroot for clang compiler
-        setenv("CCC_OVERRIDE_OPTIONS", "#^--target=wasm32-wasi", 1) // silently add "--target=wasm32-wasi" at the beginning of arguments
+        setenv("CCC_OVERRIDE_OPTIONS", "#^--target=wasm32-wasi +-fno-exceptions", 1) // silently add "--target=wasm32-wasi" at the beginning of arguments
         setenv("MAKESYSPATH", Bundle.main.resourcePath! +  "ClangLib/usr/share/mk" , 1)
         
         // PHP config
