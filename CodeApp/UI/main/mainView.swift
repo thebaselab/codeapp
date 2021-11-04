@@ -216,7 +216,8 @@ struct mainView: View{
                                     .keyboardShortcut("j", modifiers: .command)
                                 }
                                 .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                .hoverEffect(.highlight)
+                                // This flickers for some reason in iPadOS 15
+//                                .hoverEffect(.highlight)
                                 .frame(minWidth: 0, maxWidth: self.returnBarSize(), minHeight: 0, maxHeight: 60.0)
 
                                 ZStack {
@@ -235,7 +236,7 @@ struct mainView: View{
                                 }
                                 .keyboardShortcut(",", modifiers: [.command])
                                 .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                .hoverEffect(.highlight)
+//                                .hoverEffect(.highlight)
                                 .frame(minWidth: 0, maxWidth: self.returnBarSize(), minHeight: 0, maxHeight: 60.0)
                             }.frame(minWidth: 0, maxWidth: self.returnBarSize(), minHeight: 0, maxHeight: .infinity).background(Color.init(id: "activityBar.background"))
                         }
