@@ -1,5 +1,5 @@
 # Code App
-Bringing desktop-like editing expereince to iPad, available on [App Store](https://apps.apple.com/us/app/code-app/id1512938504) and [TestFlight](https://testflight.apple.com/join/EgZ8sE2P).
+Bringing desktop-like editing experience to iPad, available on [App Store](https://apps.apple.com/us/app/code-app/id1512938504) and [TestFlight](https://testflight.apple.com/join/EgZ8sE2P).
 
 ![Code App Screenshot](https://thebaselab.com/code/clang.png)
 
