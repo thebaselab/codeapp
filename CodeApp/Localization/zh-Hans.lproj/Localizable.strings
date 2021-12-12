@@ -8,14 +8,14 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.6 (September 2021)**
+##### **v1.2.7 (2021 十二月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
 [打开文件夹](https://thebaselab.com/code/openfolder)
 [Git Clone](https://thebaselab.com/code/clone)
 
-#### 支援
+#### 支持
 [说明文件](https://github.com/thebaselab/codeapp/wiki)
 [GitHub](https://github.com/thebaselab/codeapp)
 [电邮](mailto:support@thebaselab.com)
@@ -24,6 +24,8 @@
 
 "Changelog.message" =
 "
+### v1.2.7（December 2021)
+- 一些改进
 ### v1.2.6（September 2021)
 - 与最新的 iOS 版本兼容
 - 其他改进
