@@ -206,7 +206,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 //                guard command.count > 0 else {
 //                    return
 //                }
-                let isInteractive = command.hasPrefix("ssh") || command.hasPrefix("sftp")
+                let isInteractive = command.hasPrefix("ssh ") || command.hasPrefix("sftp")
                 if isInteractive {
                     startInteractive()
                 }
