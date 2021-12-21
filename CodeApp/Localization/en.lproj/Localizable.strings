@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.7 (December 2021)**
+##### **v1.2.8 (December 2021)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -24,6 +24,11 @@
 
 "Changelog.message" =
 "
+### v1.2.8 (December 2021)
+- Fixes problems where:
+  - ssh-keygen causes terminal to stall (#314)
+  - editor sometimes show a blank screen
+- Adds syntax highlighting for Terraform (#319)
 ### v1.2.7 (December 2021)
 - General improvements
 ### v1.2.6 (September 2021)
@@ -158,6 +163,8 @@
 "
 ### Licenses
 ---
+#### vscode-terraform
+ - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) is licensed under [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE)
 #### GCDWebServer
  - [GCDWebServer](https://github.com/swisspol/GCDWebServer) is licensed under [Custom License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
 #### libgit2

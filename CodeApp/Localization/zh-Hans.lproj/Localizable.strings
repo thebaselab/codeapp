@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.7 (2021 十二月)**
+##### **v1.2.8 (2021 十二月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -24,6 +24,11 @@
 
 "Changelog.message" =
 "
+### v1.2.8 (December 2021)
+- 修复了以下问题：
+  - ssh-keygen 导致终端停止 (#314)
+  - 编辑器有时会显示一个空白屏幕
+- 为 Terraform 添加语法高亮 (#319)
 ### v1.2.7（December 2021)
 - 一些改进
 ### v1.2.6（September 2021)
@@ -153,6 +158,8 @@
 "
 ### Licenses
 ---
+#### vscode-terraform
+ - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) is licensed under [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE)
 #### GCDWebServer
  - [GCDWebServer](https://github.com/swisspol/GCDWebServer) is licensed under [Custom License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
 #### libgit2

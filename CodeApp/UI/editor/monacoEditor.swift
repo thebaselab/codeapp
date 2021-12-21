@@ -404,6 +404,7 @@ struct monacoEditor: UIViewRepresentable {
                     control.executeJavascript(command: "editor.restoreViewState(\(state))")
                 }
                 UserDefaults.standard.setValue(true, forKey: "uistate.restoredSuccessfully")
+                control.executeJavascript(command: "document.getElementsByClassName('iPadShowKeyboard')[0].style.display = 'none'")
             case "Markers updated":
                 let markers = result["Markers"] as! [Any]
                 control.status.problems = [:]
