@@ -91,7 +91,7 @@ struct newFileView: View {
             #include <stdio.h>
             
             int main() {
-               // printf() displays the string inside quotation
+               setbuf(stdout, NULL);
                printf("Hello, World!");
                return 0;
             }
