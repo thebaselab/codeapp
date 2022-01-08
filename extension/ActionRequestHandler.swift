@@ -143,7 +143,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         }
         
         DispatchQueue.global(qos: .default).async {
-            NodeRunner.startEngine(withArguments: args + ["--color=always"])
+            NodeRunner.startEngine(withArguments: args)
             
             self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
             
