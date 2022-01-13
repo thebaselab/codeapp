@@ -17,9 +17,6 @@ class editorWebView: WKWebView {
     
     init(){
         let config = WKWebViewConfiguration()
-        // Potential fix for random blank screen: https://developer.apple.com/forums/thread/689717
-        let script = WKUserScript( source: #"window._platformProperties = {"os":"ios","capabilities":["brightness","contactInformation","location","push","share","storage","userRating"]}"#, injectionTime: .atDocumentStart, forMainFrameOnly: true )
-        config.userContentController.addUserScript(script)
         config.preferences.setValue(true as Bool, forKey: "allowFileAccessFromFileURLs")
         super.init(frame: .zero, configuration: config)
     }
@@ -404,7 +401,6 @@ struct monacoEditor: UIViewRepresentable {
                     control.executeJavascript(command: "editor.restoreViewState(\(state))")
                 }
                 UserDefaults.standard.setValue(true, forKey: "uistate.restoredSuccessfully")
-                control.executeJavascript(command: "document.getElementsByClassName('iPadShowKeyboard')[0].style.display = 'none'")
             case "Markers updated":
                 let markers = result["Markers"] as! [Any]
                 control.status.problems = [:]
