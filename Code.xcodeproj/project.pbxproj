@@ -439,11 +439,17 @@
 		94B7C4C925F551F800F1EF4E /* ios_system.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4CA25F5522500F1EF4E /* ssh_cmd.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A525F5518700F1EF4E /* ssh_cmd.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4CB25F5522500F1EF4E /* files.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A625F5518700F1EF4E /* files.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		94B7C4CC25F5522500F1EF4E /* curl_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4CE25F5522500F1EF4E /* awk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A925F5518700F1EF4E /* awk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4D125F5522500F1EF4E /* text.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AC25F5518700F1EF4E /* text.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4D225F5522500F1EF4E /* shell.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AD25F5518700F1EF4E /* shell.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94C1A3D62607A006007E459A /* themePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C1A3D52607A006007E459A /* themePreview.swift */; };
+		94C893B92793D01500DFBF29 /* curl_ios.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; };
+		94C893BA2793D01500DFBF29 /* curl_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; };
+		94C893BD2793D18200DFBF29 /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; };
+		94C893BE2793D18300DFBF29 /* libssh2.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		94C893BF2793D2FB00DFBF29 /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; };
+		94C893C02793D2FB00DFBF29 /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94CF58D1265E4B3000CB6A4B /* ar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94CF58BD265E4A9E00CB6A4B /* ar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94CF58D2265E4B3000CB6A4B /* link.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94CF58BE265E4A9E00CB6A4B /* link.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94CF58D3265E4B3000CB6A4B /* libLLVM.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94CF58BF265E4A9E00CB6A4B /* libLLVM.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -458,7 +464,6 @@
 		94CF58DF265E51B100CB6A4B /* ClangLib in Resources */ = {isa = PBXBuildFile; fileRef = 94CF58DE265E51B100CB6A4B /* ClangLib */; };
 		94CF58E1265E8A4B00CB6A4B /* wasm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CF58E0265E8A4B00CB6A4B /* wasm.swift */; };
 		94D721DF268DA2B8007A63BD /* tabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D721DE268DA2B8007A63BD /* tabBar.swift */; };
-		94D721E5268DBB9D007A63BD /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94E3B96B25866C79006AC043 /* String.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E3B96A25866C79006AC043 /* String.Encoding.swift */; };
 		94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94F2FEA326A2D44D007EBC6D /* freetype.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AB25F5518700F1EF4E /* network_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -515,7 +520,6 @@
 				9469AC9626A33B88003F569F /* NodeMobile.framework in Embed Frameworks */,
 				94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */,
 				94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */,
-				94D721E5268DBB9D007A63BD /* openssl.xcframework in Embed Frameworks */,
 				9407A759266F31DF00581E9D /* SwiftGit2.framework in Embed Frameworks */,
 				94CF58D1265E4B3000CB6A4B /* ar.xcframework in Embed Frameworks */,
 				94CF58D2265E4B3000CB6A4B /* link.xcframework in Embed Frameworks */,
@@ -541,6 +545,7 @@
 				94251F14263E01CA0029427A /* python3_ios-_contextvars.framework in Embed Frameworks */,
 				94251F15263E01CA0029427A /* python3_ios-_crypt.framework in Embed Frameworks */,
 				94251F16263E01CA0029427A /* python3_ios-_csv.framework in Embed Frameworks */,
+				94C893BE2793D18300DFBF29 /* libssh2.xcframework in Embed Frameworks */,
 				94251F17263E01CA0029427A /* python3_ios-_ctypes_test.framework in Embed Frameworks */,
 				94251F18263E01CA0029427A /* python3_ios-_ctypes.framework in Embed Frameworks */,
 				94251F19263E01CA0029427A /* python3_ios-_datetime.framework in Embed Frameworks */,
@@ -636,6 +641,7 @@
 				94251F73263E01CC0029427A /* python3_ios-numpy.random._philox.framework in Embed Frameworks */,
 				94251F74263E01CC0029427A /* python3_ios-numpy.random._sfc64.framework in Embed Frameworks */,
 				94251F75263E01CC0029427A /* python3_ios-numpy.random.bit_generator.framework in Embed Frameworks */,
+				94C893C02793D2FB00DFBF29 /* openssl.xcframework in Embed Frameworks */,
 				94251F76263E01CC0029427A /* python3_ios-numpy.random.mtrand.framework in Embed Frameworks */,
 				94251F77263E01CC0029427A /* python3_ios-pandas._libs.algos.framework in Embed Frameworks */,
 				94251F78263E01CC0029427A /* python3_ios-pandas._libs.groupby.framework in Embed Frameworks */,
@@ -652,6 +658,7 @@
 				94251F83263E01CC0029427A /* python3_ios-pandas._libs.ops_dispatch.framework in Embed Frameworks */,
 				94251F84263E01CC0029427A /* python3_ios-pandas._libs.ops.framework in Embed Frameworks */,
 				94251F85263E01CC0029427A /* python3_ios-pandas._libs.parsers.framework in Embed Frameworks */,
+				94C893BA2793D01500DFBF29 /* curl_ios.xcframework in Embed Frameworks */,
 				94251F86263E01CC0029427A /* python3_ios-pandas._libs.properties.framework in Embed Frameworks */,
 				94251F87263E01CC0029427A /* python3_ios-pandas._libs.reduction.framework in Embed Frameworks */,
 				94251F88263E01CC0029427A /* python3_ios-pandas._libs.reshape.framework in Embed Frameworks */,
@@ -866,7 +873,6 @@
 				94B7C4C925F551F800F1EF4E /* ios_system.xcframework in Embed Frameworks */,
 				94B7C4CA25F5522500F1EF4E /* ssh_cmd.xcframework in Embed Frameworks */,
 				94B7C4CB25F5522500F1EF4E /* files.xcframework in Embed Frameworks */,
-				94B7C4CC25F5522500F1EF4E /* curl_ios.xcframework in Embed Frameworks */,
 				94B7C4CE25F5522500F1EF4E /* awk.xcframework in Embed Frameworks */,
 				94B7C4D125F5522500F1EF4E /* text.xcframework in Embed Frameworks */,
 				94B7C4D225F5522500F1EF4E /* shell.xcframework in Embed Frameworks */,
@@ -1812,6 +1818,7 @@
 		94B7C4AD25F5518700F1EF4E /* shell.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = shell.xcframework; sourceTree = "<group>"; };
 		94B7C4B025F5518700F1EF4E /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ios_system.xcframework; sourceTree = "<group>"; };
 		94C1A3D52607A006007E459A /* themePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themePreview.swift; sourceTree = "<group>"; };
+		94C893BB2793D17C00DFBF29 /* libssh2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libssh2.xcframework; sourceTree = "<group>"; };
 		94CF58BD265E4A9E00CB6A4B /* ar.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ar.xcframework; sourceTree = "<group>"; };
 		94CF58BE265E4A9E00CB6A4B /* link.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = link.xcframework; sourceTree = "<group>"; };
 		94CF58BF265E4A9E00CB6A4B /* libLLVM.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libLLVM.xcframework; sourceTree = "<group>"; };
@@ -1861,8 +1868,12 @@
 				948F174E26B91C2600B277FC /* FilesProvider in Frameworks */,
 				94A7781C257BC452008FE7B2 /* ZIPFoundation in Frameworks */,
 				94B7C4C825F551F800F1EF4E /* ios_system.xcframework in Frameworks */,
+				94C893B92793D01500DFBF29 /* curl_ios.xcframework in Frameworks */,
 				948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */,
+				94C893BF2793D2FB00DFBF29 /* openssl.xcframework in Frameworks */,
 				94A7418C25F74A85007A9728 /* Dynamic in Frameworks */,
+				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
+				94C893BD2793D18200DFBF29 /* libssh2.xcframework in Frameworks */,
 				9469AC9826A33BD2003F569F /* NodeMobile.framework in Frameworks */,
 				EE1687E70064F15DC8BB6399 /* Pods_Code.framework in Frameworks */,
 			);
@@ -6560,6 +6571,7 @@
 				94B7C4AD25F5518700F1EF4E /* shell.xcframework */,
 				94B7C4B025F5518700F1EF4E /* ios_system.xcframework */,
 				94B3DDF42604D3C400C4F2B1 /* tar.xcframework */,
+				94C893BB2793D17C00DFBF29 /* libssh2.xcframework */,
 			);
 			path = Term;
 			sourceTree = "<group>";

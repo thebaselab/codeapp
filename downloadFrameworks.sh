@@ -18,7 +18,7 @@ done
 
 # ios_system
 for lib in files curl_ios awk text shell tar ios_system; do
-    curl -OL https://github.com/holzschu/ios_system/releases/download/v2.9.0/$lib.xcframework.zip
+    curl -OL https://github.com/holzschu/ios_system/releases/download/v3.0.0/$lib.xcframework.zip
     unzip -q $lib.xcframework.zip -d Term
     rm -f $lib.xcframework.zip 
 done
@@ -33,9 +33,13 @@ curl -OL https://github.com/holzschu/ios_system/releases/download/v2.7.0/ssh_cmd
 unzip -q ssh_cmd.xcframework.zip -d Term
 rm -f ssh_cmd.xcframework.zip
 
-curl -OL https://github.com/blinksh/openssl-apple/releases/download/v1.1.1i/openssl-dynamic.xcframework.zip
-unzip -q openssl-dynamic.xcframework.zip -d Term
-rm -f openssl-dynamic.xcframework.zip
+curl -OL https://github.com/holzschu/libssh2-for-iOS/releases/download/v1.2/openssl.xcframework.zip
+unzip -q openssl.xcframework.zip -d Term
+rm -f openssl.xcframework.zip
+
+curl -OL https://github.com/holzschu/libssh2-for-iOS/releases/download/v1.2/libssh2.xcframework.zip
+unzip -q libssh2.xcframework.zip -d Term
+rm -f libssh2.xcframework.zip
 
 # Python auxiliaries
 for lib in harfbuzz freetype libpng; do
