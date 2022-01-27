@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Clibgit2",
-        "repositoryURL": "https://github.com/thebaselab/Clibgit2",
-        "state": {
-          "branch": null,
-          "revision": "57a9a73e3a3ebd39d5ca2b4732af7ff0b7073a75",
-          "version": "0.1.0"
-        }
-      },
-      {
         "package": "Dynamic",
         "repositoryURL": "https://github.com/mhdhejazi/Dynamic.git",
         "state": {
