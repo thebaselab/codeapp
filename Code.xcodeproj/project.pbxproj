@@ -6704,6 +6704,7 @@
 				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */,
 				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */,
+				94C893EC27A2A5EF00DFBF29 /* XCRemoteSwiftPackageReference "Clibgit2" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -7259,6 +7260,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.9.11;
+			};
+		};
+		94C893EC27A2A5EF00DFBF29 /* XCRemoteSwiftPackageReference "Clibgit2" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/thebaselab/Clibgit2";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
