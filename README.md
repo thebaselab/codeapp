@@ -10,7 +10,7 @@ This repository contains the source code of the app.  We also work on issues, li
 See [Wiki](https://github.com/thebaselab/codeapp/wiki)
 
 ## The Plan
-Use [VS Code](https://github.com/microsoft/vscode) as a design template while providing key functionalities with native code:
+Use [VS Code](https://github.com/microsoft/vscode) as a design template while providing key functionalities with [monaco-editor](https://github.com/microsoft/monaco-editor) and native code:
 - Version Control (Git clone, commits, diff editor, push, pull and gutter indicator) ✅
 - Embeded terminal (70+ commands avaliable) ✅
 - Local web development environment (Node + PHP) ✅
