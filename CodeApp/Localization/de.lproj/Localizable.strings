@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.8 (Dezember 2021)**
+##### **v1.2.9 (Januar 2022)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -24,6 +24,11 @@
 
 "Changelog.message" =
 "
+### v1.2.9 (January 2022)
+- Fixes problems where:
+  - certain keys do not work on European keyboard layouts (#237)
+  - `curl` no longer works (#330)
+  - a default argument makes some npm commands crash (#326)
 ### v1.2.8 (December 2021)
 - Fixes problems where:
   - ssh-keygen causes terminal to stall (#314)

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.8 (2021 十二月)**
+##### **v1.2.9 (2022 年 1 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -24,6 +24,11 @@
 
 "Changelog.message" =
 "
+### v1.2.9（2022 年 1 月）
+- 修复了以下问题：
+   - 某些键不适用于欧洲键盘布局 (#237)
+   - `curl` 不再有效 (#330)
+   - 默认参数使一些 npm 命令崩溃 (#326)
 ### v1.2.8 (December 2021)
 - 修复了以下问题：
   - ssh-keygen 导致终端停止 (#314)

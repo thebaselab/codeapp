@@ -359,7 +359,6 @@
 		944EEBFB2563C386009D77FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBFA2563C386009D77FE /* Preview Assets.xcassets */; };
 		944FC3FF25C543CD00C7C43C /* GitServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944FC3FE25C543CC00C7C43C /* GitServiceProvider.swift */; };
 		944FC40B25C5F69D00C7C43C /* HierarchyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944FC40A25C5F69D00C7C43C /* HierarchyList.swift */; };
-		94638D8D268243CB00DDD7FC /* git.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94638D8B268243B800DDD7FC /* git.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9469AC9226A33B1E003F569F /* config.gypi in Resources */ = {isa = PBXBuildFile; fileRef = 9469A91B26A33B1D003F569F /* config.gypi */; };
 		9469AC9326A33B1E003F569F /* common.gypi in Resources */ = {isa = PBXBuildFile; fileRef = 9469A91E26A33B1D003F569F /* common.gypi */; };
 		9469AC9626A33B88003F569F /* NodeMobile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9126A33B1E003F569F /* NodeMobile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -450,6 +449,9 @@
 		94C893BE2793D18300DFBF29 /* libssh2.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94C893BF2793D2FB00DFBF29 /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; };
 		94C893C02793D2FB00DFBF29 /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		94C893E2279D09D400DFBF29 /* customShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C893E1279D09D400DFBF29 /* customShortcut.swift */; };
+		94C893E4279D0BC300DFBF29 /* shortcutPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C893E3279D0BC300DFBF29 /* shortcutPreview.swift */; };
+		94C893E6279D0C3000DFBF29 /* shortcutsMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C893E5279D0C3000DFBF29 /* shortcutsMapping.swift */; };
 		94CF58D1265E4B3000CB6A4B /* ar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94CF58BD265E4A9E00CB6A4B /* ar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94CF58D2265E4B3000CB6A4B /* link.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94CF58BE265E4A9E00CB6A4B /* link.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94CF58D3265E4B3000CB6A4B /* libLLVM.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94CF58BF265E4A9E00CB6A4B /* libLLVM.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -516,7 +518,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */,
-				94638D8D268243CB00DDD7FC /* git.xcframework in Embed Frameworks */,
 				9469AC9626A33B88003F569F /* NodeMobile.framework in Embed Frameworks */,
 				94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */,
 				94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */,
@@ -1819,6 +1820,10 @@
 		94B7C4B025F5518700F1EF4E /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ios_system.xcframework; sourceTree = "<group>"; };
 		94C1A3D52607A006007E459A /* themePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themePreview.swift; sourceTree = "<group>"; };
 		94C893BB2793D17C00DFBF29 /* libssh2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libssh2.xcframework; sourceTree = "<group>"; };
+		94C893E1279D09D400DFBF29 /* customShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customShortcut.swift; sourceTree = "<group>"; };
+		94C893E3279D0BC300DFBF29 /* shortcutPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shortcutPreview.swift; sourceTree = "<group>"; };
+		94C893E5279D0C3000DFBF29 /* shortcutsMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shortcutsMapping.swift; sourceTree = "<group>"; };
+		94C893E827A2859700DFBF29 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		94CF58BD265E4A9E00CB6A4B /* ar.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ar.xcframework; sourceTree = "<group>"; };
 		94CF58BE265E4A9E00CB6A4B /* link.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = link.xcframework; sourceTree = "<group>"; };
 		94CF58BF265E4A9E00CB6A4B /* libLLVM.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libLLVM.xcframework; sourceTree = "<group>"; };
@@ -1950,6 +1955,7 @@
 		944EEBE72563C381009D77FE = {
 			isa = PBXGroup;
 			children = (
+				94C893E727A2856700DFBF29 /* ci_scripts */,
 				94A4438225A389FF006643FF /* README.md */,
 				94F5270E25A37E8D00337306 /* .gitignore */,
 				94A56854257CEBC8008A6530 /* Code App.entitlements */,
@@ -6117,6 +6123,7 @@
 				94A4438E25A393B4006643FF /* file */,
 				94A4438D25A393A5006643FF /* language */,
 				94A4438725A390C3006643FF /* KeychainWrapper */,
+				94C893E5279D0C3000DFBF29 /* shortcutsMapping.swift */,
 			);
 			path = HelperFunctions;
 			sourceTree = "<group>";
@@ -6177,6 +6184,8 @@
 				94A777F5257B9260008FE7B2 /* setting.swift */,
 				94B3DDF72604F90800C4F2B1 /* theme.swift */,
 				94C1A3D52607A006007E459A /* themePreview.swift */,
+				94C893E1279D09D400DFBF29 /* customShortcut.swift */,
+				94C893E3279D0BC300DFBF29 /* shortcutPreview.swift */,
 			);
 			path = setting;
 			sourceTree = "<group>";
@@ -6576,6 +6585,14 @@
 			path = Term;
 			sourceTree = "<group>";
 		};
+		94C893E727A2856700DFBF29 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				94C893E827A2859700DFBF29 /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		94CF58BC265E4A9E00CB6A4B /* llvm */ = {
 			isa = PBXGroup;
 			children = (
@@ -6797,6 +6814,7 @@
 				94A77832257BDC50008FE7B2 /* SafariView.swift in Sources */,
 				94A7782D257BCEE2008FE7B2 /* getRootDirectory.swift in Sources */,
 				94A777E0257B8D8E008FE7B2 /* git.swift in Sources */,
+				94C893E6279D0C3000DFBF29 /* shortcutsMapping.swift in Sources */,
 				94A7FFB3268D085300369147 /* statusBar.swift in Sources */,
 				94A777D6257B8A88008FE7B2 /* searchBar.swift in Sources */,
 				94B3DDF1260344E800C4F2B1 /* Color+init.swift in Sources */,
@@ -6827,6 +6845,7 @@
 				9437153F26BF9FC3000376FB /* remote.swift in Sources */,
 				94A77819257BC332008FE7B2 /* CloudCodeExecutionManager.swift in Sources */,
 				949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */,
+				94C893E4279D0BC300DFBF29 /* shortcutPreview.swift in Sources */,
 				948D12222583F2A5008F877A /* executor.swift in Sources */,
 				9437155B26C3C745000376FB /* ftpauth.swift in Sources */,
 				944EEBF42563C381009D77FE /* CodeApp.swift in Sources */,
@@ -6835,6 +6854,7 @@
 				94A777A2257ABDC3008FE7B2 /* WorkSpaceStorage.swift in Sources */,
 				94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */,
 				94A5685E257E1249008A6530 /* fileName.swift in Sources */,
+				94C893E2279D09D400DFBF29 /* customShortcut.swift in Sources */,
 				94A777CE257B8977008FE7B2 /* folderCell.swift in Sources */,
 				94F52707259F9B4800337306 /* KeychainWrapper.swift in Sources */,
 				94A77830257BD680008FE7B2 /* tabs.swift in Sources */,
@@ -6904,7 +6924,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
@@ -6920,7 +6940,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.8;
+				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code.extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -6937,7 +6957,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6952,7 +6972,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.8;
+				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code.extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7013,7 +7033,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -7069,7 +7089,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -7089,7 +7109,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
@@ -7115,7 +7135,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CodeApp/Framework",
 				);
-				MARKETING_VERSION = 1.2.8;
+				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = "non-global";
@@ -7137,7 +7157,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
@@ -7165,7 +7185,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CodeApp/Framework",
 				);
-				MARKETING_VERSION = 1.2.8;
+				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = "non-global";
