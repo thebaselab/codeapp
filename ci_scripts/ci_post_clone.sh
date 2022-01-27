@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./downloadFrameworks.sh
+(cd .. && ./downloadFrameworks.sh)
