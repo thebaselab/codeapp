@@ -13,7 +13,8 @@ struct SearchBar: View {
     @State private var isEditing = false
     let searchAction: (() -> Void)?
     let placeholder: String
-    
+    let cornerRadius: CGFloat?
+
     var body: some View {
         HStack {
             TextField(placeholder, text: $text, onCommit:{searchAction?()})
@@ -23,7 +24,7 @@ struct SearchBar: View {
                 .padding(7)
                 .padding(.horizontal, 25)
                 .background(Color.init(id: "input.background"))
-                .cornerRadius(15)
+                .cornerRadius(cornerRadius ?? 15)
                 .overlay(
                     HStack {
                         Image(systemName: "magnifyingglass")

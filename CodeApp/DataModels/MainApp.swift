@@ -54,6 +54,7 @@ class MainApp: ObservableObject {
     
     var urlQueue: [URL] = []
     var editorToRestore: URL? = nil
+    var editorShortcuts: [monacoEditor.Coordinator.action] = []
     
     let terminalInstance: TerminalInstance
     let monacoInstance = monacoEditor()

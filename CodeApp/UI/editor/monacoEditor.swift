@@ -289,6 +289,26 @@ struct monacoEditor: UIViewRepresentable {
         }
     }
     
+    func applyCustomShortcuts(){
+        if let result = UserDefaults.standard.value(forKey: "thebaselab.custom.keyboard.shortcuts") as? [String:[GCKeyCode]]{
+            for entry in result {
+                let gcCodes = entry.value
+                var key = 0
+                for gc in gcCodes {
+                    if let monacoKey = shortcutsMapping[gc]?.0 {
+                        key |= monacoKey
+                    }
+                }
+                let command = "editor.addCommand(\(String(key)), () => editor.trigger('', '\(entry.key)', null), '');"
+                monacoWebView.evaluateJavaScript(command){ (result, error) in
+                    if error != nil {
+                        print("[Error] editor.addCommand: \(String(describing: error))")
+                    }
+                }
+            }
+        }
+    }
+    
     func updateUIView(_ uiView: WKWebView, context: Context) {
         return
     }
@@ -299,6 +319,10 @@ struct monacoEditor: UIViewRepresentable {
     
     class Coordinator: NSObject, WKScriptMessageHandler, UIGestureRecognizerDelegate {
         
+        struct action: Decodable, Identifiable {
+            var id: String
+            var label: String
+        }
         
         struct marker: Decodable {
             let id = UUID()
@@ -333,6 +357,20 @@ struct monacoEditor: UIViewRepresentable {
                             self.control.provideOriginalTextForUri(uri: modelUri, value: value)
                         }
                     })
+                }
+            }
+        }
+        
+        private func getAllActions(){
+            let command = "editor.getActions().map((e) => {return {id: e.id, label: e.label}})"
+            DispatchQueue.main.async {
+                monacoWebView.evaluateJavaScript(command){ (result, error) in
+                    guard error == nil, let result = result as? NSArray else {
+                        return
+                    }
+                    let jsonData = try! JSONSerialization.data(withJSONObject: result, options: [])
+                    let decoded = try! JSONDecoder().decode([action].self, from: jsonData)
+                    self.control.status.editorShortcuts = decoded
                 }
             }
         }
@@ -401,6 +439,8 @@ struct monacoEditor: UIViewRepresentable {
                     control.executeJavascript(command: "editor.restoreViewState(\(state))")
                 }
                 UserDefaults.standard.setValue(true, forKey: "uistate.restoredSuccessfully")
+                control.applyCustomShortcuts()
+                getAllActions()
             case "Markers updated":
                 let markers = result["Markers"] as! [Any]
                 control.status.problems = [:]

@@ -36,7 +36,7 @@ struct search: View {
                         if let path = URL(string: App.workSpaceStorage.currentDirectory.url)?.path{
                             App.textSearchManager.search(str: App.textSearchManager.searchTerm, path: path)
                         }
-                    }, placeholder: NSLocalizedString("Search", comment: ""))
+                    }, placeholder: NSLocalizedString("Search", comment: ""), cornerRadius: 15)
                 }
                 
                 Section(header:

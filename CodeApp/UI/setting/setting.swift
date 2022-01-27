@@ -70,40 +70,6 @@ struct settingView: View {
                         Text("Themes")
                     }
                     
-//                    HStack {
-//                        Text(NSLocalizedString("Accent", comment: ""))
-//                        Spacer()
-//                        ForEach(accentColors, id: \.self) { color in
-//                            Circle()
-//                                .fill(color)
-//                                .frame(width: 20, height: 20).onTapGesture {
-//                                    let defaults = UserDefaults.standard
-//                                    switch color{
-//                                    case Color.init("blue"):
-//                                        defaults.set("blue", forKey:"accentColor")
-//                                    case Color.init("purple"):
-//                                        defaults.set("purple", forKey:"accentColor")
-//                                    case Color.init("pink"):
-//                                        defaults.set("pink", forKey:"accentColor")
-//                                    case Color.init("red"):
-//                                        defaults.set("red", forKey:"accentColor")
-//                                    case Color.init("orange"):
-//                                        defaults.set("orange", forKey:"accentColor")
-//                                    case Color.init("yellow"):
-//                                        defaults.set("yellow", forKey:"accentColor")
-//                                    case Color.init("green"):
-//                                        defaults.set("green", forKey:"accentColor")
-//                                    case Color.init("gray"):
-//                                        defaults.set("gray", forKey:"accentColor")
-//                                    default:
-//                                        defaults.set("blue", forKey:"accentColor")
-//                                    }
-//                                }
-//                        }
-//
-//
-//                    }
-                    
                     Picker(selection: $preferredColorScheme, label: Text("Color Scheme")) {
                         ForEach(0 ..< colorSchemes.count) {
                             Text(self.colorSchemes[$0])
@@ -169,6 +135,13 @@ struct settingView: View {
                 }
                 
                 Section(header: Text(NSLocalizedString("Editor", comment: ""))) {
+                    
+                    NavigationLink(destination:
+                        customShortcuts()
+                                    .environmentObject(App)
+                    ) {
+                        Text("Custom Keyboard Shortcuts")
+                    }
                     
                     Group{
                         Stepper("\(NSLocalizedString("Tab Size", comment: "")) (\(edtorTabSize))", value: $edtorTabSize, in: 1...8).onChange(of: edtorTabSize){value in

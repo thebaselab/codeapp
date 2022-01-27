@@ -252,7 +252,7 @@ struct git: View {
                             }
                         
                 ){
-                    SearchBar(text: $App.searchManager.searchTerm, searchAction: {App.searchManager.search()}, placeholder: "GitHub")
+                    SearchBar(text: $App.searchManager.searchTerm, searchAction: {App.searchManager.search()}, placeholder: "GitHub", cornerRadius: 15)
                     ForEach(App.searchManager.searchResultItems, id: \.html_url){item in
                         VStack(alignment: .leading){
                             HStack{
