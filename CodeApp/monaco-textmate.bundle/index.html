@@ -324,7 +324,13 @@
         function switchToNormalView(){
             editor.dispose();
             editor = null;
-            editor = monaco.editor.create(document.getElementById('container'), {theme: "vs-dark", automaticLayout: true});
+            editor = monaco.editor.create(document.getElementById('container'), {
+                theme: "vs-dark",
+                automaticLayout: true,
+                unicodeHighlight: {
+                    ambiguousCharacters: false
+                }
+            });
             editor.getModel().dispose();
             applyListeners(editor)
             // editor.setModel(monaco.editor.getModel(monaco.Uri.parse(lastOpenedURI)));
