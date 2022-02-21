@@ -546,6 +546,7 @@ struct monacoEditor: UIViewRepresentable {
         monacoWebView.isOpaque = false
         monacoWebView.scrollView.bounces = false
         monacoWebView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
+        monacoWebView.contentMode = .scaleToFill
         
         if #available(iOS 14.5, *) {} else{
             monacoWebView.scrollView.isScrollEnabled = false

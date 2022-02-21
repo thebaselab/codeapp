@@ -12,6 +12,8 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        position: fixed;
+        touch-action: none;
     }
     #overlay {width: 0;height:0;position:absolute;}
     .addedBackground, .deletedBackground, .modifiedBackground {
@@ -197,6 +199,17 @@
             updateTheme()
         }
 
+        function getFirstNonSpaceColumn(line){
+            var firstNonSpaceCharPos = -1;
+            for (let i = 0; i < line.length; i++) {
+                if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n') {
+                    firstNonSpaceCharPos = i + 1;
+                    break;
+                }
+            }
+            return firstNonSpaceCharPos;
+        }
+
         function applyListeners(instance){
 
             if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -286,21 +299,46 @@
 
             instance.onMouseMove(function (e) {
                 if (e.target === null || devicehasCursor) {
-                    return
+                    return;
+                }
+                if(e.target.element === null){
+                    return;
                 }
                 if (e.target.element.className !== "line-numbers") {
                     return;
                 }
-                if(startRange === null){
-                    startRange = e.target.range;
-                    editor.setSelection(e.target.range);
-                }else{
-                    editor.setSelection({
-                        startColumn: startRange.startColumn,
-                        startLineNumber: startRange.startLineNumber,
-                        endColumn: e.target.range.endColumn,
-                        endLineNumber: e.target.range.endLineNumber
-                    });
+                if (startRange === null) {
+                    let line = editor.getModel().getValueInRange(e.target.range);
+                    let firstNonSpaceColumn = getFirstNonSpaceColumn(line);
+                    if(firstNonSpaceColumn === -1){
+                        startRange = e.target.range;
+                    }else{
+                        let newRange = {
+                            startColumn: firstNonSpaceColumn,
+                            startLineNumber: e.target.range.startLineNumber,
+                            endColumn: e.target.range.endColumn,
+                            endLineNumber: e.target.range.endLineNumber
+                        }
+                        startRange = newRange;
+                    }
+                    editor.setSelection(startRange);
+                } else {
+                    if (monaco.Position.compare({ column: 2, lineNumber: 5 }, { column: 2, lineNumber: 6 }) == -1) {
+                        editor.setSelection({
+                            startColumn: startRange.startColumn,
+                            startLineNumber: startRange.startLineNumber,
+                            endColumn: e.target.range.endColumn,
+                            endLineNumber: e.target.range.endLineNumber
+                        });
+                    } else {
+                        editor.setSelection({
+                            startColumn: e.target.range.endColumn,
+                            startLineNumber: e.target.range.endLineNumber,
+                            endColumn: startRange.startColumn,
+                            endLineNumber: startRange.startLineNumber
+                        });
+
+                    }
                 }
             });
 
@@ -310,7 +348,7 @@
                 }
                 timeout = setTimeout(() => {
                     startRange = null;
-                }, 500);
+                }, 300);
             });
         }
 
