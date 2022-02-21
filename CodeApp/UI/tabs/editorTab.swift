@@ -27,54 +27,66 @@ struct editorTab: View {
     }
     
     var body: some View {
-        if isActive && lastUpdateTime > Date.distantPast{
-            HStack(){
-                fileIcon(url: currentEditor.url, iconSize: 14, type: currentEditor.type)
-                Button(action: {}){
-                    Group{
-                        Text(editorDisplayName(editor: currentEditor))
-                        if currentEditor.isDeleted {
-                            Text("(deleted)").italic()
+        Group{
+            if isActive && lastUpdateTime > Date.distantPast{
+                HStack(spacing: 4){
+                    fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
+                    Button(action: {}){
+                        Group{
+                            Text(editorDisplayName(editor: currentEditor))
+                            if currentEditor.isDeleted {
+                                Text("(deleted)").italic()
+                            }
                         }
-                    }
-                        .lineLimit(1)
-                        .font(.system(size: 14, weight: .light))
-                        .foregroundColor(Color.init(id: "tab.activeForeground"))
-                }.keyboardShortcut(editorTab.keyForInt(int: index+1), modifiers: .command)
-                
-                
-                if currentEditor.currentVersionId == currentEditor.lastSavedVersionId{
-                    Image(systemName: "xmark").font(.system(size:10)).foregroundColor(Color.init(id: "tab.activeForeground"))
-                        .padding(.trailing, 2).frame(width: 15, height: 15)
-                        .contentShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
-                        .hoverEffect(.highlight)
-                        .onTapGesture{
+                            .lineLimit(1)
+                            .font(.system(size: 13, weight: .light))
+                            .foregroundColor(Color.init(id: "tab.activeForeground"))
+                    }.keyboardShortcut(editorTab.keyForInt(int: index+1), modifiers: .command)
+                    
+                    
+                    if currentEditor.currentVersionId == currentEditor.lastSavedVersionId{
+                        Image(systemName: "xmark")
+                            .font(.system(size:8))
+                            .foregroundColor(Color.init(id: "tab.activeForeground"))
+                            .frame(width: 18, height: 18)
+                            .contentShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
+                            .hoverEffect(.highlight)
+                            .onTapGesture{
+                                onCloseEditor()
+                            }
+                    }else{
+                        Image(systemName: "circle.fill").font(.system(size:6)).foregroundColor(.gray).padding(.trailing, 2).onTapGesture {
                             onCloseEditor()
                         }
-                }else{
-                    Image(systemName: "circle.fill").font(.system(size:8)).foregroundColor(.gray).padding(.trailing, 2).onTapGesture {
-                        onCloseEditor()
                     }
+                    
                 }
-                
-            }.frame(height: 40).padding(.leading, 15).padding(.trailing, 15).background(Color.init(id: "tab.activeBackground")).cornerRadius(10, corners: [.topLeft, .topRight])
+                .frame(height: 40)
+                .padding(.horizontal, 8)
+                .background(Color.init(id: "tab.activeBackground"))
+                .cornerRadius(10, corners: [.topLeft, .topRight])
                 .onReceive(NotificationCenter.default.publisher(for: Notification.Name("monaco.editor.currentContent.changed"), object: nil), perform: { notification in
                     lastUpdateTime = Date()
                 })
-        }else{
-            Button(action: {onOpenEditor()}){
-                HStack(){
-                    fileIcon(url: currentEditor.url, iconSize: 14, type: currentEditor.type)
-                    Text(editorDisplayName(editor: currentEditor)).lineLimit(1).font(.system(size: 14, weight: .light)).foregroundColor(Color.init(id: "tab.inactiveForeground"))
-                    if currentEditor.currentVersionId != currentEditor.lastSavedVersionId {
-                        Image(systemName: "circle.fill").font(.system(size:8)).foregroundColor(Color.init(id: "tab.inactiveForeground")).padding(.trailing, 2).onTapGesture {
-                            onCloseEditor()
+            }else{
+                Button(action: {onOpenEditor()}){
+                    HStack(spacing: 4){
+                        fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
+                        Text(editorDisplayName(editor: currentEditor)).lineLimit(1).font(.system(size: 13, weight: .light)).foregroundColor(Color.init(id: "tab.inactiveForeground"))
+                        if currentEditor.currentVersionId != currentEditor.lastSavedVersionId {
+                            Image(systemName: "circle.fill").font(.system(size:8)).foregroundColor(Color.init(id: "tab.inactiveForeground")).padding(.trailing, 2).onTapGesture {
+                                onCloseEditor()
+                            }
                         }
                     }
-                }
-            }.keyboardShortcut(editorTab.keyForInt(int: index+1), modifiers: .command)
-            .frame(height: 40).padding(.leading, 15).padding(.trailing, 15)
-            
+                }.keyboardShortcut(editorTab.keyForInt(int: index+1), modifiers: .command)
+                .frame(height: 40)
+                .padding(.horizontal, 8)
+            }
+        }.onTapGesture {
+            if !(isActive && lastUpdateTime > Date.distantPast) {
+                onOpenEditor()
+            }
         }
     }
 }

@@ -30,17 +30,24 @@ struct fileIcon: View{
             default:
                 switch fileName.lowercased().components(separatedBy: ".").last ?? "" {
                 case "swift":
-                    Image(systemName: "swift").foregroundColor(.orange).font(.system(size:iconSize))
+                    Image(systemName: "swift")
+                        .foregroundColor(.orange)
+                        .font(.system(size:iconSize))
+                        .frame(width: iconSize+6, height: iconSize+6)
                 case "txt":
-                    Image(systemName: "text.alignleft").foregroundColor(.gray).font(.system(size:iconSize-2))
-                case let x where extensionNames[x] != nil:
-                    Image(extensionNames[x]!).resizable().frame(width: iconSize+6, height: iconSize+6)
+                    Image(systemName: "text.alignleft")
+                        .foregroundColor(.gray)
+                        .font(.system(size:iconSize-2))
+                        .frame(width: iconSize+6, height: iconSize+6)
                 case "jpg", "png", "jpeg", "gif":
-                    Image(systemName: "photo").foregroundColor(.gray).font(.system(size: iconSize-2))
-                case "py":
-                    Image("image").frame(width: iconSize, height: iconSize)
-                case "cpp":
-                    Image("cplusplus.icon").resizable().aspectRatio(contentMode:.fill).frame(width: iconSize, height: iconSize).clipped()
+                    Image(systemName: "photo")
+                        .foregroundColor(.gray)
+                        .font(.system(size: iconSize-2))
+                        .frame(width: iconSize+6, height: iconSize+6)
+                case let x where extensionNames[x] != nil:
+                    Image(extensionNames[x]!)
+                        .resizable()
+                        .frame(width: iconSize+6, height: iconSize+6)
                 case "icloud":
                     Image(systemName: "icloud.and.arrow.down").foregroundColor(.gray).font(.system(size:iconSize-2))
                 default:

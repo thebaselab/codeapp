@@ -302,7 +302,7 @@ struct mainView: View{
                                                 Spacer()
                                                 Menu {
                                                     Picker(selection: $currentDirectory, label: Text("Section")){
-                                                        ForEach([0,1,3,4], id: \.self){value in
+                                                        ForEach([0,1,3], id: \.self){value in
                                                             Label(sections[value]![0], systemImage: sections[value]![1])
                                                         }
                                                     }
@@ -361,7 +361,7 @@ struct mainView: View{
                                                     Spacer()
                                                     Menu {
                                                         Picker(selection: $currentDirectory, label: Text("Section")){
-                                                            ForEach([0,1,3,4], id: \.self){value in
+                                                            ForEach([0,1,3], id: \.self){value in
                                                                 Label(sections[value]![0], systemImage: sections[value]![1])
                                                             }
                                                         }
