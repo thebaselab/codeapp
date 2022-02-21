@@ -6,14 +6,20 @@
     <meta charset="UTF-8" />
   </head>
   <style>
-      body { margin:0; }
-      #overlay {width: 0;height:0;position:absolute;}
-      .addedBackground, .deletedBackground, .modifiedBackground {
-          width: 3px !important;
-          margin-left: 6px;
-          transform: translate(-50%, 0);
-          transition: 0.1s;
-        }
+    body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    #overlay {width: 0;height:0;position:absolute;}
+    .addedBackground, .deletedBackground, .modifiedBackground {
+        width: 3px !important;
+        margin-left: 6px;
+        transform: translate(-50%, 0);
+        transition: 0.1s;
+    }
     .addedBackground {
         background: rgb(129, 184, 139);
     }
@@ -36,16 +42,18 @@
     <script src="app.bundle.js"></script>
     <script defer>
         var states = {};
-        
+
         var customDarkTheme = null;
         var customLightTheme = null;
         var customDarkThemeName = null;
         var customLightThemeName = null;
         var previousDecoration = [];
 
+        let devicehasCursor = false;
+
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             const newColorScheme = e.matches ? "dark" : "light";
-            
+
             if (newColorScheme == "dark") {
                 if (customDarkTheme === null){
                     changeTheme('vs-dark')
@@ -60,7 +68,7 @@
                 }
             }
         });
-        
+
         function getChangeType(change) {
             if (change.originalEndLineNumber === 0) {
                 return "added"; // Add
@@ -70,7 +78,7 @@
                 return "modified"; // Modify
             }
         }
-        
+
         function invalidateDecorations(){
             previousDecoration = editor.deltaDecorations(previousDecoration, []);
         }
@@ -107,7 +115,7 @@
                                         linesDecorationsClassName: "addedBackground",
                                         minimap: {color: "#81b88b", darkColor: "#587c0c", position: 2 }
                                     },
-                                    
+
                                 }
                                 break;
                             case "deleted":
@@ -118,7 +126,7 @@
                                         linesDecorationsClassName: "deletedBackground",
                                         minimap: {color: "#ca4b51", darkColor: "#94151b", position: 2 }
                                     },
-                                    
+
                                 }
                                 break;
                         }
@@ -132,7 +140,7 @@
                 }
             )
         }
-    
+
         function provideOriginalTextForUri(uri, value){
 
             var decodedContent = decodeURIComponent(escape(window.atob(value)));
@@ -163,7 +171,7 @@
                 }
             }
         }
-    
+
         function resetTheme(isDark){
             if (isDark){
                 customDarkTheme = null;
@@ -178,7 +186,7 @@
         function applyBase64AsTheme(string, themeName, isDark){
             var decodedString = decodeURIComponent(escape(window.atob(string)));
             var data = JSON.parse(decodedString);
-            
+
             if (isDark) {
                 customDarkTheme = data;
                 customDarkThemeName = themeName;
@@ -190,7 +198,7 @@
         }
 
         function applyListeners(instance){
-            
+
             if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 if (customLightTheme === null){
                     changeTheme('vs')
@@ -198,7 +206,7 @@
                     setTheme(customLightThemeName, customLightTheme)
                 }
             }
-            
+
             if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toggleMessageHandler) {
                 window.webkit.messageHandlers.toggleMessageHandler.postMessage({
                     "Event": "Editor Initialising"
@@ -208,11 +216,11 @@
             instance.onDidChangeModel((event) => {
                 var currentModel = instance.getModel();
                 var newModel = event.newModelUrl._formatted;
-                
+
                 if(newModel in states){
                     editor.restoreViewState(states[newModel]);
                 }
-                
+
                 window.webkit.messageHandlers.toggleMessageHandler.postMessage({
                     "Event": "Request Diff Update",
                     "URI": newModel
@@ -262,7 +270,7 @@
                     computeDiffForURI(modelPath);
                 }
             });
-            
+
             monaco.editor.onDidChangeMarkers((markers) => {
                 var message = "Markers updated";
                 if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.toggleMessageHandler) {
@@ -272,6 +280,38 @@
                     });
                 }
             });
+
+            let startRange = null;
+            let timeout = null;
+
+            instance.onMouseMove(function (e) {
+                if (e.target === null || devicehasCursor) {
+                    return
+                }
+                if (e.target.element.className !== "line-numbers") {
+                    return;
+                }
+                if(startRange === null){
+                    startRange = e.target.range;
+                    editor.setSelection(e.target.range);
+                }else{
+                    editor.setSelection({
+                        startColumn: startRange.startColumn,
+                        startLineNumber: startRange.startLineNumber,
+                        endColumn: e.target.range.endColumn,
+                        endLineNumber: e.target.range.endLineNumber
+                    });
+                }
+            });
+
+            instance.onMouseLeave(function (e) {
+                if(timeout !== null || devicehasCursor){
+                    clearTimeout(timeout);
+                }
+                timeout = setTimeout(() => {
+                    startRange = null;
+                }, 500);
+            });
         }
 
         var lastOpenedURI = "";
@@ -279,10 +319,10 @@
 
         function switchToDiffView(originalContent, modifiedContent, url1, url2){
             // lastOpenedURI = editor.getModel().uri.path.substring(1);
-            
+
             var original = decodeURIComponent(escape(window.atob(originalContent)));
             var modified = decodeURIComponent(escape(window.atob(modifiedContent)));
-            
+
             var originalModel = null;
             var modifiedModel = null;
 
@@ -297,7 +337,7 @@
             }else{
                 modifiedModel = monaco.editor.createModel(modified, undefined, monaco.Uri.parse(url2));
             }
-            
+
             editor.dispose();
             editor = null;
 

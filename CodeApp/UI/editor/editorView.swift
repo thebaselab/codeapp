@@ -10,6 +10,7 @@ import UniformTypeIdentifiers
 import AVKit
 import AVFoundation
 import UIKit
+import GameController
 
 struct editorView: View{
     @EnvironmentObject var App: MainApp
@@ -93,6 +94,12 @@ struct editorView: View{
                         }
                     }
                 }
+            })
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.GCMouseDidConnect), perform: { data in
+                monacoWebView.evaluateJavaScript("devicehasCursor = true", completionHandler: nil)
+            })
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.GCMouseDidDisconnect), perform: { data in
+                monacoWebView.evaluateJavaScript("devicehasCursor = false", completionHandler: nil)
             })
             
         }

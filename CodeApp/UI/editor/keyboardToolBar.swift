@@ -50,6 +50,15 @@ struct keyboardToolBar: View {
                 }, label: {
                     Image(systemName: "arrow.uturn.right")
                 })
+                Button(action: {
+                    monacoWebView.evaluateJavaScript("editor.getModel().getValueInRange(editor.getSelection())", completionHandler: { result, error in
+                        if let result = result as? String, !result.isEmpty {
+                            UIPasteboard.general.string = result
+                        }
+                    })
+                }, label: {
+                    Image(systemName: "doc.on.doc")
+                })
                 if UIPasteboard.general.hasStrings || pasteBoardHasContent {
                     Button(action: {
                         if let string = UIPasteboard.general.string?.base64Encoded() {
@@ -59,12 +68,6 @@ struct keyboardToolBar: View {
                         Image(systemName: "doc.on.clipboard")
                     })
                 }
-                Button(action: {
-                    App.monacoInstance.executeJavascript(command: "editor.trigger('', 'editor.action.quickCommand')")
-                }, label: {
-                    Image(systemName: "terminal")
-                })
-                
                 if needTabKey{
                     Button(action: {
                         App.monacoInstance.executeJavascript(command: "editor.trigger('keyboard', 'type', {text: '\t'})")
