@@ -5,18 +5,26 @@ const rpj = require('read-package-json-fast')
 
 // Returns an Map of paths to workspaces indexed by workspace name
 // { foo => '/path/to/foo' }
-const getWorkspaces = async (filters, { path }) => {
+const getWorkspaces = async (filters, { path, includeWorkspaceRoot, relativeFrom }) => {
   // TODO we need a better error to be bubbled up here if this rpj call fails
   const pkg = await rpj(resolve(path, 'package.json'))
   const workspaces = await mapWorkspaces({ cwd: path, pkg })
-  const res = filters.length ? new Map() : workspaces
+  let res = new Map()
+  if (includeWorkspaceRoot) {
+    res.set(pkg.name, path)
+  }
+
+  if (!filters.length) {
+    res = new Map([...res, ...workspaces])
+  }
 
   for (const filterArg of filters) {
     for (const [workspaceName, workspacePath] of workspaces.entries()) {
       if (filterArg === workspaceName
-        || resolve(path, filterArg) === workspacePath
-        || minimatch(workspacePath, `${resolve(path, filterArg)}/*`))
+        || resolve(relativeFrom || path, filterArg) === workspacePath
+        || minimatch(workspacePath, `${resolve(relativeFrom || path, filterArg)}/*`)) {
         res.set(workspaceName, workspacePath)
+      }
     }
   }
 

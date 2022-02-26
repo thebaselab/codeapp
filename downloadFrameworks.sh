@@ -49,9 +49,9 @@ for lib in harfbuzz freetype libpng; do
 done
 
 # Node.js
-curl -OL https://github.com/JaneaSystems/nodejs-mobile/releases/download/nodejs-mobile-v0.3.2/nodejs-mobile-v0.3.2-ios.zip
-unzip -q nodejs-mobile-v0.3.2-ios.zip -d NodeJS
-rm -f nodejs-mobile-v0.3.2-ios.zip
+curl -OL https://github.com/thebaselab/nodejs-mobile/releases/download/16.3.2/nodejs-mobile-16.zip
+unzip -q nodejs-mobile-16.zip -d NodeJS
+rm -f nodejs-mobile-16.zip
 
 # PHP
 curl -OL https://github.com/bummoblizard/php-src/releases/download/v0.2/php.xcframework.zip

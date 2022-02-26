@@ -4,7 +4,11 @@
 
 ### Requirements
 
-* [**Node.js** `v10`](https://nodejs.org/en/download/) or higher must be installed to run this program
+One of the following versions of [Node.js](https://nodejs.org/en/download/) must be installed to run **`npm`**:
+
+* `12.x.x` >= `12.13.0`
+* `14.x.x` >= `14.15.0`
+* `16.0.0` or higher
 
 ### Installation
 
@@ -28,6 +32,8 @@ If you're looking to manage multiple versions of **`node`** &/or **`npm`**, cons
 * [**`n`**](https://github.com/tj/n)
 * [**`volta`**](https://github.com/volta-cli/volta)
 * [**`nodenv`**](https://github.com/nodenv/nodenv)
+* [**`asdf-nodejs`**](https://github.com/asdf-vm/asdf-nodejs)
+* [**`nvm-windows`**](https://github.com/coreybutler/nvm-windows)
 
 ### Usage
 

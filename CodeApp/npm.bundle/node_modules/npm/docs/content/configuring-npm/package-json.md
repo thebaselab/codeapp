@@ -286,12 +286,10 @@ Certain files are always included, regardless of settings:
 
 * `package.json`
 * `README`
-* `CHANGES` / `CHANGELOG` / `HISTORY`
 * `LICENSE` / `LICENCE`
-* `NOTICE`
 * The file in the "main" field
 
-`README`, `CHANGES`, `LICENSE` & `NOTICE` can have any case and extension.
+`README` & `LICENSE` can have any case and extension.
 
 Conversely, some files are always ignored:
 
@@ -325,6 +323,8 @@ This should be a module relative to the root of your package folder.
 For most modules, it makes the most sense to have a main script and often
 not much else.
 
+If `main` is not set it defaults to `index.js` in the packages root folder.
+
 ### browser
 
 If your module is meant to be used client-side the browser field should be
@@ -339,9 +339,12 @@ install into the PATH. npm makes this pretty easy (in fact, it uses this
 feature to install the "npm" executable.)
 
 To use this, supply a `bin` field in your package.json which is a map of
-command name to local file name. On install, npm will symlink that file
-into `prefix/bin` for global installs, or `./node_modules/.bin/` for local
-installs.
+command name to local file name. When this package is installed
+globally, that file will be linked where global bins go so it is
+available to run by name.  When this package is installed as a
+dependency in another package, the file will be linked where it will be
+available to that package either directly by `npm exec` or by name in other
+scripts when invoking them via `npm run-script`.
 
 
 For example, myapp could have this:
@@ -383,6 +386,11 @@ would be the same as this:
 Please make sure that your file(s) referenced in `bin` starts with
 `#!/usr/bin/env node`, otherwise the scripts are started without the node
 executable!
+
+Note that you can also set the executable files using [directories.bin](#directoriesbin).
+
+See [folders](/configuring-npm/folders#executables) for more info on
+executables.
 
 ### man
 
@@ -545,12 +553,8 @@ had the following:
 }
 ```
 
-and then had a "start" command that then referenced the
-`npm_package_config_port` environment variable, then the user could
-override that by doing `npm config set foo:port 8001`.
-
-See [`config`](/using-npm/config) and [`scripts`](/using-npm/scripts) for
-more on package configs.
+It could also have a "start" command that referenced the
+`npm_package_config_port` environment variable.
 
 ### dependencies
 
@@ -562,8 +566,7 @@ tarball or git URL.
 **Please do not put test harnesses or transpilers or other "development"
 time tools in your `dependencies` object.**  See `devDependencies`, below.
 
-See [semver]([/using-npm/semver](https://github.com/npm/node-semver#versions))
-for more details about specifying version ranges.
+See [semver](https://github.com/npm/node-semver#versions) for more details about specifying version ranges.
 
 * `version` Must match `version` exactly
 * `>version` Must be greater than `version`
@@ -835,6 +838,10 @@ include any versions, as that information is specified in `dependencies`.
 
 If this is spelled `"bundleDependencies"`, then that is also honored.
 
+Alternatively, `"bundledDependencies"` can be defined as a boolean value. A
+value of `true` will bundle all dependencies, a value of `false` will bundle
+none.
+
 ### optionalDependencies
 
 If a dependency can be used, but you would like npm to proceed if it cannot
@@ -867,6 +874,109 @@ if (foo) {
 
 Entries in `optionalDependencies` will override entries of the same name in
 `dependencies`, so it's usually best to only put in one place.
+
+### overrides
+
+If you need to make specific changes to dependencies of your dependencies, for
+example replacing the version of a dependency with a known security issue,
+replacing an existing dependency with a fork, or making sure that the same
+version of a package is used everywhere, then you may add an override.
+
+Overrides provide a way to replace a package in your dependency tree with
+another version, or another package entirely. These changes can be scoped as
+specific or as vague as desired.
+
+To make sure the package `foo` is always installed as version `1.0.0` no matter
+what version your dependencies rely on:
+
+```json
+{
+  "overrides": {
+    "foo": "1.0.0"
+  }
+}
+```
+
+The above is a short hand notation, the full object form can be used to allow
+overriding a package itself as well as a child of the package. This will cause
+`foo` to always be `1.0.0` while also making `bar` at any depth beyond `foo`
+also `1.0.0`:
+
+```json
+{
+  "overrides": {
+    "foo": {
+      ".": "1.0.0",
+      "bar": "1.0.0"
+    }
+  }
+}
+```
+
+To only override `foo` to be `1.0.0` when it's a child (or grandchild, or great
+grandchild, etc) of the package `bar`:
+
+```json
+{
+  "overrides": {
+    "bar": {
+      "foo": "1.0.0"
+    }
+  }
+}
+```
+
+Keys can be nested to any arbitrary length. To override `foo` only when it's a
+child of `bar` and only when `bar` is a child of `baz`:
+
+```json
+{
+  "overrides": {
+    "baz": {
+      "bar": {
+        "foo": "1.0.0"
+      }
+    }
+  }
+}
+```
+
+The key of an override can also include a version, or range of versions.
+To override `foo` to `1.0.0`, but only when it's a child of `bar@2.0.0`:
+
+```json
+{
+  "overrides": {
+    "bar@2.0.0": {
+      "foo": "1.0.0"
+    }
+  }
+}
+```
+
+You may not set an override for a package that you directly depend on unless
+both the dependency and the override itself share the exact same spec. To make
+this limitation easier to deal with, overrides may also be defined as a
+reference to a spec for a direct dependency by prefixing the name of the
+package you wish the version to match with a `$`.
+
+```json
+{
+  "dependencies": {
+    "foo": "^1.0.0"
+  },
+  "overrides": {
+    // BAD, will throw an EOVERRIDE error
+    // "foo": "^2.0.0"
+    // GOOD, specs match so override is allowed
+    // "foo": "^1.0.0"
+    // BEST, the override is defined as a reference to the dependency
+    "foo": "$foo",
+    // the referenced package does not need to match the overridden one
+    "bar": "$foo"
+  }
+}
+```
 
 ### engines
 

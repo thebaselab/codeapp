@@ -1,13 +1,13 @@
 const npmFetch = require('npm-registry-fetch')
-const npm = require('../npm')
 
 const needsAuthError = (msg) =>
   Object.assign(new Error(msg), { code: 'ENEEDAUTH' })
 
-module.exports = async (opts = {}) => {
+module.exports = async (npm, opts = {}) => {
   const { registry } = opts
-  if (!registry)
+  if (!registry) {
     throw Object.assign(new Error('No registry specified.'), { code: 'ENOREGISTRY' })
+  }
 
   // First, check if we have a user/pass-based auth
   const creds = npm.config.getCredentialsByURI(registry)
@@ -23,9 +23,9 @@ module.exports = async (opts = {}) => {
     })
     const { username: usernameFromRegistry } = registryData
     // Retrieved username from registry; return it
-    if (usernameFromRegistry)
+    if (usernameFromRegistry) {
       return usernameFromRegistry
-    else {
+    } else {
       // Didn't get username from registry; bad token
       throw needsAuthError(
         'Your auth token is no longer valid. Please login again.'
