@@ -53,6 +53,12 @@
 
         let devicehasCursor = false;
 
+        setTimeout(() => {
+            if(typeof editor==='undefined'){
+                location.reload();
+            }
+        }, 2000);
+
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             const newColorScheme = e.matches ? "dark" : "light";
 

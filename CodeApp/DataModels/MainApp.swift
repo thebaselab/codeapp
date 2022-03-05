@@ -165,13 +165,6 @@ class MainApp: ObservableObject {
             monacoWebView.loadFileURL(URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"), allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
         }
         
-        // Potential fix for random blank screen:
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if(!isEditorInited){
-                monacoWebView.loadFileURL(URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"), allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
-            }
-        }
-        
         webServer.addGETHandler(forBasePath: "/", directoryPath: rootDir.path, indexFilename: "index.html", cacheAge: 10, allowRangeRequests: true)
         
         do{
