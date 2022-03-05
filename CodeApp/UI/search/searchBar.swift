@@ -12,6 +12,7 @@ struct SearchBar: View {
     @Binding var text: String
     @State private var isEditing = false
     let searchAction: (() -> Void)?
+    var clearAction: (() -> Void)? = nil
     let placeholder: String
     let cornerRadius: CGFloat?
 
@@ -34,9 +35,13 @@ struct SearchBar: View {
                         if isEditing && text != "" {
                             Image(systemName: "multiply.circle.fill")
                                 .foregroundColor(.gray)
-                                .padding(.trailing, 8).highPriorityGesture(
+                                .padding(.trailing, 8)
+                                .highPriorityGesture(
                                     TapGesture()
-                                        .onEnded({self.text = ""})
+                                        .onEnded({
+                                            self.text = ""
+                                            clearAction?()
+                                        })
                                 )
                         }
                     }

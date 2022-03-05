@@ -61,8 +61,12 @@ class TextSearchManager: ObservableObject {
                 results[path]?.append(searchResult(line_num: linenum, line: line))
             }
         }
-        self.message = "- \(self.resultCount) result\(self.resultCount > 1 ? "s" : "") in \(self.results.keys.count) file\(self.results.keys.count > 1 ? "s" : "")"
-        
+        self.message = "\(self.resultCount) result\(self.resultCount > 1 ? "s" : "") in \(self.results.keys.count) file\(self.results.keys.count > 1 ? "s" : "")"
+    }
+    
+    func removeAllResults() {
+        results.removeAll()
+        message.removeAll()
     }
     
     func search(str: String, path: String){

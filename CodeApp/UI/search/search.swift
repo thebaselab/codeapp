@@ -36,15 +36,19 @@ struct search: View {
                         if let path = URL(string: App.workSpaceStorage.currentDirectory.url)?.path{
                             App.textSearchManager.search(str: App.textSearchManager.searchTerm, path: path)
                         }
+                    }, clearAction: {
+                        App.textSearchManager.removeAllResults()
                     }, placeholder: NSLocalizedString("Search", comment: ""), cornerRadius: 15)
                 }
                 
                 Section(header:
-                    Text(NSLocalizedString("Results", comment: "") + " ")
-                        .foregroundColor(Color.init("BW"))
-                    + Text(App.textSearchManager.message)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 12, weight: .light))
+                    HStack{
+                        Text(NSLocalizedString("Results", comment: "") + " ")
+                            .foregroundColor(Color.init("BW"))
+                        Text(App.textSearchManager.message)
+                            .foregroundColor(.gray)
+                            .font(.system(size: 12, weight: .light))
+                    }
                 ){
                     if let mainFolderUrl = URL(string: App.workSpaceStorage.currentDirectory.url) {
                         ForEach(Array(App.textSearchManager.results.keys.sorted()), id: \.self){ key in
@@ -66,22 +70,27 @@ struct search: View {
                                                 }
                                         }
                                     }
-                                    
                                 }, label:{
-                                    HStack(){
-                                        fileIcon(url: key, iconSize: 10, type: .file)
-                                        Text(editorDisplayName(editor: EditorInstance(url: key, content: "", type: .file)) + " ")
-                                            .font(.system(size: 14, weight: .light))
-                                            .foregroundColor(Color.init("T1"))
-                                            + Text(fileURL.deletingLastPathComponent().relativePath(from: mainFolderUrl) ?? "")
-                                            .foregroundColor(.gray)
-                                            .font(.system(size: 12, weight: .light))
-                                        Circle()
-                                            .fill(Color.init("panel.border"))
-                                            .frame(width: 14, height: 14)
-                                            .overlay(
-                                                Text("\(result.count)").foregroundColor(Color.init("T1")).font(.system(size: 10))
-                                            )
+                                    VStack(alignment: .leading){
+                                        HStack{
+                                            fileIcon(url: key, iconSize: 10, type: .file)
+                                            Text(editorDisplayName(editor: EditorInstance(url: key, content: "", type: .file)) + " ")
+                                                .font(.system(size: 14, weight: .light))
+                                                .foregroundColor(Color.init("T1"))
+                                            Circle()
+                                                .fill(Color.init("panel.border"))
+                                                .frame(width: 14, height: 14)
+                                                .overlay(
+                                                    Text("\(result.count)").foregroundColor(Color.init("T1")).font(.system(size: 10))
+                                                )
+                                        }
+                                        if let path = fileURL.deletingLastPathComponent().relativePath(from: mainFolderUrl),
+                                           !path.isEmpty {
+                                            Text(path)
+                                                .foregroundColor(.gray)
+                                                .font(.system(size: 10, weight: .light))
+                                        }
+                                        
                                     }
                                 })
                             }

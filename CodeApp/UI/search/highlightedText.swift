@@ -13,7 +13,7 @@ struct HighlightedText: View {
     let accentColor: Color
     
     init(_ text: String, matching: String, accentColor: Color) {
-        self.text = text
+        self.text = text.trimmingCharacters(in: .whitespaces)
         self.matching = matching
         self.accentColor = accentColor
     }
