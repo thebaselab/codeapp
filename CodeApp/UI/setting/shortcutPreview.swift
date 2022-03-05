@@ -59,6 +59,21 @@ struct shortcutPreview: View {
         var value: String
     }
     
+    var keysAreValid: Bool {
+        get{
+            return (
+                keysDown.contains(.leftShift) ||
+                keysDown.contains(.rightShift) ||
+                keysDown.contains(.leftAlt) ||
+                keysDown.contains(.rightAlt) ||
+                keysDown.contains(.leftControl) ||
+                keysDown.contains(.rightControl) ||
+                keysDown.contains(.leftGUI) ||
+                keysDown.contains(.rightGUI)
+            )
+        }
+    }
+    
     var body: some View {
         if(!started){
             Text("External keyboard not detected.")
@@ -77,6 +92,12 @@ struct shortcutPreview: View {
             }
             
             if(!keysDown.isEmpty && started){
+                if !(keysAreValid){
+                    Text("Keystorkes are not valid. At least one modifier key is required.")
+                        .foregroundColor(.red)
+                        .font(.caption)
+                        .padding(.vertical)
+                }
                 Button("Reset"){
                     keysDown.removeAll()
                     displayedKeys.removeAll()
@@ -106,6 +127,9 @@ struct shortcutPreview: View {
                 }
             }
         }.onDisappear{
+            guard keysAreValid || keysDown.isEmpty else{
+                return
+            }
             // Save the shortcuts
             let userDefaultskey = "thebaselab.custom.keyboard.shortcuts"
             

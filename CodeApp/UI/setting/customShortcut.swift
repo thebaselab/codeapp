@@ -26,11 +26,20 @@ struct customShortcuts: View {
         VStack{
             SearchBar(text: $filter, searchAction: nil, placeholder: "Search", cornerRadius: 6)
                 .padding(.horizontal)
+            Text("Note: Keyboard shortcuts that clash with existing shortcuts will not apply.")
+                .font(.caption)
+                .foregroundColor(.gray)
             Form {
                 Section("Actions"){
                     List(App.editorShortcuts.filter{
                         filter.isEmpty || $0.label.lowercased().contains(filter.lowercased())
-                    }){ shortcut in
+                    }.sorted(by: {a, b in
+                        if let _ = storedShortcuts[a.id]{
+                            return true
+                        }else{
+                            return false
+                        }
+                    })){ shortcut in
                         NavigationLink(destination: shortcutPreview(shortcutID: shortcut.id, existingShortcuts: $storedShortcuts, onUpdate: {
                             App.monacoInstance.applyCustomShortcuts()
                         }), label: {
