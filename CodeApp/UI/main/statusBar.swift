@@ -171,7 +171,7 @@ struct bottomBar: View {
                     if let activeEditor = App.activeEditor, activeEditor.type == .image, let imageURL = URL(string: activeEditor.url), let uiImage = UIImage(contentsOfFile: imageURL.path) {
                         Text("\(activeEditor.url.components(separatedBy: ".").last?.uppercased() ?? "") \(String(describing: Int(uiImage.size.width * uiImage.scale)))x\(String(describing: Int(uiImage.size.height * uiImage.scale)))").font(.system(size: 12)).foregroundColor(Color.init(id: "statusBar.foreground"))
                     }
-                }.padding(.leading, [UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0, 5].max())
+                }.padding(.leading, [UIApplication.shared.getSafeArea(edge: .bottom), 5].max())
                 
                 Spacer()
                 
@@ -284,7 +284,7 @@ struct bottomBar: View {
                                 }
                         }
                     }
-                }.foregroundColor(Color.init(id: "statusBar.foreground")).frame(maxHeight: 20).padding(.trailing, [UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0, 5].max())
+                }.foregroundColor(Color.init(id: "statusBar.foreground")).frame(maxHeight: 20).padding(.trailing, [UIApplication.shared.getSafeArea(edge: .bottom), 5].max())
                 
                 
             }

@@ -64,7 +64,7 @@ class editorWebView: WKWebView {
         while (superWebView != nil) && !(superWebView is WKWebView) {
             superWebView = superWebView?.superview
         }
-        let customInputAccessory = objc_getAssociatedObject(superWebView, &ToolbarHandle)
+        let customInputAccessory = objc_getAssociatedObject(superWebView as Any, &ToolbarHandle)
         superWebView?.inputAssistantItem.leadingBarButtonGroups = []
         superWebView?.inputAssistantItem.trailingBarButtonGroups = []
         return customInputAccessory as? UIView
@@ -325,7 +325,7 @@ struct monacoEditor: UIViewRepresentable {
         }
         
         struct marker: Decodable {
-            let id = UUID()
+            var id = UUID()
             let endColumn: Int
             let endLineNumber: Int
             let startColumn: Int

@@ -253,7 +253,6 @@ class WorkSpaceStorage: ObservableObject{
         
         loadURL(url: id, completionHandler: { items, error in
             guard let items = items else{
-                print(error?.localizedDescription)
                 return
             }
             self.directoryStorage[id] = items

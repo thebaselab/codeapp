@@ -118,7 +118,9 @@ struct BannerCentreView: View{
         VStack(spacing: 10){
             ForEach(App.notificationManager.banners.indices, id: \.self){i in
                 if !App.notificationManager.banners[i].isRemoved && (App.notificationManager.banners[i].isPresented || App.notificationManager.isShowingAllBanners){
-                    App.notificationManager.banners[i].data.makeBanner(isPresented: $App.notificationManager.banners[i].isPresented, isRemoved: $App.notificationManager.banners[i].isRemoved).animation(.spring())
+                    withAnimation(.spring()){
+                        App.notificationManager.banners[i].data.makeBanner(isPresented: $App.notificationManager.banners[i].isPresented, isRemoved: $App.notificationManager.banners[i].isRemoved)
+                    }
                 }
             }
         }

@@ -363,6 +363,7 @@
 		945E7E4127CA846500BA1D95 /* NodeMobile.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		945E7E4227CA846E00BA1D95 /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */; };
 		947BF349262453040015DAEB /* searchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* searchManager.swift */; };
 		94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F92266FB5E400B29D80 /* TerminalInstance.swift */; };
 		94801F95266FBC3500B29D80 /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F94266FBC3500B29D80 /* ViewRepresentable.swift */; };
@@ -443,7 +444,6 @@
 		94C893B92793D01500DFBF29 /* curl_ios.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; };
 		94C893BA2793D01500DFBF29 /* curl_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; };
-		94C893BD2793D18200DFBF29 /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; };
 		94C893BE2793D18300DFBF29 /* libssh2.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94C893BF2793D2FB00DFBF29 /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; };
 		94C893C02793D2FB00DFBF29 /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1239,6 +1239,7 @@
 		945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = NodeMobile.xcframework; sourceTree = "<group>"; };
 		94638D8B268243B800DDD7FC /* git.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = git.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
+		947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+getSafeArea.swift"; sourceTree = "<group>"; };
 		947BF348262453040015DAEB /* searchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchManager.swift; sourceTree = "<group>"; };
 		94801F92266FB5E400B29D80 /* TerminalInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalInstance.swift; sourceTree = "<group>"; };
 		94801F94266FBC3500B29D80 /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
@@ -1375,7 +1376,6 @@
 				94C893BF2793D2FB00DFBF29 /* openssl.xcframework in Frameworks */,
 				94A7418C25F74A85007A9728 /* Dynamic in Frameworks */,
 				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
-				94C893BD2793D18200DFBF29 /* libssh2.xcframework in Frameworks */,
 				EE1687E70064F15DC8BB6399 /* Pods_Code.framework in Frameworks */,
 				945E7E4027CA846500BA1D95 /* NodeMobile.xcframework in Frameworks */,
 			);
@@ -1682,6 +1682,7 @@
 				94B3DDF0260344E700C4F2B1 /* Color+init.swift */,
 				94B3DDF9260526D200C4F2B1 /* View+If.swift */,
 				94CF58DC265E4E0F00CB6A4B /* URL+isDirectory.swift */,
+				947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2218,7 +2219,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					94369AFB25E3B933008419A0 = {
 						CreatedOnToolsVersion = 12.4;
@@ -2358,6 +2359,7 @@
 				94A777D6257B8A88008FE7B2 /* searchBar.swift in Sources */,
 				94B3DDF1260344E800C4F2B1 /* Color+init.swift in Sources */,
 				94A7780B257BBCAC008FE7B2 /* panel.swift in Sources */,
+				947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */,
 				94F52705259F997200337306 /* authentication.swift in Sources */,
 				94A777C1257B752A008FE7B2 /* bannerCentre.swift in Sources */,
 				94A777CB257B876A008FE7B2 /* editorCell.swift in Sources */,
@@ -2470,7 +2472,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Resources/NodeJS/Release-iphoneos",
 				);
 				INFOPLIST_FILE = extension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2502,7 +2503,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Resources/NodeJS/Release-iphoneos",
 				);
 				INFOPLIST_FILE = extension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2525,6 +2525,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2586,6 +2587,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -2655,14 +2657,8 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/testfield/Framework",
-					"$(PROJECT_DIR)/Code\\ App/Framework",
-					"$(PROJECT_DIR)/CodeApp/Framework",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/cpython",
-					"$(PROJECT_DIR)/CodeApp/Framework/Term",
-					"$(PROJECT_DIR)/Resources/NodeJS/Release-universal",
-					"$(PROJECT_DIR)/Resources/NodeJS/Release-iphoneos",
 				);
 				INFOPLIST_FILE = CodeApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2670,10 +2666,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/CodeApp/Framework",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2704,14 +2697,8 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/testfield/Framework",
-					"$(PROJECT_DIR)/Code\\ App/Framework",
-					"$(PROJECT_DIR)/CodeApp/Framework",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/cpython",
-					"$(PROJECT_DIR)/CodeApp/Framework/Term",
-					"$(PROJECT_DIR)/Resources/NodeJS/Release-universal",
-					"$(PROJECT_DIR)/Resources/NodeJS/Release-iphoneos",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = CodeApp/Info.plist;
@@ -2720,10 +2707,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/CodeApp/Framework",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.2.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";

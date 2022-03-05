@@ -204,7 +204,7 @@ class wasmWebViewDelegate: NSObject, WKNavigationDelegate, WKScriptMessageHandle
             } else if (arguments[1] == "fstat") {
                 if let fd = fileDescriptor(input: arguments[2]) {
                     let buf = stat.init()
-                    var pbuf = UnsafeMutablePointer<stat>.allocate(capacity: 1)
+                    let pbuf = UnsafeMutablePointer<stat>.allocate(capacity: 1)
                     pbuf.initialize(to: buf)
                     let returnValue = fstat(fd, pbuf)
                     if (returnValue == 0) {
@@ -219,7 +219,7 @@ class wasmWebViewDelegate: NSObject, WKNavigationDelegate, WKScriptMessageHandle
                 return
             } else if (arguments[1] == "stat") {
                 let buf = stat.init()
-                var pbuf = UnsafeMutablePointer<stat>.allocate(capacity: 1)
+                let pbuf = UnsafeMutablePointer<stat>.allocate(capacity: 1)
                 pbuf.initialize(to: buf)
                 let returnValue = stat(arguments[2], pbuf)
                 if (returnValue == 0) {
@@ -425,7 +425,7 @@ class wasmWebViewDelegate: NSObject, WKNavigationDelegate, WKScriptMessageHandle
                             mtime_usec = mtime_usec! / 1000
                         }
                         let mtime: timeval = timeval(tv_sec: mtime_sec, tv_usec: mtime_usec!)
-                        var time = UnsafeMutablePointer<timeval>.allocate(capacity: 2)
+                        let time = UnsafeMutablePointer<timeval>.allocate(capacity: 2)
                         time[0] = atime
                         time[1] = mtime
                         let returnVal = utimes(path, time)
@@ -462,7 +462,7 @@ class wasmWebViewDelegate: NSObject, WKNavigationDelegate, WKScriptMessageHandle
                                 mtime_usec = mtime_usec! / 1000
                             }
                             let mtime: timeval = timeval(tv_sec: mtime_sec, tv_usec: mtime_usec!)
-                            var time = UnsafeMutablePointer<timeval>.allocate(capacity: 2)
+                            let time = UnsafeMutablePointer<timeval>.allocate(capacity: 2)
                             time[0] = atime
                             time[1] = mtime
                             let returnVal = futimes(fd, time)
@@ -586,7 +586,6 @@ fileprivate func executeWebAssembly(arguments: [String]?) -> Int32 {
                     fputs(message + "\n", thread_stderr_copy)
                 }
                 fflush(thread_stderr_copy)
-                print(error)
             }
             if (result != nil) {
                 // executeWebAssembly sends back stdout and stderr as two Strings:

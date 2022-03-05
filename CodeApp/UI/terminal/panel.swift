@@ -262,9 +262,8 @@ struct panelView: View{
                     if (self.panelHeight + (value.translation.height) * -1) < 40 {
                         self.showsPanel = false
                     }
-                    let window = UIApplication.shared.windows[0]
-                    let topPadding = window.safeAreaInsets.top
-                    let bottomPadding = window.safeAreaInsets.bottom
+                    let topPadding = UIApplication.shared.getSafeArea(edge: .top)
+                    let bottomPadding = UIApplication.shared.getSafeArea(edge: .bottom)
                     if (self.panelHeight + (value.translation.height) * -1) < (UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0) - topPadding - bottomPadding - keyboardHeight) {
                         self.panelHeight = self.panelHeight + (value.translation.height) * -1
                     }else{
@@ -273,9 +272,8 @@ struct panelView: View{
                 }
         )
         .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)){ _ in
-            let window = UIApplication.shared.windows[0]
-            let topPadding = window.safeAreaInsets.top
-            let bottomPadding = window.safeAreaInsets.bottom
+            let topPadding = UIApplication.shared.getSafeArea(edge: .top)
+            let bottomPadding = UIApplication.shared.getSafeArea(edge: .bottom)
             if self.panelHeight > (UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0) - topPadding - bottomPadding - keyboardHeight) {
                 self.panelHeight = UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0) - topPadding - bottomPadding - keyboardHeight
             }
@@ -283,9 +281,8 @@ struct panelView: View{
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification), perform: { notification in
             if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 let keyboardHeight = keyboardSize.height
-                let window = UIApplication.shared.windows[0]
-                let topPadding = window.safeAreaInsets.top
-                let bottomPadding = window.safeAreaInsets.bottom
+                let topPadding = UIApplication.shared.getSafeArea(edge: .top)
+                let bottomPadding = UIApplication.shared.getSafeArea(edge: .bottom)
                 if self.panelHeight > (UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0) - topPadding - bottomPadding - keyboardHeight) {
                     DispatchQueue.main.async {
                         self.panelHeight = UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0) - topPadding - bottomPadding - keyboardHeight
