@@ -9,13 +9,6 @@
 		<string>ACEHILNPRVXafghinorstuvwx</string>
 		<string>file</string>
 	</array>
-	<key>git</key>
-	<array>
-		<string>git.framework/git</string>
-		<string>main</string>
-		<string></string>
-		<string>file</string>
-	</array>
 	<key>php</key>
 	<array>
 		<string>php.framework/php</string>
@@ -464,13 +457,13 @@
 		<string></string>
 		<string>no</string>
 	</array>
-    <key>sftp</key>
-    <array>
-        <string>ssh_cmd.framework/ssh_cmd</string>
-        <string>sftp_main</string>
-        <string>1246AafhNpqrvCc:D:i:l:o:s:S:b:B:F:J:P:R:</string>
-        <string>file</string>
-    </array>
+	<key>sftp</key>
+	<array>
+		<string>ssh_cmd.framework/ssh_cmd</string>
+		<string>sftp_main</string>
+		<string>1246AafhNpqrvCc:D:i:l:o:s:S:b:B:F:J:P:R:</string>
+		<string>file</string>
+	</array>
 	<key>ssh</key>
 	<array>
 		<string>ssh_cmd.framework/ssh_cmd</string>
