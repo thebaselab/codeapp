@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9407A759266F31DF00581E9D /* SwiftGit2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9407A758266F31DF00581E9D /* SwiftGit2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		941CF5FB2641CBDA001199C0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 941CF5FA2641CBDA001199C0 /* Settings.bundle */; };
 		941CF5FE26463450001199C0 /* activityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CF5FD26463450001199C0 /* activityBar.swift */; };
 		94251F09263E01CA0029427A /* python3_ios-_asyncio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D80263E019A0029427A /* python3_ios-_asyncio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -440,6 +439,7 @@
 		94B7C4CE25F5522500F1EF4E /* awk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A925F5518700F1EF4E /* awk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4D125F5522500F1EF4E /* text.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AC25F5518700F1EF4E /* text.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4D225F5522500F1EF4E /* shell.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AD25F5518700F1EF4E /* shell.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 94B99D9C27D4AA57005B5E3A /* SwiftGit2 */; };
 		94C1A3D62607A006007E459A /* themePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C1A3D52607A006007E459A /* themePreview.swift */; };
 		94C893B92793D01500DFBF29 /* curl_ios.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; };
 		94C893BA2793D01500DFBF29 /* curl_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -507,7 +507,6 @@
 				9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */,
 				94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */,
 				94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */,
-				9407A759266F31DF00581E9D /* SwiftGit2.framework in Embed Frameworks */,
 				94CF58D1265E4B3000CB6A4B /* ar.xcframework in Embed Frameworks */,
 				94CF58D2265E4B3000CB6A4B /* link.xcframework in Embed Frameworks */,
 				94CF58D3265E4B3000CB6A4B /* libLLVM.xcframework in Embed Frameworks */,
@@ -875,7 +874,6 @@
 		0AD02631C11B8E0F8BE93D41 /* Pods-testfield.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testfield.debug.xcconfig"; path = "Target Support Files/Pods-testfield/Pods-testfield.debug.xcconfig"; sourceTree = "<group>"; };
 		3E1E8079C05894592C2F09D9 /* Pods_Code.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Code.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7955ADC45CC2B60AC169DCB7 /* Pods-Code.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Code.debug.xcconfig"; path = "Target Support Files/Pods-Code/Pods-Code.debug.xcconfig"; sourceTree = "<group>"; };
-		9407A758266F31DF00581E9D /* SwiftGit2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftGit2.framework; sourceTree = "<group>"; };
 		941CF5FA2641CBDA001199C0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		941CF5FD26463450001199C0 /* activityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityBar.swift; sourceTree = "<group>"; };
 		94251C6D263E01810029427A /* pythonA-pandas._libs.tslibs.period.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.tslibs.period.framework"; sourceTree = "<group>"; };
@@ -1316,6 +1314,7 @@
 		94B7C4AC25F5518700F1EF4E /* text.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = text.xcframework; sourceTree = "<group>"; };
 		94B7C4AD25F5518700F1EF4E /* shell.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = shell.xcframework; sourceTree = "<group>"; };
 		94B7C4B025F5518700F1EF4E /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ios_system.xcframework; sourceTree = "<group>"; };
+		94B99D9B27D4AA3E005B5E3A /* SwiftGit2 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftGit2; sourceTree = "<group>"; };
 		94C1A3D52607A006007E459A /* themePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = themePreview.swift; sourceTree = "<group>"; };
 		94C893BB2793D17C00DFBF29 /* libssh2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libssh2.xcframework; sourceTree = "<group>"; };
 		94C893E1279D09D400DFBF29 /* customShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customShortcut.swift; sourceTree = "<group>"; };
@@ -1377,6 +1376,7 @@
 				94A7418C25F74A85007A9728 /* Dynamic in Frameworks */,
 				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
 				EE1687E70064F15DC8BB6399 /* Pods_Code.framework in Frameworks */,
+				94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */,
 				945E7E4027CA846500BA1D95 /* NodeMobile.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1402,7 +1402,6 @@
 			children = (
 				945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */,
 				94638D8B268243B800DDD7FC /* git.xcframework */,
-				9407A758266F31DF00581E9D /* SwiftGit2.framework */,
 				3E1E8079C05894592C2F09D9 /* Pods_Code.framework */,
 			);
 			name = Frameworks;
@@ -1453,6 +1452,7 @@
 		944EEBE72563C381009D77FE = {
 			isa = PBXGroup;
 			children = (
+				94B99D9527D4A622005B5E3A /* Packages */,
 				94C893E727A2856700DFBF29 /* ci_scripts */,
 				94A4438225A389FF006643FF /* README.md */,
 				94F5270E25A37E8D00337306 /* .gitignore */,
@@ -2129,6 +2129,14 @@
 			path = Term;
 			sourceTree = "<group>";
 		};
+		94B99D9527D4A622005B5E3A /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				94B99D9B27D4AA3E005B5E3A /* SwiftGit2 */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		94C893E727A2856700DFBF29 /* ci_scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2207,6 +2215,7 @@
 				94A7418B25F74A85007A9728 /* Dynamic */,
 				948F174726B6A5AB00B277FC /* MarkdownView */,
 				948F174D26B91C2600B277FC /* FilesProvider */,
+				94B99D9C27D4AA57005B5E3A /* SwiftGit2 */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -2238,8 +2247,8 @@
 			knownRegions = (
 				en,
 				"zh-Hans",
-				Base,
 				de,
+				Base,
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
@@ -2465,7 +2474,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
@@ -2480,7 +2489,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.9;
+				MARKETING_VERSION = 1.2.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code.extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2497,7 +2506,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2511,7 +2520,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.2.9;
+				MARKETING_VERSION = 1.2.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code.extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2650,11 +2659,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2667,7 +2677,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.2.9;
+				MARKETING_VERSION = 1.2.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = "non-global";
@@ -2689,12 +2699,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2708,7 +2719,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.2.9;
+				MARKETING_VERSION = 1.2.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_STYLE = "non-global";
@@ -2806,6 +2817,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		94B99D9C27D4AA57005B5E3A /* SwiftGit2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftGit2;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
