@@ -29,32 +29,36 @@ struct remoteAuthentication: View {
     }
     
     var body: some View {
-        Form{
-            Section(header: Text("Remote Credentials (For Git pull, push and clone)")) {
-                TextField("User Name", text: $username)
-                    .textContentType(.name)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                
+        VStack{
+            Text("Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it.")
+                .font(.caption)
+                .foregroundColor(.gray)
+            Form{
+                Section(header: Text("Remote Credentials")) {
+                    TextField("User Name", text: $username)
+                        .textContentType(.name)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                 SecureField("Password / Personal Access Token", text: $password)
                     .textContentType(.password)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
+                }
             }
-        }
-        .navigationBarTitle("Authentication", displayMode: .inline)
-        .navigationBarItems(trailing:
-            Button(NSLocalizedString("Done", comment: "")) {
-                self.presentationMode.wrappedValue.dismiss()
+        }.navigationBarTitle("Authentication", displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button(NSLocalizedString("Done", comment: "")) {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            )
+            .onChange(of: username){value in
+                KeychainWrapper.standard.set(value, forKey: "git-username")
+                App.gitServiceProvider?.auth(name: value, password: password)
             }
-        )
-        .onChange(of: username){value in
-            KeychainWrapper.standard.set(value, forKey: "git-username")
-            App.gitServiceProvider?.auth(name: value, password: password)
-        }
-        .onChange(of: password){value in
-            KeychainWrapper.standard.set(value, forKey: "git-password")
-            App.gitServiceProvider?.auth(name: username, password: value)
-        }
+            .onChange(of: password){value in
+                KeychainWrapper.standard.set(value, forKey: "git-password")
+                App.gitServiceProvider?.auth(name: username, password: value)
+            }
+        
     }
 }
