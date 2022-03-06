@@ -1,0 +1,30 @@
+language: objective-c
+
+os: osx
+osx_image: xcode11.4
+
+sudo: false # Enable container-based builds
+
+env:
+  matrix:
+    - SCHEME="SwiftGit2-OSX"
+    - SCHEME="SwiftGit2-iOS"
+
+matrix:
+  fast_finish: true
+
+before_install:
+  - gem update bundler # https://github.com/bundler/bundler/pull/4981
+  - gem install xcpretty
+  - gem install xcpretty-travis-formatter
+
+install: script/bootstrap
+
+script: script/cibuild
+
+branches:
+  only: # whitelist
+    - master
+
+notifications:
+  email: false
