@@ -172,6 +172,8 @@ class MainApp: ObservableObject {
         } catch let error {
             print(error)
         }
+        
+        Repository.initialize_libgit2()
     }
     
     func updateView(){
