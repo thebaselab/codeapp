@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "Clibgit2",
-        "repositoryURL": "https://github.com/light-tech/Clibgit2",
+        "repositoryURL": "https://github.com/thebaselab/Clibgit2",
         "state": {
           "branch": "master",
-          "revision": "0b01e2b814c8ad5dc0690f1fa9d0e8ffa7461d14",
+          "revision": "c2bb800c66958e8791fc3860bfebd647113d399c",
           "version": null
         }
       },
