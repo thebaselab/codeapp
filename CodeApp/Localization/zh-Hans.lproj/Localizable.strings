@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.9 (2022 年 1 月)**
+##### **v1.2.10 (2022 年 3 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -24,6 +24,12 @@
 
 "Changelog.message" =
 "
+### v1.2.10（2022 年 3 月）
+- 自定义键盘快捷键
+- 通过在行号上滑动来选择文本
+- 用户界面改进
+- 修复了编辑器有时无法加载的问题
+- Node.js 16.13.2
 ### v1.2.9（2022 年 1 月）
 - 修复了以下问题：
    - 某些键不适用于欧洲键盘布局 (#237)
@@ -319,3 +325,5 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Languages (Remote)" = "编程语言 (远程)";
 "Duplicate" = "复制";
 "Console Font Size" = "终端字体大小";
+
+"Custom Keyboard Shortcuts" = "自定义键盘快捷键";
