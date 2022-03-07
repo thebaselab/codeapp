@@ -325,7 +325,7 @@ struct monacoEditor: UIViewRepresentable {
         }
         
         struct marker: Decodable {
-            var id = UUID()
+            let id = UUID()
             let endColumn: Int
             let endLineNumber: Int
             let startColumn: Int
