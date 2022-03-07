@@ -368,9 +368,13 @@ struct monacoEditor: UIViewRepresentable {
                     guard error == nil, let result = result as? NSArray else {
                         return
                     }
-                    let jsonData = try! JSONSerialization.data(withJSONObject: result, options: [])
-                    let decoded = try! JSONDecoder().decode([action].self, from: jsonData)
-                    self.control.status.editorShortcuts = decoded
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: result, options: [])
+                        let decoded = try JSONDecoder().decode([action].self, from: jsonData)
+                        self.control.status.editorShortcuts = decoded
+                    }catch{
+                        print(error)
+                    }
                 }
             }
         }
