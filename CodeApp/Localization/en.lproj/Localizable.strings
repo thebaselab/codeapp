@@ -24,6 +24,8 @@
 
 "Changelog.message" =
 "
+### v1.2.11 (March 2022)
+- Critical bug fix
 ### v1.2.10 (March 2022)
 - Custom keyboard shortcuts
 - Text selection by sliding over line numbers

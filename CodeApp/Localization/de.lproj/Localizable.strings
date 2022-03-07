@@ -22,6 +22,156 @@
 [Twitter](https://twitter.com/thebaselab)
 ";
 
+"Changelog.message" =
+"
+### v1.2.11 (March 2022)
+- Critical bug fix
+### v1.2.10 (March 2022)
+- Custom keyboard shortcuts
+- Text selection by sliding over line numbers
+- UI improvements
+- Fixes problems where editor sometimes would not load
+- Node.js 16.13.2
+### v1.2.9 (January 2022)
+- Fixes problems where:
+  - certain keys do not work on European keyboard layouts (#237)
+  - `curl` no longer works (#330)
+  - a default argument makes some npm commands crash (#326)
+### v1.2.8 (December 2021)
+- Fixes problems where:
+  - ssh-keygen causes terminal to stall (#314)
+  - editor sometimes show a blank screen
+- Adds syntax highlighting for Terraform (#319)
+### v1.2.7 (December 2021)
+- General improvements
+### v1.2.6 (September 2021)
+- Compatibility with the latest iOS version
+- Other improvements
+### v1.2.5 (July 2021)
+- Terminal
+  - Fixed some problems regarding clang / clang++
+### v1.2.4 (June 2021)
+- Editor
+  - Fixed a problem where mouse / trackpad selection no longer works
+  - Updated to TypeScript definition to 4.2.4
+- Interface
+  - New compact side-bar design for iPhone
+  - Ability to reorder editor tabs
+  - Improved readability for Xcode Theme
+  - Ability to duplicate files or folders in context menu
+- Performance
+  - Enhanced performance when opening SMB drives from Files App
+- Git
+  - Improved compatability with various repositories remotes
+  - In-line Diff indicators
+  - Experimental Git CLI tool
+- Terminal
+  - Autocompletion for file path
+  - Open code in editor with `code <file>`
+- Runtime
+  - Clang (Run C program with `clang main.c` and `./a.out`)
+  - Clang++ (Run C++ program with `clang++ main.cpp` and `./a.out`)
+  - PHP (Run PHP program with `php` and host a web-server with `php -S localhost:<port>`)
+
+---
+
+### v1.2.3 (April 2021)
+- Editor
+  - 6 Additional Color Themes
+  - Read-only mode
+  - Built-in types for Node.js
+  - Support for @types definitions
+- Explorer
+  - Multi-file searching
+- Python Runtime
+  - Built-in Matplotlib, Pandas
+- Other
+  - UI State Restoration
+  - Localisation for German
+  - Bug fixes and other improvements
+
+---
+
+### v1.2.1 (March 2021)
+- Node.js runtime
+  - Run Javascript offline
+  - Install npm modules
+  - Install Javascript commands globally (tsc, prettier etc.)
+  - New terminal commands: npm, npx, node
+- Python 3.9.2 runtime
+  - Run Python offline
+  - Install modules with pip
+  - Install Python commands globally
+  - New terminal commands: pip, python, python3
+- Editor
+  - `Problems` tab
+  - New Markdown style
+  - Syntax highlighting for Vue
+  - Smooth Scrolling option for devices with high refresh rate
+- Terminal
+  - Now supports light colour scheme
+- File explorer
+  - Reduced row height
+- Bug fixes
+
+---
+
+### v1.1.9 (February 2021)
+- Language
+  - Faster execution
+- Bug fixes
+
+---
+
+### v1.1.8 (February 2021)
+- Text Editor
+  - Migration to TextMate grammar (More advanced syntax highlighting)
+  - Support for more languages (Groovy, HLSL, Log, Makefile, Shaderlab, Fortran, Matlab)
+  - Fixed a bug where the editor sometimes does not to pointer clicks
+  - New keyboard toolbar
+- Version Control
+  - Improved performance and reliability
+  - Staging changes
+  - Switching branch
+  - Detached head mode
+  - Revert changes
+- Language
+  - Support for Groovy
+- Built-in Terminal
+  - Support for SSH
+  - Bug fixes
+- Explorer
+  - Folding states for directories are now perserved when the sidebar is toogled off
+  - Ability to expand folder by tapping on the folder name
+- Other
+  - Width of the sidebar is reduced
+  - Theme is now temporaily removed to support the new syntax highlighting system
+  - JSON Intellisense is temporaily disabled
+
+---
+
+### v1.1.7 (January 2021)
+- Text Editor
+  - Changes are now written to disk when you run your code or dismiss the keyboard
+  - Fixed a problem where virtual keyboard sometimes does not show up
+- Version Control
+  - Ability to clone private repositories
+  - Ability to push, pull and sync from remotes
+  - Fixed a problem where cloned repository is not properly named
+- Built-in Terminal
+  - 70+ Linux commands (ls, cd, nslookup etc.)
+  - Bash-like user primitives such as piping, history and completion
+  - Press tab to show all available commands
+- Explorer
+  - Files and directories are now sorted alphabetically
+  - Files or directories starting with a dot are now hidden by default
+  - Ability to select items with a Two-Finger pan gesture
+- Other improvements
+  - You can now open files with Code App from Files app or other Apps directly
+  - You can now hold the app icon from Home Screen to reveal recent documents
+  - Fixed a typo
+";
+
 "Send us an email" = "Senden Sie uns eine E-Mail";
 "Open an issue on GitHub" = "Öffnen Sie einen Issue auf GitHub";
 "Clear console" = "Konsole löschen";
