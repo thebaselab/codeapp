@@ -3,172 +3,168 @@
     <head>
       <title>xterm</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-      <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
-      <script src="node_modules/xterm/lib/xterm.js"></script>
-      <script src="node_modules/xterm-addon-fit/lib/xterm-addon-fit.js"></script>
+      <link rel="stylesheet" href="./xterm.css" />
+      <script src="./xterm.js"></script>
+      <script src="./xterm-addon-fit.js"></script>
       <script src="./local-echo.js"></script>
       <style>
-          body {background-color: #EBEBEB; overflow: hidden}
-          #overlay {width: 0;height:0;position:absolute;}
-          /* body {background-color: #ECECEC} */
-          @media(prefers-color-scheme:dark){
-              .xterm .composition-view {
-                  /* TODO: Composition position got messed up somewhere */
-                  background: #FFF;
-                  color: #000;
-              }
-              
-              .xterm .xterm-viewport {
-                  /* On OS X this is required in order for the scroll bar to appear fully opaque */
-                  background-color: #FFF;
-              }
-              
-              body {background-color: #1E1E1E}
-          }
-      </style>
-    </head>
-    <body>
-      <div tabindex="0" id="overlay"></div>
-      <div id="terminal" style="width: 100%; height: 96vh;"></div>
-      <script>
-          
-          var defaultLightTheme = {
-              background: '#EBEBEB',
-              foreground: '#000000',
-              cursor: '#000000'
-          };
-          var defaultDarkTheme = {
-              background: '#1e1e1e',
-              foreground: '#ffffff',
-              cursor: '#ffffff'
-          };
-          
-          var activeLightTheme = defaultLightTheme;
-          var activeDarkTheme = defaultDarkTheme;
-      
-        function base64ToString(string){
-            return decodeURIComponent(escape(window.atob(string)));
-        }
-      
-        function applyBase64AsTheme(string, isDark){
-            var decodedString = decodeURIComponent(escape(window.atob(string)));
-            var data = JSON.parse(decodedString);
-            applyTheme(data, isDark);
-        }
-      
-        var term = new Terminal({
-          fontSize: 12, 
-          fontFamily: "Menlo",
-          theme: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? activeDarkTheme : activeLightTheme
-        });
-      
-        function applyTheme(theme, isDark){
-            if (theme == null){
-                if (isDark){
-                    activeDarkTheme = defaultDarkTheme
-                }else{
-                    activeLightTheme = defaultLightTheme
-                }
-            }else{
-                if (isDark){
-                    activeDarkTheme = theme;
-                }else{
-                    activeLightTheme = theme;
-                }
+        body {background-color: #EBEBEB; overflow: hidden};
+        #overlay {width: 0;height:0;position:absolute;}
+        /* body {background-color: #ECECEC} */
+        @media(prefers-color-scheme:dark){
+            .xterm .composition-view {
+                /* TODO: Composition position got messed up somewhere */
+                background: #FFF;
+                color: #000;
             }
             
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-                term.setOption('theme', activeDarkTheme)
-                document.body.style.backgroundColor = activeDarkTheme.background;
-            }else{
-                term.setOption('theme', activeLightTheme)
-                document.body.style.backgroundColor = activeLightTheme.background;
+            .xterm .xterm-viewport {
+                /* On OS X this is required in order for the scroll bar to appear fully opaque */
+                background-color: #FFF;
             }
+            
+            body {background-color: #1E1E1E}
         }
-      
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            const newColorScheme = e.matches ? "dark" : "light";
-          
-            if (newColorScheme == "dark") {
-                document.body.style.backgroundColor = activeDarkTheme.background;
-                term.setOption('theme', activeDarkTheme);
-            }else {
-                document.body.style.backgroundColor = activeLightTheme.background;
-                term.setOption('theme', activeLightTheme);
-            }
-        });
-      
-        const fitAddon = new FitAddon.FitAddon();
-        const localEcho = new LocalEchoController(term, {historySize: 50});
-        term.loadAddon(fitAddon);
-        term.open(document.getElementById('terminal'));
-
-        var isReading = false;
-
-        // Auto-completes common commands
-        function autocompleteCommonCommands(index, tokens) {
-            if (index == 0) {
-                var commands = prompt("autocomplete.commands");
-                return JSON.parse(commands);
-            }else{
-                return []
-            }
-        }
-
-        // Auto-completes known files
-        function autocompleteCommonFiles(index, tokens) {
-            if (index == 0) return [];
-            var files = prompt("autocomplete.currentdir", tokens[index]);
-            return JSON.parse(files);
-        }
-
-        // Register the handlers
-        localEcho.addAutocompleteHandler(autocompleteCommonCommands);
-        localEcho.addAutocompleteHandler(autocompleteCommonFiles);
-
-        function startInteractive(){
-            localEcho.detach();
-        }
-
-        function stopInteractive(){
-            localEcho.attach();
-        }
-          
-          term.onData(data => {
-              window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
-                  "Event": "Data",
-                  "Input": data
-              });
-          })
-
-        function readLine(prompt){
-            if (isReading){
-              localEcho.abortRead()
-            }
-            isReading = true
-            localEcho.read(prompt)
-            .then(input => {
-                readLine("");
-                window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
-                    "Event": "Return",
-                    "Input": input
-                });
-            })
-          };
-
-        window.onresize = function(event) {
-            fitAddon.fit();
-            window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
-                "Event": "window.size.change",
-                "Cols": term.cols,
-                "Rows": term.rows
-            });
-        };
-      
-        window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
-            "Event": "Init"
-        });
+    </style>
+  </head>
+  <body>
+    <div tabindex="0" id="overlay"></div>
+    <div id="terminal" style="width: 100%; height: 96vh;"></div>
+    <script>
         
-      </script>
-    </body>
-  </html>
+        var defaultLightTheme = {
+            background: '#EBEBEB',
+            foreground: '#000000',
+            cursor: '#000000'
+        };
+        var defaultDarkTheme = {
+            background: '#1e1e1e',
+            foreground: '#ffffff',
+            cursor: '#ffffff'
+        };
+        
+        var activeLightTheme = defaultLightTheme;
+        var activeDarkTheme = defaultDarkTheme;
+    
+      function base64ToString(string){
+          return decodeURIComponent(escape(window.atob(string)));
+      }
+    
+      function applyBase64AsTheme(string, isDark){
+          var decodedString = decodeURIComponent(escape(window.atob(string)));
+          var data = JSON.parse(decodedString);
+          applyTheme(data, isDark);
+      }
+    
+      var term = new Terminal({
+        fontSize: 12, 
+        fontFamily: "Menlo",
+        theme: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? activeDarkTheme : activeLightTheme
+      });
+    
+      function applyTheme(theme, isDark){
+          if (theme == null){
+              if (isDark){
+                  activeDarkTheme = defaultDarkTheme
+              }else{
+                  activeLightTheme = defaultLightTheme
+              }
+          }else{
+              if (isDark){
+                  activeDarkTheme = theme;
+              }else{
+                  activeLightTheme = theme;
+              }
+          }
+          
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+              term.setOption('theme', activeDarkTheme)
+              document.body.style.backgroundColor = activeDarkTheme.background;
+          }else{
+              term.setOption('theme', activeLightTheme)
+              document.body.style.backgroundColor = activeLightTheme.background;
+          }
+      }
+    
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+          const newColorScheme = e.matches ? "dark" : "light";
+        
+          if (newColorScheme == "dark") {
+              document.body.style.backgroundColor = activeDarkTheme.background;
+              term.setOption('theme', activeDarkTheme);
+          }else {
+              document.body.style.backgroundColor = activeLightTheme.background;
+              term.setOption('theme', activeLightTheme);
+          }
+      });
+    
+      const fitAddon = new FitAddon.FitAddon();
+      const localEcho = new LocalEchoController(term, {historySize: 50});
+      term.loadAddon(fitAddon);
+      term.open(document.getElementById('terminal'));
+
+      var isReading = false;
+
+      // Auto-completes common commands
+      function autocompleteCommonCommands(index, tokens) {
+          if (index == 0) {
+              var commands = prompt("autocomplete.commands");
+              return JSON.parse(commands);
+          }else{
+              return []
+          }
+      }
+
+      // Auto-completes known files
+      function autocompleteCommonFiles(index, tokens) {
+          if (index == 0) return [];
+          var files = prompt("autocomplete.currentdir", tokens[index]);
+          return JSON.parse(files);
+      }
+
+      // Register the handlers
+      localEcho.addAutocompleteHandler(autocompleteCommonCommands);
+      localEcho.addAutocompleteHandler(autocompleteCommonFiles);
+
+      function readLine(prompt){
+        if (isReading){
+          localEcho.abortRead()
+        }
+        isReading = true
+        localEcho.read(prompt)
+        .then(input => {
+            readLine("");
+            window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
+                "Event": "Return",
+                "Input": input
+            });
+        })
+      };
+      
+
+    //   term.onData(data => {
+    //     alert(JSON.stringify(data));
+    //     // data = data.replace(/\r/g, '\n\r');
+    //     // window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+    //     //     "Event": "Data",
+    //     //     "Input": data
+    //     // });
+    //   })
+      
+      // Causes unwanted outputs
+      window.onresize = function(event) {
+          fitAddon.fit();
+          window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
+              "Event": "window.size.change",
+              "Cols": term.cols,
+              "Rows": term.rows
+          });
+      };
+    
+      window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
+          "Event": "Init"
+      });
+      
+    </script>
+  </body>
+</html>
