@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.12 (2022 年 3 月)**
+##### **v1.2.13 (2022 年 3 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -24,6 +24,9 @@
 
 "Changelog.message" =
 "
+### v1.2.13 (2022 年 3 月)
+- iOS 15.4 的兼容性
+- Node.js 的国际化支持
 ### v1.2.12 (2022 年 3 月)
 - 错误修复
 ### v1.2.10（2022 年 3 月）
