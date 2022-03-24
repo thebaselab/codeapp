@@ -1,7 +1,7 @@
 # Clean previous downloads
 rm -rf Resources
 
-mkdir Resources
+mkdir -p Resources
 cd Resources
 
 # Python
@@ -49,9 +49,12 @@ for lib in harfbuzz freetype libpng; do
 done
 
 # Node.js
-curl -OL https://github.com/thebaselab/nodejs-mobile/releases/download/16.3.2/nodejs-mobile-16.zip
-unzip -q nodejs-mobile-16.zip -d NodeJS
-rm -f nodejs-mobile-16.zip
+mkdir -p NodeJS
+cd NodeJS
+curl -OL https://github.com/1Conan/nodejs-mobile/releases/download/nodejs-v16.14.2-mobile-v0.4.0/NodeMobile.xcframework.zip
+unzip -q NodeMobile.xcframework.zip -d NodeMobile.xcframework
+rm -f NodeMobile.xcframework.zip
+cd ..
 
 # PHP
 curl -OL https://github.com/bummoblizard/php-src/releases/download/v0.2/php.xcframework.zip

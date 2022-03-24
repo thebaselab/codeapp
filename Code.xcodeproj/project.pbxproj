@@ -358,9 +358,9 @@
 		944EEBFB2563C386009D77FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBFA2563C386009D77FE /* Preview Assets.xcassets */; };
 		944FC3FF25C543CD00C7C43C /* GitServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944FC3FE25C543CC00C7C43C /* GitServiceProvider.swift */; };
 		944FC40B25C5F69D00C7C43C /* HierarchyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944FC40A25C5F69D00C7C43C /* HierarchyList.swift */; };
-		945E7E4027CA846500BA1D95 /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */; };
-		945E7E4127CA846500BA1D95 /* NodeMobile.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945E7E4227CA846E00BA1D95 /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */; };
+		945AEA3527ECCB3D00BA193E /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */; };
+		945AEA3727ECCB4300BA193E /* NodeMobile.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945AEA3827ECCB5F00BA193E /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */; };
 		947BF349262453040015DAEB /* searchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* searchManager.swift */; };
@@ -635,11 +635,11 @@
 				94251F7A263E01CC0029427A /* python3_ios-pandas._libs.hashtable.framework in Embed Frameworks */,
 				94251F7B263E01CC0029427A /* python3_ios-pandas._libs.index.framework in Embed Frameworks */,
 				94251F7C263E01CC0029427A /* python3_ios-pandas._libs.indexing.framework in Embed Frameworks */,
+				945AEA3727ECCB4300BA193E /* NodeMobile.xcframework in Embed Frameworks */,
 				94251F7D263E01CC0029427A /* python3_ios-pandas._libs.internals.framework in Embed Frameworks */,
 				94251F7E263E01CC0029427A /* python3_ios-pandas._libs.interval.framework in Embed Frameworks */,
 				94251F7F263E01CC0029427A /* python3_ios-pandas._libs.join.framework in Embed Frameworks */,
 				94251F80263E01CC0029427A /* python3_ios-pandas._libs.json.framework in Embed Frameworks */,
-				945E7E4127CA846500BA1D95 /* NodeMobile.xcframework in Embed Frameworks */,
 				94251F81263E01CC0029427A /* python3_ios-pandas._libs.lib.framework in Embed Frameworks */,
 				94251F82263E01CC0029427A /* python3_ios-pandas._libs.missing.framework in Embed Frameworks */,
 				94251F83263E01CC0029427A /* python3_ios-pandas._libs.ops_dispatch.framework in Embed Frameworks */,
@@ -1233,8 +1233,8 @@
 		944EEBFC2563C386009D77FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		944FC3FE25C543CC00C7C43C /* GitServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitServiceProvider.swift; sourceTree = "<group>"; };
 		944FC40A25C5F69D00C7C43C /* HierarchyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchyList.swift; sourceTree = "<group>"; };
+		945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = NodeMobile.xcframework; sourceTree = "<group>"; };
 		945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NodeMobile.xcframework; path = Resources/NodeJS/NodeMobile.xcframework; sourceTree = "<group>"; };
-		945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = NodeMobile.xcframework; sourceTree = "<group>"; };
 		94638D8B268243B800DDD7FC /* git.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = git.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
 		947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+getSafeArea.swift"; sourceTree = "<group>"; };
@@ -1359,7 +1359,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				945E7E4227CA846E00BA1D95 /* NodeMobile.xcframework in Frameworks */,
+				945AEA3827ECCB5F00BA193E /* NodeMobile.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1377,7 +1377,7 @@
 				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
 				EE1687E70064F15DC8BB6399 /* Pods_Code.framework in Frameworks */,
 				94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */,
-				945E7E4027CA846500BA1D95 /* NodeMobile.xcframework in Frameworks */,
+				945AEA3527ECCB3D00BA193E /* NodeMobile.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1513,7 +1513,7 @@
 		9469A8F426A33B1D003F569F /* NodeJS */ = {
 			isa = PBXGroup;
 			children = (
-				945E7E3C27CA83E000BA1D95 /* NodeMobile.xcframework */,
+				945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */,
 			);
 			path = NodeJS;
 			sourceTree = "<group>";
@@ -2481,6 +2481,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Resources/NodeJS",
 				);
 				INFOPLIST_FILE = extension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2512,6 +2513,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Resources/NodeJS",
 				);
 				INFOPLIST_FILE = extension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2669,6 +2671,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/cpython",
+					"$(PROJECT_DIR)/Resources/NodeJS",
 				);
 				INFOPLIST_FILE = CodeApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2710,6 +2713,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/cpython",
+					"$(PROJECT_DIR)/Resources/NodeJS",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = CodeApp/Info.plist;
