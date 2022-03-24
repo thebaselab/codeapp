@@ -124,8 +124,8 @@ struct CodeApp: App {
                 NSLog("Error in creating C SDK directory \(localURL): \(error)")
                 return
             }
-            // usr/lib/clang/13.0.0/lib/wasi/
-            localURL = libraryURL.appendingPathComponent("usr/lib/clang/13.0.0/lib/wasi/") // $HOME/Library/usr/lib/clang/13.0.0/lib/wasi/
+            // usr/lib/clang/14.0.0/lib/wasi/
+            localURL = libraryURL.appendingPathComponent("usr/lib/clang/14.0.0/lib/wasi/") // $HOME/Library/usr/lib/clang/14.0.0/lib/wasi/
             do {
                 if (FileManager().fileExists(atPath: localURL.path) && !localURL.isDirectory) {
                     try FileManager().removeItem(at: localURL)
@@ -141,7 +141,7 @@ struct CodeApp: App {
                                       "usr/share",
                                       "usr/lib/wasm32-wasi/crt1.o",
                                       "usr/lib/wasm32-wasi/libc.imports",
-                                      "usr/lib/clang/13.0.0/include",
+                                      "usr/lib/clang/14.0.0/include",
             ]
             let bundleUrl = URL(fileURLWithPath: Bundle.main.resourcePath!).appendingPathComponent("ClangLib")
             
@@ -202,7 +202,7 @@ struct CodeApp: App {
                 }
             }
             // One of the libraries is in a different folder:
-            let libraryFileURL = libraryURL.appendingPathComponent("/usr/lib/clang/13.0.0/lib/wasi/libclang_rt.builtins-wasm32.a")
+            let libraryFileURL = libraryURL.appendingPathComponent("/usr/lib/clang/14.0.0/lib/wasi/libclang_rt.builtins-wasm32.a")
             if (FileManager().fileExists(atPath: libraryFileURL.path)) {
                 try! FileManager().removeItem(at: libraryFileURL)
             }
