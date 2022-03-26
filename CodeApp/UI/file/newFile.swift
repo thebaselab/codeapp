@@ -13,6 +13,7 @@ struct newFileView: View {
     
     @State var targetUrl: String
     @State private var name = ""
+    @FocusState private var filenameFieldIsFocused: Bool
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -50,7 +51,8 @@ struct newFileView: View {
     func loadNewFile(lang:Int){
         var content = ""
         
-        if !checkNameValidity(){
+        if !checkNameValidity() || name.isEmpty{
+            filenameFieldIsFocused = true
             return
         }
         
@@ -201,7 +203,6 @@ struct newFileView: View {
         VStack(alignment: .leading){
             NavigationView {
                 Form {
-                    
                     Section(header: Text(NSLocalizedString("Templates", comment: ""))) {
                         ScrollView(.horizontal, showsIndicators: false){
                             HStack(){
@@ -238,7 +239,6 @@ struct newFileView: View {
                                 }.padding().background(Color.init("B3_A")).cornerRadius(12)
                             }
                         }
-                        
                     }
                     
                     Section(header: Text(NSLocalizedString("Custom", comment: ""))) {
@@ -247,14 +247,18 @@ struct newFileView: View {
                                 .frame(width: 16)
                                 .fixedSize()
                             TextField("example.py", text: $name, onCommit: {
-//                                self.name = self.name.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!
                                 self.loadNewFile(lang: -1)
-                            }).autocapitalization(.none).disableAutocorrection(true)
+                            })
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                            .focused($filenameFieldIsFocused)
+                            
                             Spacer()
                             Button(action: {
-//                                self.name = self.name.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!
                                 if !name.isEmpty{
                                     self.loadNewFile(lang: -1)
+                                }else{
+                                    filenameFieldIsFocused = true
                                 }
                             }){
                                 Text(NSLocalizedString("Add File", comment: ""))
@@ -268,8 +272,6 @@ struct newFileView: View {
                         Text("File name '\(name)' contains invalid character.")
                     }
                     
-                    
-                    
                     Section(header: Text(NSLocalizedString("Where", comment: ""))) {
                         Text("\(targetUrl.last == "/" ? targetUrl.dropLast().components(separatedBy: "/").last!.removingPercentEncoding! : targetUrl.components(separatedBy: "/").last!.removingPercentEncoding!)")
                     }
@@ -277,6 +279,10 @@ struct newFileView: View {
                 }.navigationBarTitle(NSLocalizedString("New File", comment: ""))
             }
             Spacer()
+        }.onAppear{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6){
+                filenameFieldIsFocused = true
+            }
         }
         
         

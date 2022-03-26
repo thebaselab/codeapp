@@ -12,6 +12,7 @@ struct search: View {
     
     @EnvironmentObject var App: MainApp
     @State private var accentColor: Color = .blue
+    @FocusState private var searchBarFocused: Bool
     
     func returnSmallerInt(a:Int, b:Int) -> Int{
         if a>b {return b}
@@ -39,6 +40,7 @@ struct search: View {
                     }, clearAction: {
                         App.textSearchManager.removeAllResults()
                     }, placeholder: NSLocalizedString("Search", comment: ""), cornerRadius: 15)
+                    .focused($searchBarFocused)
                 }
                 
                 Section(header:
@@ -99,6 +101,12 @@ struct search: View {
                 }
             }
             .listStyle(SidebarListStyle())
+        }.onAppear{
+            if App.textSearchManager.results.isEmpty {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6){
+                    searchBarFocused = true
+                }
+            }
         }
     }
 }
