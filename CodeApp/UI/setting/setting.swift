@@ -71,7 +71,7 @@ struct settingView: View {
                     }
                     
                     Picker(selection: $preferredColorScheme, label: Text("Color Scheme")) {
-                        ForEach(0 ..< colorSchemes.count) {
+                        ForEach(0 ..< colorSchemes.count, id: \.self) {
                             Text(self.colorSchemes[$0])
                         }
                     }
@@ -190,7 +190,7 @@ struct settingView: View {
                         }
                         
                         Picker(selection: $renderWhitespace, label: Text("Render Whitespace")) {
-                            ForEach(0 ..< renderWhitespaceOptions.count) {
+                            ForEach(0 ..< renderWhitespaceOptions.count, id: \.self) {
                                 Text(self.renderWhitespaceOptions[$0])
                             }
                         }.onChange(of: renderWhitespace){value in

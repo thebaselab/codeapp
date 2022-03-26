@@ -273,7 +273,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             
             self.executor = Executor(root: root, onStdout: { data in
                 let str = String(decoding: data, as: UTF8.self)
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     if isInteractive || str.contains("\u{8}") || str.contains("\u{13}") || str.contains("\r") {
                         self.executeScript( "term.write(base64ToString('\(str.base64Encoded()!)'));")
                     }else {
