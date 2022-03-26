@@ -318,7 +318,6 @@ struct CodeApp: App {
         config.preferences.setValue(true as Bool, forKey: "allowFileAccessFromFileURLs")
         
         let wasmFilePath = Bundle.main.path(forResource: "wasm", ofType: "html", inDirectory: "ClangLib")
-//        let wv = WKWebView(frame: .zero, configuration: config)
         wasmWebView.isOpaque = false
         wasmWebView.loadFileURL(URL(fileURLWithPath: wasmFilePath!), allowingReadAccessTo: URL(fileURLWithPath: wasmFilePath!))
         wasmWebView.configuration.userContentController = WKUserContentController()

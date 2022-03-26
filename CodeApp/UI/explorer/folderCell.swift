@@ -15,14 +15,11 @@ struct folderCell: View{
     @State var showingNewFileSheet = false
     @State var isRenaming = false
     @State var newname = ""
-//    @State var showingFileMover = false
     
     init(item: WorkSpaceStorage.fileItemRepresentable){
         self._item = State.init(initialValue: item)
         self._newname = State.init(initialValue: item.name.removingPercentEncoding!)
     }
-    
-    //    let activityViewController = SwiftUIActivityViewController()
     
     var body: some View{
         Button(action: {
@@ -134,9 +131,6 @@ struct folderCell: View{
         .sheet(isPresented: $showingNewFileSheet) {
             newFileView(targetUrl: item.url).environmentObject(App)
         }
-//        .fileMover(isPresented: $showingFileMover, file: URL(string: item.url), onCompletion: { _ in
-//
-//        })
         .contextMenu {
             Group{
                 
@@ -171,14 +165,7 @@ struct folderCell: View{
                         Text("Duplicate")
                         Image(systemName: "plus.square.on.square")
                     }
-//
-//                    Button(action: {
-//                        showingFileMove.toggle()
-//                    }) {
-//                        Text("Move")
-//                        Image(systemName: "doc.on.doc")
-//                    }
-//
+                    
                     Button(action: {
                         App.trashItem(url: URL(string: item.url)!)
                     }) {

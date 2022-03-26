@@ -156,10 +156,6 @@ struct monacoEditor: UIViewRepresentable {
         if !editorLineNumberEnabled{
             executeJavascript(command: "editor.updateOptions({ lineNumbers: false })")
         }
-//        if horizontalSizeClass == .compact{
-//            executeJavascript(command: "editor.updateOptions({minimap: {enabled: false}})")
-//            executeJavascript(command: "editor.updateOptions({ lineNumbers: false })")
-//        }
         if editorSmoothScrolling {
             executeJavascript(command: "editor.updateOptions({ smoothScrolling: true })")
         }
@@ -459,8 +455,6 @@ struct monacoEditor: UIViewRepresentable {
                         }
                     }
                 }
-//            case "Editor Focused":
-//                control.status.terminalInstance.executeScript("document.getElementById('overlay').focus()")
             default:
                 print("[Error] \(event) not handled")
             }
@@ -480,9 +474,6 @@ struct monacoEditor: UIViewRepresentable {
             }else if editor.type == .diff{
                 control.executeJavascript(command: "editor.getOriginalEditor().setScrollPosition({scrollTop: editor.getOriginalEditor().getScrollTop() + (-1 * \(velocity.y / 100))}, 0)")
                 control.executeJavascript(command: "editor.getOriginalEditor().setScrollPosition({scrollLeft: editor.getOriginalEditor().getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)")
-                /// TODO: Acceleration for trackpad scrolling
-                //                control.executeJavascript(command: "editor.getModifiedEditor().setScrollPosition({scrollTop: editor.getModifiedEditor().getScrollTop() + (-1 * \(velocity.y / 100))}, 0)")
-                //                control.executeJavascript(command: "editor.getModifiedEditor().setScrollPosition({scrollLeft: editor.getModifiedEditor().getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)")
             }
             offsetY = velocity.y
             offsetX = velocity.x
@@ -551,21 +542,6 @@ struct monacoEditor: UIViewRepresentable {
         monacoWebView.scrollView.bounces = false
         monacoWebView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
-        
-        if #available(iOS 14.5, *) {} else{
-            monacoWebView.scrollView.isScrollEnabled = false
-            
-            let panGestureRecognizer = UIPanGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.panColor(_:)))
-            // We want continuous scrolls originated from devices like trackpads.
-            panGestureRecognizer.allowedScrollTypesMask = [.continuous]
-            panGestureRecognizer.delegate = context.coordinator
-            monacoWebView.addGestureRecognizer(panGestureRecognizer)
-            
-            let mouseGestureRecognizer = UIPanGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.mousePan(_:)))
-            mouseGestureRecognizer.allowedScrollTypesMask = [.discrete]
-            mouseGestureRecognizer.delegate = context.coordinator
-            monacoWebView.addGestureRecognizer(mouseGestureRecognizer)
-        }
         
         if !isEditorInited{
             let contentManager = monacoWebView.configuration.userContentController
