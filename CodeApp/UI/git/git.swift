@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct git: View {
     
@@ -97,6 +98,10 @@ struct git: View {
                                     }){
                                         App.notificationManager.showInformationMessage("Push succeeded")
                                         App.git_status()
+                                        
+                                        if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                                            SKStoreReviewController.requestReview(in: scene)
+                                        }
                                     }
                                 }){
                                     Label("Push", systemImage: "square.and.arrow.up")
