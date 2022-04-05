@@ -253,16 +253,16 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Font Size" = "字体大小";
 "Editor Font Size" = "编辑器字体大小";
 "Terminal Font Size" = "控制台字体大小";
-"Bracket Completion" = "自动输入括号￼￼￼";
+"Bracket Completion" = "自动输入括号";
 "Theme" = "主题";
 "Rate Code App" = "给Code App打个分";
 "About" = "关于";
 "Version" = "版本";
 
-"Done" = "完成￼";
+"Done" = "完成";
 
 "Recent" = "最近";
-"Show in Files App" = "在「档案」App中打開￼";
+"Show in Files App" = "在「档案」App中打开";
 "Copy Relative Path" = "复制相对路径";
 "Delete" = "删除";
 "Color Scheme" = "颜色主题";
