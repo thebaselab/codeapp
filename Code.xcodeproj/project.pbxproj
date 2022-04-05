@@ -2334,7 +2334,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=$PATH:/opt/homebrew/bin\nif command -v swift-format > /dev/null\nthen\n    swift-format format -i -r ${PROJECT_DIR}/CodeApp --configuration swift-format-configuration.json\nelse\n    echo \"warning: swift-format not installed, install it by running brew install swift-format\"\nfi\n\n";
+			shellScript = "export PATH=$PATH:/opt/homebrew/bin\nif command -v swift-format > /dev/null\nthen\n    swift-format format -i -r ${PROJECT_DIR}/CodeApp\nelse\n    echo \"warning: swift-format not installed, install it by running brew install swift-format\"\nfi\n\n";
 		};
 		C6CFB72B599CFB87ED1706EF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
