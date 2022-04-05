@@ -275,7 +275,7 @@ struct monacoEditor: UIViewRepresentable {
         self.executeJavascript(command: "editor.focus()")
     }
 
-    func executeJavascript(command: String, printResponse: Bool = true) {
+    func executeJavascript(command: String, printResponse: Bool = false) {
         DispatchQueue.main.async {
             monacoWebView.evaluateJavaScript(command) { (result, error) in
                 if printResponse {

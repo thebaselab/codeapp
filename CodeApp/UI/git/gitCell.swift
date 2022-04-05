@@ -132,11 +132,6 @@ struct GitCell: View {
                             Text(name)
                                 .foregroundColor(Color.init("git.modified"))
                                 .font(.system(size: 14, weight: .light))
-                            //                                if !(itemUrl.deletingLastPathComponent().absoluteString == App.currentFolder.url){
-                            //                                    Text(itemUrl.deletingLastPathComponent().lastPathComponent.removingPercentEncoding!)
-                            //                                        .foregroundColor(.gray)
-                            //                                        .font(.system(size: 12, weight: .light))
-                            //                                }
                             Spacer()
                             GitCell_controls(status: status, itemUrl: itemUrl)
                             Text("M")
@@ -187,43 +182,8 @@ struct GitCell: View {
                         Spacer()
                     }
 
-                }.padding(5)  //.padding(.leading, 5)
+                }.padding(5)
             }
         }.buttonStyle(NoAnim())
-        //        .contextMenu {
-        //
-        //            Button(action: {
-        //                openSharedFilesApp(urlString: URL(string: item.url)!.deletingLastPathComponent().absoluteString)
-        //            }){
-        //                Text(NSLocalizedString("Show in Files App", comment: ""))
-        //                Image(systemName: "folder")
-        //            }
-        //
-        //            Button(action: {
-        //                let pasteboard = UIPasteboard.general
-        //                pasteboard.string = item.url.replacingOccurrences(of:App.currentFolder.url, with: "")
-        //            }){
-        //                Text(NSLocalizedString("Copy Relative Path", comment: ""))
-        //                Image(systemName: "link")
-        //            }
-        //
-        //            Button(action: {
-        //                if let destination = URL(string: item.url) {
-        //                    do {
-        //                        try FileManager.default.trashItem(at: destination, resultingItemURL: nil)
-        //
-        //                        App.closeEditor(url: item.url, type: item.type)
-        //
-        //                    } catch let error as NSError {
-        //                        print("Error: \(error.domain)")
-        //                    }
-        //                }
-        //
-        //            }) {
-        //                Text(NSLocalizedString("Delete", comment: ""))
-        //                Image(systemName: "trash")
-        //            }.foregroundColor(.red)
-        //
-        //        }
     }
 }

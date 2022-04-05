@@ -300,8 +300,6 @@ class WorkSpaceStorage: ObservableObject {
     private func loadURL(
         url: String, completionHandler: @escaping ([fileItemRepresentable]?, Error?) -> Void
     ) {
-        print("Starting loadURL: \(url)")
-
         guard let url = URL(string: url) else {
             completionHandler(nil, nil)
             return
@@ -337,7 +335,6 @@ class WorkSpaceStorage: ObservableObject {
                 return $0.url.lowercased() < $1.url.lowercased()
             }
 
-            print("Finished loadURL: \(url)")
             completionHandler(folders + files, nil)
         }
 

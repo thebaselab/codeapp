@@ -136,8 +136,6 @@ class MainApp: ObservableObject {
         }
         workSpaceStorage.onDirectoryChange { url in
             for editor in self.editors {
-                print("editor url is \(editor.url)")
-                print("")
                 if editor.url.contains(url), let urlToCheck = URL(string: editor.url) {
                     if !FileManager.default.fileExists(atPath: urlToCheck.path) {
                         editor.isDeleted = true
@@ -568,7 +566,6 @@ class MainApp: ObservableObject {
         webServer.addGETHandler(
             forBasePath: "/", directoryPath: url.path, indexFilename: "index.html", cacheAge: 10,
             allowRangeRequests: true)
-        print(url.absoluteString)
         do {
             try webServer.start(options: [
                 GCDWebServerOption_AutomaticallySuspendInBackground: true,
@@ -611,12 +608,8 @@ class MainApp: ObservableObject {
                     self.remote = ""
                 }
                 self.branch = branch
-                print("Indexed resource count: \(indexed.count)")
-                print("Indexed resource count: \(worktree.count)")
                 self.indexedResources = indexed
                 self.workingResources = worktree
-                print(self.indexedResources.keys)
-                print(self.workingResources.keys)
                 self.gitTracks = indexed
                 worktree.forEach { key, value in
                     self.gitTracks[key] = value

@@ -304,7 +304,6 @@ class GitServiceProvider {
                     from: from, to: to,
                     checkoutProgress: { (message, current, total) in
                         DispatchQueue.main.async {
-                            print("[Git Checkout] current: \(current) total: \(total)")
                             progress?.localizedDescription = "Updating files"
                             progress?.totalUnitCount = Int64(total)
                             progress?.completedUnitCount = Int64(current)
@@ -312,7 +311,6 @@ class GitServiceProvider {
                     },
                     fetchProgress: { current, total in
                         DispatchQueue.main.async {
-                            print("[Git Fetch] current: \(current) total: \(total)")
                             progress?.localizedDescription = "Receiving objects"
                             progress?.fileOperationKind = .downloading
                             progress?.totalUnitCount = Int64(total)
@@ -325,7 +323,6 @@ class GitServiceProvider {
                     from: from, to: to, credentials: self.credential!,
                     checkoutProgress: { (message, current, total) in
                         DispatchQueue.main.async {
-                            print("[Git Checkout] current: \(current) total: \(total)")
                             progress?.localizedDescription = "Updating files"
                             progress?.totalUnitCount = Int64(total)
                             progress?.completedUnitCount = Int64(current)
@@ -333,7 +330,6 @@ class GitServiceProvider {
                     },
                     fetchProgress: { current, total in
                         DispatchQueue.main.async {
-                            print("[Git Fetch] current: \(current) total: \(total)")
                             progress?.localizedDescription = "Receiving objects"
                             progress?.fileOperationKind = .downloading
                             progress?.totalUnitCount = Int64(total)
@@ -489,7 +485,6 @@ class GitServiceProvider {
         for path in paths {
             let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
                 .replacingOccurrences(of: "%20", with: #"\ "#)
-            print("[UNSTAGE] \(path)")
             let result = repository!.unstage(path: path)
             switch result {
             case .success:
@@ -510,7 +505,6 @@ class GitServiceProvider {
         for path in paths {
             let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
                 .replacingOccurrences(of: "%20", with: #"\ "#)
-            print("[STAGE] \(path)")
             let result = repository!.add(path: path)
             switch result {
             case .success:
@@ -723,7 +717,6 @@ class GitServiceProvider {
         for path in paths {
             let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
                 .replacingOccurrences(of: "%20", with: #"\ "#)
-            print("[CHECKOUT] \(path)")
             let result = repository!.checkout(path: path, strategy: .Force)
             switch result {
             case .success:

@@ -109,7 +109,6 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     }
 
     func executeScript(_ script: String) {
-        print("[Terminal] Evaluating: \(script)")
         DispatchQueue.main.async {
             self.webView?.evaluateJavaScript(script) { (result, error) in
                 if result != nil { print(result as Any) }

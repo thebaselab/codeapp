@@ -107,8 +107,6 @@ class Executor {
 
         ios_switchSession(self.stdout_file)
 
-        print(input.debugDescription)
-
         stdin_pipe.fileHandleForWriting.write(data)
 
         if state == .running {
@@ -124,7 +122,6 @@ class Executor {
         DispatchQueue.main.async {
             if self.state == .running {
                 let str = String(decoding: data, as: UTF8.self)
-                print("out: #" + str.debugDescription + "#")
                 // Interactive Commands /with control characters
                 if str.contains("\u{8}") || str.contains("\u{13}") || str.contains("\r") {
                     self.receivedStdout(data)

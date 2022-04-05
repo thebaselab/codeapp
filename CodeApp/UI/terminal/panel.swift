@@ -166,7 +166,6 @@ struct panelView: View {
                             .padding(.trailing)
                             .highPriorityGesture(
                                 TapGesture().onEnded {
-                                    print("currentTab: \(currentTab)")
                                     if showSplitView || currentTab == 1 {
                                         App.compileManager.consoleContent = ""
                                     } else if currentTab == 2 {

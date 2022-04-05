@@ -23,9 +23,7 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, RowContent: View
     }
 
     public var body: some View {
-        //        List {
         recursiveView
-        //        }//.listStyle(SidebarListStyle())
     }
 }
 
@@ -93,14 +91,6 @@ struct FSDisclosureGroup<Label, Content>: View where Label: View, Content: View 
     @ViewBuilder
     var body: some View {
         DisclosureGroup(isExpanded: binding(for: id), content: content, label: label)
-        //            .onDrop(of: [.fileURL], isTargeted: $isTargeted, perform: { providers in
-        //                expandStates[id] = true
-        //                return true
-        //            })
-        //            .background(isTargeted ? Color.gray : Color.clear)
-        //            .onChange(of: self.expandStates[id]){ newValue in
-        //                print(newValue)
-        //            }
     }
 
 }

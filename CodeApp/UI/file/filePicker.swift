@@ -106,23 +106,23 @@ struct DocumentPickerView: UIViewControllerRepresentable {
             }
         }
 
-        @objc func listenForQuery(_ notification: Notification?) {
-            let query = notification?.object as? NSMetadataQuery
-
-            if query != fileQuery {
-                return
-            }
-
-            if query?.resultCount == 0 {
-                return
-            }
-
-            let item = fileQuery?.result(at: 0) as? NSMetadataItem
-            let progress =
-                (item?.value(forAttribute: NSMetadataUbiquitousItemPercentDownloadedKey)
-                as? NSNumber)?.doubleValue ?? 0.0
-            print("download progress = \(progress)")
-
-        }
+        //        @objc func listenForQuery(_ notification: Notification?) {
+        //            let query = notification?.object as? NSMetadataQuery
+        //
+        //            if query != fileQuery {
+        //                return
+        //            }
+        //
+        //            if query?.resultCount == 0 {
+        //                return
+        //            }
+        //
+        //            let item = fileQuery?.result(at: 0) as? NSMetadataItem
+        //            let progress =
+        //                (item?.value(forAttribute: NSMetadataUbiquitousItemPercentDownloadedKey)
+        //                as? NSNumber)?.doubleValue ?? 0.0
+        //            print("download progress = \(progress)")
+        //
+        //        }
     }
 }

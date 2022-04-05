@@ -262,8 +262,6 @@ public func npx(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
     var bin = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
     bin.appendPathComponent("node_modules/.bin/\(cmd)")
 
-    //    print(bin.path)
-
     guard FileManager.default.fileExists(atPath: bin.path) else {
         fputs(
             "npm ERR! command doesn't exist or is not supported: \(args.joined(separator: " "))\n",
