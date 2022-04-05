@@ -15,6 +15,8 @@ struct git: View {
     @AppStorage("accentColor") var accentColor: String = "blue"
     @AppStorage("user_name") var username: String = ""
     @AppStorage("user_email") var email: String = ""
+    @AppStorage("userHasPromptedWithReviewRequest") var userHasPromptedWithReviewRequest = false
+
     @State var showsIdentitySheet: Bool = false
 
     func humanReadableByteCount(bytes: Int) -> String {
@@ -112,12 +114,14 @@ struct git: View {
                                         App.git_status()
 
                                         DispatchQueue.main.async {
-                                            if let scene = UIApplication.shared.connectedScenes
-                                                .first(where: {
-                                                    $0.activationState == .foregroundActive
-                                                }) as? UIWindowScene
+                                            if !userHasPromptedWithReviewRequest,
+                                                let scene = UIApplication.shared.connectedScenes
+                                                    .first(where: {
+                                                        $0.activationState == .foregroundActive
+                                                    }) as? UIWindowScene
                                             {
                                                 SKStoreReviewController.requestReview(in: scene)
+                                                userHasPromptedWithReviewRequest = true
                                             }
                                         }
 
