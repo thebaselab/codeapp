@@ -5,23 +5,24 @@
 //  Created by Ken Chung on 7/12/2020.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
-class ActivityViewController : UIViewController {
+class ActivityViewController: UIViewController {
 
     var urls: [URL]!
 
     @objc func share() {
         let vc = UIActivityViewController(activityItems: urls, applicationActivities: [])
-        present(vc,
-                animated: true,
-                completion: nil)
+        present(
+            vc,
+            animated: true,
+            completion: nil)
         vc.popoverPresentationController?.sourceView = self.view
     }
 }
 
-struct SwiftUIActivityViewController : UIViewControllerRepresentable {
+struct SwiftUIActivityViewController: UIViewControllerRepresentable {
 
     let activityViewController = ActivityViewController()
 

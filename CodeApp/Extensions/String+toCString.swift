@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    
+
     func toCString() -> UnsafePointer<Int8>? {
         let nsSelf: NSString = self as NSString
         return nsSelf.cString(using: String.Encoding.utf8.rawValue)
@@ -17,5 +17,5 @@ extension String {
     var utf8CString: UnsafeMutablePointer<Int8> {
         return UnsafeMutablePointer(mutating: (self as NSString).utf8String!)
     }
-    
+
 }

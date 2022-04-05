@@ -13,7 +13,7 @@ struct activityBarItem: Identifiable {
     let title: String
     let systemName: String
     let contextMenuItems: [contextMenuItem]
-//    let view: AnyView
+    //    let view: AnyView
 
     struct contextMenuItem: Identifiable {
         let id = UUID()
@@ -33,12 +33,12 @@ struct activityBar: View {
     static var width: CGFloat = 50.0
 
     var body: some View {
-        VStack{
-            ForEach(activityBarItems){item in
+        VStack {
+            ForEach(activityBarItems) { item in
                 Button(action: {
 
                 }) {
-                    ZStack{
+                    ZStack {
                         // Let SwiftUI generate UIKeyCommand's discoverabilityTitle
                         Text(item.title)
                             .foregroundColor(.clear)
@@ -47,7 +47,10 @@ struct activityBar: View {
                         Image(systemName: item.systemName)
                             .font(.system(size: 20, weight: .light))
                             .foregroundColor(
-                                Color.init(id: (currentDirectory == item.id && isShowingDirectory) ? "activityBar.foreground" : "activityBar.inactiveForeground")
+                                Color.init(
+                                    id: (currentDirectory == item.id && isShowingDirectory)
+                                        ? "activityBar.foreground"
+                                        : "activityBar.inactiveForeground")
                             )
                             .padding(5)
                     }
@@ -55,12 +58,15 @@ struct activityBar: View {
                 .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 .hoverEffect(.highlight)
                 .keyboardShortcut("e", modifiers: [.command, .shift])
-                .frame(minWidth: 0, maxWidth: activityBar.width, minHeight: 0, maxHeight: activityBar.width)
-                .contextMenu{
-                    ForEach(item.contextMenuItems){ menuItem in
+                .frame(
+                    minWidth: 0, maxWidth: activityBar.width, minHeight: 0,
+                    maxHeight: activityBar.width
+                )
+                .contextMenu {
+                    ForEach(item.contextMenuItems) { menuItem in
                         Button(action: {
                             menuItem.action()
-                        }){
+                        }) {
                             Label(menuItem.title, systemImage: menuItem.systemName)
                         }
                     }

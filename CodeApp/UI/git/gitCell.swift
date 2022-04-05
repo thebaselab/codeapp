@@ -5,25 +5,27 @@
 //  Created by Ken Chung on 8/12/2020.
 //
 
-import SwiftUI
 import SwiftGit2
+import SwiftUI
 
-struct GitCell_controls: View{
+struct GitCell_controls: View {
     @EnvironmentObject var App: MainApp
     var status: Diff.Status
     var itemUrl: URL
-    
-    var body: some View{
-        switch status{
+
+    var body: some View {
+        switch status {
         case .indexModified, .indexNew, .indexDeleted:
             Image(systemName: "minus")
                 .padding(2)
                 .contentShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                 .onTapGesture {
-                    do{
-                        try App.gitServiceProvider?.unstage(paths: [itemUrl.absoluteString.removingPercentEncoding!])
+                    do {
+                        try App.gitServiceProvider?.unstage(paths: [
+                            itemUrl.absoluteString.removingPercentEncoding!
+                        ])
                         App.git_status()
-                    }catch{
+                    } catch {
                         App.notificationManager.showErrorMessage(error.localizedDescription)
                     }
                 }
@@ -36,30 +38,39 @@ struct GitCell_controls: View{
                     .contentShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                     .onTapGesture {
                         if status == .workTreeModified {
-                            App.gitServiceProvider?.previous(path: itemUrl.absoluteString.removingPercentEncoding!, error: {
-                                App.notificationManager.showErrorMessage($0.localizedDescription)
-                            }){ content in
+                            App.gitServiceProvider?.previous(
+                                path: itemUrl.absoluteString.removingPercentEncoding!,
+                                error: {
+                                    App.notificationManager.showErrorMessage(
+                                        $0.localizedDescription)
+                                }
+                            ) { content in
                                 DispatchQueue.main.async {
-                                    
+
                                     do {
-                                        try content.write(to: itemUrl, atomically: true, encoding: .utf8)
+                                        try content.write(
+                                            to: itemUrl, atomically: true, encoding: .utf8)
                                         App.git_status()
-                                        App.notificationManager.showInformationMessage("Revert succeeded")
-                                    }catch{
-                                        App.notificationManager.showErrorMessage(error.localizedDescription)
+                                        App.notificationManager.showInformationMessage(
+                                            "Revert succeeded")
+                                    } catch {
+                                        App.notificationManager.showErrorMessage(
+                                            error.localizedDescription)
                                     }
                                 }
-                                
+
                             }
-                        }else{
-                            do{
-                                try App.gitServiceProvider?.checkout(paths: [itemUrl.absoluteString.removingPercentEncoding!])
+                        } else {
+                            do {
+                                try App.gitServiceProvider?.checkout(paths: [
+                                    itemUrl.absoluteString.removingPercentEncoding!
+                                ])
                                 App.git_status()
-                            }catch{
+                            } catch {
                                 App.notificationManager.showErrorMessage(error.localizedDescription)
                             }
                         }
-                        
+
                     }
                     .hoverEffect(.highlight)
             }
@@ -67,10 +78,12 @@ struct GitCell_controls: View{
                 .padding(2)
                 .contentShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                 .onTapGesture {
-                    do{
-                        try App.gitServiceProvider?.stage(paths: [itemUrl.absoluteString.removingPercentEncoding!.removingPercentEncoding!])
+                    do {
+                        try App.gitServiceProvider?.stage(paths: [
+                            itemUrl.absoluteString.removingPercentEncoding!.removingPercentEncoding!
+                        ])
                         App.git_status()
-                    }catch{
+                    } catch {
                         App.notificationManager.showErrorMessage(error.localizedDescription)
                     }
                 }
@@ -81,89 +94,100 @@ struct GitCell_controls: View{
     }
 }
 
-struct GitCell: View{
-    
+struct GitCell: View {
+
     @EnvironmentObject var App: MainApp
     @State var itemUrl: URL
     @State var isIndex: Bool
-    
-    var body: some View{
+
+    var body: some View {
         Button(action: {
-            if !isIndex, let status = (isIndex ? App.indexedResources[itemUrl] : App.workingResources[itemUrl]), status != .workTreeNew{
+            if !isIndex,
+                let status =
+                    (isIndex ? App.indexedResources[itemUrl] : App.workingResources[itemUrl]),
+                status != .workTreeNew
+            {
                 App.compareWithPrevious(url: itemUrl)
             }
         }) {
             ZStack {
-                
-                if itemUrl.absoluteString == App.activeEditor?.url{
+
+                if itemUrl.absoluteString == App.activeEditor?.url {
                     Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
                 }
-                
+
                 HStack {
-                    fileIcon(url: itemUrl.absoluteString, iconSize: 14, type: EditorInstance.tabType.file)
-                    
-                    if let status = (isIndex ? App.indexedResources[itemUrl] : App.workingResources[itemUrl]), let name = editorDisplayName(editor: EditorInstance(url: itemUrl.absoluteString, content: "", type: .file)){
-                            switch status{
-                            case .workTreeModified, .indexModified:
-                                Text(name)
-                                    .foregroundColor(Color.init("git.modified"))
-                                    .font(.system(size: 14, weight: .light))
-//                                if !(itemUrl.deletingLastPathComponent().absoluteString == App.currentFolder.url){
-//                                    Text(itemUrl.deletingLastPathComponent().lastPathComponent.removingPercentEncoding!)
-//                                        .foregroundColor(.gray)
-//                                        .font(.system(size: 12, weight: .light))
-//                                }
-                                Spacer()
-                                GitCell_controls(status: status, itemUrl: itemUrl)
-                                Text("M")
-                                    .foregroundColor(Color.init("git.modified"))
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .padding(.horizontal, 5)
-                            case .workTreeNew:
-                                Text(name)
-                                    .foregroundColor(Color.init("git.untracked"))
-                                    .font(.system(size: 14, weight: .light))
-                                Spacer()
-                                GitCell_controls(status: status, itemUrl: itemUrl)
-                                Text("U")
-                                    .foregroundColor(Color.init("git.untracked"))
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .padding(.horizontal, 5)
-                            case .workTreeDeleted, .indexDeleted:
-                                Text(name)
-                                    .foregroundColor(Color.init("git.deleted"))
-                                    .font(.system(size: 14, weight: .light))
-                                Spacer()
-                                GitCell_controls(status: status, itemUrl: itemUrl)
-                                Text("D")
-                                    .foregroundColor(Color.init("git.deleted"))
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .padding(.horizontal, 5)
-                            case .indexNew:
-                                Text(name)
-                                    .foregroundColor(Color.init("git.added"))
-                                    .font(.system(size: 14, weight: .light))
-                                Spacer()
-                                GitCell_controls(status: status, itemUrl: itemUrl)
-                                Text("A")
-                                    .foregroundColor(Color.init("git.added"))
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .padding(.horizontal, 5)
-                            default:
-                                Text(name)
-                                    .font(.system(size: 14, weight: .light))
-                                Spacer()
-                                GitCell_controls(status: status, itemUrl: itemUrl)
-                                Text("X")
-                                    .font(.system(size: 14, weight: .semibold))
-                                    .padding(.horizontal, 5)
-                            }
-                            
-                        }else{
+                    fileIcon(
+                        url: itemUrl.absoluteString, iconSize: 14, type: EditorInstance.tabType.file
+                    )
+
+                    if let status =
+                        (isIndex ? App.indexedResources[itemUrl] : App.workingResources[itemUrl]),
+                        let name = editorDisplayName(
+                            editor: EditorInstance(
+                                url: itemUrl.absoluteString, content: "", type: .file))
+                    {
+                        switch status {
+                        case .workTreeModified, .indexModified:
+                            Text(name)
+                                .foregroundColor(Color.init("git.modified"))
+                                .font(.system(size: 14, weight: .light))
+                            //                                if !(itemUrl.deletingLastPathComponent().absoluteString == App.currentFolder.url){
+                            //                                    Text(itemUrl.deletingLastPathComponent().lastPathComponent.removingPercentEncoding!)
+                            //                                        .foregroundColor(.gray)
+                            //                                        .font(.system(size: 12, weight: .light))
+                            //                                }
                             Spacer()
+                            GitCell_controls(status: status, itemUrl: itemUrl)
+                            Text("M")
+                                .foregroundColor(Color.init("git.modified"))
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(.horizontal, 5)
+                        case .workTreeNew:
+                            Text(name)
+                                .foregroundColor(Color.init("git.untracked"))
+                                .font(.system(size: 14, weight: .light))
+                            Spacer()
+                            GitCell_controls(status: status, itemUrl: itemUrl)
+                            Text("U")
+                                .foregroundColor(Color.init("git.untracked"))
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(.horizontal, 5)
+                        case .workTreeDeleted, .indexDeleted:
+                            Text(name)
+                                .foregroundColor(Color.init("git.deleted"))
+                                .font(.system(size: 14, weight: .light))
+                            Spacer()
+                            GitCell_controls(status: status, itemUrl: itemUrl)
+                            Text("D")
+                                .foregroundColor(Color.init("git.deleted"))
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(.horizontal, 5)
+                        case .indexNew:
+                            Text(name)
+                                .foregroundColor(Color.init("git.added"))
+                                .font(.system(size: 14, weight: .light))
+                            Spacer()
+                            GitCell_controls(status: status, itemUrl: itemUrl)
+                            Text("A")
+                                .foregroundColor(Color.init("git.added"))
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(.horizontal, 5)
+                        default:
+                            Text(name)
+                                .font(.system(size: 14, weight: .light))
+                            Spacer()
+                            GitCell_controls(status: status, itemUrl: itemUrl)
+                            Text("X")
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(.horizontal, 5)
                         }
-                    
-                }.padding(5)//.padding(.leading, 5)
+
+                    } else {
+                        Spacer()
+                    }
+
+                }.padding(5)  //.padding(.leading, 5)
             }
         }.buttonStyle(NoAnim())
         //        .contextMenu {

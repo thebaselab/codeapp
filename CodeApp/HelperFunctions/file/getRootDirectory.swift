@@ -7,15 +7,20 @@
 
 import Foundation
 
-func getRootDirectory() -> URL{
+func getRootDirectory() -> URL {
     // We want ./private prefix because all other files have it
-    if let documentsPathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-        if let standardURL = URL(string: documentsPathURL.absoluteString.replacingOccurrences(of: "file:///", with: "file:///private/")){
+    if let documentsPathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        .first
+    {
+        if let standardURL = URL(
+            string: documentsPathURL.absoluteString.replacingOccurrences(
+                of: "file:///", with: "file:///private/"))
+        {
             return standardURL
-        }else{
+        } else {
             return documentsPathURL
         }
-    }else{
+    } else {
         fatalError("Could not locate Document Directory")
     }
 }

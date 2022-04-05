@@ -8,29 +8,31 @@
 import Foundation
 
 class DirectoryMonitor {
-    private var monitors: [String:FolderMonitor] = [:]
+    private var monitors: [String: FolderMonitor] = [:]
     private var numberOfFilesMonitored: Int {
         monitors.count
     }
-    var keys : Dictionary<String, FolderMonitor>.Keys {
+    var keys: Dictionary<String, FolderMonitor>.Keys {
         monitors.keys
     }
-    
-    func monitorURL(url: String, directoryDidUpdate: @escaping () -> Void){
-        guard let url = URL(string: url), !monitors.keys.contains(url.absoluteString), self.numberOfFilesMonitored < 100 else {
+
+    func monitorURL(url: String, directoryDidUpdate: @escaping () -> Void) {
+        guard let url = URL(string: url), !monitors.keys.contains(url.absoluteString),
+            self.numberOfFilesMonitored < 100
+        else {
             return
         }
         let monitor = FolderMonitor(url: url)
         monitor.folderDidChange = directoryDidUpdate
         self.monitors[url.absoluteString] = monitor
-        
+
         monitor.startMonitoring()
     }
-    
-    func removeMonitorAt(url: String){
+
+    func removeMonitorAt(url: String) {
         monitors.removeValue(forKey: url)
     }
-    
+
     func removeAll() {
         monitors.removeAll()
     }
@@ -38,38 +40,41 @@ class DirectoryMonitor {
 
 class FolderMonitor {
     // MARK: Properties
-    
+
     /// A file descriptor for the monitored directory.
     private var monitoredFolderFileDescriptor: CInt = -1
     /// A dispatch queue used for sending file changes in the directory.
-    private let folderMonitorQueue = DispatchQueue(label: "FolderMonitorQueue", attributes: .concurrent)
+    private let folderMonitorQueue = DispatchQueue(
+        label: "FolderMonitorQueue", attributes: .concurrent)
     /// A dispatch source to monitor a file descriptor created from the directory.
     private var folderMonitorSource: DispatchSourceFileSystemObject?
     /// URL for the directory being monitored.
     var url: Foundation.URL
-    
+
     var folderDidChange: (() -> Void)?
     // MARK: Initializers
     init(url: Foundation.URL) {
         self.url = url
     }
-    
-    deinit{
+
+    deinit {
         self.stopMonitoring()
     }
-    
+
     // MARK: Monitoring
     /// Listen for changes to the directory (if we are not already).
     func startMonitoring() {
         guard folderMonitorSource == nil && monitoredFolderFileDescriptor == -1 else {
             return
-            
+
         }
         // Open the directory referenced by URL for monitoring only.
         monitoredFolderFileDescriptor = open(url.path, O_EVTONLY)
-        
+
         // Define a dispatch source monitoring the directory for additions, deletions, and renamings.
-        folderMonitorSource = DispatchSource.makeFileSystemObjectSource(fileDescriptor: monitoredFolderFileDescriptor, eventMask: .write, queue: folderMonitorQueue)
+        folderMonitorSource = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: monitoredFolderFileDescriptor, eventMask: .write,
+            queue: folderMonitorQueue)
         // Define the block to call when a file change is detected.
         folderMonitorSource?.setEventHandler { [weak self] in
             self?.folderDidChange?()

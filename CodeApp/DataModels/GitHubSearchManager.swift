@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-class GitHubSearchManager: ObservableObject{
-    
+class GitHubSearchManager: ObservableObject {
+
     @Published var searchResultItems: [item] = []
     @Published var searchTerm: String = ""
     @Published var errorMessage: String = ""
-    
+
     struct searchResult: Decodable {
         let items: [item]
     }
-    
-    struct item: Decodable{
+
+    struct item: Decodable {
         let name: String
         let html_url: String
         let clone_url: String
@@ -27,32 +27,36 @@ class GitHubSearchManager: ObservableObject{
         let language: String?
         let owner: owner
     }
-    
+
     struct owner: Decodable {
         let login: String
         let avatar_url: String
     }
-    
-    func search(){
-        if searchTerm == ""{
+
+    func search() {
+        if searchTerm == "" {
             return
         }
         self.errorMessage = ""
-        var request = URLRequest(url: URL(string: "https://api.github.com/search/repositories?q=\(searchTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&per_page=10")!)
+        var request = URLRequest(
+            url: URL(
+                string:
+                    "https://api.github.com/search/repositories?q=\(searchTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&per_page=10"
+            )!)
         request.httpMethod = "GET"
-        
+
         let session = URLSession.shared
-        session.dataTask(with: request){data, response, err in
-            if data != nil{
+        session.dataTask(with: request) { data, response, err in
+            if data != nil {
                 DispatchQueue.main.async {
-                    do{
+                    do {
                         let result = try JSONDecoder().decode(searchResult.self, from: data!)
                         self.searchResultItems = result.items
-                    }catch{
+                    } catch {
                         print("search error: \(error)")
                     }
                 }
-            }else{
+            } else {
                 DispatchQueue.main.async {
                     self.errorMessage = "Could not connect to GitHub's server."
                 }

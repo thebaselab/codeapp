@@ -8,32 +8,35 @@
 import SwiftUI
 
 struct focusableTextField: UIViewRepresentable {
-    
+
     class Coordinator: NSObject, UITextFieldDelegate {
-        
+
         @Binding var text: String
         @Binding var isRenaming: Bool
         var didBecomeFirstResponder = false
         var URL: URL
         var onFileNameChange: (() -> Void)
-        
-        init(text: Binding<String>, isRenaming: Binding<Bool>, url: URL, onChange: @escaping (() -> Void)) {
+
+        init(
+            text: Binding<String>, isRenaming: Binding<Bool>, url: URL,
+            onChange: @escaping (() -> Void)
+        ) {
             _text = text
             _isRenaming = isRenaming
             URL = url
             onFileNameChange = onChange
         }
-        
+
         func textFieldDidChangeSelection(_ textField: UITextField) {
             text = textField.text ?? ""
         }
-        
+
         func textFieldDidBeginEditing(_ textField: UITextField) {
             textField.selectAll(nil)
         }
-        
+
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            if text.isEmpty{
+            if text.isEmpty {
                 return false
             }
             onFileNameChange()
@@ -41,15 +44,15 @@ struct focusableTextField: UIViewRepresentable {
             textField.resignFirstResponder()
             return true
         }
-        
+
     }
-    
+
     @Binding var text: String
     @Binding var isRenaming: Bool
     var isFirstResponder: Bool = false
     var url: URL
     var onFileNameChange: (() -> Void)
-    
+
     func makeUIView(context: UIViewRepresentableContext<focusableTextField>) -> UITextField {
         let textField = UITextField(frame: .zero)
         textField.delegate = context.coordinator
@@ -61,16 +64,19 @@ struct focusableTextField: UIViewRepresentable {
         textField.text = text
         return textField
     }
-    
+
     func makeCoordinator() -> focusableTextField.Coordinator {
-        return Coordinator(text: $text, isRenaming: $isRenaming, url: url, onChange: onFileNameChange)
+        return Coordinator(
+            text: $text, isRenaming: $isRenaming, url: url, onChange: onFileNameChange)
     }
-    
-    func updateUIView(_ uiView: UITextField, context: UIViewRepresentableContext<focusableTextField>) {
+
+    func updateUIView(
+        _ uiView: UITextField, context: UIViewRepresentableContext<focusableTextField>
+    ) {
         if text == "" {
             uiView.text = ""
         }
-        if isFirstResponder && !context.coordinator.didBecomeFirstResponder  {
+        if isFirstResponder && !context.coordinator.didBecomeFirstResponder {
             uiView.becomeFirstResponder()
             context.coordinator.didBecomeFirstResponder = true
         }

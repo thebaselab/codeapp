@@ -8,57 +8,60 @@
 import SwiftUI
 
 struct remoteAuthentication: View {
-    
+
     @EnvironmentObject var App: MainApp
-    
+
     @State var username: String
     @State var password: String
     @Environment(\.presentationMode) var presentationMode
-    
-    init(){
-        if let usr_name = KeychainWrapper.standard.string(forKey: "git-username"){
+
+    init() {
+        if let usr_name = KeychainWrapper.standard.string(forKey: "git-username") {
             _username = State(initialValue: usr_name)
-        }else{
+        } else {
             _username = State(initialValue: "")
         }
-        if let usr_pwd = KeychainWrapper.standard.string(forKey: "git-password"){
+        if let usr_pwd = KeychainWrapper.standard.string(forKey: "git-password") {
             _password = State(initialValue: usr_pwd)
-        }else{
+        } else {
             _password = State(initialValue: "")
         }
     }
-    
+
     var body: some View {
-        VStack{
-            Text("Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it.")
-                .font(.caption)
-                .foregroundColor(.gray)
-            Form{
+        VStack {
+            Text(
+                "Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it."
+            )
+            .font(.caption)
+            .foregroundColor(.gray)
+            Form {
                 Section(header: Text("Remote Credentials")) {
                     TextField("User Name", text: $username)
                         .textContentType(.name)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
-                SecureField("Password / Personal Access Token", text: $password)
-                    .textContentType(.password)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
+                    SecureField("Password / Personal Access Token", text: $password)
+                        .textContentType(.password)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                 }
             }
         }.navigationBarTitle("Authentication", displayMode: .inline)
-            .navigationBarItems(trailing:
-                Button(NSLocalizedString("Done", comment: "")) {
-                    self.presentationMode.wrappedValue.dismiss()
-                }
+            .navigationBarItems(
+                trailing:
+                    Button(NSLocalizedString("Done", comment: "")) {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
             )
-            .onChange(of: username){value in
+            .onChange(of: username) { value in
                 KeychainWrapper.standard.set(value, forKey: "git-username")
                 App.gitServiceProvider?.auth(name: value, password: password)
             }
-            .onChange(of: password){value in
+            .onChange(of: password) { value in
                 KeychainWrapper.standard.set(value, forKey: "git-password")
                 App.gitServiceProvider?.auth(name: username, password: value)
             }
-        
+
     }
 }

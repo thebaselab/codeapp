@@ -17,7 +17,7 @@ extension URL {
 
         //this is the new part, clearly, need to use workBase in lower part
         var workBase = base
-        
+
         if !workBase.hasDirectoryPath {
             workBase = workBase.deletingLastPathComponent()
         }
@@ -28,10 +28,10 @@ extension URL {
 
         // Find number of common path components:
         var i = 0
-        while i < destComponents.count &&
-              i < baseComponents.count &&
-              destComponents[i] == baseComponents[i] {
-                i += 1
+        while i < destComponents.count && i < baseComponents.count
+            && destComponents[i] == baseComponents[i]
+        {
+            i += 1
         }
 
         // Build relative path:

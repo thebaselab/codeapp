@@ -14,19 +14,19 @@ extension UIApplication {
         case left
         case right
     }
-    
+
     func getSafeArea(edge: uiedge) -> CGFloat {
         let keyWindow = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .map({$0 as? UIWindowScene})
-            .compactMap({$0})
+            .filter({ $0.activationState == .foregroundActive })
+            .map({ $0 as? UIWindowScene })
+            .compactMap({ $0 })
             .first?.windows
-            .filter({$0.isKeyWindow}).first
-        
+            .filter({ $0.isKeyWindow }).first
+
         guard let insets = keyWindow?.safeAreaInsets else {
             return 0
         }
-        
+
         switch edge {
         case .top:
             return insets.top
@@ -37,6 +37,6 @@ extension UIApplication {
         case .right:
             return insets.right
         }
-        
+
     }
 }

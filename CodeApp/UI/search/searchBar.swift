@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchBar: View {
-    
+
     @Binding var text: String
     @State private var isEditing = false
     let searchAction: (() -> Void)?
@@ -18,7 +18,7 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
-            TextField(placeholder, text: $text, onCommit:{searchAction?()})
+            TextField(placeholder, text: $text, onCommit: { searchAction?() })
                 .font(.system(size: 14))
                 .autocapitalization(.none)
                 .disableAutocorrection(true)

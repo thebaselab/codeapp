@@ -7,9 +7,9 @@
 
 import Foundation
 
-func langListInit() -> [Bool]{
+func langListInit() -> [Bool] {
     let defaults = UserDefaults.standard
-    
+
     let languageArray = [Bool](repeating: true, count: 200)
     defaults.set(languageArray, forKey: "languageList")
     return languageArray

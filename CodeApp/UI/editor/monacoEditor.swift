@@ -5,30 +5,31 @@
 //  Created by Ken Chung on 5/12/2020.
 //
 
+import GameController
 import SwiftUI
 import WebKit
-import GameController
 
 var isEditorInited = false
 private var ToolbarHandle: UInt8 = 0
 let monacoWebView = editorWebView()
 
 class editorWebView: WKWebView {
-    
-    init(){
+
+    init() {
         let config = WKWebViewConfiguration()
         config.preferences.setValue(true as Bool, forKey: "allowFileAccessFromFileURLs")
         super.init(frame: .zero, configuration: config)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func addInputAccessoryView(toolbar: UIView?) {
         guard let toolbar = toolbar else { return }
-        objc_setAssociatedObject(self, &ToolbarHandle, toolbar, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        
+        objc_setAssociatedObject(
+            self, &ToolbarHandle, toolbar, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+
         var candidateView: UIView? = nil
         for view in self.scrollView.subviews {
             if String(describing: type(of: view)).hasPrefix("WKContent") {
@@ -39,26 +40,30 @@ class editorWebView: WKWebView {
         let newClass: AnyClass? = classWithCustomAccessoryView(targetView: targetView)
         object_setClass(targetView, newClass!)
     }
-    
+
     private func classWithCustomAccessoryView(targetView: UIView) -> AnyClass? {
         guard let targetSuperClass = targetView.superclass else { return nil }
         let customInputAccessoryViewClassName = "\(targetSuperClass)_CustomInputAccessoryView"
-        
+
         var newClass: AnyClass? = NSClassFromString(customInputAccessoryViewClassName)
         if newClass == nil {
-            newClass = objc_allocateClassPair(object_getClass(targetView), customInputAccessoryViewClassName, 0)
+            newClass = objc_allocateClassPair(
+                object_getClass(targetView), customInputAccessoryViewClassName, 0)
         } else {
             return newClass
         }
-        
-        let newMethod = class_getInstanceMethod(editorWebView.self, #selector(monacoWebView.getCustomInputAccessoryView))
-        class_addMethod(newClass.self, #selector(getter: UIResponder.inputAccessoryView), method_getImplementation(newMethod!), method_getTypeEncoding(newMethod!))
-        
-        objc_registerClassPair(newClass!);
-        
+
+        let newMethod = class_getInstanceMethod(
+            editorWebView.self, #selector(monacoWebView.getCustomInputAccessoryView))
+        class_addMethod(
+            newClass.self, #selector(getter:UIResponder.inputAccessoryView),
+            method_getImplementation(newMethod!), method_getTypeEncoding(newMethod!))
+
+        objc_registerClassPair(newClass!)
+
         return newClass
     }
-    
+
     @objc func getCustomInputAccessoryView() -> UIView? {
         var superWebView: UIView? = self
         while (superWebView != nil) && !(superWebView is WKWebView) {
@@ -69,7 +74,7 @@ class editorWebView: WKWebView {
         superWebView?.inputAssistantItem.trailingBarButtonGroups = []
         return customInputAccessory as? UIView
     }
-    
+
     override open var inputAccessoryView: UIView? {
         // remove/replace the default accessory view
         return nil
@@ -77,12 +82,12 @@ class editorWebView: WKWebView {
 }
 
 struct monacoEditor: UIViewRepresentable {
-    
+
     @EnvironmentObject var status: MainApp
-    
-    @Environment (\.colorScheme) var colorScheme: ColorScheme
+
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
+
     @AppStorage("editorFontSize") var fontSize: Int = 14
     @AppStorage("quoteAutoCompletionEnabled") var bracketCompletionEnabled: Bool = true
     @AppStorage("editorMiniMapEnabled") var miniMapEnabled: Bool = true
@@ -97,63 +102,66 @@ struct monacoEditor: UIViewRepresentable {
     @AppStorage("toolBarEnabled") var toolBarEnabled: Bool = true
     @AppStorage("editorSmoothScrolling") var editorSmoothScrolling: Bool = false
     @AppStorage("editorReadOnly") var editorReadOnly = false
-    
+
     private var contentView: UIView?
-    
-    func invalidateDecorations(){
+
+    func invalidateDecorations() {
         self.executeJavascript(command: "invalidateDecorations()")
     }
-    
-    func provideOriginalTextForUri(uri: String, value: String){
+
+    func provideOriginalTextForUri(uri: String, value: String) {
         guard let encoded = value.base64Encoded() else {
             return
         }
-        self.executeJavascript(command: "provideOriginalTextForUri(`\(uri)`, `\(encoded)`)", printResponse: true)
+        self.executeJavascript(
+            command: "provideOriginalTextForUri(`\(uri)`, `\(encoded)`)", printResponse: true)
     }
-    
-    func renameModel(oldURL: String, newURL: String){
+
+    func renameModel(oldURL: String, newURL: String) {
         self.executeJavascript(command: "renameModel(`\(oldURL)`,`\(newURL)`)")
     }
-    
-    func getCurrentModelURI() -> String{
+
+    func getCurrentModelURI() -> String {
         var urlString = ""
-        monacoWebView.evaluateJavaScript("editor.getModel().uri.path;"){ (result, error) in
-            if let url = result as? String{
+        monacoWebView.evaluateJavaScript("editor.getModel().uri.path;") { (result, error) in
+            if let url = result as? String {
                 urlString = String(url.dropFirst())
             }
         }
         return urlString
     }
-    
-    func searchByTerm(term: String){
+
+    func searchByTerm(term: String) {
         guard let encoded = term.base64Encoded() else {
             return
         }
-        self.executeJavascript(command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
-        self.executeJavascript(command: "var range = editor.getModel().findMatches(decodedCommand)[0].range")
+        self.executeJavascript(
+            command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
+        self.executeJavascript(
+            command: "var range = editor.getModel().findMatches(decodedCommand)[0].range")
         self.executeJavascript(command: "editor.setSelection(range)")
         self.executeJavascript(command: "editor.getAction('actions.find').run()")
     }
-    
-    func scrollToLine(line: Int){
+
+    func scrollToLine(line: Int) {
         self.executeJavascript(command: "editor.revealLine(\(String(line)));")
     }
-    
-    func applyOptions(options: String){
+
+    func applyOptions(options: String) {
         self.executeJavascript(command: "editor.updateOptions({\(options)})")
     }
-    
-    func applyUserOptions(){
+
+    func applyUserOptions() {
         applyOptions(options: "automaticLayout: true, lineNumbersMinChars: 5")
-        
+
         executeJavascript(command: "editor.updateOptions({fontSize: \(String(fontSize))})")
         if !bracketCompletionEnabled {
             executeJavascript(command: "editor.updateOptions({ autoClosingBrackets: false });")
         }
-        if !miniMapEnabled{
+        if !miniMapEnabled {
             executeJavascript(command: "editor.updateOptions({minimap: {enabled: false}})")
         }
-        if !editorLineNumberEnabled{
+        if !editorLineNumberEnabled {
             executeJavascript(command: "editor.updateOptions({ lineNumbers: false })")
         }
         if editorSmoothScrolling {
@@ -164,94 +172,116 @@ struct monacoEditor: UIViewRepresentable {
         }
         executeJavascript(command: "editor.updateOptions({tabSize: \(String(edtorTabSize))})")
         let renderWhitespaceOptions = ["None", "Boundary", "Selection", "Trailing", "All"]
-        executeJavascript(command: "editor.updateOptions({renderWhitespace: '\(String(renderWhitespaceOptions[renderWhitespace]).lowercased())'})")
+        executeJavascript(
+            command:
+                "editor.updateOptions({renderWhitespace: '\(String(renderWhitespaceOptions[renderWhitespace]).lowercased())'})"
+        )
         executeJavascript(command: "editor.updateOptions({wordWrap: '\(editorWordWrap)'})")
     }
-    
-    func removeAllModel(){
-        self.executeJavascript(command: "monaco.editor.getModels().forEach(model => model.dispose());")
+
+    func removeAllModel() {
+        self.executeJavascript(
+            command: "monaco.editor.getModels().forEach(model => model.dispose());")
     }
-    
-    func removeModel(url: String){
-        self.executeJavascript(command: "monaco.editor.getModel(monaco.Uri.parse('\(url)')).dispose();")
+
+    func removeModel(url: String) {
+        self.executeJavascript(
+            command: "monaco.editor.getModel(monaco.Uri.parse('\(url)')).dispose();")
     }
-    
-    func updateModelContent(url: String, content: String){
-        guard let encoded = content.base64Encoded() else{
+
+    func updateModelContent(url: String, content: String) {
+        guard let encoded = content.base64Encoded() else {
             return
         }
-        self.executeJavascript(command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
-        self.executeJavascript(command: "monaco.editor.getModel(monaco.Uri.parse('\(url)')).setValue(decodedCommand)")
+        self.executeJavascript(
+            command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
+        self.executeJavascript(
+            command: "monaco.editor.getModel(monaco.Uri.parse('\(url)')).setValue(decodedCommand)")
     }
-    
-    func setCurrentModelValue(value: String){
+
+    func setCurrentModelValue(value: String) {
         let encoded = value.base64Encoded()!
-        self.executeJavascript(command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
+        self.executeJavascript(
+            command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
         self.executeJavascript(command: "editor.getModel().setValue(decodedCommand)")
     }
-    
-    func setModel(url: String){
-        self.executeJavascript(command: "editor.setModel(monaco.editor.getModel(monaco.Uri.parse('\(url)')));")
+
+    func setModel(url: String) {
+        self.executeJavascript(
+            command: "editor.setModel(monaco.editor.getModel(monaco.Uri.parse('\(url)')));")
     }
-    
-    func setModel(from: String, url: String){
+
+    func setModel(from: String, url: String) {
         self.executeJavascript(command: "states['\(from)'] = editor.saveViewState();")
-        self.executeJavascript(command: "editor.setModel(monaco.editor.getModel(monaco.Uri.parse('\(url)')));")
+        self.executeJavascript(
+            command: "editor.setModel(monaco.editor.getModel(monaco.Uri.parse('\(url)')));")
     }
-    
-    func newModel(url: String, content: String){
+
+    func newModel(url: String, content: String) {
         guard url != "welcome.md{welcome}" else {
             return
         }
-        self.executeJavascript(command: "states[editor.getModel().uri._formatted] = editor.saveViewState()")
+        self.executeJavascript(
+            command: "states[editor.getModel().uri._formatted] = editor.saveViewState()")
         let encoded = content.base64Encoded()!
-        self.executeJavascript(command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
-        self.executeJavascript(command: "editor.setModel(monaco.editor.createModel(decodedCommand, undefined, monaco.Uri.parse('\(url)')));")
+        self.executeJavascript(
+            command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
+        self.executeJavascript(
+            command:
+                "editor.setModel(monaco.editor.createModel(decodedCommand, undefined, monaco.Uri.parse('\(url)')));"
+        )
     }
-    
-    func switchToDiffView(originalContent: String, modifiedContent: String, url: String, url2: String){
+
+    func switchToDiffView(
+        originalContent: String, modifiedContent: String, url: String, url2: String
+    ) {
         let original = originalContent.base64Encoded()!
         let modified = modifiedContent.base64Encoded()!
-        self.executeJavascript(command: "switchToDiffView('\(original)','\(modified)','\(url)','\(url2)')")
+        self.executeJavascript(
+            command: "switchToDiffView('\(original)','\(modified)','\(url)','\(url2)')")
     }
-    
-    func switchToNormView(){
+
+    func switchToNormView() {
         self.executeJavascript(command: "switchToNormalView();")
     }
-    
-    func setTheme(themeName: String, data: String, isDark: Bool){
-        
+
+    func setTheme(themeName: String, data: String, isDark: Bool) {
+
         var themeName = themeName
-        
-        for keyword in "() "{
+
+        for keyword in "() " {
             themeName = themeName.replacingOccurrences(of: String(keyword), with: "")
         }
-        
+
         if let base64 = data.base64Encoded() {
-            self.executeJavascript(command: "applyBase64AsTheme('\(base64)', '\(themeName)', \(isDark ? "true" : "false"))")
+            self.executeJavascript(
+                command:
+                    "applyBase64AsTheme('\(base64)', '\(themeName)', \(isDark ? "true" : "false"))")
         }
-        
+
         if let bundlePath = Bundle.main.path(forResource: "monaco-final", ofType: "bundle"),
-           let bundle = Bundle(path: bundlePath),
-           let url = bundle.url(forResource: themeName, withExtension: "json", subdirectory: "themes"),
-           let data = try? Data(contentsOf: url),
-           let string = String(data: data, encoding: .utf8),
-           let base64 = string.base64Encoded(){
+            let bundle = Bundle(path: bundlePath),
+            let url = bundle.url(
+                forResource: themeName, withExtension: "json", subdirectory: "themes"),
+            let data = try? Data(contentsOf: url),
+            let string = String(data: data, encoding: .utf8),
+            let base64 = string.base64Encoded()
+        {
             self.executeJavascript(command: "applyBase64AsTheme('\(base64)', '\(themeName)');")
         }
     }
-    
-    func showKeyboard(){
+
+    func showKeyboard() {
         self.executeJavascript(command: "editor.focus()")
     }
-    
+
     func executeJavascript(command: String, printResponse: Bool = true) {
         DispatchQueue.main.async {
-            monacoWebView.evaluateJavaScript(command){ (result, error) in
+            monacoWebView.evaluateJavaScript(command) { (result, error) in
                 if printResponse {
                     print("Javascript: \(command) -> \(String(describing: result))")
                 }
-                if error != nil{
+                if error != nil {
                     if printResponse {
                         print("[Error] Javascript: \(command) -> \(String(describing: error))")
                     }
@@ -259,34 +289,48 @@ struct monacoEditor: UIViewRepresentable {
             }
         }
     }
-    
-    func injectTypes(url: URL){
+
+    func injectTypes(url: URL) {
         var files = [URL]()
-        if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles, .skipsPackageDescendants]) {
+        if let enumerator = FileManager.default.enumerator(
+            at: url, includingPropertiesForKeys: [.isRegularFileKey],
+            options: [.skipsHiddenFiles, .skipsPackageDescendants])
+        {
             for case let fileURL as URL in enumerator {
                 do {
-                    let fileAttributes = try fileURL.resourceValues(forKeys:[.isRegularFileKey])
-                    if fileAttributes.isRegularFile!, fileURL.absoluteString.hasSuffix("d.ts"){
+                    let fileAttributes = try fileURL.resourceValues(forKeys: [.isRegularFileKey])
+                    if fileAttributes.isRegularFile!, fileURL.absoluteString.hasSuffix("d.ts") {
                         files.append(fileURL)
                     }
                 } catch { print(error, fileURL) }
             }
         }
         for file in files {
-            guard let encodedContent = try? String(contentsOf: file, encoding: .utf8).base64Encoded() else {
+            guard
+                let encodedContent = try? String(contentsOf: file, encoding: .utf8).base64Encoded()
+            else {
                 continue
             }
             var path = file.absoluteString
-            if !file.absoluteString.contains("@types"), file.absoluteString.contains("node_modules"){
+            if !file.absoluteString.contains("@types"), file.absoluteString.contains("node_modules")
+            {
                 path = path.replacingOccurrences(of: "node_modules", with: "node_modules/@types")
             }
-            self.executeJavascript(command: "monaco.languages.typescript.javascriptDefaults.addExtraLib(decodeURIComponent(escape(window.atob('\(encodedContent)'))),'\(path)')", printResponse: false)
-            self.executeJavascript(command: "monaco.languages.typescript.typescriptDefaults.addExtraLib(decodeURIComponent(escape(window.atob('\(encodedContent)'))),'\(path)')", printResponse: false)
+            self.executeJavascript(
+                command:
+                    "monaco.languages.typescript.javascriptDefaults.addExtraLib(decodeURIComponent(escape(window.atob('\(encodedContent)'))),'\(path)')",
+                printResponse: false)
+            self.executeJavascript(
+                command:
+                    "monaco.languages.typescript.typescriptDefaults.addExtraLib(decodeURIComponent(escape(window.atob('\(encodedContent)'))),'\(path)')",
+                printResponse: false)
         }
     }
-    
-    func applyCustomShortcuts(){
-        if let result = UserDefaults.standard.value(forKey: "thebaselab.custom.keyboard.shortcuts") as? [String:[GCKeyCode]]{
+
+    func applyCustomShortcuts() {
+        if let result = UserDefaults.standard.value(forKey: "thebaselab.custom.keyboard.shortcuts")
+            as? [String: [GCKeyCode]]
+        {
             for entry in result {
                 let gcCodes = entry.value
                 var key = 0
@@ -295,8 +339,9 @@ struct monacoEditor: UIViewRepresentable {
                         key |= monacoKey
                     }
                 }
-                let command = "editor.addCommand(\(String(key)), () => editor.trigger('', '\(entry.key)', null), '');"
-                monacoWebView.evaluateJavaScript(command){ (result, error) in
+                let command =
+                    "editor.addCommand(\(String(key)), () => editor.trigger('', '\(entry.key)', null), '');"
+                monacoWebView.evaluateJavaScript(command) { (result, error) in
                     if error != nil {
                         print("[Error] editor.addCommand: \(String(describing: error))")
                     }
@@ -304,22 +349,22 @@ struct monacoEditor: UIViewRepresentable {
             }
         }
     }
-    
+
     func updateUIView(_ uiView: WKWebView, context: Context) {
         return
     }
-    
+
     func makeCoordinator() -> monacoEditor.Coordinator {
         Coordinator(self, env: status)
     }
-    
+
     class Coordinator: NSObject, WKScriptMessageHandler, UIGestureRecognizerDelegate {
-        
+
         struct action: Decodable, Identifiable {
             var id: String
             var label: String
         }
-        
+
         struct marker: Decodable {
             let id = UUID()
             let endColumn: Int
@@ -331,57 +376,67 @@ struct monacoEditor: UIViewRepresentable {
             let owner: String
             let resource: resource
         }
-        
+
         struct resource: Decodable {
             let path: String
         }
-        
-        func requestDiffUpdate(modelUri: String, force: Bool = false){
-            guard let sanitizedUri = URL(string: modelUri)?.standardizedFileURL.absoluteString.removingPercentEncoding  else{
+
+        func requestDiffUpdate(modelUri: String, force: Bool = false) {
+            guard
+                let sanitizedUri = URL(string: modelUri)?.standardizedFileURL.absoluteString
+                    .removingPercentEncoding
+            else {
                 return
             }
-            
+
             // If the cache hasn't been invalidated, it means the editor also have the up-to-date model.
-            if let isCached = self.control.status.gitServiceProvider?.isCached(uri: sanitizedUri), !force, isCached{
+            if let isCached = self.control.status.gitServiceProvider?.isCached(uri: sanitizedUri),
+                !force, isCached
+            {
                 return
             }
-            
+
             if let hasRepo = self.control.status.gitServiceProvider?.hasRepository, hasRepo {
                 DispatchQueue.global(qos: .utility).async {
-                    self.control.status.gitServiceProvider?.previous(path: sanitizedUri, error: {err in print(err)}, completionHandler: { value in
-                        DispatchQueue.main.async {
-                            self.control.provideOriginalTextForUri(uri: modelUri, value: value)
-                        }
-                    })
+                    self.control.status.gitServiceProvider?.previous(
+                        path: sanitizedUri, error: { err in print(err) },
+                        completionHandler: { value in
+                            DispatchQueue.main.async {
+                                self.control.provideOriginalTextForUri(uri: modelUri, value: value)
+                            }
+                        })
                 }
             }
         }
-        
-        private func getAllActions(){
+
+        private func getAllActions() {
             let command = "editor.getActions().map((e) => {return {id: e.id, label: e.label}})"
             DispatchQueue.main.async {
-                monacoWebView.evaluateJavaScript(command){ (result, error) in
+                monacoWebView.evaluateJavaScript(command) { (result, error) in
                     guard error == nil, let result = result as? NSArray else {
                         return
                     }
                     do {
-                        let jsonData = try JSONSerialization.data(withJSONObject: result, options: [])
+                        let jsonData = try JSONSerialization.data(
+                            withJSONObject: result, options: [])
                         let decoded = try JSONDecoder().decode([action].self, from: jsonData)
                         self.control.status.editorShortcuts = decoded
-                    }catch{
+                    } catch {
                         print(error)
                     }
                 }
             }
         }
-        
-        func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-            guard let result = message.body as? [String : AnyObject] else {
+
+        func userContentController(
+            _ userContentController: WKUserContentController, didReceive message: WKScriptMessage
+        ) {
+            guard let result = message.body as? [String: AnyObject] else {
                 return
             }
-            guard let event = result["Event"] as? String else {return}
-            
-            switch event{
+            guard let event = result["Event"] as? String else { return }
+
+            switch event {
             case "Request Diff Update":
                 if let modelUri = result["URI"] as? String {
                     requestDiffUpdate(modelUri: modelUri, force: true)
@@ -389,15 +444,22 @@ struct monacoEditor: UIViewRepresentable {
             case "Crusor Position changed":
                 let lineNumber = result["lineNumber"] as! Int
                 let column = result["Column"] as! Int
-                NotificationCenter.default.post(name: Notification.Name("monaco.cursor.position.changed"), object: nil, userInfo: ["lineNumber":lineNumber, "column": column])
+                NotificationCenter.default.post(
+                    name: Notification.Name("monaco.cursor.position.changed"), object: nil,
+                    userInfo: ["lineNumber": lineNumber, "column": column])
             case "Content changed":
                 let version = result["VersionID"] as! Int
                 let content = result["currentContent"] as! String
-                if (control.status.activeEditor?.lastSavedVersionId == control.status.activeEditor?.currentVersionId && // Saved -> Unsaved
-                   version != control.status.activeEditor?.lastSavedVersionId) ||
-                   (control.status.activeEditor?.lastSavedVersionId != control.status.activeEditor?.currentVersionId && // Unsaved -> Saved
-                   version == control.status.activeEditor?.lastSavedVersionId){
-                    NotificationCenter.default.post(name: Notification.Name("monaco.editor.currentContent.changed"), object: nil, userInfo: nil)
+                if (control.status.activeEditor?.lastSavedVersionId
+                    == control.status.activeEditor?.currentVersionId  // Saved -> Unsaved
+                    && version != control.status.activeEditor?.lastSavedVersionId)
+                    || (control.status.activeEditor?.lastSavedVersionId
+                        != control.status.activeEditor?.currentVersionId  // Unsaved -> Saved
+                        && version == control.status.activeEditor?.lastSavedVersionId)
+                {
+                    NotificationCenter.default.post(
+                        name: Notification.Name("monaco.editor.currentContent.changed"),
+                        object: nil, userInfo: nil)
                 }
                 control.status.activeEditor?.currentVersionId = version
                 control.status.activeEditor?.content = content
@@ -409,33 +471,39 @@ struct monacoEditor: UIViewRepresentable {
                 control.applyUserOptions()
                 control.status.loadURLQueue()
                 if globalDarkTheme != nil {
-                    if let theJSONData = try?  JSONSerialization.data(withJSONObject: globalDarkTheme!, options: .prettyPrinted),
-                       let jsonText = String(data: theJSONData, encoding: .utf8),
-                       let name = globalDarkTheme!["name"] as? String,
-                       let type = globalDarkTheme!["type"] as? String {
+                    if let theJSONData = try? JSONSerialization.data(
+                        withJSONObject: globalDarkTheme!, options: .prettyPrinted),
+                        let jsonText = String(data: theJSONData, encoding: .utf8),
+                        let name = globalDarkTheme!["name"] as? String,
+                        let type = globalDarkTheme!["type"] as? String
+                    {
                         control.setTheme(themeName: name, data: jsonText, isDark: type == "dark")
-                        }
-                    
+                    }
+
                 }
-                if globalLightTheme != nil{
-                    if let theJSONData = try?  JSONSerialization.data(withJSONObject: globalLightTheme!, options: .prettyPrinted),
-                       let jsonText = String(data: theJSONData, encoding: .utf8),
-                       let name = globalLightTheme!["name"] as? String,
-                       let type = globalLightTheme!["type"] as? String {
+                if globalLightTheme != nil {
+                    if let theJSONData = try? JSONSerialization.data(
+                        withJSONObject: globalLightTheme!, options: .prettyPrinted),
+                        let jsonText = String(data: theJSONData, encoding: .utf8),
+                        let name = globalLightTheme!["name"] as? String,
+                        let type = globalLightTheme!["type"] as? String
+                    {
                         control.setTheme(themeName: name, data: jsonText, isDark: type == "dark")
-                        }
+                    }
                 }
                 // TypeScript / JavaScript Types
-                control.injectTypes(url: Bundle.main.url(forResource: "npm", withExtension: "bundle")!.appendingPathComponent("node_modules/@types"))
+                control.injectTypes(
+                    url: Bundle.main.url(forResource: "npm", withExtension: "bundle")!
+                        .appendingPathComponent("node_modules/@types"))
                 control.status.scanForTypes()
-                
+
                 for editor in control.status.editors {
                     control.newModel(url: editor.url, content: editor.content)
                 }
-                if !control.status.editors.isEmpty{
+                if !control.status.editors.isEmpty {
                     control.setModel(url: control.status.currentURL())
                 }
-                if let state = UserDefaults.standard.string(forKey: "uistate.activeEditor.state"){
+                if let state = UserDefaults.standard.string(forKey: "uistate.activeEditor.state") {
                     control.executeJavascript(command: "editor.restoreViewState(\(state))")
                 }
                 UserDefaults.standard.setValue(true, forKey: "uistate.restoredSuccessfully")
@@ -447,10 +515,14 @@ struct monacoEditor: UIViewRepresentable {
                 for mkr in markers {
                     let jsonData = try! JSONSerialization.data(withJSONObject: mkr, options: [])
                     let decoded = try! JSONDecoder().decode(marker.self, from: jsonData)
-                    if let url = URL(string: String(decoded.resource.path.dropFirst().replacingOccurrences(of: " ", with: "%20"))){
+                    if let url = URL(
+                        string: String(
+                            decoded.resource.path.dropFirst().replacingOccurrences(
+                                of: " ", with: "%20")))
+                    {
                         if control.status.problems[url] != nil {
                             control.status.problems[url]!.append(decoded)
-                        }else{
+                        } else {
                             control.status.problems[url] = [decoded]
                         }
                     }
@@ -459,103 +531,131 @@ struct monacoEditor: UIViewRepresentable {
                 print("[Error] \(event) not handled")
             }
         }
-        
+
         var offsetY: CGFloat = 0.0
         var offsetX: CGFloat = 0.0
-        
+
         @objc func panColor(_ gestureRecognizer: UIPanGestureRecognizer) {
-            guard let editor = control.status.activeEditor else{
+            guard let editor = control.status.activeEditor else {
                 return
             }
             let velocity = gestureRecognizer.velocity(in: monacoWebView)
             if editor.type == .file {
-                control.executeJavascript(command: "editor.setScrollPosition({scrollTop: editor.getScrollTop() + (-1 * \(velocity.y / 100))}, 0)")
-                control.executeJavascript(command: "editor.setScrollPosition({scrollLeft: editor.getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)")
-            }else if editor.type == .diff{
-                control.executeJavascript(command: "editor.getOriginalEditor().setScrollPosition({scrollTop: editor.getOriginalEditor().getScrollTop() + (-1 * \(velocity.y / 100))}, 0)")
-                control.executeJavascript(command: "editor.getOriginalEditor().setScrollPosition({scrollLeft: editor.getOriginalEditor().getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)")
+                control.executeJavascript(
+                    command:
+                        "editor.setScrollPosition({scrollTop: editor.getScrollTop() + (-1 * \(velocity.y / 100))}, 0)"
+                )
+                control.executeJavascript(
+                    command:
+                        "editor.setScrollPosition({scrollLeft: editor.getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)"
+                )
+            } else if editor.type == .diff {
+                control.executeJavascript(
+                    command:
+                        "editor.getOriginalEditor().setScrollPosition({scrollTop: editor.getOriginalEditor().getScrollTop() + (-1 * \(velocity.y / 100))}, 0)"
+                )
+                control.executeJavascript(
+                    command:
+                        "editor.getOriginalEditor().setScrollPosition({scrollLeft: editor.getOriginalEditor().getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)"
+                )
             }
             offsetY = velocity.y
             offsetX = velocity.x
-            if gestureRecognizer.state == .ended{
+            if gestureRecognizer.state == .ended {
                 offsetY = 0.0
                 offsetX = 0.0
             }
         }
-        
+
         @objc func mousePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-            guard let editor = control.status.activeEditor else{
+            guard let editor = control.status.activeEditor else {
                 return
             }
             let translation = gestureRecognizer.translation(in: monacoWebView)
-            if editor.type == .file{
-                control.executeJavascript(command: "editor.setScrollPosition({scrollTop: editor.getScrollTop() + (-1 * \(translation.y - offsetY))}, 0)")
-                control.executeJavascript(command: "editor.setScrollPosition({scrollLeft: editor.getScrollLeft() + (-1 * \(translation.x - offsetX))}, 0)")
-            }else if editor.type == .diff{
-                control.executeJavascript(command: "editor.getOriginalEditor().setScrollPosition({scrollTop: editor.getOriginalEditor().getScrollTop() + (-1 * \(translation.y - offsetY))}, 0)")
-                control.executeJavascript(command: "editor.getOriginalEditor().setScrollPosition({scrollLeft: editor.getOriginalEditor().getScrollLeft() + (-1 * \(translation.x - offsetX))}, 0)")
+            if editor.type == .file {
+                control.executeJavascript(
+                    command:
+                        "editor.setScrollPosition({scrollTop: editor.getScrollTop() + (-1 * \(translation.y - offsetY))}, 0)"
+                )
+                control.executeJavascript(
+                    command:
+                        "editor.setScrollPosition({scrollLeft: editor.getScrollLeft() + (-1 * \(translation.x - offsetX))}, 0)"
+                )
+            } else if editor.type == .diff {
+                control.executeJavascript(
+                    command:
+                        "editor.getOriginalEditor().setScrollPosition({scrollTop: editor.getOriginalEditor().getScrollTop() + (-1 * \(translation.y - offsetY))}, 0)"
+                )
+                control.executeJavascript(
+                    command:
+                        "editor.getOriginalEditor().setScrollPosition({scrollLeft: editor.getOriginalEditor().getScrollLeft() + (-1 * \(translation.x - offsetX))}, 0)"
+                )
             }
-            
+
             offsetY = translation.y
             offsetX = translation.x
-            if gestureRecognizer.state == .ended{
+            if gestureRecognizer.state == .ended {
                 offsetY = 0.0
                 offsetX = 0.0
             }
         }
-        
-        @objc func handleToolbarChanges(notification: Notification){
-            if let key = notification.userInfo?["enabled"] as? Bool{
+
+        @objc func handleToolbarChanges(notification: Notification) {
+            if let key = notification.userInfo?["enabled"] as? Bool {
                 if key {
                     injectBarButtons()
-                }else{
+                } else {
                     monacoWebView.addInputAccessoryView(toolbar: UIView.init())
                 }
             }
         }
-        
-        func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+
+        func gestureRecognizer(
+            _ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch
+        ) -> Bool {
             return false
         }
-        
-        @objc func injectBarButtons(){
+
+        @objc func injectBarButtons() {
             let toolbar = UIHostingController(rootView: keyboardToolBar().environmentObject(env))
             toolbar.view.frame = CGRect(x: 0, y: 0, width: (monacoWebView.bounds.width), height: 40)
-            
+
             monacoWebView.addInputAccessoryView(toolbar: toolbar.view)
         }
-        
+
         var control: monacoEditor
         var env: MainApp
-        
+
         init(_ control: monacoEditor, env: MainApp) {
             self.control = control
             self.env = env
             super.init()
         }
     }
-    
-    
-    
+
     func makeUIView(context: Context) -> WKWebView {
         monacoWebView.isOpaque = false
         monacoWebView.scrollView.bounces = false
-        monacoWebView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
+        monacoWebView.customUserAgent =
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
-        
-        if !isEditorInited{
+
+        if !isEditorInited {
             let contentManager = monacoWebView.configuration.userContentController
             contentManager.add(context.coordinator, name: "toggleMessageHandler")
         }
-        
-        if toolBarEnabled{
+
+        if toolBarEnabled {
             context.coordinator.injectBarButtons()
-        }else{
+        } else {
             monacoWebView.addInputAccessoryView(toolbar: UIView.init())
         }
-        
-        NotificationCenter.default.addObserver(context.coordinator, selector: #selector(context.coordinator.handleToolbarChanges(notification:)), name: Notification.Name("toolbarSettingChanged"), object: nil)
-        
+
+        NotificationCenter.default.addObserver(
+            context.coordinator,
+            selector: #selector(context.coordinator.handleToolbarChanges(notification:)),
+            name: Notification.Name("toolbarSettingChanged"), object: nil)
+
         return monacoWebView
     }
 }

@@ -5,100 +5,107 @@
 //  Created by Ken Chung on 5/12/2020.
 //
 
-import SwiftUI
-import GCDWebServer
 import Combine
-import SwiftGit2
-import ios_system
-import UniformTypeIdentifiers
 import CoreSpotlight
+import GCDWebServer
+import SwiftGit2
+import SwiftUI
+import UniformTypeIdentifiers
+import ios_system
 
 class MainApp: ObservableObject {
     @Published var editors: [EditorInstance] = []
-    
+
     @Published var isShowingCompilerLanguage = false
     @Published var activeEditor: EditorInstance? = nil {
         willSet {
-            if let pathextension = newValue?.url.split(separator: ".").last{
+            if let pathextension = newValue?.url.split(separator: ".").last {
                 updateCompilerCode(pathExtension: String(pathextension))
             }
         }
     }
     @Published var selectedForCompare = ""
-    
+
     @Published var languageEnabled: [Bool] = langListInit()
     @Published var compilerCode: Int = 71
-    
+
     @Published var notificationManager = NotificationManager()
     @Published var compileManager = CloudCodeExecutionManager()
     @Published var searchManager = GitHubSearchManager()
     @Published var textSearchManager = TextSearchManager()
     @Published var workSpaceStorage: WorkSpaceStorage
-    
+
     var gitServiceProvider: GitServiceProvider? = nil
-    
+
     // Editor States
-    @Published var problems: [URL:[monacoEditor.Coordinator.marker]] = [:]
+    @Published var problems: [URL: [monacoEditor.Coordinator.marker]] = [:]
     @Published var showsNewFileSheet = false
     @Published var showsDirectoryPicker = false
-    
+
     // Git UI states
-    @Published var gitTracks: [URL:Diff.Status] = [:]
-    @Published var indexedResources: [URL:Diff.Status] = [:]
-    @Published var workingResources: [URL:Diff.Status] = [:]
+    @Published var gitTracks: [URL: Diff.Status] = [:]
+    @Published var indexedResources: [URL: Diff.Status] = [:]
+    @Published var workingResources: [URL: Diff.Status] = [:]
     @Published var branch: String = ""
     @Published var remote: String = ""
     @Published var commitMessage: String = ""
     @Published var isSyncing: Bool = false
     @Published var aheadBehind: (Int, Int)? = nil
-    
+
     var urlQueue: [URL] = []
     var editorToRestore: URL? = nil
     var editorShortcuts: [monacoEditor.Coordinator.action] = []
-    
+
     let terminalInstance: TerminalInstance
     let monacoInstance = monacoEditor()
     let webServer = GCDWebServer()
     var editorTypesMonitor: FolderMonitor? = nil
     let readmeMessage = NSLocalizedString("Welcome Message", comment: "")
-    
+
     private var NotificationCancellable: AnyCancellable? = nil
     private var CompilerCancellable: AnyCancellable? = nil
     private var searchCancellable: AnyCancellable? = nil
     private var textSearchCancellable: AnyCancellable? = nil
     private var workSpaceCancellable: AnyCancellable? = nil
-    
+
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
     @AppStorage("compilerShowPath") var compilerShowPath = false
-    
+
     init() {
-        
+
         let rootDir: URL
-        
+
         var stateRestorationEnabled = true
-        
+
         if UserDefaults.standard.object(forKey: "stateRestorationEnabled") != nil {
             stateRestorationEnabled = UserDefaults.standard.bool(forKey: "stateRestorationEnabled")
         }
-        
+
         if UserDefaults.standard.bool(forKey: "uistate.restoredSuccessfully") == false {
             stateRestorationEnabled = false
         }
-        
+
         UserDefaults.standard.setValue(false, forKey: "uistate.restoredSuccessfully")
-        
+
         if stateRestorationEnabled {
             var isStale = false
-            if let bookmarkData = UserDefaults.standard.value(forKey: "uistate.root.bookmark") as? Data, let bookmarkedURL = try? URL(resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale){
+            if let bookmarkData = UserDefaults.standard.value(forKey: "uistate.root.bookmark")
+                as? Data,
+                let bookmarkedURL = try? URL(
+                    resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale)
+            {
                 rootDir = bookmarkedURL
-            }else{
+            } else {
                 rootDir = getRootDirectory()
             }
-            
-            if let bookmarkDatas = UserDefaults.standard.array(forKey: "uistate.openedURLs.bookmarks") as? [Data] {
+
+            if let bookmarkDatas = UserDefaults.standard.array(
+                forKey: "uistate.openedURLs.bookmarks") as? [Data]
+            {
                 for data in bookmarkDatas {
                     var isStale = false
-                    let bookmarkedURL = try? URL(resolvingBookmarkData: data, bookmarkDataIsStale: &isStale)
+                    let bookmarkedURL = try? URL(
+                        resolvingBookmarkData: data, bookmarkDataIsStale: &isStale)
                     guard !isStale else {
                         continue
                     }
@@ -107,34 +114,39 @@ class MainApp: ObservableObject {
                     }
                 }
             }
-            if let bookmarkData = UserDefaults.standard.value(forKey: "uistate.activeEditor.bookmark") as? Data, let bookmarkedURL = try? URL(resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale){
+            if let bookmarkData = UserDefaults.standard.value(
+                forKey: "uistate.activeEditor.bookmark") as? Data,
+                let bookmarkedURL = try? URL(
+                    resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale)
+            {
                 editorToRestore = bookmarkedURL
             }
-        }else{
+        } else {
             rootDir = getRootDirectory()
         }
-        
-        self.workSpaceStorage = WorkSpaceStorage(name: rootDir.lastPathComponent, url: rootDir.absoluteString)
-        
+
+        self.workSpaceStorage = WorkSpaceStorage(
+            name: rootDir.lastPathComponent, url: rootDir.absoluteString)
+
         terminalInstance = TerminalInstance(root: rootDir)
         gitServiceProvider = GitServiceProvider(root: rootDir)
-        
+
         terminalInstance.openEditor = { url in
             self.openEditor(urlString: url, type: .any)
         }
-        workSpaceStorage.onDirectoryChange{ url in
+        workSpaceStorage.onDirectoryChange { url in
             for editor in self.editors {
                 print("editor url is \(editor.url)")
                 print("")
-                if editor.url.contains(url), let urlToCheck = URL(string: editor.url){
-                    if !FileManager.default.fileExists(atPath: urlToCheck.path){
+                if editor.url.contains(url), let urlToCheck = URL(string: editor.url) {
+                    if !FileManager.default.fileExists(atPath: urlToCheck.path) {
                         editor.isDeleted = true
                     }
                 }
             }
         }
         loadRepository(url: rootDir)
-        
+
         NotificationCancellable = notificationManager.objectWillChange.sink { [weak self] (_) in
             self?.objectWillChange.send()
         }
@@ -152,104 +164,119 @@ class MainApp: ObservableObject {
                 self?.objectWillChange.send()
             }
         }
-        
+
         if urlQueue.isEmpty {
-            let newEditor = EditorInstance(url: "welcome.md{welcome}", content: readmeMessage, type: .preview)
+            let newEditor = EditorInstance(
+                url: "welcome.md{welcome}", content: readmeMessage, type: .preview)
             editors.append(newEditor)
             activeEditor = newEditor
         }
-        
+
         let monacoPath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")
 
         DispatchQueue.main.async {
-            monacoWebView.loadFileURL(URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"), allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
+            monacoWebView.loadFileURL(
+                URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"),
+                allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
         }
-        
-        webServer.addGETHandler(forBasePath: "/", directoryPath: rootDir.path, indexFilename: "index.html", cacheAge: 10, allowRangeRequests: true)
-        
-        do{
-            try webServer.start(options: [GCDWebServerOption_AutomaticallySuspendInBackground: true, GCDWebServerOption_Port: 8000])
+
+        webServer.addGETHandler(
+            forBasePath: "/", directoryPath: rootDir.path, indexFilename: "index.html",
+            cacheAge: 10, allowRangeRequests: true)
+
+        do {
+            try webServer.start(options: [
+                GCDWebServerOption_AutomaticallySuspendInBackground: true,
+                GCDWebServerOption_Port: 8000,
+            ])
         } catch let error {
             print(error)
         }
-        
+
         Repository.initialize_libgit2()
     }
-    
-    func updateView(){
+
+    func updateView() {
         self.objectWillChange.send()
     }
-    
-    func saveUserStates(){
-        
+
+    func saveUserStates() {
+
         // Saving root folder
         if let data = try? URL(string: workSpaceStorage.currentDirectory.url)?.bookmarkData() {
             UserDefaults.standard.setValue(data, forKey: "uistate.root.bookmark")
         }
-        
+
         // Saving opened editors
-        let editorsBookmarks = editors.compactMap{try? URL(string: $0.url)?.bookmarkData()}
+        let editorsBookmarks = editors.compactMap { try? URL(string: $0.url)?.bookmarkData() }
         UserDefaults.standard.setValue(editorsBookmarks, forKey: "uistate.openedURLs.bookmarks")
-        
+
         // Save active editor
         if editors.isEmpty {
             UserDefaults.standard.setValue(nil, forKey: "uistate.activeEditor.bookmark")
-        }else if let data = try? URL(string: activeEditor?.url ?? "")?.bookmarkData() {
+        } else if let data = try? URL(string: activeEditor?.url ?? "")?.bookmarkData() {
             UserDefaults.standard.setValue(data, forKey: "uistate.activeEditor.bookmark")
         }
-        
+
         guard !editors.isEmpty else {
             UserDefaults.standard.setValue(nil, forKey: "uistate.activeEditor.state")
             return
         }
-        
-        monacoWebView.evaluateJavaScript("JSON.stringify(editor.saveViewState())"){ res, err in
+
+        monacoWebView.evaluateJavaScript("JSON.stringify(editor.saveViewState())") { res, err in
             if let res = res as? String {
                 UserDefaults.standard.setValue(res, forKey: "uistate.activeEditor.state")
             }
         }
     }
-    
-    func createFolder(urlString: String){
-        let newurl = urlString + newFileName(defaultName: "New%20Folder", extensionName: "", urlString: urlString)
-        guard let url = URL(string: newurl) else{
+
+    func createFolder(urlString: String) {
+        let newurl =
+            urlString
+            + newFileName(defaultName: "New%20Folder", extensionName: "", urlString: urlString)
+        guard let url = URL(string: newurl) else {
             return
         }
-        do{
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-        }catch{
+        do {
+            try FileManager.default.createDirectory(
+                at: url, withIntermediateDirectories: true, attributes: nil)
+        } catch {
             print("Error: \(error.localizedDescription)")
         }
     }
-    
-    func renameFile(url: URL, name: String){
+
+    func renameFile(url: URL, name: String) {
         var rv = URLResourceValues()
         rv.name = name
         var URL = url
-        do{
+        do {
             try URL.setResourceValues(rv)
-        }catch let error{
+        } catch let error {
             notificationManager.showErrorMessage(error.localizedDescription)
             return
         }
-        for i in editors.indices{
-            if editors[i].url == url.absoluteString{
-                editors[i].url = url.deletingLastPathComponent().appendingPathComponent(name).absoluteString
+        for i in editors.indices {
+            if editors[i].url == url.absoluteString {
+                editors[i].url =
+                    url.deletingLastPathComponent().appendingPathComponent(name).absoluteString
                 monacoInstance.renameModel(oldURL: url.absoluteString, newURL: editors[i].url)
-                if currentURL() == editors[i].url{
+                if currentURL() == editors[i].url {
                     monacoInstance.setModel(url: editors[i].url)
                 }
-            }else if editors[i].url == url.absoluteURL.absoluteString{                editors[i].url = url.deletingLastPathComponent().absoluteURL.appendingPathComponent(name).absoluteString
+            } else if editors[i].url == url.absoluteURL.absoluteString {
+                editors[i].url =
+                    url.deletingLastPathComponent().absoluteURL.appendingPathComponent(name)
+                    .absoluteString
                 monacoInstance.renameModel(oldURL: url.absoluteString, newURL: editors[i].url)
-                if currentURL() == editors[i].url{
+                if currentURL() == editors[i].url {
                     monacoInstance.setModel(url: editors[i].url)
                 }
             }
         }
     }
-    
-    func loadURLQueue(){
-        for i in urlQueue{
+
+    func loadURLQueue() {
+        for i in urlQueue {
             openEditor(urlString: i.absoluteString, type: .any, inNewTab: true)
         }
         urlQueue = []
@@ -258,10 +285,13 @@ class MainApp: ObservableObject {
             editorToRestore = nil
         }
     }
-    
-    func duplicateItem(from: URL){
+
+    func duplicateItem(from: URL) {
         do {
-            let newName = newFileName(defaultName: from.deletingPathExtension().lastPathComponent, extensionName: from.pathExtension, urlString: from.deletingLastPathComponent().absoluteString)
+            let newName = newFileName(
+                defaultName: from.deletingPathExtension().lastPathComponent,
+                extensionName: from.pathExtension,
+                urlString: from.deletingLastPathComponent().absoluteString)
             let newURL = from.deletingLastPathComponent().absoluteString + newName
             try FileManager.default.copyItem(at: from, to: URL(string: newURL)!)
             git_status()
@@ -269,8 +299,8 @@ class MainApp: ObservableObject {
             notificationManager.showErrorMessage(error.localizedDescription)
         }
     }
-    
-    func trashItem(url: URL){
+
+    func trashItem(url: URL) {
         do {
             try FileManager.default.removeItem(at: url)
             closeEditor(url: url.absoluteString, type: EditorInstance.tabType.file)
@@ -279,156 +309,190 @@ class MainApp: ObservableObject {
             notificationManager.showErrorMessage(error.localizedDescription)
         }
     }
-    
-    func runCode(url: String, lang: Int){
+
+    func runCode(url: String, lang: Int) {
         saveCurrentFile()
         if lang < 10 {
-            switch compilerCode{
+            switch compilerCode {
             case 0:
-                let cmd = "python3 -u \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
+                let cmd =
+                    "python3 -u \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
                 if compilerShowPath {
                     terminalInstance.executeScript("localEcho.println(`\(cmd)`);readLine('');")
-                }else{
+                } else {
                     terminalInstance.executeScript("localEcho.println(`python`);readLine('');")
                 }
-                terminalInstance.executeScript("window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})")
+                terminalInstance.executeScript(
+                    "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})"
+                )
             case 1:
-                let cmd = "node \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))"
+                let cmd =
+                    "node \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))"
                 if compilerShowPath {
                     terminalInstance.executeScript("localEcho.println(`\(cmd)`);")
-                }else{
+                } else {
                     terminalInstance.executeScript("localEcho.println(`node`);")
                 }
-                terminalInstance.executeScript("window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})")
+                terminalInstance.executeScript(
+                    "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})"
+                )
             case 2:
-                let cmd = "clang \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
+                let cmd =
+                    "clang \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
                 if compilerShowPath {
                     terminalInstance.executeScript("localEcho.println(`\(cmd)`);readLine('');")
-                }else{
+                } else {
                     terminalInstance.executeScript("localEcho.println(`clang`);readLine('');")
                 }
-                terminalInstance.executor?.evaluateCommands(["clang \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))", "wasm a.out"])
+                terminalInstance.executor?.evaluateCommands([
+                    "clang \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))",
+                    "wasm a.out",
+                ])
             case 3:
-                let cmd = "clang++ \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
+                let cmd =
+                    "clang++ \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
                 if compilerShowPath {
                     terminalInstance.executeScript("localEcho.println(`\(cmd)`);readLine('');")
-                }else{
+                } else {
                     terminalInstance.executeScript("localEcho.println(`clang++`);readLine('');")
                 }
-                terminalInstance.executor?.evaluateCommands(["clang++ \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))", "wasm a.out"])
+                terminalInstance.executor?.evaluateCommands([
+                    "clang++ \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))",
+                    "wasm a.out",
+                ])
             case 4:
-                let cmd = "php \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
+                let cmd =
+                    "php \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
                 if compilerShowPath {
                     terminalInstance.executeScript("localEcho.println(`\(cmd)`);")
-                }else{
+                } else {
                     terminalInstance.executeScript("localEcho.println(`php`);")
                 }
-                terminalInstance.executeScript("window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})")
+                terminalInstance.executeScript(
+                    "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})"
+                )
             default:
                 return
             }
-        }else{
-            if let link = URL(string: url){
+        } else {
+            if let link = URL(string: url) {
                 readURL(url: url) { result, error in
                     guard let result = result else {
                         return
                     }
-                    self.compileManager.runCode(directoryURL: link, source: result.0, language: lang)
+                    self.compileManager.runCode(
+                        directoryURL: link, source: result.0, language: lang)
                 }
-                
+
             }
         }
     }
-    
-    private func checkOccurancesOfURL(url: String) -> Int{
+
+    private func checkOccurancesOfURL(url: String) -> Int {
         var count = 0
-        for i in editors{
-            if i.url == url{
+        for i in editors {
+            if i.url == url {
                 count += 1
             }
-            if i.compareTo == url{
+            if i.compareTo == url {
                 count += 1
             }
         }
         return count
     }
-    
-    func compareWithPrevious(url: URL){
-        guard gitTracks[url] != nil else{
+
+    func compareWithPrevious(url: URL) {
+        guard gitTracks[url] != nil else {
             notificationManager.showErrorMessage("No changes are made in this file")
             return
         }
-        for i in editors{
-            if i.url == url.absoluteString{
+        for i in editors {
+            if i.url == url.absoluteString {
                 openEditor(urlString: i.url, type: .diff)
                 return
             }
         }
-        gitServiceProvider?.previous(path: url.absoluteString, error: {
-            self.notificationManager.showErrorMessage($0.localizedDescription)
-        }){previousText in
-            self.readURL(url: url.absoluteString){ result, error in
+        gitServiceProvider?.previous(
+            path: url.absoluteString,
+            error: {
+                self.notificationManager.showErrorMessage($0.localizedDescription)
+            }
+        ) { previousText in
+            self.readURL(url: url.absoluteString) { result, error in
                 guard let content = result?.0 else {
                     if let error = error {
                         self.notificationManager.showErrorMessage(error.localizedDescription)
                     }
                     return
                 }
-                let newEditor = EditorInstance(url: url.absoluteString, content: content, type: .diff, compareTo: "file://previous/\(url.path)")
+                let newEditor = EditorInstance(
+                    url: url.absoluteString, content: content, type: .diff,
+                    compareTo: "file://previous/\(url.path)")
                 self.editors.append(newEditor)
-                self.monacoInstance.switchToDiffView(originalContent: previousText , modifiedContent: content, url: newEditor.compareTo! , url2: url.absoluteString)
+                self.monacoInstance.switchToDiffView(
+                    originalContent: previousText, modifiedContent: content,
+                    url: newEditor.compareTo!, url2: url.absoluteString)
                 self.activeEditor = newEditor
             }
         }
     }
-    
-    func compareWithSelected(url: String){
-        readURL(url: url){ result, error in
+
+    func compareWithSelected(url: String) {
+        readURL(url: url) { result, error in
             if let error = error {
                 self.notificationManager.showErrorMessage(error.localizedDescription)
                 return
             }
             guard let originalContent = result?.0 else { return }
-            self.readURL(url: self.selectedForCompare){ result, error in
+            self.readURL(url: self.selectedForCompare) { result, error in
                 if let error = error {
                     self.notificationManager.showErrorMessage(error.localizedDescription)
                     return
                 }
                 guard let diffContent = result?.0 else { return }
-                let newEditor = EditorInstance(url: url, content: originalContent, type: .diff, compareTo: self.selectedForCompare)
+                let newEditor = EditorInstance(
+                    url: url, content: originalContent, type: .diff,
+                    compareTo: self.selectedForCompare)
                 self.editors.append(newEditor)
                 self.activeEditor = newEditor
-                self.monacoInstance.switchToDiffView(originalContent: diffContent, modifiedContent: originalContent, url: self.selectedForCompare, url2: url)
+                self.monacoInstance.switchToDiffView(
+                    originalContent: diffContent, modifiedContent: originalContent,
+                    url: self.selectedForCompare, url2: url)
             }
         }
     }
-    
-    func reloadCurrentFileWithEncoding(encoding: String.Encoding){
+
+    func reloadCurrentFileWithEncoding(encoding: String.Encoding) {
         guard let url = URL(string: currentURL()) else {
             return
         }
-        workSpaceStorage.contents(at: url, completionHandler: { data, error in
-            guard let data = data else {
-                if let error = error {
-                    self.notificationManager.showErrorMessage(error.localizedDescription)
+        workSpaceStorage.contents(
+            at: url,
+            completionHandler: { data, error in
+                guard let data = data else {
+                    if let error = error {
+                        self.notificationManager.showErrorMessage(error.localizedDescription)
+                    }
+                    return
                 }
-                return
-            }
-            if let string = String(data: data, encoding: encoding){
-                self.activeEditor?.encoding = encoding
-                self.activeEditor?.content = string
-                self.monacoInstance.setCurrentModelValue(value: string)
-            }else{
-                self.notificationManager.showErrorMessage("Failed to read file with \(encodingTable[encoding]!)")
-            }
-        })
+                if let string = String(data: data, encoding: encoding) {
+                    self.activeEditor?.encoding = encoding
+                    self.activeEditor?.content = string
+                    self.monacoInstance.setCurrentModelValue(value: string)
+                } else {
+                    self.notificationManager.showErrorMessage(
+                        "Failed to read file with \(encodingTable[encoding]!)")
+                }
+            })
     }
-    
-    private func readURL(url: String, completionHandler: @escaping ((String, String.Encoding)?, Error?) -> Void){
+
+    private func readURL(
+        url: String, completionHandler: @escaping ((String, String.Encoding)?, Error?) -> Void
+    ) {
         guard let url = URL(string: url) else {
             return
         }
-        workSpaceStorage.contents(at: url){ data, error in
+        workSpaceStorage.contents(at: url) { data, error in
             guard let data = data else {
                 if let error = error {
                     completionHandler(nil, error)
@@ -437,7 +501,7 @@ class MainApp: ObservableObject {
             }
             let encodings: [String.Encoding] = [.utf8, .windowsCP1252, .gb_18030_2000, .EUC_KR]
             for encoding in encodings {
-                if let string = String(data: data, encoding: encoding){
+                if let string = String(data: data, encoding: encoding) {
                     completionHandler((string, encoding), nil)
                     return
                 }
@@ -445,12 +509,15 @@ class MainApp: ObservableObject {
             completionHandler(nil, FSError.unsupportedEncoding)
         }
     }
-    
-    func saveEditor(editor: EditorInstance){
-        guard let url = URL(string: editor.url), let data = editor.content.data(using: editor.encoding) else {
+
+    func saveEditor(editor: EditorInstance) {
+        guard let url = URL(string: editor.url),
+            let data = editor.content.data(using: editor.encoding)
+        else {
             return
         }
-        self.workSpaceStorage.write(at: url, content: data, atomically: true, overwrite: true){ error in
+        self.workSpaceStorage.write(at: url, content: data, atomically: true, overwrite: true) {
+            error in
             if let error = error {
                 self.notificationManager.showErrorMessage(error.localizedDescription)
                 return
@@ -459,30 +526,34 @@ class MainApp: ObservableObject {
                 editor.lastSavedVersionId = editor.currentVersionId
                 editor.isDeleted = false
             }
-            DispatchQueue.global(qos: .utility).async{
+            DispatchQueue.global(qos: .utility).async {
                 self.git_status()
             }
         }
     }
-    
-    func saveCurrentFile(){
-        if editors.isEmpty {return}
-        if activeEditor?.type != .file && activeEditor?.type != .diff {return}
-        if activeEditor?.lastSavedVersionId == activeEditor?.currentVersionId && !(activeEditor?.isDeleted ?? false) {return}
-        
-        if let activeEditor = activeEditor{
+
+    func saveCurrentFile() {
+        if editors.isEmpty { return }
+        if activeEditor?.type != .file && activeEditor?.type != .diff { return }
+        if activeEditor?.lastSavedVersionId == activeEditor?.currentVersionId
+            && !(activeEditor?.isDeleted ?? false)
+        {
+            return
+        }
+
+        if let activeEditor = activeEditor {
             saveEditor(editor: activeEditor)
         }
-        
+
     }
-    
-    func addMarkDownPreview(url: URL, content: String){
-        if url.pathExtension != "md" && url.pathExtension != "markdown"{
+
+    func addMarkDownPreview(url: URL, content: String) {
+        if url.pathExtension != "md" && url.pathExtension != "markdown" {
             return
         }
         let newURL = url.absoluteString + "{preview}"
-        for i in editors{
-            if i.url == newURL{
+        for i in editors {
+            if i.url == newURL {
                 openEditor(urlString: i.url, type: .preview)
                 return
             }
@@ -490,48 +561,53 @@ class MainApp: ObservableObject {
         editors.append(EditorInstance(url: newURL, content: content, type: .preview))
         openEditor(urlString: newURL, type: .preview)
     }
-    
-    private func restartWebServer(url: URL){
+
+    private func restartWebServer(url: URL) {
         webServer.stop()
         webServer.removeAllHandlers()
-        webServer.addGETHandler(forBasePath: "/", directoryPath: url.path, indexFilename: "index.html", cacheAge: 10, allowRangeRequests: true)
+        webServer.addGETHandler(
+            forBasePath: "/", directoryPath: url.path, indexFilename: "index.html", cacheAge: 10,
+            allowRangeRequests: true)
         print(url.absoluteString)
-        do{
-            try webServer.start(options: [GCDWebServerOption_AutomaticallySuspendInBackground: true, GCDWebServerOption_Port: 8000])
+        do {
+            try webServer.start(options: [
+                GCDWebServerOption_AutomaticallySuspendInBackground: true,
+                GCDWebServerOption_Port: 8000,
+            ])
         } catch let error {
             print(error)
         }
     }
-    
-    func currentURL() -> String{
+
+    func currentURL() -> String {
         return activeEditor?.url ?? ""
     }
-    
-    func reloadDirectory(){
+
+    func reloadDirectory() {
         guard let url = URL(string: workSpaceStorage.currentDirectory.url) else {
             return
         }
         loadFolder(url: url, resetEditors: false)
     }
-    
-    func git_status(){
-        gitServiceProvider?.status(error: {_ in
-            
-            DispatchQueue.main.async{
+
+    func git_status() {
+        gitServiceProvider?.status(error: { _ in
+
+            DispatchQueue.main.async {
                 self.remote = ""
                 self.branch = ""
                 self.gitTracks = [:]
                 self.indexedResources = [:]
                 self.workingResources = [:]
             }
-        }){ indexed, worktree, branch in
+        }) { indexed, worktree, branch in
             guard let hasRemote = self.gitServiceProvider?.hasRemote() else {
                 return
             }
             DispatchQueue.main.async {
-                if hasRemote{
+                if hasRemote {
                     self.remote = "origin"
-                }else{
+                } else {
                     self.remote = ""
                 }
                 self.branch = branch
@@ -542,37 +618,40 @@ class MainApp: ObservableObject {
                 print(self.indexedResources.keys)
                 print(self.workingResources.keys)
                 self.gitTracks = indexed
-                worktree.forEach {key, value in
+                worktree.forEach { key, value in
                     self.gitTracks[key] = value
                 }
             }
-            
+
             self.gitServiceProvider?.aheadBehind(error: {
                 print($0.localizedDescription)
                 DispatchQueue.main.async {
                     self.aheadBehind = nil
                 }
-            }){ result in
+            }) { result in
                 DispatchQueue.main.async {
                     self.aheadBehind = result
                 }
             }
         }
     }
-    
-    func loadRepository(url: URL){
+
+    func loadRepository(url: URL) {
         gitServiceProvider = GitServiceProvider(root: url.standardizedFileURL)
         git_status()
     }
-    
+
     // Injecting JavaScript / TypeScript types
-    func scanForTypes(){
-        guard let typesURL = URL(string: workSpaceStorage.currentDirectory.url)?.appendingPathComponent("node_modules") else {
+    func scanForTypes() {
+        guard
+            let typesURL = URL(string: workSpaceStorage.currentDirectory.url)?
+                .appendingPathComponent("node_modules")
+        else {
             return
         }
         self.monacoInstance.injectTypes(url: typesURL)
         editorTypesMonitor = FolderMonitor(url: typesURL)
-        
+
         if FileManager.default.fileExists(atPath: typesURL.path) {
             editorTypesMonitor?.startMonitoring()
             editorTypesMonitor?.folderDidChange = {
@@ -580,75 +659,78 @@ class MainApp: ObservableObject {
             }
         }
     }
-    
-    func loadFolder(url: URL, resetEditors: Bool = true){
+
+    func loadFolder(url: URL, resetEditors: Bool = true) {
         ios_setDirectoryURL(url)
         scanForTypes()
-        
+
         DispatchQueue.global(qos: .userInitiated).async {
-            self.workSpaceStorage.updateDirectory(name: url.lastPathComponent, url: url.absoluteString)
+            self.workSpaceStorage.updateDirectory(
+                name: url.lastPathComponent, url: url.absoluteString)
         }
-        
+
         restartWebServer(url: url)
-        
+
         loadRepository(url: url)
-        
-        if let data = try? url.bookmarkData(){
-            if var datas = UserDefaults.standard.value(forKey: "recentFolder") as? [Data]{
-                var existingName:[String] = []
-                for data in datas{
+
+        if let data = try? url.bookmarkData() {
+            if var datas = UserDefaults.standard.value(forKey: "recentFolder") as? [Data] {
+                var existingName: [String] = []
+                for data in datas {
                     var isStale = false
-                    if let newURL = try? URL(resolvingBookmarkData: data, bookmarkDataIsStale: &isStale){
+                    if let newURL = try? URL(
+                        resolvingBookmarkData: data, bookmarkDataIsStale: &isStale)
+                    {
                         existingName.append(newURL.lastPathComponent)
                     }
                 }
-                if let index = existingName.firstIndex(of: url.lastPathComponent){
+                if let index = existingName.firstIndex(of: url.lastPathComponent) {
                     datas.remove(at: index)
                 }
                 datas = [data] + datas
-                if datas.count > 5{
+                if datas.count > 5 {
                     datas.removeLast()
                 }
                 UserDefaults.standard.setValue(datas, forKey: "recentFolder")
-                
-            }else{
+
+            } else {
                 UserDefaults.standard.setValue([data], forKey: "recentFolder")
             }
         }
-        if resetEditors{
+        if resetEditors {
             DispatchQueue.main.async {
                 self.closeAllEditors()
                 self.terminalInstance.resetAndSetNewRootDirectory(url: url)
             }
         }
     }
-    
-    func closeAllEditors(){
+
+    func closeAllEditors() {
         if editors.isEmpty {
             return
         }
         monacoInstance.removeAllModel()
-        if activeEditor?.type == .diff{
+        if activeEditor?.type == .diff {
             monacoInstance.switchToNormView()
         }
         editors.removeAll(keepingCapacity: false)
         activeEditor = nil
     }
-    
+
     func updateCompilerCode(pathExtension: String) {
         var found = false
-        
-        if (languageEnabled[0] && pathExtension == "py"){
+
+        if languageEnabled[0] && pathExtension == "py" {
             found = true
             compilerCode = 0
             isShowingCompilerLanguage = true
-        }else if (languageEnabled[1] && pathExtension == "js"){
+        } else if languageEnabled[1] && pathExtension == "js" {
             found = true
             compilerCode = 1
             isShowingCompilerLanguage = true
-        }else{
-            for i in languageList.sorted(by: {$0.key < $1.key}){
-                if i.value[1] == pathExtension && languageEnabled[i.key]{
+        } else {
+            for i in languageList.sorted(by: { $0.key < $1.key }) {
+                if i.value[1] == pathExtension && languageEnabled[i.key] {
                     compilerCode = i.key
                     isShowingCompilerLanguage = true
                     found = true
@@ -656,28 +738,29 @@ class MainApp: ObservableObject {
                 }
             }
         }
-        
-        
+
         if !found {
             isShowingCompilerLanguage = false
         }
     }
-    
+
     func openEditor(urlString: String, type: EditorInstance.tabType, inNewTab: Bool = false) {
-        
+
         for editor in editors {
-            if type == .any && editor.type == .diff{
+            if type == .any && editor.type == .diff {
                 continue
             }
-            if(editor.url == urlString && (editor.type == type || type == .any) ){
-                if(activeEditor != editor){
-                    if editor.type == .file && activeEditor?.type == .diff{
+            if editor.url == urlString && (editor.type == type || type == .any) {
+                if activeEditor != editor {
+                    if editor.type == .file && activeEditor?.type == .diff {
                         monacoInstance.switchToNormView()
                     }
-                    if editor.type == .diff && activeEditor?.type == .file{
-                        monacoInstance.switchToDiffView(originalContent: "", modifiedContent: editor.content, url: editor.compareTo! , url2: editor.url)
+                    if editor.type == .diff && activeEditor?.type == .file {
+                        monacoInstance.switchToDiffView(
+                            originalContent: "", modifiedContent: editor.content,
+                            url: editor.compareTo!, url2: editor.url)
                     }
-                    if editor.type == .file{
+                    if editor.type == .file {
                         monacoInstance.setModel(from: currentURL(), url: urlString)
                     }
                     activeEditor = editor
@@ -685,45 +768,52 @@ class MainApp: ObservableObject {
                 return
             }
         }
-        
-        guard let url = URL(string: urlString) else{
+
+        guard let url = URL(string: urlString) else {
             if urlString == "welcome.md{welcome}" {
-                let newEditor = EditorInstance(url: "welcome.md{welcome}", content: readmeMessage, type: .preview)
+                let newEditor = EditorInstance(
+                    url: "welcome.md{welcome}", content: readmeMessage, type: .preview)
                 editors.append(newEditor)
                 activeEditor = newEditor
             }
             return
         }
-        
+
         UIApplication.shared.openSessions.first?.scene?.title = url.lastPathComponent
-        
+
         if url.pathExtension == "icloud" {
             let fileManager = FileManager.default
             do {
-                try fileManager.startDownloadingUbiquitousItem(at: url )
-                self.notificationManager.showInformationMessage("Downloading \(url.lastPathComponent)")
+                try fileManager.startDownloadingUbiquitousItem(at: url)
+                self.notificationManager.showInformationMessage(
+                    "Downloading \(url.lastPathComponent)")
             } catch {
-                self.notificationManager.showErrorMessage("Download failed: \(error.localizedDescription)")
+                self.notificationManager.showErrorMessage(
+                    "Download failed: \(error.localizedDescription)")
             }
             return
         }
-        
+
         if url.scheme == "file" {
-            guard let typeID = try? url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier, let supertypes = UTType(typeID)?.supertypes else {
+            guard
+                let typeID = try? url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier,
+                let supertypes = UTType(typeID)?.supertypes
+            else {
                 return
             }
-            
-            if supertypes.contains(.mpeg4Movie) || supertypes.contains(.movie){
-                let newEditor = EditorInstance(url: url.absoluteString, content: "Video", type: .video)
+
+            if supertypes.contains(.mpeg4Movie) || supertypes.contains(.movie) {
+                let newEditor = EditorInstance(
+                    url: url.absoluteString, content: "Video", type: .video)
                 editors.append(newEditor)
                 activeEditor = newEditor
                 return
             }
         }
-        
-        func newTab(editor: EditorInstance){
-            if let activeEditor = activeEditor, !alwaysOpenInNewTab && !inNewTab{
-                if activeEditor.currentVersionId == 1{
+
+        func newTab(editor: EditorInstance) {
+            if let activeEditor = activeEditor, !alwaysOpenInNewTab && !inNewTab {
+                if activeEditor.currentVersionId == 1 {
                     for i in editors.indices {
                         if editors[i] == activeEditor {
                             editors[i] = editor
@@ -737,23 +827,26 @@ class MainApp: ObservableObject {
             editors.append(editor)
             activeEditor = editor
         }
-        
-        func newEditor(content: String, encoding: String.Encoding){
+
+        func newEditor(content: String, encoding: String.Encoding) {
 
             // Add a new editor
-            let newEditor = EditorInstance(url: url.absoluteString, content: content, type: .file, encoding: encoding){ state, content in
+            let newEditor = EditorInstance(
+                url: url.absoluteString, content: content, type: .file, encoding: encoding
+            ) { state, content in
                 if state == .modified {
                     DispatchQueue.main.async {
-                        self.monacoInstance.updateModelContent(url: url.absoluteString, content: content!)
+                        self.monacoInstance.updateModelContent(
+                            url: url.absoluteString, content: content!)
                     }
                 }
             }
-            
-            if activeEditor?.type == .diff{
+
+            if activeEditor?.type == .diff {
                 monacoInstance.switchToNormView()
             }
-            if let activeEditor = activeEditor, !alwaysOpenInNewTab && !inNewTab{
-                if activeEditor.currentVersionId == 1{
+            if let activeEditor = activeEditor, !alwaysOpenInNewTab && !inNewTab {
+                if activeEditor.currentVersionId == 1 {
                     let oldurl = activeEditor.url
                     for i in editors.indices {
                         if editors[i] == activeEditor {
@@ -771,14 +864,16 @@ class MainApp: ObservableObject {
             activeEditor = newEditor
             monacoInstance.newModel(url: url.absoluteString, content: content)
         }
-        
-        readURL(url: url.absoluteString){ result, error in
+
+        readURL(url: url.absoluteString) { result, error in
             if let error = error {
-                self.workSpaceStorage.contents(at: url){ data, _ in
-                    if let data = data, let image = UIImage(data: data){
-                        let newEditor = EditorInstance(url: url.absoluteString, content: "Image", type: .image, image: Image(uiImage: image))
+                self.workSpaceStorage.contents(at: url) { data, _ in
+                    if let data = data, let image = UIImage(data: data) {
+                        let newEditor = EditorInstance(
+                            url: url.absoluteString, content: "Image", type: .image,
+                            image: Image(uiImage: image))
                         newTab(editor: newEditor)
-                    }else{
+                    } else {
                         self.notificationManager.showErrorMessage(error.localizedDescription)
                     }
                 }
@@ -789,20 +884,20 @@ class MainApp: ObservableObject {
             }
         }
     }
-    
-    func closeEditor(url: String, type: EditorInstance.tabType){
+
+    func closeEditor(url: String, type: EditorInstance.tabType) {
         var index = -1
-        for y in 0..<editors.count{
-            if(editors[y].url == url && editors[y].type == type){
+        for y in 0..<editors.count {
+            if editors[y].url == url && editors[y].type == type {
                 index = y
             }
         }
         if index == -1 {
             return
         }
-        
-        if(index-1 >= 0){
-            if editors[index].type == .diff && editors[index-1].type != .diff{
+
+        if index - 1 >= 0 {
+            if editors[index].type == .diff && editors[index - 1].type != .diff {
                 if checkOccurancesOfURL(url: url) == 1 {
                     monacoInstance.removeModel(url: url)
                 }
@@ -811,13 +906,13 @@ class MainApp: ObservableObject {
                 }
                 monacoInstance.switchToNormView()
             }
-            openEditor(urlString: editors[index-1].url, type: editors[index-1].type)
+            openEditor(urlString: editors[index - 1].url, type: editors[index - 1].type)
             if checkOccurancesOfURL(url: url) == 1 {
                 monacoInstance.removeModel(url: url)
             }
             editors.remove(at: index)
-        }else if editors.count > 1{
-            if editors[index].type == .diff && editors[index+1].type != .diff{
+        } else if editors.count > 1 {
+            if editors[index].type == .diff && editors[index + 1].type != .diff {
                 if checkOccurancesOfURL(url: url) == 1 {
                     monacoInstance.removeModel(url: url)
                 }
@@ -826,18 +921,18 @@ class MainApp: ObservableObject {
                 }
                 monacoInstance.switchToNormView()
             }
-            openEditor(urlString: editors[index+1].url, type: editors[index+1].type)
+            openEditor(urlString: editors[index + 1].url, type: editors[index + 1].type)
             if checkOccurancesOfURL(url: url) == 1 {
                 monacoInstance.removeModel(url: url)
             }
-            activeEditor = editors[index+1]
+            activeEditor = editors[index + 1]
             editors.remove(at: index)
-        }else{
+        } else {
             monacoInstance.removeModel(url: url)
             activeEditor = nil
             editors = []
             monacoInstance.switchToNormView()
         }
     }
-    
+
 }

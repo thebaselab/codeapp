@@ -8,70 +8,77 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct folderCell: View{
-    
+struct folderCell: View {
+
     @EnvironmentObject var App: MainApp
     @State var item: WorkSpaceStorage.fileItemRepresentable
     @State var showingNewFileSheet = false
     @State var isRenaming = false
     @State var newname = ""
-    
-    init(item: WorkSpaceStorage.fileItemRepresentable){
+
+    init(item: WorkSpaceStorage.fileItemRepresentable) {
         self._item = State.init(initialValue: item)
         self._newname = State.init(initialValue: item.name.removingPercentEncoding!)
     }
-    
-    var body: some View{
+
+    var body: some View {
         Button(action: {
             if item.subFolderItems == nil {
                 App.openEditor(urlString: item.url, type: .any)
-            }else{
-                withAnimation(.easeInOut){
+            } else {
+                withAnimation(.easeInOut) {
                     if App.workSpaceStorage.expansionStates[item.url] ?? false {
                         App.workSpaceStorage.expansionStates[item.url] = false
-                    }else{
+                    } else {
                         App.workSpaceStorage.requestDirectoryUpdateAt(id: item.url)
                         App.workSpaceStorage.expansionStates[item.url] = true
                     }
                 }
             }
-            
+
         }) {
             ZStack {
-                
-                if item.url == App.activeEditor?.url && (App.activeEditor?.type == .image || App.activeEditor?.type == .file){
+
+                if item.url == App.activeEditor?.url
+                    && (App.activeEditor?.type == .image || App.activeEditor?.type == .file)
+                {
                     Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
-                }else{
+                } else {
                     Color.init(id: "sideBar.background")
                 }
-                
+
                 HStack {
-                    if item.subFolderItems != nil{
+                    if item.subFolderItems != nil {
                         Image(systemName: "folder")
                             .foregroundColor(.gray)
-                            .font(.system(size:14))
+                            .font(.system(size: 14))
                             .frame(width: 14, height: 14)
-                    }else{
+                    } else {
                         fileIcon(url: newname, iconSize: 14, type: .file)
                             .frame(width: 14, height: 14)
                     }
                     Spacer().frame(width: 10)
-                    
-                    if isRenaming{
-                        HStack{
-                            focusableTextField(text: $newname, isRenaming: $isRenaming, isFirstResponder: true, url: URL(string: item.url)!, onFileNameChange: {App.renameFile(url: URL(string: item.url)!, name: newname)})
+
+                    if isRenaming {
+                        HStack {
+                            focusableTextField(
+                                text: $newname, isRenaming: $isRenaming, isFirstResponder: true,
+                                url: URL(string: item.url)!,
+                                onFileNameChange: {
+                                    App.renameFile(url: URL(string: item.url)!, name: newname)
+                                })
                             Spacer()
                             Image(systemName: "multiply.circle.fill")
                                 .foregroundColor(.gray)
                                 .padding(.trailing, 8)
                                 .highPriorityGesture(
                                     TapGesture()
-                                        .onEnded({self.newname = ""})
+                                        .onEnded({ self.newname = "" })
                                 )
                         }
-                    }else{
-                        if let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL]{
-                            switch status{
+                    } else {
+                        if let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL] {
+                            switch status {
                             case .workTreeModified, .indexModified:
                                 Text(item.name.removingPercentEncoding!)
                                     .foregroundColor(Color.init("git.modified"))
@@ -110,20 +117,20 @@ struct folderCell: View{
                                     .padding(.horizontal, 5)
                             default:
                                 Text(item.name.removingPercentEncoding!)
-                                    .foregroundColor(Color.init(id: "list.inactiveSelectionForeground"))
+                                    .foregroundColor(
+                                        Color.init(id: "list.inactiveSelectionForeground")
+                                    )
                                     .font(.system(size: 14, weight: .light))
                                 Spacer()
                             }
-                        }else{
+                        } else {
                             Text(item.name.removingPercentEncoding!)
                                 .foregroundColor(Color.init(id: "list.inactiveSelectionForeground"))
                                 .font(.system(size: 14, weight: .light))
                             Spacer()
                         }
                     }
-                    
-                    
-                    
+
                 }.padding(5)
             }
         }
@@ -132,40 +139,42 @@ struct folderCell: View{
             newFileView(targetUrl: item.url).environmentObject(App)
         }
         .contextMenu {
-            Group{
-                
-                if item.subFolderItems == nil{
+            Group {
+
+                if item.subFolderItems == nil {
                     Button(action: {
                         App.openEditor(urlString: item.url, type: .any, inNewTab: true)
-                    }){
+                    }) {
                         Text("Open in Tab")
                         Image(systemName: "doc.plaintext")
                     }
                 }
-                
+
                 Button(action: {
-                    openSharedFilesApp(urlString: URL(string: item.url)!.deletingLastPathComponent().absoluteString)
-                }){
+                    openSharedFilesApp(
+                        urlString: URL(string: item.url)!.deletingLastPathComponent().absoluteString
+                    )
+                }) {
                     Text(NSLocalizedString("Show in Files App", comment: ""))
                     Image(systemName: "folder")
                 }
-                
-                Group{
+
+                Group {
                     Button(action: {
                         isRenaming = true
-                        
+
                     }) {
                         Text(NSLocalizedString("Rename", comment: ""))
                         Image(systemName: "pencil")
                     }
-                    
+
                     Button(action: {
                         App.duplicateItem(from: URL(string: item.url)!)
                     }) {
                         Text("Duplicate")
                         Image(systemName: "plus.square.on.square")
                     }
-                    
+
                     Button(action: {
                         App.trashItem(url: URL(string: item.url)!)
                     }) {
@@ -173,56 +182,56 @@ struct folderCell: View{
                         Image(systemName: "trash").foregroundColor(.red)
                     }
                 }
-                
-                
-                
+
             }
-            
+
             Divider()
-            
+
             Button(action: {
                 let pasteboard = UIPasteboard.general
-                guard let targetURL = URL(string: item.url), let baseURL = URL(string: App.currentURL()) else {
+                guard let targetURL = URL(string: item.url),
+                    let baseURL = URL(string: App.currentURL())
+                else {
                     return
                 }
                 pasteboard.string = targetURL.relativePath(from: baseURL)
-            }){
+            }) {
                 Text(NSLocalizedString("Copy Relative Path", comment: ""))
                 Image(systemName: "link")
             }
-            
-            if item.subFolderItems != nil{
+
+            if item.subFolderItems != nil {
                 Button(action: {
                     showingNewFileSheet.toggle()
-                }){
+                }) {
                     Text(NSLocalizedString("New File", comment: ""))
                     Image(systemName: "doc.badge.plus")
                 }
-                
+
                 Button(action: {
                     App.createFolder(urlString: item.url)
-                }){
+                }) {
                     Text(NSLocalizedString("New Folder", comment: ""))
                     Image(systemName: "folder.badge.plus")
                 }
-                
+
                 Button(action: {
                     App.loadFolder(url: URL(string: item.url)!)
-                }){
+                }) {
                     Text(NSLocalizedString("Assign as workplace folder", comment: ""))
                     Image(systemName: "folder.badge.gear")
                 }
             }
-            
-            if item.subFolderItems == nil{
+
+            if item.subFolderItems == nil {
                 Button(action: {
                     App.selectedForCompare = item.url
                 }) {
                     Text(NSLocalizedString("Select for compare", comment: ""))
                     Image(systemName: "square.split.2x1")
                 }
-                
-                if App.selectedForCompare != "" && App.selectedForCompare != item.url{
+
+                if App.selectedForCompare != "" && App.selectedForCompare != item.url {
                     Button(action: {
                         App.compareWithSelected(url: item.url)
                     }) {
@@ -232,11 +241,17 @@ struct folderCell: View{
                 }
             }
         }
-//        .onDrag { NSItemProvider(object: URL(string: item.url)! as NSURL) }
-        .if(item.subFolderItems != nil && URL(string: item.url) != nil){view in
-            view.onDrop(of: [UTType.url], delegate: FilesDropDelegate(destination: URL(string: item.url)!, hoverAction: {App.workSpaceStorage.expansionStates[item.url] = true}))
+        //        .onDrag { NSItemProvider(object: URL(string: item.url)! as NSURL) }
+        .if(item.subFolderItems != nil && URL(string: item.url) != nil) { view in
+            view.onDrop(
+                of: [UTType.url],
+                delegate: FilesDropDelegate(
+                    destination: URL(string: item.url)!,
+                    hoverAction: { App.workSpaceStorage.expansionStates[item.url] = true }))
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)){ _ in
+        .onReceive(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+        ) { _ in
             isRenaming = false
             newname = item.name.removingPercentEncoding!
         }
@@ -244,16 +259,16 @@ struct folderCell: View{
 }
 
 struct FilesDropDelegate: DropDelegate {
-    
+
     let destination: URL
     let hoverAction: () -> (Void)
-    
+
     func performDrop(info: DropInfo) -> Bool {
         guard info.hasItemsConforming(to: [.fileURL]) else {
             return false
         }
         let items = info.itemProviders(for: [.fileURL])
-        
+
         for item in items {
             _ = item.loadObject(ofClass: URL.self) { url, _ in
                 if let url = url {
@@ -263,11 +278,11 @@ struct FilesDropDelegate: DropDelegate {
         }
         return true
     }
-    
+
     func dropEntered(info: DropInfo) {
         hoverAction()
     }
-    
+
     func dropUpdated(info: DropInfo) -> DropProposal? {
         return DropProposal(operation: .move)
     }

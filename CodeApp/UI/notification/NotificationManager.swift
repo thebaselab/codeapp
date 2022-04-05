@@ -10,33 +10,47 @@ import SwiftUI
 class NotificationManager: ObservableObject {
     @Published var banners: [BannerModule] = []
     @Published var isShowingAllBanners = false
-    
-    func postProgressNotification(title: String, progress: Progress){
-        banners.append(BannerModule.init(data: BannerData.init(title: title, progress: progress, level: .info, style: .progress)))
+
+    func postProgressNotification(title: String, progress: Progress) {
+        banners.append(
+            BannerModule.init(
+                data: BannerData.init(
+                    title: title, progress: progress, level: .info, style: .progress)))
     }
-    
-    func postActionNotification(title: String, level: BannerData.Level, primary: @escaping (() -> Void), primaryTitle: String, source: String){
-        banners.append(BannerModule.init(data: BannerData.init(title: title, source: source,level: level, style: .action, primaryAction: primary, primaryTitle: primaryTitle)))
+
+    func postActionNotification(
+        title: String, level: BannerData.Level, primary: @escaping (() -> Void),
+        primaryTitle: String, source: String
+    ) {
+        banners.append(
+            BannerModule.init(
+                data: BannerData.init(
+                    title: title, source: source, level: level, style: .action,
+                    primaryAction: primary, primaryTitle: primaryTitle)))
     }
-    
-    func showInformationMessage(_ mes: String){
+
+    func showInformationMessage(_ mes: String) {
         DispatchQueue.main.async {
-            self.banners.append(BannerModule.init(data: BannerData.init(title: mes, level: .info, style: .basic)))
+            self.banners.append(
+                BannerModule.init(data: BannerData.init(title: mes, level: .info, style: .basic)))
         }
     }
-    
-    func showWarningMessage(_ mes: String){
+
+    func showWarningMessage(_ mes: String) {
         DispatchQueue.main.async {
-            self.banners.append(BannerModule.init(data: BannerData.init(title: mes, level: .warning, style: .basic)))
+            self.banners.append(
+                BannerModule.init(data: BannerData.init(title: mes, level: .warning, style: .basic))
+            )
         }
     }
-    
-    func showErrorMessage(_ mes: String){
+
+    func showErrorMessage(_ mes: String) {
         DispatchQueue.main.async {
-            self.banners.append(BannerModule.init(data: BannerData.init(title: mes, level: .error, style: .basic)))
+            self.banners.append(
+                BannerModule.init(data: BannerData.init(title: mes, level: .error, style: .basic)))
         }
     }
-    
+
 }
 
 struct BannerModule: Identifiable {
@@ -50,10 +64,10 @@ struct BannerData {
     let title: String
     var source: String? = nil
     var progress: Progress? = nil
-    
+
     let level: Level
     let style: Style
-    
+
     var primaryAction: (() -> Void)? = nil
     var secondaryAction: (() -> Void)? = nil
     var primaryTitle: String = ""
@@ -63,19 +77,27 @@ struct BannerData {
         case action
         case progress
     }
-    
+
     enum Level {
         case warning
         case info
         case error
         case success
-        
+
         var icon: some View {
             switch self {
-            case .error: return Image(systemName: "xmark.circle.fill").font(.system(size: 14)).foregroundColor(Color.red)
-            case .info: return Image(systemName: "info.circle.fill").font(.system(size: 14)).foregroundColor(Color.blue)
-            case .warning: return Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 14)).foregroundColor(Color.yellow)
-            case .success: return Image(systemName: "checkmark.circle.fill").font(.system(size: 14)).foregroundColor(Color.green)
+            case .error:
+                return Image(systemName: "xmark.circle.fill").font(.system(size: 14))
+                    .foregroundColor(Color.red)
+            case .info:
+                return Image(systemName: "info.circle.fill").font(.system(size: 14))
+                    .foregroundColor(Color.blue)
+            case .warning:
+                return Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 14))
+                    .foregroundColor(Color.yellow)
+            case .success:
+                return Image(systemName: "checkmark.circle.fill").font(.system(size: 14))
+                    .foregroundColor(Color.green)
             }
         }
     }
@@ -85,11 +107,13 @@ extension BannerData {
     func makeBanner(isPresented: Binding<Bool>, isRemoved: Binding<Bool>) -> some View {
         switch style {
         case .progress:
-            return AnyView(BannerWtihProgress(data: self, isPresented: isPresented, isRemoved: isRemoved))
+            return AnyView(
+                BannerWtihProgress(data: self, isPresented: isPresented, isRemoved: isRemoved))
         case .basic:
             return AnyView(Banner(data: self, isPresented: isPresented, isRemoved: isRemoved))
         case .action:
-            return AnyView(BannerWithButton(data: self, isPresented: isPresented, isRemoved: isRemoved))
+            return AnyView(
+                BannerWithButton(data: self, isPresented: isPresented, isRemoved: isRemoved))
         }
     }
 }

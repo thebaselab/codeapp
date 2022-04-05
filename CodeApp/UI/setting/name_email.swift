@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct name_email: View {
-    
+
     @EnvironmentObject var App: MainApp
-    
+
     @AppStorage("user_name") var username: String = ""
     @AppStorage("user_email") var email: String = ""
     @Environment(\.presentationMode) var presentationMode
-    
+
     var body: some View {
-        Form{
+        Form {
             Section(header: Text(NSLocalizedString("Author Identity", comment: ""))) {
                 TextField("Name", text: $username)
                     .textContentType(.name)
                     .disableAutocorrection(true)
-                
+
                 TextField("Email address", text: $email)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
@@ -29,16 +29,17 @@ struct name_email: View {
                     .autocapitalization(.none)
             }
         }.navigationBarTitle("Author Identity", displayMode: .inline)
-        .navigationBarItems(trailing:
-            Button(NSLocalizedString("Done", comment: "")) {
-                self.presentationMode.wrappedValue.dismiss()
+            .navigationBarItems(
+                trailing:
+                    Button(NSLocalizedString("Done", comment: "")) {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+            )
+            .onChange(of: username) { value in
+                App.gitServiceProvider?.sign(name: value, email: email)
             }
-        )
-        .onChange(of: username){value in
-            App.gitServiceProvider?.sign(name: value, email: email)
-        }
-        .onChange(of: email){value in
-            App.gitServiceProvider?.sign(name: username, email: value)
-        }
+            .onChange(of: email) { value in
+                App.gitServiceProvider?.sign(name: username, email: value)
+            }
     }
 }

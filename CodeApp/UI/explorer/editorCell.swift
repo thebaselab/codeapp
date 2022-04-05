@@ -7,28 +7,28 @@
 
 import SwiftUI
 
-struct cell: View{
-    
+struct cell: View {
+
     @EnvironmentObject var App: MainApp
     @State var item: EditorInstance
-    
-    var body: some View{
+
+    var body: some View {
         Button(action: {
             App.openEditor(urlString: item.url, type: item.type)
         }) {
             ZStack {
-                if item.url == App.activeEditor?.url && item.type == App.activeEditor?.type{
+                if item.url == App.activeEditor?.url && item.type == App.activeEditor?.type {
                     Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
-                }else{
+                } else {
                     Color.init(id: "sideBar.background")
                 }
-                
+
                 HStack {
                     fileIcon(url: item.url, iconSize: 14, type: item.type)
-                    
-                    if item.type == .file{
-                        if let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL]{
-                            switch status{
+
+                    if item.type == .file {
+                        if let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL] {
+                            switch status {
                             case .workTreeModified, .indexModified:
                                 Text(editorDisplayName(editor: item))
                                     .foregroundColor(Color.init("git.modified"))
@@ -68,53 +68,56 @@ struct cell: View{
                             default:
                                 Spacer()
                             }
-                            
-                        }else{
+
+                        } else {
                             Text(editorDisplayName(editor: item))
                                 .foregroundColor(Color.init(id: "list.inactiveSelectionForeground"))
                                 .font(.system(size: 14, weight: .light))
                             Spacer()
                         }
-                    }else{
+                    } else {
                         Text(editorDisplayName(editor: item))
                             .foregroundColor(Color.init(id: "list.inactiveSelectionForeground"))
                             .font(.system(size: 14, weight: .light))
                         Spacer()
                     }
-                    
-                    
-                }.padding(5)//.padding(.leading, 5)
+
+                }.padding(5)  //.padding(.leading, 5)
             }
         }.buttonStyle(NoAnim())
-        .contextMenu {
-            
-            Button(action: {
-                openSharedFilesApp(urlString: URL(string: item.url)!.deletingLastPathComponent().absoluteString)
-            }){
-                Text(NSLocalizedString("Show in Files App", comment: ""))
-                Image(systemName: "folder")
-            }
-            
-            Button(action: {
-                let pasteboard = UIPasteboard.general
-                guard let targetURL = URL(string: item.url), let baseURL = URL(string: App.currentURL()) else {
-                    return
-                }
-                pasteboard.string = targetURL.relativePath(from: baseURL)
-            }){
-                Text(NSLocalizedString("Copy Relative Path", comment: ""))
-                Image(systemName: "link")
-            }
-            
-            if let url = URL(string: item.url) {
+            .contextMenu {
+
                 Button(action: {
-                    App.trashItem(url: url)
+                    openSharedFilesApp(
+                        urlString: URL(string: item.url)!.deletingLastPathComponent().absoluteString
+                    )
                 }) {
-                    Text(NSLocalizedString("Delete", comment: ""))
-                    Image(systemName: "trash")
-                }.foregroundColor(.red)
+                    Text(NSLocalizedString("Show in Files App", comment: ""))
+                    Image(systemName: "folder")
+                }
+
+                Button(action: {
+                    let pasteboard = UIPasteboard.general
+                    guard let targetURL = URL(string: item.url),
+                        let baseURL = URL(string: App.currentURL())
+                    else {
+                        return
+                    }
+                    pasteboard.string = targetURL.relativePath(from: baseURL)
+                }) {
+                    Text(NSLocalizedString("Copy Relative Path", comment: ""))
+                    Image(systemName: "link")
+                }
+
+                if let url = URL(string: item.url) {
+                    Button(action: {
+                        App.trashItem(url: url)
+                    }) {
+                        Text(NSLocalizedString("Delete", comment: ""))
+                        Image(systemName: "trash")
+                    }.foregroundColor(.red)
+                }
+
             }
-            
-        }
     }
 }
