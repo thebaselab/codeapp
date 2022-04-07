@@ -1,0 +1,44 @@
+name: Build & Deploy to TestFlight
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploying to TestFlight
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Deploy iOS Beta to TestFlight via Fastlane
+        uses: maierj/fastlane-action@v2.2.0
+        with:
+          lane: "open_beta"
+        env:
+          APP_STORE_CONNECT_TEAM_ID: "${{ secrets.APP_STORE_CONNECT_TEAM_ID }}"
+          DEVELOPER_APP_ID: "${{ secrets.DEVELOPER_APP_ID }}"
+          DEVELOPER_APP_IDENTIFIER: "${{ secrets.DEVELOPER_APP_IDENTIFIER }}"
+          DEVELOPER_APP_EXTENSION_IDENTIFIER: "${{ secrets.DEVELOPER_APP_EXTENSION_IDENTIFIER }}"
+          DEVELOPER_PORTAL_TEAM_ID: "${{ secrets.DEVELOPER_PORTAL_TEAM_ID }}"
+          FASTLANE_APPLE_ID: "${{ secrets.FASTLANE_APPLE_ID }}"
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: "${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}"
+          MATCH_PASSWORD: "${{ secrets.MATCH_PASSWORD }}"
+          GIT_AUTHORIZATION: "${{ secrets.GIT_AUTHORIZATION }}"
+          PROVISIONING_PROFILE_SPECIFIER: "${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}"
+          TEMP_KEYCHAIN_PASSWORD: "${{ secrets.TEMP_KEYCHAIN_PASSWORD }}"
+          TEMP_KEYCHAIN_USER: "${{ secrets.TEMP_KEYCHAIN_USER }}"
+          APPLE_KEY_ID: "${{ secrets.APPLE_KEY_ID }}"
+          APPLE_ISSUER_ID: "${{ secrets.APPLE_ISSUER_ID }}"
+          APPLE_KEY_CONTENT: "${{ secrets.APPLE_KEY_CONTENT }}"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ipa-build
+          path: Code.ipa
