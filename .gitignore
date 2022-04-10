@@ -3,7 +3,9 @@
 git.xcframework
 php.xcframework
 Code.xcworkspace/xcuserdata/
+Code.xcodeproject/xcuserdata/
 Code.ipa
+
 Pods/
 
 # fastlane secrets
