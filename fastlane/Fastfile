@@ -84,10 +84,9 @@ platform :ios do
       distribute_external: true,
       notify_external_testers: true,
       ipa: "./Code.ipa",
-      changelog: "GitHub Action automatic build. 
-      For detailed changes, visit https://github.com/thebaselab/codeapp.
-      
-      Generated Changelog:\n" + changelog,
+      changelog: "GitHub Action automatic build. For detailed changes," + 
+      "visit https://github.com/thebaselab/codeapp." + 
+      "\nGenerated Changelog:\n" + changelog,
       groups: ["Public"]
     )
 
