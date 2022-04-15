@@ -1457,7 +1457,6 @@
 		944FC40A25C5F69D00C7C43C /* HierarchyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchyList.swift; sourceTree = "<group>"; };
 		945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = NodeMobile.xcframework; sourceTree = "<group>"; };
 		945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NodeMobile.xcframework; path = Resources/NodeJS/NodeMobile.xcframework; sourceTree = "<group>"; };
-		94638D8B268243B800DDD7FC /* git.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = git.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
 		947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+getSafeArea.swift"; sourceTree = "<group>"; };
 		947BF348262453040015DAEB /* searchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchManager.swift; sourceTree = "<group>"; };
@@ -1639,19 +1638,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1258B52A27FE6E27F56A1355 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		24509F1455D67D501EFBD28C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				942E321128093CA600233441 /* NMSSH.xcframework */,
 				945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */,
-				94638D8B268243B800DDD7FC /* git.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1722,7 +1713,6 @@
 				944EEBF22563C381009D77FE /* CodeApp */,
 				94369AFD25E3B933008419A0 /* extension */,
 				944EEBF12563C381009D77FE /* Products */,
-				1258B52A27FE6E27F56A1355 /* Pods */,
 				24509F1455D67D501EFBD28C /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -2567,8 +2557,8 @@
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
-				94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */,
-				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic.git" */,
+				94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */,
 				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */,
 				94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */,
@@ -3356,7 +3346,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */ = {
+		94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
 			requirement = {
@@ -3364,7 +3354,7 @@
 				minimumVersion = 0.9.11;
 			};
 		};
-		94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic.git" */ = {
+		94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mhdhejazi/Dynamic.git";
 			requirement = {
@@ -3412,7 +3402,7 @@
 				kind = branch;
 			};
 		};
-		94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic.git" */ = {
+		94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mhdhejazi/Dynamic.git";
 			requirement = {
@@ -3420,7 +3410,7 @@
 				minimumVersion = 1.2.0;
 			};
 		};
-		94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */ = {
+		94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
 			requirement = {
@@ -3438,12 +3428,12 @@
 		};
 		94196931280316C7008AAEB2 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */;
+			package = 94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
 		};
 		94196933280316C7008AAEB2 /* Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic.git" */;
+			package = 94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic" */;
 			productName = Dynamic;
 		};
 		94196935280316C7008AAEB2 /* MarkdownView */ = {
@@ -3477,12 +3467,12 @@
 		};
 		94A7418B25F74A85007A9728 /* Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic.git" */;
+			package = 94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */;
 			productName = Dynamic;
 		};
 		94A7781B257BC452008FE7B2 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */;
+			package = 94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
 		};
 		94B99D9C27D4AA57005B5E3A /* SwiftGit2 */ = {
