@@ -3,7 +3,7 @@
 git.xcframework
 php.xcframework
 Code.xcworkspace/xcuserdata/
-Code.xcodeproject/xcuserdata/
+Code.xcodeproj/xcuserdata/
 Code.ipa
 
 Pods/
