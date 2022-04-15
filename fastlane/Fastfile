@@ -36,7 +36,7 @@ platform :ios do
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)
 
-    changelog = changelog_from_git_commits(pretty: "%an (%as) - %s")
+    changelog = changelog_from_git_commits(pretty: "%as - %s")
 
     api_key = app_store_connect_api_key(
       key_id: APPLE_KEY_ID,
@@ -76,14 +76,14 @@ platform :ios do
       apple_id: "#{DEVELOPER_APP_ID}",
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       skip_waiting_for_build_processing: true,
-      skip_submission: true,
       distribute_external: true,
       notify_external_testers: true,
       ipa: "./Code.ipa",
-      changelog: "GitHub Action automatic build. For detailed changes," + 
-      "visit https://github.com/thebaselab/codeapp." + 
+      changelog: "GitHub Action automatic build. For detailed changes, " + 
+      "visit https://github.com/thebaselab/codeapp.\n" + 
       "\nGenerated Changelog:\n" + changelog,
-      groups: ["Public"]
+      groups: ["Public"],
+      wait_processing_interval: 300
     )
 
     delete_temp_keychain(keychain_name)
