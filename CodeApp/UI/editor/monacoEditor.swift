@@ -390,15 +390,18 @@ struct monacoEditor: UIViewRepresentable {
             }
 
             // If the cache hasn't been invalidated, it means the editor also have the up-to-date model.
-            if let isCached = self.control.status.gitServiceProvider?.isCached(uri: sanitizedUri),
+            if let isCached = self.control.status.workSpaceStorage.gitServiceProvider?.isCached(
+                url: sanitizedUri),
                 !force, isCached
             {
                 return
             }
 
-            if let hasRepo = self.control.status.gitServiceProvider?.hasRepository, hasRepo {
+            if let hasRepo = self.control.status.workSpaceStorage.gitServiceProvider?.hasRepository,
+                hasRepo
+            {
                 DispatchQueue.global(qos: .utility).async {
-                    self.control.status.gitServiceProvider?.previous(
+                    self.control.status.workSpaceStorage.gitServiceProvider?.previous(
                         path: sanitizedUri, error: { err in print(err) },
                         completionHandler: { value in
                             DispatchQueue.main.async {

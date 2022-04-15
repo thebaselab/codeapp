@@ -9,7 +9,7 @@ import SwiftUI
 
 struct editorTab: View {
 
-    @State var currentEditor: EditorInstance
+    @ObservedObject var currentEditor: EditorInstance
     // This is used for force updating the view.
     @State private var lastUpdateTime: Date = Date()
 
@@ -70,12 +70,6 @@ struct editorTab: View {
                 .padding(.horizontal, 8)
                 .background(Color.init(id: "tab.activeBackground"))
                 .cornerRadius(10, corners: [.topLeft, .topRight])
-                .onReceive(
-                    NotificationCenter.default.publisher(
-                        for: Notification.Name("monaco.editor.currentContent.changed"), object: nil),
-                    perform: { notification in
-                        lastUpdateTime = Date()
-                    })
             } else {
                 Button(action: { onOpenEditor() }) {
                     HStack(spacing: 4) {
@@ -100,7 +94,7 @@ struct editorTab: View {
                     .padding(.horizontal, 8)
             }
         }.onTapGesture {
-            if !(isActive && lastUpdateTime > Date.distantPast) {
+            if !(isActive) {
                 onOpenEditor()
             }
         }

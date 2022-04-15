@@ -12,7 +12,7 @@ struct bottomBar: View {
     @EnvironmentObject var App: MainApp
 
     @State var isShowingCheckoutAlert: Bool = false
-    @State var selectedBranch: GitServiceProvider.checkoutDest? = nil
+    @State var selectedBranch: checkoutDest? = nil
     @State var checkoutDetached: Bool = false
     @State var showChangeLog: Bool
     @State var currentLine = 0
@@ -30,7 +30,7 @@ struct bottomBar: View {
     func checkout() {
         switch selectedBranch?.type {
         case .tag:
-            App.gitServiceProvider?.checkout(
+            App.workSpaceStorage.gitServiceProvider?.checkout(
                 tagName: selectedBranch!.name, detached: checkoutDetached,
                 error: {
                     App.notificationManager.showErrorMessage($0.localizedDescription)
@@ -41,7 +41,7 @@ struct bottomBar: View {
             }
 
         case .local_branch:
-            App.gitServiceProvider?.checkout(
+            App.workSpaceStorage.gitServiceProvider?.checkout(
                 localBranchName: selectedBranch!.name, detached: checkoutDetached,
                 error: {
                     App.notificationManager.showErrorMessage($0.localizedDescription)
@@ -51,7 +51,7 @@ struct bottomBar: View {
                 App.git_status()
             }
         case .remote_branch:
-            App.gitServiceProvider?.checkout(
+            App.workSpaceStorage.gitServiceProvider?.checkout(
                 remoteBranchName: selectedBranch!.name, detached: checkoutDetached,
                 error: {
                     App.notificationManager.showErrorMessage($0.localizedDescription)
@@ -73,23 +73,20 @@ struct bottomBar: View {
                         HStack {
                             Image(systemName: "rectangle.connected.to.line.below")
                                 .font(.system(size: 10))
-                            Text(App.workSpaceStorage.remoteAddress ?? "")
-                                .font(.system(size: 12))
+                            Text(App.workSpaceStorage.remoteHost ?? "")
                         }
                         .frame(maxHeight: .infinity)
                         .padding(.horizontal, 3)
-                        .foregroundColor(Color.init(id: "statusBarItem.remoteForeground"))
-                        .background(Color.init(id: "statusBarItem.remoteBackground"))
                     }
 
                     if (App.branch) != "" {
                         HStack {
                             Image(systemName: "arrow.triangle.branch").font(.system(size: 10))
-                                .foregroundColor(Color.init(id: "statusBar.foreground"))
-                            Text("\(App.branch)").font(.system(size: 12)).foregroundColor(
-                                Color.init(id: "statusBar.foreground"))
+                            Text("\(App.branch)")
                         }.contextMenu {
-                            if let destinations = App.gitServiceProvider?.checkoutDestinations() {
+                            if let destinations = App.workSpaceStorage.gitServiceProvider?
+                                .checkoutDestinations()
+                            {
                                 Section {
                                     Menu {
                                         ForEach(destinations) { value in
@@ -155,7 +152,7 @@ struct bottomBar: View {
                             if App.aheadBehind != nil {
                                 Text("\(App.aheadBehind!.1)↓ \(App.aheadBehind!.0)↑").font(
                                     .system(size: 12)
-                                ).foregroundColor(Color.init(id: "statusBar.foreground"))
+                                )
                             }
 
                             // Git Sync is yet to be implemented in SwiftGit
@@ -182,18 +179,13 @@ struct bottomBar: View {
                         //                                        }
                         //                                    }
                     }
-                    if App.isShowingCompilerLanguage {
-                        Text("\(languageList[App.compilerCode]?[0] ?? "")").font(.system(size: 12))
-                            .foregroundColor(Color.init(id: "statusBar.foreground"))
-                    }
                     if let activeEditor = App.activeEditor, activeEditor.type == .image,
                         let imageURL = URL(string: activeEditor.url),
                         let uiImage = UIImage(contentsOfFile: imageURL.path)
                     {
                         Text(
                             "\(activeEditor.url.components(separatedBy: ".").last?.uppercased() ?? "") \(String(describing: Int(uiImage.size.width * uiImage.scale)))x\(String(describing: Int(uiImage.size.height * uiImage.scale)))"
-                        ).font(.system(size: 12)).foregroundColor(
-                            Color.init(id: "statusBar.foreground"))
+                        )
                     }
                 }.padding(.leading, [UIApplication.shared.getSafeArea(edge: .bottom), 5].max())
 
@@ -303,8 +295,6 @@ struct bottomBar: View {
                     if App.activeEditor?.type == .file || App.activeEditor?.type == .diff {
 
                         Text("Ln \(String(currentLine)), Col \(String(currentColumn))")
-                            .font(.system(size: 12))
-                            .foregroundColor(Color.init(id: "statusBar.foreground"))
                             .onTapGesture {
                                 App.monacoInstance.executeJavascript(
                                     command:
@@ -321,15 +311,12 @@ struct bottomBar: View {
                                 })
 
                         if editorReadOnly {
-                            Text("READ-ONLY").font(.system(size: 12)).foregroundColor(
-                                Color.init(id: "statusBar.foreground"))
+                            Text("READ-ONLY")
                         }
 
                         if let editor = App.activeEditor {
                             Text(
                                 "\((encodingTable[editor.encoding]) ?? editor.encoding.description)"
-                            ).font(.system(size: 12)).foregroundColor(
-                                Color.init(id: "statusBar.foreground")
                             )
                             .contextMenu {
                                 ForEach(Array(encodingTable.keys), id: \.self) { value in
@@ -343,10 +330,12 @@ struct bottomBar: View {
                             }
                         }
                     }
-                }.foregroundColor(Color.init(id: "statusBar.foreground")).frame(maxHeight: 20)
-                    .padding(.trailing, [UIApplication.shared.getSafeArea(edge: .bottom), 5].max())
-
+                }
+                .frame(maxHeight: 20)
+                .padding(.trailing, [UIApplication.shared.getSafeArea(edge: .bottom), 5].max())
             }
         }
+        .font(.system(size: 12))
+        .foregroundColor(Color.init(id: "statusBar.foreground"))
     }
 }

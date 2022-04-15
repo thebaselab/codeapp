@@ -56,25 +56,36 @@ extension Diff.Status {
     }
 }
 
-class GitServiceProvider {
-    var workingURL: URL
+class LocalGitServiceProvider: GitServiceProvider {
 
+    private var workingURL: URL
     private var repository: Repository? = nil
     private var signature: Signature? = nil
     private var credential: Credentials? = nil
     private var contentCache = NSCache<NSString, NSString>()
     private var newAndIgnored = [URL: Diff.Status]()
 
-    var hasRepository: Bool {
+    public var hasRepository: Bool {
         return repository != nil
     }
+    public var requiresSignature: Bool {
+        return signature == nil
+    }
 
-    init?(root: URL) {
-        if root.absoluteString.contains("com.apple.filesystems.smbclientd") {
-            return nil
+    init(root: URL) {
+        self.workingURL = root
+        loadDirectory(url: root)
+    }
+
+    func loadDirectory(url: URL) {
+        contentCache.removeAllObjects()
+        newAndIgnored.removeAll()
+
+        if url.absoluteString.contains("com.apple.filesystems.smbclientd") {
+            return
         }
-        workingURL = root
-        load()
+        workingURL = url
+
         if let usr_name = KeychainWrapper.standard.string(forKey: "git-username"),
             let usr_pwd = KeychainWrapper.standard.string(forKey: "git-password")
         {
@@ -86,6 +97,7 @@ class GitServiceProvider {
         {
             signature = Signature(name: usr, email: email)
         }
+        load()
     }
 
     private func load() {
@@ -99,14 +111,10 @@ class GitServiceProvider {
         }
     }
 
-    func isCached(uri: String) -> Bool {
-        let path = uri.replacingOccurrences(of: workingURL.absoluteString, with: "")
+    func isCached(url: String) -> Bool {
+        let path = url.replacingOccurrences(of: workingURL.absoluteString, with: "")
             .replacingOccurrences(of: "%20", with: #"\ "#)
         return contentCache.object(forKey: path as NSString) != nil
-    }
-
-    func isSigned() -> Bool {
-        return signature != nil
     }
 
     func sign(name: String, email: String) {
@@ -405,7 +413,7 @@ class GitServiceProvider {
 
     }
 
-    func createBranch(name: String) -> [String: Any] {
+    private func createBranch(name: String) -> [String: Any] {
         guard repository != nil else {
             return ["result": "Failed", "error": "There is no repository."]
         }
@@ -418,7 +426,7 @@ class GitServiceProvider {
         }
     }
 
-    func createBranch(name: String, fromTag tagName: String) -> [String: Any] {
+    private func createBranch(name: String, fromTag tagName: String) -> [String: Any] {
         guard repository != nil else {
             return ["result": "Failed", "error": "There is no repository."]
         }
@@ -437,7 +445,9 @@ class GitServiceProvider {
         }
     }
 
-    func createBranch(name: String, fromLocalBranch localBranchName: String) -> [String: Any] {
+    private func createBranch(name: String, fromLocalBranch localBranchName: String) -> [String:
+        Any]
+    {
         guard repository != nil else {
             return ["result": "Failed", "error": "There is no repository."]
         }
@@ -456,7 +466,9 @@ class GitServiceProvider {
         }
     }
 
-    func createBranch(name: String, fromRemoteBranch remoteBranchName: String) -> [String: Any] {
+    private func createBranch(name: String, fromRemoteBranch remoteBranchName: String) -> [String:
+        Any]
+    {
         guard repository != nil else {
             return ["result": "Failed", "error": "There is no repository"]
         }
@@ -796,18 +808,6 @@ class GitServiceProvider {
             }
         default:
             return false
-        }
-    }
-
-    struct checkoutDest: Identifiable {
-        let oid: String
-        let name: String
-        let id = UUID()
-        let type: type
-        enum type {
-            case local_branch
-            case remote_branch
-            case tag
         }
     }
 

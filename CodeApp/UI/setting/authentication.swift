@@ -30,11 +30,10 @@ struct remoteAuthentication: View {
 
     var body: some View {
         VStack {
-            Text(
+            DescriptionText(
                 "Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it."
             )
-            .font(.caption)
-            .foregroundColor(.gray)
+
             Form {
                 Section(header: Text("Remote Credentials")) {
                     TextField("User Name", text: $username)
@@ -56,11 +55,11 @@ struct remoteAuthentication: View {
             )
             .onChange(of: username) { value in
                 KeychainWrapper.standard.set(value, forKey: "git-username")
-                App.gitServiceProvider?.auth(name: value, password: password)
+                App.workSpaceStorage.gitServiceProvider?.auth(name: value, password: password)
             }
             .onChange(of: password) { value in
                 KeychainWrapper.standard.set(value, forKey: "git-password")
-                App.gitServiceProvider?.auth(name: username, password: value)
+                App.workSpaceStorage.gitServiceProvider?.auth(name: username, password: value)
             }
 
     }

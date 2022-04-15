@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class EditorInstance: Identifiable, Equatable, Hashable {
+class EditorInstance: Identifiable, Equatable, Hashable, ObservableObject {
 
     static func == (lhs: EditorInstance, rhs: EditorInstance) -> Bool {
         return lhs.id == rhs.id
@@ -21,8 +21,9 @@ class EditorInstance: Identifiable, Equatable, Hashable {
     var id = UUID()
     var url: String
     var content: String
-    var lastSavedVersionId = 1
-    var currentVersionId = 1
+
+    @Published var lastSavedVersionId = 1
+    @Published var currentVersionId = 1
 
     let type: tabType
 

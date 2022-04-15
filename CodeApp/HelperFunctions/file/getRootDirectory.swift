@@ -12,14 +12,18 @@ func getRootDirectory() -> URL {
     if let documentsPathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         .first
     {
-        if let standardURL = URL(
-            string: documentsPathURL.absoluteString.replacingOccurrences(
-                of: "file:///", with: "file:///private/"))
-        {
-            return standardURL
-        } else {
+        #if targetEnvironment(simulator)
             return documentsPathURL
-        }
+        #else
+            if let standardURL = URL(
+                string: documentsPathURL.absoluteString.replacingOccurrences(
+                    of: "file:///", with: "file:///private/"))
+            {
+                return standardURL
+            } else {
+                return documentsPathURL
+            }
+        #endif
     } else {
         fatalError("Could not locate Document Directory")
     }

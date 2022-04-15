@@ -31,7 +31,7 @@ struct editorView: View {
             ZStack {
                 Color.init(id: "editor.background")
                 if App.editors.isEmpty && App.urlQueue.isEmpty {
-                    Text("You don't have any open editor.").foregroundColor(.gray)
+                    DescriptionText("You don't have any open editor.")
                 }
                 App.monacoInstance
 
@@ -83,6 +83,12 @@ struct editorView: View {
                                     mode: AVAudioSession.Mode.default, options: [])
                             }
                     }
+
+                    VStack {
+                        InfinityProgressView(enabled: $App.workSpaceStorage.editorIsBusy)
+                        Spacer()
+                    }
+
                 }
 
             }

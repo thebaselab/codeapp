@@ -31,7 +31,7 @@ struct mainView: View {
     @State var panelShowingInput: Bool = false
 
     @State var isShowingCheckoutAlert: Bool = false
-    @State var selectedBranch: GitServiceProvider.checkoutDest? = nil
+    @State var selectedBranch: checkoutDest? = nil
     @State var checkoutDetached: Bool = false
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -79,10 +79,6 @@ struct mainView: View {
             _showChangeLog = State(initialValue: true)
             return
         }
-    }
-
-    func returnBarSize() -> CGFloat {
-        return 50.0
     }
 
     func openFolder() {
@@ -149,130 +145,102 @@ struct mainView: View {
                             VStack(spacing: 0) {
 
                                 Group {
-                                    Button(action: { self.openSidePanel(index: 0) }) {
-                                        ZStack {
-                                            Text("Show Explorer").foregroundColor(.clear).font(
-                                                .system(size: 1))
-                                            Image(systemName: "doc.on.doc").font(
-                                                .system(size: 20, weight: .light)
-                                            ).foregroundColor(
-                                                Color.init(
-                                                    id: (self.currentDirectory == 0
-                                                        && isShowingDirectory)
-                                                        ? "activityBar.foreground"
-                                                        : "activityBar.inactiveForeground")
-                                            ).padding(5)
-                                        }.frame(maxWidth: .infinity, minHeight: 60.0)
-                                    }
-                                    .keyboardShortcut("e", modifiers: [.command, .shift])
-                                    .contextMenu {
 
-                                        Button(action: {
-                                            self.openNewFile()
-                                        }) {
-                                            Text(NSLocalizedString("New File", comment: ""))
-                                            Image(systemName: "doc.badge.plus")
-                                        }
+                                    ActivityBarItemView(
+                                        activityBarItem:
+                                            ActivityBarItem(
+                                                action: {
+                                                    openSidePanel(index: 0)
+                                                },
+                                                isActive: currentDirectory == 0
+                                                    && isShowingDirectory,
+                                                iconSystemName: "doc.on.doc",
+                                                title: "Show Explorer",
+                                                shortcutKey: "e",
+                                                modifiers: [.command, .shift],
+                                                useBubble: false,
+                                                bubbleText: nil,
+                                                contextMenuItems: [
+                                                    ContextMenuItem(
+                                                        action: openNewFile, text: "New File",
+                                                        imageSystemName: "doc.badge.plus"),
+                                                    ContextMenuItem(
+                                                        action: openFile, text: "Open File",
+                                                        imageSystemName: "doc"),
+                                                    ContextMenuItem(
+                                                        action: openFolder, text: "Open Folder",
+                                                        imageSystemName: "folder.badge.gear"),
+                                                ]
+                                            ))
 
-                                        Button(action: {
-                                            self.openFile()
-                                        }) {
-                                            Text(NSLocalizedString("Open File", comment: ""))
-                                            Image(systemName: "doc")
-                                        }
+                                    ActivityBarItemView(
+                                        activityBarItem:
+                                            ActivityBarItem(
+                                                action: {
+                                                    openSidePanel(index: 1)
+                                                },
+                                                isActive: currentDirectory == 1
+                                                    && isShowingDirectory,
+                                                iconSystemName: "magnifyingglass",
+                                                title: "Show Search",
+                                                shortcutKey: "f",
+                                                modifiers: [.command, .shift],
+                                                useBubble: false,
+                                                bubbleText: nil,
+                                                contextMenuItems: nil
+                                            ))
 
-                                        Button(action: {
-                                            self.openFolder()
-                                        }) {
-                                            Text(NSLocalizedString("Open Folder", comment: ""))
-                                            Image(systemName: "folder.badge.gear")
-                                        }
+                                    ActivityBarItemView(
+                                        activityBarItem:
+                                            ActivityBarItem(
+                                                action: {
+                                                    openSidePanel(index: 3)
+                                                },
+                                                isActive: currentDirectory == 3
+                                                    && isShowingDirectory,
+                                                iconSystemName:
+                                                    "point.topleft.down.curvedto.point.bottomright.up",
+                                                title: "Show Source Control",
+                                                shortcutKey: "g",
+                                                modifiers: [.control, .shift],
+                                                useBubble: !App.gitTracks.isEmpty,
+                                                bubbleText: "\(App.gitTracks.count)",
+                                                contextMenuItems: nil
+                                            ))
 
-                                    }
+                                    ActivityBarItemView(
+                                        activityBarItem:
+                                            ActivityBarItem(
+                                                action: {
+                                                    openSidePanel(index: 4)
+                                                },
+                                                isActive: currentDirectory == 4
+                                                    && isShowingDirectory,
+                                                iconSystemName: "rectangle.connected.to.line.below",
+                                                title: "Remotes",
+                                                shortcutKey: "r",
+                                                modifiers: [.command, .shift],
+                                                useBubble: App.workSpaceStorage.remoteConnected,
+                                                bubbleText: nil,
+                                                contextMenuItems: nil
+                                            ))
 
-                                    Button(action: {
-                                        self.openSidePanel(index: 1)
-
-                                    }) {
-                                        ZStack {
-                                            Text("Show Search").foregroundColor(.clear).font(
-                                                .system(size: 1))
-                                            Image(systemName: "magnifyingglass").font(
-                                                .system(size: 20, weight: .light)
-                                            ).foregroundColor(
-                                                Color.init(
-                                                    id: (self.currentDirectory == 1
-                                                        && isShowingDirectory)
-                                                        ? "activityBar.foreground"
-                                                        : "activityBar.inactiveForeground")
-                                            ).padding(5)
-                                        }.frame(maxWidth: .infinity, minHeight: 60.0)
-                                    }
-                                    .keyboardShortcut("f", modifiers: [.command, .shift])
-
-                                    ZStack {
-                                        Button(action: { self.openSidePanel(index: 3) }) {
-                                            ZStack {
-                                                Text("Show Source Control").foregroundColor(.clear)
-                                                    .font(.system(size: 1))
-                                                Image(
-                                                    systemName:
-                                                        "point.topleft.down.curvedto.point.bottomright.up"
-                                                ).font(.system(size: 20, weight: .light))
-                                                    .foregroundColor(
-                                                        Color.init(
-                                                            id: (self.currentDirectory == 3
-                                                                && isShowingDirectory)
-                                                                ? "activityBar.foreground"
-                                                                : "activityBar.inactiveForeground")
-                                                    ).padding(5)
-                                            }.frame(maxWidth: .infinity, minHeight: 60.0)
-                                        }
-                                        .keyboardShortcut("g", modifiers: [.control, .shift])
-                                        if !App.gitTracks.isEmpty {
-                                            ZStack {
-                                                Text("\(App.gitTracks.count)").font(
-                                                    .system(size: 12)
-                                                ).foregroundColor(
-                                                    Color.init(id: "statusBar.foreground"))
-                                            }.padding(.horizontal, 3).background(
-                                                Color.init(id: "statusBar.background")
-                                            ).cornerRadius(5).offset(x: 10, y: -10)
-                                        }
-                                    }
-
-                                    //                                    Button(action: {
-                                    //                                        self.openSidePanel(index: 4)
-                                    //                                    }) {
-                                    //                                        ZStack{
-                                    //                                            Text("Remotes").foregroundColor(.clear).font(.system(size: 1))
-                                    //                                            Image(systemName: "rectangle.connected.to.line.below").font(.system(size: 20, weight: .light)).foregroundColor(Color.init(id: (self.currentDirectory == 4 && isShowingDirectory) ? "activityBar.foreground" : "activityBar.inactiveForeground")).padding(5)
-                                    //                                        }.frame(maxWidth: .infinity, minHeight: 60.0)
-                                    //                                    }
-
-                                    Button(action: { self.openConsolePanel() }) {
-                                        ZStack {
-                                            Text("Show Panel").foregroundColor(.clear).font(
-                                                .system(size: 1))
-                                            Image(systemName: "chevron.left.slash.chevron.right")
-                                                .font(.system(size: 20, weight: .light))
-                                                .foregroundColor(
-                                                    Color.init(
-                                                        id: (self.showsPanel)
-                                                            ? "activityBar.foreground"
-                                                            : "activityBar.inactiveForeground")
-                                                ).padding(5)
-                                        }.frame(maxWidth: .infinity, minHeight: 60.0)
-
-                                    }
-                                    .keyboardShortcut("j", modifiers: .command)
+                                    ActivityBarItemView(
+                                        activityBarItem:
+                                            ActivityBarItem(
+                                                action: {
+                                                    openConsolePanel()
+                                                },
+                                                isActive: showsPanel,
+                                                iconSystemName: "chevron.left.slash.chevron.right",
+                                                title: "Show Panel",
+                                                shortcutKey: "j",
+                                                modifiers: [.command],
+                                                useBubble: false,
+                                                bubbleText: nil,
+                                                contextMenuItems: nil
+                                            ))
                                 }
-                                .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                // This flickers for some reason in iPadOS 15
-                                //                                .hoverEffect(.highlight)
-                                .frame(
-                                    minWidth: 0, maxWidth: self.returnBarSize(), minHeight: 0,
-                                    maxHeight: 60.0)
 
                                 ZStack {
                                     Color.black.opacity(0.001)
@@ -284,25 +252,24 @@ struct mainView: View {
                                         "document.getElementById('overlay').focus()")
                                 }
 
-                                Button(action: { self.showingSettingsSheet.toggle() }) {
-                                    ZStack {
-                                        Text("User Settings").foregroundColor(.clear).font(
-                                            .system(size: 1))
-                                        Image(systemName: "slider.horizontal.3").font(
-                                            .system(size: 20, weight: .light)
-                                        ).foregroundColor(.gray).padding(5)
-                                    }.frame(maxWidth: .infinity, minHeight: 60.0)
-                                }
-                                .keyboardShortcut(",", modifiers: [.command])
-                                .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                //                                .hoverEffect(.highlight)
-                                .frame(
-                                    minWidth: 0, maxWidth: self.returnBarSize(), minHeight: 0,
-                                    maxHeight: 60.0)
-                            }.frame(
-                                minWidth: 0, maxWidth: self.returnBarSize(), minHeight: 0,
-                                maxHeight: .infinity
-                            ).background(Color.init(id: "activityBar.background"))
+                                ActivityBarItemView(
+                                    activityBarItem:
+                                        ActivityBarItem(
+                                            action: {
+                                                showingSettingsSheet.toggle()
+                                            },
+                                            isActive: false,
+                                            iconSystemName: "slider.horizontal.3",
+                                            title: "User Settings",
+                                            shortcutKey: ",",
+                                            modifiers: [.command],
+                                            useBubble: false,
+                                            bubbleText: nil,
+                                            contextMenuItems: nil
+                                        ))
+                            }
+                            .frame(minWidth: 0, maxWidth: 50.0, minHeight: 0, maxHeight: .infinity)
+                            .background(Color.init(id: "activityBar.background"))
                         }
 
                         if isShowingDirectory && horizontalSizeClass == .regular {
@@ -541,8 +508,10 @@ struct mainView: View {
                         }
                     }
                     bottomBar(
-                        showChangeLog: showChangeLog, showingNewFileSheet: $showingNewFileSheet,
-                        showSafari: $showSafari, showsFilePicker: $showsFilePicker,
+                        showChangeLog: showChangeLog,
+                        showingNewFileSheet: $showingNewFileSheet,
+                        showSafari: $showSafari,
+                        showsFilePicker: $showsFilePicker,
                         showsDirectoryPicker: $showsDirectoryPicker,
                         openConsolePanel: openConsolePanel,
                         onDirectoryPickerFinished: {

@@ -9,192 +9,71 @@ import FilesProvider
 import Foundation
 import SwiftUI
 
-enum FSError: Error {
-    case notImplemented
-    case schemeNotRegistered
-    case invalidHost
-    case unsupportedEncoding
-}
-
-protocol FileSystemProvider {
-    static var registeredScheme: String { get }
-
-    func contentsOfDirectory(at url: URL, completionHandler: @escaping ([URL]?, Error?) -> Void)
-    func fileExists(at url: URL, completionHandler: @escaping (Bool) -> Void)
-    func createDirectory(
-        at: URL, withIntermediateDirectories: Bool, completionHandler: @escaping (Error?) -> Void)
-    func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void)
-    func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void)
-    func contents(at: URL, completionHandler: @escaping (Data?, Error?) -> Void)
-    func write(
-        at: URL, content: Data, atomically: Bool, overwrite: Bool,
-        completionHandler: @escaping (Error?) -> Void)
-}
-
-class FTPFileSystemProvider: FileSystemProvider {
-
-    static var registeredScheme: String = "ftp"
-
-    var fs: FTPFileProvider
-
-    init?(baseURL: URL, cred: URLCredential) {
-        guard baseURL.scheme == "ftp" || baseURL.scheme == "ftps" else {
-            return nil
-        }
-        if let fs = FTPFileProvider(baseURL: baseURL, credential: cred) {
-            //            fs.serverTrustPolicy = .disableEvaluation
-            self.fs = fs
-        } else {
-            return nil
-        }
-    }
-
-    func write(
-        at: URL, content: Data, atomically: Bool, overwrite: Bool,
-        completionHandler: @escaping (Error?) -> Void
-    ) {
-        fs.writeContents(
-            path: at.path, contents: content, atomically: atomically, overwrite: overwrite,
-            completionHandler: completionHandler)
-    }
-
-    func contentsOfDirectory(at url: URL, completionHandler: @escaping ([URL]?, Error?) -> Void) {
-        fs.contentsOfDirectory(path: url.path) { files, error in
-            completionHandler(
-                files.map {
-                    if $0.isDirectory {
-                        return $0.url.appendingPathComponent("", isDirectory: true)
-                    } else {
-                        return $0.url
-                    }
-                }, error)
-        }
-    }
-
-    func fileExists(at url: URL, completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(true)
-    }
-
-    func createDirectory(
-        at: URL, withIntermediateDirectories: Bool, completionHandler: @escaping (Error?) -> Void
-    ) {
-        fs.create(folder: at.lastPathComponent, at: at.path, completionHandler: completionHandler)
-    }
-
-    func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
-        fs.copyItem(path: at.path, to: to.path, completionHandler: completionHandler)
-    }
-
-    func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
-        fs.removeItem(path: at.path, completionHandler: completionHandler)
-    }
-
-    func contents(at: URL, completionHandler: @escaping (Data?, Error?) -> Void) {
-        print("FTP: Loading contents of \(at.path)")
-        fs.contents(path: at.path) { data, error in
-            print("FTP: Finished loading contents of \(at.absoluteString)")
-            DispatchQueue.main.async {
-                completionHandler(data, error)
-            }
-        }
-    }
-
-}
-
-class LocalFileSystemProvider: FileSystemProvider {
-
-    func write(
-        at: URL, content: Data, atomically: Bool, overwrite: Bool,
-        completionHandler: @escaping (Error?) -> Void
-    ) {
-        do {
-            var options: Data.WritingOptions = []
-            if atomically { options.update(with: .atomic) }
-            if !overwrite { options.update(with: .withoutOverwriting) }
-            try content.write(to: at, options: options)
-            completionHandler(nil)
-        } catch {
-            completionHandler(error)
-        }
-    }
-
-    static var registeredScheme: String = "file"
-
-    func contentsOfDirectory(at url: URL, completionHandler: @escaping ([URL]?, Error?) -> Void) {
-        do {
-            let urls = try FileManager.default.contentsOfDirectory(
-                at: url, includingPropertiesForKeys: nil)
-            completionHandler(urls, nil)
-        } catch {
-            completionHandler(nil, error)
-        }
-    }
-
-    func fileExists(at url: URL, completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(FileManager.default.fileExists(atPath: url.path))
-    }
-
-    func createDirectory(
-        at: URL, withIntermediateDirectories: Bool, completionHandler: @escaping (Error?) -> Void
-    ) {
-        do {
-            try FileManager.default.createDirectory(
-                at: at, withIntermediateDirectories: withIntermediateDirectories)
-            completionHandler(nil)
-        } catch {
-            completionHandler(error)
-        }
-    }
-
-    func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
-        do {
-            try FileManager.default.copyItem(at: at, to: to)
-            completionHandler(nil)
-        } catch {
-            completionHandler(error)
-        }
-    }
-
-    func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
-        do {
-            try FileManager.default.removeItem(at: at)
-            completionHandler(nil)
-        } catch {
-            completionHandler(error)
-        }
-    }
-
-    func contents(at: URL, completionHandler: @escaping (Data?, Error?) -> Void) {
-        do {
-            let data = try Data(contentsOf: at)
-            completionHandler(data, nil)
-        } catch {
-            completionHandler(nil, error)
-        }
-    }
-}
-
 class WorkSpaceStorage: ObservableObject {
     @Published var currentDirectory: fileItemRepresentable
     @Published var expansionStates: [AnyHashable: Bool] = [:]
+    @Published var explorerIsBusy = false
+    @Published var editorIsBusy = false
+    @Published var remoteFingerprint: String? = nil
 
     private var directoryMonitor = DirectoryMonitor()
     private var onDirectoryChangeAction: ((String) -> Void)? = nil
     private var directoryStorage: [String: [(fileItemRepresentable)]] = [:]
     private var fss: [String: FileSystemProvider] = [:]
 
-    var remoteConnected: Bool {
-        currentDirectory.url.starts(with: "ftp") || currentDirectory.url.starts(with: "ftps")
+    enum FSError: Error {
+        case NotImplemented
+        case SchemeNotRegistered
+        case InvalidHost
+        case UnsupportedEncoding
+        case Unknown
+        case ConnectionFailure
+        case AuthFailure
+        case UnsupportedScheme
+
+        var message: String {
+            switch self {
+            case .NotImplemented:
+                return ""
+            case .SchemeNotRegistered:
+                return ""
+            case .InvalidHost:
+                return ""
+            case .UnsupportedEncoding:
+                return ""
+            case .Unknown:
+                return "Unknown Error"
+            case .ConnectionFailure:
+                return "Connection Failed"
+            case .AuthFailure:
+                return "Authentication Failed"
+            case .UnsupportedScheme:
+                return "Unsupported Scheme"
+            }
+        }
     }
 
-    var remoteAddress: String? {
+    var remoteConnected: Bool {
+        !currentDirectory.url.starts(with: "file")
+    }
+    var remoteHost: String? {
         URL(string: currentDirectory.url)?.host
     }
+    var currentScheme: String? {
+        URL(string: currentDirectory.url)?.scheme
+    }
+    private var fs: FileSystemProvider? {
+        currentScheme != nil ? fss[currentScheme!] : nil
+    }
 
-    init(name: String, url: String) {
-        self.fss["file"] = LocalFileSystemProvider()
-        self.currentDirectory = fileItemRepresentable(name: name, url: url, isDirectory: true)
-        self.requestDirectoryUpdateAt(id: url)
+    init(url: URL) {
+        let localFS = LocalFileSystemProvider()
+        localFS.gitServiceProvider = LocalGitServiceProvider(root: url)
+
+        self.fss["file"] = localFS
+        self.currentDirectory = fileItemRepresentable(
+            name: url.lastPathComponent, url: url.absoluteString, isDirectory: true)
+        self.requestDirectoryUpdateAt(id: url.absoluteString)
     }
 
     func connectToServer(
@@ -203,7 +82,7 @@ class WorkSpaceStorage: ObservableObject {
         switch host.scheme {
         case "ftp", "ftps":
             guard let fs = FTPFileSystemProvider(baseURL: host, cred: credentials) else {
-                completionHandler(FSError.invalidHost)
+                completionHandler(FSError.InvalidHost)
                 return
             }
             fs.contentsOfDirectory(at: host) { urls, error in
@@ -211,14 +90,66 @@ class WorkSpaceStorage: ObservableObject {
                     completionHandler(error)
                     return
                 }
-                self.fss["ftp"] = fs
-                self.fss["ftps"] = fs
+                self.fss[host.scheme!] = fs
                 self.updateDirectory(name: "FTP", url: host.absoluteString)
                 completionHandler(nil)
             }
+        case "sftp":
+            guard let password = credentials.password,
+                let fs = SFTPFileSystemProvider(
+                    baseURL: host, cred: credentials,
+                    didDisconnect: { error in
+                        self.disconnect()
+                    })
+            else {
+                completionHandler(FSError.Unknown)
+                return
+            }
+            fs.connect(password: password) { error in
+                if let error = error {
+                    completionHandler(error)
+                    return
+                }
+                guard let homePath = fs.homePath,
+                    let hostName = host.host,
+                    let baseURL = URL(string: "sftp://\(hostName)/\(homePath)")
+                else {
+                    completionHandler(FSError.Unknown)
+                    return
+                }
+                fs.contentsOfDirectory(at: baseURL) { urls, error in
+                    if error != nil {
+                        completionHandler(error)
+                        return
+                    }
+                    self.fss[host.scheme!] = fs
+                    self.updateDirectory(name: "SFTP", url: baseURL.absoluteString)
+
+                    if let fingerPrint = fs.fingerPrint {
+                        DispatchQueue.main.async {
+                            self.remoteFingerprint = fingerPrint
+                        }
+                    }
+                    completionHandler(nil)
+                }
+            }
+
         default:
+            completionHandler(FSError.UnsupportedScheme)
             return
         }
+    }
+
+    func disconnect() {
+        expansionStates.removeAll()
+        directoryStorage.removeAll()
+
+        fss[currentScheme!] = nil
+
+        let documentDir = getRootDirectory()
+        self.currentDirectory = fileItemRepresentable(
+            name: documentDir.lastPathComponent, url: documentDir.absoluteString, isDirectory: true)
+        self.requestDirectoryUpdateAt(id: documentDir.absoluteString)
     }
 
     func onDirectoryChange(_ action: @escaping ((String) -> Void)) {
@@ -282,6 +213,46 @@ class WorkSpaceStorage: ObservableObject {
                     }
                 }
             })
+    }
+
+    private func removeFromTree(url: URL) {
+        let isDirectory = url.isDirectory
+
+        if isDirectory {
+            directoryStorage.removeValue(forKey: url.absoluteString)
+        } else {
+            let urlToRemove = url.deletingLastPathComponent()
+            directoryStorage[urlToRemove.absoluteString]?.removeAll(where: {
+                $0.url == url.absoluteString
+            })
+        }
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut) {
+                self.currentDirectory = self.buildTree(at: self.currentDirectory.url)
+            }
+        }
+    }
+
+    private func insertToTree(file: fileItemRepresentable) {
+        guard var urlToInsert = URL(string: file.url) else {
+            return
+        }
+        urlToInsert.deleteLastPathComponent()
+        if directoryStorage[urlToInsert.absoluteString] != nil {
+            // Remove duplicated file
+            var storage = directoryStorage[urlToInsert.absoluteString]!.filter {
+                $0.url != file.url
+            }
+            storage.append(file)
+            directoryStorage[urlToInsert.absoluteString] = storage
+        } else {
+            directoryStorage[urlToInsert.absoluteString] = [file]
+        }
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut) {
+                self.currentDirectory = self.buildTree(at: self.currentDirectory.url)
+            }
+        }
     }
 
     private func buildTree(at base: String) -> fileItemRepresentable {
@@ -381,25 +352,51 @@ extension WorkSpaceStorage: FileSystemProvider {
         "nil"
     }
 
+    var gitServiceProvider: GitServiceProvider? {
+        fs?.gitServiceProvider
+    }
+
+    var searchServiceProvider: SearchServiceProvider? {
+        fs?.searchServiceProvider
+    }
+
     func write(
         at: URL, content: Data, atomically: Bool, overwrite: Bool,
         completionHandler: @escaping (Error?) -> Void
     ) {
         guard let scheme = at.scheme, let fs = fss[scheme] else {
-            completionHandler(FSError.schemeNotRegistered)
+            completionHandler(FSError.SchemeNotRegistered)
             return
         }
+        if scheme != "file" {
+            let fileToInsert = fileItemRepresentable(url: at.absoluteString, isDirectory: false)
+            insertToTree(file: fileToInsert)
+        }
         return fs.write(
-            at: at, content: content, atomically: atomically, overwrite: overwrite,
-            completionHandler: completionHandler)
+            at: at, content: content, atomically: atomically, overwrite: overwrite
+        ) { error in
+            DispatchQueue.main.async {
+                completionHandler(error)
+            }
+        }
     }
 
     func contentsOfDirectory(at url: URL, completionHandler: @escaping ([URL]?, Error?) -> Void) {
         guard let scheme = url.scheme, let fs = fss[scheme] else {
-            completionHandler(nil, FSError.schemeNotRegistered)
+            completionHandler(nil, FSError.SchemeNotRegistered)
             return
         }
-        return fs.contentsOfDirectory(at: url, completionHandler: completionHandler)
+        DispatchQueue.main.async {
+            self.explorerIsBusy = true
+        }
+        return fs.contentsOfDirectory(at: url) { urls, error in
+            DispatchQueue.main.async {
+                self.explorerIsBusy = false
+            }
+            DispatchQueue.main.async {
+                completionHandler(urls, error)
+            }
+        }
     }
 
     func fileExists(at url: URL, completionHandler: @escaping (Bool) -> Void) {
@@ -407,42 +404,77 @@ extension WorkSpaceStorage: FileSystemProvider {
             completionHandler(false)
             return
         }
-        return fs.fileExists(at: url, completionHandler: completionHandler)
+        return fs.fileExists(at: url) { error in
+            DispatchQueue.main.async {
+                completionHandler(error)
+            }
+        }
     }
 
     func createDirectory(
         at: URL, withIntermediateDirectories: Bool, completionHandler: @escaping (Error?) -> Void
     ) {
         guard let scheme = at.scheme, let fs = fss[scheme] else {
-            completionHandler(FSError.schemeNotRegistered)
+            completionHandler(FSError.SchemeNotRegistered)
             return
         }
+        if scheme != "file" {
+            let fileToInsert = fileItemRepresentable(url: at.absoluteString, isDirectory: true)
+            insertToTree(file: fileToInsert)
+        }
         return fs.createDirectory(
-            at: at, withIntermediateDirectories: withIntermediateDirectories,
-            completionHandler: completionHandler)
+            at: at, withIntermediateDirectories: withIntermediateDirectories
+        ) { error in
+            DispatchQueue.main.async {
+                completionHandler(error)
+            }
+        }
     }
 
     func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
         guard let scheme = at.scheme, at.scheme == to.scheme, let fs = fss[scheme] else {
-            completionHandler(FSError.schemeNotRegistered)
+            completionHandler(FSError.SchemeNotRegistered)
             return
         }
-        return fs.copyItem(at: at, to: to, completionHandler: completionHandler)
+        if scheme != "file" {
+            let fileToInsert = fileItemRepresentable(url: to.absoluteString, isDirectory: false)
+            insertToTree(file: fileToInsert)
+        }
+        return fs.copyItem(at: at, to: to) { error in
+            DispatchQueue.main.async {
+                completionHandler(error)
+            }
+        }
     }
 
     func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
         guard let scheme = at.scheme, let fs = fss[scheme] else {
-            completionHandler(FSError.schemeNotRegistered)
+            completionHandler(FSError.SchemeNotRegistered)
             return
         }
-        return fs.removeItem(at: at, completionHandler: completionHandler)
+        return fs.removeItem(at: at) { error in
+            if scheme != "file" && error == nil {
+                self.removeFromTree(url: at)
+            }
+            DispatchQueue.main.async {
+                completionHandler(error)
+            }
+        }
     }
 
     func contents(at: URL, completionHandler: @escaping (Data?, Error?) -> Void) {
         guard let scheme = at.scheme, let fs = fss[scheme] else {
-            completionHandler(nil, FSError.schemeNotRegistered)
+            completionHandler(nil, FSError.SchemeNotRegistered)
             return
         }
-        return fs.contents(at: at, completionHandler: completionHandler)
+        DispatchQueue.main.async {
+            self.editorIsBusy = true
+        }
+        return fs.contents(at: at) { data, error in
+            DispatchQueue.main.async {
+                self.editorIsBusy = false
+                completionHandler(data, error)
+            }
+        }
     }
 }

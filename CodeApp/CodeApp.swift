@@ -32,10 +32,8 @@ struct CodeApp: App {
 
         globalThemes.removeAll()
 
-        let bundleUrl = URL(fileURLWithPath: Bundle.main.resourcePath!).appendingPathComponent(
-            "Library")
-
-        let themesURL = bundleUrl.appendingPathComponent("editor/themes")
+        let themesURL = URL(fileURLWithPath: Bundle.main.resourcePath!).appendingPathComponent(
+            "Themes")
         let themesPaths = try! FileManager.default.contentsOfDirectory(
             at: themesURL, includingPropertiesForKeys: nil)
 

@@ -474,8 +474,6 @@
 		942E320528087FA400233441 /* ResultsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E320328087FA400233441 /* ResultsSection.swift */; };
 		942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E32062808805F00233441 /* SearchUnsupportedSection.swift */; };
 		942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E32062808805F00233441 /* SearchUnsupportedSection.swift */; };
-		942E321228093CA600233441 /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
-		942E321328093CA600233441 /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
 		94369AFF25E3B933008419A0 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94369AFE25E3B933008419A0 /* Media.xcassets */; };
 		94369B0125E3B933008419A0 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94369B0025E3B933008419A0 /* ActionRequestHandler.swift */; };
 		94369B0725E3B933008419A0 /* extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -485,6 +483,10 @@
 		9437153F26BF9FC3000376FB /* remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437153E26BF9FC3000376FB /* remote.swift */; };
 		9437155B26C3C745000376FB /* RemoteAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437155A26C3C745000376FB /* RemoteAuthView.swift */; };
 		9438C9A225CBD25F00335E82 /* keyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438C9A125CBD25F00335E82 /* keyboardToolBar.swift */; };
+		94465DDA2809491B001DACDF /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
+		94465DDC28094920001DACDF /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
+		94465DDD28094920001DACDF /* NMSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		94465DDE28094A6F001DACDF /* NMSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		944EEBF42563C381009D77FE /* CodeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EEBF32563C381009D77FE /* CodeApp.swift */; };
 		944EEBF82563C386009D77FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBF72563C386009D77FE /* Assets.xcassets */; };
 		944EEBFB2563C386009D77FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBFA2563C386009D77FE /* Preview Assets.xcassets */; };
@@ -673,6 +675,7 @@
 				941969AC280316C7008AAEB2 /* network_ios.xcframework in Embed Frameworks */,
 				941969AD280316C7008AAEB2 /* freetype.xcframework in Embed Frameworks */,
 				94196A26280316C7008AAEB2 /* openssl.xcframework in Embed Frameworks */,
+				94465DDD28094920001DACDF /* NMSSH.xcframework in Embed Frameworks */,
 				94196A2E280316C7008AAEB2 /* NodeMobile.xcframework in Embed Frameworks */,
 				94196B0A280316C7008AAEB2 /* libpng.xcframework in Embed Frameworks */,
 				94196B0B280316C7008AAEB2 /* harfbuzz.xcframework in Embed Frameworks */,
@@ -714,6 +717,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				94465DDE28094A6F001DACDF /* NMSSH.xcframework in Embed Frameworks */,
 				9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */,
 				94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */,
 				94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */,
@@ -1081,19 +1085,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0AD02631C11B8E0F8BE93D41 /* Pods-testfield.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testfield.debug.xcconfig"; path = "Target Support Files/Pods-testfield/Pods-testfield.debug.xcconfig"; sourceTree = "<group>"; };
-		2AB67F68160E7FEBABEC4BF0 /* Pods-Code UI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Code UI.debug.xcconfig"; path = "Target Support Files/Pods-Code UI/Pods-Code UI.debug.xcconfig"; sourceTree = "<group>"; };
-		4B210B5AC440EBE31739A75A /* Pods-CodeUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeUI.release.xcconfig"; path = "Target Support Files/Pods-CodeUI/Pods-CodeUI.release.xcconfig"; sourceTree = "<group>"; };
-		680F60D38E5FD9B1BE6306F9 /* Pods-Code UI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Code UI.release.xcconfig"; path = "Target Support Files/Pods-Code UI/Pods-Code UI.release.xcconfig"; sourceTree = "<group>"; };
-		7955ADC45CC2B60AC169DCB7 /* Pods-Code.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Code.debug.xcconfig"; path = "Target Support Files/Pods-Code/Pods-Code.debug.xcconfig"; sourceTree = "<group>"; };
-		7E553435048AABE27DCF6505 /* libPods-CodeUI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CodeUI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94127C3F280335C8008C7F82 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		941969242802AB2C008AAEB2 /* FileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemProvider.swift; sourceTree = "<group>"; };
 		941969282802AB64008AAEB2 /* FTPFileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPFileSystemProvider.swift; sourceTree = "<group>"; };
 		9419692A2802AB88008AAEB2 /* LocalFileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileSystemProvider.swift; sourceTree = "<group>"; };
 		9419692C2803117D008AAEB2 /* InfiniteProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteProgressView.swift; sourceTree = "<group>"; };
 		94196B18280316C7008AAEB2 /* CodeUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		94196B19280316C8008AAEB2 /* Code copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Code copy-Info.plist"; path = "/Users/kenchung/Desktop/production/codeapp/Code copy-Info.plist"; sourceTree = "<absolute>"; };
 		941CF5FA2641CBDA001199C0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		941CF5FD26463450001199C0 /* activityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityBar.swift; sourceTree = "<group>"; };
 		94251C6D263E01810029427A /* pythonA-pandas._libs.tslibs.period.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.tslibs.period.framework"; sourceTree = "<group>"; };
@@ -1593,12 +1590,6 @@
 		94F5270A25A0704500337306 /* GitHubAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAccountManager.swift; sourceTree = "<group>"; };
 		94F5270E25A37E8D00337306 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		94FC220A257F7D2900B85D1B /* gitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gitCell.swift; sourceTree = "<group>"; };
-		98B2DD41DF64285713F1AE49 /* Pods-testfield.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testfield.release.xcconfig"; path = "Target Support Files/Pods-testfield/Pods-testfield.release.xcconfig"; sourceTree = "<group>"; };
-		AFA015ECC02AB37873068F16 /* libPods-Code.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Code.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4F639469ECAC8D0C36356EA /* Pods-Code.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Code.release.xcconfig"; path = "Target Support Files/Pods-Code/Pods-Code.release.xcconfig"; sourceTree = "<group>"; };
-		DAA3B9A39D5E197682320FDC /* Pods-CodeUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeUI.debug.xcconfig"; path = "Target Support Files/Pods-CodeUI/Pods-CodeUI.debug.xcconfig"; sourceTree = "<group>"; };
-		DCC7456CE0F457947AA31F1F /* Pods-Code App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Code App.release.xcconfig"; path = "Target Support Files/Pods-Code App/Pods-Code App.release.xcconfig"; sourceTree = "<group>"; };
-		E36A20D9E6FAFCF622240CB2 /* Pods-Code App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Code App.debug.xcconfig"; path = "Target Support Files/Pods-Code App/Pods-Code App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1607,7 +1598,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9419698F280316C7008AAEB2 /* FilesProvider in Frameworks */,
-				942E321328093CA600233441 /* NMSSH.xcframework in Frameworks */,
 				94196990280316C7008AAEB2 /* ZIPFoundation in Frameworks */,
 				94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */,
 				94196993280316C7008AAEB2 /* MarkdownView in Frameworks */,
@@ -1615,6 +1605,7 @@
 				94196994280316C7008AAEB2 /* openssl.xcframework in Frameworks */,
 				94196995280316C7008AAEB2 /* Dynamic in Frameworks */,
 				94196998280316C7008AAEB2 /* SwiftGit2 in Frameworks */,
+				94465DDC28094920001DACDF /* NMSSH.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1635,11 +1626,11 @@
 				94B7C4C825F551F800F1EF4E /* ios_system.xcframework in Frameworks */,
 				94C893B92793D01500DFBF29 /* curl_ios.xcframework in Frameworks */,
 				948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */,
+				94465DDA2809491B001DACDF /* NMSSH.xcframework in Frameworks */,
 				94C893BF2793D2FB00DFBF29 /* openssl.xcframework in Frameworks */,
 				94A7418C25F74A85007A9728 /* Dynamic in Frameworks */,
 				94798713280330080055B838 /* GCDWebServers in Frameworks */,
 				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
-				942E321228093CA600233441 /* NMSSH.xcframework in Frameworks */,
 				94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */,
 				945AEA3527ECCB3D00BA193E /* NodeMobile.xcframework in Frameworks */,
 			);
@@ -1651,16 +1642,6 @@
 		1258B52A27FE6E27F56A1355 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0AD02631C11B8E0F8BE93D41 /* Pods-testfield.debug.xcconfig */,
-				98B2DD41DF64285713F1AE49 /* Pods-testfield.release.xcconfig */,
-				E36A20D9E6FAFCF622240CB2 /* Pods-Code App.debug.xcconfig */,
-				DCC7456CE0F457947AA31F1F /* Pods-Code App.release.xcconfig */,
-				7955ADC45CC2B60AC169DCB7 /* Pods-Code.debug.xcconfig */,
-				C4F639469ECAC8D0C36356EA /* Pods-Code.release.xcconfig */,
-				2AB67F68160E7FEBABEC4BF0 /* Pods-Code UI.debug.xcconfig */,
-				680F60D38E5FD9B1BE6306F9 /* Pods-Code UI.release.xcconfig */,
-				DAA3B9A39D5E197682320FDC /* Pods-CodeUI.debug.xcconfig */,
-				4B210B5AC440EBE31739A75A /* Pods-CodeUI.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1671,8 +1652,6 @@
 				942E321128093CA600233441 /* NMSSH.xcframework */,
 				945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */,
 				94638D8B268243B800DDD7FC /* git.xcframework */,
-				AFA015ECC02AB37873068F16 /* libPods-Code.a */,
-				7E553435048AABE27DCF6505 /* libPods-CodeUI.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1745,7 +1724,6 @@
 				944EEBF12563C381009D77FE /* Products */,
 				1258B52A27FE6E27F56A1355 /* Pods */,
 				24509F1455D67D501EFBD28C /* Frameworks */,
-				94196B19280316C8008AAEB2 /* Code copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2589,8 +2567,8 @@
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
-				94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
-				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */,
+				94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */,
+				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic.git" */,
 				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */,
 				94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */,
@@ -2975,7 +2953,6 @@
 /* Begin XCBuildConfiguration section */
 		94196B16280316C7008AAEB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAA3B9A39D5E197682320FDC /* Pods-CodeUI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3019,7 +2996,6 @@
 		};
 		94196B17280316C7008AAEB2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B210B5AC440EBE31739A75A /* Pods-CodeUI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3253,7 +3229,6 @@
 		};
 		944EEC002563C386009D77FE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7955ADC45CC2B60AC169DCB7 /* Pods-Code.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3274,6 +3249,7 @@
 					"$(PROJECT_DIR)/Resources/cpython",
 					"$(PROJECT_DIR)/Resources/NodeJS",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CodeApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3296,7 +3272,6 @@
 		};
 		944EEC012563C386009D77FE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C4F639469ECAC8D0C36356EA /* Pods-Code.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3319,6 +3294,7 @@
 					"$(PROJECT_DIR)/Resources/NodeJS",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CodeApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3380,7 +3356,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+		94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
 			requirement = {
@@ -3388,7 +3364,7 @@
 				minimumVersion = 0.9.11;
 			};
 		};
-		94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic" */ = {
+		94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mhdhejazi/Dynamic.git";
 			requirement = {
@@ -3436,7 +3412,7 @@
 				kind = branch;
 			};
 		};
-		94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */ = {
+		94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mhdhejazi/Dynamic.git";
 			requirement = {
@@ -3444,7 +3420,7 @@
 				minimumVersion = 1.2.0;
 			};
 		};
-		94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+		94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
 			requirement = {
@@ -3462,12 +3438,12 @@
 		};
 		94196931280316C7008AAEB2 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			package = 94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */;
 			productName = ZIPFoundation;
 		};
 		94196933280316C7008AAEB2 /* Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic" */;
+			package = 94196934280316C7008AAEB2 /* XCRemoteSwiftPackageReference "Dynamic.git" */;
 			productName = Dynamic;
 		};
 		94196935280316C7008AAEB2 /* MarkdownView */ = {
@@ -3501,12 +3477,12 @@
 		};
 		94A7418B25F74A85007A9728 /* Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */;
+			package = 94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic.git" */;
 			productName = Dynamic;
 		};
 		94A7781B257BC452008FE7B2 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			package = 94A7781A257BC452008FE7B2 /* XCRemoteSwiftPackageReference "ZIPFoundation.git" */;
 			productName = ZIPFoundation;
 		};
 		94B99D9C27D4AA57005B5E3A /* SwiftGit2 */ = {

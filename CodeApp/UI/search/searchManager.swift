@@ -13,18 +13,12 @@ class TextSearchManager: ObservableObject {
     @Published var searchTerm = ""
     @Published var message = ""
     @Published var expansionStates: [String: Bool] = [:]
-    @Published var results: [String: [searchResult]] = [:]
+    @Published var results: [String: [SearchResult]] = [:]
 
     var executor: Executor? = nil
     private var resultCount = 0
 
     private var tempResponse = ""
-
-    struct searchResult: Identifiable {
-        let id = UUID()
-        let line_num: Int
-        let line: String
-    }
 
     init() {
         executor = Executor(
@@ -61,9 +55,9 @@ class TextSearchManager: ObservableObject {
             }
             resultCount += 1
             if results[path] == nil {
-                results[path] = [searchResult(line_num: linenum, line: line)]
+                results[path] = [SearchResult(line_num: linenum, line: line)]
             } else {
-                results[path]?.append(searchResult(line_num: linenum, line: line))
+                results[path]?.append(SearchResult(line_num: linenum, line: line))
             }
         }
         self.message =

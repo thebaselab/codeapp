@@ -21,7 +21,7 @@ struct GitCell_controls: View {
                 .contentShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                 .onTapGesture {
                     do {
-                        try App.gitServiceProvider?.unstage(paths: [
+                        try App.workSpaceStorage.gitServiceProvider?.unstage(paths: [
                             itemUrl.absoluteString.removingPercentEncoding!
                         ])
                         App.git_status()
@@ -38,7 +38,7 @@ struct GitCell_controls: View {
                     .contentShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                     .onTapGesture {
                         if status == .workTreeModified {
-                            App.gitServiceProvider?.previous(
+                            App.workSpaceStorage.gitServiceProvider?.previous(
                                 path: itemUrl.absoluteString.removingPercentEncoding!,
                                 error: {
                                     App.notificationManager.showErrorMessage(
@@ -62,7 +62,7 @@ struct GitCell_controls: View {
                             }
                         } else {
                             do {
-                                try App.gitServiceProvider?.checkout(paths: [
+                                try App.workSpaceStorage.gitServiceProvider?.checkout(paths: [
                                     itemUrl.absoluteString.removingPercentEncoding!
                                 ])
                                 App.git_status()
@@ -79,7 +79,7 @@ struct GitCell_controls: View {
                 .contentShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                 .onTapGesture {
                     do {
-                        try App.gitServiceProvider?.stage(paths: [
+                        try App.workSpaceStorage.gitServiceProvider?.stage(paths: [
                             itemUrl.absoluteString.removingPercentEncoding!.removingPercentEncoding!
                         ])
                         App.git_status()

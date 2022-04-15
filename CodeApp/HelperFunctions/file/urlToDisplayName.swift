@@ -5,6 +5,8 @@
 //  Created by Ken Chung on 5/12/2020.
 //
 
+import Foundation
+
 func editorDisplayName(editor: EditorInstance) -> String {
     if editor.type == .diff {
         let name1 = editor.url.components(separatedBy: "/").last?.removingPercentEncoding ?? ""

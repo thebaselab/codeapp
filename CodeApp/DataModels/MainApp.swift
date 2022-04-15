@@ -7,7 +7,7 @@
 
 import Combine
 import CoreSpotlight
-import GCDWebServer
+import GCDWebServers
 import SwiftGit2
 import SwiftUI
 import UniformTypeIdentifiers
@@ -35,8 +35,6 @@ class MainApp: ObservableObject {
     @Published var textSearchManager = TextSearchManager()
     @Published var workSpaceStorage: WorkSpaceStorage
 
-    var gitServiceProvider: GitServiceProvider? = nil
-
     // Editor States
     @Published var problems: [URL: [monacoEditor.Coordinator.marker]] = [:]
     @Published var showsNewFileSheet = false
@@ -61,6 +59,7 @@ class MainApp: ObservableObject {
     let webServer = GCDWebServer()
     var editorTypesMonitor: FolderMonitor? = nil
     let readmeMessage = NSLocalizedString("Welcome Message", comment: "")
+    let deviceSupportsBiometricAuth: Bool = biometricAuthSupported()
 
     private var NotificationCancellable: AnyCancellable? = nil
     private var CompilerCancellable: AnyCancellable? = nil
@@ -125,11 +124,9 @@ class MainApp: ObservableObject {
             rootDir = getRootDirectory()
         }
 
-        self.workSpaceStorage = WorkSpaceStorage(
-            name: rootDir.lastPathComponent, url: rootDir.absoluteString)
+        self.workSpaceStorage = WorkSpaceStorage(url: rootDir)
 
         terminalInstance = TerminalInstance(root: rootDir)
-        gitServiceProvider = GitServiceProvider(root: rootDir)
 
         terminalInstance.openEditor = { url in
             self.openEditor(urlString: url, type: .any)
@@ -201,8 +198,15 @@ class MainApp: ObservableObject {
     func saveUserStates() {
 
         // Saving root folder
-        if let data = try? URL(string: workSpaceStorage.currentDirectory.url)?.bookmarkData() {
+        if let currentDir = URL(string: workSpaceStorage.currentDirectory.url),
+            currentDir.scheme == "file",
+            let data = try? currentDir.bookmarkData()
+        {
             UserDefaults.standard.setValue(data, forKey: "uistate.root.bookmark")
+        } else {
+            // If the current directory is a remote directory, or cannot be saved as a bookmark,
+            // we don't save the state.
+            return
         }
 
         // Saving opened editors
@@ -235,11 +239,10 @@ class MainApp: ObservableObject {
         guard let url = URL(string: newurl) else {
             return
         }
-        do {
-            try FileManager.default.createDirectory(
-                at: url, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            print("Error: \(error.localizedDescription)")
+        workSpaceStorage.createDirectory(at: url, withIntermediateDirectories: true) { error in
+            if let error = error {
+                self.notificationManager.showErrorMessage(error.localizedDescription)
+            }
         }
     }
 
@@ -285,26 +288,28 @@ class MainApp: ObservableObject {
     }
 
     func duplicateItem(from: URL) {
-        do {
-            let newName = newFileName(
-                defaultName: from.deletingPathExtension().lastPathComponent,
-                extensionName: from.pathExtension,
-                urlString: from.deletingLastPathComponent().absoluteString)
-            let newURL = from.deletingLastPathComponent().absoluteString + newName
-            try FileManager.default.copyItem(at: from, to: URL(string: newURL)!)
-            git_status()
-        } catch {
-            notificationManager.showErrorMessage(error.localizedDescription)
+        let newName = newFileName(
+            defaultName: from.deletingPathExtension().lastPathComponent,
+            extensionName: from.pathExtension,
+            urlString: from.deletingLastPathComponent().absoluteString)
+        let newURL = from.deletingLastPathComponent().absoluteString + newName
+        workSpaceStorage.copyItem(at: from, to: URL(string: newURL)!) { error in
+            if let error = error {
+                self.notificationManager.showErrorMessage(error.localizedDescription)
+                return
+            }
+            self.git_status()
         }
     }
 
     func trashItem(url: URL) {
-        do {
-            try FileManager.default.removeItem(at: url)
-            closeEditor(url: url.absoluteString, type: EditorInstance.tabType.file)
-            git_status()
-        } catch {
-            notificationManager.showErrorMessage(error.localizedDescription)
+        workSpaceStorage.removeItem(at: url) { error in
+            if let error = error {
+                self.notificationManager.showErrorMessage(error.localizedDescription)
+                return
+            }
+            self.closeEditor(url: url.absoluteString, type: EditorInstance.tabType.file)
+            self.git_status()
         }
     }
 
@@ -410,7 +415,7 @@ class MainApp: ObservableObject {
                 return
             }
         }
-        gitServiceProvider?.previous(
+        workSpaceStorage.gitServiceProvider?.previous(
             path: url.absoluteString,
             error: {
                 self.notificationManager.showErrorMessage($0.localizedDescription)
@@ -504,7 +509,7 @@ class MainApp: ObservableObject {
                     return
                 }
             }
-            completionHandler(nil, FSError.unsupportedEncoding)
+            completionHandler(nil, WorkSpaceStorage.FSError.UnsupportedEncoding)
         }
     }
 
@@ -564,7 +569,8 @@ class MainApp: ObservableObject {
         webServer.stop()
         webServer.removeAllHandlers()
         webServer.addGETHandler(
-            forBasePath: "/", directoryPath: url.path, indexFilename: "index.html", cacheAge: 10,
+            forBasePath: "/", directoryPath: url.path, indexFilename: "index.html",
+            cacheAge: 10,
             allowRangeRequests: true)
         do {
             try webServer.start(options: [
@@ -588,7 +594,7 @@ class MainApp: ObservableObject {
     }
 
     func git_status() {
-        gitServiceProvider?.status(error: { _ in
+        workSpaceStorage.gitServiceProvider?.status(error: { _ in
 
             DispatchQueue.main.async {
                 self.remote = ""
@@ -598,7 +604,7 @@ class MainApp: ObservableObject {
                 self.workingResources = [:]
             }
         }) { indexed, worktree, branch in
-            guard let hasRemote = self.gitServiceProvider?.hasRemote() else {
+            guard let hasRemote = self.workSpaceStorage.gitServiceProvider?.hasRemote() else {
                 return
             }
             DispatchQueue.main.async {
@@ -616,7 +622,7 @@ class MainApp: ObservableObject {
                 }
             }
 
-            self.gitServiceProvider?.aheadBehind(error: {
+            self.workSpaceStorage.gitServiceProvider?.aheadBehind(error: {
                 print($0.localizedDescription)
                 DispatchQueue.main.async {
                     self.aheadBehind = nil
@@ -630,7 +636,7 @@ class MainApp: ObservableObject {
     }
 
     func loadRepository(url: URL) {
-        gitServiceProvider = GitServiceProvider(root: url.standardizedFileURL)
+        workSpaceStorage.gitServiceProvider?.loadDirectory(url: url.standardizedFileURL)
         git_status()
     }
 

@@ -58,7 +58,12 @@ cd ..
 
 # PHP
 curl -OL https://github.com/bummoblizard/php-src/releases/download/v0.2/php.xcframework.zip
-unzip -q php.xcframework -d PHP
+unzip -q php.xcframework.zip -d PHP
 rm -f php.xcframework.zip
+
+# NMSSH
+curl -OL https://github.com/thebaselab/NMSSH/releases/download/2.3.1/NMSSH.xcframework.zip
+unzip -q NMSSH.xcframework.zip
+rm -f NMSSH.xcframework.zip
 
 echo "Done!"

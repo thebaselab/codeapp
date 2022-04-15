@@ -36,10 +36,10 @@ struct name_email: View {
                     }
             )
             .onChange(of: username) { value in
-                App.gitServiceProvider?.sign(name: value, email: email)
+                App.workSpaceStorage.gitServiceProvider?.sign(name: value, email: email)
             }
             .onChange(of: email) { value in
-                App.gitServiceProvider?.sign(name: username, email: value)
+                App.workSpaceStorage.gitServiceProvider?.sign(name: username, email: value)
             }
     }
 }

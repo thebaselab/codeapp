@@ -93,8 +93,9 @@ struct explorer: View {
     var body: some View {
         VStack(spacing: 0) {
 
-            List(selection: $selectKeeper) {
+            InfinityProgressView(enabled: $App.workSpaceStorage.explorerIsBusy)
 
+            List(selection: $selectKeeper) {
                 Section(
                     header:
                         Text("Open Editors")

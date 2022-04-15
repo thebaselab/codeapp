@@ -7,16 +7,17 @@
 
 import SwiftUI
 
-struct ftpAuthView: View {
+struct RemoteAuthView: View {
 
     @State var username: String = ""
     @State var password: String = ""
 
+    let targetURL: URL
     var credCB: (String, String) -> Void
 
     var body: some View {
         Form {
-            Section(header: Text("FTP Authentication")) {
+            Section(header: Text("Credentials for \(targetURL.absoluteString)")) {
                 TextField("Username", text: $username)
                     .textContentType(.username)
                     .disableAutocorrection(true)
