@@ -2,6 +2,33 @@
   "object": {
     "pins": [
       {
+        "package": "Clibgit2",
+        "repositoryURL": "https://github.com/thebaselab/Clibgit2",
+        "state": {
+          "branch": "master",
+          "revision": "d3c0a17fabd9cf53d091d99eeb8535f20986cf4e",
+          "version": null
+        }
+      },
+      {
+        "package": "CwlCatchException",
+        "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
+        "state": {
+          "branch": null,
+          "revision": "35f9e770f54ce62dd8526470f14c6e137cef3eea",
+          "version": "2.1.1"
+        }
+      },
+      {
+        "package": "CwlPreconditionTesting",
+        "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
+        "state": {
+          "branch": null,
+          "revision": "c21f7bab5ca8eee0a9998bbd17ca1d0eb45d4688",
+          "version": "2.1.0"
+        }
+      },
+      {
         "package": "Dynamic",
         "repositoryURL": "https://github.com/mhdhejazi/Dynamic.git",
         "state": {
@@ -11,12 +38,66 @@
         }
       },
       {
+        "package": "FilesProvider",
+        "repositoryURL": "https://github.com/amosavian/FileProvider",
+        "state": {
+          "branch": "master",
+          "revision": "abf68a62541a4193c8d106367ddb3648e8ab693f",
+          "version": null
+        }
+      },
+      {
+        "package": "GCDWebServer",
+        "repositoryURL": "https://github.com/JacobHearst/GCDWebServer",
+        "state": {
+          "branch": null,
+          "revision": "14f9eedb296c5b71fec971d8256ef3bfc20a2245",
+          "version": "3.5.5"
+        }
+      },
+      {
+        "package": "MarkdownView",
+        "repositoryURL": "https://github.com/thebaselab/MarkdownView",
+        "state": {
+          "branch": "master",
+          "revision": "55ea9b558ed5e4614398bab5438d47967ec2c3fe",
+          "version": null
+        }
+      },
+      {
+        "package": "Nimble",
+        "repositoryURL": "https://github.com/Quick/Nimble.git",
+        "state": {
+          "branch": null,
+          "revision": "c93f16c25af5770f0d3e6af27c9634640946b068",
+          "version": "9.2.1"
+        }
+      },
+      {
+        "package": "Quick",
+        "repositoryURL": "https://github.com/Quick/Quick.git",
+        "state": {
+          "branch": null,
+          "revision": "bd86ca0141e3cfb333546de5a11ede63f0c4a0e6",
+          "version": "4.0.0"
+        }
+      },
+      {
+        "package": "ZipArchive",
+        "repositoryURL": "https://github.com/ZipArchive/ZipArchive.git",
+        "state": {
+          "branch": null,
+          "revision": "38e0ce0598e06b034271f296a8e15b149c91aa19",
+          "version": "2.4.3"
+        }
+      },
+      {
         "package": "ZIPFoundation",
         "repositoryURL": "https://github.com/weichsel/ZIPFoundation.git",
         "state": {
           "branch": null,
-          "revision": "ec32d62d412578542c0ffb7a6ce34d3e64b43b94",
-          "version": "0.9.11"
+          "revision": "7254c74b49cec2cb81520523ba993c671f71b066",
+          "version": "0.9.14"
         }
       }
     ]

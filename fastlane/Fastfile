@@ -36,7 +36,7 @@ platform :ios do
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)
 
-    changelog = changelog_from_git_commits(pretty: "- %h (%an) %as %s")
+    changelog = changelog_from_git_commits(pretty: "%an (%as) - %s")
 
     api_key = app_store_connect_api_key(
       key_id: APPLE_KEY_ID,
@@ -49,10 +49,6 @@ platform :ios do
     increment_build_number(
       xcodeproj: "Code.xcodeproj",
       build_number: latest_testflight_build_number + 1
-    )
-
-    cocoapods(
-      clean_install: true
     )
 
     Dir.chdir("..") do
@@ -71,7 +67,7 @@ platform :ios do
 
     gym(
       configuration: "Release",
-      workspace: "Code.xcworkspace",
+      project: "Code.xcodeproj",
       scheme: "Code App",
       export_method: "app-store",
     )

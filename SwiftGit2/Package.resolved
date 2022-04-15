@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "Clibgit2",
-        "repositoryURL": "https://github.com/thebaselab/Clibgit2.git",
+        "repositoryURL": "https://github.com/thebaselab/Clibgit2",
         "state": {
           "branch": "master",
-          "revision": "aa576914cc480458b2940e5bec75f4455c0e07d7",
+          "revision": "c2bb800c66958e8791fc3860bfebd647113d399c",
           "version": null
         }
       },
