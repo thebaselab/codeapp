@@ -51,7 +51,7 @@ struct newFileView: View {
     func loadNewFile(lang: Int) {
         var content = ""
 
-        if !checkNameValidity() || name.isEmpty {
+        if lang != 1 && (!checkNameValidity() || name.isEmpty) {
             filenameFieldIsFocused = true
             return
         }
