@@ -801,13 +801,13 @@ class MainApp: ObservableObject {
                 return
             }
 
-            if supertypes.contains(.mpeg4Movie) || supertypes.contains(.movie) {
-                let newEditor = EditorInstance(
-                    url: url.absoluteString, content: "Video", type: .video)
-                editors.append(newEditor)
-                activeEditor = newEditor
-                return
-            }
+            //            if supertypes.contains(.mpeg4Movie) || supertypes.contains(.movie) {
+            //                let newEditor = EditorInstance(
+            //                    url: url.absoluteString, content: "Video", type: .video)
+            //                editors.append(newEditor)
+            //                activeEditor = newEditor
+            //                return
+            //            }
         }
 
         func newTab(editor: EditorInstance) {
