@@ -142,6 +142,10 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
         completionHandler: @escaping (Error?) -> Void
     ) {
         queue.async {
+            var content = content
+            if content.isEmpty {
+                content = "\n".data(using: .utf8)!
+            }
             let success = self.session.sftp.writeContents(content, toFileAtPath: at.path)
             if success {
                 completionHandler(nil)
