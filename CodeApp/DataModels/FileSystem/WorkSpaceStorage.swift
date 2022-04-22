@@ -21,7 +21,7 @@ class WorkSpaceStorage: ObservableObject {
     private var directoryStorage: [String: [(fileItemRepresentable)]] = [:]
     private var fss: [String: FileSystemProvider] = [:]
 
-    enum FSError: Error {
+    enum FSError: Error, LocalizedError {
         case NotImplemented
         case SchemeNotRegistered
         case InvalidHost
@@ -31,24 +31,24 @@ class WorkSpaceStorage: ObservableObject {
         case AuthFailure
         case UnsupportedScheme
 
-        var message: String {
+        public var errorDescription: String? {
             switch self {
             case .NotImplemented:
-                return ""
+                return "Not implemented"
             case .SchemeNotRegistered:
-                return ""
+                return "Scheme not registered"
             case .InvalidHost:
-                return ""
+                return "Invalid host"
             case .UnsupportedEncoding:
-                return ""
+                return "Unsupported encoding"
             case .Unknown:
-                return "Unknown Error"
+                return "Unknown error"
             case .ConnectionFailure:
-                return "Connection Failed"
+                return "Connection failed"
             case .AuthFailure:
-                return "Authentication Failed"
+                return "Authentication failed"
             case .UnsupportedScheme:
-                return "Unsupported Scheme"
+                return "Unsupported scheme"
             }
         }
     }
