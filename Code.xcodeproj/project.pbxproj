@@ -652,6 +652,10 @@
 		94F52707259F9B4800337306 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F52706259F9B4800337306 /* KeychainWrapper.swift */; };
 		94F52709259F9B7800337306 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F52708259F9B7800337306 /* KeychainItemAccessibility.swift */; };
 		94F5270B25A0704600337306 /* GitHubAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F5270A25A0704500337306 /* GitHubAccountManager.swift */; };
+		94F6B510280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
+		94F6B511280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
+		94F6B513280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */; };
+		94F6B514280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */; };
 		94FC220B257F7D2A00B85D1B /* gitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC220A257F7D2900B85D1B /* gitCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -1588,6 +1592,8 @@
 		94F52708259F9B7800337306 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		94F5270A25A0704500337306 /* GitHubAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAccountManager.swift; sourceTree = "<group>"; };
 		94F5270E25A37E8D00337306 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDisplayName.swift; sourceTree = "<group>"; };
+		94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCellContextMenu.swift; sourceTree = "<group>"; };
 		94FC220A257F7D2900B85D1B /* gitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gitCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1936,6 +1942,8 @@
 		94A777C9257B8754008FE7B2 /* explorer */ = {
 			isa = PBXGroup;
 			children = (
+				94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */,
+				94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */,
 				944FC40A25C5F69D00C7C43C /* HierarchyList.swift */,
 				94A777C3257B8042008FE7B2 /* explorer.swift */,
 				94A777CA257B876A008FE7B2 /* editorCell.swift */,
@@ -2740,6 +2748,7 @@
 				94A04611280498F200182275 /* CloneButton.swift in Sources */,
 				942E3202280877C900233441 /* SearchServiceProvider.swift in Sources */,
 				94196972280316C7008AAEB2 /* KeychainWrapper.swift in Sources */,
+				94F6B514280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */,
 				94A0460B2804955C00182275 /* GitHubSearchView.swift in Sources */,
 				94E6CC7C2806FBAF00939E4F /* SFTPFileSystemProvider.swift in Sources */,
 				94196973280316C7008AAEB2 /* tabs.swift in Sources */,
@@ -2748,6 +2757,7 @@
 				94A0462F2804A87300182275 /* TimeLineSection.swift in Sources */,
 				94196976280316C7008AAEB2 /* search.swift in Sources */,
 				94196977280316C7008AAEB2 /* String+base64EncodedDecoded.swift in Sources */,
+				94F6B511280EFD07000DBAE2 /* FileDisplayName.swift in Sources */,
 				94196978280316C7008AAEB2 /* fileIcon.swift in Sources */,
 				94A046232804A42300182275 /* WorkingChangesSection.swift in Sources */,
 				94196979280316C7008AAEB2 /* ViewRepresentable.swift in Sources */,
@@ -2864,6 +2874,7 @@
 				94A04610280498F200182275 /* CloneButton.swift in Sources */,
 				942E3201280877C900233441 /* SearchServiceProvider.swift in Sources */,
 				94F52707259F9B4800337306 /* KeychainWrapper.swift in Sources */,
+				94F6B513280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */,
 				94A0460A2804955C00182275 /* GitHubSearchView.swift in Sources */,
 				94E6CC7B2806FBAF00939E4F /* SFTPFileSystemProvider.swift in Sources */,
 				94A77830257BD680008FE7B2 /* tabs.swift in Sources */,
@@ -2872,6 +2883,7 @@
 				94A0462E2804A87300182275 /* TimeLineSection.swift in Sources */,
 				94A777D2257B8A32008FE7B2 /* search.swift in Sources */,
 				94A777B0257B679C008FE7B2 /* String+base64EncodedDecoded.swift in Sources */,
+				94F6B510280EFD07000DBAE2 /* FileDisplayName.swift in Sources */,
 				94A77792257AB805008FE7B2 /* fileIcon.swift in Sources */,
 				94A046222804A42300182275 /* WorkingChangesSection.swift in Sources */,
 				94801F95266FBC3500B29D80 /* ViewRepresentable.swift in Sources */,
