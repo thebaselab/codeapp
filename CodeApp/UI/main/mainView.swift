@@ -334,162 +334,80 @@ struct mainView: View {
                             if isShowingDirectory && horizontalSizeClass == .compact {
                                 HStack(spacing: 0) {
                                     VStack {
-                                        if #available(iOS 15.0, *) {
-                                            HStack {
-                                                Button(action: {
-                                                    withAnimation(.easeIn(duration: 0.2)) {
-                                                        isShowingDirectory.toggle()
-                                                    }
-                                                }) {
-                                                    Image(systemName: "sidebar.left")
-                                                        .font(.system(size: 17))
-                                                        .foregroundColor(Color.init("T1"))
-                                                        .padding(5)
-                                                        .contentShape(
-                                                            RoundedRectangle(
-                                                                cornerRadius: 8, style: .continuous)
-                                                        )
-                                                        .hoverEffect(.highlight)
-                                                        .frame(
-                                                            minWidth: 0, maxWidth: 20, minHeight: 0,
-                                                            maxHeight: 20
-                                                        )
-                                                        .padding()
-                                                }.sheet(isPresented: $showingNewFileSheet) {
-                                                    newFileView(
-                                                        targetUrl: App.workSpaceStorage
-                                                            .currentDirectory.url
-                                                    ).environmentObject(App)
+                                        HStack {
+                                            Button(action: {
+                                                withAnimation(.easeIn(duration: 0.2)) {
+                                                    isShowingDirectory.toggle()
                                                 }
-                                                Spacer()
-                                                Menu {
-                                                    Picker(
-                                                        selection: $currentDirectory,
-                                                        label: Text("Section")
-                                                    ) {
-                                                        ForEach([0, 1, 3], id: \.self) { value in
-                                                            Label(
-                                                                sections[value]![0],
-                                                                systemImage: sections[value]![1])
-                                                        }
-                                                    }
-                                                } label: {
-                                                    Image(systemName: "ellipsis.circle")
-                                                        .font(.system(size: 17))
-                                                        .foregroundColor(Color.init("T1"))
-                                                        .padding(5)
-                                                        .contentShape(
-                                                            RoundedRectangle(
-                                                                cornerRadius: 8, style: .continuous)
-                                                        )
-                                                        .hoverEffect(.highlight)
-                                                        .frame(
-                                                            minWidth: 0, maxWidth: 20, minHeight: 0,
-                                                            maxHeight: 20
-                                                        )
-                                                        .padding()
-                                                }
+                                            }) {
+                                                Image(systemName: "sidebar.left")
+                                                    .font(.system(size: 17))
+                                                    .foregroundColor(Color.init("T1"))
+                                                    .padding(5)
+                                                    .contentShape(
+                                                        RoundedRectangle(
+                                                            cornerRadius: 8, style: .continuous)
+                                                    )
+                                                    .hoverEffect(.highlight)
+                                                    .frame(
+                                                        minWidth: 0, maxWidth: 20, minHeight: 0,
+                                                        maxHeight: 20
+                                                    )
+                                                    .padding()
+                                            }.sheet(isPresented: $showingNewFileSheet) {
+                                                newFileView(
+                                                    targetUrl: App.workSpaceStorage
+                                                        .currentDirectory.url
+                                                ).environmentObject(App)
                                             }
-                                            .background(
-                                                Color.init(id: "sideBar.background")
-                                                    .ignoresSafeArea(.container, edges: .top)
-                                            )
-                                            .frame(height: 40)
-
-                                            Group {
-                                                if self.currentDirectory == 0 {
-                                                    explorer(
-                                                        showingNewFileSheet: $showingNewFileSheet,
-                                                        showsDirectoryPicker: $showsDirectoryPicker)
-                                                } else if self.currentDirectory == 1 {
-                                                    search()
-                                                } else if self.currentDirectory == 3 {
-                                                    git()
-                                                }
-                                            }.background(Color.init(id: "sideBar.background"))
-                                        } else {
-                                            ZStack(alignment: .topLeading) {
-                                                Group {
-                                                    if self.currentDirectory == 0 {
-                                                        explorer(
-                                                            showingNewFileSheet:
-                                                                $showingNewFileSheet,
-                                                            showsDirectoryPicker:
-                                                                $showsDirectoryPicker)
-                                                    } else if self.currentDirectory == 1 {
-                                                        search()
-                                                    } else if self.currentDirectory == 3 {
-                                                        git()
-                                                    }
-                                                }.background(Color.init(id: "sideBar.background"))
-
-                                                HStack {
-                                                    Button(action: {
-                                                        withAnimation(.easeIn(duration: 0.2)) {
-                                                            isShowingDirectory.toggle()
-                                                        }
-                                                    }) {
-                                                        Image(systemName: "sidebar.left")
-                                                            .font(.system(size: 17))
-                                                            .foregroundColor(Color.init("T1"))
-                                                            .padding(5)
-                                                            .contentShape(
-                                                                RoundedRectangle(
-                                                                    cornerRadius: 8,
-                                                                    style: .continuous)
-                                                            )
-                                                            .hoverEffect(.highlight)
-                                                            .frame(
-                                                                minWidth: 0, maxWidth: 20,
-                                                                minHeight: 0, maxHeight: 20
-                                                            )
-                                                            .padding()
-                                                    }.sheet(isPresented: $showingNewFileSheet) {
-                                                        newFileView(
-                                                            targetUrl: App.workSpaceStorage
-                                                                .currentDirectory.url
-                                                        ).environmentObject(App)
-                                                    }
-                                                    Spacer()
-                                                    Menu {
-                                                        Picker(
-                                                            selection: $currentDirectory,
-                                                            label: Text("Section")
-                                                        ) {
-                                                            ForEach([0, 1, 3], id: \.self) {
-                                                                value in
-                                                                Label(
-                                                                    sections[value]![0],
-                                                                    systemImage: sections[value]![1]
-                                                                )
-                                                            }
-                                                        }
-                                                    } label: {
-                                                        Image(systemName: "ellipsis.circle")
-                                                            .font(.system(size: 17))
-                                                            .foregroundColor(Color.init("T1"))
-                                                            .padding(5)
-                                                            .contentShape(
-                                                                RoundedRectangle(
-                                                                    cornerRadius: 8,
-                                                                    style: .continuous)
-                                                            )
-                                                            .hoverEffect(.highlight)
-                                                            .frame(
-                                                                minWidth: 0, maxWidth: 20,
-                                                                minHeight: 0, maxHeight: 20
-                                                            )
-                                                            .padding()
+                                            Spacer()
+                                            Menu {
+                                                Picker(
+                                                    selection: $currentDirectory,
+                                                    label: Text("Section")
+                                                ) {
+                                                    ForEach([0, 1, 3, 4], id: \.self) { value in
+                                                        Label(
+                                                            sections[value]![0],
+                                                            systemImage: sections[value]![1])
                                                     }
                                                 }
-                                                .background(
-                                                    Color.init(id: "sideBar.background")
-                                                        .ignoresSafeArea(.container, edges: .top)
-                                                )
-                                                .frame(height: 40)
+                                            } label: {
+                                                Image(systemName: "ellipsis.circle")
+                                                    .font(.system(size: 17))
+                                                    .foregroundColor(Color.init("T1"))
+                                                    .padding(5)
+                                                    .contentShape(
+                                                        RoundedRectangle(
+                                                            cornerRadius: 8, style: .continuous)
+                                                    )
+                                                    .hoverEffect(.highlight)
+                                                    .frame(
+                                                        minWidth: 0, maxWidth: 20, minHeight: 0,
+                                                        maxHeight: 20
+                                                    )
+                                                    .padding()
                                             }
-
                                         }
+                                        .background(
+                                            Color.init(id: "sideBar.background")
+                                                .ignoresSafeArea(.container, edges: .top)
+                                        )
+                                        .frame(height: 40)
+
+                                        Group {
+                                            if self.currentDirectory == 0 {
+                                                explorer(
+                                                    showingNewFileSheet: $showingNewFileSheet,
+                                                    showsDirectoryPicker: $showsDirectoryPicker)
+                                            } else if self.currentDirectory == 1 {
+                                                search()
+                                            } else if self.currentDirectory == 3 {
+                                                git()
+                                            } else if self.currentDirectory == 4 {
+                                                remote()
+                                            }
+                                        }.background(Color.init(id: "sideBar.background"))
 
                                     }
                                     .frame(width: 280.0, height: geometry.size.height - 20)
