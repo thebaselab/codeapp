@@ -17,7 +17,7 @@ struct Banner: View {
         VStack {
             HStack {
                 data.level.icon
-                Text(data.title).lineLimit(5).font(.system(size: 14)).foregroundColor(
+                Text(data.title).lineLimit(5).font(.subheadline).foregroundColor(
                     Color.init("T1"))
                 Spacer()
             }.frame(minHeight: 50).padding(.horizontal, 10)
@@ -47,7 +47,7 @@ struct BannerWtihProgress: View {
         VStack {
             HStack {
                 data.level.icon
-                Text(data.title).lineLimit(1).font(.system(size: 14)).foregroundColor(
+                Text(data.title).lineLimit(1).font(.subheadline).foregroundColor(
                     Color.init("T1"))
                 Spacer()
             }.frame(height: 50).padding(.leading, 10).padding(.trailing, 10)
@@ -88,7 +88,7 @@ struct BannerWithButton: View {
         VStack {
             HStack {
                 data.level.icon
-                Text(data.title).lineLimit(2).font(.system(size: 14)).foregroundColor(
+                Text(data.title).lineLimit(2).font(.subheadline).foregroundColor(
                     Color.init("T1"))
                 Spacer()
                 Image(systemName: "xmark").font(.system(size: 12)).foregroundColor(Color.init("T1"))

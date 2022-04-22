@@ -109,7 +109,7 @@ struct explorer: View {
                                 Spacer()
                                 Text(NSLocalizedString("New File", comment: "")).foregroundColor(
                                     .white
-                                ).font(.system(size: 14, weight: .light)).lineLimit(1)
+                                ).font(.subheadline).lineLimit(1)
                                 Spacer()
                             }.foregroundColor(Color.init("T1")).padding(4).background(
                                 Color.init(id: "button.background")
@@ -123,7 +123,7 @@ struct explorer: View {
                                 Spacer()
                                 Text(NSLocalizedString("Open Folder", comment: "")).foregroundColor(
                                     .white
-                                ).font(.system(size: 14, weight: .light)).lineLimit(1)
+                                ).font(.subheadline).lineLimit(1)
                                 Spacer()
                             }.foregroundColor(Color.init("T1")).padding(4).background(
                                 Color.init(id: "button.background")
@@ -172,61 +172,61 @@ struct explorer: View {
                 if editMode == EditMode.inactive {
                     if searching {
                         HStack {
-                            Image(systemName: "line.horizontal.3.decrease").font(.system(size: 14))
+                            Image(systemName: "line.horizontal.3.decrease").font(.subheadline)
                                 .foregroundColor(Color.init(id: "activityBar.foreground"))
                             TextField("Filter", text: $searchString)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
                             Image(systemName: "checkmark.circle").contentShape(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                            ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                                 Color.init(id: "activityBar.foreground")
                             ).onTapGesture { withAnimation { searching = false } }
                         }
                     } else {
                         Image(systemName: "doc.badge.plus").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture { openNewFile() }
                         Image(systemName: "folder.badge.plus").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture {
                             App.createFolder(urlString: App.workSpaceStorage.currentDirectory.url)
                         }
                         Image(systemName: "folder.badge.gear").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture { openFolder() }
                         Image(systemName: "magnifyingglass").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture { withAnimation { searching = true } }
                         Image(systemName: "arrow.clockwise").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture { App.reloadDirectory() }
                     }
                 } else {
                     if selectKeeper.isEmpty {
-                        //                        Image(systemName: "square.and.arrow.up").contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous)).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(.gray)
+                        //                        Image(systemName: "square.and.arrow.up").contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous)).hoverEffect(.highlight).font(.subheadline).foregroundColor(.gray)
                         Image(systemName: "trash").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(.gray)
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(.gray)
                         Image(systemName: "square.on.square").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(.gray)
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(.gray)
                     } else {
-                        //                        Image(systemName: "square.and.arrow.up").contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous)).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(Color.init(id: "activityBar.foreground"))
+                        //                        Image(systemName: "square.and.arrow.up").contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous)).hoverEffect(.highlight).font(.subheadline).foregroundColor(Color.init(id: "activityBar.foreground"))
                         //                            .onTapGesture{activityViewController.share(urls: Array(selectKeeper).map{URL.init(string: $0)!})}
                         Image(systemName: "trash").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture {
                             for i in selectKeeper {
@@ -237,7 +237,7 @@ struct explorer: View {
                         }
                         Image(systemName: "square.on.square").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture {
                             for i in selectKeeper { App.duplicateItem(from: URL(string: i)!) }
@@ -246,7 +246,7 @@ struct explorer: View {
                     }
                     Image(systemName: "checkmark.circle").contentShape(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    ).hoverEffect(.highlight).font(.system(size: 14)).foregroundColor(
+                    ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                         Color.init(id: "activityBar.foreground")
                     ).onTapGesture { withAnimation { editMode = EditMode.inactive } }
                 }

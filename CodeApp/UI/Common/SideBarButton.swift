@@ -23,7 +23,7 @@ struct SideBarButton: View {
             Text(title)
                 .lineLimit(1)
                 .foregroundColor(.white)
-                .font(.system(size: 14, weight: .light))
+                .font(.subheadline)
             Spacer()
         }.onTapGesture {
             onTap()

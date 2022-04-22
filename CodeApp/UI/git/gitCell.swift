@@ -131,7 +131,7 @@ struct GitCell: View {
                         case .workTreeModified, .indexModified:
                             Text(name)
                                 .foregroundColor(Color.init("git.modified"))
-                                .font(.system(size: 14, weight: .light))
+                                .font(.subheadline)
                             Spacer()
                             GitCell_controls(status: status, itemUrl: itemUrl)
                             Text("M")
@@ -141,7 +141,7 @@ struct GitCell: View {
                         case .workTreeNew:
                             Text(name)
                                 .foregroundColor(Color.init("git.untracked"))
-                                .font(.system(size: 14, weight: .light))
+                                .font(.subheadline)
                             Spacer()
                             GitCell_controls(status: status, itemUrl: itemUrl)
                             Text("U")
@@ -151,7 +151,7 @@ struct GitCell: View {
                         case .workTreeDeleted, .indexDeleted:
                             Text(name)
                                 .foregroundColor(Color.init("git.deleted"))
-                                .font(.system(size: 14, weight: .light))
+                                .font(.subheadline)
                             Spacer()
                             GitCell_controls(status: status, itemUrl: itemUrl)
                             Text("D")
@@ -161,7 +161,7 @@ struct GitCell: View {
                         case .indexNew:
                             Text(name)
                                 .foregroundColor(Color.init("git.added"))
-                                .font(.system(size: 14, weight: .light))
+                                .font(.subheadline)
                             Spacer()
                             GitCell_controls(status: status, itemUrl: itemUrl)
                             Text("A")
@@ -170,7 +170,7 @@ struct GitCell: View {
                                 .padding(.horizontal, 5)
                         default:
                             Text(name)
-                                .font(.system(size: 14, weight: .light))
+                                .font(.subheadline)
                             Spacer()
                             GitCell_controls(status: status, itemUrl: itemUrl)
                             Text("X")

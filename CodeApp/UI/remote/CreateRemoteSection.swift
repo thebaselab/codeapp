@@ -34,7 +34,8 @@ struct CreateRemoteSection: View {
                 HStack {
                     Image(systemName: "rectangle.connected.to.line.below")
                         .foregroundColor(.gray)
-                        .font(.system(size: 14))
+                        .font(.subheadline)
+
                     Picker("Protocol", selection: $serverType) {
                         ForEach(RemoteType.type.allCases, id: \.self) { type in
                             Text(type.rawValue.uppercased())
@@ -48,7 +49,7 @@ struct CreateRemoteSection: View {
                     HStack {
                         Image(systemName: "link")
                             .foregroundColor(.gray)
-                            .font(.system(size: 14))
+                            .font(.subheadline)
 
                         TextField("Address", text: $address)
                             .focused($focusedField, equals: .address)
@@ -58,7 +59,7 @@ struct CreateRemoteSection: View {
                     HStack {
                         Image(systemName: "network")
                             .foregroundColor(.gray)
-                            .font(.system(size: 14))
+                            .font(.subheadline)
 
                         TextField("Port", text: $port)
                             .focused($focusedField, equals: .port)
@@ -67,7 +68,7 @@ struct CreateRemoteSection: View {
                     HStack {
                         Image(systemName: "person")
                             .foregroundColor(.gray)
-                            .font(.system(size: 14))
+                            .font(.subheadline)
 
                         TextField("Username", text: $username)
                             .focused($focusedField, equals: .username)
@@ -77,7 +78,7 @@ struct CreateRemoteSection: View {
                     HStack {
                         Image(systemName: "key")
                             .foregroundColor(.gray)
-                            .font(.system(size: 14))
+                            .font(.subheadline)
 
                         SecureField("Password", text: $password)
                             .focused($focusedField, equals: .password)
@@ -100,11 +101,7 @@ struct CreateRemoteSection: View {
                 )
             }
 
-            HStack {
-                Spacer()
-                Text("Connect").font(.system(size: 14, weight: .light)).lineLimit(1)
-                Spacer()
-            }.onTapGesture {
+            SideBarButton("Connect") {
 
                 guard !address.isEmpty else {
                     App.notificationManager.showErrorMessage("Address cannot be empty.")
@@ -175,10 +172,6 @@ struct CreateRemoteSection: View {
                 }
 
             }
-            .foregroundColor(Color.init("T1"))
-            .padding(4)
-            .background(Color.init(id: "button.background"))
-            .cornerRadius(10.0)
 
         }.onChange(of: serverType) { value in
             if value == .sftp {

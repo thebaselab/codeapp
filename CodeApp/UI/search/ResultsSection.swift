@@ -71,7 +71,7 @@ struct ResultsSection: View {
                                                     url: key, content: "", type: .file))
                                                 + " "
                                         )
-                                        .font(.system(size: 14, weight: .light))
+                                        .font(.subheadline)
                                         .foregroundColor(Color.init("T1"))
                                         Circle()
                                             .fill(Color.init("panel.border"))

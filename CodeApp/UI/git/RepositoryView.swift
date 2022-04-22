@@ -18,7 +18,7 @@ struct RepositoryView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             if App.commitMessage.isEmpty {
-                Text("Message (⌘Enter to commit)").font(.system(size: 14))
+                Text("Message (⌘Enter to commit)").font(.subheadline)
                     .foregroundColor(.gray).padding(.leading, 3)
             }
             TextEditor(text: $App.commitMessage)

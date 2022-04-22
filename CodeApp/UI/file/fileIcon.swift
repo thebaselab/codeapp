@@ -85,10 +85,14 @@ struct fileIcon: View {
     let iconSize: CGFloat
     let type: EditorInstance.tabType
 
+    @Environment(\.sizeCategory) var sizeCategory
+
     var body: some View {
         switch type {
         case .preview:
-            Image(systemName: "newspaper").foregroundColor(.gray).font(.system(size: iconSize - 2))
+            Image(systemName: "newspaper")
+                .foregroundColor(.gray)
+                .font(.system(size: iconSize - 2))
         default:
             let fileName = url.components(separatedBy: "/").last ?? ""
             switch fileName {

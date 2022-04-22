@@ -18,20 +18,18 @@ struct SearchBar: View {
 
     var body: some View {
         HStack {
+
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+                .font(.subheadline)
+
             TextField(placeholder, text: $text, onCommit: { searchAction?() })
-                .font(.system(size: 14))
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
-                .padding(7)
-                .padding(.horizontal, 25)
-                .background(Color.init(id: "input.background"))
-                .cornerRadius(cornerRadius ?? 15)
                 .overlay(
                     HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 8)
+                        Spacer()
+
                         if isEditing && text != "" {
                             Image(systemName: "multiply.circle.fill")
                                 .foregroundColor(.gray)
@@ -49,6 +47,9 @@ struct SearchBar: View {
                 .onTapGesture {
                     self.isEditing = true
                 }
-        }
+
+        }.padding(7)
+            .background(Color.init(id: "input.background"))
+            .cornerRadius(cornerRadius ?? 15)
     }
 }

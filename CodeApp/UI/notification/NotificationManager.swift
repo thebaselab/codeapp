@@ -87,16 +87,16 @@ struct BannerData {
         var icon: some View {
             switch self {
             case .error:
-                return Image(systemName: "xmark.circle.fill").font(.system(size: 14))
+                return Image(systemName: "xmark.circle.fill").font(.subheadline)
                     .foregroundColor(Color.red)
             case .info:
-                return Image(systemName: "info.circle.fill").font(.system(size: 14))
+                return Image(systemName: "info.circle.fill").font(.subheadline)
                     .foregroundColor(Color.blue)
             case .warning:
-                return Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 14))
+                return Image(systemName: "exclamationmark.triangle.fill").font(.subheadline)
                     .foregroundColor(Color.yellow)
             case .success:
-                return Image(systemName: "checkmark.circle.fill").font(.system(size: 14))
+                return Image(systemName: "checkmark.circle.fill").font(.subheadline)
                     .foregroundColor(Color.green)
             }
         }

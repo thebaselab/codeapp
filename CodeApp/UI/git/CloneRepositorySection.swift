@@ -35,7 +35,8 @@ struct CloneRepositorySection: View {
             HStack {
                 Image(systemName: "link")
                     .foregroundColor(.gray)
-                    .font(.system(size: 14))
+                    .font(.subheadline)
+
                 TextField(
                     "URL (HTTPS)", text: $gitURL,
                     onCommit: {

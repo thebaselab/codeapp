@@ -31,13 +31,13 @@ struct GitHubSearchResultCell: View {
             }
 
             Text(item.name)
-                .font(.system(size: 14))
+                .font(.subheadline)
                 .fontWeight(.semibold)
                 .foregroundColor(Color.init("T1"))
 
             if item.description != nil {
                 Text(item.description!)
-                    .font(.system(size: 14))
+                    .font(.subheadline)
                     .foregroundColor(Color.init("T1"))
             }
 
