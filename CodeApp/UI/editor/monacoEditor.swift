@@ -102,6 +102,8 @@ struct monacoEditor: UIViewRepresentable {
     @AppStorage("toolBarEnabled") var toolBarEnabled: Bool = true
     @AppStorage("editorSmoothScrolling") var editorSmoothScrolling: Bool = false
     @AppStorage("editorReadOnly") var editorReadOnly = false
+    @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
+    @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
 
     private var contentView: UIView?
 
@@ -230,6 +232,9 @@ struct monacoEditor: UIViewRepresentable {
             command:
                 "editor.setModel(monaco.editor.createModel(decodedCommand, undefined, monaco.Uri.parse('\(url)')));"
         )
+        if editorSpellCheckEnabled {
+            SpellChecker.shared.check(text: content, uri: url)
+        }
     }
 
     func switchToDiffView(
@@ -466,8 +471,16 @@ struct monacoEditor: UIViewRepresentable {
                 }
                 control.status.activeEditor?.currentVersionId = version
                 control.status.activeEditor?.content = content
-                if let modelUri = result["URI"] as? String {
-                    requestDiffUpdate(modelUri: modelUri)
+
+                let modelUri = result["URI"] as! String
+                requestDiffUpdate(modelUri: modelUri)
+
+                let startOffset = result["startOffset"] as! Int
+                let endOffset = result["endOffset"] as! Int
+                if control.editorSpellCheckEnabled && control.editorSpellCheckOnContentChanged {
+                    SpellChecker.shared.check(
+                        text: content, uri: modelUri, startOffset: startOffset, endOffset: endOffset
+                    )
                 }
             case "Editor Initialising":
                 isEditorInited = true

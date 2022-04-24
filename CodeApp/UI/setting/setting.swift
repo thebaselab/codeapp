@@ -38,6 +38,9 @@ struct settingView: View {
 
     @AppStorage("compilerShowPath") var compilerShowPath = false
 
+    @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
+    @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
+
     @State var showsEraseAlert: Bool = false
 
     let colorSchemes = ["Automatic", "Dark", "Light"]
@@ -291,6 +294,15 @@ struct settingView: View {
                                 }
                             }
                         }
+                    }
+                }
+
+                Section("Experimental Features") {
+                    Toggle("Enable spell check in text files", isOn: $editorSpellCheckEnabled)
+                    if editorSpellCheckEnabled {
+                        Toggle(
+                            "Spell checking on content changed",
+                            isOn: $editorSpellCheckOnContentChanged)
                     }
                 }
 

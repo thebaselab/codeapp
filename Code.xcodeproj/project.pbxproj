@@ -464,6 +464,8 @@
 		94252055263E01CF0029427A /* pythonA-zmq.backend.cffi._cffi.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D56263E01950029427A /* pythonA-zmq.backend.cffi._cffi.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94252056263E01CF0029427A /* pythonA.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251CF5263E018D0029427A /* pythonA.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94252059263E103E0029427A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9425205B263E103E0029427A /* InfoPlist.strings */; };
+		942ACB9D281312900067114D /* SpellChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942ACB9C281312900067114D /* SpellChecker.swift */; };
+		942ACB9E281312900067114D /* SpellChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942ACB9C281312900067114D /* SpellChecker.swift */; };
 		942E31F828086FE800233441 /* KeyChainAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E31F728086FE800233441 /* KeyChainAccessor.swift */; };
 		942E31F928086FE800233441 /* KeyChainAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E31F728086FE800233441 /* KeyChainAccessor.swift */; };
 		942E31FB280876AA00233441 /* SearchSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E31FA280876AA00233441 /* SearchSection.swift */; };
@@ -1433,6 +1435,7 @@
 		94251DBA263E019F0029427A /* pythonA-pandas._libs.window.aggregations.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.window.aggregations.framework"; sourceTree = "<group>"; };
 		9425205A263E103E0029427A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9425205C263E10490029427A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		942ACB9C281312900067114D /* SpellChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellChecker.swift; sourceTree = "<group>"; };
 		942E31F728086FE800233441 /* KeyChainAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainAccessor.swift; sourceTree = "<group>"; };
 		942E31FA280876AA00233441 /* SearchSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSection.swift; sourceTree = "<group>"; };
 		942E3200280877C900233441 /* SearchServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceProvider.swift; sourceTree = "<group>"; };
@@ -1903,6 +1906,7 @@
 				94F5270A25A0704500337306 /* GitHubAccountManager.swift */,
 				94801F92266FB5E400B29D80 /* TerminalInstance.swift */,
 				94801F94266FBC3500B29D80 /* ViewRepresentable.swift */,
+				942ACB9C281312900067114D /* SpellChecker.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -2750,6 +2754,7 @@
 				94196972280316C7008AAEB2 /* KeychainWrapper.swift in Sources */,
 				94F6B514280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */,
 				94A0460B2804955C00182275 /* GitHubSearchView.swift in Sources */,
+				942ACB9E281312900067114D /* SpellChecker.swift in Sources */,
 				94E6CC7C2806FBAF00939E4F /* SFTPFileSystemProvider.swift in Sources */,
 				94196973280316C7008AAEB2 /* tabs.swift in Sources */,
 				94196974280316C7008AAEB2 /* LocalGitServiceProvider.swift in Sources */,
@@ -2876,6 +2881,7 @@
 				94F52707259F9B4800337306 /* KeychainWrapper.swift in Sources */,
 				94F6B513280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */,
 				94A0460A2804955C00182275 /* GitHubSearchView.swift in Sources */,
+				942ACB9D281312900067114D /* SpellChecker.swift in Sources */,
 				94E6CC7B2806FBAF00939E4F /* SFTPFileSystemProvider.swift in Sources */,
 				94A77830257BD680008FE7B2 /* tabs.swift in Sources */,
 				944FC3FF25C543CD00C7C43C /* LocalGitServiceProvider.swift in Sources */,

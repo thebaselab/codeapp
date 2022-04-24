@@ -338,6 +338,25 @@
           var position = instance.getPosition();
           var content = instance.getValue();
 
+          let startLineNumber = Number.NEGATIVE_INFINITY;
+          let endLineNumber = Number.POSITIVE_INFINITY;
+          event.changes.forEach((change) => {
+            if (change.range.startLineNumber > startLineNumber) {
+              startLineNumber = change.range.startLineNumber;
+            }
+            if (change.range.endLineNumber < endLineNumber) {
+              endLineNumber = change.range.endLineNumber;
+            }
+          });
+          const startOffset = currentModel.getOffsetAt({
+            column: 0,
+            lineNumber: startLineNumber,
+          });
+          const endOffset = currentModel.getOffsetAt({
+            column: currentModel.getLineLength(endLineNumber),
+            lineNumber: endLineNumber,
+          });
+
           var message = "Content changed";
           if (
             window.webkit &&
@@ -349,6 +368,8 @@
               VersionID: versionID,
               URI: modelPath,
               currentContent: content,
+              startOffset: startOffset,
+              endOffset: endOffset,
             });
           }
 
@@ -432,6 +453,10 @@
           timeout = setTimeout(() => {
             startRange = null;
           }, 300);
+        });
+
+        monaco.editor.onWillDisposeModel((model) => {
+          monaco.editor.setModelMarkers(model, "code.app.native", []);
         });
       }
 
@@ -523,6 +548,66 @@
         cm2.past = cm1.past;
         cm2.future = cm1.future;
         model1.dispose();
+      }
+
+      function invalidateDiagnosticForOffset(startOffset, endOffset) {
+        const model = editor.getModel();
+        const startPosition = model.getPositionAt(startOffset);
+        const endPosition = model.getPositionAt(endOffset);
+
+        const rangeToRemove = {
+          startColumn: 0,
+          startLineNumber: startPosition.lineNumber,
+          endColumn: model.getLineLength(endPosition.lineNumber),
+          endLineNumber: endPosition.lineNumber,
+        };
+
+        const existingMarkers = monaco.editor
+          .getModelMarkers({
+            resource: model.uri,
+          })
+          .filter((marker) => {
+            return !monaco.Range.areIntersecting(rangeToRemove, marker);
+          });
+
+        monaco.editor.setModelMarkers(
+          model,
+          "code.app.native",
+          existingMarkers
+        );
+      }
+
+      function provideDiagnostic(items, removeExisting) {
+        const model = editor.getModel();
+        const languageId = model.getLanguageId();
+
+        if (languageId !== "markdown" && languageId !== "plaintext") {
+          return;
+        }
+        const markerLineNumbers = new Set();
+        const markers = items.map((item) => {
+          const position = model.getPositionAt(item.offset);
+          markerLineNumbers.add(position.lineNumber);
+          return {
+            endColumn: position.column + item.length,
+            endLineNumber: position.lineNumber,
+            message: item.message,
+            severity: 2,
+            startColumn: position.column,
+            startLineNumber: position.lineNumber,
+          };
+        });
+        const existingMarkers = monaco.editor
+          .getModelMarkers({
+            resource: model.uri,
+          })
+          .filter((marker) => !markerLineNumbers.has(marker.startLineNumber));
+
+        monaco.editor.setModelMarkers(
+          model,
+          "code.app.native",
+          markers.concat(existingMarkers)
+        );
       }
     </script>
   </body>

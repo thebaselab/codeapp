@@ -69,6 +69,8 @@ class MainApp: ObservableObject {
 
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
     @AppStorage("compilerShowPath") var compilerShowPath = false
+    @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
+    @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
 
     init() {
 
@@ -531,6 +533,9 @@ class MainApp: ObservableObject {
             }
             DispatchQueue.global(qos: .utility).async {
                 self.git_status()
+            }
+            if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
+                SpellChecker.shared.check(text: editor.content, uri: editor.url)
             }
         }
     }
