@@ -8,7 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct folderCell: View {
+struct FolderCell: View {
 
     @EnvironmentObject var App: MainApp
     @State var item: WorkSpaceStorage.fileItemRepresentable
@@ -28,15 +28,10 @@ struct folderCell: View {
 
     var body: some View {
         HStack {
-            if item.subFolderItems != nil {
-                Image(systemName: "folder")
-                    .foregroundColor(.gray)
-                    .font(.system(size: 14))
-                    .frame(width: 14, height: 14)
-            } else {
-                fileIcon(url: newname, iconSize: 14, type: .file)
-                    .frame(width: 14, height: 14)
-            }
+            Image(systemName: "folder")
+                .foregroundColor(.gray)
+                .font(.system(size: 14))
+                .frame(width: 14, height: 14)
             Spacer().frame(width: 10)
 
             if isRenaming {
@@ -84,42 +79,44 @@ struct folderCell: View {
                     FileDisplayName(
                         gitStatus: nil, name: item.name.removingPercentEncoding!)
                 }
+                Spacer()
             }
 
-        }.padding(5)
-            .if(item.subFolderItems == nil) { view in
-                view.onTapGesture {
-                    App.openEditor(urlString: item.url, type: .any)
-                }
+        }
+        .padding(5)
+        .if(item.subFolderItems == nil) { view in
+            view.onTapGesture {
+                App.openEditor(urlString: item.url, type: .any)
             }
-            .listRowBackground(
-                item.url == App.activeEditor?.url
-                    ? Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
-                    : Color.clear.cornerRadius(10.0)
-            )
-            .sheet(isPresented: $showingNewFileSheet) {
-                newFileView(targetUrl: item.url).environmentObject(App)
-            }
-            .contextMenu {
-                FileCellContextMenu(
-                    item: item,
-                    onRename: {
-                        isRenaming = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            focusedField = .rename
-                        }
-                    },
-                    onCreateNewFile: {
-                        showingNewFileSheet.toggle()
-                    })
-            }
-            //        .onDrag { NSItemProvider(object: URL(string: item.url)! as NSURL) }
-            .onReceive(
-                NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-            ) { _ in
-                isRenaming = false
-                newname = item.name.removingPercentEncoding!
-            }
+        }
+        .listRowBackground(
+            item.url == App.activeEditor?.url
+                ? Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
+                : Color.clear.cornerRadius(10.0)
+        )
+        .sheet(isPresented: $showingNewFileSheet) {
+            newFileView(targetUrl: item.url).environmentObject(App)
+        }
+        .contextMenu {
+            FileCellContextMenu(
+                item: item,
+                onRename: {
+                    isRenaming = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        focusedField = .rename
+                    }
+                },
+                onCreateNewFile: {
+                    showingNewFileSheet.toggle()
+                })
+        }
+        //        .onDrag { NSItemProvider(object: URL(string: item.url)! as NSURL) }
+        .onReceive(
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+        ) { _ in
+            isRenaming = false
+            newname = item.name.removingPercentEncoding!
+        }
     }
 }
 

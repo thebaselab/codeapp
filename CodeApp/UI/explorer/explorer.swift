@@ -153,8 +153,14 @@ struct explorer: View {
                         children: \.subFolderItems,
                         expandStates: $App.workSpaceStorage.expansionStates,
                         rowContent: {
-                            folderCell(item: $0)
+                            FileFolderCell(item: $0)
                                 .frame(height: 16)
+                                .listRowBackground(
+                                    $0.url == App.activeEditor?.url
+                                        ? Color.init(id: "list.inactiveSelectionBackground")
+                                            .cornerRadius(10.0)
+                                        : Color.clear.cornerRadius(10.0)
+                                )
                         },
                         onDisclose: { id in
                             if let id = id as? String {
