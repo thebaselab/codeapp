@@ -48,10 +48,10 @@ struct newFileView: View {
         }
     }
 
-    func loadNewFile(lang: Int) {
+    func loadNewFile(lang: Int, useTemplate: Bool = true) {
         var content = ""
 
-        if lang != 1 && (!checkNameValidity() || name.isEmpty) {
+        if !useTemplate && (!checkNameValidity() || name.isEmpty) {
             filenameFieldIsFocused = true
             return
         }
@@ -258,7 +258,7 @@ struct newFileView: View {
                             TextField(
                                 "example.py", text: $name,
                                 onCommit: {
-                                    self.loadNewFile(lang: -1)
+                                    self.loadNewFile(lang: -1, useTemplate: false)
                                 }
                             )
                             .autocapitalization(.none)
@@ -267,11 +267,7 @@ struct newFileView: View {
 
                             Spacer()
                             Button(action: {
-                                if !name.isEmpty {
-                                    self.loadNewFile(lang: -1)
-                                } else {
-                                    filenameFieldIsFocused = true
-                                }
+                                self.loadNewFile(lang: -1, useTemplate: false)
                             }) {
                                 Text(NSLocalizedString("Add File", comment: ""))
                             }
