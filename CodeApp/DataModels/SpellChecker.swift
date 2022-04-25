@@ -14,6 +14,7 @@ class SpellChecker {
 
     private let checker = UITextChecker()
     private let tokenizer = NLTokenizer(unit: .word)
+    private let recognizer = NLLanguageRecognizer()
     private let queue = DispatchQueue.global(qos: .utility)
 
     private let options: NLTagger.Options = [
@@ -35,11 +36,16 @@ class SpellChecker {
         let range = text.index(text.startIndex, offsetBy: startOffset)..<endIndex
         tokenizer.string = text
 
+        recognizer.reset()
+        recognizer.processString(text)
+        let language = recognizer.dominantLanguage?.rawValue
+
         tokenizer.enumerateTokens(in: range) { tokenRange, _ in
             let word = text[tokenRange]
             let misspelledRange = checker.rangeOfMisspelledWord(
                 in: String(word), range: NSRange(0..<word.utf16.count),
-                startingAt: 0, wrap: false, language: "en")
+                startingAt: 0, wrap: false, language: language ?? "en")
+
             if misspelledRange.location != NSNotFound {
                 let length = text.distance(
                     from: tokenRange.lowerBound, to: tokenRange.upperBound)
