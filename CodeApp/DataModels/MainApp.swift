@@ -283,10 +283,13 @@ class MainApp: ObservableObject {
             openEditor(urlString: i.absoluteString, type: .any, inNewTab: true)
         }
         urlQueue = []
-        if editorToRestore != nil {
-            openEditor(urlString: editorToRestore!.absoluteString, type: .any)
-            editorToRestore = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            if self.editorToRestore != nil {
+                self.openEditor(urlString: self.editorToRestore!.absoluteString, type: .any)
+                self.editorToRestore = nil
+            }
         }
+
     }
 
     func duplicateItem(from: URL) {
