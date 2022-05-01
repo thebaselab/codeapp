@@ -41,12 +41,22 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
         self.session.disconnect()
     }
 
-    func connect(password: String, completionHandler: @escaping (Error?) -> Void) {
+    func connect(password: String, usesKey: Bool, completionHandler: @escaping (Error?) -> Void) {
         queue.async {
             self.session.connect()
 
             if self.session.isConnected {
-                self.session.authenticate(byPassword: password)
+                if usesKey {
+                    let privateKeyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa")
+                    if let privateKeyContent = try? String(contentsOf: privateKeyUrl) {
+                        self.session.authenticateBy(
+                            inMemoryPublicKey: nil, privateKey: privateKeyContent,
+                            andPassword: password.isEmpty ? nil : password)
+                    }
+                } else {
+                    self.session.authenticate(byPassword: password)
+                }
+
             }
 
             guard self.session.isConnected && self.session.isAuthorized else {

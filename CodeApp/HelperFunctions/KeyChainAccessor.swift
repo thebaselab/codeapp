@@ -11,16 +11,16 @@ class KeychainAccessor {
 
     static let shared = KeychainAccessor()
 
-    public func hasCredentials(for url: URL) -> Bool {
-        KeychainWrapper.standard.hasValue(forKey: "username;\(url.absoluteString)")
-            && KeychainWrapper.standard.hasValue(forKey: "password;\(url.absoluteString)")
+    public func hasCredentials(for url: String) -> Bool {
+        KeychainWrapper.standard.hasValue(forKey: "username;\(url)")
+            && KeychainWrapper.standard.hasValue(forKey: "password;\(url)")
     }
 
-    public func getCredentials(for url: URL) -> URLCredential? {
+    public func getCredentials(for url: String) -> URLCredential? {
         guard
             let username = KeychainWrapper.standard.string(
-                forKey: "username;\(url.absoluteString)"),
-            let password = KeychainWrapper.standard.string(forKey: "password;\(url.absoluteString)")
+                forKey: "username;\(url)"),
+            let password = KeychainWrapper.standard.string(forKey: "password;\(url)")
         else {
             return nil
         }
@@ -28,16 +28,16 @@ class KeychainAccessor {
 
     }
 
-    public func storeCredentials(username: String, password: String, for url: URL) {
+    public func storeCredentials(username: String, password: String, for url: String) {
         KeychainWrapper.standard.set(
-            username, forKey: "username;\(url.absoluteString)")
+            username, forKey: "username;\(url)")
         KeychainWrapper.standard.set(
-            password, forKey: "password;\(url.absoluteString)")
+            password, forKey: "password;\(url)")
     }
 
-    public func removeCredentials(for url: URL) -> Bool {
-        KeychainWrapper.standard.removeObject(forKey: "username;\(url.absoluteString)")
-            && KeychainWrapper.standard.removeObject(forKey: "password;\(url.absoluteString)")
+    public func removeCredentials(for url: String) -> Bool {
+        KeychainWrapper.standard.removeObject(forKey: "username;\(url)")
+            && KeychainWrapper.standard.removeObject(forKey: "password;\(url)")
     }
 
 }

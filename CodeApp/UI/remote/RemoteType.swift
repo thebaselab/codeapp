@@ -10,9 +10,9 @@ import SwiftUI
 struct RemoteType: View {
 
     enum type: String, CaseIterable, Identifiable {
+        case sftp
         case ftp
         case ftps
-        case sftp
         var id: String { self.rawValue }
     }
 

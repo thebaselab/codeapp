@@ -11,7 +11,7 @@ import SwiftUI
 struct ServerCell: View {
 
     @EnvironmentObject var App: MainApp
-    @State var url: URL
+    @State var host: RemoteHost
     @State var showsPrompt = false
 
     let onRemove: () -> Void
@@ -20,31 +20,39 @@ struct ServerCell: View {
         HStack {
             Image(systemName: "server.rack")
                 .foregroundColor(.gray)
-            Text(url.host ?? "")
+            if let host = URL(string: host.url)?.host {
+                Text(host)
+            }
             Spacer()
-            if App.workSpaceStorage.currentDirectory.url == url.absoluteString {
+            if App.workSpaceStorage.currentDirectory.url == host.url {
                 Circle()
                     .fill(Color.green)
                     .frame(width: 10)
             }
-            if let scheme = RemoteType.type.init(rawValue: url.scheme!) {
-                RemoteType(type: scheme)
+            if let scheme = URL(string: host.url)?.scheme,
+                let type = RemoteType.type.init(rawValue: scheme)
+            {
+                RemoteType(type: type)
             }
 
         }.onTapGesture {
 
-            if KeychainAccessor.shared.hasCredentials(for: url) {
+            let hostUrl = URL(string: host.url)!
+
+            if KeychainAccessor.shared.hasCredentials(for: host.url) {
                 let context = LAContext()
                 context.localizedCancelTitle = "Enter Credentials"
                 context.evaluatePolicy(
                     .deviceOwnerAuthenticationWithBiometrics,
-                    localizedReason: "Authenticate to \(url.host ?? "server")"
+                    localizedReason: "Authenticate to \(hostUrl.host ?? "server")"
                 ) { success, error in
                     if success {
 
-                        let cred = KeychainAccessor.shared.getCredentials(for: url)!
+                        let cred = KeychainAccessor.shared.getCredentials(for: host.url)!
 
-                        App.workSpaceStorage.connectToServer(host: url, credentials: cred) {
+                        App.workSpaceStorage.connectToServer(
+                            host: hostUrl, credentials: cred, usesKey: host.useKeyAuth
+                        ) {
                             error in
                             if let error = error {
                                 DispatchQueue.main.async {
@@ -68,10 +76,11 @@ struct ServerCell: View {
             }
 
         }.sheet(isPresented: $showsPrompt) {
-            RemoteAuthView(targetURL: url) { username, password in
+            RemoteAuthView(host: host) { username, password in
                 let cred = URLCredential(
                     user: username, password: password, persistence: .forSession)
-                App.workSpaceStorage.connectToServer(host: url, credentials: cred) { error in
+                let hostUrl = URL(string: host.url)!
+                App.workSpaceStorage.connectToServer(host: hostUrl, credentials: cred) { error in
                     if let error = error {
                         App.notificationManager.showErrorMessage(error.localizedDescription)
                     }

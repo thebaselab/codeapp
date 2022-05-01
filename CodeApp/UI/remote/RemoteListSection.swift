@@ -10,21 +10,24 @@ import SwiftUI
 struct RemoteListSection: View {
 
     @EnvironmentObject var App: MainApp
-    @State var servers: [URL]
+    @State var hosts: [RemoteHost]
 
     var body: some View {
         Section(header: Text("Remotes")) {
-            ForEach(servers, id: \.absoluteString) { url in
-                ServerCell(
-                    url: url,
-                    onRemove: {
-                        if var hosts = UserDefaults.standard.stringArray(forKey: "remote.hosts") {
-                            hosts.removeAll(where: { $0 == url.absoluteString })
-                            servers = hosts.compactMap { URL(string: $0) }
-                            UserDefaults.standard.set(hosts, forKey: "remote.hosts")
 
-                            _ = KeychainAccessor.shared.removeCredentials(for: url)
-                        }
+            if hosts.isEmpty {
+                DescriptionText("You don't have any saved remote.")
+            }
+
+            ForEach(hosts, id: \.url) { host in
+                ServerCell(
+                    host: host,
+                    onRemove: {
+                        var remoteHosts = UserDefaults.standard.remoteHosts
+                        remoteHosts.removeAll(where: { $0.url == host.url })
+                        UserDefaults.standard.remoteHosts = remoteHosts
+                        hosts = remoteHosts
+                        _ = KeychainAccessor.shared.removeCredentials(for: host.url)
                     })
             }
         }

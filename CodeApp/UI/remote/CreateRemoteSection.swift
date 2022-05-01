@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+struct RemoteHost: Codable {
+    var url: String
+    var useKeyAuth: Bool
+}
+
 struct CreateRemoteSection: View {
     enum Field: Hashable {
         case address
@@ -18,13 +23,19 @@ struct CreateRemoteSection: View {
     @EnvironmentObject var App: MainApp
 
     @State var saveAddress: Bool = true
-    @State var serverType: RemoteType.type = .ftp
+    @State var serverType: RemoteType.type = .sftp
     @State var address: String = ""
     @State var password: String = ""
-    @State var port: String = "21"
+    @State var privateKey: String = ""
+    @State var privateKeyURL: String = ""
+    @State var usesPrivateKey: Bool = false
+    @State var showFileImporter: Bool = false
+    @State var port: String = "22"
     @State var saveCredentials: Bool = false
     @State var username: String = ""
-    @Binding var servers: [URL]
+    @State var hasSSHKey = true
+
+    @Binding var hosts: [RemoteHost]
 
     @FocusState var focusedField: Field?
 
@@ -80,14 +91,22 @@ struct CreateRemoteSection: View {
                             .foregroundColor(.gray)
                             .font(.subheadline)
 
-                        SecureField("Password", text: $password)
-                            .focused($focusedField, equals: .password)
+                        SecureField(
+                            usesPrivateKey ? "Key passphrase" : "Password",
+                            text: $password
+                        )
+                        .focused($focusedField, equals: .password)
                     }
+
                 }
             }
             .padding(7)
             .background(Color.init(id: "input.background"))
             .cornerRadius(15)
+
+            if serverType == .sftp {
+                Toggle("Use key authentication", isOn: $usesPrivateKey)
+            }
 
             Toggle("Remember address", isOn: $saveAddress)
 
@@ -101,82 +120,106 @@ struct CreateRemoteSection: View {
                 )
             }
 
-            SideBarButton("Connect") {
-
-                guard !address.isEmpty else {
-                    App.notificationManager.showErrorMessage("Address cannot be empty.")
-                    focusedField = .address
-                    return
+            if usesPrivateKey && hasSSHKey {
+                SideBarButton("Show public key") {
+                    let publicKeyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa.pub")
+                    App.openEditor(
+                        urlString: publicKeyUrl.absoluteString, type: .file, inNewTab: true)
                 }
+            }
 
-                guard !username.isEmpty else {
-                    App.notificationManager.showErrorMessage("Username cannot be empty.")
-                    focusedField = .username
-                    return
+            if usesPrivateKey && !hasSSHKey {
+                DescriptionText(
+                    "SSH key not found in Documents/.ssh/id_rsa. Generate one by running ssh-keygen in the terminal."
+                )
+
+                SideBarButton("Reload key") {
+                    let keyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa")
+                    hasSSHKey = FileManager.default.fileExists(atPath: keyUrl.path)
                 }
+            } else {
+                SideBarButton("Connect") {
 
-                guard !password.isEmpty else {
-                    App.notificationManager.showErrorMessage("Password cannot be empty.")
-                    focusedField = .password
-                    return
-                }
-
-                guard
-                    let url = URL(
-                        string: serverType.rawValue.lowercased() + "://" + address + ":\(port)")
-                else {
-                    App.notificationManager.showErrorMessage("Invalid address.")
-                    focusedField = .address
-                    return
-                }
-
-                let cred = URLCredential(
-                    user: username, password: password, persistence: .none)
-
-                App.workSpaceStorage.connectToServer(host: url, credentials: cred) { error in
-                    if let error = error {
-                        App.notificationManager.showErrorMessage(error.localizedDescription)
+                    guard !address.isEmpty else {
+                        App.notificationManager.showErrorMessage("Address cannot be empty.")
+                        focusedField = .address
                         return
-                    } else {
-                        DispatchQueue.main.async {
-                            App.notificationManager.showInformationMessage(
-                                "Connected successfully.")
-                        }
+                    }
 
-                        guard saveAddress else {
+                    guard !username.isEmpty else {
+                        App.notificationManager.showErrorMessage("Username cannot be empty.")
+                        focusedField = .username
+                        return
+                    }
+
+                    guard !password.isEmpty || usesPrivateKey else {
+                        App.notificationManager.showErrorMessage("Password cannot be empty.")
+                        focusedField = .password
+                        return
+                    }
+
+                    guard
+                        let url = URL(
+                            string: serverType.rawValue.lowercased() + "://" + address + ":\(port)")
+                    else {
+                        App.notificationManager.showErrorMessage("Invalid address.")
+                        focusedField = .address
+                        return
+                    }
+
+                    let cred = URLCredential(
+                        user: username, password: password, persistence: .none)
+
+                    App.workSpaceStorage.connectToServer(
+                        host: url, credentials: cred, usesKey: usesPrivateKey
+                    ) { error in
+                        if let error = error {
+                            App.notificationManager.showErrorMessage(error.localizedDescription)
                             return
-                        }
-
-                        DispatchQueue.main.async {
-                            if var hosts = UserDefaults.standard.stringArray(
-                                forKey: "remote.hosts")
-                            {
-                                hosts.append(url.absoluteString)
-                                servers = hosts.compactMap { URL(string: $0) }
-                                UserDefaults.standard.set(hosts, forKey: "remote.hosts")
-                            } else {
-                                servers = [url]
-                                UserDefaults.standard.set(
-                                    [url.absoluteString], forKey: "remote.hosts")
+                        } else {
+                            DispatchQueue.main.async {
+                                App.notificationManager.showInformationMessage(
+                                    "Connected successfully.")
                             }
+
+                            guard saveAddress else {
+                                return
+                            }
+
+                            let remoteHost = RemoteHost(
+                                url: url.absoluteString, useKeyAuth: usesPrivateKey)
+                            var remoteHosts = UserDefaults.standard.remoteHosts
+                            remoteHosts = remoteHosts.filter{$0.url != url.absoluteString}
+                            remoteHosts.append(remoteHost)
+                            
+                            if UserDefaults.standard.remoteHosts.count > remoteHosts.count {
+                                _ = KeychainAccessor.shared.removeCredentials(for: url.absoluteString)
+                            }
+
+                            UserDefaults.standard.remoteHosts = remoteHosts
+
+                            DispatchQueue.main.async {
+                                hosts = remoteHosts
+                            }
+
+                            guard saveCredentials else {
+                                return
+                            }
+
+                            KeychainAccessor.shared.storeCredentials(
+                                username: cred.user!, password: cred.password!,
+                                for: url.absoluteString)
+
                         }
-
-                        guard saveCredentials else {
-                            return
-                        }
-
-                        KeychainAccessor.shared.storeCredentials(
-                            username: cred.user!, password: cred.password!, for: url)
-
                     }
                 }
-
             }
 
         }.onChange(of: serverType) { value in
             if value == .sftp {
                 port = "22"
             } else {
+                usesPrivateKey = false
                 port = "21"
             }
         }
@@ -184,6 +227,10 @@ struct CreateRemoteSection: View {
             if !value {
                 saveCredentials = false
             }
+        }
+        .onAppear {
+            let keyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa")
+            hasSSHKey = FileManager.default.fileExists(atPath: keyUrl.path)
         }
     }
 }

@@ -663,6 +663,8 @@
 		94F6B513280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */; };
 		94F6B514280F0312000DBAE2 /* FileCellContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */; };
 		94FC220B257F7D2A00B85D1B /* gitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC220A257F7D2900B85D1B /* gitCell.swift */; };
+		94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */; };
+		94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1604,6 +1606,7 @@
 		94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDisplayName.swift; sourceTree = "<group>"; };
 		94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCellContextMenu.swift; sourceTree = "<group>"; };
 		94FC220A257F7D2900B85D1B /* gitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gitCell.swift; sourceTree = "<group>"; };
+		94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Hosts.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1945,6 +1948,7 @@
 				94B3DDF9260526D200C4F2B1 /* View+If.swift */,
 				94CF58DC265E4E0F00CB6A4B /* URL+isDirectory.swift */,
 				947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */,
+				94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2805,6 +2809,7 @@
 				9419698C280316C7008AAEB2 /* terminalToolBar.swift in Sources */,
 				94A04608280493C600182275 /* CloneRepositorySection.swift in Sources */,
 				94A045F82804822400182275 /* ServerCell.swift in Sources */,
+				94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				9419698D280316C7008AAEB2 /* activityBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2934,6 +2939,7 @@
 				94369B4725E7FF18008419A0 /* terminalToolBar.swift in Sources */,
 				94A04607280493C600182275 /* CloneRepositorySection.swift in Sources */,
 				94A045F72804822400182275 /* ServerCell.swift in Sources */,
+				94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				941CF5FE26463450001199C0 /* activityBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

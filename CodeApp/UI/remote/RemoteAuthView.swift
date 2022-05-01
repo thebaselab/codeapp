@@ -12,21 +12,23 @@ struct RemoteAuthView: View {
     @State var username: String = ""
     @State var password: String = ""
 
-    let targetURL: URL
+    let host: RemoteHost
     var credCB: (String, String) -> Void
 
     var body: some View {
         Form {
-            Section(header: Text("Credentials for \(targetURL.absoluteString)")) {
+            Section(header: Text("Credentials for \(host.url)")) {
                 TextField("Username", text: $username)
                     .textContentType(.username)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
 
-                SecureField("Password", text: $password)
-                    .textContentType(.password)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
+                SecureField(
+                    host.useKeyAuth ? "Passphrase for private key" : "Password", text: $password
+                )
+                .textContentType(.password)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
 
                 Button("Connect") {
                     credCB(username, password)

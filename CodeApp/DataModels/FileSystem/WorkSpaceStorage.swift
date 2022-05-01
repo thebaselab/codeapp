@@ -77,7 +77,8 @@ class WorkSpaceStorage: ObservableObject {
     }
 
     func connectToServer(
-        host: URL, credentials: URLCredential, completionHandler: @escaping (Error?) -> Void
+        host: URL, credentials: URLCredential, usesKey: Bool = false,
+        completionHandler: @escaping (Error?) -> Void
     ) {
         switch host.scheme {
         case "ftp", "ftps":
@@ -105,7 +106,7 @@ class WorkSpaceStorage: ObservableObject {
                 completionHandler(FSError.Unknown)
                 return
             }
-            fs.connect(password: password) { error in
+            fs.connect(password: password, usesKey: usesKey) { error in
                 if let error = error {
                     completionHandler(error)
                     return
