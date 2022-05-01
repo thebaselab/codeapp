@@ -9,7 +9,7 @@ import SwiftUI
 
 let languageList = [
     0: ["Python (3.9.2)", "py"],
-    1: ["JavaScript (Node.js 12.19.0)", "js"],
+    1: ["JavaScript (Node.js 16.14.2)", "js"],
     2: ["C (Clang 13.0.0)", "c"],
     3: ["C++ (Clang 13.0.0)", "cpp"],
     4: ["PHP (8.0.8)", "php"],
