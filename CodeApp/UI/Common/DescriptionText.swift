@@ -16,7 +16,7 @@ struct DescriptionText: View {
     }
 
     var body: some View {
-        Text(text)
+        Text(NSLocalizedString(text, comment: ""))
             .foregroundColor(.gray)
             .font(.system(size: 12, weight: .light))
             .lineLimit(3)

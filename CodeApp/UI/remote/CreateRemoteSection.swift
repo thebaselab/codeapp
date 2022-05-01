@@ -189,11 +189,12 @@ struct CreateRemoteSection: View {
                             let remoteHost = RemoteHost(
                                 url: url.absoluteString, useKeyAuth: usesPrivateKey)
                             var remoteHosts = UserDefaults.standard.remoteHosts
-                            remoteHosts = remoteHosts.filter{$0.url != url.absoluteString}
+                            remoteHosts = remoteHosts.filter { $0.url != url.absoluteString }
                             remoteHosts.append(remoteHost)
-                            
+
                             if UserDefaults.standard.remoteHosts.count > remoteHosts.count {
-                                _ = KeychainAccessor.shared.removeCredentials(for: url.absoluteString)
+                                _ = KeychainAccessor.shared.removeCredentials(
+                                    for: url.absoluteString)
                             }
 
                             UserDefaults.standard.remoteHosts = remoteHosts

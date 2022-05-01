@@ -21,9 +21,9 @@ struct ResultsSection: View {
         Section(
             header:
                 HStack {
-                    Text("Results ")
+                    Text("Results")
                         .foregroundColor(Color.init("BW"))
-                    Text(App.textSearchManager.message)
+                    Text(" " + App.textSearchManager.message)
                         .foregroundColor(.gray)
                         .font(.system(size: 12, weight: .light))
                 }

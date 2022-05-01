@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.13 (March 2022)**
+##### **v1.3.0 (May 2022)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -24,6 +24,10 @@
 
 "Changelog.message" =
 "
+### v1.3.0 (May 2022)
+- Remote Support (SFTP and FTP)
+- Dynamic Type support
+- Experimental feature: Spell check for text files
 ### v1.2.13 (March 2022)
 - Compatibility with iOS 15.4
 - Internationalization support for Node.js

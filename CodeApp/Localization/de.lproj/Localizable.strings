@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.12 (March 2022)**
+##### **v1.3.0 (May 2022)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -24,6 +24,10 @@
 
 "Changelog.message" =
 "
+### v1.3.0 (May 2022)
+- Remote Support (SFTP and FTP)
+- Dynamic Type support
+- Experimental feature: Spell check for text files
 ### v1.2.13 (March 2022)
 - Compatibility with iOS 15.4
 - Internationalization support for Node.js
@@ -306,3 +310,23 @@
 "Languages (Remote)" = "Programmiersprachen (Remote)";
 "Duplicate" = "Duplikat";
 "Console Font Size" = "Konsolen-Schriftgröße";
+
+"Custom Keyboard Shortcuts" = "Benutzerdefinierte Tastaturkürzel";
+
+"Remotes" = "Remotes";
+"You don't have any saved remote." = "Sie haben keine gespeicherten Remote.";
+"New remote" = "Neuer remote";
+"Address" = "Adresse";
+"Port" = "Port";
+"Username" = "Benutzername";
+"Password" = "Passwort";
+"Use key authentication" = "Verwendet Schlüsselauthentifizierung";
+"Remember address" = "Adresse speichern";
+"Connect" = "Verbinden";
+"Disconnect" = "Trennen";
+"Current Remote" = "Aktueller remote";
+"Remember credentials" = "Anmeldeinformationen speichern";
+
+"Expermimental Features" = "Experimentelle Funktionen";
+"Enable spell check in text files" = "Rechtschreibprüfung in Textdateien aktivieren";
+"Spell checking on content changed" = "Rechtschreibprüfung bei Inhaltänderung";

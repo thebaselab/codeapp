@@ -20,7 +20,7 @@ struct SideBarButton: View {
     var body: some View {
         HStack {
             Spacer()
-            Text(title)
+            Text(NSLocalizedString(title, comment: ""))
                 .lineLimit(1)
                 .foregroundColor(.white)
                 .font(.subheadline)

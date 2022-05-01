@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.2.13 (2022 年 3 月)**
+##### **v1.3.0 (2022 年 5 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -22,8 +22,13 @@
 [推特](https://twitter.com/thebaselab)
 ";
 
+
 "Changelog.message" =
 "
+### v1.3.0 (2022 年 5 月)
+- 远程支持 (SFTP 和 FTP)
+- Dynamic Type支持
+- 实验性功能: 拼写检查文本文件
 ### v1.2.13 (2022 年 3 月)
 - iOS 15.4 的兼容性
 - Node.js 的国际化支持
@@ -332,3 +337,21 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Console Font Size" = "终端字体大小";
 
 "Custom Keyboard Shortcuts" = "自定义键盘快捷键";
+
+"Remotes" = "远程";
+"You don't have any saved remote." = "您没有任何已保存的远程。";
+"New remote" = "新建远程";
+"Address" = "地址";
+"Port" = "端口";
+"Username" = "用户名";
+"Password" = "密码";
+"Use key authentication" = "使用密钥认证";
+"Remember address" = "记住地址";
+"Connect" = "连接";
+"Disconnect" = "断开";
+"Current Remote" = "当前远程";
+"Remember credentials" = "记住凭据";
+
+"Expermimental Features" = "实验性功能";
+"Enable spell check in text files" = "在文本文件中启用拼写检查";
+"Spell checking on content changed" = "在内容改变时检查拼写";
