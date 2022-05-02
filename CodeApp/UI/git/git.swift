@@ -13,17 +13,17 @@ struct git: View {
 
     var body: some View {
         List {
-            if App.gitTracks.count > 0 || App.branch != "" {
+            if App.workSpaceStorage.gitServiceProvider == nil {
+                SourceControlUnsupportedSection()
+            } else if App.gitTracks.count > 0 || App.branch != "" {
                 SourceControlSection()
                 if !App.indexedResources.isEmpty {
                     StagedChangesSection()
                 }
                 WorkingChangesSection()
-            } else if App.workSpaceStorage.gitServiceProvider != nil {
+            } else {
                 EmptySourceControlSection()
                 CloneRepositorySection()
-            } else {
-                SourceControlUnsupportedSection()
             }
         }
         .environment(\.defaultMinListRowHeight, 10)

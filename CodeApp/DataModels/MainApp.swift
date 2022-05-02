@@ -191,6 +191,8 @@ class MainApp: ObservableObject {
         }
 
         Repository.initialize_libgit2()
+
+        git_status()
     }
 
     func updateView() {
@@ -602,8 +604,8 @@ class MainApp: ObservableObject {
     }
 
     func git_status() {
-        workSpaceStorage.gitServiceProvider?.status(error: { _ in
 
+        func clearUIState() {
             DispatchQueue.main.async {
                 self.remote = ""
                 self.branch = ""
@@ -611,6 +613,14 @@ class MainApp: ObservableObject {
                 self.indexedResources = [:]
                 self.workingResources = [:]
             }
+        }
+
+        if workSpaceStorage.gitServiceProvider == nil {
+            clearUIState()
+        }
+
+        workSpaceStorage.gitServiceProvider?.status(error: { _ in
+            clearUIState()
         }) { indexed, worktree, branch in
             guard let hasRemote = self.workSpaceStorage.gitServiceProvider?.hasRemote() else {
                 return

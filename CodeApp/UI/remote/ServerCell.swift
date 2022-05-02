@@ -60,6 +60,7 @@ struct ServerCell: View {
                                         error.localizedDescription)
                                 }
                             } else {
+                                App.loadRepository(url: hostUrl)
                                 App.notificationManager.showInformationMessage(
                                     "Connected successfully.")
                             }
@@ -83,6 +84,10 @@ struct ServerCell: View {
                 App.workSpaceStorage.connectToServer(host: hostUrl, credentials: cred) { error in
                     if let error = error {
                         App.notificationManager.showErrorMessage(error.localizedDescription)
+                    } else {
+                        App.loadRepository(url: hostUrl)
+                        App.notificationManager.showInformationMessage(
+                            "Connected successfully.")
                     }
                     showsPrompt = false
                 }
