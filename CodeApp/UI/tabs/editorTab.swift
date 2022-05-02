@@ -9,6 +9,7 @@ import SwiftUI
 
 struct editorTab: View {
 
+    @EnvironmentObject var App: MainApp
     @ObservedObject var currentEditor: EditorInstance
     // This is used for force updating the view.
     @State private var lastUpdateTime: Date = Date()
@@ -33,7 +34,16 @@ struct editorTab: View {
                     fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
                     Button(action: {}) {
                         Group {
-                            Text(editorDisplayName(editor: currentEditor))
+                            if let status = App.gitTracks[
+                                URL(string: currentEditor.url)!.standardizedFileURL]
+                            {
+                                FileDisplayName(
+                                    gitStatus: status,
+                                    name: editorDisplayName(editor: currentEditor))
+                            } else {
+                                FileDisplayName(
+                                    gitStatus: nil, name: editorDisplayName(editor: currentEditor))
+                            }
                             if currentEditor.isDeleted {
                                 Text("(deleted)").italic()
                             }
@@ -74,9 +84,17 @@ struct editorTab: View {
                 Button(action: { onOpenEditor() }) {
                     HStack(spacing: 4) {
                         fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
-                        Text(editorDisplayName(editor: currentEditor)).lineLimit(1).font(
-                            .system(size: 13, weight: .light)
-                        ).foregroundColor(Color.init(id: "tab.inactiveForeground"))
+                        if let status = App.gitTracks[
+                            URL(string: currentEditor.url)!.standardizedFileURL]
+                        {
+                            FileDisplayName(
+                                gitStatus: status, name: editorDisplayName(editor: currentEditor))
+                        } else {
+                            Text(editorDisplayName(editor: currentEditor))
+                                .lineLimit(1)
+                                .font(.subheadline)
+                                .foregroundColor(Color.init(id: "tab.inactiveForeground"))
+                        }
                         if currentEditor.currentVersionId != currentEditor.lastSavedVersionId {
                             Image(systemName: "circle.fill")
                                 .font(.system(size: 7))
