@@ -167,10 +167,16 @@ struct mainView: View {
                                                     ContextMenuItem(
                                                         action: openFile, text: "Open File",
                                                         imageSystemName: "doc"),
-                                                    ContextMenuItem(
-                                                        action: openFolder, text: "Open Folder",
-                                                        imageSystemName: "folder.badge.gear"),
                                                 ]
+                                                    + (App.workSpaceStorage.remoteConnected
+                                                        ? []
+                                                        : [
+                                                            ContextMenuItem(
+                                                                action: openFolder,
+                                                                text: "Open Folder",
+                                                                imageSystemName: "folder.badge.gear"
+                                                            )
+                                                        ])
                                             ))
 
                                     ActivityBarItemView(

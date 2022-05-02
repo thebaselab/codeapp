@@ -202,11 +202,15 @@ struct explorer: View {
                         ).onTapGesture {
                             App.createFolder(urlString: App.workSpaceStorage.currentDirectory.url)
                         }
-                        Image(systemName: "folder.badge.gear").contentShape(
-                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
-                            Color.init(id: "activityBar.foreground")
-                        ).onTapGesture { openFolder() }
+
+                        if !App.workSpaceStorage.remoteConnected {
+                            Image(systemName: "folder.badge.gear").contentShape(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
+                                Color.init(id: "activityBar.foreground")
+                            ).onTapGesture { openFolder() }
+                        }
+
                         Image(systemName: "magnifyingglass").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
