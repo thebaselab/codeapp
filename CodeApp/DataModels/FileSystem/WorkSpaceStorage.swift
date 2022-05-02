@@ -168,18 +168,16 @@ class WorkSpaceStorage: ObservableObject {
             requestDirectoryUpdateAt(id: url)
         } else {
             // Directory is not updated
-            let group = DispatchGroup()
-
             for key in directoryStorage.keys {
-                group.enter()
+                let semaphore = DispatchSemaphore(value: 0)
                 loadURL(
                     url: key,
                     completionHandler: { items, error in
                         self.directoryStorage[key] = items
-                        group.leave()
+                        semaphore.signal()
                     })
+                semaphore.wait()
             }
-            group.wait()
 
             DispatchQueue.main.async {
                 withAnimation(.easeInOut) {
