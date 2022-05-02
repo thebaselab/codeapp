@@ -34,8 +34,8 @@ struct editorTab: View {
                     fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
                     Button(action: {}) {
                         Group {
-                            if let status = App.gitTracks[
-                                URL(string: currentEditor.url)!.standardizedFileURL]
+                            if let url = URL(string: currentEditor.url)?.standardizedFileURL,
+                                let status = App.gitTracks[url]
                             {
                                 FileDisplayName(
                                     gitStatus: status,
@@ -84,8 +84,8 @@ struct editorTab: View {
                 Button(action: { onOpenEditor() }) {
                     HStack(spacing: 4) {
                         fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
-                        if let status = App.gitTracks[
-                            URL(string: currentEditor.url)!.standardizedFileURL]
+                        if let url = URL(string: currentEditor.url)?.standardizedFileURL,
+                            let status = App.gitTracks[url]
                         {
                             FileDisplayName(
                                 gitStatus: status, name: editorDisplayName(editor: currentEditor))
