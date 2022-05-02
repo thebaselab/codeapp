@@ -63,8 +63,9 @@ struct CreateRemoteSection: View {
                             .font(.subheadline)
 
                         TextField("Address", text: $address)
-                            .focused($focusedField, equals: .address)
                             .autocapitalization(.none)
+                            .textContentType(.URL)
+                            .focused($focusedField, equals: .address)
                     }
 
                     HStack {
@@ -74,6 +75,7 @@ struct CreateRemoteSection: View {
 
                         TextField("Port", text: $port)
                             .focused($focusedField, equals: .port)
+                            .keyboardType(.numberPad)
                     }
 
                     HStack {
@@ -83,6 +85,7 @@ struct CreateRemoteSection: View {
 
                         TextField("Username", text: $username)
                             .focused($focusedField, equals: .username)
+                            .disableAutocorrection(true)
                             .autocapitalization(.none)
                     }
 
