@@ -46,7 +46,7 @@ struct tabBar: View {
                     .onTapGesture {
                         App.compileManager.stopRunning()
                     }
-            } else {
+            } else if !App.workSpaceStorage.remoteConnected {
                 Button(action: {
                     if !App.currentURL().contains("index{default}.md{code-preview}") {
                         if App.currentURL().components(separatedBy: "/").last?.components(
@@ -155,8 +155,10 @@ struct tabBar: View {
                     Button(action: { App.closeAllEditors() }) {
                         Label("Close All", systemImage: "xmark")
                     }
-                    Button(action: { self.showSafari.toggle() }) {
-                        Label("Preview in Safari", systemImage: "safari")
+                    if !App.workSpaceStorage.remoteConnected {
+                        Button(action: { self.showSafari.toggle() }) {
+                            Label("Preview in Safari", systemImage: "safari")
+                        }
                     }
                 }
                 Divider()
