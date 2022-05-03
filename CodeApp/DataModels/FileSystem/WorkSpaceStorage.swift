@@ -169,14 +169,11 @@ class WorkSpaceStorage: ObservableObject {
         } else {
             // Directory is not updated
             for key in directoryStorage.keys {
-                let semaphore = DispatchSemaphore(value: 0)
                 loadURL(
                     url: key,
                     completionHandler: { items, error in
                         self.directoryStorage[key] = items
-                        semaphore.signal()
                     })
-                semaphore.wait()
             }
 
             DispatchQueue.main.async {

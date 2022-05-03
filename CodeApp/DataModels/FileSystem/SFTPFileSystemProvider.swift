@@ -19,7 +19,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
 
     private var didDisconnect: (Error) -> Void
     private var session: NMSSHSession
-    private let queue = DispatchQueue.global(qos: .userInteractive)
+    private let queue = DispatchQueue(label: "sftp.serial.queue")
 
     init?(baseURL: URL, cred: URLCredential, didDisconnect: @escaping (Error) -> Void) {
         guard baseURL.scheme == "sftp",
