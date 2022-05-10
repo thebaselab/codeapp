@@ -11,6 +11,7 @@ protocol FileSystemProvider {
     static var registeredScheme: String { get }
     var gitServiceProvider: GitServiceProvider? { get }
     var searchServiceProvider: SearchServiceProvider? { get }
+    var terminalServiceProvider: TerminalServiceProvider? { get }
 
     func contentsOfDirectory(at url: URL, completionHandler: @escaping ([URL]?, Error?) -> Void)
     func fileExists(at url: URL, completionHandler: @escaping (Bool) -> Void)

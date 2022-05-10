@@ -12,6 +12,7 @@ class LocalFileSystemProvider: FileSystemProvider {
     static var registeredScheme: String = "file"
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
+    var terminalServiceProvider: TerminalServiceProvider? = nil
 
     func write(
         at: URL, content: Data, atomically: Bool, overwrite: Bool,

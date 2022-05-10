@@ -13,6 +13,7 @@ class FTPFileSystemProvider: FileSystemProvider {
     static var registeredScheme: String = "ftp"
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
+    var terminalServiceProvider: TerminalServiceProvider? = nil
 
     private var fs: FTPFileProvider
 

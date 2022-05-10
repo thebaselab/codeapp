@@ -13,6 +13,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
     static var registeredScheme: String = "sftp"
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
+    var terminalServiceProvider: TerminalServiceProvider? = nil
 
     var homePath: String? = "/"
     var fingerPrint: String? = nil

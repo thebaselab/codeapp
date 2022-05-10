@@ -356,6 +356,10 @@ extension WorkSpaceStorage: FileSystemProvider {
         fs?.searchServiceProvider
     }
 
+    var terminalServiceProvider: TerminalServiceProvider? {
+        fs?.terminalServiceProvider
+    }
+
     func write(
         at: URL, content: Data, atomically: Bool, overwrite: Bool,
         completionHandler: @escaping (Error?) -> Void
