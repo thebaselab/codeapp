@@ -54,7 +54,6 @@ struct settingView: View {
     ]
 
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var window: UIWindow? {
@@ -316,13 +315,13 @@ struct settingView: View {
                     ) {
                         Text(NSLocalizedString("Release Notes", comment: ""))
                     }
-                    
+
                     if AppStore.isSubscribed {
                         Button("Request a refund") {
                             AppStore.beginRefundProcess()
                         }
                     }
-                    
+
                     Button(action: {
                         showsEraseAlert.toggle()
                     }) {

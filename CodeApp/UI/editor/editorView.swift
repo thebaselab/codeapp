@@ -17,7 +17,6 @@ struct editorView: View {
 
     @AppStorage("editorLightTheme") var editorLightTheme: String = "Default"
     @AppStorage("editorDarkTheme") var editorDarkTheme: String = "Default"
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     @Binding var showsNewFile: Bool
     @Binding var showsDirectory: Bool
@@ -91,9 +90,6 @@ struct editorView: View {
 
                 }
 
-            }
-            .onChange(of: colorScheme) { newValue in
-                App.updateView()
             }
             .onReceive(
                 NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),

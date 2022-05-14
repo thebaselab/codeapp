@@ -85,7 +85,6 @@ struct monacoEditor: UIViewRepresentable {
 
     @EnvironmentObject var status: MainApp
 
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @AppStorage("editorFontSize") var fontSize: Int = 14

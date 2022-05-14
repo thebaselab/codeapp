@@ -168,7 +168,8 @@ struct explorer: View {
                             }
                         })
                 }
-            }.listStyle(SidebarListStyle())
+            }.animation(.easeIn)
+                .listStyle(SidebarListStyle())
                 .environment(\.defaultMinListRowHeight, 10)
                 .environment(\.editMode, $editMode)
 

@@ -10,6 +10,7 @@ import SwiftUI
 struct editorTab: View {
 
     @EnvironmentObject var App: MainApp
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @ObservedObject var currentEditor: EditorInstance
     // This is used for force updating the view.
     @State private var lastUpdateTime: Date = Date()

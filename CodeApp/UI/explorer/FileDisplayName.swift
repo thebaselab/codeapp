@@ -10,6 +10,7 @@ import SwiftUI
 
 struct FileDisplayName: View {
 
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     let gitStatus: Diff.Status?
     let name: String
 

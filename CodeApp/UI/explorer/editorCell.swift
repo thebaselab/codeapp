@@ -10,6 +10,8 @@ import SwiftUI
 struct cell: View {
 
     @EnvironmentObject var App: MainApp
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+
     @State var item: EditorInstance
 
     var body: some View {

@@ -28,6 +28,7 @@ struct CodeApp: App {
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     func loadBuiltInThemes() {
 
@@ -406,7 +407,9 @@ struct CodeApp: App {
                     } else {
                         App.urlQueue.append(url)
                     }
-                    print("Received URL: \(url)")
+                }
+                .onChange(of: colorScheme) { newValue in
+                    App.updateView()
                 }
         }
     }
