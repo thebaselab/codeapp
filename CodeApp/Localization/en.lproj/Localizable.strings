@@ -210,3 +210,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 > This project would not have been possible without the above open source projects.
 > Happy coding from Hong Kong 🇭🇰
 ";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "12 months for %@.";
+"subscription.message" = "Make Code available for all and unlock all themes. Code remains open source and all features remain available without subscription.";
+"subscription.payment.description %@ %@" = "Starting on %@, your membership will automatically renew at %@ per year until you cancel it.";
+"subscription.payment.disallowed" = "Your device's configuration does not allow payments.";
+"subscription.join" = "Join Code+";
+"code.and.privacy" = "About Code and Privacy";

@@ -10,6 +10,7 @@ import SwiftUI
 struct settingView: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var AppStore: Store
 
     @AppStorage("editorFontSize") var fontSize: Int = 14
     @AppStorage("quoteAutoCompletionEnabled") var quoteAutoCompleteEnabled: Bool = true
@@ -42,6 +43,7 @@ struct settingView: View {
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
 
     @State var showsEraseAlert: Bool = false
+    @State var showReceiptInformation: Bool = false
 
     let colorSchemes = ["Automatic", "Dark", "Light"]
     let renderWhitespaceOptions = ["None", "Boundary", "Selection", "Trailing", "All"]
@@ -314,6 +316,13 @@ struct settingView: View {
                     ) {
                         Text(NSLocalizedString("Release Notes", comment: ""))
                     }
+                    
+                    if AppStore.isSubscribed {
+                        Button("Request a refund") {
+                            AppStore.beginRefundProcess()
+                        }
+                    }
+                    
                     Button(action: {
                         showsEraseAlert.toggle()
                     }) {
@@ -356,7 +365,29 @@ struct settingView: View {
                                 + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0")
                         )
                     }
+
+                    if showReceiptInformation {
+                        HStack {
+                            Text("Receipt - Original app version")
+                            Spacer()
+                            Text("\(AppStore.purchaseReceipt?.originalAppVersion ?? "None")")
+                        }
+
+                        HStack {
+                            Text("Receipt - TestFlight")
+                            Spacer()
+                            Text(
+                                Bundle.main.appStoreReceiptURL?.lastPathComponent
+                                    == "sandboxReceipt" ? "True" : "False")
+                        }
+                    }
+
                     Text("Code App by thebaselab").font(.footnote).foregroundColor(.gray)
+                        .onTapGesture(
+                            count: 2,
+                            perform: {
+                                showReceiptInformation = true
+                            })
                 }
 
             }

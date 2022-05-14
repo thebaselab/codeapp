@@ -273,6 +273,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Color Scheme" = "颜色主题";
 "Dark Theme" = "黑暗主题";
 "Light Theme" = "浅色主题";
+"Dark Themes" = "黑暗主题";
+"Light Themes" = "浅色主题";
 "Text Wrap" = "换行";
 "Render Whitespace" = "呈现空白";
 
@@ -355,3 +357,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Expermimental Features" = "实验性功能";
 "Enable spell check in text files" = "在文本文件中启用拼写检查";
 "Spell checking on content changed" = "在内容改变时检查拼写";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "12个月 %@";
+"subscription.message" = "让Code可以被所有人使用，并解锁所有主题。代码仍然是开源的，并且所有功能都将保持可用。";
+"subscription.payment.description %@ %@" = "从%@开始，Code+将自动续订，每年%@，直到您取消。";
+"subscription.payment.disallowed" = "您的设备的配置不允许付款。";
+"subscription.join" = "订阅 Code+";
+"code.and.privacy" = "Code 隐私政策";

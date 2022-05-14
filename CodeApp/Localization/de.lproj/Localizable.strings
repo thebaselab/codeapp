@@ -244,7 +244,9 @@
 "Delete" = "Löschen";
 "Color Scheme" = "Farbschema";
 "Dark Theme" = "Dark Theme";
+"Dark Themes" = "Dark Themes";
 "Light Theme" = "Light Theme";
+"Light Themes" = "Light Themes";
 "Text Wrap" = "Textumbruch";
 "Render Whitespace" = "Leerzeichen machen";
 
@@ -330,3 +332,11 @@
 "Expermimental Features" = "Experimentelle Funktionen";
 "Enable spell check in text files" = "Rechtschreibprüfung in Textdateien aktivieren";
 "Spell checking on content changed" = "Rechtschreibprüfung bei Inhaltänderung";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "12 Monate für $9.99";
+"subscription.message" = "Code für alle freigeben und alle Themen freischalten. Code bleibt Open Source und alle Funktionen sind verfügbar ohne Abonnement.";
+"subscription.payment.description %@ %@" = "Beginnend am %@, Ihre Mitgliedschaft wird automatisch um %@ pro Jahr aktualisiert, bis Sie sie abbestellen.";
+"subscription.payment.disallowed" = "Ihre Geräte-Konfiguration erlaubt keine Zahlungen.";
+"subscription.join" = "Code+ beitreten";
+"code.and.privacy" = "Datenschutz-Bestimmungen";

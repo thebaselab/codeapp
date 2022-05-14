@@ -24,6 +24,7 @@ struct CodeApp: App {
     }
 
     @State private var App = MainApp()
+    @StateObject private var AppStore = Store()
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
@@ -385,6 +386,7 @@ struct CodeApp: App {
         WindowGroup {
             mainView()
                 .environmentObject(App)
+                .environmentObject(AppStore)
                 .ignoresSafeArea(.container, edges: .bottom)
                 .onAppear {
                     if UserDefaults.standard.integer(forKey: "preferredColorScheme") == 1 {

@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "AppReceiptValidator",
+        "repositoryURL": "https://github.com/IdeasOnCanvas/AppReceiptValidator",
+        "state": {
+          "branch": "main",
+          "revision": "4dd74e61bb8692fa52da5ec99941dbea1d8c8753",
+          "version": null
+        }
+      },
+      {
+        "package": "ASN1Decoder",
+        "repositoryURL": "https://github.com/IdeasOnCanvas/ASN1Decoder",
+        "state": {
+          "branch": null,
+          "revision": "6f36ef23becd7f9266ef6b026af4798996a1a8be",
+          "version": "1.8.1"
+        }
+      },
+      {
         "package": "Clibgit2",
         "repositoryURL": "https://github.com/thebaselab/Clibgit2",
         "state": {
@@ -80,6 +98,15 @@
           "branch": null,
           "revision": "bd86ca0141e3cfb333546de5a11ede63f0c4a0e6",
           "version": "4.0.0"
+        }
+      },
+      {
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/apple/swift-crypto",
+        "state": {
+          "branch": null,
+          "revision": "ddb07e896a2a8af79512543b1c7eb9797f8898a5",
+          "version": "1.1.7"
         }
       },
       {

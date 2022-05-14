@@ -129,6 +129,12 @@
 		94196B12280316C7008AAEB2 /* tar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B3DDF42604D3C400C4F2B1 /* tar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		941CF5FB2641CBDA001199C0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 941CF5FA2641CBDA001199C0 /* Settings.bundle */; };
 		941CF5FE26463450001199C0 /* activityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CF5FD26463450001199C0 /* activityBar.swift */; };
+		9420698828284027007DE671 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9420698728284027007DE671 /* Store.swift */; };
+		9420698928284027007DE671 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9420698728284027007DE671 /* Store.swift */; };
+		94206990282CDA64007DE671 /* AppReceiptValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 9420698F282CDA64007DE671 /* AppReceiptValidator */; };
+		94206992282CDA78007DE671 /* AppReceiptValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 94206991282CDA78007DE671 /* AppReceiptValidator */; };
+		94206993282CDA78007DE671 /* AppReceiptValidator in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 94206991282CDA78007DE671 /* AppReceiptValidator */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		94206994282CDA7D007DE671 /* AppReceiptValidator in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9420698F282CDA64007DE671 /* AppReceiptValidator */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		94251F09263E01CA0029427A /* python3_ios-_asyncio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D80263E019A0029427A /* python3_ios-_asyncio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0A263E01CA0029427A /* python3_ios-_bisect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251CF8263E018E0029427A /* python3_ios-_bisect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0B263E01CA0029427A /* python3_ios-_blake2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D0C263E018F0029427A /* python3_ios-_blake2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -485,6 +491,10 @@
 		9437153F26BF9FC3000376FB /* remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437153E26BF9FC3000376FB /* remote.swift */; };
 		9437155B26C3C745000376FB /* RemoteAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437155A26C3C745000376FB /* RemoteAuthView.swift */; };
 		9438C9A225CBD25F00335E82 /* keyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438C9A125CBD25F00335E82 /* keyboardToolBar.swift */; };
+		9441129D28217D6A00A8F1D7 /* TerminalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */; };
+		9441129E2821816700A8F1D7 /* TerminalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */; };
+		944112A1282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944112A0282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift */; };
+		944112A2282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944112A0282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift */; };
 		94465DDA2809491B001DACDF /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
 		94465DDC28094920001DACDF /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
 		94465DDD28094920001DACDF /* NMSSH.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -694,6 +704,7 @@
 				94196B0C280316C7008AAEB2 /* ios_system.xcframework in Embed Frameworks */,
 				94196B0D280316C7008AAEB2 /* ssh_cmd.xcframework in Embed Frameworks */,
 				94196B0E280316C7008AAEB2 /* files.xcframework in Embed Frameworks */,
+				94206993282CDA78007DE671 /* AppReceiptValidator in Embed Frameworks */,
 				94196B0F280316C7008AAEB2 /* awk.xcframework in Embed Frameworks */,
 				94196B10280316C7008AAEB2 /* text.xcframework in Embed Frameworks */,
 				94196B11280316C7008AAEB2 /* shell.xcframework in Embed Frameworks */,
@@ -831,6 +842,7 @@
 				94251F5D263E01CB0029427A /* python3_ios-math.framework in Embed Frameworks */,
 				94251F5E263E01CB0029427A /* python3_ios-matplotlib._c_internal_utils.framework in Embed Frameworks */,
 				94251F5F263E01CB0029427A /* python3_ios-matplotlib._contour.framework in Embed Frameworks */,
+				94206994282CDA7D007DE671 /* AppReceiptValidator in Embed Frameworks */,
 				94251F60263E01CB0029427A /* python3_ios-matplotlib._image.framework in Embed Frameworks */,
 				94251F61263E01CB0029427A /* python3_ios-matplotlib._path.framework in Embed Frameworks */,
 				94251F62263E01CB0029427A /* python3_ios-matplotlib._qhull.framework in Embed Frameworks */,
@@ -1105,6 +1117,8 @@
 		94196B18280316C7008AAEB2 /* CodeUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CF5FA2641CBDA001199C0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		941CF5FD26463450001199C0 /* activityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityBar.swift; sourceTree = "<group>"; };
+		9420698728284027007DE671 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		9420698A2828476D007DE671 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Configuration.storekit; path = CodeApp/Configuration.storekit; sourceTree = SOURCE_ROOT; };
 		94251C6D263E01810029427A /* pythonA-pandas._libs.tslibs.period.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.tslibs.period.framework"; sourceTree = "<group>"; };
 		94251C6E263E01810029427A /* pythonA-numpy.random._bounded_integers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-numpy.random._bounded_integers.framework"; sourceTree = "<group>"; };
 		94251C6F263E01810029427A /* python3_ios-_codecs_tw.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "python3_ios-_codecs_tw.framework"; sourceTree = "<group>"; };
@@ -1461,6 +1475,8 @@
 		9437153E26BF9FC3000376FB /* remote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = remote.swift; sourceTree = "<group>"; };
 		9437155A26C3C745000376FB /* RemoteAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAuthView.swift; sourceTree = "<group>"; };
 		9438C9A125CBD25F00335E82 /* keyboardToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = keyboardToolBar.swift; sourceTree = "<group>"; };
+		9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalProvider.swift; sourceTree = "<group>"; };
+		944112A0282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPTerminalServiceProvider.swift; sourceTree = "<group>"; };
 		944EEBF02563C381009D77FE /* Code.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Code.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		944EEBF32563C381009D77FE /* CodeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeApp.swift; sourceTree = "<group>"; };
 		944EEBF72563C386009D77FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1614,6 +1630,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94206992282CDA78007DE671 /* AppReceiptValidator in Frameworks */,
 				9419698F280316C7008AAEB2 /* FilesProvider in Frameworks */,
 				94196990280316C7008AAEB2 /* ZIPFoundation in Frameworks */,
 				94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */,
@@ -1649,6 +1666,7 @@
 				94798713280330080055B838 /* GCDWebServers in Frameworks */,
 				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
 				94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */,
+				94206990282CDA64007DE671 /* AppReceiptValidator in Frameworks */,
 				945AEA3527ECCB3D00BA193E /* NodeMobile.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1713,6 +1731,23 @@
 			path = Remote;
 			sourceTree = "<group>";
 		};
+		9441129B28217D4C00A8F1D7 /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */,
+			);
+			path = Terminal;
+			sourceTree = "<group>";
+		};
+		9441129F282181C900A8F1D7 /* SFTP */ = {
+			isa = PBXGroup;
+			children = (
+				94E6CC7A2806FBAF00939E4F /* SFTPFileSystemProvider.swift */,
+				944112A0282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift */,
+			);
+			path = SFTP;
+			sourceTree = "<group>";
+		};
 		944EEBE72563C381009D77FE = {
 			isa = PBXGroup;
 			children = (
@@ -1760,6 +1795,7 @@
 				944EEBF72563C386009D77FE /* Assets.xcassets */,
 				94A56834257CC60E008A6530 /* LaunchScreen.storyboard */,
 				944EEBFC2563C386009D77FE /* Info.plist */,
+				9420698A2828476D007DE671 /* Configuration.storekit */,
 				944EEBF92563C386009D77FE /* Preview Content */,
 				941CF5FA2641CBDA001199C0 /* Settings.bundle */,
 			);
@@ -1907,6 +1943,7 @@
 		94A77794257ABB4A008FE7B2 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
+				9441129B28217D4C00A8F1D7 /* Terminal */,
 				94CB91AA2802A885002EAC51 /* FileSystem */,
 				94A7779E257ABD7A008FE7B2 /* MainApp.swift */,
 				94A77795257ABB69008FE7B2 /* EditorInstance.swift */,
@@ -1916,6 +1953,7 @@
 				94801F92266FB5E400B29D80 /* TerminalInstance.swift */,
 				94801F94266FBC3500B29D80 /* ViewRepresentable.swift */,
 				942ACB9C281312900067114D /* SpellChecker.swift */,
+				9420698728284027007DE671 /* Store.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -2434,11 +2472,11 @@
 		94CB91AA2802A885002EAC51 /* FileSystem */ = {
 			isa = PBXGroup;
 			children = (
+				9441129F282181C900A8F1D7 /* SFTP */,
 				94A777A1257ABDC3008FE7B2 /* WorkSpaceStorage.swift */,
 				941969242802AB2C008AAEB2 /* FileSystemProvider.swift */,
 				94A0461228049A7A00182275 /* GitServiceProvider.swift */,
 				941969282802AB64008AAEB2 /* FTPFileSystemProvider.swift */,
-				94E6CC7A2806FBAF00939E4F /* SFTPFileSystemProvider.swift */,
 				9419692A2802AB88008AAEB2 /* LocalFileSystemProvider.swift */,
 				944FC3FE25C543CC00C7C43C /* LocalGitServiceProvider.swift */,
 				942E3200280877C900233441 /* SearchServiceProvider.swift */,
@@ -2499,6 +2537,7 @@
 				94196937280316C7008AAEB2 /* FilesProvider */,
 				94196939280316C7008AAEB2 /* SwiftGit2 */,
 				94127C42280336B6008C7F82 /* GCDWebServers */,
+				94206991282CDA78007DE671 /* AppReceiptValidator */,
 			);
 			productName = testfield;
 			productReference = 94196B18280316C7008AAEB2 /* CodeUI.app */;
@@ -2545,6 +2584,7 @@
 				948F174D26B91C2600B277FC /* FilesProvider */,
 				94B99D9C27D4AA57005B5E3A /* SwiftGit2 */,
 				94798712280330080055B838 /* GCDWebServers */,
+				9420698F282CDA64007DE671 /* AppReceiptValidator */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -2586,6 +2626,7 @@
 				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */,
 				94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */,
+				9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -2745,6 +2786,7 @@
 				9419695E280316C7008AAEB2 /* keyboardToolBar.swift in Sources */,
 				9419695F280316C7008AAEB2 /* NotificationManager.swift in Sources */,
 				94196960280316C7008AAEB2 /* URL+isDirectory.swift in Sources */,
+				9441129E2821816700A8F1D7 /* TerminalProvider.swift in Sources */,
 				94196961280316C7008AAEB2 /* String.Encoding.swift in Sources */,
 				94196962280316C7008AAEB2 /* theme.swift in Sources */,
 				94196963280316C7008AAEB2 /* remote.swift in Sources */,
@@ -2787,6 +2829,7 @@
 				9419697E280316C7008AAEB2 /* problems.swift in Sources */,
 				94E6CC862807502A00939E4F /* SideBarItemView.swift in Sources */,
 				94A045F22804816000182275 /* CreateRemoteSection.swift in Sources */,
+				944112A2282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
 				9419697F280316C7008AAEB2 /* GitHubAccountManager.swift in Sources */,
 				94196980280316C7008AAEB2 /* URL+relativePath.swift in Sources */,
 				942E320528087FA400233441 /* ResultsSection.swift in Sources */,
@@ -2806,6 +2849,7 @@
 				942E31FC280876AA00233441 /* SearchSection.swift in Sources */,
 				94A046262804A67100182275 /* SourceControlSection.swift in Sources */,
 				94A0460E280497FB00182275 /* GitHubSearchResultCell.swift in Sources */,
+				9420698928284027007DE671 /* Store.swift in Sources */,
 				9419698C280316C7008AAEB2 /* terminalToolBar.swift in Sources */,
 				94A04608280493C600182275 /* CloneRepositorySection.swift in Sources */,
 				94A045F82804822400182275 /* ServerCell.swift in Sources */,
@@ -2875,6 +2919,7 @@
 				9438C9A225CBD25F00335E82 /* keyboardToolBar.swift in Sources */,
 				94A777BE257B74EE008FE7B2 /* NotificationManager.swift in Sources */,
 				94CF58DD265E4E0F00CB6A4B /* URL+isDirectory.swift in Sources */,
+				9441129D28217D6A00A8F1D7 /* TerminalProvider.swift in Sources */,
 				94E3B96B25866C79006AC043 /* String.Encoding.swift in Sources */,
 				94B3DDF82604F90800C4F2B1 /* theme.swift in Sources */,
 				9437153F26BF9FC3000376FB /* remote.swift in Sources */,
@@ -2917,6 +2962,7 @@
 				949B3CBB25DBCCDC00BC83B5 /* problems.swift in Sources */,
 				94E6CC852807502A00939E4F /* SideBarItemView.swift in Sources */,
 				94A045F12804816000182275 /* CreateRemoteSection.swift in Sources */,
+				944112A1282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
 				94F5270B25A0704600337306 /* GitHubAccountManager.swift in Sources */,
 				949B3CB925DADCB900BC83B5 /* URL+relativePath.swift in Sources */,
 				942E320428087FA400233441 /* ResultsSection.swift in Sources */,
@@ -2936,6 +2982,7 @@
 				942E31FB280876AA00233441 /* SearchSection.swift in Sources */,
 				94A046252804A67100182275 /* SourceControlSection.swift in Sources */,
 				94A0460D280497FB00182275 /* GitHubSearchResultCell.swift in Sources */,
+				9420698828284027007DE671 /* Store.swift in Sources */,
 				94369B4725E7FF18008419A0 /* terminalToolBar.swift in Sources */,
 				94A04607280493C600182275 /* CloneRepositorySection.swift in Sources */,
 				94A045F72804822400182275 /* ServerCell.swift in Sources */,
@@ -2986,7 +3033,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 78;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
@@ -3029,7 +3076,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 78;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
@@ -3071,7 +3118,7 @@
 				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 78;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
@@ -3107,7 +3154,7 @@
 				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 78;
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3263,7 +3310,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 78;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_BITCODE = NO;
@@ -3306,7 +3353,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 78;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 69R94YG49H;
@@ -3414,6 +3461,14 @@
 				kind = branch;
 			};
 		};
+		9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/IdeasOnCanvas/AppReceiptValidator";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JacobHearst/GCDWebServer";
@@ -3485,6 +3540,16 @@
 		94196939280316C7008AAEB2 /* SwiftGit2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
+		};
+		9420698F282CDA64007DE671 /* AppReceiptValidator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */;
+			productName = AppReceiptValidator;
+		};
+		94206991282CDA78007DE671 /* AppReceiptValidator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */;
+			productName = AppReceiptValidator;
 		};
 		94798712280330080055B838 /* GCDWebServers */ = {
 			isa = XCSwiftPackageProductDependency;
