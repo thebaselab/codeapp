@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.0 (May 2022)**
+##### **v1.3.1 (May 2022)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -24,6 +24,9 @@
 
 "Changelog.message" =
 "
+### v1.3.1 (May 2022)
+- Bug fixes
+- Code+
 ### v1.3.0 (May 2022)
 - Remote Support (SFTP and FTP)
 - Dynamic Type support
@@ -328,15 +331,18 @@
 "Disconnect" = "Trennen";
 "Current Remote" = "Aktueller remote";
 "Remember credentials" = "Anmeldeinformationen speichern";
+"Key passphrase" = "Schlüssel-Passphrase";
+"Show public key" = "öffentlichen Schlüssel anzeigen";
 
 "Expermimental Features" = "Experimentelle Funktionen";
 "Enable spell check in text files" = "Rechtschreibprüfung in Textdateien aktivieren";
 "Spell checking on content changed" = "Rechtschreibprüfung bei Inhaltänderung";
 
 "subscription.codeplus" = "Code+";
-"subscription.title %@" = "12 Monate für $9.99";
-"subscription.message" = "Code für alle freigeben und alle Themen freischalten. Code bleibt Open Source und alle Funktionen sind verfügbar ohne Abonnement.";
+"subscription.title %@" = "12 Monate für %@";
+"subscription.message" = "Machen Sie Code für alle verfügbar und schalten Sie alle Themen frei. Der Code bleibt Open Source und vorhandene Funktionen bleiben ohne Abonnement verfügbar.";
 "subscription.payment.description %@ %@" = "Beginnend am %@, Ihre Mitgliedschaft wird automatisch um %@ pro Jahr aktualisiert, bis Sie sie abbestellen.";
 "subscription.payment.disallowed" = "Ihre Geräte-Konfiguration erlaubt keine Zahlungen.";
 "subscription.join" = "Code+ beitreten";
 "code.and.privacy" = "Datenschutz-Bestimmungen";
+"credentials.note" = "Hinweis: Anmeldeinformationen werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben darauf keinen Zugriff.";

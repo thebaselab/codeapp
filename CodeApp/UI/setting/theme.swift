@@ -107,11 +107,14 @@ struct themeConfigView: View {
                         }
                     }
 
-                    Link(destination: URL(string: "https://thebaselab.com/privacypolicies/")!) {
-                        Label("code.and.privacy", systemImage: "lock")
+                    HStack {
+                        Spacer()
+                        Link(destination: URL(string: "https://thebaselab.com/privacypolicies/")!) {
+                            Label("code.and.privacy", systemImage: "lock")
+                        }
+                        .foregroundColor(.white)
+                        .font(.body.bold())
                     }
-                    .foregroundColor(.white)
-                    .font(.body.bold())
 
                     Spacer()
                 }.frame(maxWidth: 500)

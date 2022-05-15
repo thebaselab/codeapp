@@ -31,7 +31,7 @@ struct remoteAuthentication: View {
     var body: some View {
         VStack {
             DescriptionText(
-                "Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it."
+                "credentials.note"
             )
 
             Form {

@@ -119,7 +119,7 @@ struct CreateRemoteSection: View {
 
             if saveCredentials {
                 DescriptionText(
-                    "Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it."
+                    "credentials.note"
                 )
             }
 
