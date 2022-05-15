@@ -70,6 +70,7 @@ class Store: ObservableObject {
         Task {
             //Initialize the store by starting a product request.
             await requestProducts()
+            await checkSubscriptionStatus()
         }
 
         let receiptValidator = AppReceiptValidator()
@@ -85,6 +86,17 @@ class Store: ObservableObject {
 
     deinit {
         updateListenerTask?.cancel()
+    }
+
+    @MainActor
+    func checkSubscriptionStatus() async {
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let transaction) = result {
+                if transaction.productID == Store.standardSubscriptionProductId {
+                    self.isSubscribed = true
+                }
+            }
+        }
     }
 
     func listenForTransactions() -> Task<Void, Error> {
@@ -193,6 +205,7 @@ class Store: ObservableObject {
     func updatePurchasedIdentifiers(_ transaction: Transaction) async {
         if transaction.revocationDate == nil {
             //If the App Store has not revoked the transaction, add it to the list of `purchasedIdentifiers`.
+            print("Inserting", transaction.productID)
             purchasedIdentifiers.insert(transaction.productID)
             if transaction.productID == Store.standardSubscriptionProductId {
                 isSubscribed = true
