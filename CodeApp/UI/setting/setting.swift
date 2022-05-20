@@ -349,6 +349,16 @@ struct settingView: View {
                                     "All settings erased")
                             }, secondaryButton: .cancel())
                     }
+                    Link(
+                        "terms_of_use",
+                        destination: URL(
+                            string:
+                                "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+                    )
+                    Link(
+                        "code.and.privacy",
+                        destination: URL(string: "https://thebaselab.com/privacypolicies/")!)
+
                     NavigationLink(
                         destination: simpleMarkDownView(
                             text: NSLocalizedString("licenses", comment: ""))

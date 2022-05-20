@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.1 (May 2022)**
+##### **v1.3.2 (May 2022)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -25,8 +25,11 @@
 "Changelog.message" =
 "
 ### v1.3.1 (May 2022)
+- Fixes a bug that prevents existing users to access themes
+### v1.3.1 (May 2022)
 - Bug fixes
-- Code+
+- You can now use custom Java entry class name
+- Introducing Code+ - A subscription service that allows us to bring Code to everyone and unlocks all themes. Existing users continue to have full access to the app.
 ### v1.3.0 (May 2022)
 - Remote Support (SFTP and FTP)
 - Dynamic Type support
@@ -221,4 +224,5 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "subscription.payment.disallowed" = "Your device's configuration does not allow payments.";
 "subscription.join" = "Join Code+";
 "code.and.privacy" = "About Code and Privacy";
+"terms_of_use" = "Terms of Use";
 "credentials.note" = "Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it.";

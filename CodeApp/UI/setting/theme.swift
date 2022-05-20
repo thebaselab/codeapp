@@ -109,9 +109,22 @@ struct themeConfigView: View {
 
                     HStack {
                         Spacer()
-                        Link(destination: URL(string: "https://thebaselab.com/privacypolicies/")!) {
-                            Label("code.and.privacy", systemImage: "lock")
+                        Group {
+                            Link(
+                                destination: URL(
+                                    string:
+                                        "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+                                )!
+                            ) {
+                                Label("terms_of_use", systemImage: "doc.text")
+                            }
+                            Link(
+                                destination: URL(string: "https://thebaselab.com/privacypolicies/")!
+                            ) {
+                                Label("code.and.privacy", systemImage: "lock")
+                            }
                         }
+
                         .foregroundColor(.white)
                         .font(.body.bold())
                     }

@@ -79,7 +79,8 @@ class Store: ObservableObject {
 
         if let originalAppVersion = installedReceipt?.originalAppVersion {
             print("originalAppVersion", originalAppVersion)
-            isPurchasedBeforeFree = originalAppVersion < "1.3.1"
+
+            isPurchasedBeforeFree = originalAppVersion < "83"
         }
         print("isPurchasedBeforeFree", isPurchasedBeforeFree)
     }
