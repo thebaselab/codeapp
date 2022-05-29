@@ -679,8 +679,8 @@
 		94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FF3370284348F1003DE5DD /* KBWebViewBase.m */; };
 		94FF337428435158003DE5DD /* FontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF337328435158003DE5DD /* FontPicker.swift */; };
 		94FF337528435158003DE5DD /* FontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF337328435158003DE5DD /* FontPicker.swift */; };
-		94FF338128435F34003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */; };
-		94FF338228435F34003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */; };
+		94FF33892843744C003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */; };
+		94FF338A2843744C003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1634,7 +1634,7 @@
 		94FF336F284348F1003DE5DD /* CodeUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CodeUI-Bridging-Header.h"; sourceTree = "<group>"; };
 		94FF3370284348F1003DE5DD /* KBWebViewBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBWebViewBase.m; sourceTree = "<group>"; };
 		94FF337328435158003DE5DD /* FontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontPicker.swift; sourceTree = "<group>"; };
-		94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "CodeApp/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = SOURCE_ROOT; };
+		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "CodeApp/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1763,6 +1763,7 @@
 		944EEBE72563C381009D77FE = {
 			isa = PBXGroup;
 			children = (
+				94FF338728437438003DE5DD /* Fonts */,
 				94B99D9527D4A622005B5E3A /* Packages */,
 				94C893E727A2856700DFBF29 /* ci_scripts */,
 				94A4438225A389FF006643FF /* README.md */,
@@ -1774,7 +1775,6 @@
 				94CF58DE265E51B100CB6A4B /* ClangLib */,
 				94B3D6DD25F77AFE00C4F2B1 /* Library */,
 				94127C3F280335C8008C7F82 /* Themes */,
-				94FF337A28435C5E003DE5DD /* Fonts */,
 				94B3D55125F776A900C4F2B1 /* Resources */,
 				944EEBF22563C381009D77FE /* CodeApp */,
 				94369AFD25E3B933008419A0 /* extension */,
@@ -2529,12 +2529,12 @@
 			path = PythonAux;
 			sourceTree = "<group>";
 		};
-		94FF337A28435C5E003DE5DD /* Fonts */ = {
+		94FF338728437438003DE5DD /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */,
+				94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */,
 			);
-			path = Fonts;
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2680,7 +2680,7 @@
 				9419699E280316C7008AAEB2 /* InfoPlist.strings in Resources */,
 				9419699F280316C7008AAEB2 /* cacert.pem in Resources */,
 				941969A0280316C7008AAEB2 /* commandDictionary.plist in Resources */,
-				94FF338228435F34003DE5DD /* FiraCode-Regular.ttf in Resources */,
+				94FF338A2843744C003DE5DD /* FiraCode-Regular.ttf in Resources */,
 				941969A1280316C7008AAEB2 /* ClangLib in Resources */,
 				941969A2280316C7008AAEB2 /* Settings.bundle in Resources */,
 				941969A3280316C7008AAEB2 /* extraCommandsDictionary.plist in Resources */,
@@ -2715,7 +2715,7 @@
 				948D12002583F20D008F877A /* extraCommandsDictionary.plist in Resources */,
 				94369B4A25EAB262008419A0 /* npm.bundle in Resources */,
 				94B3D6DE25F77AFE00C4F2B1 /* Library in Resources */,
-				94FF338128435F34003DE5DD /* FiraCode-Regular.ttf in Resources */,
+				94FF33892843744C003DE5DD /* FiraCode-Regular.ttf in Resources */,
 				948D127C2583F734008F877A /* terminal.bundle in Resources */,
 				94A56835257CC60E008A6530 /* LaunchScreen.storyboard in Resources */,
 				944EEBF82563C386009D77FE /* Assets.xcassets in Resources */,
