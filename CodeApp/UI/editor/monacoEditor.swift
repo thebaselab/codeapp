@@ -13,7 +13,7 @@ var isEditorInited = false
 private var ToolbarHandle: UInt8 = 0
 let monacoWebView = editorWebView()
 
-class editorWebView: WKWebView {
+class editorWebView: KBWebViewBase {
 
     init() {
         let config = WKWebViewConfiguration()

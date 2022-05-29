@@ -675,6 +675,8 @@
 		94FC220B257F7D2A00B85D1B /* gitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC220A257F7D2900B85D1B /* gitCell.swift */; };
 		94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */; };
 		94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */; };
+		94FF3371284348F1003DE5DD /* KBWebViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FF3370284348F1003DE5DD /* KBWebViewBase.m */; };
+		94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FF3370284348F1003DE5DD /* KBWebViewBase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1623,6 +1625,10 @@
 		94F6B512280F0312000DBAE2 /* FileCellContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCellContextMenu.swift; sourceTree = "<group>"; };
 		94FC220A257F7D2900B85D1B /* gitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gitCell.swift; sourceTree = "<group>"; };
 		94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Hosts.swift"; sourceTree = "<group>"; };
+		94FF336D284348D0003DE5DD /* KBWebViewBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KBWebViewBase.h; sourceTree = "<group>"; };
+		94FF336E284348F1003DE5DD /* Code-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Code-Bridging-Header.h"; sourceTree = "<group>"; };
+		94FF336F284348F1003DE5DD /* CodeUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CodeUI-Bridging-Header.h"; sourceTree = "<group>"; };
+		94FF3370284348F1003DE5DD /* KBWebViewBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBWebViewBase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1970,6 +1976,10 @@
 				94C893E5279D0C3000DFBF29 /* shortcutsMapping.swift */,
 				94E6CC872807632B00939E4F /* biometricType.swift */,
 				942E31F728086FE800233441 /* KeyChainAccessor.swift */,
+				94FF336D284348D0003DE5DD /* KBWebViewBase.h */,
+				94FF3370284348F1003DE5DD /* KBWebViewBase.m */,
+				94FF336E284348F1003DE5DD /* Code-Bridging-Header.h */,
+				94FF336F284348F1003DE5DD /* CodeUI-Bridging-Header.h */,
 			);
 			path = HelperFunctions;
 			sourceTree = "<group>";
@@ -2599,13 +2609,16 @@
 				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					9419692E280316C7008AAEB2 = {
+						LastSwiftMigration = 1330;
+					};
 					94369AFB25E3B933008419A0 = {
 						CreatedOnToolsVersion = 12.4;
 						LastSwiftMigration = 1240;
 					};
 					944EEBEF2563C381009D77FE = {
 						CreatedOnToolsVersion = 12.2;
-						LastSwiftMigration = 1240;
+						LastSwiftMigration = 1330;
 					};
 				};
 			};
@@ -2791,6 +2804,7 @@
 				94196962280316C7008AAEB2 /* theme.swift in Sources */,
 				94196963280316C7008AAEB2 /* remote.swift in Sources */,
 				94196964280316C7008AAEB2 /* CloudCodeExecutionManager.swift in Sources */,
+				94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				94196965280316C7008AAEB2 /* String+toCString.swift in Sources */,
 				94196966280316C7008AAEB2 /* shortcutPreview.swift in Sources */,
 				94196967280316C7008AAEB2 /* executor.swift in Sources */,
@@ -2924,6 +2938,7 @@
 				94B3DDF82604F90800C4F2B1 /* theme.swift in Sources */,
 				9437153F26BF9FC3000376FB /* remote.swift in Sources */,
 				94A77819257BC332008FE7B2 /* CloudCodeExecutionManager.swift in Sources */,
+				94FF3371284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */,
 				94C893E4279D0BC300DFBF29 /* shortcutPreview.swift in Sources */,
 				948D12222583F2A5008F877A /* executor.swift in Sources */,
@@ -3059,7 +3074,7 @@
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/CodeUI-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3104,7 +3119,7 @@
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/CodeUI-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3336,6 +3351,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/Code-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3381,6 +3397,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore thebaselab.VS-Code";
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/Code-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
