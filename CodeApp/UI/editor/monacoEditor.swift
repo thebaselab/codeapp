@@ -17,7 +17,8 @@ class editorWebView: KBWebViewBase {
 
     init() {
         let config = WKWebViewConfiguration()
-        config.preferences.setValue(true as Bool, forKey: "allowFileAccessFromFileURLs")
+        config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+        config.preferences.setValue(true, forKey: "shouldAllowUserInstalledFonts")
         super.init(frame: .zero, configuration: config)
     }
 
@@ -88,6 +89,7 @@ struct monacoEditor: UIViewRepresentable {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     @AppStorage("editorFontSize") var fontSize: Int = 14
+    @AppStorage("editorFontFamily") var fontFamily: String = "Menlo"
     @AppStorage("quoteAutoCompletionEnabled") var bracketCompletionEnabled: Bool = true
     @AppStorage("editorMiniMapEnabled") var miniMapEnabled: Bool = true
     @AppStorage("editorLineNumberEnabled") var editorLineNumberEnabled: Bool = true
@@ -156,6 +158,9 @@ struct monacoEditor: UIViewRepresentable {
         applyOptions(options: "automaticLayout: true, lineNumbersMinChars: 5")
 
         executeJavascript(command: "editor.updateOptions({fontSize: \(String(fontSize))})")
+        executeJavascript(
+            command: "editor.updateOptions({fontFamily: \"\(fontFamily)\", fontLigatures: true})")
+
         if !bracketCompletionEnabled {
             executeJavascript(command: "editor.updateOptions({ autoClosingBrackets: false });")
         }

@@ -13,6 +13,7 @@ struct settingView: View {
     @EnvironmentObject var AppStore: Store
 
     @AppStorage("editorFontSize") var fontSize: Int = 14
+    @AppStorage("editorFontFamily") var fontFamily: String = "Menlo"
     @AppStorage("quoteAutoCompletionEnabled") var quoteAutoCompleteEnabled: Bool = true
     @AppStorage("suggestionEnabled") var suggestionEnabled: Bool = true
 
@@ -154,6 +155,29 @@ struct settingView: View {
                 }
 
                 Section(header: Text(NSLocalizedString("Editor", comment: ""))) {
+
+                    NavigationLink(
+                        destination: FontPicker(onFontPick: { descriptor in
+                            fontFamily = descriptor.object(forKey: .family) as! String
+                        }).toolbar {
+                            Button("settings.editor.font.reset") {
+                                fontFamily = "Menlo"
+                            }
+                            .disabled(fontFamily == "Menlo")
+                        },
+                        label: {
+                            HStack {
+                                Text("settings.editor.font")
+                                Spacer()
+                                Text(fontFamily)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    )
+                    .onChange(of: fontFamily) { value in
+                        App.monacoInstance.executeJavascript(
+                            command: "editor.updateOptions({fontFamily: \"\(value)\"})")
+                    }
 
                     NavigationLink(
                         destination:

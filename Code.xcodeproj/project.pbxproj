@@ -677,6 +677,10 @@
 		94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */; };
 		94FF3371284348F1003DE5DD /* KBWebViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FF3370284348F1003DE5DD /* KBWebViewBase.m */; };
 		94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 94FF3370284348F1003DE5DD /* KBWebViewBase.m */; };
+		94FF337428435158003DE5DD /* FontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF337328435158003DE5DD /* FontPicker.swift */; };
+		94FF337528435158003DE5DD /* FontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF337328435158003DE5DD /* FontPicker.swift */; };
+		94FF338128435F34003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */; };
+		94FF338228435F34003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1629,6 +1633,8 @@
 		94FF336E284348F1003DE5DD /* Code-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Code-Bridging-Header.h"; sourceTree = "<group>"; };
 		94FF336F284348F1003DE5DD /* CodeUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CodeUI-Bridging-Header.h"; sourceTree = "<group>"; };
 		94FF3370284348F1003DE5DD /* KBWebViewBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBWebViewBase.m; sourceTree = "<group>"; };
+		94FF337328435158003DE5DD /* FontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontPicker.swift; sourceTree = "<group>"; };
+		94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "CodeApp/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1768,6 +1774,7 @@
 				94CF58DE265E51B100CB6A4B /* ClangLib */,
 				94B3D6DD25F77AFE00C4F2B1 /* Library */,
 				94127C3F280335C8008C7F82 /* Themes */,
+				94FF337A28435C5E003DE5DD /* Fonts */,
 				94B3D55125F776A900C4F2B1 /* Resources */,
 				944EEBF22563C381009D77FE /* CodeApp */,
 				94369AFD25E3B933008419A0 /* extension */,
@@ -2064,6 +2071,7 @@
 				94C1A3D52607A006007E459A /* themePreview.swift */,
 				94C893E1279D09D400DFBF29 /* customShortcut.swift */,
 				94C893E3279D0BC300DFBF29 /* shortcutPreview.swift */,
+				94FF337328435158003DE5DD /* FontPicker.swift */,
 			);
 			path = setting;
 			sourceTree = "<group>";
@@ -2521,6 +2529,14 @@
 			path = PythonAux;
 			sourceTree = "<group>";
 		};
+		94FF337A28435C5E003DE5DD /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				94FF338028435F34003DE5DD /* FiraCode-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2664,6 +2680,7 @@
 				9419699E280316C7008AAEB2 /* InfoPlist.strings in Resources */,
 				9419699F280316C7008AAEB2 /* cacert.pem in Resources */,
 				941969A0280316C7008AAEB2 /* commandDictionary.plist in Resources */,
+				94FF338228435F34003DE5DD /* FiraCode-Regular.ttf in Resources */,
 				941969A1280316C7008AAEB2 /* ClangLib in Resources */,
 				941969A2280316C7008AAEB2 /* Settings.bundle in Resources */,
 				941969A3280316C7008AAEB2 /* extraCommandsDictionary.plist in Resources */,
@@ -2698,6 +2715,7 @@
 				948D12002583F20D008F877A /* extraCommandsDictionary.plist in Resources */,
 				94369B4A25EAB262008419A0 /* npm.bundle in Resources */,
 				94B3D6DE25F77AFE00C4F2B1 /* Library in Resources */,
+				94FF338128435F34003DE5DD /* FiraCode-Regular.ttf in Resources */,
 				948D127C2583F734008F877A /* terminal.bundle in Resources */,
 				94A56835257CC60E008A6530 /* LaunchScreen.storyboard in Resources */,
 				944EEBF82563C386009D77FE /* Assets.xcassets in Resources */,
@@ -2857,6 +2875,7 @@
 				94196988280316C7008AAEB2 /* TerminalInstance.swift in Sources */,
 				94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */,
 				94A0461C2804A2E500182275 /* RepositoryView.swift in Sources */,
+				94FF337528435158003DE5DD /* FontPicker.swift in Sources */,
 				9419698A280316C7008AAEB2 /* newFile.swift in Sources */,
 				9419698B280316C7008AAEB2 /* EditorInstance.swift in Sources */,
 				94E6CC892807632B00939E4F /* biometricType.swift in Sources */,
@@ -2991,6 +3010,7 @@
 				94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */,
 				94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */,
 				94A0461B2804A2E500182275 /* RepositoryView.swift in Sources */,
+				94FF337428435158003DE5DD /* FontPicker.swift in Sources */,
 				94A77802257B960A008FE7B2 /* newFile.swift in Sources */,
 				94A77796257ABB69008FE7B2 /* EditorInstance.swift in Sources */,
 				94E6CC882807632B00939E4F /* biometricType.swift in Sources */,

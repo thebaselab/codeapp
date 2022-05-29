@@ -352,3 +352,6 @@
 "terms_of_use" = "Nutzungsbedingungen";
 "code.and.privacy" = "Datenschutz-Bestimmungen";
 "credentials.note" = "Hinweis: Anmeldeinformationen werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben darauf keinen Zugriff.";
+
+"settings.editor.font" = "Editor-Schriftart";
+"settings.editor.font.reset" = "Standard";

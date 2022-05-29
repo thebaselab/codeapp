@@ -376,3 +376,6 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "terms_of_use" = "使用条款";
 "code.and.privacy" = "Code 隐私政策";
 "credentials.note" = "注意：凭据存储在设备的 Secure Enclave 内，我们无权访问";
+
+"settings.editor.font" = "编辑器字体";
+"settings.editor.font.reset" = "重置";
