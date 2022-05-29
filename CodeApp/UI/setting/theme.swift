@@ -139,26 +139,27 @@ struct themeConfigView: View {
     var body: some View {
         ZStack {
             themeSection
-                .if(!AppStore.isSubscribed && !AppStore.isPurchasedBeforeFree) { view in
-                    view
-                        .disabled(true)
-                        .blur(radius: 4)
-                }
                 .padding()
-
-            if !AppStore.isSubscribed && !AppStore.isPurchasedBeforeFree {
-                VStack {
-                    LinearGradient(
-                        gradient: Gradient(colors: [Color.blue, Color.green]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                }
-                .frame(maxHeight: 400)
-                .edgesIgnoringSafeArea(.horizontal)
-                .overlay(subscriptionSection.padding())
-                .cornerRadius(10)
-            }
+            //                .if(!AppStore.isSubscribed && !AppStore.isPurchasedBeforeFree) { view in
+            //                    view
+            //                        .disabled(true)
+            //                        .blur(radius: 4)
+            //                }
+            //                .padding()
+            //
+            //            if !AppStore.isSubscribed && !AppStore.isPurchasedBeforeFree {
+            //                VStack {
+            //                    LinearGradient(
+            //                        gradient: Gradient(colors: [Color.blue, Color.green]),
+            //                        startPoint: .topLeading,
+            //                        endPoint: .bottomTrailing
+            //                    )
+            //                }
+            //                .frame(maxHeight: 400)
+            //                .edgesIgnoringSafeArea(.horizontal)
+            //                .overlay(subscriptionSection.padding())
+            //                .cornerRadius(10)
+            //            }
         }
     }
 }

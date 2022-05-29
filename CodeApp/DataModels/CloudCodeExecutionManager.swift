@@ -70,10 +70,9 @@ class CloudCodeExecutionManager: ObservableObject {
 
             try archive.addEntry(with: "compile", fileURL: compileFile)
             try archive.addEntry(with: "run", fileURL: runFile)
-        }catch {
+        } catch {
             return [:]
         }
-        
 
         let base64 = archive.data!.base64EncodedString(options: .lineLength64Characters)
 
@@ -88,13 +87,12 @@ class CloudCodeExecutionManager: ObservableObject {
     }
 
     func runCode(directoryURL: URL, source: String, language: Int) {
-        
+
         if CloudCodeExecutionManager.judge0Server.isEmpty {
             self.consoleContent = "Server-side execution is unsupported in TestFlight builds."
             return
         }
-        
-        
+
         self.isRunningCode = true
 
         self.consoleContent = "Running \(directoryURL.lastPathComponent) remotely..\n"

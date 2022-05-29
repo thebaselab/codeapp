@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.2 (2022 年 5 月)**
+##### **v1.3.3 (2022 年 5 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -25,7 +25,9 @@
 
 "Changelog.message" =
 "
-### v1.3.1 (2022 年 5 月)
+### v1.3.3 (2022 年 5 月)
+- Bug修复
+### v1.3.2 (2022 年 5 月)
 - 修复了阻止现有用户访问主题的Bug
 ### v1.3.1 (2022 年 5 月)
 - Bug修复
