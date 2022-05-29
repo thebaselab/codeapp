@@ -337,7 +337,7 @@ class MainApp: ObservableObject {
                 )
             case 1:
                 let cmd =
-                    "node \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))"
+                    "node \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
                 if compilerShowPath {
                     terminalInstance.executeScript("localEcho.println(`\(cmd)`);")
                 } else {
