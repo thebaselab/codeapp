@@ -10,26 +10,56 @@ import ios_system
 
 class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 
-    public var webView: editorWebView? = nil
+    public var terminalServiceProvider: TerminalServiceProvider? = nil {
+        didSet {
+            if terminalServiceProvider != nil {
+                self.startInteractive()
+            }
+            terminalServiceProvider?.onDisconnect(callback: {
+                self.stopInteractive()
+                self.terminalServiceProvider = nil
+                self.clearLine()
+            })
+        }
+    }
+    public var webView: WebViewBase? = nil
     public var executor: Executor? = nil
     private var terminalMessageHandlerAdded = false
     public var openEditor: ((String) -> Void)? = nil
 
     var isInteractive = false
 
-    func clearAndKill() {
-        clearLine()
+    func killCurrentProcess() {
+        if let state = executor?.state,
+            state == .interactive
+        {
+            executor?.sendInput(input: "\u{3}")
+            return
+        }
+
+        if nodeUUID != nil {
+            let notificationName = CFNotificationName(
+                "com.thebaselab.code.node.stop" as CFString)
+            let notificationCenter =
+                CFNotificationCenterGetDarwinNotifyCenter()
+            CFNotificationCenterPostNotification(
+                notificationCenter, notificationName, nil, nil, false)
+        }
         executor?.kill()
     }
 
     func startInteractive() {
-        isInteractive = true
-        executeScript("startInteractive()")
+        if !isInteractive {
+            isInteractive = true
+            executeScript("startInteractive()")
+        }
     }
 
     func stopInteractive() {
-        isInteractive = false
-        executeScript("stopInteractive()")
+        if isInteractive {
+            isInteractive = false
+            executeScript("stopInteractive()")
+        }
     }
 
     func setFontSize(size: Int) {
@@ -54,6 +84,9 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     }
 
     func reset() {
+        guard terminalServiceProvider == nil else {
+            return
+        }
         guard !isInteractive, let prompt = executor?.prompt else {
             return
         }
@@ -149,6 +182,26 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     ) {
         guard let result = message.body as? [String: AnyObject] else { return }
         guard let event = result["Event"] as? String else { return }
+
+        if let ts = self.terminalServiceProvider {
+            startInteractive()
+
+            switch event {
+            case "window.size.change":
+                let cols = result["Cols"] as! Int
+                let rows = result["Rows"] as! Int
+                if let ts = terminalServiceProvider {
+                    ts.setWindowsSize(cols: cols, rows: rows)
+                }
+            case "Data":
+                if let input = result["Input"] as? String {
+                    ts.write(data: "\(input)".data(using: .utf8)!)
+                }
+            default:
+                return
+            }
+            return
+        }
 
         if self.executor?.state == .interactive && event == "Data" {
             self.executor?.sendInput(input: result["Input"] as! String)
@@ -265,6 +318,9 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             let cols = result["Cols"] as! Int
             let rows = result["Rows"] as! Int
             ios_setWindowSize(Int32(cols), Int32(rows), executor?.stdout_file)
+            if let ts = terminalServiceProvider {
+                ts.setWindowsSize(cols: cols, rows: rows)
+            }
         case "Data":
             let data = result["Input"] as! String
             if data == #"\u0003"# && !isInteractive {
@@ -292,6 +348,11 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             return
         }
         executeScript("localEcho.println(base64ToString('\(content.base64Encoded()!)'))")
+    }
+
+    func write(data: Data) {
+        self.executeScript(
+            "term.write(base64ToString('\(data.base64EncodedString())'));")
     }
 
     init(root: URL) {
@@ -326,17 +387,10 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                     DispatchQueue.main.async {
                         self.executeScript("readLine(base64ToString('\(prompt.base64Encoded()!)'))")
                     }
-                    //                let components = prompt.components(separatedBy: "\n")
-                    //                for i in components{
-                    //                    DispatchQueue.main.async {
-                    //                        self.executeScript( "readLine(base64ToString('\((i + "\r\n").base64Encoded()!)'))")
-                    //                    }
-                    //                }
                 })
 
-            webView = editorWebView()
+            webView = WebViewBase()
             webView?.addInputAccessoryView(toolbar: UIView.init())
-            //            webView?.scrollView.isScrollEnabled = false
             webView?.scrollView.bounces = false
             webView?.uiDelegate = self
             webView?.isOpaque = false

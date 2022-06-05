@@ -142,6 +142,9 @@ class MainApp: ObservableObject {
                 }
             }
         }
+        workSpaceStorage.onTerminalData { data in
+            self.terminalInstance.write(data: data)
+        }
         loadRepository(url: rootDir)
 
         NotificationCancellable = notificationManager.objectWillChange.sink { [weak self] (_) in

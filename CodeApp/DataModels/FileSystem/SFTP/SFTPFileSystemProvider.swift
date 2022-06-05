@@ -13,7 +13,10 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
     static var registeredScheme: String = "sftp"
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
-    var terminalServiceProvider: TerminalServiceProvider? = nil
+    var terminalServiceProvider: TerminalServiceProvider? {
+        _terminalServiceProvider
+    }
+    var _terminalServiceProvider: SFTPTerminalServiceProvider? = nil
 
     var homePath: String? = "/"
     var fingerPrint: String? = nil
@@ -22,7 +25,10 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
     private var session: NMSSHSession
     private let queue = DispatchQueue(label: "sftp.serial.queue")
 
-    init?(baseURL: URL, cred: URLCredential, didDisconnect: @escaping (Error) -> Void) {
+    init?(
+        baseURL: URL, cred: URLCredential, didDisconnect: @escaping (Error) -> Void,
+        onTerminalData: ((Data) -> Void)?
+    ) {
         guard baseURL.scheme == "sftp",
             let host = baseURL.host,
             let port = baseURL.port,
@@ -35,14 +41,29 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
         super.init()
 
         session.delegate = self
+        self._terminalServiceProvider = SFTPTerminalServiceProvider(
+            baseURL: baseURL, cred: cred)
+        if let onTerminalData = onTerminalData {
+            self._terminalServiceProvider?.onStderr(callback: onTerminalData)
+            self._terminalServiceProvider?.onStdout(callback: onTerminalData)
+        }
+
     }
 
     deinit {
+        self._terminalServiceProvider?.disconnect()
         self.session.sftp.disconnect()
         self.session.disconnect()
     }
 
     func connect(password: String, usesKey: Bool, completionHandler: @escaping (Error?) -> Void) {
+
+        self._terminalServiceProvider?.connect(
+            password: password, usesKey: usesKey,
+            completionHandler: { _ in
+                return
+            })
+
         queue.async {
             self.session.connect()
 

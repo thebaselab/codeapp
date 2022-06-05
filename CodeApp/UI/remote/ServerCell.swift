@@ -63,6 +63,8 @@ struct ServerCell: View {
                                 App.loadRepository(url: hostUrl)
                                 App.notificationManager.showInformationMessage(
                                     "Connected successfully.")
+                                App.terminalInstance.terminalServiceProvider =
+                                    App.workSpaceStorage.terminalServiceProvider
                             }
                         }
 
@@ -88,6 +90,8 @@ struct ServerCell: View {
                         App.loadRepository(url: hostUrl)
                         App.notificationManager.showInformationMessage(
                             "Connected successfully.")
+                        App.terminalInstance.terminalServiceProvider =
+                            App.workSpaceStorage.terminalServiceProvider
                     }
                     showsPrompt = false
                 }

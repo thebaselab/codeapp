@@ -18,6 +18,7 @@ class WorkSpaceStorage: ObservableObject {
 
     private var directoryMonitor = DirectoryMonitor()
     private var onDirectoryChangeAction: ((String) -> Void)? = nil
+    private var onTerminalDataAction: ((Data) -> Void)? = nil
     private var directoryStorage: [String: [(fileItemRepresentable)]] = [:]
     private var fss: [String: FileSystemProvider] = [:]
 
@@ -101,7 +102,7 @@ class WorkSpaceStorage: ObservableObject {
                     baseURL: host, cred: credentials,
                     didDisconnect: { error in
                         self.disconnect()
-                    })
+                    }, onTerminalData: self.onTerminalDataAction)
             else {
                 completionHandler(FSError.Unknown)
                 return
@@ -151,6 +152,10 @@ class WorkSpaceStorage: ObservableObject {
         self.currentDirectory = fileItemRepresentable(
             name: documentDir.lastPathComponent, url: documentDir.absoluteString, isDirectory: true)
         self.requestDirectoryUpdateAt(id: documentDir.absoluteString)
+    }
+
+    func onTerminalData(_ action: @escaping (Data) -> Void) {
+        onTerminalDataAction = action
     }
 
     func onDirectoryChange(_ action: @escaping ((String) -> Void)) {

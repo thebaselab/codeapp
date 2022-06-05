@@ -184,6 +184,8 @@ struct CreateRemoteSection: View {
                                 App.notificationManager.showInformationMessage(
                                     "Connected successfully.")
                             }
+                            App.terminalInstance.terminalServiceProvider =
+                                App.workSpaceStorage.terminalServiceProvider
 
                             guard saveAddress else {
                                 return

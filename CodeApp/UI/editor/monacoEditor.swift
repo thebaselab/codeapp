@@ -11,9 +11,9 @@ import WebKit
 
 var isEditorInited = false
 private var ToolbarHandle: UInt8 = 0
-let monacoWebView = editorWebView()
+let monacoWebView = WebViewBase()
 
-class editorWebView: KBWebViewBase {
+class WebViewBase: KBWebViewBase {
 
     init() {
         let config = WKWebViewConfiguration()
@@ -55,7 +55,7 @@ class editorWebView: KBWebViewBase {
         }
 
         let newMethod = class_getInstanceMethod(
-            editorWebView.self, #selector(monacoWebView.getCustomInputAccessoryView))
+            WebViewBase.self, #selector(WebViewBase.getCustomInputAccessoryView))
         class_addMethod(
             newClass.self, #selector(getter:UIResponder.inputAccessoryView),
             method_getImplementation(newMethod!), method_getTypeEncoding(newMethod!))

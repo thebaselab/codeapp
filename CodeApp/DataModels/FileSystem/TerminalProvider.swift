@@ -24,4 +24,6 @@ protocol TerminalServiceProvider {
     // Set Stderr callback
     // The callback will be called when stderr is being written
     func onStderr(callback: @escaping (Data) -> Void)
+
+    func onDisconnect(callback: @escaping () -> Void)
 }

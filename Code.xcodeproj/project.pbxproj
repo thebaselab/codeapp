@@ -1743,12 +1743,12 @@
 			path = Remote;
 			sourceTree = "<group>";
 		};
-		9441129B28217D4C00A8F1D7 /* Terminal */ = {
+		9441129B28217D4C00A8F1D7 /* FTP */ = {
 			isa = PBXGroup;
 			children = (
-				9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */,
+				941969282802AB64008AAEB2 /* FTPFileSystemProvider.swift */,
 			);
-			path = Terminal;
+			path = FTP;
 			sourceTree = "<group>";
 		};
 		9441129F282181C900A8F1D7 /* SFTP */ = {
@@ -1837,6 +1837,15 @@
 				9469AC9A26A33D19003F569F /* php.xcframework */,
 			);
 			path = PHP;
+			sourceTree = "<group>";
+		};
+		9491410E284B0626006E32AD /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				944FC3FE25C543CC00C7C43C /* LocalGitServiceProvider.swift */,
+				9419692A2802AB88008AAEB2 /* LocalFileSystemProvider.swift */,
+			);
+			path = Local;
 			sourceTree = "<group>";
 		};
 		94A045FC2804852600182275 /* Common */ = {
@@ -1956,7 +1965,6 @@
 		94A77794257ABB4A008FE7B2 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				9441129B28217D4C00A8F1D7 /* Terminal */,
 				94CB91AA2802A885002EAC51 /* FileSystem */,
 				94A7779E257ABD7A008FE7B2 /* MainApp.swift */,
 				94A77795257ABB69008FE7B2 /* EditorInstance.swift */,
@@ -2490,13 +2498,13 @@
 		94CB91AA2802A885002EAC51 /* FileSystem */ = {
 			isa = PBXGroup;
 			children = (
+				9491410E284B0626006E32AD /* Local */,
+				9441129B28217D4C00A8F1D7 /* FTP */,
 				9441129F282181C900A8F1D7 /* SFTP */,
 				94A777A1257ABDC3008FE7B2 /* WorkSpaceStorage.swift */,
+				9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */,
 				941969242802AB2C008AAEB2 /* FileSystemProvider.swift */,
 				94A0461228049A7A00182275 /* GitServiceProvider.swift */,
-				941969282802AB64008AAEB2 /* FTPFileSystemProvider.swift */,
-				9419692A2802AB88008AAEB2 /* LocalFileSystemProvider.swift */,
-				944FC3FE25C543CC00C7C43C /* LocalGitServiceProvider.swift */,
 				942E3200280877C900233441 /* SearchServiceProvider.swift */,
 			);
 			path = FileSystem;

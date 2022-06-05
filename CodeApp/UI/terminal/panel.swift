@@ -90,11 +90,6 @@ struct panelView: View {
                     }
                 }
 
-                //                Text("SSH").foregroundColor(currentTab == 3 ? Color.init(id: "panelTitle.activeForeground") : Color.init(id: "panelTitle.inactiveForeground")).font(.system(size: 12, weight: .light)).padding(.leading)
-                //                    .onTapGesture {
-                //                        self.currentTab = 3
-                //                    }
-
                 Spacer()
 
                 Group {
@@ -132,7 +127,9 @@ struct panelView: View {
                         .padding(.trailing)
                     }
 
-                    if currentTab == 2 {
+                    if currentTab == 2
+                        && !(currentTab == 2 && App.workSpaceStorage.currentScheme == "sftp")
+                    {
                         Image(systemName: "stop").font(.system(size: 12, weight: .light))
                             .foregroundColor(Color.init(id: "panelTitle.activeForeground")).padding(
                                 3
@@ -143,19 +140,14 @@ struct panelView: View {
                             .padding(.trailing)
                             .highPriorityGesture(
                                 TapGesture().onEnded {
-                                    if nodeUUID != nil {
-                                        let notificationName = CFNotificationName(
-                                            "com.thebaselab.code.node.stop" as CFString)
-                                        let notificationCenter =
-                                            CFNotificationCenterGetDarwinNotifyCenter()
-                                        CFNotificationCenterPostNotification(
-                                            notificationCenter, notificationName, nil, nil, false)
-                                    }
-                                    ios_kill()
+                                    App.terminalInstance.killCurrentProcess()
+                                    App.terminalInstance.reset()
                                 })
                     }
 
-                    if currentTab != -1 {
+                    if currentTab != -1
+                        && !(currentTab == 2 && App.workSpaceStorage.currentScheme == "sftp")
+                    {
                         Image(systemName: "trash").font(.system(size: 12, weight: .light))
                             .foregroundColor(Color.init(id: "panelTitle.activeForeground")).padding(
                                 3
@@ -169,13 +161,7 @@ struct panelView: View {
                                     if showSplitView || currentTab == 1 {
                                         App.compileManager.consoleContent = ""
                                     } else if currentTab == 2 {
-                                        guard let prompt = App.terminalInstance.executor?.prompt
-                                        else {
-                                            return
-                                        }
-                                        App.terminalInstance.executeScript(
-                                            #"term.write('\033c"# + "\(prompt)' + localEcho._input)"
-                                        )
+                                        App.terminalInstance.reset()
                                     } else if currentTab == 0 {
                                         App.compileManager.stdin = ""
                                     }
@@ -263,28 +249,6 @@ struct panelView: View {
                                 Button("Clear Console") {
                                     App.terminalInstance.reset()
                                 }.keyboardShortcut("k", modifiers: [.command])
-
-                                Button("Kill Process") {
-                                    if let state = App.terminalInstance.executor?.state,
-                                        state == .interactive
-                                    {
-                                        App.terminalInstance.executor?.sendInput(input: "\u{3}")
-                                    } else {
-                                        if nodeUUID != nil {
-                                            let notificationName = CFNotificationName(
-                                                "com.thebaselab.code.node.stop" as CFString)
-                                            let notificationCenter =
-                                                CFNotificationCenterGetDarwinNotifyCenter()
-                                            CFNotificationCenterPostNotification(
-                                                notificationCenter, notificationName, nil, nil,
-                                                false)
-                                        }
-                                        App.terminalInstance.clearLine()
-                                        App.terminalInstance.executor?.kill()
-                                    }
-
-                                }
-                                .keyboardShortcut("c", modifiers: [.control])
 
                                 ViewRepresentable(wv)
                                     .onTapGesture {
