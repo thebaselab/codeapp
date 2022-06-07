@@ -22,7 +22,7 @@ struct GitCell_controls: View {
                 .onTapGesture {
                     do {
                         try App.workSpaceStorage.gitServiceProvider?.unstage(paths: [
-                            itemUrl.absoluteString.removingPercentEncoding!
+                            itemUrl.absoluteString
                         ])
                         App.git_status()
                     } catch {
@@ -39,7 +39,7 @@ struct GitCell_controls: View {
                     .onTapGesture {
                         if status == .workTreeModified {
                             App.workSpaceStorage.gitServiceProvider?.previous(
-                                path: itemUrl.absoluteString.removingPercentEncoding!,
+                                path: itemUrl.absoluteString,
                                 error: {
                                     App.notificationManager.showErrorMessage(
                                         $0.localizedDescription)
@@ -63,7 +63,7 @@ struct GitCell_controls: View {
                         } else {
                             do {
                                 try App.workSpaceStorage.gitServiceProvider?.checkout(paths: [
-                                    itemUrl.absoluteString.removingPercentEncoding!
+                                    itemUrl.absoluteString
                                 ])
                                 App.git_status()
                             } catch {
@@ -80,7 +80,7 @@ struct GitCell_controls: View {
                 .onTapGesture {
                     do {
                         try App.workSpaceStorage.gitServiceProvider?.stage(paths: [
-                            itemUrl.absoluteString.removingPercentEncoding!.removingPercentEncoding!
+                            itemUrl.absoluteString
                         ])
                         App.git_status()
                     } catch {

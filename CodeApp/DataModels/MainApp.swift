@@ -419,12 +419,6 @@ class MainApp: ObservableObject {
             notificationManager.showErrorMessage("No changes are made in this file")
             return
         }
-        for i in editors {
-            if i.url == url.absoluteString {
-                openEditor(urlString: i.url, type: .diff)
-                return
-            }
-        }
         workSpaceStorage.gitServiceProvider?.previous(
             path: url.absoluteString,
             error: {

@@ -271,7 +271,6 @@ class LocalGitServiceProvider: GitServiceProvider {
                         continue
                     }
                 }
-
                 completionHandler(indexedGroup, workingGroup, self.branch())
             case let .failure(_error):
                 error(_error)
