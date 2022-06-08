@@ -1,3 +1,3 @@
-Library/* linguist-vendored
-ClangLib/* linguist-vendored
-CodeApp/npm.bundle/* linguist-vendored
+Library/** linguist-vendored
+ClangLib/** linguist-vendored
+CodeApp/npm.bundle/** linguist-vendored
