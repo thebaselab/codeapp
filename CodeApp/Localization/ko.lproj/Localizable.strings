@@ -1,0 +1,357 @@
+/*
+  Localizable.strings
+  Code App
+
+  Created by Ken Chung on 6/12/2020.
+  
+*/
+
+"Welcome Message" =
+"# Code App
+##### **v1.3.3 (2022년 5월)**
+#### 시작
+[새 파일...](https://thebaselab.com/code/newfile)
+[파일 열기...](https://thebaselab.com/code/openfile)
+[폴더 열기...](https://thebaselab.com/code/openfolder)
+[저장소 복제...](https://thebaselab.com/code/clone)
+
+#### 지원
+[문서](https://github.com/thebaselab/codeapp/wiki)
+[깃헙(GitHub)](https://github.com/thebaselab/codeapp)
+[이메일(E-Mail)](mailto:support@thebaselab.com)
+[트위터(Twitter)](https://twitter.com/thebaselab)
+";
+
+"Changelog.message" =
+"
+### v1.3.3 (2022년 5월)
+- 오류 수정
+### v1.3.2 (2022년 5월)
+- 기존 사용자가 테마 기능에 접근할 수 없는 오류 수정
+### v1.3.1 (2022년 5월)
+- 오류 수정
+- 이제 자바(Java)에서 사용자 정의 엔트리 클래스 사용 가능
+- Code+ 소개 - 모든 사람에게 Code 앱을 제공하며, 모든 테마의 잠금을 해제할 수 있는 구독 서비스. 기존 사용자는 계속해서 앱에 대한 전체 권한을 가짐.
+### v1.3.0 (2022년 5월)
+- 원격 서버 지원(SFTP와 FTP)
+- 동적 타입 지원
+- 실점적 기능: 텍스트 파일에 대한 맞춤법 검사
+### v1.2.13 (2022년 3월)
+- iOS 15.4와의 호환성
+- Node.js에 대한 국제화 지원(i18n)
+### v1.2.12 (2022년 3월)
+- 중대한 버그 수정
+### v1.2.10 (2022년 3월)
+- 사용자 정의 키보드 바로가기 키(단축키)
+- 행 번호를 스와이프하여 텍스트 선택
+- UI 개서
+- 가끔 편집기가 로드되지 않는 문제 수정
+- Node.js 16.13.2
+### v1.2.9 (2022년 1월)
+- 다음의 문제 수정
+  - 유럽식 레이아웃 키보드에서 일부 키가 작동하지 않음 (#237)
+  - `curl`이 작동하지 않음 (#330)
+  - 기본 인수가 일부 npm 명령과 충돌 (#326)
+### v1.2.8 (2021년 12월)
+- 다음의 문제 수정
+  - ssh-keygen으로 인해 터미널이 중단됨 (#314)
+  - 편집기가 때때로 빈 화면을 표시
+- 테라폼(Terraform)에 대한 구문 강죠 표시 추가 (#319)
+### v1.2.7 (2021년 12월)
+- 일반적인 개선
+### v1.2.6 (2021년 9월)
+- 최신 iOS 버전과의 호환성
+- 기타 개선
+### v1.2.5 (2021년 7월)
+- 터미널(Terminal)
+  - clang / clang++에 관한 몇 가지 문제 수정
+### v1.2.4 (2021년 6월)
+- 편집기
+  - 마우스 또는 트랙패드를 통한 선택이 되지 않는 문제 수정
+  - 타입스크립트(TypeScript) 정의를 4.2.4로 업데이트
+- 인터페이스
+  - 아이폰(iPhone)을 위한 새로운 컴팩트 사이드바 디자인
+  - 편집기 탭 재정렬 기능
+  - Xcode 테마의 가독성 향상
+  - 컨텍스트 메뉴에서 파일 또는 폴더 복사 가능
+- 성능
+  - 파일 앱에서 SMB 프로토콜 드라이브를 열 때 성능 개선
+- 깃(Git)
+  - 다양한 원격 저장소에 대한 호환성 개선(Azure DevOps 등)
+  - 인라인 변경 사항(Diff) 표시
+  - 실험적인 Git CLI 도구(원격 작업은 아직 지원되지 않음)
+- 터미널
+  - 파일 경로 자동 완성
+  - `code <file>`을 사용하여 편집기에서 코드 열기
+- 런타임
+  - Clang (`clang main.c`과 `./a.out`으로 C 프로그램 실행)
+  - Clang++ (`clang++ main.cpp`과 `./a.out`으로 C++ 프로그램 실행)
+  - PHP (`php`으로 PHP 프로그램 실행 및 `php -S localhost:<port>`으로 호스트 웹 서버 실행)
+
+---
+
+### v1.2.3 (2021년 4월)
+- 편집기
+  - 6 색상의 테마 추가
+  - 읽기 전용 모드
+  - Node.js에 대한 내장 타입
+  - @types 정의 지원
+- 탐색기
+  - 다중 파일 검색
+- 파이썬(Python) 런타임
+  - Matplotlib, Pandas 모듈 내장
+- 기타
+  - UI 상태 복원
+  - 독일어 지원
+  - 오류 수정 및 기타 개선
+
+---
+
+### v1.2.1 (2021년 3월)
+- Node.js 런타임
+  - 오프라인 상태에서 자바스크립트 실행
+  - npm 모듈 설치
+  - 전역 자바스크립트(Javascript) 명령 설치 (tsc, prettier 등)
+  - 새로운 터미널 명령: npm, npx, node
+- 파이썬(Python) 3.9.2 런타임
+  - 오프라인 상태에서 파이썬 실행
+  - pip를 통한 모듈 설치
+  - 전역 파이썬(Python) 명령 설치
+  - 새로운 터미널 명령: pip, python, python3
+- 편집기
+  - `문제` 탭
+  - 새로운 마크다운(Markdown) 스타일
+  - 뷰(Vue)에 대한 구문 강조 표시
+  - 고 주사율 디스플레이 장비에 대한 부드러운 스크롤 옵션
+- 터미널
+  - 밝은 색 구성표 제공
+- 탐색기
+  - 행 높이 축소
+- 오류 수정
+
+---
+
+### v1.1.9 (2021년 2월)
+- 언어
+  - 더 빠른 실행
+- 오류 수정
+
+---
+
+### v1.1.8 (2021년 2월)
+- 편집기
+  - TextMate 언어 문법 방식으로 변경(더 향상된 구문 강조)
+  - 더 많은 언어 지원(Groovy, HLSL, Log, Makefile, Shaderlab, Fortran, Matlab)
+  - 때때로 포인터가 클락하지 못하는 오류 수정
+  - 새로운 키보드 툴바
+- 형상 관리
+  - 성능 및 안정성 향상
+  - 스테이징(Staging) 변경
+  - 브랜치(Branch) 변경
+  - 분리 헤드(Detached head) 모드
+  - 변경 사항 되돌리기
+- 언어
+  - 그루비(Groovy) 지원
+- 터미널
+  - SSH 지원
+  - 오류 수정
+- 탐색기
+  - 사이드바를 닫더라도 디렉토리를 접어놓은 상태로 유지
+  - 폴더 이름을 탭하여 폴더를 펼치는 기능
+- 기타
+  - 사이드바 너비 축소
+  - 새로운 구문 강조 시스템을 위한 일시적인 테마 제거
+  - 일시적인 JSON Intellisense 비활성
+
+---
+
+### v1.1.7 (2021년 1월)
+- 편집기
+  - 코드를 실행하거나 키보드를 사용하지 않을 때 변경 사항을 디스크에 기록
+  - 간헐적으로 가상 키보드가 나타나지 않는 문제를 수정
+- 형상 관리
+  - 개인 저장소 복제 가능
+  - 원격 저장소(Remote)로부터 푸시, 풀 및 동기화 가능
+  - 복제한 저장소의 이름이 올바르게 지정되지 않는 문제 수정
+- 터미널
+  - 70개 이상의 리눅스 명령어 지원(ls, cd, nslookup 등)
+  - 파이프, 명령 기록, 자동완성과 같이 Bash와 유사한 사용자 프리미티브(User Primitives)
+  - 탭(Tab) 키를 눌러 사용 가능한 모든 명령을 보기
+- 탐색기
+  - 파일 및 디렉토리가 알파벳순으로 정렬
+  - 점(.)으로 시작하는 파일이나 디렉토리는 기본적으로 숨김
+  - 두 손가락 스와이프 제스처를 통한 항목 선택
+- 기타
+  - 이제 파일 앱 또는 다른 앱에서 코드 앱으로 파일을 열 수 있음
+  - 이제 홈 화면에서 앱 아이콘을 길게 눌러 최근 문서를 표시
+  - 오타 수정
+";
+
+"Send us an email" = "개발자에게 이메일 보내기";
+"Open an issue on GitHub" = "깃헙(GitHub)에 이슈 생성하기";
+"Clear console" = "콘솔 비우기";
+"Kill Process" = "프로세스 종료";
+"Sync" = "동기화";
+"Synchronize Changes" = "변경 사항 동기화(깃(Git) 풀 및 푸시(Pull & Push))";
+"You don't have any open editor." = "열린 편집기가 없습니다.";
+"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "이는 원격 서버의 변경 사항을 로컬 저장소로 풀(Pull)한 다음에 로컬 커밋(Commit)을 원격 서버로 푸시(Push)합니다. 충돌 사항이 있으면 로컬의 복사본으로 병합(Merge) 및 덮어쓰기를 합니다.";
+"Remote Credentials (For Git pull, push and clone)" = "원격 서버 자격 증명(깃(Git) 풀, 푸시 및 복제(Pull, Push & Clone))";
+"Password / Personal Access Token" = "암호 / 개인 접속 토큰";
+"User Name" = "사용자 이름";
+"Show hidden files" = "숨김 파일 표시";
+"Erase" = "지우기";
+"This will erase all user settings, including author identity and credentials." = "이는 작성자 ID 및 로그인 정보를 포함한 모든 사용자 설정을 지웁니다.";
+"Erase all settings" = "모든 설정 지우기";
+"Release Notes" = "릴리즈 노트";
+
+"New File" = "새 파일";
+"Open File" = "파일 열기";
+"Open Folder" = "폴더 열기";
+"Open Editors" = "편집기 열기";
+"EXPLORER" = "탐색기";
+"SEARCH" = "검색";
+"Search" = "검색";
+"Results" = "결과";
+"Search Text" = "텍스트 검색";
+"Search File" = "파일 검색";
+"Quick add" = "빠른 추가";
+"Custom" = "사용자 정의";
+"Where" = "경로";
+"Current Folder" = "현재 폴더";
+"Add File" = "파일 추가하기";
+"INPUT" = "입력";
+"PROBLEMS" = "문제";
+"OUTPUT" = "출력";
+"Options" = "옵션";
+"Close All" = "모두 닫기";
+"Preview in Safari" = "Safari에서 미리보기";
+"Mini Map" = "미니맵";
+"Line Numbers" = "행 번호";
+"OTHERS" = "기타";
+"Tab Size" = "탭 너비";
+
+"Settings" = "설정";
+"General" = "일반";
+"Editor" = "편집기";
+"Compiler" = "컴파일러";
+"Accent" = "제목";
+"Font Size" = "글꼴 크기";
+"Editor Font Size" = "편집기 글꼴 크기";
+"Terminal Font Size" = "터미널 글꼴 크기";
+"Bracket Completion" = "괄호 자동 완성";
+"Theme" = "테마";
+"Rate Code App" = "Code App 평가하기";
+"About" = "정보";
+"Version" = "버전";
+
+"Done" = "완료";
+
+"Recent" = "최근 항목";
+"Show in Files App" = "파일 앱에서 보기";
+"Copy Relative Path" = "상대 경로 복사하기";
+"Delete" = "삭제하기";
+"Color Scheme" = "색 구성표";
+"Dark Theme" = "어두운 테마";
+"Dark Themes" = "어두운 테마들";
+"Light Theme" = "밝은 테마";
+"Light Themes" = "밝은 테마들";
+"Text Wrap" = "줄바꿈";
+"Render Whitespace" = "공백 표시";
+
+"Share" = "공유";
+"Rename" = "이름 바꾸기";
+"Assign as workplace folder" = "작업 공간(Workplace) 폴더로 지정하기";
+"Select for compare" = "비교를 위해 선택하기";
+"Compare with selected" = "선택 항목과 비교하기";
+"Version Control" = "형상 관리";
+"Author Identity" = "작성자 정보";
+"Authentication" = "자격 증명";
+"Name" = "이름";
+"Email address" = "이메일(E-Mail) 주소";
+"Save" = "저장하기";
+"Close Editor" = "편집기 닫기";
+"Zoom in" = "확대하기";
+"Zoom out" = "축소하기";
+"Show Explorer" = "탐색기 보기";
+"Show Search" = "검색 보기";
+"Show Source Control" = "소스 제어 보기";
+"User Settings" = "사용자 설정";
+"Show Panel" = "패널 보기";
+"Run Code" = "코드 실행하기";
+"New Folder" = "새 폴더";
+
+"Source Control" = "소스 제어";
+"The folder currently opened doesn't have a git repository." = "현재 열려 있는 폴더는 깃(Git) 저장소가 없습니다.";
+"Example: https://github.com/thebaselab/codeapp.git" = "예: https://github.com/thebaselab/codeapp.git";
+"Initialize Repository" = "저장소 초기화하기";
+"Clone Repository" = "저장소 복제하기";
+"TERMINAL" = "터미널";
+"Keyboard Toolbar" = "키보드 툴바";
+"Always Open In New Tab" = "항상 새 탭에서 열기";
+"Changes" = "변경 사항";
+"There are no staged changes." = "변경 사항이 없습니다.";
+"Message (⌘Enter to commit)" = "메시지(커밋하라면 ⌘Enter)";
+"Staged Changes" = "변경 사항";
+"No changes are made in the working directory" = "작업 디렉토리에 변경 사항이 없습니다.";
+"Git checkout: Uncommitted Changes" = "깃(Git) 체크아웃: 커밋되지 않은 변경 사항";
+"Uncommited changes will be lost. Do you wish to proceed?" = "커밋되지 않은 변경 사항은 사라집니다. 계속하시겠습니까?";
+"Commit message cannot be empty" = "커밋 메시지는 비워둘 수 없습니다.";
+"Commit succeeded" = "커밋 성공";
+"Pushing to remote" = "원격 서버로 푸시";
+"Push succeeded" = "푸시 성공";
+"No changes are made in this file" = "이 파일에는 변경 사항이 없습니다.";
+
+"Smooth Scrolling" = "부드러운 스크롤";
+"Stage All Changes" = "모든 변경사항 스테이지하기(Stage)";
+"Push" = "푸시하기(Push)";
+"Fetch" = "가져오기(Fetch)";
+
+"Welcome" = "시작하기";
+"Licenses" = "라이선스";
+"Version" = "버전";
+"Code App by thebaselab" = "thebaselab의 Code App";
+"Themes" = "테마";
+"Read-only Mode" = "읽기 전용 모드";
+"Show Welcome Page" = "시작하기 화면 보기";
+"UI State Restoration" = "UI 상태 복원";
+"Open in Tab" = "탭으로 열기";
+"Show Command in Terminal" = "터미널에서 명령 보기";
+"Languages (Local)" = "프로그래밍 언어 (로컬)";
+"Languages (Remote)" = "프로그래밍 언어 (원격)";
+"Duplicate" = "복사하기";
+"Console Font Size" = "콘솔 글꼴 크기";
+
+"Custom Keyboard Shortcuts" = "키보드 바로가기 키(단축키) 사용자화";
+
+"Remotes" = "원격 서버";
+"You don't have any saved remote." = "저장한 원격 서버가 없습니다.";
+"New remote" = "새 원격 서버";
+"Address" = "주소";
+"Port" = "포트(Port)";
+"Username" = "사용자 이름";
+"Password" = "암호";
+"Use key authentication" = "키 인증 사용";
+"Remember address" = "주소 기억하기";
+"Connect" = "연결하기";
+"Disconnect" = "연결 끊기";
+"Current Remote" = "현재 원격 서버";
+"Remember credentials" = "자격 증명 기억하기";
+"Key passphrase" = "SSH 비밀키";
+"Show public key" = "공개 키 보기";
+
+"Expermimental Features" = "실험 기능(실험실)";
+"Enable spell check in text files" = "텍스트 파일에서 맞춤법 검사 활성화";
+"Spell checking on content changed" = "변경한 내용에 대해 맞춤법 검사";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "%@에의 12개월";
+"subscription.message" = "모든 사람에게 Code를 제공하고 모든 테마를 잠금 해제하십시오. Code는 오픈 소스로 유지되며 모든 기존 기능은 계속 무료로 사용할 수 있습니다.";
+"subscription.payment.description %@ %@" = "Code+는 %@부터 취소할 때까지 매년 %@ 자동으로 갱신됩니다.";
+"subscription.payment.disallowed" = "기기가 결제를 허용하지 않도록 설정되었습니다.";
+"subscription.join" = "Code+ 가입";
+"terms_of_use" = "이용 약관";
+"code.and.privacy" = "개인 정보 보호 정책";
+"credentials.note" = "참고: 자격 증명은 장치의 보안 영역에 저장되며 액세스 권한이 없습니다.";
+
+"settings.editor.font" = "편집기 글꼴";
+"settings.editor.font.reset" = "기본값";

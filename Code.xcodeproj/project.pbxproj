@@ -1115,6 +1115,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		73F80B0F2850F7E5000EF3FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		73F80B102850F7EE000EF3FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94127C3F280335C8008C7F82 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		941969242802AB2C008AAEB2 /* FileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemProvider.swift; sourceTree = "<group>"; };
 		941969282802AB64008AAEB2 /* FTPFileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPFileSystemProvider.swift; sourceTree = "<group>"; };
@@ -2655,6 +2657,7 @@
 				"zh-Hans",
 				de,
 				Base,
+				ko,
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
@@ -3050,6 +3053,7 @@
 			children = (
 				9425205A263E103E0029427A /* zh-Hans */,
 				9425205C263E10490029427A /* de */,
+				73F80B102850F7EE000EF3FC /* ko */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -3060,6 +3064,7 @@
 				94A56831257CC3A1008A6530 /* zh-Hans */,
 				94A56833257CC3AF008A6530 /* en */,
 				94D7DEE12632C6B000FA0760 /* de */,
+				73F80B0F2850F7E5000EF3FC /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
