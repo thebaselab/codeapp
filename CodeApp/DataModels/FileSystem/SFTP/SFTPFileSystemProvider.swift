@@ -18,7 +18,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
     }
     var _terminalServiceProvider: SFTPTerminalServiceProvider? = nil
 
-    var homePath: String? = "/"
+    var homePath: String? = ""
     var fingerPrint: String? = nil
 
     private var didDisconnect: (Error) -> Void
@@ -92,7 +92,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
             let path = self.session.channel.execute("echo $HOME", error: &error)
                 .replacingOccurrences(
                     of: "\n", with: "")
-            if error == nil {
+            if error == nil && path.hasPrefix("/") {
                 // $HOME might not be defined in non Unix environment
                 self.homePath = path
             }

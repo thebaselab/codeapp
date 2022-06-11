@@ -58,7 +58,6 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
                 self.session.channel.requestPty = true
                 self.session.channel.ptyTerminalType = .xterm
                 try self.session.channel.startShell()
-                try self.session.channel.write("clear\n")
             } catch {
                 print("Unable to start shell,", error)
             }
@@ -69,8 +68,10 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
     }
 
     func disconnect() {
-        self.session.channel.closeShell()
-        self.session.disconnect()
+        queue.async {
+            self.session.channel.closeShell()
+            self.session.disconnect()
+        }
         didDisconnect?()
     }
 
