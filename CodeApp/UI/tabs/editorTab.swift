@@ -58,7 +58,7 @@ struct editorTab: View {
                         Image(systemName: "xmark")
                             .font(.system(size: 8))
                             .foregroundColor(Color.init(id: "tab.activeForeground"))
-                            .frame(width: 18, height: 18)
+                            .frame(width: 26, height: 26)
                             .contentShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
                             .hoverEffect(.highlight)
                             .onTapGesture {

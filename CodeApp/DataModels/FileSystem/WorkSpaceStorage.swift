@@ -21,6 +21,7 @@ class WorkSpaceStorage: ObservableObject {
     private var onTerminalDataAction: ((Data) -> Void)? = nil
     private var directoryStorage: [String: [(fileItemRepresentable)]] = [:]
     private var fss: [String: FileSystemProvider] = [:]
+    private var isConnecting = false
 
     enum FSError: Error, LocalizedError {
         case NotImplemented
@@ -78,6 +79,22 @@ class WorkSpaceStorage: ObservableObject {
     }
 
     func connectToServer(
+        host: URL, credentials: URLCredential, usesKey: Bool = false,
+        completionHandler: @escaping (Error?) -> Void
+    ) {
+        if isConnecting {
+            return
+        }
+        isConnecting = true
+        _connectToServer(
+            host: host, credentials: credentials,
+            completionHandler: { error in
+                completionHandler(error)
+                self.isConnecting = false
+            })
+    }
+
+    private func _connectToServer(
         host: URL, credentials: URLCredential, usesKey: Bool = false,
         completionHandler: @escaping (Error?) -> Void
     ) {

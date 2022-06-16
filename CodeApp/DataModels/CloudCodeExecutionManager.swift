@@ -9,10 +9,6 @@ import SwiftUI
 import ZIPFoundation
 
 class CloudCodeExecutionManager: ObservableObject {
-
-    private static let judge0Server = ""
-    private static let judge0Key = ""
-
     @Published var isRunningCode = false
     @Published var consoleContent = ""
     @Published var stdin: String = ""
@@ -88,7 +84,7 @@ class CloudCodeExecutionManager: ObservableObject {
 
     func runCode(directoryURL: URL, source: String, language: Int) {
 
-        if CloudCodeExecutionManager.judge0Server.isEmpty {
+        if JUDGE0_ENDPOINT.isEmpty {
             self.consoleContent = "Server-side execution is unsupported in TestFlight builds."
             return
         }
@@ -100,7 +96,7 @@ class CloudCodeExecutionManager: ObservableObject {
         var request = URLRequest(
             url: URL(
                 string:
-                    "\(CloudCodeExecutionManager.judge0Server)/submissions/?base64_encoded=true&wait=true"
+                    "\(JUDGE0_ENDPOINT)/submissions/?base64_encoded=true&wait=true"
             )!)
         request.httpMethod = "POST"
 
@@ -125,7 +121,7 @@ class CloudCodeExecutionManager: ObservableObject {
 
         request.addValue("application/json", forHTTPHeaderField: "content-Type")
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue(CloudCodeExecutionManager.judge0Key, forHTTPHeaderField: "X-Auth-Token")
+        request.addValue(JUDGE0_KEY, forHTTPHeaderField: "X-Auth-Token")
 
         mainSession = URLSession.shared
 
