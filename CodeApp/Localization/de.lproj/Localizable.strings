@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.3 (May 2022)**
+##### **v1.3.4 (June 2022)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -24,6 +24,12 @@
 
 "Changelog.message" =
 "
+### v1.3.4 (June 2022)
+- Terminal support for SFTP
+- Support for Fira Code and custom fonts
+- Korean localization
+- New documentation website
+- General improvements
 ### v1.3.3 (May 2022)
 - Bug fixes
 ### v1.3.2 (May 2022)

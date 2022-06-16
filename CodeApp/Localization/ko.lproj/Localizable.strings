@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.3 (2022년 5월)**
+##### **v1.3.4 (2022년 6월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -24,6 +24,12 @@
 
 "Changelog.message" =
 "
+### v1.3.4 (2022년 6월)
+- SFTP에 대한 터미널 지원
+- Fira 코드 및 사용자 정의 글꼴 지원
+- 한국어 현지화
+- 새로운 문서 웹사이트
+- 일반 개선 사항
 ### v1.3.3 (2022년 5월)
 - 오류 수정
 ### v1.3.2 (2022년 5월)
