@@ -10,6 +10,9 @@ APPLE_KEY_ID = ENV["APPLE_KEY_ID"]
 APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 
+JUDGE0_KEY = ENV["JUDGE0_KEY"]
+JUDGE0_ENDPOINT = ENV["JUDGE0_ENDPOINT"]
+
 def delete_temp_keychain(name)
   delete_keychain(
     name: name
@@ -53,6 +56,8 @@ platform :ios do
 
     Dir.chdir("..") do
       sh("./downloadFrameworks.sh")
+      sh(%Q[echo 'let JUDGE0_ENDPOINT = "#{JUDGE0_ENDPOINT}"' > CodeApp/DataModels/Constants.swift])
+      sh(%Q[echo 'let JUDGE0_KEY = "#{JUDGE0_KEY}"' >> CodeApp/DataModels/Constants.swift])
     end
 
     match(

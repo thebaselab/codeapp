@@ -1,7 +1,5 @@
-name: Build & Deploy to TestFlight
-on:
-  push:
-    branches: [main]
+name: Build & Upload to App Store
+on: [workflow_dispatch]
 
 concurrency:
   group: ${{ github.ref }}
@@ -9,14 +7,14 @@ concurrency:
 
 jobs:
   deploy:
-    name: Deploying to TestFlight
+    name: Deploying to App Store
     runs-on: macOS-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Deploy iOS Beta to TestFlight via Fastlane
+      - name: Deploy production build to App Store via Fastlane
         uses: maierj/fastlane-action@v2.2.0
         with:
           lane: "open_beta"
@@ -36,11 +34,5 @@ jobs:
           APPLE_KEY_ID: "${{ secrets.APPLE_KEY_ID }}"
           APPLE_ISSUER_ID: "${{ secrets.APPLE_ISSUER_ID }}"
           APPLE_KEY_CONTENT: "${{ secrets.APPLE_KEY_CONTENT }}"
-          JUDGE0_KEY: ""
-          JUDGE0_ENDPOINT: ""
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ipa-build
-          path: Code.ipa
+          JUDGE0_KEY: "${{ secrets.JUDGE0_KEY }}"
+          JUDGE0_ENDPOINT: "${{ secrets.JUDGE0_ENDPOINT }}"

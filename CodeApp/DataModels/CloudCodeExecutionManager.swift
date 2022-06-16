@@ -121,7 +121,7 @@ class CloudCodeExecutionManager: ObservableObject {
 
         request.addValue("application/json", forHTTPHeaderField: "content-Type")
         request.addValue("application/json", forHTTPHeaderField: "accept")
-        request.addValue(JUDGE0_ENDPOINT_KEY, forHTTPHeaderField: "X-Auth-Token")
+        request.addValue(JUDGE0_KEY, forHTTPHeaderField: "X-Auth-Token")
 
         mainSession = URLSession.shared
 

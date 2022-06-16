@@ -1,2 +1,2 @@
 let JUDGE0_ENDPOINT = ""
-let JUDGE0_ENDPOINT_KEY = ""
+let JUDGE0_KEY = ""
