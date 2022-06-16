@@ -64,6 +64,7 @@ struct CreateRemoteSection: View {
 
                         TextField("Address", text: $address)
                             .autocapitalization(.none)
+                            .disableAutocorrection(true)
                             .textContentType(.URL)
                             .focused($focusedField, equals: .address)
                     }
