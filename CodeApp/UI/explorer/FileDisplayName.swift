@@ -58,7 +58,6 @@ struct FileDisplayName: View {
                 Text(name)
                     .font(.subheadline)
                     .foregroundColor(Color.init(id: "list.inactiveSelectionForeground"))
-                Spacer()
             }
 
         }
