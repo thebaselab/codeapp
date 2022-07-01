@@ -37,7 +37,6 @@ struct mainView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
-    @AppStorage("accentColor") var accentColor: String = "blue"
     @AppStorage("editorFontSize") var editorTextSize: Int = 14
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("compilerShowPath") var compilerShowPath = false

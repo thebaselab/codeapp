@@ -82,7 +82,6 @@ struct BannerWithButton: View {
     let data: BannerData
     @Binding var isPresented: Bool
     @Binding var isRemoved: Bool
-    @AppStorage("accentColor") var accentColor: String = "blue"
 
     var body: some View {
         VStack {
@@ -104,7 +103,7 @@ struct BannerWithButton: View {
                         .system(size: 12)
                     ).padding(.leading, 8).padding(.trailing, 8).padding(.top, 4).padding(
                         .bottom, 4
-                    ).background(Color.init(accentColor)).cornerRadius(10).onTapGesture {
+                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10).onTapGesture {
                         data.primaryAction?()
                         withAnimation {
                             isRemoved = true
@@ -116,7 +115,7 @@ struct BannerWithButton: View {
                         .system(size: 12)
                     ).padding(.leading, 8).padding(.trailing, 8).padding(.top, 4).padding(
                         .bottom, 4
-                    ).background(Color.init(accentColor)).cornerRadius(10).onTapGesture {
+                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10).onTapGesture {
                         data.secondaryAction?()
                         withAnimation {
                             isRemoved = true

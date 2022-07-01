@@ -22,7 +22,6 @@ struct explorer: View {
     @State private var editMode = EditMode.inactive
     @Binding var showingNewFileSheet: Bool
     @Binding var showsDirectoryPicker: Bool
-    @AppStorage("accentColor") var accentColor: String = "blue"
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
     @State private var searchString: String = ""
     @State private var searching: Bool = false

@@ -29,7 +29,6 @@ struct settingView: View {
     @AppStorage("editorWordWrap") var editorWordWrap: String = "off"
 
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
-    @AppStorage("accentColor") var accentColor: String = "blue"
 
     @AppStorage("toolBarEnabled") var toolBarEnabled: Bool = true
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
@@ -49,10 +48,6 @@ struct settingView: View {
     let colorSchemes = ["Automatic", "Dark", "Light"]
     let renderWhitespaceOptions = ["None", "Boundary", "Selection", "Trailing", "All"]
     let wordWrapOptions = ["off", "on", "wordWrapColumn", "bounded"]
-    let accentColors = [
-        Color.init("blue"), Color.init("purple"), Color.init("pink"), Color.init("red"),
-        Color.init("orange"), Color.init("yellow"), Color.init("green"), Color.init("gray"),
-    ]
 
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -115,7 +110,7 @@ struct settingView: View {
                         UIApplication.shared.open(url)
                     }) {
                         Text("Open an issue on GitHub")
-                            .foregroundColor(Color.init(accentColor))
+                            .foregroundColor(Color.init(id: "statusBar.background"))
                     }
 
                     Button(action: {
@@ -124,7 +119,7 @@ struct settingView: View {
                         UIApplication.shared.open(url)
                     }) {
                         Text("Send us an email")
-                            .foregroundColor(Color.init(accentColor))
+                            .foregroundColor(Color.init(id: "statusBar.background"))
                     }
 
                     Button(action: {
@@ -136,7 +131,7 @@ struct settingView: View {
                         UIApplication.shared.open(writeReviewURL)
                     }) {
                         Text(NSLocalizedString("Rate Code App", comment: ""))
-                            .foregroundColor(Color.init(accentColor))
+                            .foregroundColor(Color.init(id: "statusBar.background"))
                     }
                 }
 
