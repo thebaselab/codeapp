@@ -43,6 +43,10 @@
 	<string>Authentication with Face ID</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Access to Photo Library is required to save images.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>FiraCode-Regular.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -70,10 +74,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>FiraCode-Regular.ttf</string>
 	</array>
 	<key>UISupportsDocumentBrowser</key>
 	<true/>
