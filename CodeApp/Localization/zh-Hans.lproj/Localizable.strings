@@ -182,7 +182,7 @@
   - 文件和目录现在按字母顺序排序
   - 现在默认隐藏以点开头的文件或目录
   - 能够以两指平移手势选择项目
-- 其他改進
+- 其他改进
   - 您可以直接从文件应用程序或其他应用程序中使用Code App打开文件
   - 可以在主屏幕上按住应用程序图标以打开最近文档
 ";
@@ -238,8 +238,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "New File" = "新建文件";
 "Open File" = "打开文件";
-"Open Folder" = "打開文件夾￼";
-"Open Editors" = "打开的编辑器￼￼";
+"Open Folder" = "打开文件夹";
+"Open Editors" = "打开的编辑器";
 "EXPLORER" = "资源管理器￼￼";
 "SEARCH" = "搜索";
 "Search" = "搜索";
@@ -248,7 +248,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Search File" = "搜索文件";
 "Quick add" = "新建文件";
 "Custom" = "自定义";
-"Where" = "￼路徑";
+"Where" = "路径";
 "Current Folder" = "当前文件夹";
 "Add File" = "新建文件";
 "INPUT" = "输入";
@@ -266,7 +266,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "General" = "一般";
 "Editor" = "编辑器";
 "Compiler" = "编译器";
-"Accent" = "主題";
+"Accent" = "主题";
 "Font Size" = "字体大小";
 "Editor Font Size" = "编辑器字体大小";
 "Terminal Font Size" = "控制台字体大小";
@@ -310,7 +310,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "User Settings" = "用户设置";
 "Show Panel" = "显示终端";
 "Run Code" = "运行代码";
-"New Folder" = "新建文件夾";
+"New Folder" = "新建文件夹";
 
 "Source Control" = "源码管理";
 "The folder currently opened doesn't have a git repository." = "当前打开的文件夹没有Git存储库。";
@@ -325,7 +325,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Message (⌘Enter to commit)" = "提交备注 (⌘Enter 以提交)";
 "Staged Changes" = "缓存变更";
 "No changes are made in the working directory" = "没有任何未缓存的变更。";
-"Git checkout: Uncommitted Changes" = "Git checkout: 未提交的更改 ";
+"Git checkout: Uncommitted Changes" = "Git checkout: 未提交的更改";
 "Uncommited changes will be lost. Do you wish to proceed?" = "未提交的更改将丢失。 你要继续吗？";
 "Commit message cannot be empty" = "备注不能为空";
 "Commit succeeded" = "提交成功";
