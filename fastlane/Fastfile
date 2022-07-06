@@ -80,7 +80,6 @@ platform :ios do
     pilot(
       apple_id: "#{DEVELOPER_APP_ID}",
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-      skip_waiting_for_build_processing: true,
       distribute_external: true,
       notify_external_testers: true,
       ipa: "./Code.ipa",
