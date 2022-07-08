@@ -515,7 +515,7 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
         for path in paths {
             let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
-                .replacingOccurrences(of: "%20", with: #"\ "#)
+                .removingPercentEncoding!
             let result = repository!.add(path: path)
             switch result {
             case .success:
