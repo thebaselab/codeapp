@@ -34,7 +34,7 @@ Currently, only HTTPS urls are supported.
 
 Newly added / modified files need to be added to the staging area before you can make a commit. To do it. press the plus icon next to the file name.
 
-![Adding a file to staging area](<../.gitbook/assets/image (1).png>)
+![Adding a file to staging area](<../.gitbook/assets/image (1) (1).png>)
 
 You can now enter a commit message in the textfield and press the check button. You can also use the `command`+`enter` shortcut.
 
@@ -42,7 +42,7 @@ You can now enter a commit message in the textfield and press the check button. 
 
 You can now push you changes to your remote like GitHub.
 
-![Pushing changes to remote](<../.gitbook/assets/image (3).png>)
+![Pushing changes to remote](<../.gitbook/assets/image (3) (1).png>)
 
 ### Switching branches
 
