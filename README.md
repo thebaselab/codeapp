@@ -40,16 +40,16 @@ Link to TestFlight (Free)
 
 Or if you'd like to get your hands dirty (Requires a Mac with Xcode installed) :&#x20;
 
-{% content-ref url="guides/your-first-program-in-python.md" %}
-[your-first-program-in-python.md](guides/your-first-program-in-python.md)
+{% content-ref url="extras/building-code-from-source.md" %}
+[building-code-from-source.md](extras/building-code-from-source.md)
 {% endcontent-ref %}
 
 ### Jump right in
 
 Follow these guides to get started on the basics:
 
-{% content-ref url="guides/creating-a-node.js-project.md" %}
-[creating-a-node.js-project.md](guides/creating-a-node.js-project.md)
+{% content-ref url="guides/your-first-program-in-python.md" %}
+[your-first-program-in-python.md](guides/your-first-program-in-python.md)
 {% endcontent-ref %}
 
 {% content-ref url="guides/version-control.md" %}
