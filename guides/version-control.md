@@ -42,7 +42,7 @@ You can now enter a commit message in the textfield and press the check button. 
 
 You can now push you changes to your remote like GitHub.
 
-![Pushing changes to remote](<../.gitbook/assets/image (3) (1).png>)
+![Pushing changes to remote](<../.gitbook/assets/image (3) (1) (1).png>)
 
 ### Switching branches
 

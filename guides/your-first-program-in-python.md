@@ -16,7 +16,7 @@ Let's start by creating a Python source file. Expand the file explorer side bar 
 
 For now, let's use the built in template.
 
-![Creating a new file](<../.gitbook/assets/image (3).png>)
+![Creating a new file](<../.gitbook/assets/image (3) (1).png>)
 
 You should now see the hello world program written in Python. Tap the play button to run it.&#x20;
 
