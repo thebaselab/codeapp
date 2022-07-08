@@ -103,24 +103,26 @@ struct BannerWithButton: View {
                         .system(size: 12)
                     ).padding(.leading, 8).padding(.trailing, 8).padding(.top, 4).padding(
                         .bottom, 4
-                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10).onTapGesture {
-                        data.primaryAction?()
-                        withAnimation {
-                            isRemoved = true
+                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10)
+                        .onTapGesture {
+                            data.primaryAction?()
+                            withAnimation {
+                                isRemoved = true
+                            }
                         }
-                    }
                 }
                 if data.secondaryAction != nil {
                     Text(data.secondaryTitle).foregroundColor(.white).lineLimit(1).font(
                         .system(size: 12)
                     ).padding(.leading, 8).padding(.trailing, 8).padding(.top, 4).padding(
                         .bottom, 4
-                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10).onTapGesture {
-                        data.secondaryAction?()
-                        withAnimation {
-                            isRemoved = true
+                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10)
+                        .onTapGesture {
+                            data.secondaryAction?()
+                            withAnimation {
+                                isRemoved = true
+                            }
                         }
-                    }
                 }
 
             }.frame(height: 30).padding(.leading, 10).padding(.trailing, 10).padding(.bottom, 10)
