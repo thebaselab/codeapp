@@ -1,8 +1,8 @@
 ---
-description: Learn to write and run programs using different programming languages.
+description: Learn to write Python script and install third party packages using pip.
 ---
 
-# Running your code
+# Your first program in Python
 
 Code App comes with many built-in languages including C++, Python and others. To see a full list, click the link below:
 
