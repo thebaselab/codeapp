@@ -51,4 +51,4 @@ print(res.text)
 
 ![Getting the list of all astronauts on ISS](<../.gitbook/assets/image (5).png>)
 
-You now have a list of all astronauts currently on their mission in the space.
+Cool! You now have a list of all astronauts currently on their mission in the space.&#x20;
