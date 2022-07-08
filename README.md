@@ -40,8 +40,8 @@ Link to TestFlight (Free)
 
 Or if you'd like to get your hands dirty (Requires a Mac with Xcode installed) :&#x20;
 
-{% content-ref url="extras/building-code-from-source.md" %}
-[building-code-from-source.md](extras/building-code-from-source.md)
+{% content-ref url="guides/your-first-program-in-python.md" %}
+[your-first-program-in-python.md](guides/your-first-program-in-python.md)
 {% endcontent-ref %}
 
 ### Jump right in
