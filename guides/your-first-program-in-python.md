@@ -38,7 +38,7 @@ In this example, we will try out the `requests` module. It allows Python to make
 
 Tap on the chevron button to bring up the terminal and type `pip install requests` in the terminal.
 
-![Installing requests](<../.gitbook/assets/image (1).png>)
+![Installing requests](<../.gitbook/assets/image (1) (1).png>)
 
 Copy the following code to your source file and click run:
 
