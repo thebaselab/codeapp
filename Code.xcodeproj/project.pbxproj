@@ -129,6 +129,8 @@
 		94196B12280316C7008AAEB2 /* tar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B3DDF42604D3C400C4F2B1 /* tar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		941CF5FB2641CBDA001199C0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 941CF5FA2641CBDA001199C0 /* Settings.bundle */; };
 		941CF5FE26463450001199C0 /* activityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941CF5FD26463450001199C0 /* activityBar.swift */; };
+		941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
+		941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
 		9420698828284027007DE671 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9420698728284027007DE671 /* Store.swift */; };
 		9420698928284027007DE671 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9420698728284027007DE671 /* Store.swift */; };
 		94206990282CDA64007DE671 /* AppReceiptValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 9420698F282CDA64007DE671 /* AppReceiptValidator */; };
@@ -1127,6 +1129,7 @@
 		94196B18280316C7008AAEB2 /* CodeUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CF5FA2641CBDA001199C0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		941CF5FD26463450001199C0 /* activityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = activityBar.swift; sourceTree = "<group>"; };
+		941E53B528787D3100561C7E /* MenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonView.swift; sourceTree = "<group>"; };
 		9420698728284027007DE671 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		9420698A2828476D007DE671 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Configuration.storekit; path = CodeApp/Configuration.storekit; sourceTree = SOURCE_ROOT; };
 		94251C6D263E01810029427A /* pythonA-pandas._libs.tslibs.period.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.tslibs.period.framework"; sourceTree = "<group>"; };
@@ -1858,6 +1861,7 @@
 			children = (
 				94A045FD2804853200182275 /* DescriptionText.swift */,
 				94A046002804865000182275 /* SideBarButton.swift */,
+				941E53B528787D3100561C7E /* MenuButtonView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2850,6 +2854,7 @@
 				9419696D280316C7008AAEB2 /* DirectoryFolderMonitor.swift in Sources */,
 				9419696E280316C7008AAEB2 /* fileName.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
+				941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94196970280316C7008AAEB2 /* customShortcut.swift in Sources */,
 				94196971280316C7008AAEB2 /* FolderCell.swift in Sources */,
 				94A04611280498F200182275 /* CloneButton.swift in Sources */,
@@ -2986,6 +2991,7 @@
 				94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */,
 				94A5685E257E1249008A6530 /* fileName.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,
+				941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94C893E2279D09D400DFBF29 /* customShortcut.swift in Sources */,
 				94A777CE257B8977008FE7B2 /* FolderCell.swift in Sources */,
 				94A04610280498F200182275 /* CloneButton.swift in Sources */,

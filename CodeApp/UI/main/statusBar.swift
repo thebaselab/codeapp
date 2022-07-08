@@ -81,58 +81,22 @@ struct bottomBar: View {
 
                     if (App.branch) != "" {
                         HStack {
-                            Image(systemName: "arrow.triangle.branch").font(.system(size: 10))
-                            Text("\(App.branch)")
-                        }.contextMenu {
                             if let destinations = App.workSpaceStorage.gitServiceProvider?
                                 .checkoutDestinations()
                             {
-                                Section {
-                                    Menu {
-                                        ForEach(destinations) { value in
-                                            Button(action: {
-                                                selectedBranch = value
-                                                checkoutDetached = true
-                                                if !App.gitTracks.isEmpty {
-                                                    isShowingCheckoutAlert = true
-                                                } else {
-                                                    checkout()
-                                                }
-                                            }) {
-                                                Text("\(value.name) at \(value.oid)")
-                                                if value.type == .tag {
-                                                    Image(systemName: "tag")
-                                                } else {
-                                                    Image(systemName: "arrow.triangle.branch")
-                                                }
-                                            }
-                                        }
-                                    } label: {
-                                        Label(
-                                            "Checkout detached...", systemImage: "bolt.horizontal")
-                                    }
-                                }
-
-                                ForEach(destinations) { value in
-                                    Button(action: {
-                                        selectedBranch = value
+                                MenuButtonView(
+                                    options: destinations.map {
+                                        .init(value: $0, title: "\($0.name) at \($0.oid)")
+                                    },
+                                    onSelect: { branch in
+                                        selectedBranch = branch
                                         checkoutDetached = false
                                         if !App.gitTracks.isEmpty {
                                             isShowingCheckoutAlert = true
                                         } else {
                                             checkout()
                                         }
-
-                                    }) {
-                                        Text("\(value.name) at \(value.oid)")
-                                        if value.type == .tag {
-                                            Image(systemName: "tag")
-                                        } else {
-                                            Image(systemName: "arrow.triangle.branch")
-                                        }
-                                    }
-                                }
-
+                                    }, title: App.branch, iconName: "arrow.triangle.branch")
                             }
                         }
                         .fixedSize(horizontal: true, vertical: false)
@@ -154,30 +118,7 @@ struct bottomBar: View {
                                     .system(size: 12)
                                 )
                             }
-
-                            // Git Sync is yet to be implemented in SwiftGit
-
-                            //                                        Button(action: {isShowingSyncAlert = true}){
-                            //                                            Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 10)).foregroundColor(.white)
-                            //                                        }
-                            //                                        .rotationEffect(Angle.degrees(App.isSyncing ? 360 : 0))
-                            //                                        .animation(App.isSyncing ? Animation.linear(duration: 2.0).repeatForever(autoreverses: false) : .default)
-                            //                                        .alert(isPresented:$isShowingSyncAlert) {
-                            //                                            Alert(title: Text("Synchronize Changes"), message: Text("This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy."), primaryButton: .default(Text("Sync")) {
-                            //                                                App.syncRepository()
-                            //                                            }, secondaryButton: .cancel())
-                            //                                        }
-
                         }
-                        //                                    if App.remote == ""{
-                        //                                        Button(action: {App.syncRepository()}){
-                        //                                            Image(systemName: "icloud.and.arrow.up").font(.system(size: 12)).foregroundColor(.white)
-                        //                                        }
-                        //                                    }else{
-                        //                                        Button(action: {App.syncRepository()}){
-                        //                                            Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 12)).foregroundColor(.white)
-                        //                                        }
-                        //                                    }
                     }
                     if let activeEditor = App.activeEditor, activeEditor.type == .image,
                         let imageURL = URL(string: activeEditor.url),
