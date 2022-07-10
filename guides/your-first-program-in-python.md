@@ -4,7 +4,7 @@ description: Learn to write Python script and install third party packages using
 
 # Your first program in Python
 
-Code App comes with many built-in languages including C++, Python and others. To see a full list, click the link below:
+Code App comes with many built-in languages including C++, Python and others. To see the full list, click the link below:
 
 {% content-ref url="../extras/supported-languages.md" %}
 [supported-languages.md](../extras/supported-languages.md)
@@ -26,7 +26,7 @@ Congratulations! You now ran your first program on Code App.
 
 ### Python - Installing a third party module
 
-Third party modules allow you to do awesome things, including making network requests to a webserver, drawing charts to analysis data, or downloading a YouTube video.&#x20;
+Third party modules allow you to do awesome things, including making network requests to a web server, drawing charts to analysis data, or downloading a YouTube video.&#x20;
 
 Code App comes with the `pip` command in the terminal. To install a modules, just type `pip install <module name>` in the terminal.
 
@@ -34,7 +34,7 @@ Code App comes with the `pip` command in the terminal. To install a modules, jus
 Note that not all modules work on Code App, see the [FAQ](../extras/frequently-asked-questions.md#my-favourite-npm-python-module-doesnt-work) for more.
 {% endhint %}
 
-In this example, we will try out the `requests` module. It allows Python to make network requests the web servers. Let's try to get the list of people currently in the space.
+In this example, we will try out the `requests` module. It allows Python to make network requests to web servers. Let's try to get the list of people currently in the space.
 
 Tap on the chevron button to bring up the terminal and type `pip install requests` in the terminal.
 
@@ -51,4 +51,4 @@ print(res.text)
 
 ![Getting the list of all astronauts on ISS](<../.gitbook/assets/image (5).png>)
 
-Cool! You now have a list of all astronauts currently on their mission in the space.&#x20;
+Cool! You now have the list of all astronauts currently on their mission in the space.&#x20;

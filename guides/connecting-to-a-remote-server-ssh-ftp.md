@@ -12,7 +12,7 @@ Before using this feature, you'll need to set up a ssh or ftp server on your com
 
 ### Set up a new remote in Code App
 
-Open the remote section in the side bar and enter the server's information. Enable `Remember credentials` to use save the credentials. Code App will ask for Face ID or Touch ID authentication when you connect to the server again in the future.
+Open the remote section in the side bar and enter the server's information. Enable `Remember credentials` to save the credentials. Code App will ask for Face ID or Touch ID authentication when you connect to the server again in the future.
 
 ![Setting up a new remote](<../.gitbook/assets/image (2).png>)
 
