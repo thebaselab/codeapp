@@ -34,3 +34,5 @@ app.listen(port, () => console.log(`app listening on port ${port}`))
 Tap the run button on type `node index.js` in the terminal to run the server. Launch Safari side-by-side and visit `localhost:3000`. You now have yourself an Express server :).
 
 ![An express server running on Code App](<../.gitbook/assets/image (3).png>)
+
+To stop the server, press the stop (square) button located at the top right corner of the terminal tab.
