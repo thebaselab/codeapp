@@ -12,6 +12,7 @@ class NotificationManager: ObservableObject {
     @Published var isShowingAllBanners = false
 
     func postProgressNotification(title: String, progress: Progress) {
+        let title = NSLocalizedString(title, comment: "")
         banners.append(
             BannerModule.init(
                 data: BannerData.init(
@@ -22,6 +23,9 @@ class NotificationManager: ObservableObject {
         title: String, level: BannerData.Level, primary: @escaping (() -> Void),
         primaryTitle: String, source: String
     ) {
+        let title = NSLocalizedString(title, comment: "")
+        let primaryTitle = NSLocalizedString(primaryTitle, comment: "")
+        let source = NSLocalizedString(source, comment: "")
         banners.append(
             BannerModule.init(
                 data: BannerData.init(
@@ -30,6 +34,7 @@ class NotificationManager: ObservableObject {
     }
 
     func showInformationMessage(_ mes: String) {
+        let mes = NSLocalizedString(mes, comment: "")
         DispatchQueue.main.async {
             self.banners.append(
                 BannerModule.init(data: BannerData.init(title: mes, level: .info, style: .basic)))
@@ -37,6 +42,7 @@ class NotificationManager: ObservableObject {
     }
 
     func showWarningMessage(_ mes: String) {
+        let mes = NSLocalizedString(mes, comment: "")
         DispatchQueue.main.async {
             self.banners.append(
                 BannerModule.init(data: BannerData.init(title: mes, level: .warning, style: .basic))
@@ -45,6 +51,7 @@ class NotificationManager: ObservableObject {
     }
 
     func showErrorMessage(_ mes: String) {
+        let mes = NSLocalizedString(mes, comment: "")
         DispatchQueue.main.async {
             self.banners.append(
                 BannerModule.init(data: BannerData.init(title: mes, level: .error, style: .basic)))
