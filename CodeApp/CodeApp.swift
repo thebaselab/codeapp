@@ -363,24 +363,13 @@ struct CodeApp: App {
             createCSDK()
         }
 
-        let config = WKWebViewConfiguration()
-        config.preferences.javaScriptCanOpenWindowsAutomatically = true
-        config.preferences.setValue(true as Bool, forKey: "allowFileAccessFromFileURLs")
-
         let wasmFilePath = Bundle.main.path(
             forResource: "wasm", ofType: "html", inDirectory: "ClangLib")
-        wasmWebView.isOpaque = false
-        wasmWebView.loadFileURL(
-            URL(fileURLWithPath: wasmFilePath!),
-            allowingReadAccessTo: URL(fileURLWithPath: wasmFilePath!))
-        wasmWebView.configuration.userContentController = WKUserContentController()
-
-        let delegate = wasmWebViewDelegate()
-        wasmWebView.configuration.userContentController.add(delegate, name: "aShell")
-        wasmWebView.navigationDelegate = delegate
-        wasmWebView.uiDelegate = delegate
-        wasmWebView.isAccessibilityElement = false
-
+        DispatchQueue.main.async {
+            wasmWebView.loadFileURL(
+                URL(fileURLWithPath: wasmFilePath!),
+                allowingReadAccessTo: URL(fileURLWithPath: wasmFilePath!))
+        }
     }
 
     var body: some Scene {

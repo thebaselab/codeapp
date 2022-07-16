@@ -361,3 +361,5 @@
 
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
+
+"errors.script_already_running" = "Ein Skript wird bereits ausgeführt. Beenden Sie es, bevor Sie ein anderes ausführen.";

@@ -350,6 +350,10 @@ class MainApp: ObservableObject {
                     "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})"
                 )
             case 2:
+                if javascriptRunning {
+                    notificationManager.showErrorMessage("errors.script_already_running")
+                    return
+                }
                 let cmd =
                     "clang \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
                 if compilerShowPath {
@@ -362,6 +366,10 @@ class MainApp: ObservableObject {
                     "wasm a.out",
                 ])
             case 3:
+                if javascriptRunning {
+                    notificationManager.showErrorMessage("errors.script_already_running")
+                    return
+                }
                 let cmd =
                     "clang++ \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
                 if compilerShowPath {

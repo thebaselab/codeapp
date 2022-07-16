@@ -361,3 +361,5 @@
 
 "settings.editor.font" = "편집기 글꼴";
 "settings.editor.font.reset" = "기본값";
+
+"errors.script_already_running" = "스크립트가 이미 실행 중입니다. 다른 것을 실행하기 전에 완료하십시오.";

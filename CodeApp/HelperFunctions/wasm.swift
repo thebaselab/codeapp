@@ -501,9 +501,32 @@ private var wasmWebViewConfig: WKWebViewConfiguration {
     return config
 }
 
-var wasmWebView = WKWebView(frame: .zero, configuration: wasmWebViewConfig)
+class WasmWebView: WKWebView {
+    init() {
+        super.init(frame: .zero, configuration: wasmWebViewConfig)
 
-private var javascriptRunning = false  // We can't execute JS while we are already executing JS.
+        let config = WKWebViewConfiguration()
+        config.preferences.javaScriptCanOpenWindowsAutomatically = true
+        config.preferences.setValue(true as Bool, forKey: "allowFileAccessFromFileURLs")
+
+        self.isOpaque = false
+        self.configuration.userContentController = WKUserContentController()
+
+        let delegate = wasmWebViewDelegate()
+        self.configuration.userContentController.add(delegate, name: "aShell")
+        self.navigationDelegate = delegate
+        self.uiDelegate = delegate
+        self.isAccessibilityElement = false
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+var wasmWebView = WasmWebView()
+
+var javascriptRunning = false  // We can't execute JS while we are already executing JS.
 
 // copies of thread_std*, used when inside a sub-thread, for example executing webAssembly
 private var thread_stdin_copy: UnsafeMutablePointer<FILE>? = nil
@@ -573,26 +596,6 @@ private func executeWebAssembly(arguments: [String]?) -> Int32 {
     thread_stderr_copy = thread_stderr
     DispatchQueue.main.async {
         wasmWebView.evaluateJavaScript(javascript) { (result, error) in
-            if error != nil {
-                let userInfo = (error! as NSError).userInfo
-                fputs("wasm: Error ", thread_stderr_copy)
-                // WKJavaScriptExceptionSourceURL is hterm.html, of course.
-                if let file = userInfo["WKJavaScriptExceptionSourceURL"] as? String {
-                    fputs("in file " + file + " ", thread_stderr_copy)
-                }
-                if let line = userInfo["WKJavaScriptExceptionLineNumber"] as? Int32 {
-                    fputs("at line \(line)", thread_stderr_copy)
-                }
-                if let column = userInfo["WKJavaScriptExceptionColumnNumber"] as? Int32 {
-                    fputs(", column \(column): ", thread_stderr_copy)
-                } else {
-                    fputs(": ", thread_stderr_copy)
-                }
-                if let message = userInfo["WKJavaScriptExceptionMessage"] as? String {
-                    fputs(message + "\n", thread_stderr_copy)
-                }
-                fflush(thread_stderr_copy)
-            }
             if result != nil {
                 // executeWebAssembly sends back stdout and stderr as two Strings:
                 if let array = result! as? NSMutableArray {

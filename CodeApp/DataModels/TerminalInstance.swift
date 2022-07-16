@@ -45,6 +45,19 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             CFNotificationCenterPostNotification(
                 notificationCenter, notificationName, nil, nil, false)
         }
+
+        if javascriptRunning {
+            javascriptRunning = false
+
+            DispatchQueue.main.async {
+                wasmWebView = WasmWebView()
+                let wasmFilePath = Bundle.main.path(
+                    forResource: "wasm", ofType: "html", inDirectory: "ClangLib")
+                wasmWebView.loadFileURL(
+                    URL(fileURLWithPath: wasmFilePath!),
+                    allowingReadAccessTo: URL(fileURLWithPath: wasmFilePath!))
+            }
+        }
         executor?.kill()
     }
 
