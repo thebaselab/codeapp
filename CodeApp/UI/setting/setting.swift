@@ -110,7 +110,6 @@ struct settingView: View {
                         UIApplication.shared.open(url)
                     }) {
                         Text("Open an issue on GitHub")
-                            .foregroundColor(Color.init(id: "statusBar.background"))
                     }
 
                     Button(action: {
@@ -119,7 +118,6 @@ struct settingView: View {
                         UIApplication.shared.open(url)
                     }) {
                         Text("Send us an email")
-                            .foregroundColor(Color.init(id: "statusBar.background"))
                     }
 
                     Button(action: {
@@ -131,7 +129,6 @@ struct settingView: View {
                         UIApplication.shared.open(writeReviewURL)
                     }) {
                         Text(NSLocalizedString("Rate Code App", comment: ""))
-                            .foregroundColor(Color.init(id: "statusBar.background"))
                     }
                 }
 
