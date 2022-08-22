@@ -416,7 +416,7 @@ struct settingView: View {
                 }
 
             }
-
+            .background(Color(.systemGroupedBackground))
             .navigationBarTitle("Settings", displayMode: .inline)
             .navigationBarItems(
                 trailing:
@@ -425,6 +425,5 @@ struct settingView: View {
                     }
             )
         }
-
     }
 }
