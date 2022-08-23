@@ -29,6 +29,7 @@ struct name_email: View {
                     .autocapitalization(.none)
             }
         }.navigationBarTitle("Author Identity", displayMode: .inline)
+            .background(Color(.systemGroupedBackground))
             .navigationBarItems(
                 trailing:
                     Button(NSLocalizedString("Done", comment: "")) {

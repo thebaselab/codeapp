@@ -28,9 +28,7 @@ struct customShortcuts: View {
         VStack {
             SearchBar(text: $filter, searchAction: nil, placeholder: "Search", cornerRadius: 6)
                 .padding(.horizontal)
-            Text("Note: Keyboard shortcuts that clash with existing shortcuts will not apply.")
-                .font(.caption)
-                .foregroundColor(.gray)
+            DescriptionText("Note: Keyboard shortcuts that clash with existing shortcuts will not apply.")
             Form {
                 Section("Actions") {
                     List(
@@ -79,8 +77,8 @@ struct customShortcuts: View {
                             })
                     }
                 }
-
             }
+            .background(Color(.systemGroupedBackground))
         }.onAppear {
             if let result = UserDefaults.standard.value(
                 forKey: "thebaselab.custom.keyboard.shortcuts") as? [String: [GCKeyCode]]
