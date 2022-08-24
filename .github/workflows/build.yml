@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Deploy iOS Beta to TestFlight via Fastlane
-        uses: maierj/fastlane-action@v2.2.0
+        uses: maierj/fastlane-action@v2.2.1
         with:
           lane: "open_beta"
         env:
