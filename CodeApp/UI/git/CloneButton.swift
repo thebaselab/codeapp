@@ -14,7 +14,7 @@ struct CloneButton: View {
 
     var body: some View {
         Text("Clone")
-            .foregroundColor(Color.init("T1"))
+            .foregroundColor(.white)
             .lineLimit(1)
             .font(.system(size: 12))
             .padding(.horizontal, 8)
