@@ -33,15 +33,16 @@ struct remoteAuthentication: View {
             Form {
                 Section(
                     header: Text("Remote Credentials"),
-                    footer: Text("credentials.note")) {
-                TextField("User Name", text: $username)
-                    .textContentType(.name)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                SecureField("Password / Personal Access Token", text: $password)
-                    .textContentType(.password)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
+                    footer: Text("credentials.note")
+                ) {
+                    TextField("User Name", text: $username)
+                        .textContentType(.name)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                    SecureField("Password / Personal Access Token", text: $password)
+                        .textContentType(.password)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                 }
             }
         }.navigationBarTitle("Authentication", displayMode: .inline)

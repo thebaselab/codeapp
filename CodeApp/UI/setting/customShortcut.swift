@@ -28,7 +28,8 @@ struct customShortcuts: View {
         VStack {
             SearchBar(text: $filter, searchAction: nil, placeholder: "Search", cornerRadius: 6)
                 .padding(.horizontal)
-            DescriptionText("Note: Keyboard shortcuts that clash with existing shortcuts will not apply.")
+            DescriptionText(
+                "Note: Keyboard shortcuts that clash with existing shortcuts will not apply.")
             Form {
                 Section("Actions") {
                     List(
