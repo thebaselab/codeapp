@@ -71,6 +71,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     public var requiresSignature: Bool {
         return signature == nil
     }
+    private let workerQueue = DispatchQueue.global(qos: .userInitiated)
 
     init(root: URL) {
         self.workingURL = root
@@ -206,7 +207,7 @@ class LocalGitServiceProvider: GitServiceProvider {
         error: @escaping (NSError) -> Void,
         completionHandler: @escaping ([URL: Diff.Status], [URL: Diff.Status], String) -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             self.load()
             guard self.repository != nil else {
                 let _error = NSError(
@@ -279,7 +280,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     }
 
     func initialize(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             guard self.repository == nil else {
                 let _error = NSError(
                     domain: "", code: 401,
@@ -303,7 +304,7 @@ class LocalGitServiceProvider: GitServiceProvider {
         from: URL, to: URL, progress: Progress?, error: @escaping (NSError) -> Void,
         completionHandler: @escaping () -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             progress?.fileOperationKind = .downloading
             var result: Result<Repository, NSError>
             if self.credential == nil {
@@ -362,7 +363,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     func commit(
         message: String, error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             guard self.repository != nil else {
                 let _error = NSError(
                     domain: "", code: 401,
@@ -527,7 +528,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     }
 
     func fetch(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             guard self.repository != nil else {
                 let err = NSError(
                     domain: "", code: 401,
@@ -627,7 +628,7 @@ class LocalGitServiceProvider: GitServiceProvider {
         tagName: String, detached: Bool, error: @escaping (NSError) -> Void,
         completionHandler: @escaping () -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             guard self.repository != nil else {
                 let _error = NSError(
                     domain: "", code: 401,
@@ -659,7 +660,7 @@ class LocalGitServiceProvider: GitServiceProvider {
         localBranchName: String, detached: Bool, error: @escaping (NSError) -> Void,
         completionHandler: @escaping () -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             guard self.repository != nil else {
                 let _error = NSError(
                     domain: "", code: 401,
@@ -691,7 +692,7 @@ class LocalGitServiceProvider: GitServiceProvider {
         remoteBranchName: String, detached: Bool, error: @escaping (NSError) -> Void,
         completionHandler: @escaping () -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             guard self.repository != nil else {
                 let _error = NSError(
                     domain: "", code: 401,
@@ -738,8 +739,31 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
-    func push(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void) {
-        DispatchQueue.global(qos: .utility).async {
+    func remotes() async throws -> [Remote] {
+        guard let repository = self.repository else {
+            throw NSError(
+                domain: "", code: 401,
+                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            workerQueue.async {
+                let result = repository.allRemotes()
+                switch result {
+                case let .success(remotes):
+                    continuation.resume(returning: remotes)
+                case let .failure(error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+
+    func push(
+        error: @escaping (NSError) -> Void, progress: Progress?,
+        completionHandler: @escaping () -> Void
+    ) {
+        workerQueue.async {
             guard self.repository != nil else {
                 let _error = NSError(
                     domain: "", code: 401,
@@ -771,7 +795,13 @@ class LocalGitServiceProvider: GitServiceProvider {
                     if remotes.map({ $0.name }).contains("origin") {
                         result = self.repository!.push(
                             credentials: self.credential!, branch: self.branch(long: true),
-                            remoteName: "origin")
+                            remoteName: "origin",
+                            progress: { current, total in
+                                DispatchQueue.main.async {
+                                    progress?.totalUnitCount = Int64(current)
+                                    progress?.completedUnitCount = Int64(total)
+                                }
+                            })
                     } else {
                         result = self.repository!.push(
                             credentials: self.credential!, branch: self.branch(long: true),
