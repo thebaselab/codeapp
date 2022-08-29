@@ -87,16 +87,6 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
             }
 
             self.session.sftp.connect()
-
-            var error: NSError?
-            let path = self.session.channel.execute("echo $HOME", error: &error)
-                .replacingOccurrences(
-                    of: "\n", with: "")
-            if error == nil && path.hasPrefix("/") {
-                // $HOME might not be defined in non Unix environment
-                self.homePath = path
-            }
-
             self.fingerPrint = self.session.fingerprint(self.session.fingerprintHash)
 
             completionHandler(nil)
