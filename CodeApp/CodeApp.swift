@@ -128,7 +128,7 @@ struct CodeApp: App {
                 appropriateFor: nil,
                 create: true)
             // usr/lib/wasm32-wasi
-            var localURL = libraryURL.appendingPathComponent("usr/lib/wasm32-wasi")  // $HOME/Library/usr/lib/wasm32-wasi
+            var localURL = libraryURL.appendingPathComponent("usr/lib/wasm32-wasi")
             do {
                 if FileManager().fileExists(atPath: localURL.path) && !localURL.isDirectory {
                     try FileManager().removeItem(at: localURL)
@@ -142,7 +142,7 @@ struct CodeApp: App {
                 return
             }
             // usr/lib/clang/14.0.0/lib/wasi/
-            localURL = libraryURL.appendingPathComponent("usr/lib/clang/14.0.0/lib/wasi/")  // $HOME/Library/usr/lib/clang/14.0.0/lib/wasi/
+            localURL = libraryURL.appendingPathComponent("usr/lib/clang/14.0.0/lib/wasi/")
             do {
                 if FileManager().fileExists(atPath: localURL.path) && !localURL.isDirectory {
                     try FileManager().removeItem(at: localURL)
@@ -288,8 +288,6 @@ struct CodeApp: App {
             "PYTHONPYCACHEPREFIX",
             (libraryURL.appendingPathComponent("__pycache__")).path.toCString(), 1)
         setenv("PYTHONUSERBASE", libraryURL.path.toCString(), 1)
-
-        //        setenv("REQUESTS_CA_BUNDLE", pemUrl.path.toCString(), 1)
         setenv("SSL_CERT_FILE", pemUrl.path.toCString(), 1)
 
         // Help aiohttp install itself:
@@ -297,10 +295,10 @@ struct CodeApp: App {
         setenv("MULTIDICT_NO_EXTENSIONS", "1", 1)
 
         // clang options:
-        setenv("SYSROOT", libraryURL.path + "/usr", 1)  // sysroot for clang compiler
+        setenv("SYSROOT", libraryURL.path + "/usr", 1)
         setenv(
             "CCC_OVERRIDE_OPTIONS",
-            "#^--target=wasm32-wasi +-fno-exceptions +-lc-printscan-long-double", 1)  // silently add "--target=wasm32-wasi" at the beginning of arguments
+            "#^--target=wasm32-wasi +-fno-exceptions +-lc-printscan-long-double", 1)
         setenv("MAKESYSPATH", Bundle.main.resourcePath! + "ClangLib/usr/share/mk", 1)
 
         // PHP config

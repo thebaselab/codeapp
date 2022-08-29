@@ -27,12 +27,12 @@ struct problemsView: View {
                                         Image(systemName: "xmark.circle").foregroundColor(.red)
                                     case 1:
                                         Image(systemName: "exclamationmark.triangle")
-                                            .foregroundColor(.yellow)  // hint
+                                            .foregroundColor(.yellow)
                                     case 2:
-                                        Image(systemName: "info.circle").foregroundColor(.blue)  // info
+                                        Image(systemName: "info.circle").foregroundColor(.blue)
                                     case 4:
                                         Image(systemName: "exclamationmark.triangle")
-                                            .foregroundColor(.yellow)  // warning
+                                            .foregroundColor(.yellow)
                                     default:
                                         Image(systemName: "xmark.circle").foregroundColor(.red)
                                     }
@@ -49,7 +49,6 @@ struct problemsView: View {
                         } label: {
                             fileIcon(url: url.absoluteString, iconSize: 14, type: .file)
                             Text(url.lastPathComponent).foregroundColor(Color.init("T1"))
-                            //                                Text("monaco-tm").foregroundColor(.gray)
                             Circle()
                                 .fill(Color.init("panel.border"))
                                 .frame(width: 14, height: 14)
