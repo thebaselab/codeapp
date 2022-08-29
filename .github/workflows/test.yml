@@ -1,0 +1,16 @@
+name: Tests
+on:
+  pull_request:
+    branches:
+      - "*"
+      - "!gitbook"
+
+jobs:
+  test:
+    runs-on: macos-12
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install swift-format
+        run: brew install swift-format
+      - name: Linting
+        run: swift-format lint -r -s ./CodeApp
