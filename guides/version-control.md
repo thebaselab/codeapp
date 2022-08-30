@@ -4,17 +4,17 @@ description: Use the built-in support for Git to manage your code.
 
 # Version Control
 
-### Setup your identities
+### Set up your identities
 
 Git uses your username and email address identify the author of every commit. Before making a commit, you'll need to set up your identity.
 
 To proceed, go `Settings > Version Control > Identity`.&#x20;
 
-### Setup your credentials
+### Set up your credentials
 
-Git providers usually require credentials before you can clone any repository. To start, setup your credentials at `Settings > Version Control > Authentication`.
+If you are cloning a private repository or pushing changes to a repo, you need to set up credentials. To start, enter your credentials at `Settings > Version Control > Authentication`.
 
-In many cases, you'll need to generate a personal access token instead of using the regular password. To know more about this:
+In many cases, you'll need to use a personal access token instead of using the regular password. To know more about this:
 
 {% embed url="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" %}
 Creating a personal access token on GitHub
