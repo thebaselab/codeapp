@@ -241,7 +241,7 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
 
     let npmPath = npmURL.path
 
-    args = ["node", "--max-old-space-size=180", "--optimize-for-size", npmPath] + args  // + ["--prefix", workingPath]
+    args = ["node", "--max-old-space-size=180", "--optimize-for-size", npmPath] + args
 
     return nodeCmd(args: args)
 }

@@ -355,9 +355,8 @@ class wasmWebViewDelegate: NSObject, WKNavigationDelegate, WKScriptMessageHandle
                 completionHandler(result)
                 return
             } else if arguments[1] == "chdir" {
-
-                //                    let result = changeDirectory(path: arguments[2]) // call cd_main and updates the ios current session
-                completionHandler("\(FileManager.default.changeCurrentDirectoryPath(arguments[2]))")  // true or false
+                // true or false
+                completionHandler("\(FileManager.default.changeCurrentDirectoryPath(arguments[2]))")
                 return
             } else if arguments[1] == "fchdir" {
                 if let fd = Int32(arguments[2]) {
@@ -438,11 +437,13 @@ class wasmWebViewDelegate: NSObject, WKNavigationDelegate, WKScriptMessageHandle
                         }
                         return
                     } else {
-                        completionHandler("\(-EFAULT)")  // time points out of process allocated space
+                        // time points out of process allocated space
+                        completionHandler("\(-EFAULT)")
                         return
                     }
                 } else {
-                    completionHandler("\(-EFAULT)")  // time points out of process allocated space
+                    // time points out of process allocated space
+                    completionHandler("\(-EFAULT)")
                     return
                 }
             } else if arguments[1] == "futimes" {
@@ -475,11 +476,11 @@ class wasmWebViewDelegate: NSObject, WKNavigationDelegate, WKScriptMessageHandle
                             }
                             return
                         } else {
-                            completionHandler("\(-EFAULT)")  // time points out of process allocated space
+                            completionHandler("\(-EFAULT)")
                             return
                         }
                     } else {
-                        completionHandler("\(-EFAULT)")  // time points out of process allocated space
+                        completionHandler("\(-EFAULT)")
                         return
                     }
                 }
