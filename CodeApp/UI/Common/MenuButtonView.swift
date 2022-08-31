@@ -42,8 +42,8 @@ struct MenuButtonView<S>: UIViewRepresentable {
                     withConfiguration: UIImage.SymbolConfiguration(
                         pointSize: 12, weight: .regular, scale: .default)), for: .normal)
         }
-        button.tintColor = .white
-        button.setTitleColor(.white, for: .normal)
+        button.tintColor = UIColor(id: "activityBar.foreground")
+        button.setTitleColor(button.tintColor, for: .normal)
         button.menu = UIMenu(
             children: options.map { option in
                 UIAction(

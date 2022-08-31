@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+extension UIColor {
+    convenience init(id: String) {
+        self.init(Color(id: id))
+    }
+}
+
 extension Color {
     init(id: String) {
 
