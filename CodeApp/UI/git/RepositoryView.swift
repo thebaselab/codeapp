@@ -6,6 +6,7 @@
 //
 
 import StoreKit
+import SwiftGit2
 import SwiftUI
 
 struct RepositoryView: View {
@@ -14,6 +15,7 @@ struct RepositoryView: View {
     @AppStorage("userHasPromptedWithReviewRequest") var userHasPromptedWithReviewRequest = false
 
     @State var showsIdentitySheet: Bool = false
+    @State var remotes: [Remote] = []
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -81,39 +83,44 @@ struct RepositoryView: View {
 
             Menu {
                 Section {
-                    //                                Button(action: {App.pullRepository()}){
-                    //                                    Label("Pull", systemImage: "square.and.arrow.down")
-                    //                                }
-                    Button(action: {
-                        App.notificationManager.showInformationMessage(
-                            "Pushing to remote")
-                        App.workSpaceStorage.gitServiceProvider?.push(error: {
-                            App.notificationManager.showErrorMessage(
-                                $0.localizedDescription)
-                        }) {
-                            App.notificationManager.showInformationMessage(
-                                "Push succeeded")
-                            App.git_status()
+                    Menu {
+                        ForEach(remotes, id: \.hashValue) { remote in
+                            Button("\(remote.name) - \(remote.URL)") {
+                                let progress = Progress(totalUnitCount: 100)
+                                progress.localizedDescription = "Uploading objects"
 
-                            DispatchQueue.main.async {
-                                if !userHasPromptedWithReviewRequest,
-                                    let scene = UIApplication.shared.connectedScenes
-                                        .first(where: {
-                                            $0.activationState == .foregroundActive
-                                        }) as? UIWindowScene
-                                {
-                                    SKStoreReviewController.requestReview(in: scene)
-                                    userHasPromptedWithReviewRequest = true
+                                App.notificationManager.postProgressNotification(
+                                    title: "Pushing to remote", progress: progress)
+
+                                App.workSpaceStorage.gitServiceProvider?.push(
+                                    error: {
+                                        App.notificationManager.showErrorMessage(
+                                            $0.localizedDescription)
+                                    }, remote: remote.name, progress: progress
+                                ) {
+                                    App.notificationManager.showInformationMessage(
+                                        "Push succeeded")
+                                    App.git_status()
+
+                                    DispatchQueue.main.async {
+                                        if !userHasPromptedWithReviewRequest,
+                                            let scene = UIApplication.shared.connectedScenes
+                                                .first(where: {
+                                                    $0.activationState == .foregroundActive
+                                                }) as? UIWindowScene
+                                        {
+                                            SKStoreReviewController.requestReview(in: scene)
+                                            userHasPromptedWithReviewRequest = true
+                                        }
+                                    }
+
                                 }
                             }
-
                         }
-                    }) {
+                    } label: {
                         Label("Push", systemImage: "square.and.arrow.up")
                     }
-                    //                                Button(action: {App.syncRepository()}){
-                    //                                    Label("Sync", systemImage: "arrow.triangle.2.circlepath")
-                    //                                }
+
                     Button(action: {
                         App.notificationManager.showInformationMessage(
                             "Fetching from origin")
@@ -149,27 +156,20 @@ struct RepositoryView: View {
                     }) {
                         Label("Stage All Changes", systemImage: "plus.circle")
                     }
-                    //                                Button(action: {}){
-                    //                                    Label(NSLocalizedString("Commit Staged", comment: ""), systemImage: "square.and.arrow.down")
-                    //                                }
-                    //                                Button(action: {}){
-                    //                                    Label(NSLocalizedString("Commit All", comment: ""), systemImage: "square.and.arrow.up")
-                    //                                }
-                    //                                Button(action: {}){
-                    //                                    Label(NSLocalizedString("Revert Last Commit", comment: ""), systemImage: "square.and.arrow.up")
-                    //                                }
                 }
-                //                            Menu{
-                //
-                //                            }label: {
-                //                                Label("Commit...", systemImage: "ellipsis")
-                //                            }
             } label: {
                 Image(systemName: "ellipsis.circle")
                     .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                     .hoverEffect(.highlight)
                     .font(.system(size: 16))
                     .foregroundColor(Color.init(id: "activityBar.foreground"))
+            }
+            .onAppear {
+                Task {
+                    self.remotes =
+                        (try? await App.workSpaceStorage.gitServiceProvider?
+                            .remotes()) ?? []
+                }
             }
 
         }.sheet(isPresented: $showsIdentitySheet) {

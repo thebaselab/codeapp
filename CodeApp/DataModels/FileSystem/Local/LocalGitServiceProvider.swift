@@ -760,7 +760,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     }
 
     func push(
-        error: @escaping (NSError) -> Void, progress: Progress?,
+        error: @escaping (NSError) -> Void, remote: String, progress: Progress?,
         completionHandler: @escaping () -> Void
     ) {
         workerQueue.async {
@@ -781,40 +781,32 @@ class LocalGitServiceProvider: GitServiceProvider {
             let result = self.repository!.allRemotes()
             switch result {
             case let .success(remotes):
-                if remotes.count == 0 {
+                let result: Result<(), NSError>
+                if remotes.map({ $0.name }).contains(remote) {
+                    result = self.repository!.push(
+                        credentials: self.credential!, branch: self.branch(long: true),
+                        remoteName: remote,
+                        progress: { current, total in
+                            DispatchQueue.main.async {
+                                progress?.totalUnitCount = Int64(current)
+                                progress?.completedUnitCount = Int64(total)
+                            }
+                        })
+                    switch result {
+                    case .success:
+                        completionHandler()
+                    case let .failure(_error):
+                        error(_error)
+                    }
+                } else {
                     let _error = NSError(
                         domain: "", code: 401,
                         userInfo: [
                             NSLocalizedDescriptionKey:
-                                "Your repository has no remotes configured to push to"
+                                "The specified remote does not exist"
                         ])
                     error(_error)
                     return
-                } else {
-                    let result: Result<(), NSError>
-                    if remotes.map({ $0.name }).contains("origin") {
-                        result = self.repository!.push(
-                            credentials: self.credential!, branch: self.branch(long: true),
-                            remoteName: "origin",
-                            progress: { current, total in
-                                DispatchQueue.main.async {
-                                    progress?.totalUnitCount = Int64(current)
-                                    progress?.completedUnitCount = Int64(total)
-                                }
-                            })
-                    } else {
-                        result = self.repository!.push(
-                            credentials: self.credential!, branch: self.branch(long: true),
-                            remoteName: remotes.first!.name)
-                    }
-                    switch result {
-                    case .success():
-                        completionHandler()
-                    case let .failure(err):
-                        error(err)
-                        return
-                    }
-
                 }
             case let .failure(_error):
                 error(_error)

@@ -57,7 +57,9 @@ protocol GitServiceProvider {
         completionHandler: @escaping () -> Void
     )
     func checkout(paths: [String]) throws
-    func push(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void)
+    func push(
+        error: @escaping (NSError) -> Void, remote: String, progress: Progress?,
+        completionHandler: @escaping () -> Void)
     func hasRemote() -> Bool
     func checkoutDestinations() -> [checkoutDest]
     func branches(isRemote: Bool) -> [checkoutDest]
@@ -66,4 +68,5 @@ protocol GitServiceProvider {
         path: String, error: @escaping (NSError) -> Void,
         completionHandler: @escaping (String) -> Void
     )
+    func remotes() async throws -> [Remote]
 }

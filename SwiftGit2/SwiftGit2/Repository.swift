@@ -128,26 +128,49 @@ private func cloneOptions(bare: Bool = false, localClone: Bool = false, fetchOpt
 	return options
 }
 
+
+
+
+func pushTransferProgressCallback(
+    current: UInt32,
+    total: UInt32,
+    bytes: size_t,
+    payload: UnsafeMutableRawPointer? ) -> Int32 {
+    if let payload = payload {
+        let buffer = payload.assumingMemoryBound(to: fetchPayload.self)
+        let block: fetchPayload
+        block = buffer.pointee
+        if let progressBlock = block.fetchProgress {
+            progressBlock(Int(current), Int(total))
+        }
+    }
+    return 0
+}
+
 private func pushOptions(credentials: Credentials = .default,
-						  checkoutOptions: git_checkout_options? = nil) -> git_push_options {
+                         checkoutOptions: git_checkout_options? = nil, progress: FetchProgressBlock? = nil) -> git_push_options {
 	// Do this because GIT_PUSH_OPTIONS_INIT is unavailable in swift
 	let pointer = UnsafeMutablePointer<git_push_options>.allocate(capacity: 1)
 	git_push_init_options(pointer, UInt32(GIT_PUSH_OPTIONS_VERSION))
+    
 	var options = pointer.move()
 	pointer.deallocate()
-	
+    
 	options.callbacks.payload = credentials.toPointer()
 	options.callbacks.credentials = credentialsCallback
+    var payload = fetchPayload(fetchProgress: nil, credentials: credentials)
+    
+    if progress != nil {
+        options.callbacks.push_transfer_progress = pushTransferProgressCallback
+        let blockPointer = UnsafeMutablePointer<FetchProgressBlock>.allocate(capacity: 1)
+        blockPointer.initialize(to: progress!)
+        // How can we have a payload that contains both credentials and callback?
+        payload = fetchPayload(fetchProgress: progress, credentials: credentials)
+    }
+    let buffer = UnsafeMutablePointer<fetchPayload>.allocate(capacity: 1)
+    buffer.initialize(from: &payload, count: 1)
 	
-//	func pushTransferProgressCallback(
-//		current: UInt32,
-//		total: UInt32,
-//		bytes: size_t,
-//		payload: UnsafeMutableRawPointer? ) -> Int32 {
-//		let result: Int32 = 1
-//		return result
-//	}
-//	options.callbacks.push_transfer_progress = pushTransferProgressCallback
+    options.callbacks.payload = UnsafeMutableRawPointer(buffer)
 
 	return options
 }
@@ -204,11 +227,11 @@ public final class Repository {
 		return Result.success(finalResult as! Branch)
 	}
 	
-	public func push(credentials: Credentials, branch: String, remoteName: String) -> Result<(), NSError>{
+    public func push(credentials: Credentials, branch: String, remoteName: String, progress: FetchProgressBlock? = nil) -> Result<(), NSError>{
 
 		return remoteLookup(named: remoteName) { remote in
 			remote.flatMap { pointer in
-				var opts = pushOptions(credentials: credentials)
+                var opts = pushOptions(credentials: credentials, progress: progress)
 				
 				switch reference(named: branch){
 				case .success:
