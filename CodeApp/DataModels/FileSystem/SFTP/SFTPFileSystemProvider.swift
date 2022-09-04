@@ -135,6 +135,17 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
         }
     }
 
+    func moveItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
+        queue.async {
+            let success = self.session.sftp.moveItem(atPath: at.path, toPath: to.path)
+            if success {
+                completionHandler(nil)
+            } else {
+                completionHandler(WorkSpaceStorage.FSError.Unknown)
+            }
+        }
+    }
+
     func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
         queue.async {
             let success = self.session.sftp.removeFile(atPath: at.path)

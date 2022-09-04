@@ -65,6 +65,10 @@ class FTPFileSystemProvider: FileSystemProvider {
         fs.copyItem(path: at.path, to: to.path, completionHandler: completionHandler)
     }
 
+    func moveItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
+        fs.moveItem(path: at.path, to: to.path, completionHandler: completionHandler)
+    }
+
     func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
         fs.removeItem(path: at.path, completionHandler: completionHandler)
     }

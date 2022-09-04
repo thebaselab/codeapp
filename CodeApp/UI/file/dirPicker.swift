@@ -11,8 +11,7 @@ import UniformTypeIdentifiers
 
 struct DirectoryPickerView: UIViewControllerRepresentable {
 
-    @EnvironmentObject var App: MainApp
-    let onOpen: (() -> Void)
+    let onOpen: ((URL) -> Void)
 
     func makeCoordinator() -> Coordinator {
         return DirectoryPickerView.Coordinator(parent1: self)
@@ -45,7 +44,7 @@ struct DirectoryPickerView: UIViewControllerRepresentable {
 
             guard url.startAccessingSecurityScopedResource() else { return }
 
-            parent.App.loadFolder(url: url)
+            parent.onOpen(url)
         }
     }
 }

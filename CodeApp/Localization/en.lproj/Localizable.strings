@@ -239,3 +239,13 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "settings.editor.font.reset" = "Reset to default";
 
 "errors.script_already_running" = "A script is already running. Finish it before running another one.";
+"errors.fs.not_implemented" = "Operation not implemented";
+"errors.fs.scheme_not_registered" = "File URI scheme not registered";
+"errors.fs.invalid_host" = "Invalid host";
+"errors.fs.unsupported_encoding" = "Unsupported encoding";
+"errors.fs.unknown" = "Unknown error";
+"errors.fs.connection_failure" = "Connection failed";
+"errors.fs.authentication_failure" = "Authentication failed";
+
+"file.move" = "Move ..";
+"file.download" = "Download ..";

@@ -363,3 +363,13 @@
 "settings.editor.font.reset" = "Standard";
 
 "errors.script_already_running" = "Ein Skript wird bereits ausgeführt. Beenden Sie es, bevor Sie ein anderes ausführen.";
+"errors.fs.not_implemented" = "Diese Funktion ist noch nicht implementiert.";
+"errors.fs.scheme_not_registered" = "Das Dateisystem-Schema ist nicht registriert.";
+"errors.fs.invalid_host" = "Ungültiger Hostname.";
+"errors.fs.unspported_encoding" = "Nicht unterstützte Zeichenkodierung.";
+"errors.fs.unknown" = "Unbekannter Fehler.";
+"errors.fs.connection_failure" = "Verbindungsfehler.";
+"errors.fs.authentication_failure" = "Authentifizierungsfehler.";
+
+"file.move" = "Bewegen ..";
+"file.download" = "Download ..";

@@ -168,8 +168,8 @@ struct bottomBar: View {
                         }
                         .keyboardShortcut("w", modifiers: [.command])
                         .sheet(isPresented: self.$showsDirectoryPicker) {
-                            DirectoryPickerView(onOpen: {
-                                onDirectoryPickerFinished()
+                            DirectoryPickerView(onOpen: { url in
+                                App.loadFolder(url: url)
                             })
                         }
                         Button("Command Palatte") {

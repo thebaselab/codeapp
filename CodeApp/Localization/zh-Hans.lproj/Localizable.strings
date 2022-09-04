@@ -386,3 +386,13 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "settings.editor.font.reset" = "重置";
 
 "errors.script_already_running" = "脚本已在运行。 在运行另一个之前完成它。";
+"errors.fs.not_implemented" = "文件系统不支持此操作。";
+"errors.fs.scheme_not_registered" = "文件系统方案未注册。";
+"errors.fs.invalid_host" = "无效的主机。";
+"errors.fs.unspported_encoding" = "不支持的编码。";
+"errors.fs.unknown" = "未知错误。";
+"errors.fs.connection_failure" = "连接失败。";
+"errors.fs.authentication_failure" = "身份验证失败。";
+
+"file.move" = "移动 ..";
+"file.download" = "下载 ..";

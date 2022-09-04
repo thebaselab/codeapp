@@ -15,6 +15,7 @@ struct FileCellContextMenu: View {
 
     let onRename: () -> Void
     let onCreateNewFile: () -> Void
+    let onMoveFile: () -> Void
 
     var body: some View {
         Group {
@@ -58,6 +59,14 @@ struct FileCellContextMenu: View {
                 }) {
                     Text("Delete").foregroundColor(.red)
                     Image(systemName: "trash").foregroundColor(.red)
+                }
+
+                Button(action: {
+                    onMoveFile()
+                }) {
+                    Label(
+                        item.url.hasPrefix("file") ? "file.move" : "file.download",
+                        systemImage: "folder")
                 }
             }
 

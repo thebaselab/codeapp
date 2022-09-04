@@ -13,6 +13,7 @@ struct FolderCell: View {
     @EnvironmentObject var App: MainApp
     @State var item: WorkSpaceStorage.fileItemRepresentable
     @State var showingNewFileSheet = false
+    @State var showsDirectoryPicker = false
     @State var newname = ""
     @FocusState var focusedField: Field?
     @State var isRenaming: Bool = false
@@ -97,6 +98,20 @@ struct FolderCell: View {
         .sheet(isPresented: $showingNewFileSheet) {
             newFileView(targetUrl: item.url).environmentObject(App)
         }
+        .sheet(isPresented: $showsDirectoryPicker) {
+            DirectoryPickerView(onOpen: { url in
+                guard let itemURL = URL(string: item.url) else {
+                    return
+                }
+                App.workSpaceStorage.moveItem(
+                    at: itemURL, to: url.appendingPathComponent(itemURL.lastPathComponent),
+                    completionHandler: { error in
+                        if let error = error {
+                            App.notificationManager.showErrorMessage(error.localizedDescription)
+                        }
+                    })
+            })
+        }
         .contextMenu {
             FileCellContextMenu(
                 item: item,
@@ -108,6 +123,9 @@ struct FolderCell: View {
                 },
                 onCreateNewFile: {
                     showingNewFileSheet.toggle()
+                },
+                onMoveFile: {
+                    showsDirectoryPicker.toggle()
                 })
         }
         //        .onDrag { NSItemProvider(object: URL(string: item.url)! as NSURL) }

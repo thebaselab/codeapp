@@ -64,6 +64,15 @@ class LocalFileSystemProvider: FileSystemProvider {
         }
     }
 
+    func moveItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
+        do {
+            try FileManager.default.moveItem(at: at, to: to)
+            completionHandler(nil)
+        } catch {
+            completionHandler(error)
+        }
+    }
+
     func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
         do {
             try FileManager.default.removeItem(at: at)

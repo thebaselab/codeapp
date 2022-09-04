@@ -31,26 +31,23 @@ class WorkSpaceStorage: ObservableObject {
         case Unknown
         case ConnectionFailure
         case AuthFailure
-        case UnsupportedScheme
 
         public var errorDescription: String? {
             switch self {
             case .NotImplemented:
-                return "Not implemented"
+                return "errors.fs.not_implemented"
             case .SchemeNotRegistered:
-                return "Scheme not registered"
+                return "errors.fs.scheme_not_registered"
             case .InvalidHost:
-                return "Invalid host"
+                return "errors.fs.invalid_host"
             case .UnsupportedEncoding:
-                return "Unsupported encoding"
+                return "errors.fs.unsupported_encoding"
             case .Unknown:
-                return "Unknown error"
+                return "errors.fs.unknown"
             case .ConnectionFailure:
-                return "Connection failed"
+                return "errors.fs.connection_failure"
             case .AuthFailure:
-                return "Authentication failed"
-            case .UnsupportedScheme:
-                return "Unsupported scheme"
+                return "errors.fs.authentication_failure"
             }
         }
     }
@@ -88,6 +85,7 @@ class WorkSpaceStorage: ObservableObject {
         isConnecting = true
         _connectToServer(
             host: host, credentials: credentials,
+            usesKey: usesKey,
             completionHandler: { error in
                 completionHandler(error)
                 self.isConnecting = false
@@ -154,7 +152,7 @@ class WorkSpaceStorage: ObservableObject {
             }
 
         default:
-            completionHandler(FSError.UnsupportedScheme)
+            completionHandler(FSError.SchemeNotRegistered)
             return
         }
     }
@@ -454,17 +452,48 @@ extension WorkSpaceStorage: FileSystemProvider {
     }
 
     func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
-        guard let scheme = at.scheme, at.scheme == to.scheme, let fs = fss[scheme] else {
+        guard let scheme = at.scheme, let fs = fss[scheme] else {
             completionHandler(FSError.SchemeNotRegistered)
             return
         }
         if scheme != "file" {
-            let fileToInsert = fileItemRepresentable(url: to.absoluteString, isDirectory: false)
+            let fileToInsert = fileItemRepresentable(
+                url: to.absoluteString, isDirectory: to.isDirectory)
             insertToTree(file: fileToInsert)
+        }
+        DispatchQueue.main.async {
+            self.explorerIsBusy = true
         }
         return fs.copyItem(at: at, to: to) { error in
             DispatchQueue.main.async {
                 completionHandler(error)
+            }
+            DispatchQueue.main.async {
+                self.explorerIsBusy = false
+            }
+        }
+    }
+
+    func moveItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
+        guard let scheme = at.scheme, let fs = fss[scheme] else {
+            completionHandler(FSError.SchemeNotRegistered)
+            return
+        }
+        if scheme != "file" {
+            let fileToInsert = fileItemRepresentable(
+                url: to.absoluteString, isDirectory: to.isDirectory)
+            insertToTree(file: fileToInsert)
+            removeFromTree(url: at)
+        }
+        DispatchQueue.main.async {
+            self.explorerIsBusy = true
+        }
+        return fs.moveItem(at: at, to: to) { error in
+            DispatchQueue.main.async {
+                completionHandler(error)
+            }
+            DispatchQueue.main.async {
+                self.explorerIsBusy = false
             }
         }
     }

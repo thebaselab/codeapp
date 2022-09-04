@@ -363,3 +363,13 @@
 "settings.editor.font.reset" = "기본값";
 
 "errors.script_already_running" = "스크립트가 이미 실행 중입니다. 다른 것을 실행하기 전에 완료하십시오.";
+"errors.fs.not_implemented" = "이 기능은 아직 구현되지 않았습니다.";
+"errors.fs.scheme_not_registered" = "스키마가 등록되지 않았습니다.";
+"errors.fs.invalid_host" = "호스트가 잘못되었습니다.";
+"errors.fs.unspported_encoding" = "지원되지 않는 인코딩입니다.";
+"errors.fs.unknown" = "알 수 없는 오류가 발생했습니다.";
+"errors.fs.connection_failure" = "연결에 실패했습니다.";
+"errors.fs.authentication_failure" = "인증에 실패했습니다.";
+
+"file.move" = "이동하다 ..";
+"file.download" = "다운로드 ..";

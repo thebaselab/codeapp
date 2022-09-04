@@ -12,6 +12,7 @@ struct FileCell: View {
     @EnvironmentObject var App: MainApp
     @State var item: WorkSpaceStorage.fileItemRepresentable
     @State var newname = ""
+    @State var showsDirectoryPicker = false
     @FocusState var focusedField: Field?
     @State var isRenaming: Bool = false
 
@@ -76,6 +77,20 @@ struct FileCell: View {
 
             }
             .padding(5)
+            .sheet(isPresented: $showsDirectoryPicker) {
+                DirectoryPickerView(onOpen: { url in
+                    guard let itemURL = URL(string: item.url) else {
+                        return
+                    }
+                    App.workSpaceStorage.moveItem(
+                        at: itemURL, to: url.appendingPathComponent(itemURL.lastPathComponent),
+                        completionHandler: { error in
+                            if let error = error {
+                                App.notificationManager.showErrorMessage(error.localizedDescription)
+                            }
+                        })
+                })
+            }
             .contextMenu {
                 FileCellContextMenu(
                     item: item,
@@ -85,7 +100,9 @@ struct FileCell: View {
                             focusedField = .rename
                         }
                     },
-                    onCreateNewFile: {})
+                    onCreateNewFile: {},
+                    onMoveFile: { showsDirectoryPicker.toggle() }
+                )
             }
             .onReceive(
                 NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
