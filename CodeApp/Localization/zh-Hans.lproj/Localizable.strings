@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.4 (2022 年 6 月)**
+##### **v1.3.5 (2022 年 9 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -24,6 +24,11 @@
 
 "Changelog.message" =
 "
+### v1.3.5 (2022 年 9 月)
+- 用户界面改进
+- 支持在资源管理器中移动文件
+- 支持从远程服务器下载文件
+- 能够为 git push 选择不同的遥控器
 ### v1.3.4 (2022 年 6 月)
 - 对 SFTP 的终端支持
 - 支持 Fira 代码和自定义字体
