@@ -15,7 +15,7 @@ struct FileCellContextMenu: View {
 
     let onRename: () -> Void
     let onCreateNewFile: () -> Void
-    let onMoveFile: () -> Void
+    let onCopyFile: () -> Void
 
     var body: some View {
         Group {
@@ -62,10 +62,10 @@ struct FileCellContextMenu: View {
                 }
 
                 Button(action: {
-                    onMoveFile()
+                    onCopyFile()
                 }) {
                     Label(
-                        item.url.hasPrefix("file") ? "file.move" : "file.download",
+                        item.url.hasPrefix("file") ? "file.copy" : "file.download",
                         systemImage: "folder")
                 }
             }

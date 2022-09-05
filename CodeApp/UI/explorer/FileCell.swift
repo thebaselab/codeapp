@@ -82,7 +82,7 @@ struct FileCell: View {
                     guard let itemURL = URL(string: item.url) else {
                         return
                     }
-                    App.workSpaceStorage.moveItem(
+                    App.workSpaceStorage.copyItem(
                         at: itemURL, to: url.appendingPathComponent(itemURL.lastPathComponent),
                         completionHandler: { error in
                             if let error = error {
@@ -101,7 +101,7 @@ struct FileCell: View {
                         }
                     },
                     onCreateNewFile: {},
-                    onMoveFile: { showsDirectoryPicker.toggle() }
+                    onCopyFile: { showsDirectoryPicker.toggle() }
                 )
             }
             .onReceive(

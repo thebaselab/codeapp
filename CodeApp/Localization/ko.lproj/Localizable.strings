@@ -376,5 +376,5 @@
 "errors.fs.connection_failure" = "연결에 실패했습니다.";
 "errors.fs.authentication_failure" = "인증에 실패했습니다.";
 
-"file.move" = "이동하다 ..";
-"file.download" = "다운로드 ..";
+"file.copy" = "에게 복사..";
+"file.download" = "다운로드..";

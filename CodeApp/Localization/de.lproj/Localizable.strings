@@ -376,5 +376,5 @@
 "errors.fs.connection_failure" = "Verbindungsfehler.";
 "errors.fs.authentication_failure" = "Authentifizierungsfehler.";
 
-"file.move" = "Bewegen ..";
-"file.download" = "Download ..";
+"file.copy" = "Kopieren nach..";
+"file.download" = "Herunterladen auf..";
