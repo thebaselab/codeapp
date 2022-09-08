@@ -1259,6 +1259,23 @@ public final class Repository {
 	}
 }
 
+@available(iOS 15, *)
+public extension Repository {
+    func asyncPush(credentails: Credentials, branchName: String, remoteName: String, progress: FetchProgressBlock? = nil) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            let result = self.push(credentials: credentails, branch: branchName, remoteName: remoteName, progress: progress)
+            switch result {
+            case .success():
+                continuation.resume()
+                return
+            case .failure(let error):
+                continuation.resume(throwing: error)
+            }
+        }
+        
+    }
+}
+
 private extension Array {
 	func aggregateResult<Value, Error>() -> Result<[Value], Error> where Element == Result<Value, Error> {
 		var values: [Value] = []
