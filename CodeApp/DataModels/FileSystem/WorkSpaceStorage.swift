@@ -336,8 +336,13 @@ extension WorkSpaceStorage {
         var name: String
         var url: String
         var subFolderItems: [fileItemRepresentable]?
-
         var isDownloading = false
+        var isFolder: Bool {
+            subFolderItems != nil
+        }
+        var _url: URL? {
+            URL(string: url)
+        }
 
         init(name: String? = nil, url: String, isDirectory: Bool) {
             if name != nil {
