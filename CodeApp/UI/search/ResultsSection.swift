@@ -40,7 +40,7 @@ struct ResultsSection: View {
                                 VStack(alignment: .leading, spacing: 2) {
                                     ForEach(result) { res in
                                         HighlightedText(
-                                            res.line,
+                                            res.line.trimmingCharacters(in: .whitespacesAndNewlines),
                                             matching: App.textSearchManager.searchTerm,
                                             accentColor: Color.init(id: "statusBar.background")
                                         )
