@@ -26,20 +26,47 @@ class WebViewBase: KBWebViewBase {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func addInputAccessoryView(toolbar: UIView?) {
-        guard let toolbar = toolbar else { return }
-        objc_setAssociatedObject(
-            self, &ToolbarHandle, toolbar, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-
+    var candidateView: UIView? {
         var candidateView: UIView? = nil
         for view in self.scrollView.subviews {
             if String(describing: type(of: view)).hasPrefix("WKContent") {
                 candidateView = view
             }
         }
+        return candidateView
+    }
+
+    func addInputAccessoryView(toolbar: UIView?) {
+        guard let toolbar = toolbar else { return }
         guard let targetView = candidateView else { return }
+
+        objc_setAssociatedObject(
+            self, &ToolbarHandle, toolbar, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+
         let newClass: AnyClass? = classWithCustomAccessoryView(targetView: targetView)
         object_setClass(targetView, newClass!)
+    }
+
+    func removeUIDropInteraction() {
+        func findInteractionView(in subviews: [UIView]) -> UIView? {
+            for subview in subviews {
+                for interaction in subview.interactions {
+                    if interaction is UIDragInteraction {
+                        return subview
+                    }
+                }
+                return findInteractionView(in: subview.subviews)
+            }
+            return nil
+        }
+
+        if let interactionView = findInteractionView(in: subviews) {
+            for interaction in interactionView.interactions {
+                if interaction is UIDragInteraction || interaction is UIDropInteraction {
+                    interactionView.removeInteraction(interaction)
+                }
+            }
+        }
     }
 
     private func classWithCustomAccessoryView(targetView: UIView) -> AnyClass? {
@@ -488,6 +515,7 @@ struct monacoEditor: UIViewRepresentable {
                 }
             case "Editor Initialising":
                 isEditorInited = true
+                monacoWebView.removeUIDropInteraction()
                 control.applyUserOptions()
                 control.status.loadURLQueue()
                 if globalDarkTheme != nil {
