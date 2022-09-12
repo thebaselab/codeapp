@@ -63,4 +63,17 @@ extension URL {
         }
         return false
     }
+    
+    // Reference: https://stackoverflow.com/questions/43193772/how-do-i-see-if-some-folder-is-a-child-of-another-using-nsurl
+    func canonicalize() -> URL {
+        self.standardizedFileURL.resolvingSymlinksInPath()
+    }
+    
+    func hasChild(url: URL) -> Bool{
+        let ancestorComponents: [String] = self.canonicalize().pathComponents
+        let childComponents: [String] = url.canonicalize().pathComponents
+
+        return ancestorComponents.count < childComponents.count
+            && !zip(ancestorComponents, childComponents).contains(where: !=)
+    }
 }

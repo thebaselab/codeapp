@@ -375,6 +375,8 @@
 "errors.fs.unknown" = "Unbekannter Fehler.";
 "errors.fs.connection_failure" = "Verbindungsfehler.";
 "errors.fs.authentication_failure" = "Authentifizierungsfehler.";
+"errors.fs.attempting_to_copy_parent_to_child" = "Versuch, ein Verzeichnis in sich selbst zu kopieren.";
+"errors.fs.attempting_to_copy_oneself" = "Sie versuchen, sich selbst zu kopieren.";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";

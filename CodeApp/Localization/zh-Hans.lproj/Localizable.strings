@@ -398,6 +398,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.fs.unknown" = "未知错误。";
 "errors.fs.connection_failure" = "连接失败。";
 "errors.fs.authentication_failure" = "身份验证失败。";
+"errors.fs.attempting_to_copy_parent_to_child" = "尝试将父文件夹复制到子文件夹。";
+"errors.fs.attempting_to_copy_oneself" = "尝试复制自己。";
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";

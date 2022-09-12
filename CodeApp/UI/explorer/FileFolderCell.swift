@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct FileFolderCell: View {
     @EnvironmentObject var App: MainApp
@@ -27,6 +28,20 @@ struct FileFolderCell: View {
                     }
                     return itemProvider
                 }
+                .onDrop(of: [.folder, .item], isTargeted: nil, perform: { providers in
+                    if let provider = providers.first {
+                            provider.loadItem(forTypeIdentifier: UTType.item.identifier){ data, error in
+                                if let at = data as? URL, let to = item._url?.appendingPathComponent(at.lastPathComponent, conformingTo: .item) {
+                                    App.workSpaceStorage.copyItem(at: at, to: to, completionHandler: { error in
+                                        if let error = error {
+                                            App.notificationManager.showErrorMessage(error.localizedDescription)
+                                        }
+                                    })
+                                }
+                            }
+                    }
+                    return true
+                })
         } else {
             FileCell(item: item)
                 .frame(height: 16)

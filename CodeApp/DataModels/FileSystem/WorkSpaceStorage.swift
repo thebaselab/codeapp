@@ -31,6 +31,8 @@ class WorkSpaceStorage: ObservableObject {
         case Unknown
         case ConnectionFailure
         case AuthFailure
+        case AttemptingToCopyParentToChild
+        case AttemptingToCopyOneself
 
         public var errorDescription: String? {
             switch self {
@@ -48,6 +50,10 @@ class WorkSpaceStorage: ObservableObject {
                 return "errors.fs.connection_failure"
             case .AuthFailure:
                 return "errors.fs.authentication_failure"
+            case .AttemptingToCopyParentToChild:
+                return "errors.fs.attempting_to_copy_parent_to_child"
+            case .AttemptingToCopyOneself:
+                return "errors.fs.attempting_to_copy_oneself"
             }
         }
     }
@@ -461,6 +467,17 @@ extension WorkSpaceStorage: FileSystemProvider {
             completionHandler(FSError.SchemeNotRegistered)
             return
         }
+        
+        if at.sameFileLocation(path: to.path){
+            completionHandler(FSError.AttemptingToCopyOneself)
+            return
+        }
+        
+        if at.hasChild(url: to){
+            completionHandler(FSError.AttemptingToCopyParentToChild)
+            return
+        }
+        
         if scheme != "file" {
             let fileToInsert = fileItemRepresentable(
                 url: to.absoluteString, isDirectory: to.isDirectory)
