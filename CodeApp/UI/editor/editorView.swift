@@ -124,29 +124,34 @@ struct editorView: View {
                         "devicehasCursor = false", completionHandler: nil)
                 })
 
-        }.onDrop(of: [.url, .item], isTargeted: $targeted, perform: { providers in
-            if let provider = providers.first {
-                if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier){
-                    _ = provider.loadObject(ofClass: URL.self, completionHandler: { url, err in
-                        if let url = url {
-                            DispatchQueue.main.async {
-                                App.openEditor(urlString: url.absoluteString, type: .any)
-                            }
-                        }
-                    })
-                }else{
-                    provider.loadItem(forTypeIdentifier: UTType.item.identifier){ data, error in
-                        if let target = data as? URL {
-                            DispatchQueue.main.async {
-                                App.openEditor(urlString: target.absoluteString, type: .any)
+        }.onDrop(
+            of: [.url, .item], isTargeted: $targeted,
+            perform: { providers in
+                if let provider = providers.first {
+                    if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
+                        _ = provider.loadObject(
+                            ofClass: URL.self,
+                            completionHandler: { url, err in
+                                if let url = url {
+                                    DispatchQueue.main.async {
+                                        App.openEditor(urlString: url.absoluteString, type: .any)
+                                    }
+                                }
+                            })
+                    } else {
+                        provider.loadItem(forTypeIdentifier: UTType.item.identifier) {
+                            data, error in
+                            if let target = data as? URL {
+                                DispatchQueue.main.async {
+                                    App.openEditor(urlString: target.absoluteString, type: .any)
+                                }
                             }
                         }
                     }
+
                 }
-                    
-            }
-            return true
-        })
+                return true
+            })
 
     }
 }

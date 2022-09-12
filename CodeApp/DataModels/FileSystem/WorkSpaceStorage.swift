@@ -467,17 +467,17 @@ extension WorkSpaceStorage: FileSystemProvider {
             completionHandler(FSError.SchemeNotRegistered)
             return
         }
-        
-        if at.sameFileLocation(path: to.path){
+
+        if at.sameFileLocation(path: to.path) {
             completionHandler(FSError.AttemptingToCopyOneself)
             return
         }
-        
-        if at.hasChild(url: to){
+
+        if at.hasChild(url: to) {
             completionHandler(FSError.AttemptingToCopyParentToChild)
             return
         }
-        
+
         if scheme != "file" {
             let fileToInsert = fileItemRepresentable(
                 url: to.absoluteString, isDirectory: to.isDirectory)
