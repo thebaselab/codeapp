@@ -131,7 +131,12 @@ class MainApp: ObservableObject {
         terminalInstance = TerminalInstance(root: rootDir)
 
         terminalInstance.openEditor = { url in
-            self.openEditor(urlString: url, type: .any)
+            if url.isDirectory {
+                self.loadFolder(url: url)
+            }else{
+                self.openEditor(urlString: url.absoluteString, type: .any)
+            }
+            
         }
         workSpaceStorage.onDirectoryChange { url in
             for editor in self.editors {

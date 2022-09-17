@@ -25,7 +25,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     public var webView: WebViewBase? = nil
     public var executor: Executor? = nil
     private var terminalMessageHandlerAdded = false
-    public var openEditor: ((String) -> Void)? = nil
+    public var openEditor: ((URL) -> Void)? = nil
 
     var isInteractive = false
 
@@ -281,7 +281,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                     self.readLine()
                     return
                 }
-                openEditor?(fileUrl.absoluteString)
+                openEditor?(fileUrl.standardized)
                 self.readLine()
             case "clear":
                 self.executeScript("localEcho._input='';" + #"term.write('\033c')"#)
