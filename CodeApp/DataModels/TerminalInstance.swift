@@ -10,6 +10,9 @@ import ios_system
 
 class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 
+    let INTERRUPT = "\u{03}"
+    let END_OF_TRANSMISSION = "\u{04}"
+
     public var terminalServiceProvider: TerminalServiceProvider? = nil {
         didSet {
             if terminalServiceProvider != nil {
@@ -29,36 +32,8 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 
     var isInteractive = false
 
-    func killCurrentProcess() {
-        if let state = executor?.state,
-            state == .interactive
-        {
-            executor?.sendInput(input: "\u{3}")
-            return
-        }
-
-        if nodeUUID != nil {
-            let notificationName = CFNotificationName(
-                "com.thebaselab.code.node.stop" as CFString)
-            let notificationCenter =
-                CFNotificationCenterGetDarwinNotifyCenter()
-            CFNotificationCenterPostNotification(
-                notificationCenter, notificationName, nil, nil, false)
-        }
-
-        if javascriptRunning {
-            javascriptRunning = false
-
-            DispatchQueue.main.async {
-                wasmWebView = WasmWebView()
-                let wasmFilePath = Bundle.main.path(
-                    forResource: "wasm", ofType: "html", inDirectory: "ClangLib")
-                wasmWebView.loadFileURL(
-                    URL(fileURLWithPath: wasmFilePath!),
-                    allowingReadAccessTo: URL(fileURLWithPath: wasmFilePath!))
-            }
-        }
-        executor?.kill()
+    func sendInterrupt() {
+        executeScript("sendInterrupt()")
     }
 
     func startInteractive() {
@@ -330,26 +305,20 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         case "window.size.change":
             let cols = result["Cols"] as! Int
             let rows = result["Rows"] as! Int
-            ios_setWindowSize(Int32(cols), Int32(rows), executor?.stdout_file)
-            if let ts = terminalServiceProvider {
-                ts.setWindowsSize(cols: cols, rows: rows)
-            }
+            executor?.setWindowSize(cols: cols, rows: rows)
         case "Data":
             let data = result["Input"] as! String
-            if data == #"\u0003"# && !isInteractive {
-                if nodeUUID != nil {
-                    let notificationName = CFNotificationName(
-                        "com.thebaselab.code.node.stop" as CFString)
-                    let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
-                    CFNotificationCenterPostNotification(
-                        notificationCenter, notificationName, nil, nil, false)
-                }
-                clearLine()
-                executor?.kill()
+
+            if data == END_OF_TRANSMISSION {
+                executor?.endOfTransmission()
             }
-            if isInteractive && data == #"\u0004"# {
-                clearLine()
-                executor?.kill()
+
+            if data == INTERRUPT {
+                if executor?.state == .idle {
+                    clearLine()
+                } else {
+                    executor?.kill()
+                }
             }
         default:
             print("\(result) Event not handled")

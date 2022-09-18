@@ -140,8 +140,7 @@ struct panelView: View {
                             .padding(.trailing)
                             .highPriorityGesture(
                                 TapGesture().onEnded {
-                                    App.terminalInstance.killCurrentProcess()
-                                    App.terminalInstance.reset()
+                                    App.terminalInstance.sendInterrupt()
                                 })
                     }
 
@@ -249,6 +248,10 @@ struct panelView: View {
                                 Button("Clear Console") {
                                     App.terminalInstance.reset()
                                 }.keyboardShortcut("k", modifiers: [.command])
+
+                                Button("SIGINT") {
+                                    App.terminalInstance.sendInterrupt()
+                                }.keyboardShortcut("c", modifiers: [.control])
 
                                 ViewRepresentable(wv)
                                     .onTapGesture {
