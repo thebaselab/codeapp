@@ -16,20 +16,19 @@ class Executor {
         case interactive
     }
 
+    private let persistentIdentifier = "com.thebaselab.terminal"
     private var pid: pid_t? = nil
-    private let stdin_pipe = Pipe()
-    private let stdout_pipe = Pipe()
-    private let stderr_pipe = Pipe()
-    private let stdin_file: UnsafeMutablePointer<FILE>
-    let stdout_file: UnsafeMutablePointer<FILE>
-    private let stderr_file: UnsafeMutablePointer<FILE>
 
+    private var stdin_file: UnsafeMutablePointer<FILE>?
+    private var stdout_file: UnsafeMutablePointer<FILE>?
     private var stdin_file_input: FileHandle? = nil
 
     private var receivedStdout: ((_ data: Data) -> Void)
     private var receivedStderr: ((_ data: Data) -> Void)
     private var requestInput: ((_ prompt: String) -> Void)
     private var lastCommand: String? = nil
+    private var stdout_active = false
+    private let END_OF_TRANSMISSION = "\u{04}"
 
     var currentWorkingDirectory: URL
     var state: State = .idle
@@ -52,16 +51,6 @@ class Executor {
         receivedStdout = onStdout
         receivedStderr = onStderr
         requestInput = onRequestInput
-
-        // Get file for stdin that can be read from
-        stdin_file = fdopen(stdin_pipe.fileHandleForReading.fileDescriptor, "r")
-        // Get file for stdout/stderr that can be written to
-        stdout_file = fdopen(stdout_pipe.fileHandleForWriting.fileDescriptor, "w")
-        stderr_file = fdopen(stderr_pipe.fileHandleForWriting.fileDescriptor, "w")
-
-        // Call the following functions when data is written to stdout/stderr.
-        stdout_pipe.fileHandleForReading.readabilityHandler = self.onStdout
-        stderr_pipe.fileHandleForReading.readabilityHandler = self.onStderr
     }
 
     func evaluateCommands(_ cmds: [String]) {
@@ -86,13 +75,25 @@ class Executor {
             })
     }
 
+    func endOfTransmission() {
+        try? stdin_file_input?.close()
+    }
+
     func kill() {
-        guard self.state != .idle else {
-            return
+        if nodeUUID != nil {
+            let notificationName = CFNotificationName(
+                "com.thebaselab.code.node.stop" as CFString)
+            let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
+            CFNotificationCenterPostNotification(
+                notificationCenter, notificationName, nil, nil, false)
         }
-        ios_switchSession(self.stdout_file)
+
+        ios_switchSession(persistentIdentifier.toCString())
         ios_kill()
-        self.state = .idle
+    }
+
+    func setWindowSize(cols: Int, rows: Int) {
+        ios_setWindowSize(Int32(cols), Int32(rows), persistentIdentifier.toCString())
     }
 
     func sendInput(input: String) {
@@ -105,23 +106,32 @@ class Executor {
             stdinString += input + "\n"
         }
 
-        ios_switchSession(self.stdout_file)
+        ios_switchSession(persistentIdentifier.toCString())
 
-        stdin_pipe.fileHandleForWriting.write(data)
+        stdin_file_input?.write(data)
 
         if state == .running {
             if let endData = "\n".data(using: .utf8) {
-                stdin_pipe.fileHandleForWriting.write(endData)
+                stdin_file_input?.write(endData)
             }
         }
 
     }
 
     private func onStdout(_ stdout: FileHandle) {
+        if !stdout_active { return }
+
         let data = stdout.availableData
+        let str = String(decoding: data, as: UTF8.self)
+
+        if str.contains(END_OF_TRANSMISSION) {
+            stdout_active = false
+            return
+        }
+
         DispatchQueue.main.async {
+
             if self.state == .running {
-                let str = String(decoding: data, as: UTF8.self)
                 // Interactive Commands /with control characters
                 if str.contains("\u{8}") || str.contains("\u{13}") || str.contains("\r") {
                     self.receivedStdout(data)
@@ -161,6 +171,24 @@ class Executor {
             return
         }
 
+        var stdin_pipe = Pipe()
+        stdin_file = fdopen(stdin_pipe.fileHandleForReading.fileDescriptor, "r")
+        while stdin_file == nil {
+            stdin_pipe = Pipe()
+            stdin_file = fdopen(stdin_pipe.fileHandleForReading.fileDescriptor, "r")
+        }
+        stdin_file_input = stdin_pipe.fileHandleForWriting
+
+        var stdout_pipe = Pipe()
+        stdout_file = fdopen(stdout_pipe.fileHandleForWriting.fileDescriptor, "w")
+        while stdout_file == nil {
+            stdout_pipe = Pipe()
+            stdout_file = fdopen(stdout_pipe.fileHandleForWriting.fileDescriptor, "w")
+        }
+        stdout_pipe.fileHandleForReading.readabilityHandler = self.onStdout
+
+        stdout_active = true
+
         let queue = DispatchQueue(label: "\(command)", qos: .utility)
 
         queue.async {
@@ -174,9 +202,26 @@ class Executor {
             self.lastCommand = command
             Thread.current.name = command
 
-            ios_switchSession(self.stdout_file)
-            ios_setStreams(self.stdin_file, self.stdout_file, self.stderr_file)
+            ios_switchSession(self.persistentIdentifier.toCString())
+            ios_setContext(UnsafeMutableRawPointer(mutating: self.persistentIdentifier.toCString()))
+            ios_setStreams(self.stdin_file, self.stdout_file, self.stdout_file)
+
             let code = self.run(command: command)
+
+            close(stdin_pipe.fileHandleForReading.fileDescriptor)
+            self.stdin_file_input = nil
+
+            // Send info to the stdout handler that the command has finished:
+            let writeOpen = fcntl(stdout_pipe.fileHandleForWriting.fileDescriptor, F_GETFD)
+            if writeOpen >= 0 {
+                // Pipe is still open, send information to close it, once all output has been processed.
+                stdout_pipe.fileHandleForWriting.write(self.END_OF_TRANSMISSION.data(using: .utf8)!)
+                while self.stdout_active {
+                    fflush(thread_stdout)
+                }
+            }
+
+            close(stdout_pipe.fileHandleForReading.fileDescriptor)
 
             DispatchQueue.main.async {
                 self.state = .idle
@@ -193,6 +238,7 @@ class Executor {
             }
 
             ios_setMiniRootURL(url)
+
             DispatchQueue.main.async {
                 self.prompt =
                     "\(FileManager().currentDirectoryPath.split(separator: "/").last?.removingPercentEncoding ?? "") $ "
@@ -207,12 +253,15 @@ class Executor {
         NSLog("Running command: \(command)")
 
         // ios_system requires these to be set to nil before command execution
+        thread_stdin = nil
+        thread_stdout = nil
+        thread_stderr = nil
+
         pid = ios_fork()
         let returnCode = ios_system(command)
         ios_waitpid(pid!)
-
-        thread_stdout = nil
-        thread_stderr = nil
+        ios_releaseThreadId(pid!)
+        pid = nil
 
         // Flush pipes to make sure all data is read
         fflush(thread_stdout)

@@ -133,10 +133,10 @@ class MainApp: ObservableObject {
         terminalInstance.openEditor = { url in
             if url.isDirectory {
                 self.loadFolder(url: url)
-            }else{
+            } else {
                 self.openEditor(urlString: url.absoluteString, type: .any)
             }
-            
+
         }
         workSpaceStorage.onDirectoryChange { url in
             for editor in self.editors {

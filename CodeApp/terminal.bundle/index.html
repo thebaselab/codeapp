@@ -182,6 +182,13 @@
         });
       }
 
+      function sendInterrupt() {
+        window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
+          Event: "Data",
+          Input: "\u0003",
+        });
+      }
+
       window.onresize = function (event) {
         fitAddon.fit();
         window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
