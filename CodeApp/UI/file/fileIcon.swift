@@ -65,7 +65,7 @@ let extensionNames = [
     "stylelintrc.yml": "stylelint", "stylelintrc.js": "stylelint", "stylelintignore": "stylelint",
     "direnv": "config", "env": "config", "static": "config", "editorconfig": "config",
     "slugignore": "config", "tmp": "clock", "htaccess": "config", "key": "lock", "cert": "lock",
-    "DS_Store": "ignored",
+    "DS_Store": "ignored", "svelte": "svelte"
 ]
 let level2ExtensionNames = [
     "css.map": "css", "js.map": "javascript", "spec.js": "javascript_yellow",
