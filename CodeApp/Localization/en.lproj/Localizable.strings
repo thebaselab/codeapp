@@ -202,8 +202,12 @@
 "
 ### Licenses
 ---
+#### gruvbox-material-vscode
+ - [gruvbo-material-vscode] is licensed under the [MIT License](https://github.com/sainnhe/gruvbox-material-vscode/blob/master/LICENSE).
+#### catppuccin
+ - [catppuccin](https://github.com/catppuccin/vscode) is licensed under the [MIT License](https://github.com/catppuccin/vscode/blob/main/LICENSE).
 #### vscode-terraform
- - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) is licensed under [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE)
+ - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) is licensed under [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE).
 #### GCDWebServer
  - [GCDWebServer](https://github.com/swisspol/GCDWebServer) is licensed under [Custom License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
 #### libgit2
