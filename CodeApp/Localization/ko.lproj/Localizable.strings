@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.5 (2022년 9월)**
+##### **v1.3.6 (2022년 10월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -24,6 +24,13 @@
 
 "Changelog.message" =
 "
+### v1.3.6 (2022년 10월)
+- Node.js를 v16.17.0으로 업그레이드
+- svelte에 대한 구문 강조 표시
+- 새로운 편집기 테마
+- 터미널 종료 신호를 적절하게 처리
+- `code` 명령으로 디렉토리 열기 지원
+- emmet이 작동하지 않는 버그 수정
 ### v1.3.5 (2022년 9월)
 - UI 개선
 - 탐색기에서 파일 이동 지원

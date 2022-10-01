@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.5 (September 2022)**
+##### **v1.3.6 (October 2022)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -24,6 +24,14 @@
 
 "Changelog.message" =
 "
+### v1.3.6 (October 2022)
+- Upgrade Node.js to v16.17.0
+- Syntax highlighting for svelte
+- New editor themes
+- Properly handle terminal terminate signals
+- Support opening directories with `code` command
+- Fix a bug that prevents emmet from working
+
 ### v1.3.5 (September 2022)
 - UI improvements
 - Support for moving files in explorer
