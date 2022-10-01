@@ -33,7 +33,7 @@ struct themeConfigView: View {
                 HStack(spacing: 20) {
 
                     ForEach(
-                        [themeConfigView.darkPlusTheme] + globalThemes.filter { $0.isDark },
+                        [themeConfigView.darkPlusTheme] + globalThemes.sorted {$0.name < $1.name} .filter { $0.isDark },
                         id: \.id
                     ) { item in
                         themePreview(item: item)
@@ -49,7 +49,7 @@ struct themeConfigView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach(
-                        [themeConfigView.lightPlusTheme] + globalThemes.filter { !$0.isDark },
+                        [themeConfigView.lightPlusTheme] + globalThemes.sorted {$0.name < $1.name}.filter { !$0.isDark },
                         id: \.id
                     ) { item in
                         themePreview(item: item)
