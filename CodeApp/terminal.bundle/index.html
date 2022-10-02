@@ -96,10 +96,10 @@
           window.matchMedia &&
           window.matchMedia("(prefers-color-scheme: dark)").matches
         ) {
-          term.setOption("theme", activeDarkTheme);
+          term.options.theme = activeDarkTheme;
           document.body.style.backgroundColor = activeDarkTheme.background;
         } else {
-          term.setOption("theme", activeLightTheme);
+          term.options.theme = activeLightTheme;
           document.body.style.backgroundColor = activeLightTheme.background;
         }
       }
@@ -111,10 +111,10 @@
 
           if (newColorScheme == "dark") {
             document.body.style.backgroundColor = activeDarkTheme.background;
-            term.setOption("theme", activeDarkTheme);
+            term.options.theme = activeDarkTheme;
           } else {
             document.body.style.backgroundColor = activeLightTheme.background;
-            term.setOption("theme", activeLightTheme);
+            term.options.theme = activeLightTheme;
           }
         });
 
