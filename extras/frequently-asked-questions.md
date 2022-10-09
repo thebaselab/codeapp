@@ -23,3 +23,9 @@ It comes with the purchase of the app as we don’t feel like a monthly subscrip
 #### I can't clone or push to a private repository.
 
 You'll need to set your credentials at `Settings > Version Control > Authentication`. In many cases, you need to use a personal access token instead of the regular password. For GitHub, see [https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+
+### Others
+
+#### How to change display language?
+
+Go to iOS Settings App > Code and select a new language. Currently English, German, Korean and Chinese (_简化字)_ are supported.
