@@ -18,7 +18,7 @@
 #### 支持
 [说明文件](https://code.thebaselab.com)
 [GitHub](https://github.com/thebaselab/codeapp)
-[电邮](mailto:support@thebaselab.com)
+[邮箱](mailto:support@thebaselab.com)
 [推特](https://twitter.com/thebaselab)
 ";
 
@@ -26,11 +26,11 @@
 "
 ### v1.3.6 (2022 年 10 月)
 - 将 Node.js 升级到 v16.17.0
-- svelte的语法突出显示
+- svelte 的语法突出显示
 - 新的编辑器主题
 - 正确处理终端终止信号
 - 支持使用 `code` 命令打开目录
-- 修复了一个阻止 emmet 工作的bug
+- 修复了一个阻止 emmet 工作的 bug
 ### v1.3.5 (2022 年 9 月)
 - 用户界面改进
 - 支持在资源管理器中移动文件
@@ -43,15 +43,15 @@
 - 新的文档网站
 - 一般改进
 ### v1.3.3 (2022 年 5 月)
-- Bug修复
+- Bug 修复
 ### v1.3.2 (2022 年 5 月)
-- 修复了阻止现有用户访问主题的Bug
+- 修复了阻止现有用户访问主题的 Bug
 ### v1.3.1 (2022 年 5 月)
-- Bug修复
-- Code+ - 一项订阅服务，可让我们将 Code 带给所有人并解锁所有主题。现有用户继续拥有对Code的完全访问权限。
+- Bug 修复
+- Code+ - 一项订阅服务，可让我们将 Code 带给所有人并解锁所有主题。现有用户继续拥有对 Code 的完全访问权限。
 ### v1.3.0 (2022 年 5 月)
 - 远程支持 (SFTP 和 FTP)
-- Dynamic Type支持
+- Dynamic Type 支持
 - 实验性功能: 拼写检查文本文件
 ### v1.2.13 (2022 年 3 月)
 - iOS 15.4 的兼容性
@@ -87,14 +87,14 @@
  - 解决了鼠标/触控板选择不起作用的问题
  - 更新到TypeScript 4.2.4
 - 界面
-  - 新的iPhone侧边栏设计
+  - 新的 iPhone 侧边栏设计
   - 能够对编辑器标签进行重新排序
-  - 改进了Xcode主题的可读性
-  - 能够在Context Menu中复制文件
+  - 改进了 Xcode 主题的可读性
+  - 能够在 Context Menu 中复制文件
 - 性能
-  - 从Files App打开SMB时增强了性能
+  - 从文件 App 打开 SMB 时增强了性能
 - Git
-  - 改善与Azure DevOps存储库的兼容性
+  - 改善与 Azure DevOps 存储库的兼容性
   - Gutter indicators
   - Git CLI 命令 (暂不支持远程操作)
 - 终端
@@ -110,10 +110,10 @@
 
 ### v1.2.3 (April 2021)
 - 编辑器
-  - 6个颜色主题
+  - 6 个颜色主题
   - 只读模式
-  - Node.js的内置类型
-  - 支持@types定义
+  - Node.js 的内置类型
+  - 支持 @types 定义
 - 资源管理器
   - 多文件搜索
 - Python
@@ -135,26 +135,26 @@
   - 安装模块命令 (pip install)
   - 新的终端命令：pip, python, python3
 - 编辑
-  -`问题`标签
-  - 新的Markdown风格
+  -`问题` 标签
+  - 新的 Markdown 风格
   - Vue的语法突出显示
   - 平滑滚动选项 (适用于 iPad Pro)
 - 终端
   - 现在支持浅色模式
 - 文件管理器
   - 减少行高
-- Bug修复
+- Bug 修复
 
 ---
 
 ### v1.1.9 (February 2021)
-- Bug修复
+- Bug 修复
 
 ---
 
 ### v1.1.8 (February 2021)
 - 文本编辑器
-  - 迁移到TextMate语法（更高级语法突出显示）
+  - 迁移到 TextMate 语法（更高级语法突出显示）
   - 支持更多语言（Groovy，HLSL，Log，Makefile，Shaderlab，Fortran和Matlab）
   - 修复了编辑器有时没有反应的错误
   - 新的键盘工具栏
@@ -167,14 +167,14 @@
 - 语言
   - 支持 Groovy
 - 内置终端
-  - Bug修复
+  - Bug 修复
 - 资源管理器
   - 现在在关闭侧边栏时保留目录的折叠状态
   - 能够通过点击文件夹名称来扩展文件夹
 - 其他
   - 侧边栏的宽度减小
   - 现在暂时删除了主题，以支持新的语法突出显示系统
-  - 暂时禁用了JSON Intellisense
+  - 暂时禁用了 JSON Intellisense
 
 ---
 
@@ -188,14 +188,14 @@
   - 修复了克隆存储库命名不正确的问题
 - 内置终端
   - 70+ Linux 指令 (ls, cd, nslookup等)
-  - 类似于Bash的功能，例如Piping，历史记录和完成
-  - 按Tab键显示所有可用命令
+  - 类似于 Bash 的功能，例如 Piping，历史记录和完成
+  - 按 Tab 键显示所有可用命令
 - 资源管理器
   - 文件和目录现在按字母顺序排序
   - 现在默认隐藏以点开头的文件或目录
   - 能够以两指平移手势选择项目
 - 其他改进
-  - 您可以直接从文件应用程序或其他应用程序中使用Code App打开文件
+  - 您可以直接从文件应用程序或其他应用程序中使用 Code App 打开文件
   - 可以在主屏幕上按住应用程序图标以打开最近文档
 ";
 
@@ -231,22 +231,22 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 > Happy coding from Hong Kong 🇭🇰
 ";
 
-"Send us an email" = "给我们发电邮";
-"Open an issue on GitHub" = "在GitHub上发布问题";
+"Send us an email" = "给我们发邮件";
+"Open an issue on GitHub" = "在 GitHub 上报告问题";
 "Clear console" = "清除终端";
-"Kill Process" = "中止命令";
+"Kill Process" = "中止进程";
 "Sync" = "同步";
 "Synchronize Changes" = "同步远程变更 (Git pull & push)";
-"You don't have any open editor." = "没有打开的编辑器。";
-"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "这将会远程更改下拉到本地存储库，然后将本地提交推送到远程分支。冲突将被本地副本合并和覆盖。";
-"Remote Credentials (For Git pull, push and clone)" = "远程凭证（用于Git pull，push和clone）";
+"You don't have any open editor." = "当前没有打开的编辑器。";
+"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "这会将远程更改拉取到本地存储库，然后将本地提交推送到远程分支。冲突将被本地副本合并和覆盖。";
+"Remote Credentials (For Git pull, push and clone)" = "远程凭证（用于 Git pull，push 和 clone）";
 "Password / Personal Access Token" = "密码/个人访问令牌";
 "User Name" = "用户名";
 "Show hidden files" = "显示隐藏文件";
 "Erase" = "清除";
 "This will erase all user settings, including author identity and credentials." = "这将清除所有用户设置，包括作者身份和凭据。";
 "Erase all settings" = "清除所有设置";
-"Release Notes" = "版本的新功能";
+"Release Notes" = "发布说明";
 
 "New File" = "新建文件";
 "Open File" = "打开文件";
@@ -268,11 +268,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "OUTPUT" = "输出";
 "Options" = "选项";
 "Close All" = "全部关闭";
-"Preview in Safari" = "在Safari中预览";
+"Preview in Safari" = "在 Safari 中预览";
 "Mini Map" = "小地图";
 "Line Numbers" = "行号";
 "OTHERS" = "其他";
-"Tab Size" = "Tab宽度";
+"Tab Size" = "Tab 宽度";
 
 "Settings" = "设置";
 "General" = "一般";
@@ -284,14 +284,14 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Terminal Font Size" = "控制台字体大小";
 "Bracket Completion" = "自动输入括号";
 "Theme" = "主题";
-"Rate Code App" = "给Code App打个分";
+"Rate Code App" = "为 Code App 打分";
 "About" = "关于";
 "Version" = "版本";
 
 "Done" = "完成";
 
 "Recent" = "最近";
-"Show in Files App" = "在「档案」App中打开";
+"Show in Files App" = "在「文件」App 中打开";
 "Copy Relative Path" = "复制相对路径";
 "Delete" = "删除";
 "Color Scheme" = "颜色主题";
@@ -300,13 +300,13 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Dark Themes" = "黑暗主题";
 "Light Themes" = "浅色主题";
 "Text Wrap" = "换行";
-"Render Whitespace" = "呈现空白";
+"Render Whitespace" = "渲染空白字符";
 
 "Share" = "分享";
-"Rename" = "重新命名";
+"Rename" = "重命名";
 "Assign as workplace folder" = "设置为工作文件夹";
 "Select for compare" = "选择进行比较";
-"Compare with selected" = "与选定的比较";
+"Compare with selected" = "与选定内容做比较";
 "Version Control" = "版本控制";
 "Author Identity" = "作者身份";
 "Authentication" = "凭据";
@@ -325,7 +325,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "New Folder" = "新建文件夹";
 
 "Source Control" = "源码管理";
-"The folder currently opened doesn't have a git repository." = "当前打开的文件夹没有Git存储库。";
+"The folder currently opened doesn't have a git repository." = "当前打开的文件夹没有 Git 存储库。";
 "Example: https://github.com/thebaselab/codeapp.git" = "例子: https://github.com/thebaselab/codeapp.git";
 "Initialize Repository" = "初始化存储库";
 "Clone Repository" = "克隆存储库";
@@ -334,11 +334,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Always Open In New Tab" = "总是在新标签页中打开";
 "Changes" = "变更";
 "There are no staged changes." = "没有任何缓存变更。";
-"Message (⌘Enter to commit)" = "提交备注 (⌘Enter 以提交)";
+"Message (⌘Enter to commit)" = "提交备注 (⌘ + Enter 以提交)";
 "Staged Changes" = "缓存变更";
 "No changes are made in the working directory" = "没有任何未缓存的变更。";
 "Git checkout: Uncommitted Changes" = "Git checkout: 未提交的更改";
-"Uncommited changes will be lost. Do you wish to proceed?" = "未提交的更改将丢失。 你要继续吗？";
+"Uncommited changes will be lost. Do you wish to proceed?" = "未提交的更改将丢失。你要继续吗？";
 "Commit message cannot be empty" = "备注不能为空";
 "Commit succeeded" = "提交成功";
 "Pushing to remote" = "推送到远程";
@@ -365,8 +365,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Custom Keyboard Shortcuts" = "自定义键盘快捷键";
 
 "Remotes" = "远程";
-"You don't have any saved remote." = "您没有任何已保存的远程。";
-"New remote" = "新建远程";
+"You don't have any saved remote." = "您没有任何已保存的远程服务器。";
+"New remote" = "新建远程服务器";
 "Address" = "地址";
 "Port" = "端口";
 "Username" = "用户名";
@@ -375,9 +375,9 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Remember address" = "记住地址";
 "Connect" = "连接";
 "Disconnect" = "断开";
-"Current Remote" = "当前远程";
+"Current Remote" = "当前远程服务器";
 "Remember credentials" = "记住凭据";
-"Key passphrase" = "SSH密钥密码";
+"Key passphrase" = "SSH 密钥密码";
 "Show public key" = "显示公钥";
 
 "Expermimental Features" = "实验性功能";
@@ -386,8 +386,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "subscription.codeplus" = "Code+";
 "subscription.title %@" = "12个月 %@";
-"subscription.message" = "让Code可以被所有人使用，并解锁所有主题。代码仍然是开源的，所有现存的功能都将保持免费可用。";
-"subscription.payment.description %@ %@" = "从%@开始，Code+将自动续订，每年%@，直到您取消。";
+"subscription.message" = "让 Code 面向所有人可用，并解锁所有主题。Code 仍然开源，且所有现存功能都将保持免费可用。";
+"subscription.payment.description %@ %@" = "从%@开始，Code+ 将自动续订，每年%@，直到您取消。";
 "subscription.payment.disallowed" = "您的设备的配置不允许付款。";
 "subscription.join" = "订阅 Code+";
 "terms_of_use" = "使用条款";
