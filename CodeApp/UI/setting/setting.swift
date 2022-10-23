@@ -52,14 +52,12 @@ struct settingView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    var window: UIWindow? {
-        guard let scene = UIApplication.shared.connectedScenes.first,
-            let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate,
-            let window = windowSceneDelegate.window
-        else {
-            return nil
-        }
-        return window
+    var windows: [UIWindow] {
+        let windows = UIApplication.shared.connectedScenes.compactMap({ scene in
+            let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate
+            return windowSceneDelegate?.window ?? nil
+        })
+        return windows
     }
 
     var body: some View {
@@ -83,11 +81,12 @@ struct settingView: View {
 
                     .onChange(of: preferredColorScheme) { value in
                         if value == 1 {
-                            window?.overrideUserInterfaceStyle = .dark
+                            windows.forEach({ $0.overrideUserInterfaceStyle = .dark })
                         } else if value == 2 {
-                            window?.overrideUserInterfaceStyle = .light
+                            windows.forEach({ $0.overrideUserInterfaceStyle = .light })
                         } else {
-                            window?.overrideUserInterfaceStyle = .unspecified
+                            windows.forEach({ $0.overrideUserInterfaceStyle = .unspecified })
+
                         }
                         App.updateView()
                     }
