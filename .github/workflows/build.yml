@@ -38,6 +38,7 @@ jobs:
           APPLE_KEY_CONTENT: "${{ secrets.APPLE_KEY_CONTENT }}"
           JUDGE0_KEY: ""
           JUDGE0_ENDPOINT: ""
+          ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3

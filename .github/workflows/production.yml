@@ -36,3 +36,4 @@ jobs:
           APPLE_KEY_CONTENT: "${{ secrets.APPLE_KEY_CONTENT }}"
           JUDGE0_KEY: "${{ secrets.JUDGE0_KEY }}"
           JUDGE0_ENDPOINT: "${{ secrets.JUDGE0_ENDPOINT }}"
+          ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: true
