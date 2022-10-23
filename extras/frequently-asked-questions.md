@@ -24,6 +24,10 @@ It comes with the purchase of the app as we don’t feel like a monthly subscrip
 
 You'll need to set your credentials at `Settings > Version Control > Authentication`. In many cases, you need to use a personal access token instead of the regular password. For GitHub, see [https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
+#### How to clone another repository?
+
+You'll need to set the editor's root folder to another location. You can do this by selecting the configure folder tool located in file explorer. (Folder icon with a gear)
+
 ### Others
 
 #### How to change display language?
