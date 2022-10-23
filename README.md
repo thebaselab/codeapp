@@ -44,6 +44,10 @@ Or if you'd like to get your hands dirty (Requires a Mac with Xcode installed) :
 [building-code-from-source.md](extras/building-code-from-source.md)
 {% endcontent-ref %}
 
+{% embed url="https://github.com/thebaselab/codeapp" %}
+Link to our repo
+{% endembed %}
+
 ### Jump right in
 
 Follow these guides to get started on the basics:
