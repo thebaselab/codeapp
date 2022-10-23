@@ -33,6 +33,17 @@ struct editorView: View {
                     DescriptionText("You don't have any open editor.")
                 }
                 App.monacoInstance
+                    .onReceive(
+                        NotificationCenter.default.publisher(
+                            for: Notification.Name("monaco.cursor.position.changed"),
+                            object: nil),
+                        perform: { notification in
+                            let sceneIdentifier = notification.userInfo?["sceneIdentifier"] as! UUID
+                            if sceneIdentifier != App.sceneIdentifier {
+                                App.monacoInstance.executeJavascript(
+                                    command: "document.getElementById('overlay').focus()")
+                            }
+                        })
 
                 if let editor = App.activeEditor {
                     if editor.type == .preview, let content = App.activeEditor?.content {
@@ -94,7 +105,9 @@ struct editorView: View {
 
                         App.saveCurrentFile()
 
-                        monacoWebView.evaluateJavaScript("document.activeElement.className") {
+                        App.monacoInstance.monacoWebView.evaluateJavaScript(
+                            "document.activeElement.className"
+                        ) {
                             result, error in
                             if let res = result as? String {
                                 if res != "shadow-root-host" && res != "actions-container"
@@ -110,19 +123,6 @@ struct editorView: View {
                     }
                 }
             )
-            .onReceive(
-                NotificationCenter.default.publisher(for: NSNotification.Name.GCMouseDidConnect),
-                perform: { data in
-                    monacoWebView.evaluateJavaScript(
-                        "devicehasCursor = true", completionHandler: nil)
-                }
-            )
-            .onReceive(
-                NotificationCenter.default.publisher(for: NSNotification.Name.GCMouseDidDisconnect),
-                perform: { data in
-                    monacoWebView.evaluateJavaScript(
-                        "devicehasCursor = false", completionHandler: nil)
-                })
 
         }.onDrop(
             of: [.url, .item], isTargeted: $targeted,
