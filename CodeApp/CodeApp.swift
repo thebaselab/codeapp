@@ -23,12 +23,10 @@ struct CodeApp: App {
         return window
     }
 
-    @State private var App = MainApp()
     @StateObject private var AppStore = Store()
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     func loadBuiltInThemes() {
 
@@ -373,7 +371,6 @@ struct CodeApp: App {
     var body: some Scene {
         WindowGroup {
             mainView()
-                .environmentObject(App)
                 .environmentObject(AppStore)
                 .ignoresSafeArea(.container, edges: .bottom)
                 .onAppear {
@@ -383,21 +380,19 @@ struct CodeApp: App {
                         window?.overrideUserInterfaceStyle = .light
                     }
                 }
-                .onOpenURL { url in
-                    _ = url.startAccessingSecurityScopedResource()
-                    try? FileManager.default.startDownloadingUbiquitousItem(at: url)
-                    if isEditorInited {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            App.openEditor(
-                                urlString: url.standardizedFileURL.absoluteString, type: .file)
-                        }
-                    } else {
-                        App.urlQueue.append(url)
-                    }
-                }
-                .onChange(of: colorScheme) { newValue in
-                    App.updateView()
-                }
+            //                .onOpenURL { url in
+            //                    _ = url.startAccessingSecurityScopedResource()
+            //                    try? FileManager.default.startDownloadingUbiquitousItem(at: url)
+            //                    if isEditorInited {
+            //                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            //                            App.openEditor(
+            //                                urlString: url.standardizedFileURL.absoluteString, type: .file)
+            //                        }
+            //                    } else {
+            //                        App.urlQueue.append(url)
+            //                    }
+            //                }
+
         }
     }
 }

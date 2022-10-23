@@ -29,7 +29,9 @@ class SpellChecker {
         let message: String
     }
 
-    private func _check(text: String, uri: String, startOffset: Int = 0, endOffset: Int = 0) {
+    private func _check(text: String, uri: String, startOffset: Int = 0, endOffset: Int = 0)
+        -> [SpellProblem]
+    {
         var spellProblems: [SpellProblem] = []
         let endIndex =
             endOffset == 0 ? text.endIndex : text.index(text.startIndex, offsetBy: endOffset)
@@ -57,37 +59,21 @@ class SpellChecker {
             return true
         }
 
-        if spellProblems.isEmpty, endOffset != 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                monacoWebView.evaluateJavaScript(
-                    "invalidateDiagnosticForOffset(\(startOffset), \(endOffset))"
-                ) {
-                    result, error in
-
-                }
-            }
-            return
-        }
-
-        let jsonData = try! JSONEncoder().encode(spellProblems)
-        let jsonStr = String(data: jsonData, encoding: .utf8)!
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            monacoWebView.evaluateJavaScript(
-                "provideDiagnostic(\(jsonStr), '\(uri)')"
-            ) {
-                result, error in
-
-            }
-        }
+        return spellProblems
     }
 
-    func check(text: String, uri: String, startOffset: Int = 0, endOffset: Int = 0) {
+    func check(
+        text: String, uri: String, startOffset: Int = 0, endOffset: Int = 0,
+        cb: @escaping (([SpellProblem]) -> Void)
+    ) {
         if !(uri.hasSuffix(".md") || uri.hasSuffix(".txt")) {
             return
         }
         print("Providing Spelling Diagnostic for \(uri)")
         queue.async {
-            self._check(text: text, uri: uri, startOffset: startOffset, endOffset: endOffset)
+            let problems = self._check(
+                text: text, uri: uri, startOffset: startOffset, endOffset: endOffset)
+            cb(problems)
         }
     }
 }

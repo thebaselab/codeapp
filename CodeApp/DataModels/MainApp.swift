@@ -60,6 +60,7 @@ class MainApp: ObservableObject {
     var editorTypesMonitor: FolderMonitor? = nil
     let readmeMessage = NSLocalizedString("Welcome Message", comment: "")
     let deviceSupportsBiometricAuth: Bool = biometricAuthSupported()
+    let sceneIdentifier = UUID()
 
     private var NotificationCancellable: AnyCancellable? = nil
     private var CompilerCancellable: AnyCancellable? = nil
@@ -180,7 +181,7 @@ class MainApp: ObservableObject {
         let monacoPath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")
 
         DispatchQueue.main.async {
-            monacoWebView.loadFileURL(
+            self.monacoInstance.monacoWebView.loadFileURL(
                 URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"),
                 allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
         }
@@ -237,7 +238,8 @@ class MainApp: ObservableObject {
             return
         }
 
-        monacoWebView.evaluateJavaScript("JSON.stringify(editor.saveViewState())") { res, err in
+        monacoInstance.monacoWebView.evaluateJavaScript("JSON.stringify(editor.saveViewState())") {
+            res, err in
             if let res = res as? String {
                 UserDefaults.standard.setValue(res, forKey: "uistate.activeEditor.state")
             }
@@ -550,7 +552,7 @@ class MainApp: ObservableObject {
                 self.git_status()
             }
             if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
-                SpellChecker.shared.check(text: editor.content, uri: editor.url)
+                self.monacoInstance.checkSpelling(text: editor.content, uri: editor.url)
             }
         }
     }

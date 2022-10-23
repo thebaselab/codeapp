@@ -9,11 +9,9 @@ import GameController
 import SwiftUI
 import WebKit
 
-var isEditorInited = false
-private var ToolbarHandle: UInt8 = 0
-let monacoWebView = WebViewBase()
-
 class WebViewBase: KBWebViewBase {
+    private var ToolbarHandle: UInt8 = 0
+    var isEditorInited = false
 
     init() {
         let config = WKWebViewConfiguration()
@@ -132,6 +130,8 @@ struct monacoEditor: UIViewRepresentable {
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
+
+    let monacoWebView = WebViewBase()
 
     private var contentView: UIView?
 
@@ -264,8 +264,38 @@ struct monacoEditor: UIViewRepresentable {
                 "editor.setModel(monaco.editor.createModel(decodedCommand, undefined, monaco.Uri.parse('\(url)')));"
         )
         if editorSpellCheckEnabled {
-            SpellChecker.shared.check(text: content, uri: url)
+            checkSpelling(text: content, uri: url)
         }
+    }
+
+    func checkSpelling(text: String, uri: String, startOffset: Int = 0, endOffset: Int = 0) {
+
+        SpellChecker.shared.check(
+            text: text, uri: uri,
+            cb: { spellProblems in
+                if spellProblems.isEmpty, endOffset != 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        monacoWebView.evaluateJavaScript(
+                            "invalidateDiagnosticForOffset(\(startOffset), \(endOffset))"
+                        ) {
+                            result, error in
+
+                        }
+                    }
+                    return
+                }
+
+                let jsonData = try! JSONEncoder().encode(spellProblems)
+                let jsonStr = String(data: jsonData, encoding: .utf8)!
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    monacoWebView.evaluateJavaScript(
+                        "provideDiagnostic(\(jsonStr), '\(uri)')"
+                    ) {
+                        result, error in
+
+                    }
+                }
+            })
     }
 
     func switchToDiffView(
@@ -451,7 +481,7 @@ struct monacoEditor: UIViewRepresentable {
         private func getAllActions() {
             let command = "editor.getActions().map((e) => {return {id: e.id, label: e.label}})"
             DispatchQueue.main.async {
-                monacoWebView.evaluateJavaScript(command) { (result, error) in
+                self.control.monacoWebView.evaluateJavaScript(command) { (result, error) in
                     guard error == nil, let result = result as? NSArray else {
                         return
                     }
@@ -485,7 +515,10 @@ struct monacoEditor: UIViewRepresentable {
                 let column = result["Column"] as! Int
                 NotificationCenter.default.post(
                     name: Notification.Name("monaco.cursor.position.changed"), object: nil,
-                    userInfo: ["lineNumber": lineNumber, "column": column])
+                    userInfo: [
+                        "lineNumber": lineNumber, "column": column,
+                        "sceneIdentifier": control.status.sceneIdentifier,
+                    ])
             case "Content changed":
                 let version = result["VersionID"] as! Int
                 let content = result["currentContent"] as! String
@@ -509,13 +542,13 @@ struct monacoEditor: UIViewRepresentable {
                 let startOffset = result["startOffset"] as! Int
                 let endOffset = result["endOffset"] as! Int
                 if control.editorSpellCheckEnabled && control.editorSpellCheckOnContentChanged {
-                    SpellChecker.shared.check(
+                    control.checkSpelling(
                         text: content, uri: modelUri, startOffset: startOffset, endOffset: endOffset
                     )
                 }
             case "Editor Initialising":
-                isEditorInited = true
-                monacoWebView.removeUIDropInteraction()
+                control.monacoWebView.isEditorInited = true
+                control.monacoWebView.removeUIDropInteraction()
                 control.applyUserOptions()
                 control.status.loadURLQueue()
                 if globalDarkTheme != nil {
@@ -587,7 +620,7 @@ struct monacoEditor: UIViewRepresentable {
             guard let editor = control.status.activeEditor else {
                 return
             }
-            let velocity = gestureRecognizer.velocity(in: monacoWebView)
+            let velocity = gestureRecognizer.velocity(in: control.monacoWebView)
             if editor.type == .file {
                 control.executeJavascript(
                     command:
@@ -619,7 +652,7 @@ struct monacoEditor: UIViewRepresentable {
             guard let editor = control.status.activeEditor else {
                 return
             }
-            let translation = gestureRecognizer.translation(in: monacoWebView)
+            let translation = gestureRecognizer.translation(in: control.monacoWebView)
             if editor.type == .file {
                 control.executeJavascript(
                     command:
@@ -653,7 +686,7 @@ struct monacoEditor: UIViewRepresentable {
                 if key {
                     injectBarButtons()
                 } else {
-                    monacoWebView.addInputAccessoryView(toolbar: UIView.init())
+                    control.monacoWebView.addInputAccessoryView(toolbar: UIView.init())
                 }
             }
         }
@@ -666,9 +699,10 @@ struct monacoEditor: UIViewRepresentable {
 
         @objc func injectBarButtons() {
             let toolbar = UIHostingController(rootView: keyboardToolBar().environmentObject(env))
-            toolbar.view.frame = CGRect(x: 0, y: 0, width: (monacoWebView.bounds.width), height: 40)
+            toolbar.view.frame = CGRect(
+                x: 0, y: 0, width: (control.monacoWebView.bounds.width), height: 40)
 
-            monacoWebView.addInputAccessoryView(toolbar: toolbar.view)
+            control.monacoWebView.addInputAccessoryView(toolbar: toolbar.view)
         }
 
         var control: monacoEditor
@@ -688,7 +722,7 @@ struct monacoEditor: UIViewRepresentable {
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
 
-        if !isEditorInited {
+        if !monacoWebView.isEditorInited {
             let contentManager = monacoWebView.configuration.userContentController
             contentManager.add(context.coordinator, name: "toggleMessageHandler")
         }

@@ -56,7 +56,7 @@ struct keyboardToolBar: View {
                     })
                 Button(
                     action: {
-                        monacoWebView.evaluateJavaScript(
+                        App.monacoInstance.monacoWebView.evaluateJavaScript(
                             "editor.getModel().getValueInRange(editor.getSelection())",
                             completionHandler: { result, error in
                                 if let result = result as? String, !result.isEmpty {

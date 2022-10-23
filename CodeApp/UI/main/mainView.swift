@@ -12,7 +12,7 @@ import ios_system
 
 struct mainView: View {
 
-    @EnvironmentObject var App: MainApp
+    @StateObject var App = MainApp()
 
     @State var showChangeLog: Bool
     @State var isShowingDirectory: Bool
@@ -468,6 +468,9 @@ struct mainView: View {
                 UserDefaults.standard.setValue(showsPanel, forKey: "mainView.panelEnabled")
                 UserDefaults.standard.setValue(currentPanelTab, forKey: "mainView.panelIndex")
                 App.saveUserStates()
+            }
+            .onChange(of: colorScheme) { newValue in
+                App.updateView()
             }
         }
     }
