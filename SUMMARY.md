@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Code App](README.md)
+* [Code App Documentation](README.md)
 
 ## Guides
 
