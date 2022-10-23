@@ -53,9 +53,9 @@ struct settingView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var windows: [UIWindow] {
-        let windows = UIApplication.shared.connectedScenes.compactMap({ scene in
+        let windows: [UIWindow] = UIApplication.shared.connectedScenes.compactMap({ scene in
             let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate
-            return windowSceneDelegate?.window ?? nil
+            return windowSceneDelegate?.window as? UIWindow
         })
         return windows
     }
