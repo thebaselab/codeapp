@@ -12,7 +12,7 @@ struct NoRepositoryView: View {
     @EnvironmentObject var App: MainApp
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             DescriptionText(
                 "The folder currently opened doesn't have a git repository."
             )
