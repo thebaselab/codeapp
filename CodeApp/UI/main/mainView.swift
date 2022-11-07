@@ -472,6 +472,6 @@ struct mainView: View {
             .onChange(of: colorScheme) { newValue in
                 App.updateView()
             }
-        }
+        }.hiddenScrollableContentBackground()
     }
 }

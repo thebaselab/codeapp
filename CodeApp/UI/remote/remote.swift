@@ -21,12 +21,18 @@ struct remote: View {
 
     var body: some View {
         List {
-            if App.workSpaceStorage.remoteConnected {
-                RemoteConnectedSection()
-            } else {
-                RemoteListSection(hosts: hosts)
-                CreateRemoteSection(hosts: $hosts)
+            Group {
+                if App.workSpaceStorage.remoteConnected {
+                    RemoteConnectedSection()
+                } else {
+                    RemoteListSection(hosts: hosts)
+                    CreateRemoteSection(hosts: $hosts)
+                }
+
             }
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+
         }.listStyle(SidebarListStyle())
     }
 }

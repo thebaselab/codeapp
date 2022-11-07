@@ -13,18 +13,22 @@ struct git: View {
 
     var body: some View {
         List {
-            if App.workSpaceStorage.gitServiceProvider == nil {
-                SourceControlUnsupportedSection()
-            } else if App.gitTracks.count > 0 || App.branch != "" {
-                SourceControlSection()
-                if !App.indexedResources.isEmpty {
-                    StagedChangesSection()
+            Group {
+                if App.workSpaceStorage.gitServiceProvider == nil {
+                    SourceControlUnsupportedSection()
+                } else if App.gitTracks.count > 0 || App.branch != "" {
+                    SourceControlSection()
+                    if !App.indexedResources.isEmpty {
+                        StagedChangesSection()
+                    }
+                    WorkingChangesSection()
+                } else {
+                    EmptySourceControlSection()
+                    CloneRepositorySection()
                 }
-                WorkingChangesSection()
-            } else {
-                EmptySourceControlSection()
-                CloneRepositorySection()
             }
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
         }
         .environment(\.defaultMinListRowHeight, 10)
         .listStyle(SidebarListStyle())

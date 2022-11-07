@@ -15,12 +15,16 @@ struct search: View {
     var body: some View {
         VStack(alignment: .leading) {
             List {
-                if App.workSpaceStorage.remoteConnected {
-                    SearchUnsupportedSection()
-                } else {
-                    SearchSection()
-                    ResultsSection()
+                Group {
+                    if App.workSpaceStorage.remoteConnected {
+                        SearchUnsupportedSection()
+                    } else {
+                        SearchSection()
+                        ResultsSection()
+                    }
                 }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
             .listStyle(SidebarListStyle())
         }

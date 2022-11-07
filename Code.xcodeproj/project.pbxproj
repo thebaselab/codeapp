@@ -685,6 +685,8 @@
 		94FF337528435158003DE5DD /* FontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF337328435158003DE5DD /* FontPicker.swift */; };
 		94FF33892843744C003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */; };
 		94FF338A2843744C003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */; };
+		9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */; };
+		9F3C2DC92918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1643,6 +1645,7 @@
 		94FF3370284348F1003DE5DD /* KBWebViewBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBWebViewBase.m; sourceTree = "<group>"; };
 		94FF337328435158003DE5DD /* FontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontPicker.swift; sourceTree = "<group>"; };
 		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "CodeApp/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
+		9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hiddenScrollableContentBackground.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1953,6 +1956,7 @@
 		94A7778C257AB79A008FE7B2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				9F3C2DCA2918A3B700BFF14C /* Modifiers */,
 				94A045FC2804852600182275 /* Common */,
 				9437153D26BF9F98000376FB /* Remote */,
 				941CF5FC264633D8001199C0 /* main */,
@@ -2555,6 +2559,14 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		9F3C2DCA2918A3B700BFF14C /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2832,6 +2844,7 @@
 				9419695B280316C7008AAEB2 /* Markdown.swift in Sources */,
 				9419695C280316C7008AAEB2 /* monacoEditor.swift in Sources */,
 				942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
+				9F3C2DC92918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
 				9419695D280316C7008AAEB2 /* tabBar.swift in Sources */,
 				9419695E280316C7008AAEB2 /* keyboardToolBar.swift in Sources */,
 				9419695F280316C7008AAEB2 /* NotificationManager.swift in Sources */,
@@ -2969,6 +2982,7 @@
 				94A5682B257CBDE4008A6530 /* Markdown.swift in Sources */,
 				94A777AC257B66CF008FE7B2 /* monacoEditor.swift in Sources */,
 				942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
+				9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
 				94D721DF268DA2B8007A63BD /* tabBar.swift in Sources */,
 				9438C9A225CBD25F00335E82 /* keyboardToolBar.swift in Sources */,
 				94A777BE257B74EE008FE7B2 /* NotificationManager.swift in Sources */,
