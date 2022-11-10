@@ -134,6 +134,13 @@ struct explorer: View {
                     ForEach(App.editors) { item in
                         cell(item: item)
                             .frame(height: 16)
+                            .listRowBackground(
+                                item.url == App.activeEditor?.url
+                                    ? Color.init(id: "list.inactiveSelectionBackground")
+                                        .cornerRadius(10.0)
+                                    : Color.clear.cornerRadius(10.0)
+                            )
+                            .listRowSeparator(.hidden)
                     }
                 }
 

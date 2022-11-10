@@ -90,11 +90,6 @@ struct FolderCell: View {
                 App.openEditor(urlString: item.url, type: .any)
             }
         }
-        .listRowBackground(
-            item.url == App.activeEditor?.url
-                ? Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
-                : Color.clear.cornerRadius(10.0)
-        )
         .sheet(isPresented: $showingNewFileSheet) {
             newFileView(targetUrl: item.url).environmentObject(App)
         }
