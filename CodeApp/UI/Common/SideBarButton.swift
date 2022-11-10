@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct NoAnim: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+    }
+}
+
 struct SideBarButton: View {
 
     @State var title: String
@@ -18,19 +24,27 @@ struct SideBarButton: View {
     }
 
     var body: some View {
-        HStack {
-            Spacer()
-            Text(NSLocalizedString(title, comment: ""))
-                .lineLimit(1)
-                .foregroundColor(.white)
-                .font(.subheadline)
-            Spacer()
-        }.onTapGesture {
-            onTap()
-        }.foregroundColor(Color.init("T1"))
-            .padding(4)
-            .background(
-                Color.init(id: "button.background")
-            ).cornerRadius(10.0)
+
+        Button(
+            action: {
+                onTap()
+            },
+            label: {
+                HStack {
+                    Spacer()
+                    Text(NSLocalizedString(title, comment: ""))
+                        .lineLimit(1)
+                        .foregroundColor(.white)
+                        .font(.subheadline)
+                    Spacer()
+                }
+                .foregroundColor(Color.init("T1"))
+                .padding(4)
+                .background(
+                    Color.init(id: "button.background")
+                )
+                .cornerRadius(10.0)
+            }
+        ).buttonStyle(NoAnim())
     }
 }

@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-struct NoAnim: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-    }
-}
-
 struct explorer: View {
 
     @EnvironmentObject var App: MainApp
@@ -101,34 +95,17 @@ struct explorer: View {
                         .foregroundColor(Color.init("BW"))
                 ) {
                     if App.editors.isEmpty {
-                        Button(action: {
+                        SideBarButton("New File") {
                             openNewFile()
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text(NSLocalizedString("New File", comment: "")).foregroundColor(
-                                    .white
-                                ).font(.subheadline).lineLimit(1)
-                                Spacer()
-                            }.foregroundColor(Color.init("T1")).padding(4).background(
-                                Color.init(id: "button.background")
-                            ).cornerRadius(10.0)
-                        }.buttonStyle(NoAnim())
+                        }
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
 
-                        Button(action: {
+                        SideBarButton("Open Folder") {
                             openFolder()
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text(NSLocalizedString("Open Folder", comment: "")).foregroundColor(
-                                    .white
-                                ).font(.subheadline).lineLimit(1)
-                                Spacer()
-                            }.foregroundColor(Color.init("T1")).padding(4).background(
-                                Color.init(id: "button.background")
-                            ).cornerRadius(10.0)
-                        }.buttonStyle(NoAnim())
-
+                        }
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
                     }
 
                     ForEach(App.editors) { item in
