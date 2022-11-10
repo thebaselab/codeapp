@@ -117,6 +117,11 @@ public func node(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<In
 @_cdecl("npm")
 public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
 
+    guard let appGroupSharedLibrary = Resources.appGroupSharedLibrary else {
+        fputs("App Group is unavailable. Did you properly configure it in Xcode?\n", thread_stderr)
+        return -1
+    }
+
     var args = convertCArguments(argc: argc, argv: argv)!
 
     if args == ["npm", "init"] {
@@ -174,7 +179,7 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
                     let cmdArgs = script.components(separatedBy: " ")
 
                     // Checking for globally installed bin
-                    let nodeBinPath = sharedURL().appendingPathComponent("lib/bin").path
+                    let nodeBinPath = appGroupSharedLibrary.appendingPathComponent("lib/bin").path
 
                     if let paths = try? FileManager.default.contentsOfDirectory(atPath: nodeBinPath)
                     {
@@ -182,8 +187,10 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
                         for i in paths {
                             let binCmd = i.replacingOccurrences(of: nodeBinPath, with: "")
                             if cmd == binCmd {
-                                let moduleURL = sharedURL().appendingPathComponent("lib/bin/\(cmd)")
-                                    .resolvingSymlinksInPath()
+                                let moduleURL = appGroupSharedLibrary.appendingPathComponent(
+                                    "lib/bin/\(cmd)"
+                                )
+                                .resolvingSymlinksInPath()
 
                                 let prettierPath = moduleURL.path
 
@@ -287,9 +294,14 @@ public func npx(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
 @_cdecl("nodeg")
 public func nodeg(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
 
+    guard let appGroupSharedLibrary = Resources.appGroupSharedLibrary else {
+        fputs("App Group is unavailable. Did you properly configure it in Xcode?\n", thread_stderr)
+        return -1
+    }
+
     var args = convertCArguments(argc: argc, argv: argv)!
 
-    let moduleURL = sharedURL().appendingPathComponent("lib/bin/\(args.removeFirst())")
+    let moduleURL = appGroupSharedLibrary.appendingPathComponent("lib/bin/\(args.removeFirst())")
         .resolvingSymlinksInPath()
 
     let prettierPath = moduleURL.path

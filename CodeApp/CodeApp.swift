@@ -10,32 +10,24 @@ import UIKit
 import WebKit
 import ios_system
 
+var globalThemes: [Theme] = []
+var globalDarkTheme: [String: Any]? = nil
+var globalLightTheme: [String: Any]? = nil
+
 @main
 struct CodeApp: App {
-
-    var window: UIWindow? {
-        guard let scene = UIApplication.shared.connectedScenes.first,
-            let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate,
-            let window = windowSceneDelegate.window
-        else {
-            return nil
-        }
-        return window
-    }
 
     @StateObject private var AppStore = Store()
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
+    @AppStorage("preferredColorScheme") var colorScheme: Int = 0
 
     func loadBuiltInThemes() {
-
         globalThemes.removeAll()
 
-        let themesURL = URL(fileURLWithPath: Bundle.main.resourcePath!).appendingPathComponent(
-            "Themes")
         let themesPaths = try! FileManager.default.contentsOfDirectory(
-            at: themesURL, includingPropertiesForKeys: nil)
+            at: Resources.themes, includingPropertiesForKeys: nil)
 
         for path in themesPaths {
             if let data = try? Data(contentsOf: path),
@@ -62,7 +54,7 @@ struct CodeApp: App {
                 let result = (preview[0], preview[1], preview[2], preview[3])
 
                 globalThemes.append(
-                    theme(name: name, url: path, isDark: type == "dark", preview: result))
+                    Theme(name: name, url: path, isDark: type == "dark", preview: result))
             } else {
                 print("READ ERROR: \(path)")
             }
@@ -160,11 +152,9 @@ struct CodeApp: App {
                 "usr/lib/wasm32-wasi/libc.imports",
                 "usr/lib/clang/14.0.0/include",
             ]
-            let bundleUrl = URL(fileURLWithPath: Bundle.main.resourcePath!).appendingPathComponent(
-                "ClangLib")
 
             for linkedObject in linkedCDirectories {
-                let bundleFile = bundleUrl.appendingPathComponent(linkedObject)
+                let bundleFile = Resources.clangLib.appendingPathComponent(linkedObject)
                 if !FileManager().fileExists(atPath: bundleFile.path) {
                     NSLog("createCSDK: requested file \(bundleFile.path) does not exist")
                     continue
@@ -275,18 +265,15 @@ struct CodeApp: App {
         let libraryURL = try! FileManager().url(
             for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let pemUrl = Bundle.main.url(forResource: "cacert", withExtension: "pem")!
-
         // Main Python install: $APPDIR/Library/lib/python3.x
-        let bundleUrl = URL(fileURLWithPath: Bundle.main.resourcePath!).appendingPathComponent(
-            "Library")
+        let bundleUrl = Resources.pythonLibrary
         setenv("PYTHONHOME", bundleUrl.path.toCString(), 1)
         // Compiled files: ~/Library/__pycache__
         setenv(
             "PYTHONPYCACHEPREFIX",
             (libraryURL.appendingPathComponent("__pycache__")).path.toCString(), 1)
         setenv("PYTHONUSERBASE", libraryURL.path.toCString(), 1)
-        setenv("SSL_CERT_FILE", pemUrl.path.toCString(), 1)
+        setenv("SSL_CERT_FILE", Resources.carcert.path.toCString(), 1)
 
         // Help aiohttp install itself:
         setenv("YARL_NO_EXTENSIONS", "1", 1)
@@ -359,13 +346,21 @@ struct CodeApp: App {
             createCSDK()
         }
 
-        let wasmFilePath = Bundle.main.path(
-            forResource: "wasm", ofType: "html", inDirectory: "ClangLib")
         DispatchQueue.main.async {
             wasmWebView.loadFileURL(
-                URL(fileURLWithPath: wasmFilePath!),
-                allowingReadAccessTo: URL(fileURLWithPath: wasmFilePath!))
+                Resources.wasmHTML,
+                allowingReadAccessTo: Resources.wasmHTML)
         }
+    }
+
+    var window: UIWindow? {
+        guard let scene = UIApplication.shared.connectedScenes.first,
+            let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate,
+            let window = windowSceneDelegate.window
+        else {
+            return nil
+        }
+        return window
     }
 
     var body: some Scene {
@@ -373,13 +368,7 @@ struct CodeApp: App {
             mainView()
                 .environmentObject(AppStore)
                 .ignoresSafeArea(.container, edges: .bottom)
-                .onAppear {
-                    if UserDefaults.standard.integer(forKey: "preferredColorScheme") == 1 {
-                        window?.overrideUserInterfaceStyle = .dark
-                    } else if UserDefaults.standard.integer(forKey: "preferredColorScheme") == 2 {
-                        window?.overrideUserInterfaceStyle = .light
-                    }
-                }
+                .preferredColorScheme(colorScheme == 1 ? .dark : colorScheme == 2 ? .light : .none)
             //                .onOpenURL { url in
             //                    _ = url.startAccessingSecurityScopedResource()
             //                    try? FileManager.default.startDownloadingUbiquitousItem(at: url)
@@ -397,31 +386,14 @@ struct CodeApp: App {
     }
 }
 
-struct theme {
-    let id = UUID()
-    let name: String
-    let url: URL
-    let isDark: Bool
-
-    // editor.background, activitybar.background, statusbar_background, sidebar_background
-    let preview: (Color, Color, Color, Color)
-}
-
-var globalThemes: [theme] = []
-var globalDarkTheme: [String: Any]? = nil
-var globalLightTheme: [String: Any]? = nil
-
-func sharedURL() -> URL {
-    return FileManager.default.containerURL(
-        forSecurityApplicationGroupIdentifier: "group.com.thebaselab.code")!
-}
-
 func refreshNodeCommands() {
-    let nodeBinPath = sharedURL().appendingPathComponent("lib/bin").path
+    let nodeBinPath = Resources.appGroupSharedLibrary?.appendingPathComponent("lib/bin").path
 
-    if let paths = try? FileManager.default.contentsOfDirectory(atPath: nodeBinPath) {
-        for i in paths {
-            let cmd = i.replacingOccurrences(of: nodeBinPath, with: "")
+    if let nodeBinPath = nodeBinPath,
+        let paths = try? FileManager.default.contentsOfDirectory(atPath: nodeBinPath)
+    {
+        paths.forEach { path in
+            let cmd = path.replacingOccurrences(of: nodeBinPath, with: "")
             replaceCommand(cmd, "nodeg", true)
         }
     }
