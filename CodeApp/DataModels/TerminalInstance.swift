@@ -101,9 +101,9 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         outputTheme["brightWhite"] = colorArray["terminal.ansiBrightWhite"]
         outputTheme["brightYellow"] = colorArray["terminal.ansiBrightYellow"]
         outputTheme["cursor"] =
-            colorArray["terminalCursor.background"]
+            colorArray["terminalCursor.foreground"]
             ?? (rawTheme["type"] as? String == "dark" ? "#ffffff" : "#000000")
-        outputTheme["cursorAccent"] = colorArray["terminalCursor.foreground"]
+        outputTheme["cursorAccent"] = colorArray["terminalCursor.background"]
         outputTheme["cyan"] = colorArray["terminal.ansiBrightCyan"]
         outputTheme["foreground"] =
             colorArray["terminal.foreground"] ?? colorArray["editor.foreground"]
