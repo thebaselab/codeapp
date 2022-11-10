@@ -312,12 +312,8 @@ struct monacoEditor: UIViewRepresentable {
     }
 
     func setTheme(themeName: String, data: String, isDark: Bool) {
-
-        var themeName = themeName
-
-        for keyword in "() " {
-            themeName = themeName.replacingOccurrences(of: String(keyword), with: "")
-        }
+        let themeName = themeName.replacingOccurrences(
+            of: "[^A-Za-z0-9]+", with: "", options: [.regularExpression])
 
         if let base64 = data.base64Encoded() {
             self.executeJavascript(
