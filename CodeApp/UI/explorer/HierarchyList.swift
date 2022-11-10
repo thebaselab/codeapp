@@ -48,7 +48,9 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, RowContent: View
                     },
                     label: {
                         rowContent(child)
-                    }, onDisclose: onDisclose)
+                    }, onDisclose: onDisclose
+                )
+                .listRowBackground(Color.clear)
             } else {
                 rowContent(child)
             }
