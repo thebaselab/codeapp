@@ -50,7 +50,7 @@
 		9419695F280316C7008AAEB2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777BD257B74EE008FE7B2 /* NotificationManager.swift */; };
 		94196960280316C7008AAEB2 /* URL+isDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CF58DC265E4E0F00CB6A4B /* URL+isDirectory.swift */; };
 		94196961280316C7008AAEB2 /* String.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E3B96A25866C79006AC043 /* String.Encoding.swift */; };
-		94196962280316C7008AAEB2 /* theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF72604F90800C4F2B1 /* theme.swift */; };
+		94196962280316C7008AAEB2 /* ThemeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF72604F90800C4F2B1 /* ThemeConfigView.swift */; };
 		94196963280316C7008AAEB2 /* remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437153E26BF9FC3000376FB /* remote.swift */; };
 		94196964280316C7008AAEB2 /* CloudCodeExecutionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77818257BC332008FE7B2 /* CloudCodeExecutionManager.swift */; };
 		94196965280316C7008AAEB2 /* String+toCString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC425DEA89A00BC83B5 /* String+toCString.swift */; };
@@ -624,7 +624,7 @@
 		94B3D6DE25F77AFE00C4F2B1 /* Library in Resources */ = {isa = PBXBuildFile; fileRef = 94B3D6DD25F77AFE00C4F2B1 /* Library */; };
 		94B3DDF1260344E800C4F2B1 /* Color+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF0260344E700C4F2B1 /* Color+init.swift */; };
 		94B3DDF62604D3ED00C4F2B1 /* tar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B3DDF42604D3C400C4F2B1 /* tar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		94B3DDF82604F90800C4F2B1 /* theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF72604F90800C4F2B1 /* theme.swift */; };
+		94B3DDF82604F90800C4F2B1 /* ThemeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF72604F90800C4F2B1 /* ThemeConfigView.swift */; };
 		94B3DDFA260526D200C4F2B1 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF9260526D200C4F2B1 /* View+If.swift */; };
 		94B7C4C825F551F800F1EF4E /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; };
 		94B7C4C925F551F800F1EF4E /* ios_system.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -687,6 +687,10 @@
 		94FF338A2843744C003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */; };
 		9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */; };
 		9F3C2DC92918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */; };
+		9F3C2DEA2918E19B00BFF14C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DE92918E19B00BFF14C /* Theme.swift */; };
+		9F3C2DEB2918E19B00BFF14C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DE92918E19B00BFF14C /* Theme.swift */; };
+		9F3C2DED2918EDC400BFF14C /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DEC2918EDC400BFF14C /* Resources.swift */; };
+		9F3C2DEE2918EDC400BFF14C /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DEC2918EDC400BFF14C /* Resources.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1589,7 +1593,7 @@
 		94B3D6DD25F77AFE00C4F2B1 /* Library */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Library; sourceTree = "<group>"; };
 		94B3DDF0260344E700C4F2B1 /* Color+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+init.swift"; sourceTree = "<group>"; };
 		94B3DDF42604D3C400C4F2B1 /* tar.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = tar.xcframework; sourceTree = "<group>"; };
-		94B3DDF72604F90800C4F2B1 /* theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theme.swift; sourceTree = "<group>"; };
+		94B3DDF72604F90800C4F2B1 /* ThemeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeConfigView.swift; sourceTree = "<group>"; };
 		94B3DDF9260526D200C4F2B1 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		94B7C4A525F5518700F1EF4E /* ssh_cmd.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ssh_cmd.xcframework; sourceTree = "<group>"; };
 		94B7C4A625F5518700F1EF4E /* files.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = files.xcframework; sourceTree = "<group>"; };
@@ -1646,6 +1650,8 @@
 		94FF337328435158003DE5DD /* FontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontPicker.swift; sourceTree = "<group>"; };
 		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "CodeApp/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
 		9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hiddenScrollableContentBackground.swift; sourceTree = "<group>"; };
+		9F3C2DE92918E19B00BFF14C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		9F3C2DEC2918EDC400BFF14C /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1989,6 +1995,8 @@
 				942ACB9C281312900067114D /* SpellChecker.swift */,
 				9420698728284027007DE671 /* Store.swift */,
 				942A1884285B90650018801F /* Constants.swift */,
+				9F3C2DE92918E19B00BFF14C /* Theme.swift */,
+				9F3C2DEC2918EDC400BFF14C /* Resources.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -1996,6 +2004,7 @@
 		94A77799257ABC16008FE7B2 /* HelperFunctions */ = {
 			isa = PBXGroup;
 			children = (
+				9F3C2DE82918E15A00BFF14C /* Setup */,
 				949B3CC625DEAAA600BC83B5 /* node.swift */,
 				94CF58E0265E8A4B00CB6A4B /* wasm.swift */,
 				94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */,
@@ -2089,7 +2098,7 @@
 				94F52704259F997200337306 /* authentication.swift */,
 				9494A3A42587479F004A103E /* name_email.swift */,
 				94A777F5257B9260008FE7B2 /* setting.swift */,
-				94B3DDF72604F90800C4F2B1 /* theme.swift */,
+				94B3DDF72604F90800C4F2B1 /* ThemeConfigView.swift */,
 				94C1A3D52607A006007E459A /* themePreview.swift */,
 				94C893E1279D09D400DFBF29 /* customShortcut.swift */,
 				94C893E3279D0BC300DFBF29 /* shortcutPreview.swift */,
@@ -2567,6 +2576,13 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
+		9F3C2DE82918E15A00BFF14C /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2836,6 +2852,7 @@
 				94196955280316C7008AAEB2 /* activityViewController.swift in Sources */,
 				942E31F928086FE800233441 /* KeyChainAccessor.swift in Sources */,
 				94A046292804A6B300182275 /* EmptySourceControlSection.swift in Sources */,
+				9F3C2DEB2918E19B00BFF14C /* Theme.swift in Sources */,
 				94196956280316C7008AAEB2 /* themePreview.swift in Sources */,
 				94196957280316C7008AAEB2 /* setting.swift in Sources */,
 				94196958280316C7008AAEB2 /* wasm.swift in Sources */,
@@ -2851,7 +2868,7 @@
 				94196960280316C7008AAEB2 /* URL+isDirectory.swift in Sources */,
 				9441129E2821816700A8F1D7 /* TerminalProvider.swift in Sources */,
 				94196961280316C7008AAEB2 /* String.Encoding.swift in Sources */,
-				94196962280316C7008AAEB2 /* theme.swift in Sources */,
+				94196962280316C7008AAEB2 /* ThemeConfigView.swift in Sources */,
 				94196963280316C7008AAEB2 /* remote.swift in Sources */,
 				94196964280316C7008AAEB2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */,
@@ -2912,6 +2929,7 @@
 				94FF337528435158003DE5DD /* FontPicker.swift in Sources */,
 				9419698A280316C7008AAEB2 /* newFile.swift in Sources */,
 				9419698B280316C7008AAEB2 /* EditorInstance.swift in Sources */,
+				9F3C2DEE2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC892807632B00939E4F /* biometricType.swift in Sources */,
 				942E31FC280876AA00233441 /* SearchSection.swift in Sources */,
 				94A046262804A67100182275 /* SourceControlSection.swift in Sources */,
@@ -2974,6 +2992,7 @@
 				94A56860257E18F2008A6530 /* activityViewController.swift in Sources */,
 				942E31F828086FE800233441 /* KeyChainAccessor.swift in Sources */,
 				94A046282804A6B300182275 /* EmptySourceControlSection.swift in Sources */,
+				9F3C2DEA2918E19B00BFF14C /* Theme.swift in Sources */,
 				94C1A3D62607A006007E459A /* themePreview.swift in Sources */,
 				94A777F6257B9260008FE7B2 /* setting.swift in Sources */,
 				94CF58E1265E8A4B00CB6A4B /* wasm.swift in Sources */,
@@ -2989,7 +3008,7 @@
 				94CF58DD265E4E0F00CB6A4B /* URL+isDirectory.swift in Sources */,
 				9441129D28217D6A00A8F1D7 /* TerminalProvider.swift in Sources */,
 				94E3B96B25866C79006AC043 /* String.Encoding.swift in Sources */,
-				94B3DDF82604F90800C4F2B1 /* theme.swift in Sources */,
+				94B3DDF82604F90800C4F2B1 /* ThemeConfigView.swift in Sources */,
 				9437153F26BF9FC3000376FB /* remote.swift in Sources */,
 				94A77819257BC332008FE7B2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3371284348F1003DE5DD /* KBWebViewBase.m in Sources */,
@@ -3050,6 +3069,7 @@
 				94FF337428435158003DE5DD /* FontPicker.swift in Sources */,
 				94A77802257B960A008FE7B2 /* newFile.swift in Sources */,
 				94A77796257ABB69008FE7B2 /* EditorInstance.swift in Sources */,
+				9F3C2DED2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC882807632B00939E4F /* biometricType.swift in Sources */,
 				942E31FB280876AA00233441 /* SearchSection.swift in Sources */,
 				94A046252804A67100182275 /* SourceControlSection.swift in Sources */,

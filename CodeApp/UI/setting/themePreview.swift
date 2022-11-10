@@ -11,7 +11,7 @@ struct themePreview: View {
 
     @EnvironmentObject var App: MainApp
 
-    @State var item: theme
+    @State var item: Theme
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"

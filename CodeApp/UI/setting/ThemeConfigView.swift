@@ -12,13 +12,13 @@ struct themeConfigView: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var AppStore: Store
 
-    static let lightPlusTheme = theme(
+    static let lightPlusTheme = Theme(
         name: "Light+", url: URL(string: "https://thebaselab.com")!, isDark: false,
         preview: (
             .init(hexString: "#FFFFFF"), .init(hexString: "#2C2C2C"), .init(hexString: "#0D7ACC"),
             .init(hexString: "#F3F3F3")
         ))
-    static let darkPlusTheme = theme(
+    static let darkPlusTheme = Theme(
         name: "Dark+", url: URL(string: "https://thebaselab.com")!, isDark: true,
         preview: (
             .init(hexString: "#1E1E1E"), .init(hexString: "#333333"), .init(hexString: "#0D7ACC"),
