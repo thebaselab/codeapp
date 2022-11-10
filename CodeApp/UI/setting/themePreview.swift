@@ -16,6 +16,46 @@ struct themePreview: View {
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
 
+    func setTheme() {
+        App.updateView()
+
+        if item.url.scheme == "https" {
+            if item.isDark {
+                globalDarkTheme = nil
+                selectedTheme = item.name
+                App.monacoInstance.executeJavascript(command: "resetTheme(true)")
+                App.terminalInstance.executeScript("applyTheme(null, true)")
+            } else {
+                globalLightTheme = nil
+                selectedLightTheme = item.name
+                App.monacoInstance.executeJavascript(command: "resetTheme(false)")
+                App.terminalInstance.executeScript("applyTheme(null, false)")
+            }
+            return
+        }
+
+        let data = try! Data(contentsOf: item.url)
+        let jsonArray =
+            try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            as! [String: Any]
+
+        if item.isDark {
+            globalDarkTheme = jsonArray
+            selectedTheme = item.name
+        } else {
+            globalLightTheme = jsonArray
+            selectedLightTheme = item.name
+        }
+
+        let content = String(data: data, encoding: .utf8)!
+
+        App.monacoInstance.setTheme(
+            themeName: item.name.replacingOccurrences(of: " ", with: ""), data: content,
+            isDark: item.isDark)
+        App.terminalInstance.applyTheme(rawTheme: jsonArray)
+
+    }
+
     var body: some View {
         VStack {
             VStack(spacing: 0) {
@@ -50,43 +90,7 @@ struct themePreview: View {
             Text(item.name)
                 .font(.system(size: 16, weight: .regular))
         }.onTapGesture {
-
-            App.updateView()
-
-            if item.url.scheme == "https" {
-                if item.isDark {
-                    globalDarkTheme = nil
-                    selectedTheme = item.name
-                    App.monacoInstance.executeJavascript(command: "resetTheme(true)")
-                    App.terminalInstance.executeScript("applyTheme(null, true)")
-                } else {
-                    globalLightTheme = nil
-                    selectedLightTheme = item.name
-                    App.monacoInstance.executeJavascript(command: "resetTheme(false)")
-                    App.terminalInstance.executeScript("applyTheme(null, false)")
-                }
-                return
-            }
-
-            let data = try! Data(contentsOf: item.url)
-            let jsonArray =
-                try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                as! [String: Any]
-
-            if item.isDark {
-                globalDarkTheme = jsonArray
-                selectedTheme = item.name
-            } else {
-                globalLightTheme = jsonArray
-                selectedLightTheme = item.name
-            }
-
-            let content = String(data: data, encoding: .utf8)!
-
-            App.monacoInstance.setTheme(
-                themeName: item.name.replacingOccurrences(of: " ", with: ""), data: content,
-                isDark: item.isDark)
-            App.terminalInstance.applyTheme(rawTheme: jsonArray)
+            setTheme()
         }
     }
 }

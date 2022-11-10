@@ -74,7 +74,6 @@ struct RepositoryView: View {
             }) {
                 Image(systemName: "checkmark.circle")
             }
-            .buttonStyle(NoAnim())
             .keyboardShortcut(.return, modifiers: [.command])
             .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             .hoverEffect(.highlight)

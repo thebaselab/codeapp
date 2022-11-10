@@ -290,7 +290,7 @@ struct mainView: View {
                                     } else if self.currentDirectory == 3 {
                                         git()
                                     } else if self.currentDirectory == 4 {
-                                        remote()
+                                        RemoteContainer()
                                     }
                                 }.background(Color.init(id: "sideBar.background"))
 
@@ -410,7 +410,7 @@ struct mainView: View {
                                             } else if self.currentDirectory == 3 {
                                                 git()
                                             } else if self.currentDirectory == 4 {
-                                                remote()
+                                                RemoteContainer()
                                             }
                                         }.background(Color.init(id: "sideBar.background"))
 
