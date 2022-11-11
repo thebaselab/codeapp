@@ -1,5 +1,5 @@
 //
-//  ResultsSection.swift
+//  SearchResultsSection.swift
 //  Code
 //
 //  Created by Ken Chung on 15/4/2022.
@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct ResultsSection: View {
+struct SearchResultsSection: View {
 
     @EnvironmentObject var App: MainApp
+
+    let onTapSearchResult: (SearchResult, String) -> Void
 
     private func binding(for key: String) -> Binding<Bool> {
         return .init(
@@ -49,15 +51,7 @@ struct ResultsSection: View {
                                         .font(.custom("Menlo Regular", size: 14))
                                         .lineLimit(1)
                                         .onTapGesture {
-                                            App.openEditor(
-                                                urlString: fileURL.absoluteString,
-                                                type: .file)
-                                            App.monacoInstance.executeJavascript(
-                                                command: "editor.focus()")
-                                            App.monacoInstance.searchByTerm(
-                                                term: App.textSearchManager.searchTerm)
-                                            App.monacoInstance.scrollToLine(
-                                                line: res.line_num)
+                                            onTapSearchResult(res, key)
                                         }
                                     }
                                 }

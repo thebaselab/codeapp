@@ -11,6 +11,9 @@ struct SearchSection: View {
     @EnvironmentObject var App: MainApp
     @FocusState private var searchBarFocused: Bool
 
+    let onSearch: () -> Void
+    let onClearSearchResults: () -> Void
+
     var body: some View {
         Section(
             header:
@@ -19,17 +22,9 @@ struct SearchSection: View {
         ) {
             SearchBar(
                 text: $App.textSearchManager.searchTerm,
-                searchAction: {
-                    if let path = URL(string: App.workSpaceStorage.currentDirectory.url)?
-                        .path
-                    {
-                        App.textSearchManager.search(
-                            str: App.textSearchManager.searchTerm, path: path)
-                    }
-                },
-                clearAction: {
-                    App.textSearchManager.removeAllResults()
-                }, placeholder: NSLocalizedString("Search", comment: ""), cornerRadius: 15
+                searchAction: onSearch,
+                clearAction: onClearSearchResults,
+                placeholder: NSLocalizedString("Search", comment: ""), cornerRadius: 15
             )
             .focused($searchBarFocused)
         }.onAppear {

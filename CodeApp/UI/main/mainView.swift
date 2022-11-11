@@ -286,7 +286,7 @@ struct mainView: View {
                                             showingNewFileSheet: $showingNewFileSheet,
                                             showsDirectoryPicker: $showsDirectoryPicker)
                                     } else if self.currentDirectory == 1 {
-                                        search()
+                                        SearchContainer()
                                     } else if self.currentDirectory == 3 {
                                         git()
                                     } else if self.currentDirectory == 4 {
@@ -406,7 +406,7 @@ struct mainView: View {
                                                     showingNewFileSheet: $showingNewFileSheet,
                                                     showsDirectoryPicker: $showsDirectoryPicker)
                                             } else if self.currentDirectory == 1 {
-                                                search()
+                                                SearchContainer()
                                             } else if self.currentDirectory == 3 {
                                                 git()
                                             } else if self.currentDirectory == 4 {
