@@ -51,6 +51,7 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, RowContent: View
                     }, onDisclose: onDisclose
                 )
                 .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
             } else {
                 rowContent(child)
             }
