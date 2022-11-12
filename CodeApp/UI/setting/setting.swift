@@ -132,7 +132,7 @@ struct settingView: View {
                 }
 
                 Section(header: Text(NSLocalizedString("Version Control", comment: ""))) {
-                    NavigationLink(destination: name_email()) {
+                    NavigationLink(destination: SourceControlIdentityConfiguration()) {
                         Text("Author Identity")
                     }
                     NavigationLink(destination: remoteAuthentication()) {

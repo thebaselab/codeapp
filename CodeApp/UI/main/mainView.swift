@@ -288,7 +288,7 @@ struct mainView: View {
                                     } else if self.currentDirectory == 1 {
                                         SearchContainer()
                                     } else if self.currentDirectory == 3 {
-                                        git()
+                                        SourceControlContainer()
                                     } else if self.currentDirectory == 4 {
                                         RemoteContainer()
                                     }
@@ -408,7 +408,7 @@ struct mainView: View {
                                             } else if self.currentDirectory == 1 {
                                                 SearchContainer()
                                             } else if self.currentDirectory == 3 {
-                                                git()
+                                                SourceControlContainer()
                                             } else if self.currentDirectory == 4 {
                                                 RemoteContainer()
                                             }

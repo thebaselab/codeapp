@@ -1,5 +1,5 @@
 //
-//  name+email.swift
+//  SourceControlIdentityConfiguration.swift
 //  Code App
 //
 //  Created by Ken Chung on 14/12/2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct name_email: View {
+struct SourceControlIdentityConfiguration: View {
 
     @EnvironmentObject var App: MainApp
 

@@ -1,5 +1,5 @@
 //
-//  GitHubResultCell.swift
+//  GitHubSearchView.swift
 //  Code
 //
 //  Created by Ken Chung on 12/4/2022.
@@ -7,17 +7,28 @@
 
 import SwiftUI
 
-struct GitHubSearchResultCell: View {
+struct GitHubSearchView: View {
+
+    @EnvironmentObject var App: MainApp
+
+    let onClone: (String) async throws -> Void
+
+    var body: some View {
+        SearchBar(
+            text: $App.searchManager.searchTerm,
+            searchAction: { App.searchManager.search() }, placeholder: "GitHub",
+            cornerRadius: 15)
+        ForEach(App.searchManager.searchResultItems, id: \.html_url) { item in
+            GitHubSearchResultCell(item: item, onClone: onClone)
+        }.listRowBackground(Color.init(id: "sideBar.background"))
+    }
+}
+
+private struct GitHubSearchResultCell: View {
 
     @State var item: GitHubSearchManager.item
 
-    func humanReadableByteCount(bytes: Int) -> String {
-        if bytes < 1000 { return "\(bytes) B" }
-        let exp = Int(log2(Double(bytes)) / log2(1000.0))
-        let unit = ["KB", "MB", "GB", "TB", "PB", "EB"][exp - 1]
-        let number = Double(bytes) / pow(1000, Double(exp))
-        return String(format: "%.1f %@", number, unit)
-    }
+    let onClone: (String) async throws -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -58,8 +69,35 @@ struct GitHubSearchResultCell: View {
 
                 Spacer()
 
-                CloneButton(item: item)
+                CloneButton(item: item, onClone: onClone)
             }
         }
+    }
+}
+
+private struct CloneButton: View {
+
+    @EnvironmentObject var App: MainApp
+    @State var item: GitHubSearchManager.item
+
+    let onClone: (String) async throws -> Void
+
+    var body: some View {
+        Text("Clone")
+            .foregroundColor(.white)
+            .lineLimit(1)
+            .font(.system(size: 12))
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(
+                Color.init(id: "button.background")
+            )
+            .cornerRadius(10)
+            .onTapGesture {
+                Task {
+                    try await onClone(item.clone_url)
+                }
+            }
+
     }
 }
