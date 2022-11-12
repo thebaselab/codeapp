@@ -88,7 +88,7 @@ struct explorer: View {
 
             InfinityProgressView(enabled: $App.workSpaceStorage.explorerIsBusy)
 
-            List(selection: $selectKeeper) {
+            List {
                 Section(
                     header:
                         Text("Open Editors")
