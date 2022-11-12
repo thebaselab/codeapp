@@ -17,7 +17,6 @@ struct SourceControlEmptySection: View {
         Section(
             header:
                 Text("Source Control")
-                .foregroundColor(Color.init("BW"))
         ) {
             VStack(alignment: .leading) {
                 DescriptionText(

@@ -18,7 +18,6 @@ struct SearchSection: View {
         Section(
             header:
                 Text("Search", comment: "")
-                .foregroundColor(Color.init("BW"))
         ) {
             SearchBar(
                 text: $App.textSearchManager.searchTerm,

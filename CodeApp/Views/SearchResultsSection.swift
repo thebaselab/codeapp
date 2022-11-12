@@ -24,7 +24,6 @@ struct SearchResultsSection: View {
             header:
                 HStack {
                     Text("Results")
-                        .foregroundColor(Color.init("BW"))
                     Text(" " + App.textSearchManager.message)
                         .foregroundColor(.gray)
                         .font(.system(size: 12, weight: .light))

@@ -12,7 +12,6 @@ struct SearchUnsupportedSection: View {
         Section(
             header:
                 Text("Search")
-                .foregroundColor(Color.init("BW"))
         ) {
             DescriptionText("The current workspace does not support global search.")
         }

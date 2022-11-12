@@ -92,7 +92,6 @@ struct explorer: View {
                 Section(
                     header:
                         Text("Open Editors")
-                        .foregroundColor(Color.init("BW"))
                 ) {
                     if App.editors.isEmpty {
                         SideBarButton("New File") {
@@ -128,7 +127,6 @@ struct explorer: View {
                                 of: "{default}", with: " "
                             ).removingPercentEncoding!
                         )
-                        .foregroundColor(Color.init("BW"))
                 ) {
                     HierarchyList(
                         data: foldersWithFilter(

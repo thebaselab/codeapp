@@ -17,10 +17,7 @@ struct SourceControlCloneSection: View {
     var body: some View {
         Section(
             header:
-                HStack {
-                    Text(NSLocalizedString("Clone Repository", comment: ""))
-                        .foregroundColor(Color.init("BW"))
-                }
+                Text("Clone Repository")
         ) {
 
             if App.searchManager.errorMessage != "" {
