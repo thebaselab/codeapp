@@ -23,7 +23,6 @@ struct SourceControlEmptySection: View {
                 DescriptionText(
                     "The folder currently opened doesn't have a git repository."
                 )
-                .frame(height: 60)
 
                 SideBarButton("Initialize Repository") {
                     Task {
