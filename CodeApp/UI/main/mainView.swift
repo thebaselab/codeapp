@@ -282,7 +282,7 @@ struct mainView: View {
 
                                 Group {
                                     if self.currentDirectory == 0 {
-                                        explorer(
+                                        ExplorerContainer(
                                             showingNewFileSheet: $showingNewFileSheet,
                                             showsDirectoryPicker: $showsDirectoryPicker)
                                     } else if self.currentDirectory == 1 {
@@ -402,7 +402,7 @@ struct mainView: View {
 
                                         Group {
                                             if self.currentDirectory == 0 {
-                                                explorer(
+                                                ExplorerContainer(
                                                     showingNewFileSheet: $showingNewFileSheet,
                                                     showsDirectoryPicker: $showsDirectoryPicker)
                                             } else if self.currentDirectory == 1 {

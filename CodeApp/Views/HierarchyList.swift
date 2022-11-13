@@ -64,9 +64,7 @@ struct FSDisclosureGroup<Label, Content>: View where Label: View, Content: View 
     var id: AnyHashable
     var content: () -> Content
     var label: () -> Label
-
     var onDisclose: (AnyHashable) -> Void
-    //    @State var isTargeted = false
 
     init(
         expandStates: Binding<[AnyHashable: Bool]>, id: AnyHashable,

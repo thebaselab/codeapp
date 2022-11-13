@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 class WorkSpaceStorage: ObservableObject {
-    @Published var currentDirectory: fileItemRepresentable
+    @Published var currentDirectory: FileItemRepresentable
     @Published var expansionStates: [AnyHashable: Bool] = [:]
     @Published var explorerIsBusy = false
     @Published var editorIsBusy = false
@@ -19,7 +19,7 @@ class WorkSpaceStorage: ObservableObject {
     private var directoryMonitor = DirectoryMonitor()
     private var onDirectoryChangeAction: ((String) -> Void)? = nil
     private var onTerminalDataAction: ((Data) -> Void)? = nil
-    private var directoryStorage: [String: [(fileItemRepresentable)]] = [:]
+    private var directoryStorage: [String: [(FileItemRepresentable)]] = [:]
     private var fss: [String: FileSystemProvider] = [:]
     private var isConnecting = false
 
@@ -76,7 +76,7 @@ class WorkSpaceStorage: ObservableObject {
         localFS.gitServiceProvider = LocalGitServiceProvider(root: url)
 
         self.fss["file"] = localFS
-        self.currentDirectory = fileItemRepresentable(
+        self.currentDirectory = FileItemRepresentable(
             name: url.lastPathComponent, url: url.absoluteString, isDirectory: true)
         self.requestDirectoryUpdateAt(id: url.absoluteString)
     }
@@ -170,7 +170,7 @@ class WorkSpaceStorage: ObservableObject {
         fss[currentScheme!] = nil
 
         let documentDir = getRootDirectory()
-        self.currentDirectory = fileItemRepresentable(
+        self.currentDirectory = FileItemRepresentable(
             name: documentDir.lastPathComponent, url: documentDir.absoluteString, isDirectory: true)
         self.requestDirectoryUpdateAt(id: documentDir.absoluteString)
     }
@@ -190,7 +190,7 @@ class WorkSpaceStorage: ObservableObject {
             directoryMonitor.removeAll()
             directoryStorage.removeAll()
             expansionStates.removeAll()
-            currentDirectory = fileItemRepresentable(name: name, url: url, isDirectory: true)
+            currentDirectory = FileItemRepresentable(name: name, url: url, isDirectory: true)
             requestDirectoryUpdateAt(id: url)
         } else {
             // Directory is not updated
@@ -255,7 +255,7 @@ class WorkSpaceStorage: ObservableObject {
         }
     }
 
-    private func insertToTree(file: fileItemRepresentable) {
+    private func insertToTree(file: FileItemRepresentable) {
         guard var urlToInsert = URL(string: file.url) else {
             return
         }
@@ -277,21 +277,21 @@ class WorkSpaceStorage: ObservableObject {
         }
     }
 
-    private func buildTree(at base: String) -> fileItemRepresentable {
+    private func buildTree(at base: String) -> FileItemRepresentable {
         let items = directoryStorage[base]
         guard items != nil else {
-            return fileItemRepresentable(url: base, isDirectory: true)
+            return FileItemRepresentable(url: base, isDirectory: true)
         }
         let subItems =
             items!.filter { $0.subFolderItems != nil }.map { buildTree(at: $0.url) }
             + items!.filter { $0.subFolderItems == nil }
-        var item = fileItemRepresentable(url: base, isDirectory: true)
+        var item = FileItemRepresentable(url: base, isDirectory: true)
         item.subFolderItems = subItems
         return item
     }
 
     private func loadURL(
-        url: String, completionHandler: @escaping ([fileItemRepresentable]?, Error?) -> Void
+        url: String, completionHandler: @escaping ([FileItemRepresentable]?, Error?) -> Void
     ) {
         guard let url = URL(string: url) else {
             completionHandler(nil, nil)
@@ -303,8 +303,8 @@ class WorkSpaceStorage: ObservableObject {
                 completionHandler(nil, error)
                 return
             }
-            var folders: [fileItemRepresentable] = []
-            var files: [fileItemRepresentable] = []
+            var folders: [FileItemRepresentable] = []
+            var files: [FileItemRepresentable] = []
 
             for i in fileURLs {
                 var name = i.lastPathComponent.removingPercentEncoding ?? ""
@@ -313,10 +313,10 @@ class WorkSpaceStorage: ObservableObject {
                 }
                 if i.hasDirectoryPath {
                     folders.append(
-                        fileItemRepresentable(name: name, url: i.absoluteString, isDirectory: true))
+                        FileItemRepresentable(name: name, url: i.absoluteString, isDirectory: true))
                 } else {
                     files.append(
-                        fileItemRepresentable(name: name, url: i.absoluteString, isDirectory: false)
+                        FileItemRepresentable(name: name, url: i.absoluteString, isDirectory: false)
                     )
                 }
             }
@@ -335,13 +335,13 @@ class WorkSpaceStorage: ObservableObject {
 }
 
 extension WorkSpaceStorage {
-    struct fileItemRepresentable: Identifiable {
+    struct FileItemRepresentable: Identifiable {
         var id: String {
             self.url
         }
         var name: String
         var url: String
-        var subFolderItems: [fileItemRepresentable]?
+        var subFolderItems: [FileItemRepresentable]?
         var isDownloading = false
         var isFolder: Bool {
             subFolderItems != nil
@@ -400,7 +400,7 @@ extension WorkSpaceStorage: FileSystemProvider {
             return
         }
         if scheme != "file" {
-            let fileToInsert = fileItemRepresentable(url: at.absoluteString, isDirectory: false)
+            let fileToInsert = FileItemRepresentable(url: at.absoluteString, isDirectory: false)
             insertToTree(file: fileToInsert)
         }
         return fs.write(
@@ -450,7 +450,7 @@ extension WorkSpaceStorage: FileSystemProvider {
             return
         }
         if scheme != "file" {
-            let fileToInsert = fileItemRepresentable(url: at.absoluteString, isDirectory: true)
+            let fileToInsert = FileItemRepresentable(url: at.absoluteString, isDirectory: true)
             insertToTree(file: fileToInsert)
         }
         return fs.createDirectory(
@@ -479,7 +479,7 @@ extension WorkSpaceStorage: FileSystemProvider {
         }
 
         if scheme != "file" {
-            let fileToInsert = fileItemRepresentable(
+            let fileToInsert = FileItemRepresentable(
                 url: to.absoluteString, isDirectory: to.isDirectory)
             insertToTree(file: fileToInsert)
         }
@@ -502,7 +502,7 @@ extension WorkSpaceStorage: FileSystemProvider {
             return
         }
         if scheme != "file" {
-            let fileToInsert = fileItemRepresentable(
+            let fileToInsert = FileItemRepresentable(
                 url: to.absoluteString, isDirectory: to.isDirectory)
             insertToTree(file: fileToInsert)
             removeFromTree(url: at)

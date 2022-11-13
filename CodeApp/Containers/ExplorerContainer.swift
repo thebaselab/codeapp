@@ -1,13 +1,14 @@
 //
-//  explorer.swift
+//  ExplorerContainer.swift
 //  Code App
 //
 //  Created by Ken Chung on 5/12/2020.
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
-struct explorer: View {
+struct ExplorerContainer: View {
 
     @EnvironmentObject var App: MainApp
 
@@ -20,11 +21,11 @@ struct explorer: View {
     @State private var searchString: String = ""
     @State private var searching: Bool = false
 
-    func openNewFile() {
+    func onOpenNewFile() {
         showingNewFileSheet.toggle()
     }
 
-    func openFolder() {
+    func onPickNewDirectory() {
         showsDirectoryPicker = true
     }
 
@@ -34,53 +35,50 @@ struct explorer: View {
             UIApplication.shared.open(furl, options: [:], completionHandler: nil)
         }
     }
-
-    func foldersWithFilter(folder: [WorkSpaceStorage.fileItemRepresentable]?) -> [WorkSpaceStorage
-        .fileItemRepresentable]
-    {
-
-        var result = [WorkSpaceStorage.fileItemRepresentable]()
-
-        for item in folder ?? [WorkSpaceStorage.fileItemRepresentable]() {
-            if searchString == "" {
-                result.append(item)
-                continue
+    
+    func onDragCell(item: WorkSpaceStorage.FileItemRepresentable) -> NSItemProvider{
+        guard let url = item._url else {
+            return NSItemProvider()
+        }
+        if item.subFolderItems != nil {
+            let itemProvider = NSItemProvider()
+            itemProvider.suggestedName = url.lastPathComponent
+            itemProvider.registerFileRepresentation(
+                forTypeIdentifier: "public.folder", visibility: .all
+            ) {
+                $0(url, false, nil)
+                return nil
             }
-            if item.subFolderItems == nil
-                && item.name.lowercased().contains(searchString.lowercased())
-            {
-                result.append(item)
-                continue
+            return itemProvider
+        }else{
+            guard let provider = NSItemProvider(contentsOf: url) else {
+                return NSItemProvider()
             }
-            if item.subFolderItems != nil {
-                var temp = item
-                temp.subFolderItems = foldersWithFilter(folder: item.subFolderItems)
-                if temp.subFolderItems?.count != 0 {
-                    result.append(temp)
+            provider.suggestedName = url.lastPathComponent
+            return provider
+        }
+    }
+    
+    func onDropToFolder(item: WorkSpaceStorage.FileItemRepresentable, providers: [NSItemProvider]) -> Bool{
+        if let provider = providers.first {
+            provider.loadItem(forTypeIdentifier: UTType.item.identifier) {
+                data, error in
+                if let at = data as? URL,
+                    let to = item._url?.appendingPathComponent(
+                        at.lastPathComponent, conformingTo: .item)
+                {
+                    App.workSpaceStorage.copyItem(
+                        at: at, to: to,
+                        completionHandler: { error in
+                            if let error = error {
+                                App.notificationManager.showErrorMessage(
+                                    error.localizedDescription)
+                            }
+                        })
                 }
             }
         }
-
-        if !showHiddenFiles {
-            var finalResult = [WorkSpaceStorage.fileItemRepresentable]()
-            for item in result {
-                if item.name.hasPrefix(".") && !item.name.hasSuffix("icloud") {
-                    continue
-                }
-                if item.subFolderItems != nil {
-                    var temp = item
-                    temp.subFolderItems = temp.subFolderItems?.filter { a in
-                        return !a.name.hasPrefix(".")
-                    }
-                    finalResult.append(temp)
-                    continue
-                }
-                finalResult.append(item)
-            }
-            return finalResult
-        }
-
-        return result
+        return true
     }
 
     var body: some View {
@@ -89,67 +87,11 @@ struct explorer: View {
             InfinityProgressView(enabled: $App.workSpaceStorage.explorerIsBusy)
 
             List {
-                Section(
-                    header:
-                        Text("Open Editors")
-                ) {
-                    if App.editors.isEmpty {
-                        SideBarButton("New File") {
-                            openNewFile()
-                        }
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-
-                        SideBarButton("Open Folder") {
-                            openFolder()
-                        }
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                    }
-
-                    ForEach(App.editors) { item in
-                        cell(item: item)
-                            .frame(height: 16)
-                            .listRowBackground(
-                                item.url == App.activeEditor?.url
-                                    ? Color.init(id: "list.inactiveSelectionBackground")
-                                        .cornerRadius(10.0)
-                                    : Color.clear.cornerRadius(10.0)
-                            )
-                            .listRowSeparator(.hidden)
-                    }
-                }
-
-                Section(
-                    header:
-                        Text(
-                            App.workSpaceStorage.currentDirectory.name.replacingOccurrences(
-                                of: "{default}", with: " "
-                            ).removingPercentEncoding!
-                        )
-                ) {
-                    HierarchyList(
-                        data: foldersWithFilter(
-                            folder: App.workSpaceStorage.currentDirectory.subFolderItems),
-                        children: \.subFolderItems,
-                        expandStates: $App.workSpaceStorage.expansionStates,
-                        rowContent: {
-                            FileFolderCell(item: $0)
-                                .frame(height: 16)
-                                .listRowBackground(
-                                    $0.url == App.activeEditor?.url
-                                        ? Color.init(id: "list.inactiveSelectionBackground")
-                                            .cornerRadius(10.0)
-                                        : Color.clear.cornerRadius(10.0)
-                                )
-                                .listRowSeparator(.hidden)
-                        },
-                        onDisclose: { id in
-                            if let id = id as? String {
-                                App.workSpaceStorage.requestDirectoryUpdateAt(id: id)
-                            }
-                        })
-                }
+                ExplorerEditorListSection(
+                    onOpenNewFile: onOpenNewFile,
+                    onPickNewDirectory: onPickNewDirectory
+                )
+                ExplorerFileTreeSection(searchString: searchString, onDrag: onDragCell, onDropToFolder: onDropToFolder)
             }.listStyle(SidebarListStyle())
                 .environment(\.defaultMinListRowHeight, 10)
                 .environment(\.editMode, $editMode)
@@ -176,7 +118,7 @@ struct explorer: View {
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
-                        ).onTapGesture { openNewFile() }
+                        ).onTapGesture { onOpenNewFile() }
                         Image(systemName: "folder.badge.plus").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
@@ -190,7 +132,7 @@ struct explorer: View {
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                             ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                                 Color.init(id: "activityBar.foreground")
-                            ).onTapGesture { openFolder() }
+                            ).onTapGesture { onPickNewDirectory() }
                         }
 
                         Image(systemName: "magnifyingglass").contentShape(
@@ -248,9 +190,5 @@ struct explorer: View {
             ).cornerRadius(12).padding(.bottom, 15).padding(.horizontal, 8)
 
         }
-        //        .onDrop(
-        //            of: [(kUTTypeText as String), (kUTTypeImage as String)],
-        //            delegate: self
-        //        )
     }
 }
