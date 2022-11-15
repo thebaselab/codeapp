@@ -1,5 +1,5 @@
 //
-//  authentication.swift
+//  SourceControlAuthenticationConfiguration.swift
 //  Code App
 //
 //  Created by Ken Chung on 2/1/2021.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct remoteAuthentication: View {
+struct SourceControlAuthenticationConfiguration: View {
 
     @EnvironmentObject var App: MainApp
 

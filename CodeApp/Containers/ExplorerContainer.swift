@@ -35,8 +35,8 @@ struct ExplorerContainer: View {
             UIApplication.shared.open(furl, options: [:], completionHandler: nil)
         }
     }
-    
-    func onDragCell(item: WorkSpaceStorage.FileItemRepresentable) -> NSItemProvider{
+
+    func onDragCell(item: WorkSpaceStorage.FileItemRepresentable) -> NSItemProvider {
         guard let url = item._url else {
             return NSItemProvider()
         }
@@ -50,7 +50,7 @@ struct ExplorerContainer: View {
                 return nil
             }
             return itemProvider
-        }else{
+        } else {
             guard let provider = NSItemProvider(contentsOf: url) else {
                 return NSItemProvider()
             }
@@ -58,8 +58,10 @@ struct ExplorerContainer: View {
             return provider
         }
     }
-    
-    func onDropToFolder(item: WorkSpaceStorage.FileItemRepresentable, providers: [NSItemProvider]) -> Bool{
+
+    func onDropToFolder(item: WorkSpaceStorage.FileItemRepresentable, providers: [NSItemProvider])
+        -> Bool
+    {
         if let provider = providers.first {
             provider.loadItem(forTypeIdentifier: UTType.item.identifier) {
                 data, error in
@@ -91,7 +93,8 @@ struct ExplorerContainer: View {
                     onOpenNewFile: onOpenNewFile,
                     onPickNewDirectory: onPickNewDirectory
                 )
-                ExplorerFileTreeSection(searchString: searchString, onDrag: onDragCell, onDropToFolder: onDropToFolder)
+                ExplorerFileTreeSection(
+                    searchString: searchString, onDrag: onDragCell, onDropToFolder: onDropToFolder)
             }.listStyle(SidebarListStyle())
                 .environment(\.defaultMinListRowHeight, 10)
                 .environment(\.editMode, $editMode)

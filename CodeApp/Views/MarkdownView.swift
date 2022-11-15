@@ -9,11 +9,11 @@ import MarkdownView
 import MessageUI
 import SwiftUI
 
-struct changeLogWrapper: View {
+struct ChangeLogView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         NavigationView {
-            simpleMarkDownView(text: NSLocalizedString("Changelog.message", comment: ""))
+            SimpleMarkDownView(text: NSLocalizedString("Changelog.message", comment: ""))
                 .navigationBarTitle(NSLocalizedString("Release Notes", comment: ""))
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(
@@ -26,7 +26,7 @@ struct changeLogWrapper: View {
     }
 }
 
-struct simpleMarkDownView: UIViewRepresentable {
+struct SimpleMarkDownView: UIViewRepresentable {
 
     var text: String
 
@@ -45,7 +45,7 @@ struct simpleMarkDownView: UIViewRepresentable {
     }
 
 }
-struct markDownView: UIViewRepresentable {
+struct MarkDownView: UIViewRepresentable {
 
     @EnvironmentObject var App: MainApp
 
@@ -70,14 +70,14 @@ struct markDownView: UIViewRepresentable {
         return
     }
 
-    func makeCoordinator() -> markDownView.Coordinator {
+    func makeCoordinator() -> MarkDownView.Coordinator {
         Coordinator(self)
     }
 
     class Coordinator: NSObject, UITextViewDelegate, MFMailComposeViewControllerDelegate {
-        var control: markDownView
+        var control: MarkDownView
 
-        init(_ control: markDownView) {
+        init(_ control: MarkDownView) {
             self.control = control
             super.init()
 

@@ -10,26 +10,31 @@ import SwiftUI
 import UIKit
 import ios_system
 
-struct mainView: View {
-
+struct mainScene: View {
     @StateObject var App = MainApp()
+    @StateObject var extensionManager = ExtensionManager()
+
+    var body: some View {
+        mainView()
+            .environmentObject(App)
+            .environmentObject(extensionManager)
+            .onAppear {
+                extensionManager.initializeExtensions(app: App)
+            }
+    }
+}
+
+private struct mainView: View {
+
+    @EnvironmentObject var App: MainApp
+    @EnvironmentObject var extensionManager: ExtensionManager
 
     @State var showChangeLog: Bool
-    @State var isShowingDirectory: Bool
-    @State var currentDirectory: Int
-    @State var showsPanel: Bool
-    @State var currentPanelTab: Int
-
     @State var showingSettingsSheet: Bool = false
     @State var showingNewFileSheet: Bool = false
     @State var showsDirectoryPicker: Bool = false
     @State var showsFilePicker: Bool = false
     @State var showSafari: Bool = false
-
-    @State var panelHeight: CGFloat = 200.0
-    @State var panelShowSplitView: Bool = false
-    @State var panelShowingInput: Bool = false
-
     @State var isShowingCheckoutAlert: Bool = false
     @State var selectedBranch: checkoutDest? = nil
     @State var checkoutDetached: Bool = false
@@ -41,6 +46,11 @@ struct mainView: View {
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("compilerShowPath") var compilerShowPath = false
 
+    @SceneStorage("sidebar.visible") var isShowingDirectory: Bool = false
+    @SceneStorage("sidebar.tab") var currentDirectory: Int = 0
+    @SceneStorage("panel.height") var panelHeight: Double = 200.0
+    @SceneStorage("panel.visible") var showsPanel: Bool = false
+
     let sections: [Int: [String]] = [
         0: ["Files", "doc.on.doc"], 1: ["Search", "magnifyingglass"],
         3: ["Source Control", "point.topleft.down.curvedto.point.bottomright.up"],
@@ -48,19 +58,6 @@ struct mainView: View {
     ]
 
     init() {
-        _isShowingDirectory = State.init(
-            initialValue: UserDefaults.standard.bool(forKey: "mainView.sideBarEnabled"))
-        _currentDirectory = State.init(
-            initialValue: UserDefaults.standard.integer(forKey: "mainView.sideBarIndex"))
-        _showsPanel = State.init(
-            initialValue: UserDefaults.standard.bool(forKey: "mainView.panelEnabled"))
-        if UserDefaults.standard.object(forKey: "mainView.panelIndex") != nil {
-            _currentPanelTab = State.init(
-                initialValue: UserDefaults.standard.integer(forKey: "mainView.panelIndex"))
-        } else {
-            _currentPanelTab = State.init(initialValue: 2)
-        }
-
         if let lastReadVersion = UserDefaults.standard.string(forKey: "changelog.lastread") {
             let currentVersion =
                 Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
@@ -117,22 +114,22 @@ struct mainView: View {
     }
 
     func runCode() {
-        guard let editor = App.activeEditor else {
-            return
-        }
-        App.runCode(url: editor.url, lang: App.compilerCode)
-        DispatchQueue.main.async {
-            if self.panelHeight < 70 {
-                self.panelHeight = 200
-            }
-            self.showsPanel = true
-            if App.compilerCode < 10 {
-                self.currentPanelTab = 2
-            } else {
-                self.currentPanelTab = 1
-            }
-
-        }
+        //                guard let editor = App.activeEditor else {
+        //                    return
+        //                }
+        //                App.runCode(url: editor.url, lang: App.compilerCode)
+        //                DispatchQueue.main.async {
+        //                    if self.panelHeight < 70 {
+        //                        self.panelHeight = 200
+        //                    }
+        //                    self.showsPanel = true
+        //                    if App.compilerCode < 10 {
+        //                        self.currentPanelTab = PanelSection.terminal
+        //                    } else {
+        //                        self.currentPanelTab = PanelSection.remoteExecutionOutput
+        //                    }
+        //
+        //                }
     }
 
     var body: some View {
@@ -306,6 +303,7 @@ struct mainView: View {
                                     showSafari: $showSafari, runCode: runCode,
                                     openConsolePanel: openConsolePanel
                                 )
+                                .environmentObject(extensionManager.toolbarManager)
                                 .frame(height: 40)
 
                                 editorView(
@@ -323,12 +321,8 @@ struct mainView: View {
                                 }
 
                                 if showsPanel {
-                                    panelView(
-                                        showsPanel: self.$showsPanel,
-                                        panelHeight: self.$panelHeight,
-                                        isShowingInput: self.$panelShowingInput,
-                                        showSplitView: $panelShowSplitView,
-                                        currentTab: $currentPanelTab)
+                                    PanelView()
+                                        .environmentObject(extensionManager.panelManager)
                                 }
                             }
                             .edgesIgnoringSafeArea(.bottom)
@@ -449,29 +443,21 @@ struct mainView: View {
                     Spacer()
                     VStack {
                         Spacer()
-                        BannerCentreView().padding(
+                        NotificationCentreView().padding(
                             .trailing, (self.horizontalSizeClass == .compact ? 40 : 10))
                     }
                 }.padding(.bottom, 30).frame(width: geometry.size.width)
 
             }
             .background(Color.init(id: "sideBar.background").edgesIgnoringSafeArea(.all))
-            .environmentObject(App).accentColor(Color.init(id: "activityBar.inactiveForeground"))
+            .accentColor(Color.init(id: "activityBar.inactiveForeground"))
             .navigationTitle(
                 URL(string: App.workSpaceStorage.currentDirectory.url)?.lastPathComponent ?? ""
             )
-            .onReceive(NotificationCenter.default.publisher(for: UIScene.didDisconnectNotification))
-            { _ in
-                UserDefaults.standard.setValue(
-                    isShowingDirectory, forKey: "mainView.sideBarEnabled")
-                UserDefaults.standard.setValue(currentDirectory, forKey: "mainView.sideBarIndex")
-                UserDefaults.standard.setValue(showsPanel, forKey: "mainView.panelEnabled")
-                UserDefaults.standard.setValue(currentPanelTab, forKey: "mainView.panelIndex")
-                App.saveUserStates()
-            }
             .onChange(of: colorScheme) { newValue in
                 App.updateView()
             }
+            .environmentObject(App)
         }.hiddenScrollableContentBackground()
     }
 }

@@ -151,17 +151,8 @@ struct bottomBar: View {
                             .sheet(
                                 isPresented: $showChangeLog,
                                 content: {
-                                    changeLogWrapper()
+                                    ChangeLogView()
                                 })
-                        // #181: In iOS 15, Monaco Editor inside WKWebView no longer reads some of the built-in keyboard shortcuts like Cmd-A, we need a way to forward them directly.
-                        if #available(iOS 15, *) {
-                            Button("Select All") {
-                                App.monacoInstance.executeJavascript(
-                                    command:
-                                        "if(document.activeElement.className.includes('monaco')){editor.setSelection(editor.getModel().getFullModelRange())}else if(document.activeElement.className=='input'){document.execCommand('selectAll')};"
-                                )
-                            }.keyboardShortcut("a", modifiers: [.command])
-                        }
                         Button("Close Editor") {
                             App.closeEditor(
                                 url: App.currentURL(), type: App.activeEditor?.type ?? .any)

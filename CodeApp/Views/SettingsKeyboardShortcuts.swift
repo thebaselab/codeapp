@@ -1,5 +1,5 @@
 //
-//  shortcutPreview.swift
+//  customShortcut.swift
 //  Code
 //
 //  Created by Ken Chung on 23/1/2022.
@@ -8,29 +8,89 @@
 import GameController
 import SwiftUI
 
-struct characterBlock: View {
+struct SettingsKeyboardShortcuts: View {
 
-    @State var key: String
+    @EnvironmentObject var App: MainApp
+    @State var filter: String = ""
+    @State var storedShortcuts: [String: [GCKeyCode]] = [:]
+
+    init() {
+        if let result = UserDefaults.standard.value(forKey: "thebaselab.custom.keyboard.shortcuts")
+            as? [String: [GCKeyCode]]
+        {
+            _storedShortcuts = State(initialValue: result)
+        }
+        // This must be called twice for it to work for some reason.
+        let _ = GCKeyboard.coalesced?.keyboardInput
+    }
 
     var body: some View {
-        HStack {
-            if [
-                "shift", "command", "arrow.up", "arrow.down", "arrow.left", "arrow.right",
-                "delete.forward", "delete.backward", "option", "capslock", "control",
-            ].contains(key) {
-                Image(systemName: key)
-            } else {
-                Text(key)
+        VStack {
+            SearchBar(text: $filter, searchAction: nil, placeholder: "Search", cornerRadius: 6)
+                .padding(.horizontal)
+            DescriptionText(
+                "Note: Keyboard shortcuts that clash with existing shortcuts will not apply.")
+            Form {
+                Section("Actions") {
+                    List(
+                        App.editorShortcuts.filter {
+                            filter.isEmpty || $0.label.lowercased().contains(filter.lowercased())
+                        }.sorted(by: { a, b in
+                            if let _ = storedShortcuts[a.id] {
+                                return true
+                            } else {
+                                return false
+                            }
+                        })
+                    ) { shortcut in
+                        NavigationLink(
+                            destination: ShortcutPreview(
+                                shortcutID: shortcut.id, existingShortcuts: $storedShortcuts,
+                                onUpdate: {
+                                    App.monacoInstance.applyCustomShortcuts()
+                                }),
+                            label: {
+                                HStack {
+                                    Text(shortcut.label)
+                                    Spacer()
+                                    if let keycodes = storedShortcuts[shortcut.id] {
+                                        HStack {
+                                            ForEach(
+                                                keycodes.compactMap { shortcutsMapping[$0]?.1 }
+                                                    .sorted {
+                                                        if $0.count != $1.count {
+                                                            return $0.count > $1.count
+                                                        } else {
+                                                            return $0 < $1
+                                                        }
+                                                    }.map {
+                                                        ShortcutPreview.displayedKey(value: $0)
+                                                    }
+                                            ) { key in
+                                                CharacterBlock(key: key.value)
+                                            }
+                                        }
+                                    } else {
+                                        Text("Not set")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            })
+                    }
+                }
+            }
+            .background(Color(.systemGroupedBackground))
+        }.onAppear {
+            if let result = UserDefaults.standard.value(
+                forKey: "thebaselab.custom.keyboard.shortcuts") as? [String: [GCKeyCode]]
+            {
+                storedShortcuts = result
             }
         }
-        .font(.system(size: 14, weight: .regular, design: .default))
-        .padding(4)
-        .background(Color.init(id: "sideBar.background"))
-        .cornerRadius(4)
     }
 }
 
-struct shortcutPreview: View {
+private struct ShortcutPreview: View {
 
     @Environment(\.scenePhase) var scenePhase
     @State var keysDown: Set<GCKeyCode>
@@ -87,7 +147,7 @@ struct shortcutPreview: View {
 
             HStack {
                 ForEach(displayedKeys) { key in
-                    characterBlock(key: key.value)
+                    CharacterBlock(key: key.value)
                 }
             }
 
@@ -154,5 +214,27 @@ struct shortcutPreview: View {
                 UserDefaults.standard.set(newDictionary, forKey: userDefaultskey)
             }
         }
+    }
+}
+
+private struct CharacterBlock: View {
+
+    @State var key: String
+
+    var body: some View {
+        HStack {
+            if [
+                "shift", "command", "arrow.up", "arrow.down", "arrow.left", "arrow.right",
+                "delete.forward", "delete.backward", "option", "capslock", "control",
+            ].contains(key) {
+                Image(systemName: key)
+            } else {
+                Text(key)
+            }
+        }
+        .font(.system(size: 14, weight: .regular, design: .default))
+        .padding(4)
+        .background(Color.init(id: "sideBar.background"))
+        .cornerRadius(4)
     }
 }

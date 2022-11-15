@@ -8,29 +8,36 @@
 import SwiftUI
 import ZIPFoundation
 
+private struct CodeResult: Decodable {
+    let status: CodeStatus
+    let stdout: String?
+    let stderr: String?
+    let compile_output: String?
+    let message: String?
+    let exit_code: Int?
+    let exit_signal: Int?
+    let time: String?
+    let memory: Float?
+}
+
+private struct CodeStatus: Decodable {
+    let description: String
+    let id: Int
+}
+
+enum PanelDisplayMode: Int {
+    case input
+    case output
+    case split
+}
+
 class CloudCodeExecutionManager: ObservableObject {
     @Published var isRunningCode = false
     @Published var consoleContent = ""
     @Published var stdin: String = ""
+    @Published var displayMode: PanelDisplayMode = .output
 
     private var mainSession: URLSession? = nil
-
-    struct codeResult: Decodable {
-        let status: codeStatus
-        let stdout: String?
-        let stderr: String?
-        let compile_output: String?
-        let message: String?
-        let exit_code: Int?
-        let exit_signal: Int?
-        let time: String?
-        let memory: Float?
-    }
-
-    struct codeStatus: Decodable {
-        let description: String
-        let id: Int
-    }
 
     func stopRunning() {
         mainSession?.getTasksWithCompletionHandler {
@@ -46,40 +53,6 @@ class CloudCodeExecutionManager: ObservableObject {
             self.consoleContent = "Execution cancelled."
         }
 
-    }
-
-    private func generateJavaParameters(sourceURL: URL) -> [String: Any] {
-
-        let archive = Archive(accessMode: .create)!
-
-        do {
-            try archive.addEntry(with: sourceURL.lastPathComponent, fileURL: sourceURL)
-
-            let tempDir = FileManager().temporaryDirectory
-            let compileFile = tempDir.appendingPathComponent("compile")
-            let runFile = tempDir.appendingPathComponent("run")
-
-            try "javac \(sourceURL.lastPathComponent)".write(
-                to: compileFile, atomically: true, encoding: .utf8)
-            try "java \(sourceURL.deletingPathExtension().lastPathComponent)".write(
-                to: runFile, atomically: true, encoding: .utf8)
-
-            try archive.addEntry(with: "compile", fileURL: compileFile)
-            try archive.addEntry(with: "run", fileURL: runFile)
-        } catch {
-            return [:]
-        }
-
-        let base64 = archive.data!.base64EncodedString(options: .lineLength64Characters)
-
-        let parameters: [String: Any] = [
-            "language_id": 89,  // Multi-file program
-            "stdin": stdin.base64Encoded()!,
-            "cpu_time_limit": 6,
-            "additional_files": base64,
-        ]
-
-        return parameters
     }
 
     func runCode(directoryURL: URL, source: String, language: Int) {
@@ -102,7 +75,7 @@ class CloudCodeExecutionManager: ObservableObject {
 
         let parameters: [String: Any] =
             language == 62
-            ? generateJavaParameters(sourceURL: directoryURL)
+        ? generateJavaParameters(sourceURL: directoryURL, stdin: stdin)
             : [
                 "source_code": source.base64Encoded()!,
                 "language_id": language,
@@ -132,7 +105,7 @@ class CloudCodeExecutionManager: ObservableObject {
             if data != nil {
                 DispatchQueue.main.async {
                     do {
-                        let result = try JSONDecoder().decode(codeResult.self, from: data!)
+                        let result = try JSONDecoder().decode(CodeResult.self, from: data!)
 
                         if result.stderr != nil {
                             self.consoleContent += "\n" + result.stderr!.base64Decoded()! + "\n"
@@ -168,4 +141,38 @@ class CloudCodeExecutionManager: ObservableObject {
         }.resume()
 
     }
+}
+
+private func generateJavaParameters(sourceURL: URL, stdin: String) -> [String: Any] {
+
+    let archive = Archive(accessMode: .create)!
+
+    do {
+        try archive.addEntry(with: sourceURL.lastPathComponent, fileURL: sourceURL)
+
+        let tempDir = FileManager().temporaryDirectory
+        let compileFile = tempDir.appendingPathComponent("compile")
+        let runFile = tempDir.appendingPathComponent("run")
+
+        try "javac \(sourceURL.lastPathComponent)".write(
+            to: compileFile, atomically: true, encoding: .utf8)
+        try "java \(sourceURL.deletingPathExtension().lastPathComponent)".write(
+            to: runFile, atomically: true, encoding: .utf8)
+
+        try archive.addEntry(with: "compile", fileURL: compileFile)
+        try archive.addEntry(with: "run", fileURL: runFile)
+    } catch {
+        return [:]
+    }
+
+    let base64 = archive.data!.base64EncodedString(options: .lineLength64Characters)
+
+    let parameters: [String: Any] = [
+        "language_id": 89,  // Multi-file program
+        "stdin": stdin.base64Encoded()!,
+        "cpu_time_limit": 6,
+        "additional_files": base64,
+    ]
+
+    return parameters
 }

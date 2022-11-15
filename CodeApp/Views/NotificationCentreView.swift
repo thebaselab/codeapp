@@ -1,5 +1,5 @@
 //
-//  bannerCentre.swift
+//  NotificationCentreView.swift
 //  Code App
 //
 //  Created by Ken Chung on 5/12/2020.
@@ -7,9 +7,31 @@
 
 import SwiftUI
 
-struct Banner: View {
+struct NotificationCentreView: View {
 
-    let data: BannerData
+    @EnvironmentObject var App: MainApp
+
+    var body: some View {
+        VStack(spacing: 10) {
+            ForEach(App.notificationManager.notifications.indices, id: \.self) { i in
+                if !App.notificationManager.notifications[i].isRemoved
+                    && (App.notificationManager.notifications[i].isPresented
+                        || App.notificationManager.isShowingAllBanners)
+                {
+                    withAnimation(.spring()) {
+                        App.notificationManager.notifications[i].data.makeView(
+                            isPresented: $App.notificationManager.notifications[i].isPresented,
+                            isRemoved: $App.notificationManager.notifications[i].isRemoved)
+                    }
+                }
+            }
+        }
+    }
+}
+
+private struct NotificationItem: View {
+
+    let data: NotificationData
     @Binding var isPresented: Bool
     @Binding var isRemoved: Bool
 
@@ -37,9 +59,9 @@ struct Banner: View {
     }
 }
 
-struct BannerWtihProgress: View {
+private struct NotificationItemWtihProgress: View {
 
-    let data: BannerData
+    let data: NotificationData
     @Binding var isPresented: Bool
     @Binding var isRemoved: Bool
 
@@ -77,9 +99,9 @@ struct BannerWtihProgress: View {
     }
 }
 
-struct BannerWithButton: View {
+private struct NotificationItemWithButton: View {
 
-    let data: BannerData
+    let data: NotificationData
     @Binding var isPresented: Bool
     @Binding var isRemoved: Bool
 
@@ -131,24 +153,39 @@ struct BannerWithButton: View {
     }
 }
 
-struct BannerCentreView: View {
+extension NotificationData.Level {
+    var icon: some View {
+        switch self {
+        case .error:
+            return Image(systemName: "xmark.circle.fill").font(.subheadline)
+                .foregroundColor(Color.red)
+        case .info:
+            return Image(systemName: "info.circle.fill").font(.subheadline)
+                .foregroundColor(Color.blue)
+        case .warning:
+            return Image(systemName: "exclamationmark.triangle.fill").font(.subheadline)
+                .foregroundColor(Color.yellow)
+        case .success:
+            return Image(systemName: "checkmark.circle.fill").font(.subheadline)
+                .foregroundColor(Color.green)
+        }
+    }
+}
 
-    @EnvironmentObject var App: MainApp
-
-    var body: some View {
-        VStack(spacing: 10) {
-            ForEach(App.notificationManager.banners.indices, id: \.self) { i in
-                if !App.notificationManager.banners[i].isRemoved
-                    && (App.notificationManager.banners[i].isPresented
-                        || App.notificationManager.isShowingAllBanners)
-                {
-                    withAnimation(.spring()) {
-                        App.notificationManager.banners[i].data.makeBanner(
-                            isPresented: $App.notificationManager.banners[i].isPresented,
-                            isRemoved: $App.notificationManager.banners[i].isRemoved)
-                    }
-                }
-            }
+extension NotificationData {
+    func makeView(isPresented: Binding<Bool>, isRemoved: Binding<Bool>) -> some View {
+        switch style {
+        case .progress:
+            return AnyView(
+                NotificationItemWtihProgress(
+                    data: self, isPresented: isPresented, isRemoved: isRemoved))
+        case .basic:
+            return AnyView(
+                NotificationItem(data: self, isPresented: isPresented, isRemoved: isRemoved))
+        case .action:
+            return AnyView(
+                NotificationItemWithButton(
+                    data: self, isPresented: isPresented, isRemoved: isRemoved))
         }
     }
 }

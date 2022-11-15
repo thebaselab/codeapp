@@ -10,7 +10,7 @@ import UniformTypeIdentifiers
 
 struct ExplorerCell: View {
     @EnvironmentObject var App: MainApp
-    
+
     let item: WorkSpaceStorage.FileItemRepresentable
     let onDrag: () -> NSItemProvider
     let onDropToFolder: ([NSItemProvider]) -> Bool
@@ -48,16 +48,16 @@ private struct FileCell: View {
     enum Field {
         case rename
     }
-    
+
     func onRename() {
         App.renameFile(url: URL(string: item.url)!, name: newname)
         focusedField = nil
     }
-    
+
     func onOpenEditor() {
         App.openEditor(urlString: item.url, type: .any)
     }
-    
+
     func onCopyItemToFolder(url: URL) {
         guard let itemURL = URL(string: item.url) else {
             return
@@ -70,7 +70,7 @@ private struct FileCell: View {
                 }
             })
     }
-    
+
     var body: some View {
         Button(action: onOpenEditor) {
             HStack {
@@ -163,7 +163,7 @@ private struct FolderCell: View {
         self._item = State.init(initialValue: item)
         self._newname = State.init(initialValue: item.name.removingPercentEncoding!)
     }
-    
+
     func onRename() {
         App.renameFile(url: URL(string: item.url)!, name: newname)
         focusedField = nil

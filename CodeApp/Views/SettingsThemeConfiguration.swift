@@ -1,13 +1,77 @@
 //
-//  themePreview.swift
+//  SettingsThemeConfiguration.swift
 //  Code
 //
-//  Created by Ken Chung on 21/3/2021.
+//  Created by Ken Chung on 19/3/2021.
 //
 
 import SwiftUI
 
-struct themePreview: View {
+struct SettingsThemeConfiguration: View {
+
+    @EnvironmentObject var App: MainApp
+
+    static let defaultLightPlusTheme = Theme(
+        name: "Light+", url: URL(string: "https://thebaselab.com")!, isDark: false,
+        preview: (
+            .init(hexString: "#FFFFFF"), .init(hexString: "#2C2C2C"), .init(hexString: "#0D7ACC"),
+            .init(hexString: "#F3F3F3")
+        ))
+    static let defaultDarkPlusTheme = Theme(
+        name: "Dark+", url: URL(string: "https://thebaselab.com")!, isDark: true,
+        preview: (
+            .init(hexString: "#1E1E1E"), .init(hexString: "#333333"), .init(hexString: "#0D7ACC"),
+            .init(hexString: "#252526")
+        ))
+
+    var themeSection: some View {
+        VStack(alignment: .leading) {
+            Text("Dark Themes")
+                .font(.system(size: 20, weight: .bold))
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+
+                    ForEach(
+                        [SettingsThemeConfiguration.defaultDarkPlusTheme]
+                            + globalThemes.sorted { $0.name < $1.name }.filter { $0.isDark },
+                        id: \.id
+                    ) { item in
+                        ThemePreview(item: item)
+                            .environmentObject(App)
+                    }
+
+                }
+                .frame(height: 150)
+            }
+
+            Text("Light Themes")
+                .font(.system(size: 20, weight: .bold))
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(
+                        [SettingsThemeConfiguration.defaultLightPlusTheme]
+                            + globalThemes.sorted { $0.name < $1.name }.filter { !$0.isDark },
+                        id: \.id
+                    ) { item in
+                        ThemePreview(item: item)
+                            .environmentObject(App)
+                    }
+                }
+                .frame(height: 150)
+            }
+            Spacer()
+        }
+    }
+
+    var body: some View {
+        ZStack {
+            themeSection
+                .padding()
+        }
+    }
+}
+
+private struct ThemePreview: View {
 
     @EnvironmentObject var App: MainApp
 
@@ -94,9 +158,3 @@ struct themePreview: View {
         }
     }
 }
-
-//struct themePreview_Previews: PreviewProvider {
-//    static var previews: some View {
-//        themePreview(item: theme(name: "Dark+", url: URL(string: "https://thebaselab.com")!, isDark: true, preview: (.init(hexString: "#1E1E1E"), .init(hexString: "#333333"), .init(hexString: "#0D7ACC"), .init(hexString: "#252526"))))
-//    }
-//}

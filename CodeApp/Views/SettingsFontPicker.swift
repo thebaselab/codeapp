@@ -3,7 +3,7 @@
 import SwiftUI
 import UIKit
 
-public struct FontPicker: UIViewControllerRepresentable {
+public struct SettingsFontPicker: UIViewControllerRepresentable {
 
     @Environment(\.presentationMode) var presentationMode
     private let onFontPick: (UIFontDescriptor) -> Void
@@ -12,7 +12,9 @@ public struct FontPicker: UIViewControllerRepresentable {
         self.onFontPick = onFontPick
     }
 
-    public func makeUIViewController(context: UIViewControllerRepresentableContext<FontPicker>)
+    public func makeUIViewController(
+        context: UIViewControllerRepresentableContext<SettingsFontPicker>
+    )
         -> UIFontPickerViewController
     {
         let configuration = UIFontPickerViewController.Configuration()
@@ -24,16 +26,16 @@ public struct FontPicker: UIViewControllerRepresentable {
         return vc
     }
 
-    public func makeCoordinator() -> FontPicker.Coordinator {
+    public func makeCoordinator() -> SettingsFontPicker.Coordinator {
         return Coordinator(self, onFontPick: self.onFontPick)
     }
 
     public class Coordinator: NSObject, UIFontPickerViewControllerDelegate {
 
-        var parent: FontPicker
+        var parent: SettingsFontPicker
         private let onFontPick: (UIFontDescriptor) -> Void
 
-        init(_ parent: FontPicker, onFontPick: @escaping (UIFontDescriptor) -> Void) {
+        init(_ parent: SettingsFontPicker, onFontPick: @escaping (UIFontDescriptor) -> Void) {
             self.parent = parent
             self.onFontPick = onFontPick
         }
@@ -54,7 +56,7 @@ public struct FontPicker: UIViewControllerRepresentable {
 
     public func updateUIViewController(
         _ uiViewController: UIFontPickerViewController,
-        context: UIViewControllerRepresentableContext<FontPicker>
+        context: UIViewControllerRepresentableContext<SettingsFontPicker>
     ) {
 
     }

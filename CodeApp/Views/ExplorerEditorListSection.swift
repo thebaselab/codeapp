@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ExplorerEditorListSection: View {
-    
+
     @EnvironmentObject var App: MainApp
-    
+
     let onOpenNewFile: () -> Void
     let onPickNewDirectory: () -> Void
-    
+
     var body: some View {
         Section(
             header:
@@ -48,24 +48,23 @@ struct ExplorerEditorListSection: View {
     }
 }
 
-
 private struct EditorCell: View {
 
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     @State var item: EditorInstance
-    
+
     func onOpenEditor() {
         App.openEditor(urlString: item.url, type: item.type)
     }
-    
+
     func onOpenInFilesApp() {
         openSharedFilesApp(
             urlString: URL(string: item.url)!.deletingLastPathComponent().absoluteString
         )
     }
-    
+
     func onCopyRelativePath() {
         let pasteboard = UIPasteboard.general
         guard let targetURL = URL(string: item.url),
@@ -75,7 +74,7 @@ private struct EditorCell: View {
         }
         pasteboard.string = targetURL.relativePath(from: baseURL)
     }
-    
+
     func onTrashEditor() {
         guard let url = URL(string: item.url) else {
             return

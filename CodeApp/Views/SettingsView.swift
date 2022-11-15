@@ -1,5 +1,5 @@
 //
-//  setting.swift
+//  SettingsView.swift
 //  Code App
 //
 //  Created by Ken Chung on 5/12/2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct settingView: View {
+struct SettingsView: View {
 
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var AppStore: Store
@@ -16,29 +16,21 @@ struct settingView: View {
     @AppStorage("editorFontFamily") var fontFamily: String = "Menlo"
     @AppStorage("quoteAutoCompletionEnabled") var quoteAutoCompleteEnabled: Bool = true
     @AppStorage("suggestionEnabled") var suggestionEnabled: Bool = true
-
     @AppStorage("editorMiniMapEnabled") var miniMapEnabled: Bool = true
     @AppStorage("editorLineNumberEnabled") var editorLineNumberEnabled: Bool = true
     @AppStorage("editorShowKeyboardButtonEnabled") var editorShowKeyboardButtonEnabled: Bool = true
     @AppStorage("editorTabSize") var edtorTabSize: Int = 4
-
     @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
     @AppStorage("preferredColorScheme") var preferredColorScheme: Int = 0
-
     @AppStorage("editorRenderWhitespace") var renderWhitespace: Int = 2
     @AppStorage("editorWordWrap") var editorWordWrap: String = "off"
-
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
-
     @AppStorage("toolBarEnabled") var toolBarEnabled: Bool = true
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
-
     @AppStorage("editorSmoothScrolling") var editorSmoothScrolling: Bool = false
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
-
     @AppStorage("compilerShowPath") var compilerShowPath = false
-
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
 
@@ -67,7 +59,7 @@ struct settingView: View {
 
                     NavigationLink(
                         destination:
-                            themeConfigView()
+                            SettingsThemeConfiguration()
                             .environmentObject(App)
                     ) {
                         Text("Themes")
@@ -135,7 +127,7 @@ struct settingView: View {
                     NavigationLink(destination: SourceControlIdentityConfiguration()) {
                         Text("Author Identity")
                     }
-                    NavigationLink(destination: remoteAuthentication()) {
+                    NavigationLink(destination: SourceControlAuthenticationConfiguration()) {
                         Text("Authentication")
                     }
                 }
@@ -148,7 +140,7 @@ struct settingView: View {
                 Section(header: Text(NSLocalizedString("Editor", comment: ""))) {
 
                     NavigationLink(
-                        destination: FontPicker(onFontPick: { descriptor in
+                        destination: SettingsFontPicker(onFontPick: { descriptor in
                             fontFamily = descriptor.object(forKey: .family) as! String
                         }).toolbar {
                             Button("settings.editor.font.reset") {
@@ -172,7 +164,7 @@ struct settingView: View {
 
                     NavigationLink(
                         destination:
-                            customShortcuts()
+                            SettingsKeyboardShortcuts()
                             .environmentObject(App)
                     ) {
                         Text("Custom Keyboard Shortcuts")
@@ -325,7 +317,7 @@ struct settingView: View {
                 Section(header: Text(NSLocalizedString("About", comment: ""))) {
 
                     NavigationLink(
-                        destination: simpleMarkDownView(
+                        destination: SimpleMarkDownView(
                             text: NSLocalizedString("Changelog.message", comment: ""))
                     ) {
                         Text(NSLocalizedString("Release Notes", comment: ""))
@@ -375,7 +367,7 @@ struct settingView: View {
                         destination: URL(string: "https://thebaselab.com/privacypolicies/")!)
 
                     NavigationLink(
-                        destination: simpleMarkDownView(
+                        destination: SimpleMarkDownView(
                             text: NSLocalizedString("licenses", comment: ""))
                     ) {
                         Text("Licenses")

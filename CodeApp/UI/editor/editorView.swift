@@ -47,7 +47,7 @@ struct editorView: View {
 
                 if let editor = App.activeEditor {
                     if editor.type == .preview, let content = App.activeEditor?.content {
-                        markDownView(
+                        MarkDownView(
                             text: content, showsNewFile: $showsNewFile,
                             showsDirectory: $showsDirectory, showsFolderPicker: $showsFolderPicker,
                             showsFilePicker: $showsFilePicker, directoryID: $directoryID)

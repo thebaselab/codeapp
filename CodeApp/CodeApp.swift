@@ -16,8 +16,7 @@ var globalLightTheme: [String: Any]? = nil
 
 @main
 struct CodeApp: App {
-
-    @StateObject private var AppStore = Store()
+    @StateObject var AppStore: Store = Store()
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
@@ -365,10 +364,10 @@ struct CodeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            mainView()
-                .environmentObject(AppStore)
+            mainScene()
                 .ignoresSafeArea(.container, edges: .bottom)
                 .preferredColorScheme(colorScheme == 1 ? .dark : colorScheme == 2 ? .light : .none)
+                .environmentObject(AppStore)
             //                .onOpenURL { url in
             //                    _ = url.startAccessingSecurityScopedResource()
             //                    try? FileManager.default.startDownloadingUbiquitousItem(at: url)

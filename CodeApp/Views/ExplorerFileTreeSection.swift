@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ExplorerFileTreeSection: View {
-    
+
     @EnvironmentObject var App: MainApp
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
-    
+
     let searchString: String
     let onDrag: (WorkSpaceStorage.FileItemRepresentable) -> NSItemProvider
     let onDropToFolder: (WorkSpaceStorage.FileItemRepresentable, [NSItemProvider]) -> Bool
-    
+
     func foldersWithFilter(folder: [WorkSpaceStorage.FileItemRepresentable]?) -> [WorkSpaceStorage
         .FileItemRepresentable]
     {
@@ -63,7 +63,7 @@ struct ExplorerFileTreeSection: View {
 
         return result
     }
-    
+
     var body: some View {
         Section(
             header:
@@ -88,14 +88,14 @@ struct ExplorerFileTreeSection: View {
                             onDropToFolder(item, providers)
                         }
                     )
-                        .frame(height: 16)
-                        .listRowBackground(
-                            item.url == App.activeEditor?.url
-                                ? Color.init(id: "list.inactiveSelectionBackground")
-                                    .cornerRadius(10.0)
-                                : Color.clear.cornerRadius(10.0)
-                        )
-                        .listRowSeparator(.hidden)
+                    .frame(height: 16)
+                    .listRowBackground(
+                        item.url == App.activeEditor?.url
+                            ? Color.init(id: "list.inactiveSelectionBackground")
+                                .cornerRadius(10.0)
+                            : Color.clear.cornerRadius(10.0)
+                    )
+                    .listRowSeparator(.hidden)
                 },
                 onDisclose: { id in
                     if let id = id as? String {
