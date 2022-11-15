@@ -8,6 +8,11 @@
 import SwiftUI
 import ios_system
 
+private let PANEL_MINIMUM_HEIGHT: CGFloat = 40
+private let TOP_BAR_HEIGHT: CGFloat = 40
+private let EDITOR_MINIMUM_HEIGHT: CGFloat = 8
+private let BOTTOM_BAR_HEIGHT: CGFloat = 20
+
 struct PanelToolbarButton: View {
     let systemName: String
     let onTapGesture: () -> Void
@@ -45,22 +50,32 @@ private struct PanelTabLabel: View {
     }
 }
 
-struct PanelView: View {
-
-    @EnvironmentObject var App: MainApp
+private struct PanelTabs: View {
     @EnvironmentObject var panelManager: PanelManager
 
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    var body: some View {
+        ForEach(panelManager.panels, id: \.labelId) { panel in
+            PanelTabLabel(panel: panel)
 
-    @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
+            if let bubbleCount = panelManager.bubbleCount[panel.labelId] {
+                Circle()
+                    .fill(Color.init(id: "panel.border"))
+                    .frame(width: 14, height: 14)
+                    .overlay(
+                        Text("\(bubbleCount)")
+                            .foregroundColor(Color.init(id: "panelTitle.activeForeground"))
+                            .font(.system(size: 10))
+                    )
+            }
+        }
+    }
 
-    @SceneStorage("panel.visible") var showsPanel: Bool = false
-    @SceneStorage("panel.height") var panelHeight: Double = 200.0
-    @SceneStorage("panel.splitViewEnabled") var showSplitView: Bool = false
+}
+
+private struct Implementation: View {
+
+    @EnvironmentObject var panelManager: PanelManager
     @SceneStorage("panel.currentSection") var currentSection: String = "PROBLEMS"
-
-    @State var showSheet = false
-    @State var keyboardHeight: CGFloat = 0.0
 
     var currentPanel: Panel? {
         panelManager.panels.first(where: { $0.labelId == currentSection })
@@ -76,20 +91,7 @@ struct PanelView: View {
             }
 
             HStack {
-                ForEach(panelManager.panels, id: \.labelId) { panel in
-                    PanelTabLabel(panel: panel)
-
-                    if let bubbleCount = panelManager.bubbleCount[panel.labelId] {
-                        Circle()
-                            .fill(Color.init(id: "panel.border"))
-                            .frame(width: 14, height: 14)
-                            .overlay(
-                                Text("\(bubbleCount)")
-                                    .foregroundColor(Color.init(id: "panelTitle.activeForeground"))
-                                    .font(.system(size: 10))
-                            )
-                    }
-                }
+                PanelTabs()
 
                 Spacer()
 
@@ -97,7 +99,7 @@ struct PanelView: View {
                     .toolBarView
                     .environmentObject(panelManager)
 
-            }.frame(height: 14).padding(.top, 5).padding(.bottom, 5)
+            }.frame(height: 14).padding(.vertical, 5)
 
             HStack {
                 if let currentPanel = currentPanel {
@@ -106,46 +108,84 @@ struct PanelView: View {
                 } else {
                     Text("Empty Panel")
                 }
-            }
-
-            Spacer()
+            }.frame(maxHeight: .infinity)
         }
-        .frame(height: CGFloat(panelHeight))
-        .background(Color.init(id: "editor.background"))
-        //            .gesture(
-        //                DragGesture()
-        //                    .onChanged { value in
-        //                        if (self.panelHeight + (value.translation.height) * -1) < 40 {
-        //                            self.showsPanel = false
-        //                        }
-        //                        let topPadding = UIApplication.shared.getSafeArea(edge: .top)
-        //                        let bottomPadding = UIApplication.shared.getSafeArea(edge: .bottom)
-        //                        if (self.panelHeight + (value.translation.height) * -1)
-        //                            < (UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0)
-        //                                - topPadding - bottomPadding - keyboardHeight)
-        //                        {
-        //                            self.panelHeight = self.panelHeight + (value.translation.height) * -1
-        //                        } else {
-        //                            self.panelHeight =
-        //                                UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0)
-        //                                - topPadding - bottomPadding - keyboardHeight
-        //                        }
-        //                    }
-        //            )
-        //            .onReceive(
-        //                NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
-        //            ) { _ in
-        //                let topPadding = UIApplication.shared.getSafeArea(edge: .top)
-        //                let bottomPadding = UIApplication.shared.getSafeArea(edge: .bottom)
-        //                if self.panelHeight
-        //                    > (UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0) - topPadding
-        //                        - bottomPadding - keyboardHeight)
-        //                {
-        //                    self.panelHeight =
-        //                        UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0) - topPadding
-        //                        - bottomPadding - keyboardHeight
-        //                }
-        //            }
+    }
+
+}
+
+struct PanelView: View {
+
+    @EnvironmentObject var App: MainApp
+
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
+
+    @SceneStorage("panel.visible") var showsPanel: Bool = false
+    @SceneStorage("panel.height") var panelHeight: Double = 200.0
+    @SceneStorage("panel.splitViewEnabled") var showSplitView: Bool = false
+
+    @State var showSheet = false
+    @State var keyboardHeight: CGFloat = 0.0
+
+    var maxHeight: CGFloat {
+        UIScreen.main.bounds.height
+            - UIApplication.shared.getSafeArea(edge: .top)
+            - UIApplication.shared.getSafeArea(edge: .bottom)
+            - keyboardHeight
+            - TOP_BAR_HEIGHT
+            - EDITOR_MINIMUM_HEIGHT
+            - BOTTOM_BAR_HEIGHT
+    }
+
+    func evaluateProposedHeight(proposal: CGFloat) {
+        if proposal < PANEL_MINIMUM_HEIGHT {
+            showsPanel = false
+        } else if proposal > maxHeight {
+            panelHeight = maxHeight
+        } else {
+            panelHeight = proposal
+        }
+    }
+
+    var body: some View {
+        Implementation()
+            .frame(height: CGFloat(panelHeight))
+            .background(Color.init(id: "editor.background"))
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        let proposedNewHeight = panelHeight - value.translation.height
+                        evaluateProposedHeight(proposal: proposedNewHeight)
+                    }
+            )
+            .onReceive(
+                NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+            ) { notification in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    evaluateProposedHeight(proposal: panelHeight)
+                }
+            }
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: UIResponder.keyboardDidChangeFrameNotification),
+                perform: { notification in
+                    if let keyboardSize =
+                        (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
+                        .cgRectValue
+                    {
+                        keyboardHeight = keyboardSize.height
+                        evaluateProposedHeight(proposal: panelHeight)
+                    }
+                }
+            )
+            .onReceive(
+                NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification),
+                perform: { _ in
+                    keyboardHeight = 0.0
+                }
+            )
         //            .onReceive(
         //                NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification),
         //                perform: { notification in
@@ -167,24 +207,6 @@ struct PanelView: View {
         //                            }
         //                        }
         //                    }
-        //                }
-        //            )
-        //            .onReceive(
-        //                NotificationCenter.default.publisher(
-        //                    for: UIResponder.keyboardDidChangeFrameNotification),
-        //                perform: { notification in
-        //                    if let keyboardSize =
-        //                        (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
-        //                        .cgRectValue
-        //                    {
-        //                        keyboardHeight = keyboardSize.height
-        //                    }
-        //                }
-        //            )
-        //            .onReceive(
-        //                NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification),
-        //                perform: { _ in
-        //                    self.keyboardHeight = 0.0
         //                }
         //            )
         //            .onChange(of: consoleFontSize) { value in
