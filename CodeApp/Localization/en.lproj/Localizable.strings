@@ -270,3 +270,6 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "file.download" = "Download to..";
 
 "actions.new_window" = "New Window";
+
+"remote.connecting" = "Connecting to Host";
+"remote.connected" = "Connected successfully";

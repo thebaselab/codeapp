@@ -388,3 +388,6 @@
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";
 "actions.new_window" = "새창";
+
+"remote.connecting" = "호스트에 연결";
+"remote.connected" = "성공적으로 연결됨";

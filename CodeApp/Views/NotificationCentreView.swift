@@ -182,7 +182,6 @@ private struct NotificationItemWithButton: View {
                     .cornerRadius(10)
 
             }
-
         }
     }
 }

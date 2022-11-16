@@ -388,3 +388,6 @@
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";
 "actions.new_window" = "Neues Fenster";
+
+"remote.connecting" = "Verbindung zum Host herstellen";
+"remote.connected" = "Erfolgreich verbunden";

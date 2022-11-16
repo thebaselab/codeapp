@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct RemoteListSection: View {
-    let hosts: [RemoteHost]
 
+    @EnvironmentObject var App: MainApp
+
+    let hosts: [RemoteHost]
     let onRemoveHost: (RemoteHost) -> Void
     let onConnectToHost: (RemoteHost, () -> Void) async throws -> Void
     let onConnectToHostWithCredentials: (RemoteHost, URLCredential) async throws -> Void

@@ -83,28 +83,33 @@ struct RemoteContainer: View {
             throw RemoteHostError.invalidUrl
         }
 
-        try await withCheckedThrowingContinuation {
-            (continuation: CheckedContinuation<Void, Error>) in
-            App.workSpaceStorage.connectToServer(
-                host: hostUrl, credentials: cred, usesKey: host.useKeyAuth
-            ) {
-                error in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        App.notificationManager.showErrorMessage(
-                            error.localizedDescription)
+        try await App.notificationManager.withAsyncNotification(
+            title: "remote.connecting",
+            task: {
+                try await withCheckedThrowingContinuation {
+                    (continuation: CheckedContinuation<Void, Error>) in
+                    App.workSpaceStorage.connectToServer(
+                        host: hostUrl, credentials: cred, usesKey: host.useKeyAuth
+                    ) {
+                        error in
+                        if let error = error {
+                            DispatchQueue.main.async {
+                                App.notificationManager.showErrorMessage(
+                                    error.localizedDescription)
+                            }
+                            continuation.resume(throwing: error)
+                        } else {
+                            App.loadRepository(url: hostUrl)
+                            App.notificationManager.showInformationMessage(
+                                "remote.connected")
+                            App.terminalInstance.terminalServiceProvider =
+                                App.workSpaceStorage.terminalServiceProvider
+                            continuation.resume(returning: ())
+                        }
                     }
-                    continuation.resume(throwing: error)
-                } else {
-                    App.loadRepository(url: hostUrl)
-                    App.notificationManager.showInformationMessage(
-                        "Connected successfully.")
-                    App.terminalInstance.terminalServiceProvider =
-                        App.workSpaceStorage.terminalServiceProvider
-                    continuation.resume(returning: ())
                 }
             }
-        }
+        )
     }
 
     var body: some View {

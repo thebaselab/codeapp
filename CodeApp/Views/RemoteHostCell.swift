@@ -15,7 +15,7 @@ struct RemoteHostCell: View {
 
     let host: RemoteHost
     let onRemove: () -> Void
-    let onConnect: (() -> Void) async throws -> Void
+    let onConnect: (@escaping () -> Void) async throws -> Void
     let onConnectWithCredentials: (URLCredential) async throws -> Void
 
     var body: some View {

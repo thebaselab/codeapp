@@ -33,6 +33,23 @@ class NotificationManager: ObservableObject {
                     primaryAction: primary, primaryTitle: primaryTitle)))
     }
 
+    func withAsyncNotification(
+        title: String, task: @escaping (() async throws -> Void)
+    ) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            showAsyncNotification(
+                title: title,
+                task: {
+                    do {
+                        try await task()
+                        continuation.resume()
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                })
+        }
+    }
+
     func showAsyncNotification(
         title: String, task: @escaping (() async -> Void)
     ) {
