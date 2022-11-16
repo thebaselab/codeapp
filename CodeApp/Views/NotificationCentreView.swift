@@ -29,33 +29,52 @@ struct NotificationCentreView: View {
     }
 }
 
-private struct NotificationItem: View {
+private struct NotificationItem<V: View>: View {
+    let children: () -> V
+
+    init(@ViewBuilder children: @escaping () -> V) {
+        self.children = children
+    }
+
+    var body: some View {
+        VStack {
+            children()
+                .frame(minHeight: 50)
+                .padding(.horizontal, 10)
+        }
+        .frame(maxWidth: 300)
+        .background(Color.init(id: "sideBar.background"))
+        .cornerRadius(10)
+    }
+}
+
+private struct SimpleNotificationItem: View {
 
     let data: NotificationData
     @Binding var isPresented: Bool
     @Binding var isRemoved: Bool
 
     var body: some View {
-        VStack {
+        NotificationItem {
             HStack {
                 data.level.icon
                 Text(data.title).lineLimit(5).font(.subheadline).foregroundColor(
                     Color.init("T1"))
                 Spacer()
-            }.frame(minHeight: 50).padding(.horizontal, 10)
-        }.frame(maxWidth: 300).background(Color.init(id: "sideBar.background")).cornerRadius(10)
-            .onTapGesture {
+            }
+        }
+        .onTapGesture {
+            withAnimation {
+                isRemoved = true
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
                 withAnimation {
-                    isRemoved = true
+                    isPresented = false
                 }
             }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
-                    withAnimation {
-                        isPresented = false
-                    }
-                }
-            }
+        }
     }
 }
 
@@ -66,36 +85,37 @@ private struct NotificationItemWtihProgress: View {
     @Binding var isRemoved: Bool
 
     var body: some View {
-        VStack {
-            HStack {
-                data.level.icon
-                Text(data.title).lineLimit(1).font(.subheadline).foregroundColor(
-                    Color.init("T1"))
-                Spacer()
-            }.frame(height: 50).padding(.leading, 10).padding(.trailing, 10)
+        NotificationItem {
+            VStack {
+                HStack {
+                    data.level.icon
+                    Text(data.title).lineLimit(1).font(.subheadline).foregroundColor(
+                        Color.init("T1"))
+                    Spacer()
+                }.frame(height: 50).padding(.leading, 10).padding(.trailing, 10)
 
-            ProgressView(data.progress!).padding(
-                EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-            ).onChange(
-                of: data.progress,
-                perform: { value in
-                    if data.progress!.isFinished {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            withAnimation {
-                                isRemoved = true
+                ProgressView(data.progress!).padding(
+                    EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
+                ).onChange(
+                    of: data.progress,
+                    perform: { value in
+                        if data.progress!.isFinished {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                withAnimation {
+                                    isRemoved = true
+                                }
                             }
                         }
                     }
-                }
-            )
-            .progressViewStyle(LinearProgressViewStyle())
-
-        }.frame(maxWidth: 300).background(Color.init(id: "sideBar.background")).cornerRadius(10)
-            .onTapGesture {
-                withAnimation {
-                    isRemoved = true
-                }
+                )
+                .progressViewStyle(LinearProgressViewStyle())
             }
+        }
+        .onTapGesture {
+            withAnimation {
+                isRemoved = true
+            }
+        }
     }
 }
 
@@ -181,7 +201,7 @@ extension NotificationData {
                     data: self, isPresented: isPresented, isRemoved: isRemoved))
         case .basic:
             return AnyView(
-                NotificationItem(data: self, isPresented: isPresented, isRemoved: isRemoved))
+                SimpleNotificationItem(data: self, isPresented: isPresented, isRemoved: isRemoved))
         case .action:
             return AnyView(
                 NotificationItemWithButton(

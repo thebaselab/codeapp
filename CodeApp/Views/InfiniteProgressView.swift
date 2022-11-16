@@ -34,10 +34,3 @@ struct InfinityProgressView: View {
             }
     }
 }
-
-struct InfinityProgressView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        InfinityProgressView(enabled: .constant(true))
-    }
-}

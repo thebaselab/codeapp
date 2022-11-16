@@ -163,6 +163,24 @@ struct TopBar: View {
                         Label("Settings", systemImage: "slider.horizontal.3")
                     }
                 }
+
+                #if DEBUG
+                Section {
+                    Button("Regular Notification") {
+                        App.notificationManager.showErrorMessage("Error")
+                    }
+                    Button("Progress Notification") {
+                        App.notificationManager.postProgressNotification(
+                            title: "Progress", progress: Progress())
+                    }
+                    Button("Action Notification") {
+                        App.notificationManager.postActionNotification(
+                            title: "Error", level: .error, primary: {},
+                            primaryTitle: "primaryTitle", source: "source")
+                    }
+                }
+                #endif
+                
             } label: {
                 Image(systemName: "ellipsis").font(.system(size: 17, weight: .light))
                     .foregroundColor(Color.init("T1")).padding(5)
