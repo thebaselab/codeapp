@@ -35,7 +35,7 @@ struct SourceControlEntry: View {
                 }
 
                 HStack {
-                    fileIcon(
+                    FileIcon(
                         url: itemUrl.absoluteString, iconSize: 14, type: EditorInstance.tabType.file
                     )
 

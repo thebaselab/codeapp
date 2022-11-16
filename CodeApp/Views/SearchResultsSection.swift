@@ -58,7 +58,7 @@ struct SearchResultsSection: View {
                             label: {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        fileIcon(url: key, iconSize: 10, type: .file)
+                                        FileIcon(url: key, iconSize: 10, type: .file)
                                         Text(
                                             editorDisplayName(
                                                 editor: EditorInstance(
