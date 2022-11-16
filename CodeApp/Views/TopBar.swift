@@ -148,6 +148,15 @@ struct TopBar: View {
                         Label("Show Panel", systemImage: "chevron.left.slash.chevron.right")
                     }
 
+                    if UIApplication.shared.supportsMultipleScenes {
+                        Button(action: {
+                            UIApplication.shared.requestSceneSessionActivation(
+                                nil, userActivity: nil, options: nil, errorHandler: nil)
+                        }) {
+                            Label("actions.new_window", systemImage: "square.split.2x1")
+                        }
+                    }
+
                     Button(action: {
                         showingSettingsSheet.toggle()
                     }) {
