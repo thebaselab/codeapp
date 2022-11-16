@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ToolbarItem: Identifiable {
     let id = UUID()
+    var extenionID: String
     var icon: String
     var onClick: () -> Void
     var shortCut: KeyboardShortcut?
+    var shouldFocusPanelOnTap: Bool = false
 }

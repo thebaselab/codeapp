@@ -205,20 +205,29 @@ struct tabBar: View {
 
 private struct ToolbarItemView: View {
 
+    @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
+    @SceneStorage("panel.focusedId") var currentPanel: String = DefaultUIState.PANEL_FOCUSED_ID
+
     let item: ToolbarItem
 
     var body: some View {
-        Button(action: item.onClick) {
-            ZStack {
-                Image(systemName: item.icon)
-                    .font(.system(size: 17))
-                    .foregroundColor(Color.init("T1"))
-                    .padding(5)
-                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                    .hoverEffect(.highlight)
-                    .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20)
-            }.padding()
-        }.keyboardShortcut("r", modifiers: [.command])
+        Button(action: {
+            if item.shouldFocusPanelOnTap {
+                showsPanel = true
+                currentPanel = item.extenionID
+            }
+
+            item.onClick()
+        }) {
+            Image(systemName: item.icon)
+                .font(.system(size: 17))
+                .foregroundColor(Color.init("T1"))
+                .padding(5)
+                .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                .hoverEffect(.highlight)
+                .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20)
+                .padding()
+        }
     }
 
 }

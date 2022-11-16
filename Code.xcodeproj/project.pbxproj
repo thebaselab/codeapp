@@ -689,6 +689,8 @@
 		9FD5BCE62923897200F20C4B /* PanelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCE42923897200F20C4B /* PanelManager.swift */; };
 		9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */; };
 		9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */; };
+		9FD5BCEC292495DF00F20C4B /* DefaultUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */; };
+		9FD5BCED292495DF00F20C4B /* DefaultUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1649,6 +1651,7 @@
 		9FC03E732920CF1700DECD1B /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		9FD5BCE42923897200F20C4B /* PanelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelManager.swift; sourceTree = "<group>"; };
 		9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalExtension.swift; sourceTree = "<group>"; };
+		9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUIState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2567,6 +2570,7 @@
 			isa = PBXGroup;
 			children = (
 				9F3C2DEC2918EDC400BFF14C /* Resources.swift */,
+				9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -2931,6 +2935,7 @@
 				94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */,
 				94FF337528435158003DE5DD /* SettingsFontPicker.swift in Sources */,
 				9419698A280316C7008AAEB2 /* newFile.swift in Sources */,
+				9FD5BCED292495DF00F20C4B /* DefaultUIState.swift in Sources */,
 				9419698B280316C7008AAEB2 /* EditorInstance.swift in Sources */,
 				9F3C2DEE2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC892807632B00939E4F /* biometricType.swift in Sources */,
@@ -3070,6 +3075,7 @@
 				94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */,
 				94FF337428435158003DE5DD /* SettingsFontPicker.swift in Sources */,
 				94A77802257B960A008FE7B2 /* newFile.swift in Sources */,
+				9FD5BCEC292495DF00F20C4B /* DefaultUIState.swift in Sources */,
 				94A77796257ABB69008FE7B2 /* EditorInstance.swift in Sources */,
 				9F3C2DED2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC882807632B00939E4F /* biometricType.swift in Sources */,

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+private let EXTENSION_ID = "EXECUTION"
+
 class RemoteExecutionExtension: CodeAppExtension {
     let storage = CloudCodeExecutionManager()
     
@@ -15,19 +17,19 @@ class RemoteExecutionExtension: CodeAppExtension {
         contribution: CodeAppExtension.Contribution
     ) {
         let panel = Panel(
-            labelId: "EXECUTION",
+            labelId: EXTENSION_ID,
             mainView: AnyView(PanelRemoteExecutionMainView().environmentObject(storage)),
             toolBarView: AnyView(PanelRemoteExecutionToolbarView().environmentObject(storage))
         )
         contribution.panel.registerPanel(panel: panel)
 
         let toolbarItem = ToolbarItem(
+            extenionID: EXTENSION_ID,
             icon: "play",
             onClick: {
                 if self.storage.displayMode == .input {
                     self.storage.displayMode = .output
                 }
-                
                 guard let editor = app.activeEditor else {
                     return
                 }
@@ -39,7 +41,8 @@ class RemoteExecutionExtension: CodeAppExtension {
                 }
                 self.storage.runCode(directoryURL: url, source: editor.content, language: languageCode)
             },
-            shortCut: .init("r", modifiers: [.command])
+            shortCut: .init("r", modifiers: [.command]),
+            shouldFocusPanelOnTap: true
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
     }

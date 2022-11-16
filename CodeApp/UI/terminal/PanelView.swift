@@ -33,19 +33,19 @@ struct PanelToolbarButton: View {
 
 private struct PanelTabLabel: View {
     let panel: Panel
-    @SceneStorage("panel.currentSection") var currentSection: String = "PROBLEMS"
+    @SceneStorage("panel.focusedId") var currentPanelId: String = DefaultUIState.PANEL_FOCUSED_ID
 
     var body: some View {
         Text(panel.labelId)
             .foregroundColor(
                 Color.init(
-                    id: panel.labelId == currentSection
+                    id: panel.labelId == currentPanelId
                         ? "panelTitle.activeForeground" : "panelTitle.inactiveForeground")
             )
             .font(.system(size: 12, weight: .light))
             .padding(.leading)
             .onTapGesture {
-                currentSection = panel.labelId
+                currentPanelId = panel.labelId
             }
     }
 }
@@ -75,10 +75,10 @@ private struct PanelTabs: View {
 private struct Implementation: View {
 
     @EnvironmentObject var panelManager: PanelManager
-    @SceneStorage("panel.currentSection") var currentSection: String = "PROBLEMS"
+    @SceneStorage("panel.focusedId") var currentPanelId: String = DefaultUIState.PANEL_FOCUSED_ID
 
     var currentPanel: Panel? {
-        panelManager.panels.first(where: { $0.labelId == currentSection })
+        panelManager.panels.first(where: { $0.labelId == currentPanelId })
     }
 
     var body: some View {
