@@ -30,18 +30,31 @@ struct NotificationCentreView: View {
 }
 
 private struct NotificationItem<V: View>: View {
+    let data: NotificationData
     let children: () -> V
 
-    init(@ViewBuilder children: @escaping () -> V) {
+    init(
+        data: NotificationData,
+        @ViewBuilder children: @escaping () -> V = { EmptyView() }
+    ) {
+        self.data = data
         self.children = children
     }
 
     var body: some View {
         VStack {
+            HStack {
+                data.level.icon
+                Text(data.title)
+                    .lineLimit(5)
+                    .font(.subheadline)
+                    .foregroundColor(Color.init("T1"))
+                Spacer()
+            }
             children()
-                .frame(minHeight: 50)
-                .padding(.horizontal, 10)
         }
+        .frame(minHeight: 50)
+        .padding(10)
         .frame(maxWidth: 300)
         .background(Color.init(id: "sideBar.background"))
         .cornerRadius(10)
@@ -55,26 +68,19 @@ private struct SimpleNotificationItem: View {
     @Binding var isRemoved: Bool
 
     var body: some View {
-        NotificationItem {
-            HStack {
-                data.level.icon
-                Text(data.title).lineLimit(5).font(.subheadline).foregroundColor(
-                    Color.init("T1"))
-                Spacer()
-            }
-        }
-        .onTapGesture {
-            withAnimation {
-                isRemoved = true
-            }
-        }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+        NotificationItem(data: data)
+            .onTapGesture {
                 withAnimation {
-                    isPresented = false
+                    isRemoved = true
                 }
             }
-        }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+                    withAnimation {
+                        isPresented = false
+                    }
+                }
+            }
     }
 }
 
@@ -85,30 +91,22 @@ private struct NotificationItemWtihProgress: View {
     @Binding var isRemoved: Bool
 
     var body: some View {
-        NotificationItem {
+        NotificationItem(data: data) {
             VStack {
-                HStack {
-                    data.level.icon
-                    Text(data.title).lineLimit(1).font(.subheadline).foregroundColor(
-                        Color.init("T1"))
-                    Spacer()
-                }.frame(height: 50).padding(.leading, 10).padding(.trailing, 10)
-
-                ProgressView(data.progress!).padding(
-                    EdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-                ).onChange(
-                    of: data.progress,
-                    perform: { value in
-                        if data.progress!.isFinished {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                withAnimation {
-                                    isRemoved = true
+                ProgressView(data.progress!)
+                    .onChange(
+                        of: data.progress,
+                        perform: { value in
+                            if data.progress!.isFinished {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                    withAnimation {
+                                        isRemoved = true
+                                    }
                                 }
                             }
                         }
-                    }
-                )
-                .progressViewStyle(LinearProgressViewStyle())
+                    )
+                    .progressViewStyle(LinearProgressViewStyle())
             }
         }
         .onTapGesture {
@@ -119,6 +117,34 @@ private struct NotificationItemWtihProgress: View {
     }
 }
 
+private struct AsyncProgressNotificationItem: View {
+
+    let data: NotificationData
+    @State var enabled: Bool = false
+
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        NotificationItem(data: data) {
+            VStack {
+                InfinityProgressView(enabled: $enabled)
+            }
+        }
+        .onAppear {
+            enabled = true
+            Task {
+                await data.task?()
+                await MainActor.run {
+                    enabled = false
+                    isPresented = false
+                }
+            }
+        }
+
+    }
+
+}
+
 private struct NotificationItemWithButton: View {
 
     let data: NotificationData
@@ -126,50 +152,38 @@ private struct NotificationItemWithButton: View {
     @Binding var isRemoved: Bool
 
     var body: some View {
-        VStack {
+        NotificationItem(data: data) {
             HStack {
-                data.level.icon
-                Text(data.title).lineLimit(2).font(.subheadline).foregroundColor(
-                    Color.init("T1"))
-                Spacer()
-                Image(systemName: "xmark").font(.system(size: 12)).foregroundColor(Color.init("T1"))
-                    .onTapGesture { isRemoved = true }
-            }.frame(height: 50).padding(.leading, 10).padding(.trailing, 10)
-
-            HStack {
-                Text("Source: \(data.source ?? "")").lineLimit(2).font(.system(size: 12))
+                Text("Source: \(data.source ?? "")")
+                    .lineLimit(2)
+                    .font(.system(size: 12))
                     .foregroundColor(Color.gray)
                 Spacer()
-                if data.primaryAction != nil {
-                    Text(data.primaryTitle).foregroundColor(.white).lineLimit(1).font(
-                        .system(size: 12)
-                    ).padding(.leading, 8).padding(.trailing, 8).padding(.top, 4).padding(
-                        .bottom, 4
-                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10)
-                        .onTapGesture {
-                            data.primaryAction?()
-                            withAnimation {
-                                isRemoved = true
+                Group {
+                    if data.primaryAction != nil {
+                        Text(data.primaryTitle)
+                            .onTapGesture {
+                                data.primaryAction?()
+                                withAnimation {
+                                    isRemoved = true
+                                }
                             }
-                        }
-                }
-                if data.secondaryAction != nil {
-                    Text(data.secondaryTitle).foregroundColor(.white).lineLimit(1).font(
-                        .system(size: 12)
-                    ).padding(.leading, 8).padding(.trailing, 8).padding(.top, 4).padding(
-                        .bottom, 4
-                    ).background(Color.init(id: "statusBar.background")).cornerRadius(10)
-                        .onTapGesture {
-                            data.secondaryAction?()
-                            withAnimation {
-                                isRemoved = true
-                            }
-                        }
-                }
+                    }
+                    if data.secondaryAction != nil {
+                        Text(data.secondaryTitle)
+                    }
 
-            }.frame(height: 30).padding(.leading, 10).padding(.trailing, 10).padding(.bottom, 10)
+                }.foregroundColor(.white)
+                    .lineLimit(1)
+                    .font(.system(size: 12))
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.init(id: "statusBar.background"))
+                    .cornerRadius(10)
 
-        }.frame(maxWidth: 300).background(Color.init(id: "sideBar.background")).cornerRadius(10)
+            }
+
+        }
     }
 }
 
@@ -206,6 +220,10 @@ extension NotificationData {
             return AnyView(
                 NotificationItemWithButton(
                     data: self, isPresented: isPresented, isRemoved: isRemoved))
+        case .infinityProgress:
+            return AnyView(
+                AsyncProgressNotificationItem(data: self, isPresented: isPresented)
+            )
         }
     }
 }

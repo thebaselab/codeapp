@@ -25,11 +25,13 @@ struct NotificationData {
     var secondaryAction: (() -> Void)? = nil
     var primaryTitle: String = ""
     var secondaryTitle: String = ""
+    var task: (() async -> Void)? = nil
 
     enum Style {
         case basic
         case action
         case progress
+        case infinityProgress
     }
 
     enum Level {

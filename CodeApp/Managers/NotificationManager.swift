@@ -33,6 +33,21 @@ class NotificationManager: ObservableObject {
                     primaryAction: primary, primaryTitle: primaryTitle)))
     }
 
+    func showAsyncNotification(
+        title: String, task: @escaping (() async -> Void)
+    ) {
+        let title = NSLocalizedString(title, comment: "")
+        var data = NotificationData.init(
+            title: title, level: .info, style: .infinityProgress)
+        data.task = task
+
+        DispatchQueue.main.async {
+            self.notifications.append(
+                NotificationEntry(data: data)
+            )
+        }
+    }
+
     func showInformationMessage(_ mes: String) {
         let mes = NSLocalizedString(mes, comment: "")
         DispatchQueue.main.async {

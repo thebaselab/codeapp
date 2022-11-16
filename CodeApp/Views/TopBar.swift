@@ -165,22 +165,29 @@ struct TopBar: View {
                 }
 
                 #if DEBUG
-                Section {
-                    Button("Regular Notification") {
-                        App.notificationManager.showErrorMessage("Error")
+                    Section("UI Debug Menu") {
+                        Button("Regular Notification") {
+                            App.notificationManager.showErrorMessage("Error")
+                        }
+                        Button("Progress Notification") {
+                            App.notificationManager.postProgressNotification(
+                                title: "Progress", progress: Progress())
+                        }
+                        Button("Action Notification") {
+                            App.notificationManager.postActionNotification(
+                                title: "Error", level: .error, primary: {},
+                                primaryTitle: "primaryTitle", source: "source")
+                        }
+                        Button("Async Notification") {
+                            App.notificationManager.showAsyncNotification(
+                                title: "Task Name",
+                                task: {
+                                    try? await Task.sleep(nanoseconds: 10 * 1_000_000_000)
+                                })
+                        }
                     }
-                    Button("Progress Notification") {
-                        App.notificationManager.postProgressNotification(
-                            title: "Progress", progress: Progress())
-                    }
-                    Button("Action Notification") {
-                        App.notificationManager.postActionNotification(
-                            title: "Error", level: .error, primary: {},
-                            primaryTitle: "primaryTitle", source: "source")
-                    }
-                }
                 #endif
-                
+
             } label: {
                 Image(systemName: "ellipsis").font(.system(size: 17, weight: .light))
                     .foregroundColor(Color.init("T1")).padding(5)
