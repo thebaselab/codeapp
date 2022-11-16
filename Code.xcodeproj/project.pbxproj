@@ -1625,7 +1625,7 @@
 		94FF336F284348F1003DE5DD /* CodeUI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CodeUI-Bridging-Header.h"; sourceTree = "<group>"; };
 		94FF3370284348F1003DE5DD /* KBWebViewBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBWebViewBase.m; sourceTree = "<group>"; };
 		94FF337328435158003DE5DD /* SettingsFontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFontPicker.swift; sourceTree = "<group>"; };
-		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "CodeApp/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
+		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "Dependencies/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
 		9F046C2D29221D5200BDE4E9 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		9F046C312922203E00BDE4E9 /* ToolbarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarManager.swift; sourceTree = "<group>"; };
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
@@ -1756,6 +1756,7 @@
 				948D11FE2583F20C008F877A /* extraCommandsDictionary.plist */,
 				94B3D5D525F776A900C4F2B1 /* cacert.pem */,
 				94127C3F280335C8008C7F82 /* Themes */,
+				9FD5BCF22924A66500F20C4B /* Dependencies */,
 				94B3D55125F776A900C4F2B1 /* Resources */,
 				9FD5BCF12924A4C300F20C4B /* LanguageResources */,
 				944EEBF22563C381009D77FE /* CodeApp */,
@@ -1787,9 +1788,6 @@
 				9F3C2DF1291CB29F00BFF14C /* Errors */,
 				9F3C2DCA2918A3B700BFF14C /* Modifiers */,
 				94A5682D257CC367008A6530 /* Localization */,
-				948D12202583F24E008F877A /* terminal.bundle */,
-				94369B4925EAB175008419A0 /* npm.bundle */,
-				94A4438F25A44CDB006643FF /* monaco-textmate.bundle */,
 				94A777AE257B678A008FE7B2 /* Extensions */,
 				94A77799257ABC16008FE7B2 /* Utilities */,
 				944EEBF32563C381009D77FE /* CodeApp.swift */,
@@ -2523,6 +2521,16 @@
 				94B3D6DD25F77AFE00C4F2B1 /* Library */,
 			);
 			path = LanguageResources;
+			sourceTree = "<group>";
+		};
+		9FD5BCF22924A66500F20C4B /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				948D12202583F24E008F877A /* terminal.bundle */,
+				94369B4925EAB175008419A0 /* npm.bundle */,
+				94A4438F25A44CDB006643FF /* monaco-textmate.bundle */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
