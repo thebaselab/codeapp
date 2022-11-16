@@ -42,7 +42,7 @@ private struct PanelCodeMarkersSection: View {
 
 private struct MarkersView: View {
 
-    let markers: [monacoEditor.Coordinator.marker]
+    let markers: [MonacoEditor.Coordinator.marker]
     let url: URL
 
     @State var expanded: Bool = true
@@ -75,7 +75,7 @@ private struct MarkersView: View {
                 }.padding(.leading, 20).padding(.vertical, 3)
             }
         } label: {
-            fileIcon(url: url.absoluteString, iconSize: 14, type: .file)
+            FileIcon(url: url.absoluteString, iconSize: 14, type: .file)
             Text(url.lastPathComponent).foregroundColor(Color.init("T1"))
             Circle()
                 .fill(Color.init("panel.border"))

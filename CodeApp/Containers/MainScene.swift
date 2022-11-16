@@ -10,12 +10,12 @@ import SwiftUI
 import UIKit
 import ios_system
 
-struct mainScene: View {
+struct MainScene: View {
     @StateObject var App = MainApp()
     @StateObject var extensionManager = ExtensionManager()
 
     var body: some View {
-        mainView()
+        MainView()
             .environmentObject(App)
             .environmentObject(extensionManager)
             .onAppear {
@@ -24,7 +24,7 @@ struct mainScene: View {
     }
 }
 
-private struct mainView: View {
+private struct MainView: View {
 
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var extensionManager: ExtensionManager
@@ -297,7 +297,7 @@ private struct mainView: View {
 
                         ZStack {
                             VStack(spacing: 0) {
-                                tabBar(
+                                TopBar(
                                     isShowingDirectory: $isShowingDirectory,
                                     showingSettingsSheet: $showingSettingsSheet,
                                     showSafari: $showSafari, runCode: runCode,
@@ -306,7 +306,7 @@ private struct mainView: View {
                                 .environmentObject(extensionManager.toolbarManager)
                                 .frame(height: 40)
 
-                                editorView(
+                                EditorView(
                                     showsNewFile: $showingNewFileSheet,
                                     showsDirectory: $isShowingDirectory,
                                     showsFolderPicker: $showsDirectoryPicker,
@@ -315,7 +315,7 @@ private struct mainView: View {
                                 )
                                 .disabled(horizontalSizeClass == .compact && isShowingDirectory)
                                 .sheet(isPresented: $showingNewFileSheet) {
-                                    newFileView(
+                                    NewFileView(
                                         targetUrl: App.workSpaceStorage.currentDirectory.url
                                     ).environmentObject(App)
                                 }
@@ -353,7 +353,7 @@ private struct mainView: View {
                                                     )
                                                     .padding()
                                             }.sheet(isPresented: $showingNewFileSheet) {
-                                                newFileView(
+                                                NewFileView(
                                                     targetUrl: App.workSpaceStorage
                                                         .currentDirectory.url
                                                 ).environmentObject(App)
@@ -423,7 +423,7 @@ private struct mainView: View {
                             }
                         }
                     }
-                    bottomBar(
+                    BottomBar(
                         showChangeLog: showChangeLog,
                         showingNewFileSheet: $showingNewFileSheet,
                         showSafari: $showSafari,

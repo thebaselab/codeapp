@@ -1,5 +1,5 @@
 //
-//  filePicker.swift
+//  DocumentPickerView.swift
 //  Code App
 //
 //  Created by Ken Chung on 5/12/2020.
@@ -88,41 +88,10 @@ struct DocumentPickerView: UIViewControllerRepresentable {
                             }
                         }
                     }
-
-                    //                    let query = NSMetadataQuery()
-                    //                    query.predicate = NSPredicate(format: "%K > 0", NSMetadataUbiquitousItemPercentDownloadedKey)
-                    //                    query.searchScopes = [url.deletingLastPathComponent()]
-                    //                    query.valueListAttributes = [NSMetadataUbiquitousItemPercentDownloadedKey, NSMetadataUbiquitousItemDownloadingStatusKey]
-                    //
-                    //                    fileQuery = query
-                    //
-                    //                    NotificationCenter.default.addObserver(self, selector: #selector(listenForQuery(_:)), name: .NSMetadataQueryDidUpdate, object: query)
-                    //
-                    //                    fileQuery?.start()
-
                 } catch {
                     parent.App.notificationManager.showErrorMessage(error.localizedDescription)
                 }
             }
         }
-
-        //        @objc func listenForQuery(_ notification: Notification?) {
-        //            let query = notification?.object as? NSMetadataQuery
-        //
-        //            if query != fileQuery {
-        //                return
-        //            }
-        //
-        //            if query?.resultCount == 0 {
-        //                return
-        //            }
-        //
-        //            let item = fileQuery?.result(at: 0) as? NSMetadataItem
-        //            let progress =
-        //                (item?.value(forAttribute: NSMetadataUbiquitousItemPercentDownloadedKey)
-        //                as? NSNumber)?.doubleValue ?? 0.0
-        //            print("download progress = \(progress)")
-        //
-        //        }
     }
 }

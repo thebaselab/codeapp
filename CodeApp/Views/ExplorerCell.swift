@@ -74,7 +74,7 @@ private struct FileCell: View {
     var body: some View {
         Button(action: onOpenEditor) {
             HStack {
-                fileIcon(url: newname, iconSize: 14, type: .file)
+                FileIcon(url: newname, iconSize: 14, type: .file)
                     .frame(width: 14, height: 14)
 
                 if isRenaming {
@@ -219,7 +219,7 @@ private struct FolderCell: View {
         }
         .padding(5)
         .sheet(isPresented: $showingNewFileSheet) {
-            newFileView(targetUrl: item.url).environmentObject(App)
+            NewFileView(targetUrl: item.url).environmentObject(App)
         }
         .sheet(isPresented: $showsDirectoryPicker) {
             DirectoryPickerView(onOpen: { url in

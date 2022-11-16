@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct tabBar: View {
+struct TopBar: View {
 
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var toolBarManager: ToolbarManager
@@ -37,44 +37,12 @@ struct tabBar: View {
                         .padding()
                 }
             }
-            tabs()
+            EditorTabs()
             Spacer()
 
             ForEach(toolBarManager.items) { item in
                 ToolbarItemView(item: item)
             }
-
-            //            if App.compileManager.isRunningCode {
-            //                Image(systemName: "stop").font(.system(size: 17)).foregroundColor(Color.init("T1"))
-            //                    .padding(5).frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20)
-            //                    .padding()
-            //                    .onTapGesture {
-            //                        App.compileManager.stopRunning()
-            //                    }
-            //            } else if !App.workSpaceStorage.remoteConnected {
-            //                Button(action: {
-            //                    if !App.currentURL().contains("index{default}.md{code-preview}") {
-            //                        if App.currentURL().components(separatedBy: "/").last?.components(
-            //                            separatedBy: "."
-            //                        ).last == "html" {
-            //                            showSafari.toggle()
-            //                        } else {
-            //                            runCode()
-            //                        }
-            //                    }
-            //                }) {
-            //                    ZStack {
-            //                        Text("Run Code").foregroundColor(.clear).font(.system(size: 1))
-            //                        Image(systemName: "play").font(.system(size: 17)).foregroundColor(
-            //                            Color.init("T1")
-            //                        ).padding(5)
-            //                            .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            //                            .hoverEffect(.highlight)
-            //                            .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20)
-            //                    }.padding()
-            //
-            //                }.keyboardShortcut("r", modifiers: [.command])
-            //            }
 
             if App.branch != "" && App.activeEditor?.type == .file {
                 Button(action: {

@@ -36,7 +36,7 @@ class MainApp: ObservableObject {
     @Published var workSpaceStorage: WorkSpaceStorage
 
     // Editor States
-    @Published var problems: [URL: [monacoEditor.Coordinator.marker]] = [:]
+    @Published var problems: [URL: [MonacoEditor.Coordinator.marker]] = [:]
     @Published var showsNewFileSheet = false
     @Published var showsDirectoryPicker = false
 
@@ -52,10 +52,10 @@ class MainApp: ObservableObject {
 
     var urlQueue: [URL] = []
     var editorToRestore: URL? = nil
-    var editorShortcuts: [monacoEditor.Coordinator.action] = []
+    var editorShortcuts: [MonacoEditor.Coordinator.action] = []
 
     let terminalInstance: TerminalInstance
-    let monacoInstance = monacoEditor()
+    let monacoInstance = MonacoEditor()
     let webServer = GCDWebServer()
     var editorTypesMonitor: FolderMonitor? = nil
     let readmeMessage = NSLocalizedString("Welcome Message", comment: "")

@@ -12,7 +12,7 @@ import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
 
-struct editorView: View {
+struct EditorView: View {
     @EnvironmentObject var App: MainApp
 
     @AppStorage("editorLightTheme") var editorLightTheme: String = "Default"

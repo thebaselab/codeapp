@@ -56,8 +56,8 @@ platform :ios do
 
     Dir.chdir("..") do
       sh("./downloadFrameworks.sh")
-      sh(%Q[echo 'let JUDGE0_ENDPOINT = "#{JUDGE0_ENDPOINT}"' > CodeApp/DataModels/Constants.swift])
-      sh(%Q[echo 'let JUDGE0_KEY = "#{JUDGE0_KEY}"' >> CodeApp/DataModels/Constants.swift])
+      sh(%Q[echo 'let JUDGE0_ENDPOINT = "#{JUDGE0_ENDPOINT}"' > CodeApp/Constants/Secrets.swift])
+      sh(%Q[echo 'let JUDGE0_KEY = "#{JUDGE0_KEY}"' >> CodeApp/Constants/Secrets.swift])
     end
 
     match(

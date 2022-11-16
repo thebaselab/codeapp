@@ -1,5 +1,5 @@
 //
-//  fileIcon.swift
+//  FileIcon.swift
 //  Code App
 //
 //  Created by Ken Chung on 5/12/2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-let extensionNames = [
+private let extensionNames = [
     "bsl": "bsl", "mdo": "mdo", "asm": "asm", "s": "asm", "c": "c", "h": "c", "m": "c",
     "cs": "c-sharp", "cshtml": "html", "aspx": "html", "ascx": "html", "asax": "html",
     "master": "html", "cc": "cpp", "cpp": "cpp", "cxx": "cpp", "c++": "cpp", "hh": "cpp",
@@ -67,7 +67,7 @@ let extensionNames = [
     "slugignore": "config", "tmp": "clock", "htaccess": "config", "key": "lock", "cert": "lock",
     "DS_Store": "ignored", "svelte": "svelte",
 ]
-let level2ExtensionNames = [
+private let level2ExtensionNames = [
     "css.map": "css", "js.map": "javascript", "spec.js": "javascript_yellow",
     "test.js": "javascript", "npm-debug.log": "npm", "php.inc": "php", "spec.jsx": "react",
     "test.jsx": "react", "spec.tsx": "react", "test.tsx": "react", "erb.html": "html_erb",
@@ -78,9 +78,9 @@ let level2ExtensionNames = [
     "stylelintrc.json": "stylelint", "stylelintrc.yaml": "stylelint",
     "stylelintrc.yml": "stylelint", "stylelintrc.js": "stylelint",
 ]
-let fileNames = ["LICENSE": "license", "README.md": "info"]
+private let fileNames = ["LICENSE": "license", "README.md": "info"]
 
-struct fileIcon: View {
+struct FileIcon: View {
     let url: String
     let iconSize: CGFloat
     let type: EditorInstance.tabType

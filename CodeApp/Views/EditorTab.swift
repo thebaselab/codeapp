@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct editorTab: View {
+struct EditorTab: View {
 
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -32,7 +32,7 @@ struct editorTab: View {
         Group {
             if isActive && lastUpdateTime > Date.distantPast {
                 HStack(spacing: 4) {
-                    fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
+                    FileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
                     Button(action: {}) {
                         Group {
                             if let url = URL(string: currentEditor.url)?.standardizedFileURL,
@@ -52,7 +52,7 @@ struct editorTab: View {
                         .lineLimit(1)
                         .font(.system(size: 13, weight: .light))
                         .foregroundColor(Color.init(id: "tab.activeForeground"))
-                    }.keyboardShortcut(editorTab.keyForInt(int: index + 1), modifiers: .command)
+                    }.keyboardShortcut(EditorTab.keyForInt(int: index + 1), modifiers: .command)
 
                     if currentEditor.currentVersionId == currentEditor.lastSavedVersionId {
                         Image(systemName: "xmark")
@@ -84,7 +84,7 @@ struct editorTab: View {
             } else {
                 Button(action: { onOpenEditor() }) {
                     HStack(spacing: 4) {
-                        fileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
+                        FileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
                         if let url = URL(string: currentEditor.url)?.standardizedFileURL,
                             let status = App.gitTracks[url]
                         {
@@ -108,7 +108,7 @@ struct editorTab: View {
                                 }
                         }
                     }
-                }.keyboardShortcut(editorTab.keyForInt(int: index + 1), modifiers: .command)
+                }.keyboardShortcut(EditorTab.keyForInt(int: index + 1), modifiers: .command)
                     .frame(height: 40)
                     .padding(.horizontal, 8)
             }

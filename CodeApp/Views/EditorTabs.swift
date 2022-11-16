@@ -8,7 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct tabs: View {
+struct EditorTabs: View {
     @EnvironmentObject var App: MainApp
 
     @State private var dragging: EditorInstance?
@@ -53,7 +53,7 @@ struct tabs: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
                 ForEach(Array(App.editors.enumerated()), id: \.element) { i, currentEditor in
-                    editorTab(
+                    EditorTab(
                         currentEditor: currentEditor, isActive: (App.activeEditor == currentEditor),
                         index: i,
                         onOpenEditor: {

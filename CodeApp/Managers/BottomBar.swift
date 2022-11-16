@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct bottomBar: View {
+struct BottomBar: View {
 
     @EnvironmentObject var App: MainApp
 

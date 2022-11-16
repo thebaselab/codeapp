@@ -364,7 +364,7 @@ struct CodeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            mainScene()
+            MainScene()
                 .ignoresSafeArea(.container, edges: .bottom)
                 .preferredColorScheme(colorScheme == 1 ? .dark : colorScheme == 2 ? .light : .none)
                 .environmentObject(AppStore)

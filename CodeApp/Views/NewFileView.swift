@@ -1,5 +1,5 @@
 //
-//  newFile.swift
+//  NewFileView.swift
 //  Code App
 //
 //  Created by Ken Chung on 5/12/2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct newFileView: View {
+struct NewFileView: View {
 
     @EnvironmentObject var App: MainApp
 
@@ -252,7 +252,7 @@ struct newFileView: View {
 
                     Section(header: Text(NSLocalizedString("Custom", comment: ""))) {
                         HStack {
-                            fileIcon(url: name, iconSize: 14, type: .file)
+                            FileIcon(url: name, iconSize: 14, type: .file)
                                 .frame(width: 16)
                                 .fixedSize()
                             TextField(

@@ -86,7 +86,7 @@ private struct EditorCell: View {
         Button(action: onOpenEditor) {
             ZStack {
                 HStack {
-                    fileIcon(url: item.url, iconSize: 14, type: item.type)
+                    FileIcon(url: item.url, iconSize: 14, type: item.type)
 
                     if item.type == .file,
                         let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL]
