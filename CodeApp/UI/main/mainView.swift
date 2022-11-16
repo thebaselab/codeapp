@@ -325,7 +325,6 @@ private struct mainView: View {
                                         .environmentObject(extensionManager.panelManager)
                                 }
                             }
-                            .edgesIgnoringSafeArea(.bottom)
                             .blur(
                                 radius: (horizontalSizeClass == .compact && isShowingDirectory)
                                     ? 10 : 0)
