@@ -26,4 +26,6 @@ class Resources {
             "Library")
 
     static let carcert = Bundle.main.url(forResource: "cacert", withExtension: "pem")!
+
+    static let npm = Bundle.main.url(forResource: "npm", withExtension: "bundle")!
 }

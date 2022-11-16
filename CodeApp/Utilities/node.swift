@@ -243,12 +243,8 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
         return 1
     }
 
-    var npmURL = Bundle.main.url(forResource: "npm", withExtension: "bundle")!
-    npmURL.appendPathComponent("node_modules/.bin/npm")
-
-    let npmPath = npmURL.path
-
-    args = ["node", "--max-old-space-size=180", "--optimize-for-size", npmPath] + args
+    let npmURL = Resources.npm.appendingPathComponent("node_modules/.bin/npm")
+    args = ["node", "--max-old-space-size=180", "--optimize-for-size", npmURL.path] + args
 
     return nodeCmd(args: args)
 }

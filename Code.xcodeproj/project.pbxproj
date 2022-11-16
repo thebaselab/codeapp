@@ -1589,7 +1589,6 @@
 		94C893BB2793D17C00DFBF29 /* libssh2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libssh2.xcframework; sourceTree = "<group>"; };
 		94C893E1279D09D400DFBF29 /* SettingsKeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKeyboardShortcuts.swift; sourceTree = "<group>"; };
 		94C893E5279D0C3000DFBF29 /* shortcutsMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shortcutsMapping.swift; sourceTree = "<group>"; };
-		94C893E827A2859700DFBF29 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		94CF58BD265E4A9E00CB6A4B /* ar.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ar.xcframework; sourceTree = "<group>"; };
 		94CF58BE265E4A9E00CB6A4B /* link.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = link.xcframework; sourceTree = "<group>"; };
 		94CF58BF265E4A9E00CB6A4B /* libLLVM.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libLLVM.xcframework; sourceTree = "<group>"; };
@@ -1706,7 +1705,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		94369AFD25E3B933008419A0 /* extension */ = {
+		94369AFD25E3B933008419A0 /* NodeExtension */ = {
 			isa = PBXGroup;
 			children = (
 				94369B1B25E3EDFC008419A0 /* extension.entitlements */,
@@ -1715,7 +1714,7 @@
 				94369B0025E3B933008419A0 /* ActionRequestHandler.swift */,
 				94369B0425E3B933008419A0 /* Info.plist */,
 			);
-			path = extension;
+			path = NodeExtension;
 			sourceTree = "<group>";
 		};
 		94369B1025E3DDDA008419A0 /* NodeRunner */ = {
@@ -1750,20 +1749,18 @@
 			children = (
 				94FF338728437438003DE5DD /* Fonts */,
 				94B99D9527D4A622005B5E3A /* Packages */,
-				94C893E727A2856700DFBF29 /* ci_scripts */,
 				94A4438225A389FF006643FF /* README.md */,
 				94F5270E25A37E8D00337306 /* .gitignore */,
 				94A56854257CEBC8008A6530 /* Code App.entitlements */,
 				948D11FF2583F20C008F877A /* commandDictionary.plist */,
 				948D11FE2583F20C008F877A /* extraCommandsDictionary.plist */,
 				94B3D5D525F776A900C4F2B1 /* cacert.pem */,
-				94CF58DE265E51B100CB6A4B /* ClangLib */,
-				94B3D6DD25F77AFE00C4F2B1 /* Library */,
 				94127C3F280335C8008C7F82 /* Themes */,
 				94B3D55125F776A900C4F2B1 /* Resources */,
+				9FD5BCF12924A4C300F20C4B /* LanguageResources */,
 				944EEBF22563C381009D77FE /* CodeApp */,
 				9F046C3729223CC000BDE4E9 /* Extensions */,
-				94369AFD25E3B933008419A0 /* extension */,
+				94369AFD25E3B933008419A0 /* NodeExtension */,
 				944EEBF12563C381009D77FE /* Products */,
 				24509F1455D67D501EFBD28C /* Frameworks */,
 			);
@@ -2297,14 +2294,6 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
-		94C893E727A2856700DFBF29 /* ci_scripts */ = {
-			isa = PBXGroup;
-			children = (
-				94C893E827A2859700DFBF29 /* ci_post_clone.sh */,
-			);
-			path = ci_scripts;
-			sourceTree = "<group>";
-		};
 		94CB91AA2802A885002EAC51 /* FileSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -2525,6 +2514,15 @@
 				9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */,
 			);
 			path = TerminalService;
+			sourceTree = "<group>";
+		};
+		9FD5BCF12924A4C300F20C4B /* LanguageResources */ = {
+			isa = PBXGroup;
+			children = (
+				94CF58DE265E51B100CB6A4B /* ClangLib */,
+				94B3D6DD25F77AFE00C4F2B1 /* Library */,
+			);
+			path = LanguageResources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3094,7 +3092,7 @@
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/CodeUI-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/CodeUI-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3140,7 +3138,7 @@
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/CodeUI-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/CodeUI-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3175,7 +3173,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "extension/NodeRunner/extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "NodeExtension/NodeRunner/extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3210,7 +3208,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore thebaselab.VS-Code.extension";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "extension/NodeRunner/extension-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "NodeExtension/NodeRunner/extension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3372,7 +3370,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/Code-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/Code-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3418,7 +3416,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore thebaselab.VS-Code";
 				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/HelperFunctions/Code-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/Code-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
