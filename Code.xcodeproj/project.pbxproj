@@ -3157,7 +3157,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NodeExtension/extension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 87;
@@ -3193,7 +3193,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NodeExtension/extension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 87;
@@ -3204,7 +3204,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/NodeJS",
 				);
-				INFOPLIST_FILE = extension/Info.plist;
+				INFOPLIST_FILE = NodeExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
