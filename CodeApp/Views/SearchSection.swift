@@ -18,6 +18,7 @@ struct SearchSection: View {
         Section(
             header:
                 Text("Search", comment: "")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             SearchBar(
                 text: $App.textSearchManager.searchTerm,

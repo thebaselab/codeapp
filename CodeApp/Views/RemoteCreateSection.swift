@@ -107,7 +107,11 @@ struct RemoteCreateSection: View {
     }
 
     var body: some View {
-        Section(header: Text("New remote")) {
+        Section(
+            header:
+                Text("New remote")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+        ) {
             Group {
                 HStack {
                     Image(systemName: "rectangle.connected.to.line.below")

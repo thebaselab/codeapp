@@ -25,9 +25,7 @@ struct SearchResultsSection: View {
                 HStack {
                     Text("Results")
                     Text(" " + App.textSearchManager.message)
-                        .foregroundColor(.gray)
-                        .font(.system(size: 12, weight: .light))
-                }
+                }.foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             if let mainFolderUrl = URL(string: App.workSpaceStorage.currentDirectory.url) {
                 ForEach(Array(App.textSearchManager.results.keys.sorted()), id: \.self) {

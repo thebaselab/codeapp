@@ -15,7 +15,11 @@ struct RemoteListSection: View {
     let onConnectToHostWithCredentials: (RemoteHost, URLCredential) async throws -> Void
 
     var body: some View {
-        Section(header: Text("Remotes")) {
+        Section(
+            header:
+                Text("Remotes")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+        ) {
             if hosts.isEmpty {
                 DescriptionText("You don't have any saved remote.")
             }

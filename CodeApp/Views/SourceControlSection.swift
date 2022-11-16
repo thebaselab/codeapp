@@ -78,6 +78,7 @@ private struct MainSection: View {
         Section(
             header:
                 Text("Source Control")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             ZStack(alignment: .leading) {
                 if App.commitMessage.isEmpty {
@@ -189,6 +190,7 @@ private struct WorkingChangesSection: View {
         Section(
             header:
                 Text("Changes")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             if App.workingResources.isEmpty {
                 DescriptionText("No changes are made in the working directory.")
@@ -220,7 +222,8 @@ private struct StagedChangesSection: View {
     var body: some View {
         Section(
             header:
-                Text("Staged Changes", comment: "")
+                Text("Staged Changes")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             ForEach(Array(App.indexedResources.keys), id: \.self) { value in
                 SourceControlEntry(

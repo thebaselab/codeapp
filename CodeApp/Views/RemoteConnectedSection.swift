@@ -12,7 +12,11 @@ struct RemoteConnectedSection: View {
     @EnvironmentObject var App: MainApp
 
     var body: some View {
-        Section("Current Remote") {
+        Section(
+            header:
+                Text("Current Remote")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+        ) {
             DescriptionText("Connected to \(App.workSpaceStorage.remoteHost ?? "server.")")
 
             if let fingerPrint = App.workSpaceStorage.remoteFingerprint {

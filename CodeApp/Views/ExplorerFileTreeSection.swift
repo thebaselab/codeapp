@@ -71,7 +71,7 @@ struct ExplorerFileTreeSection: View {
                     App.workSpaceStorage.currentDirectory.name.replacingOccurrences(
                         of: "{default}", with: " "
                     ).removingPercentEncoding!
-                )
+                ).foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             HierarchyList(
                 data: foldersWithFilter(

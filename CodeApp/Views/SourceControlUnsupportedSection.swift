@@ -12,6 +12,7 @@ struct SourceControlUnsupportedSection: View {
         Section(
             header:
                 Text("Source Control")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             DescriptionText("The current workspace does not support source control.")
         }

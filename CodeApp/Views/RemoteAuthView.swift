@@ -17,7 +17,11 @@ struct RemoteAuthView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Credentials for \(host.url)")) {
+            Section(
+                header:
+                    Text("Credentials for \(host.url)")
+                    .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+            ) {
                 TextField("Username", text: $username)
                     .textContentType(.username)
                     .disableAutocorrection(true)

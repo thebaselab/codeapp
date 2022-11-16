@@ -18,6 +18,7 @@ struct SourceControlCloneSection: View {
         Section(
             header:
                 Text("Clone Repository")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
 
             if App.searchManager.errorMessage != "" {

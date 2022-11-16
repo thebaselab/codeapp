@@ -12,6 +12,7 @@ struct SearchUnsupportedSection: View {
         Section(
             header:
                 Text("Search")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             DescriptionText("The current workspace does not support global search.")
         }

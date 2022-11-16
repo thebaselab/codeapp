@@ -18,6 +18,7 @@ struct ExplorerEditorListSection: View {
         Section(
             header:
                 Text("Open Editors")
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             if App.editors.isEmpty {
                 SideBarButton("New File") {
