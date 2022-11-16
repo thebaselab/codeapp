@@ -21,6 +21,10 @@ struct MainScene: View {
             .onAppear {
                 extensionManager.initializeExtensions(app: App)
             }
+            .onOpenURL { url in
+                _ = url.startAccessingSecurityScopedResource()
+                App.openEditor(urlString: url.standardizedFileURL.absoluteString, type: .file)
+            }
     }
 }
 

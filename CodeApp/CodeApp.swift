@@ -368,19 +368,6 @@ struct CodeApp: App {
                 .ignoresSafeArea(.container, edges: .bottom)
                 .preferredColorScheme(colorScheme == 1 ? .dark : colorScheme == 2 ? .light : .none)
                 .environmentObject(AppStore)
-            //                .onOpenURL { url in
-            //                    _ = url.startAccessingSecurityScopedResource()
-            //                    try? FileManager.default.startDownloadingUbiquitousItem(at: url)
-            //                    if isEditorInited {
-            //                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            //                            App.openEditor(
-            //                                urlString: url.standardizedFileURL.absoluteString, type: .file)
-            //                        }
-            //                    } else {
-            //                        App.urlQueue.append(url)
-            //                    }
-            //                }
-
         }
     }
 }

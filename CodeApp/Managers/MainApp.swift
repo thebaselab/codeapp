@@ -859,6 +859,11 @@ class MainApp: ObservableObject {
 
         func newEditor(content: String, encoding: String.Encoding) {
 
+            guard monacoInstance.monacoWebView.isEditorInited else {
+                self.urlQueue.append(url)
+                return
+            }
+
             // Add a new editor
             let newEditor = EditorInstance(
                 url: url.absoluteString, content: content, type: .file, encoding: encoding
