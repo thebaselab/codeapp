@@ -26,7 +26,7 @@ private struct PanelCodeMarkersSection: View {
         Group {
             if App.problems.isEmpty {
                 Text("No problems detected in the workspace.")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             } else {
                 ScrollView {
                     VStack(alignment: .leading) {
