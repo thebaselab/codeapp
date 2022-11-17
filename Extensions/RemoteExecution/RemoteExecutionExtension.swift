@@ -50,24 +50,11 @@ class RemoteExecutionExtension: CodeAppExtension {
 
 private struct InputView: View {
     @EnvironmentObject var manager: CloudCodeExecutionManager
-
+    
     var body: some View {
-        ZStack(alignment: .leading) {
 
-            if manager.stdin.isEmpty {
-                VStack {
-                    Text("Program input..")
-                        .font(.custom("Menlo", size: 13, relativeTo: .footnote))
-                        .foregroundColor(.gray)
-                    Spacer()
-                }
-            }
-
-            TextEditor(text: $manager.stdin)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .font(.custom("Menlo", size: 13, relativeTo: .footnote))
-        }
+        TextEditorWithPlaceholder.init(placeholder: "Program input...", text: $manager.stdin)
+        
     }
 }
 

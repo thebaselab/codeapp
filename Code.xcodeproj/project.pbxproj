@@ -687,6 +687,8 @@
 		9FD5BCED292495DF00F20C4B /* DefaultUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */; };
 		9FD5BCEF29249F0200F20C4B /* WebViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */; };
 		9FD5BCF029249F0200F20C4B /* WebViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */; };
+		FFD081B82925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
+		FFD081B92925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1645,6 +1647,7 @@
 		9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalExtension.swift; sourceTree = "<group>"; };
 		9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUIState.swift; sourceTree = "<group>"; };
 		9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewBase.swift; sourceTree = "<group>"; };
+		FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorWithPlaceholder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2428,6 +2431,7 @@
 				94A77801257B960A008FE7B2 /* NewFileView.swift */,
 				94A77822257BC7E5008FE7B2 /* DirectoryPickerView.swift */,
 				94A77828257BC951008FE7B2 /* DocumentPickerView.swift */,
+				FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2826,6 +2830,7 @@
 				94196964280316C7008AAEB2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				9F046C3E29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */,
+				FFD081B92925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */,
 				94196965280316C7008AAEB2 /* String+toCString.swift in Sources */,
 				9F3C2DF8291CCE9A00BFF14C /* Remote.swift in Sources */,
 				94196967280316C7008AAEB2 /* Executor.swift in Sources */,
@@ -2964,6 +2969,7 @@
 				94A77819257BC332008FE7B2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3371284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				9F046C3D29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */,
+				FFD081B82925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */,
 				949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */,
 				9F3C2DF7291CCE9A00BFF14C /* Remote.swift in Sources */,
 				948D12222583F2A5008F877A /* Executor.swift in Sources */,
