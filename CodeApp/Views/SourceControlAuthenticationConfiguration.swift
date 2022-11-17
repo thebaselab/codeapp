@@ -13,6 +13,9 @@ struct SourceControlAuthenticationConfiguration: View {
 
     @State var username: String
     @State var password: String
+    @State var isGitHubDocumentationPresented: Bool = false
+    @State var isGitLabDocumentationPresented: Bool = false
+
     @Environment(\.presentationMode) var presentationMode
 
     init() {
@@ -33,18 +36,38 @@ struct SourceControlAuthenticationConfiguration: View {
             Form {
                 Section(
                     header: Text("Remote Credentials"),
-                    footer: Text("credentials.note")
+                    footer: VStack(alignment: .leading) {
+
+                        Text("credentials.note")
+                            .padding(.bottom, 4)
+
+                        Button(action: {
+                            isGitHubDocumentationPresented.toggle()
+                        }) {
+                            Text("GitHub")
+                                .font(.footnote)
+                        }
+                        Button(action: {
+                            isGitLabDocumentationPresented.toggle()
+                        }) {
+                            Text("GitLab")
+                                .font(.footnote)
+                        }
+                    }
+
                 ) {
                     TextField("User Name", text: $username)
                         .textContentType(.name)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
-                    SecureField("Password / Personal Access Token", text: $password)
+                    SecureField("source_control.pat", text: $password)
                         .textContentType(.password)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
+
                 }
             }
+
         }.navigationBarTitle("Authentication", displayMode: .inline)
             .background(Color(.systemGroupedBackground))
             .navigationBarItems(
@@ -60,6 +83,22 @@ struct SourceControlAuthenticationConfiguration: View {
             .onChange(of: password) { value in
                 KeychainWrapper.standard.set(value, forKey: "git-password")
                 App.workSpaceStorage.gitServiceProvider?.auth(name: username, password: value)
+            }
+            .sheet(isPresented: $isGitHubDocumentationPresented) {
+                SafariView(
+                    url: URL(
+                        string:
+                            "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic"
+                    )!)
+
+            }
+            .sheet(isPresented: $isGitLabDocumentationPresented) {
+                SafariView(
+                    url: URL(
+                        string:
+                            "https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html"
+                    )!)
+
             }
 
     }

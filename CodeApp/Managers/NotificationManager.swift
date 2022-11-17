@@ -13,12 +13,13 @@ class NotificationManager: ObservableObject {
 
     func postProgressNotification(title: String, progress: Progress) {
         let title = NSLocalizedString(title, comment: "")
-        notifications.append(
-            NotificationEntry.init(
-                data: NotificationData.init(
-                    title: title, progress: progress, level: .info, style: .progress)))
+        DispatchQueue.main.async {
+            self.notifications.append(
+                NotificationEntry.init(
+                    data: NotificationData.init(
+                        title: title, progress: progress, level: .info, style: .progress)))
+        }
     }
-
     func postActionNotification(
         title: String, level: NotificationData.Level, primary: @escaping (() -> Void),
         primaryTitle: String, source: String
@@ -26,11 +27,14 @@ class NotificationManager: ObservableObject {
         let title = NSLocalizedString(title, comment: "")
         let primaryTitle = NSLocalizedString(primaryTitle, comment: "")
         let source = NSLocalizedString(source, comment: "")
-        notifications.append(
-            NotificationEntry.init(
-                data: NotificationData.init(
-                    title: title, source: source, level: level, style: .action,
-                    primaryAction: primary, primaryTitle: primaryTitle)))
+        DispatchQueue.main.async {
+            self.notifications.append(
+                NotificationEntry.init(
+                    data: NotificationData.init(
+                        title: title, source: source, level: level, style: .action,
+                        primaryAction: primary, primaryTitle: primaryTitle)))
+        }
+
     }
 
     func withAsyncNotification(

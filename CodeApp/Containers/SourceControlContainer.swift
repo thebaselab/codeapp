@@ -11,7 +11,7 @@ import SwiftUI
 struct SourceControlContainer: View {
 
     @EnvironmentObject var App: MainApp
-
+    @State var showsPrompt = false
     func onInitializeRepository() async throws {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
@@ -72,8 +72,21 @@ struct SourceControlContainer: View {
         return try await withCheckedThrowingContinuation { continuation in
             serviceProvider.push(
                 error: {
-                    App.notificationManager.showErrorMessage(
-                        $0.localizedDescription)
+                    if $0.code == GitErrorCode.GIT_EAUTH.rawValue {
+                        App.notificationManager.postActionNotification(
+                            title:
+                                "Authentication failed: You might need to configure your git credentials.",
+                            level: .error,
+                            primary: {
+
+                                showsPrompt = true
+
+                            }, primaryTitle: "Configure", source: "Source Control")
+                    } else {
+                        App.notificationManager.showErrorMessage(
+                            $0.localizedDescription)
+                    }
+
                     continuation.resume(throwing: $0)
                 }, remote: remote.name, progress: progress
             ) {
@@ -165,8 +178,21 @@ struct SourceControlContainer: View {
             serviceProvider.clone(
                 from: gitURL, to: dirURL, progress: progress,
                 error: {
-                    App.notificationManager.showErrorMessage(
-                        "Clone error: \($0.localizedDescription)")
+                    if $0.localizedDescription
+                        == "could not find appropriate mechanism for credentials"
+                    {
+                        App.notificationManager.postActionNotification(
+                            title:
+                                "Authentication failed: You might need to configure your git credentials.",
+                            level: .error,
+                            primary: {
+                                showsPrompt = true
+                            }, primaryTitle: "Configure",
+                            source: "Source Control")
+                    } else {
+                        App.notificationManager.showErrorMessage(
+                            "Clone error: \($0.localizedDescription)")
+                    }
                     continuation.resume(throwing: $0)
                 }
             ) {
@@ -275,5 +301,10 @@ struct SourceControlContainer: View {
         }
         .environment(\.defaultMinListRowHeight, 10)
         .listStyle(SidebarListStyle())
+        .sheet(
+            isPresented: $showsPrompt,
+            content: {
+                SourceControlAuthenticationConfiguration()
+            })
     }
 }

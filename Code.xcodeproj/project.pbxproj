@@ -689,6 +689,8 @@
 		9FD5BCF029249F0200F20C4B /* WebViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */; };
 		FFD081B82925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
 		FFD081B92925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
+		FFD081BB29260B00001D9373 /* Libgit2Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081BA29260B00001D9373 /* Libgit2Error.swift */; };
+		FFD081BC29260B00001D9373 /* Libgit2Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081BA29260B00001D9373 /* Libgit2Error.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1648,6 +1650,7 @@
 		9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUIState.swift; sourceTree = "<group>"; };
 		9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewBase.swift; sourceTree = "<group>"; };
 		FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorWithPlaceholder.swift; sourceTree = "<group>"; };
+		FFD081BA29260B00001D9373 /* Libgit2Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Libgit2Error.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2453,6 +2456,7 @@
 			children = (
 				9F3C2DF2291CB2B400BFF14C /* RemoteHostError.swift */,
 				9FC03E65291F21BD00DECD1B /* SourceControlError.swift */,
+				FFD081BA29260B00001D9373 /* Libgit2Error.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -2890,6 +2894,7 @@
 				94A046262804A67100182275 /* SourceControlSection.swift in Sources */,
 				9420698928284027007DE671 /* Store.swift in Sources */,
 				94A04608280493C600182275 /* SourceControlCloneSection.swift in Sources */,
+				FFD081BC29260B00001D9373 /* Libgit2Error.swift in Sources */,
 				94A045F82804822400182275 /* RemoteHostCell.swift in Sources */,
 				94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				9F046C332922203E00BDE4E9 /* ToolbarManager.swift in Sources */,
@@ -3029,6 +3034,7 @@
 				94A046252804A67100182275 /* SourceControlSection.swift in Sources */,
 				9420698828284027007DE671 /* Store.swift in Sources */,
 				94A04607280493C600182275 /* SourceControlCloneSection.swift in Sources */,
+				FFD081BB29260B00001D9373 /* Libgit2Error.swift in Sources */,
 				94A045F72804822400182275 /* RemoteHostCell.swift in Sources */,
 				94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				9F046C322922203E00BDE4E9 /* ToolbarManager.swift in Sources */,
@@ -3082,7 +3088,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				DEVELOPMENT_TEAM = Q52FN4887Q;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
@@ -3360,7 +3366,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				DEVELOPMENT_TEAM = Q52FN4887Q;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;

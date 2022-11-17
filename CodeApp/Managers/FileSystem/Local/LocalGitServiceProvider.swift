@@ -773,7 +773,7 @@ class LocalGitServiceProvider: GitServiceProvider {
             }
             guard self.credential != nil else {
                 let _error = NSError(
-                    domain: "", code: 401,
+                    domain: "", code: -16,
                     userInfo: [NSLocalizedDescriptionKey: "Credentials are not configured"])
                 error(_error)
                 return
