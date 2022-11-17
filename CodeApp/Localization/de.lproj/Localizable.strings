@@ -214,7 +214,6 @@
 "You don't have any open editor." = "Sie haben keinen offenen Editor.";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "Dadurch werden Remote-Änderungen in Ihr lokales Repository übertragen und lokale Commits an den Upstream-Zweig weitergeleitet. Konflikte werden von der lokalen Kopie zusammengeführt und überschrieben.";
 "Remote Credentials (For Git pull, push and clone)" = "Remote-Anmeldeinformationen (für Git pull, push und clone)";
-"Password / Personal Access Token" = "Passwort / Personal Access Token";
 "User Name" = "Benutzername";
 "Show hidden files" = "Versteckte Dateien anzeigen";
 "Erase" = "Löschen";
@@ -369,8 +368,10 @@
 "subscription.join" = "Code+ beitreten";
 "terms_of_use" = "Nutzungsbedingungen";
 "code.and.privacy" = "Datenschutz-Bestimmungen";
-"credentials.note" = "Hinweis: Anmeldeinformationen werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben darauf keinen Zugriff.";
+"credentials.note" = "Hinweis: Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.
 
+Sie müssen ein persönliches Zugriffstoken anstelle eines Passworts verwenden, um eine Verbindung zu GitHub herzustellen.
+Befolgen Sie die Schritte im folgenden Link, um eines zu erstellen, wenn Sie noch keins besitzen:";
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
 
@@ -392,3 +393,5 @@
 
 "remote.connecting" = "Verbindung zum Host herstellen";
 "remote.connected" = "Erfolgreich verbunden";
+
+"source_control.pat" = "persönliches Zugangstoken";
