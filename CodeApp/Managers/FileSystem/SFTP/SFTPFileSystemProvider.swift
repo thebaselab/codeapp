@@ -125,12 +125,38 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
     }
 
     func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
+
+        if to.isFileURL {
+            copyItemFromRemoteToLocal(at: at, to: to, completionHandler: completionHandler)
+            return
+        }
+
         queue.async {
             let success = self.session.sftp.copyContents(ofPath: at.path, toFileAtPath: to.path)
             if success {
                 completionHandler(nil)
             } else {
                 completionHandler(WorkSpaceStorage.FSError.Unknown)
+            }
+        }
+    }
+
+    private func copyItemFromRemoteToLocal(
+        at: URL, to: URL, completionHandler: @escaping (Error?) -> Void
+    ) {
+        queue.async {
+            let data = self.session.sftp.contents(atPath: at.path)
+
+            guard let data = data else {
+                completionHandler(WorkSpaceStorage.FSError.Unknown)
+                return
+            }
+
+            do {
+                try data.write(to: to)
+                completionHandler(nil)
+            } catch {
+                completionHandler(error)
             }
         }
     }
