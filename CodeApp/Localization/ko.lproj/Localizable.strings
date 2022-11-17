@@ -384,6 +384,7 @@
 "errors.fs.authentication_failure" = "인증에 실패했습니다.";
 "errors.fs.attempting_to_copy_parent_to_child" = "부모를 자식으로 복사하려고 시도했습니다.";
 "errors.fs.attempting_to_copy_oneself" = "자기 자신을 복사하려고합니다.";
+"errors.fs.already_connecting_to_a_host" = "호스트에 이미 연결 중.";
 
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";

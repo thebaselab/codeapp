@@ -23,39 +23,17 @@ class WorkSpaceStorage: ObservableObject {
     private var fss: [String: FileSystemProvider] = [:]
     private var isConnecting = false
 
-    enum FSError: Error, LocalizedError {
-        case NotImplemented
-        case SchemeNotRegistered
-        case InvalidHost
-        case UnsupportedEncoding
-        case Unknown
-        case ConnectionFailure
-        case AuthFailure
-        case AttemptingToCopyParentToChild
-        case AttemptingToCopyOneself
-
-        public var errorDescription: String? {
-            switch self {
-            case .NotImplemented:
-                return "errors.fs.not_implemented"
-            case .SchemeNotRegistered:
-                return "errors.fs.scheme_not_registered"
-            case .InvalidHost:
-                return "errors.fs.invalid_host"
-            case .UnsupportedEncoding:
-                return "errors.fs.unsupported_encoding"
-            case .Unknown:
-                return "errors.fs.unknown"
-            case .ConnectionFailure:
-                return "errors.fs.connection_failure"
-            case .AuthFailure:
-                return "errors.fs.authentication_failure"
-            case .AttemptingToCopyParentToChild:
-                return "errors.fs.attempting_to_copy_parent_to_child"
-            case .AttemptingToCopyOneself:
-                return "errors.fs.attempting_to_copy_oneself"
-            }
-        }
+    enum FSError: String, LocalizedError {
+        case NotImplemented = "errors.fs.not_implemented"
+        case SchemeNotRegistered = "errors.fs.scheme_not_registered"
+        case InvalidHost = "errors.fs.invalid_host"
+        case UnsupportedEncoding = "errors.fs.unsupported_encoding"
+        case Unknown = "errors.fs.unknown"
+        case ConnectionFailure = "errors.fs.connection_failure"
+        case AuthFailure = "errors.fs.authentication_failure"
+        case AttemptingToCopyParentToChild = "errors.fs.attempting_to_copy_parent_to_child"
+        case AttemptingToCopyOneself = "errors.fs.attempting_to_copy_oneself"
+        case AlreadyConnectingToAHost = "errors.fs.already_connecting_to_a_host"
     }
 
     var remoteConnected: Bool {
@@ -86,6 +64,7 @@ class WorkSpaceStorage: ObservableObject {
         completionHandler: @escaping (Error?) -> Void
     ) {
         if isConnecting {
+            completionHandler(FSError.AlreadyConnectingToAHost)
             return
         }
         isConnecting = true

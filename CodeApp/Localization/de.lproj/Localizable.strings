@@ -384,6 +384,7 @@
 "errors.fs.authentication_failure" = "Authentifizierungsfehler.";
 "errors.fs.attempting_to_copy_parent_to_child" = "Versuch, ein Verzeichnis in sich selbst zu kopieren.";
 "errors.fs.attempting_to_copy_oneself" = "Sie versuchen, sich selbst zu kopieren.";
+"errors.fs.already_connecting_to_a_host" = "Es wird bereits eine Verbindung zu einem Host hergestellt.";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";

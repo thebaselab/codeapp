@@ -407,6 +407,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.fs.authentication_failure" = "身份验证失败。";
 "errors.fs.attempting_to_copy_parent_to_child" = "尝试将父文件夹复制到子文件夹。";
 "errors.fs.attempting_to_copy_oneself" = "尝试复制自己。";
+"errors.fs.already_connecting_to_a_host" = "已经正在连接到主机。";
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";
