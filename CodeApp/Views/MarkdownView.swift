@@ -15,9 +15,7 @@ struct ChangeLogView: View {
     var body: some View {
         NavigationView {
             SimpleMarkDownView(text: NSLocalizedString("Changelog.message", comment: ""))
-                .navigationBarTitle(
-                    NSLocalizedString("Release Notes", comment: ""), displayMode: .inline
-                )
+                .navigationBarTitle(NSLocalizedString("Release Notes", comment: ""), displayMode: .inline)
                 .toolbar {
                     Button(
                         action: { self.presentationMode.wrappedValue.dismiss() }) {
