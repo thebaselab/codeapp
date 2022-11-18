@@ -35,7 +35,7 @@ struct SourceControlAuthenticationConfiguration: View {
         VStack {
             Form {
                 Section(
-                    header: Text("Remote Credentials"),
+                    header: Text("source_control.remote_credentials"),
                     footer: VStack(alignment: .leading) {
 
                         Text("credentials.note")

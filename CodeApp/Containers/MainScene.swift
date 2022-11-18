@@ -57,7 +57,7 @@ private struct MainView: View {
 
     let sections: [Int: [String]] = [
         0: ["Files", "doc.on.doc"], 1: ["Search", "magnifyingglass"],
-        3: ["Source Control", "point.topleft.down.curvedto.point.bottomright.up"],
+        3: ["source_control.title", "point.topleft.down.curvedto.point.bottomright.up"],
         4: ["Remotes", "rectangle.connected.to.line.below"],
     ]
 

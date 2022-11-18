@@ -154,10 +154,14 @@ private struct NotificationItemWithButton: View {
     var body: some View {
         NotificationItem(data: data) {
             HStack {
-                Text("Source: \(data.source ?? "")")
-                    .lineLimit(2)
-                    .font(.system(size: 12))
-                    .foregroundColor(Color.gray)
+                Text(
+                    String(
+                        format: NSLocalizedString("notification.source", comment: ""),
+                        (data.source ?? ""))
+                )
+                .lineLimit(2)
+                .font(.system(size: 12))
+                .foregroundColor(Color.gray)
                 Spacer()
                 Group {
                     if data.primaryAction != nil {

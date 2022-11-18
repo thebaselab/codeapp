@@ -213,7 +213,6 @@
 "Synchronize Changes" = "변경 사항 동기화(깃(Git) 풀 및 푸시(Pull & Push))";
 "You don't have any open editor." = "열린 편집기가 없습니다.";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "이는 원격 서버의 변경 사항을 로컬 저장소로 풀(Pull)한 다음에 로컬 커밋(Commit)을 원격 서버로 푸시(Push)합니다. 충돌 사항이 있으면 로컬의 복사본으로 병합(Merge) 및 덮어쓰기를 합니다.";
-"Remote Credentials (For Git pull, push and clone)" = "원격 서버 자격 증명(깃(Git) 풀, 푸시 및 복제(Pull, Push & Clone))";
 "User Name" = "사용자 이름";
 "Show hidden files" = "숨김 파일 표시";
 "Erase" = "지우기";
@@ -223,7 +222,6 @@
 
 "New File" = "새 파일";
 "Open File" = "파일 열기";
-"Open Folder" = "폴더 열기";
 "Open Editors" = "편집기 열기";
 "EXPLORER" = "탐색기";
 "SEARCH" = "검색";
@@ -297,7 +295,6 @@
 "Run Code" = "코드 실행하기";
 "New Folder" = "새 폴더";
 
-"Source Control" = "소스 제어";
 "The folder currently opened doesn't have a git repository." = "현재 열려 있는 폴더는 깃(Git) 저장소가 없습니다.";
 "Example: https://github.com/thebaselab/codeapp.git" = "예: https://github.com/thebaselab/codeapp.git";
 "Initialize Repository" = "저장소 초기화하기";
@@ -306,16 +303,11 @@
 "Keyboard Toolbar" = "키보드 툴바";
 "Always Open In New Tab" = "항상 새 탭에서 열기";
 "Changes" = "변경 사항";
-"There are no staged changes." = "변경 사항이 없습니다.";
 "Message (⌘Enter to commit)" = "메시지(커밋하라면 ⌘Enter)";
 "Staged Changes" = "변경 사항";
-"No changes are made in the working directory" = "작업 디렉토리에 변경 사항이 없습니다.";
+"No changes are made in the working directory." = "작업 디렉토리에 변경 사항이 없습니다.";
 "Git checkout: Uncommitted Changes" = "깃(Git) 체크아웃: 커밋되지 않은 변경 사항";
 "Uncommited changes will be lost. Do you wish to proceed?" = "커밋되지 않은 변경 사항은 사라집니다. 계속하시겠습니까?";
-"Commit message cannot be empty" = "커밋 메시지는 비워둘 수 없습니다.";
-"Commit succeeded" = "커밋 성공";
-"Pushing to remote" = "원격 서버로 푸시";
-"Push succeeded" = "푸시 성공";
 "No changes are made in this file" = "이 파일에는 변경 사항이 없습니다.";
 
 "Smooth Scrolling" = "부드러운 스크롤";
@@ -360,6 +352,11 @@
 "Enable spell check in text files" = "텍스트 파일에서 맞춤법 검사 활성화";
 "Spell checking on content changed" = "변경한 내용에 대해 맞춤법 검사";
 
+"common.configure" = "";
+"common.open_folder" = "폴더 열기";
+
+"notification.source" = "원천: %@";
+
 "subscription.codeplus" = "Code+";
 "subscription.title %@" = "%@에의 12개월";
 "subscription.message" = "모든 사람에게 Code를 제공하고 모든 테마를 잠금 해제하십시오. Code는 오픈 소스로 유지되며 모든 기존 기능은 계속 무료로 사용할 수 있습니다.";
@@ -386,6 +383,11 @@ GitHub에 연결하려면 암호 대신 개인 액세스 토큰을 사용해야 
 "errors.fs.attempting_to_copy_parent_to_child" = "부모를 자식으로 복사하려고 시도했습니다.";
 "errors.fs.attempting_to_copy_oneself" = "자기 자신을 복사하려고합니다.";
 "errors.fs.already_connecting_to_a_host" = "호스트에 이미 연결 중.";
+"errors.source_control.authentication_failed" = "인증 실패: git 자격 증명을 구성해야 할 수 있습니다.";
+"errors.source_control.clone_authentication_failed" = "인증 실패: 리포지토리 URL이 잘못되었거나 git 자격 증명을 구성해야 합니다.";
+"errors.source_control.no_staged_changes" = "변경 사항이 없습니다.";
+"errors.source_control.empty_commit_message" = "커밋 메시지는 비워둘 수 없습니다.";
+"errors.source_control.invalid_url" = "잘못된 URL";
 
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";
@@ -394,4 +396,17 @@ GitHub에 연결하려면 암호 대신 개인 액세스 토큰을 사용해야 
 "remote.connecting" = "호스트에 연결";
 "remote.connected" = "성공적으로 연결됨";
 
+"source_control.title" = "소스 제어";
 "source_control.pat" = "개인 액세스 토큰";
+"source_control.repository_initialized" = "저장소 초기화됨";
+"source_control.commit_succeeded" = "커밋 성공";
+"source_control.uploading_objects" = "개체 업로드";
+"source_control.pushing_to_remote" = "원격 서버로 푸시";
+"source_control.push_succeeded" = "푸시 성공";
+"source_control.fetching_from_origin" = "원점에서 가져오기";
+"source_control.fetch_succeeded" = "가져오기 성공";
+"source_control.clone_succeeded" = "클론 성공";
+"source_control.cloning_into" = "%@에 복제";
+"source_control.error" = "복제 오류: %@";
+"source_control.revert_succeeded" = "되돌리기 성공";
+"source_control.remote_credentials" = "원격 서버 자격 증명";

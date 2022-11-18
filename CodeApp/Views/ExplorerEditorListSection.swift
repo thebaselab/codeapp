@@ -27,7 +27,7 @@ struct ExplorerEditorListSection: View {
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
 
-                SideBarButton("Open Folder") {
+                SideBarButton("common.open_folder") {
                     onPickNewDirectory()
                 }
                 .listRowBackground(Color.clear)
