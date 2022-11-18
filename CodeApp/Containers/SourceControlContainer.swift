@@ -73,7 +73,7 @@ struct SourceControlContainer: View {
         return try await withCheckedThrowingContinuation { continuation in
             serviceProvider.push(
                 error: {
-                    if $0.code == GitErrorCode.GIT_EAUTH.rawValue {
+                    if $0.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
                         App.notificationManager.postActionNotification(
                             title:
                                 "errors.source_control.authentication_failed",
