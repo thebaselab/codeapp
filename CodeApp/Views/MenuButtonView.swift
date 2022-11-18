@@ -42,7 +42,7 @@ struct MenuButtonView<S>: UIViewRepresentable {
                     withConfiguration: UIImage.SymbolConfiguration(
                         pointSize: 12, weight: .regular, scale: .default)), for: .normal)
         }
-        button.tintColor = UIColor(id: "activityBar.foreground")
+        button.tintColor = UIColor(id: "statusBar.foreground")
         button.setTitleColor(button.tintColor, for: .normal)
         button.menu = UIMenu(
             children: options.map { option in
@@ -60,7 +60,9 @@ struct MenuButtonView<S>: UIViewRepresentable {
         return button
     }
 
-    func updateUIView(_ uiView: UIButton, context: Context) {
-        uiView.configuration?.title = title
+    func updateUIView(_ button: UIButton, context: Context) {
+        button.configuration?.title = title
+        button.tintColor = UIColor(Color.init(id: "statusBar.foreground"))
+        button.setTitleColor(button.tintColor, for: .normal)
     }
 }
