@@ -239,7 +239,6 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Synchronize Changes" = "同步远程变更 (Git pull & push)";
 "You don't have any open editor." = "当前没有打开的编辑器。";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "这会将远程更改拉取到本地存储库，然后将本地提交推送到远程分支。冲突将被本地副本合并和覆盖。";
-"Remote Credentials (For Git pull, push and clone)" = "远程凭证（用于 Git pull，push 和 clone）";
 "User Name" = "用户名";
 "Show hidden files" = "显示隐藏文件";
 "Erase" = "清除";
@@ -249,7 +248,6 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "New File" = "新建文件";
 "Open File" = "打开文件";
-"Open Folder" = "打开文件夹";
 "Open Editors" = "打开的编辑器";
 "EXPLORER" = "资源管理器￼￼";
 "SEARCH" = "搜索";
@@ -323,7 +321,6 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Run Code" = "运行代码";
 "New Folder" = "新建文件夹";
 
-"Source Control" = "源码管理";
 "The folder currently opened doesn't have a git repository." = "当前打开的文件夹没有 Git 存储库。";
 "Example: https://github.com/thebaselab/codeapp.git" = "例子: https://github.com/thebaselab/codeapp.git";
 "Initialize Repository" = "初始化存储库";
@@ -332,16 +329,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Keyboard Toolbar" = "键盘工具栏";
 "Always Open In New Tab" = "总是在新标签页中打开";
 "Changes" = "变更";
-"There are no staged changes." = "没有任何缓存变更。";
 "Message (⌘Enter to commit)" = "提交备注 (⌘ + Enter 以提交)";
 "Staged Changes" = "缓存变更";
-"No changes are made in the working directory" = "没有任何未缓存的变更。";
+"No changes are made in the working directory." = "没有任何未缓存的变更。";
 "Git checkout: Uncommitted Changes" = "Git checkout: 未提交的更改";
 "Uncommited changes will be lost. Do you wish to proceed?" = "未提交的更改将丢失。你要继续吗？";
-"Commit message cannot be empty" = "备注不能为空";
-"Commit succeeded" = "提交成功";
-"Pushing to remote" = "推送到远程";
-"Push succeeded" = "推送成功";
 "No changes are made in this file" = "没有任何变更。";
 
 "Smooth Scrolling" = "平滑滚动";
@@ -383,6 +375,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Enable spell check in text files" = "在文本文件中启用拼写检查";
 "Spell checking on content changed" = "在内容改变时检查拼写";
 
+"common.configure" = "配置";
+"common.open_folder" = "打开文件夹";
+
+"notification.source" = "来源: %@";
+
 "subscription.codeplus" = "Code+";
 "subscription.title %@" = "12个月 %@";
 "subscription.message" = "让 Code 面向所有人可用，并解锁所有主题。Code 仍然开源，且所有现存功能都将保持免费可用。";
@@ -393,8 +390,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "code.and.privacy" = "Code 隐私政策";
 "credentials.note" = "注意：凭据存储在您设备的 Secure Enclave 内。我们无权访问它。
 
-您必须使用个人访问令牌而不是密码来连接到 GitHub。
-如果您没有，请按照以下链接中的步骤创建一个：";
+在许多情况下，您需要使用个人访问令牌而不是密码来进行身份验证。 要了解更多：";
 "settings.editor.font" = "编辑器字体";
 "settings.editor.font.reset" = "重置";
 
@@ -409,6 +405,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.fs.attempting_to_copy_parent_to_child" = "尝试将父文件夹复制到子文件夹。";
 "errors.fs.attempting_to_copy_oneself" = "尝试复制自己。";
 "errors.fs.already_connecting_to_a_host" = "已经正在连接到主机。";
+"errors.source_control.authentication_failed" = "身份验证失败：您可能需要配置您的 git 凭据。";
+"errors.source_control.clone_authentication_failed" = "身份验证失败：存储库 url 错误或您需要配置 git 凭据。";
+"errors.source_control.no_staged_changes" = "没有任何缓存变更。";
+"errors.source_control.empty_commit_message" = "备注不能为空";
+"errors.source_control.invalid_url" = "无效的网址";
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";
@@ -417,4 +418,18 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.connecting" = "正在连接到主机";
 "remote.connected" = "连接成功";
 
+"source_control.title" = "源码管理";
 "source_control.pat" = "个人访问令牌";
+"source_control.repository_initialized" = "存储库已初始化";
+"source_control.commit_succeeded" = "提交成功";
+"source_control.uploading_objects" = "上传中";
+"source_control.pushing_to_remote" = "推送中";
+"source_control.push_succeeded" = "推送成功";
+"source_control.fetching_from_origin" = "下载中";
+"source_control.fetch_succeeded" = "下载成功";
+"source_control.clone_succeeded" = "克隆成功";
+"source_control.cloning_into" = "克隆中: %@";
+"source_control.error" = "克隆错误: %@";
+"source_control.revert_succeeded" = "还原成功";
+"source_control.remote_credentials" = "Git 凭证";
+"source_control.setup_your_credentials" = "设置您的 git 凭据（仅提供英文版）";

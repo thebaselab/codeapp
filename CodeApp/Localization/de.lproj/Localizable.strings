@@ -213,7 +213,6 @@
 "Synchronize Changes" = "Änderungen synchronisieren";
 "You don't have any open editor." = "Sie haben keinen offenen Editor.";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "Dadurch werden Remote-Änderungen in Ihr lokales Repository übertragen und lokale Commits an den Upstream-Zweig weitergeleitet. Konflikte werden von der lokalen Kopie zusammengeführt und überschrieben.";
-"Remote Credentials (For Git pull, push and clone)" = "Remote-Anmeldeinformationen (für Git pull, push und clone)";
 "User Name" = "Benutzername";
 "Show hidden files" = "Versteckte Dateien anzeigen";
 "Erase" = "Löschen";
@@ -223,7 +222,6 @@
 
 "New File" = "Neue Datei";
 "Open File" = "Datei öffnen";
-"Open Folder" = "Ordner öffnen";
 "Open Editors" = "Editor öffnen";
 "EXPLORER" = "EXPLORER";
 "SEARCH" = "SUCHEN";
@@ -297,7 +295,6 @@
 "Run Code" = "Code ausführen";
 "New Folder" = "Neuer Ordner";
 
-"Source Control" = "Quellcodeverwaltung";
 "The folder currently opened doesn't have a git repository." = "Der aktuell geöffnete Ordner hat kein Git-Repository.";
 "Example: https://github.com/thebaselab/codeapp.git" = "Beispiel: https://github.com/thebaselab/codeapp.git";
 "Initialize Repository" = "Repository initialisieren";
@@ -306,16 +303,11 @@
 "Keyboard Toolbar" = "Tastatursymbolleiste";
 "Always Open In New Tab" = "Immer in neuem Tab öffnen";
 "Changes" = "Änderungen";
-"There are no staged changes." = "Es gibt keine inszenierten Änderungen.";
 "Message (⌘Enter to commit)" = "Nachricht (⌘Enter zum committen)";
 "Staged Changes" = "Inszenierte Änderungen";
-"No changes are made in the working directory" = "Im Arbeitsverzeichnis werden keine Änderungen vorgenommen";
+"No changes are made in the working directory." = "Im Arbeitsverzeichnis werden keine Änderungen vorgenommen";
 "Git checkout: Uncommitted Changes" = "Git checkout: Uncommitted Changes";
 "Uncommited changes will be lost. Do you wish to proceed?" = "Nicht festgeschriebene Änderungen gehen verloren. Möchten Sie fortfahren?";
-"Commit message cannot be empty" = "Commit-Nachricht darf nicht leer sein";
-"Commit succeeded" = "Commit erfolgreich";
-"Pushing to remote" = "Pushen zu remote";
-"Push succeeded" = "Push erfolgreich";
 "No changes are made in this file" = "In dieser Datei werden keine Änderungen vorgenommen";
 
 "Smooth Scrolling" = "flüssiges Scrollen";
@@ -360,6 +352,11 @@
 "Enable spell check in text files" = "Rechtschreibprüfung in Textdateien aktivieren";
 "Spell checking on content changed" = "Rechtschreibprüfung bei Inhaltänderung";
 
+"common.configure" = "";
+"common.open_folder" = "Ordner öffnen";
+
+"notification.source" = "Quelle: %@";
+
 "subscription.codeplus" = "Code+";
 "subscription.title %@" = "12 Monate für %@";
 "subscription.message" = "Machen Sie Code für alle verfügbar und schalten Sie alle Themen frei. Der Code bleibt Open Source und vorhandene Funktionen bleiben ohne Abonnement verfügbar.";
@@ -370,8 +367,7 @@
 "code.and.privacy" = "Datenschutz-Bestimmungen";
 "credentials.note" = "Hinweis: Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.
 
-Sie müssen ein persönliches Zugriffstoken anstelle eines Passworts verwenden, um eine Verbindung zu GitHub herzustellen.
-Befolgen Sie die Schritte im folgenden Link, um eines zu erstellen, wenn Sie noch keins besitzen:";
+In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffstoken anstelle eines Kennworts verwenden. Um mehr darüber zu erfahren:";
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
 
@@ -386,6 +382,11 @@ Befolgen Sie die Schritte im folgenden Link, um eines zu erstellen, wenn Sie noc
 "errors.fs.attempting_to_copy_parent_to_child" = "Versuch, ein Verzeichnis in sich selbst zu kopieren.";
 "errors.fs.attempting_to_copy_oneself" = "Sie versuchen, sich selbst zu kopieren.";
 "errors.fs.already_connecting_to_a_host" = "Es wird bereits eine Verbindung zu einem Host hergestellt.";
+"errors.source_control.authentication_failed" = "Authentifizierung fehlgeschlagen: Möglicherweise müssen Sie Ihre Git-Anmeldeinformationen konfigurieren.";
+"errors.source_control.clone_authentication_failed" = "Authentifizierung fehlgeschlagen: Entweder ist die Repository-URL falsch oder Sie müssen Ihre Git-Anmeldeinformationen konfigurieren.";
+"errors.source_control.no_staged_changes" = "Es gibt keine inszenierten Änderungen.";
+"errors.source_control.empty_commit_message" = "Commit-Nachricht darf nicht leer sein";
+"errors.source_control.invalid_url" = "ungültige URL";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";
@@ -394,4 +395,18 @@ Befolgen Sie die Schritte im folgenden Link, um eines zu erstellen, wenn Sie noc
 "remote.connecting" = "Verbindung zum Host herstellen";
 "remote.connected" = "Erfolgreich verbunden";
 
+"source_control.title" = "Quellcodeverwaltung";
 "source_control.pat" = "persönliches Zugangstoken";
+"source_control.repository_initialized" = "Repository initialisiert";
+"source_control.commit_succeeded" = "Commit erfolgreich";
+"source_control.uploading_objects" = "Hochladen von Objekten";
+"source_control.pushing_to_remote" = "Pushen zu remote";
+"source_control.push_succeeded" = "Push erfolgreich";
+"source_control.fetching_from_origin" = "Vom Ursprung abrufen";
+"source_control.fetch_succeeded" = "Abruf erfolgreich";
+"source_control.clone_succeeded" = "Klonen war erfolgreich";
+"source_control.cloning_into" = "Klonen in %@";
+"source_control.error" = "Klonfehler: %@";
+"source_control.revert_succeeded" = "Zurücksetzen erfolgreich";
+"source_control.remote_credentials" = "Remote-Anmeldeinformationen";
+"source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";

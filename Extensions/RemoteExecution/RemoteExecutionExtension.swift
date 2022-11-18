@@ -53,7 +53,11 @@ private struct InputView: View {
     
     var body: some View {
 
-        TextEditorWithPlaceholder.init(placeholder: "Program input...", text: $manager.stdin)
+        TextEditorWithPlaceholder(
+            placeholder: "Program input..",
+            text: $manager.stdin,
+            customFont: .custom("Menlo", size: 13, relativeTo: .footnote)
+        )
         
     }
 }

@@ -22,7 +22,7 @@ struct SourceControlContainer: View {
             )
         }) {
             App.notificationManager.showInformationMessage(
-                "Repository initialized")
+                "source_control.repository_initialized")
             App.git_status()
         }
     }
@@ -35,10 +35,10 @@ struct SourceControlContainer: View {
             throw SourceControlError.authorIdentityMissing
         } else if App.gitTracks.isEmpty {
             App.notificationManager.showWarningMessage(
-                "There are no staged changes")
+                "errors.source_control.no_staged_changes")
         } else if App.commitMessage.isEmpty {
             App.notificationManager.showWarningMessage(
-                "Commit message cannot be empty")
+                "errors.source_control.empty_commit_message")
         } else {
             serviceProvider.commit(
                 message: App.commitMessage,
@@ -53,7 +53,7 @@ struct SourceControlContainer: View {
                     App.monacoInstance.invalidateDecorations()
                 }
                 App.notificationManager.showInformationMessage(
-                    "Commit succeeded")
+                    "source_control.commit_succeeded")
             }
         }
     }
@@ -64,24 +64,25 @@ struct SourceControlContainer: View {
         }
 
         let progress = Progress(totalUnitCount: 100)
-        progress.localizedDescription = "Uploading objects"
+        progress.localizedDescription = NSLocalizedString(
+            "source_control.uploading_objects", comment: "")
 
         App.notificationManager.postProgressNotification(
-            title: "Pushing to remote", progress: progress)
+            title: "source_control.pushing_to_remote", progress: progress)
 
         return try await withCheckedThrowingContinuation { continuation in
             serviceProvider.push(
                 error: {
-                    if $0.code == GitErrorCode.GIT_EAUTH.rawValue {
+                    if $0.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
                         App.notificationManager.postActionNotification(
                             title:
-                                "Authentication failed: You might need to configure your git credentials.",
+                                "errors.source_control.authentication_failed",
                             level: .error,
                             primary: {
 
                                 showsPrompt = true
 
-                            }, primaryTitle: "Configure", source: "Source Control")
+                            }, primaryTitle: "common.configure", source: "source_control.title")
                     } else {
                         App.notificationManager.showErrorMessage(
                             $0.localizedDescription)
@@ -91,7 +92,7 @@ struct SourceControlContainer: View {
                 }, remote: remote.name, progress: progress
             ) {
                 App.notificationManager.showInformationMessage(
-                    "Push succeeded")
+                    "source_control.push_succeeded")
                 App.git_status()
 
                 continuation.resume()
@@ -105,7 +106,7 @@ struct SourceControlContainer: View {
         }
 
         App.notificationManager.showInformationMessage(
-            "Fetching from origin")
+            "source_control.fetching_from_origin")
 
         return try await withCheckedThrowingContinuation { continuation in
             serviceProvider.fetch(error: {
@@ -114,7 +115,7 @@ struct SourceControlContainer: View {
                 continuation.resume(throwing: $0)
             }) {
                 App.notificationManager.showInformationMessage(
-                    "Fetch succeeded")
+                    "source_control.fetch_succeeded")
                 App.git_status()
 
                 continuation.resume()
@@ -152,7 +153,7 @@ struct SourceControlContainer: View {
             throw SourceControlError.gitServiceProviderUnavailable
         }
         guard let gitURL = URL(string: urlString) else {
-            App.notificationManager.showErrorMessage("Invalid URL")
+            App.notificationManager.showErrorMessage("errors.source_control.invalid_url")
             throw SourceControlError.invalidURL
         }
 
@@ -171,8 +172,9 @@ struct SourceControlContainer: View {
 
         let progress = Progress(totalUnitCount: 100)
         App.notificationManager.postProgressNotification(
-            title: "Cloning into \(gitURL.absoluteString)",
-            progress: progress)
+            title: "source_control.cloning_into",
+            progress: progress,
+            gitURL.absoluteString)
 
         return try await withCheckedThrowingContinuation { continuation in
             serviceProvider.clone(
@@ -183,24 +185,24 @@ struct SourceControlContainer: View {
                     {
                         App.notificationManager.postActionNotification(
                             title:
-                                "Authentication failed: You might need to configure your git credentials.",
+                                "errors.source_control.clone_authentication_failed",
                             level: .error,
                             primary: {
                                 showsPrompt = true
-                            }, primaryTitle: "Configure",
-                            source: "Source Control")
+                            }, primaryTitle: "common.configure",
+                            source: "source_control.title")
                     } else {
                         App.notificationManager.showErrorMessage(
-                            "Clone error: \($0.localizedDescription)")
+                            "source_control.error", $0.localizedDescription)
                     }
                     continuation.resume(throwing: $0)
                 }
             ) {
                 App.notificationManager.postActionNotification(
-                    title: "Clone succeeded", level: .success,
+                    title: "source_control.clone_succeeded", level: .success,
                     primary: {
                         App.loadFolder(url: dirURL)
-                    }, primaryTitle: "Open Folder", source: repo)
+                    }, primaryTitle: "common.open_folder", source: repo)
                 continuation.resume()
             }
         }
@@ -225,7 +227,7 @@ struct SourceControlContainer: View {
             throw SourceControlError.gitServiceProviderUnavailable
         }
         guard let fileURL = URL(string: urlString) else {
-            App.notificationManager.showErrorMessage("Invalid URL")
+            App.notificationManager.showErrorMessage("errors.source_control.invalid_url")
             throw SourceControlError.invalidURL
         }
 
@@ -256,7 +258,7 @@ struct SourceControlContainer: View {
                         to: fileURL, atomically: true, encoding: .utf8)
                     App.git_status()
                     App.notificationManager.showInformationMessage(
-                        "Revert succeeded")
+                        "source_control.revert_succeeded")
                     continuation.resume()
                 } catch {
                     App.notificationManager.showErrorMessage(
@@ -269,7 +271,7 @@ struct SourceControlContainer: View {
 
     func onShowChangesInDiffEditor(urlString: String) throws {
         guard let fileURL = URL(string: urlString) else {
-            App.notificationManager.showErrorMessage("Invalid URL")
+            App.notificationManager.showErrorMessage("errors.source_control.invalid_url")
             throw SourceControlError.invalidURL
         }
         App.compareWithPrevious(url: fileURL)
@@ -304,7 +306,9 @@ struct SourceControlContainer: View {
         .sheet(
             isPresented: $showsPrompt,
             content: {
-                SourceControlAuthenticationConfiguration()
+                NavigationView {
+                    SourceControlAuthenticationConfiguration()
+                }
             })
     }
 }

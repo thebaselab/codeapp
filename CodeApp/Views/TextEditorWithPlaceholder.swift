@@ -10,28 +10,31 @@ struct TextEditorWithPlaceholder: View {
 
     @Binding var text: String
     @State private var placeholder: String
+    let customFont: Font?
 
-    init(placeholder: String, text: Binding<String>) {
+    init(placeholder: String, text: Binding<String>, customFont: Font? = nil) {
         _text = text
         _placeholder = State(initialValue: placeholder)
+        self.customFont = customFont
     }
 
     var body: some View {
         ZStack {
-            if text == "" {
-                TextEditor(text: $placeholder).font(
-                    .custom("Menlo", size: 13, relativeTo: .footnote)
-                ).foregroundColor(.gray).disabled(true)
+            if text.isEmpty {
+                TextEditor(text: $placeholder)
+                    .foregroundColor(.gray)
+                    .disabled(true)
+                    .if(customFont != nil) {
+                        $0.font(customFont)
+                    }
             }
 
-            TextEditor(text: $text).autocapitalization(.none)
+            TextEditor(text: $text)
+                .autocapitalization(.none)
                 .disableAutocorrection(true)
-                .font(.custom("Menlo", size: 13, relativeTo: .footnote)).onChange(
-                    of: text,
-                    perform: { newValue in
-                        print(newValue)
-
-                    })
+                .if(customFont != nil) {
+                    $0.font(customFont)
+                }
         }
     }
 }

@@ -77,7 +77,7 @@ private struct MainSection: View {
     var body: some View {
         Section(
             header:
-                Text("Source Control")
+                Text("source_control.title")
                 .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             ZStack(alignment: .leading) {
@@ -96,7 +96,7 @@ private struct MainSection: View {
 
             HStack {
                 if App.indexedResources.isEmpty {
-                    Text("There are no staged changes.").foregroundColor(.gray).font(
+                    Text("errors.source_control.no_staged_changes").foregroundColor(.gray).font(
                         .system(size: 12, weight: .light))
                 } else {
                     Text(

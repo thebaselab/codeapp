@@ -242,6 +242,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 > Happy coding from Hong Kong 🇭🇰
 ";
 
+"common.configure" = "Configure";
+"common.open_folder" = "Open Folder";
+
+"notification.source" = "Source: %@";
+
 "subscription.codeplus" = "Code+";
 "subscription.title %@" = "12 months for %@.";
 "subscription.message" = "Make Code available for all and unlock all themes. Code remains open source and existing features remain available without subscription.";
@@ -252,8 +257,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "terms_of_use" = "Terms of Use";
 "credentials.note" = "Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it.
 
-You have to use personal access token instead of password to connect to GitHub. 
-Follow the steps in below link to create one if you don't own one:";
+In many cases, you need to use a personal access token instead of password to authenticate. To know more about this:";
 
 "settings.editor.font" = "Font";
 "settings.editor.font.reset" = "Reset to default";
@@ -269,6 +273,11 @@ Follow the steps in below link to create one if you don't own one:";
 "errors.fs.attempting_to_copy_parent_to_child" = "Source is a parent of the target.";
 "errors.fs.attempting_to_copy_oneself" = "Source has the same path as the parent.";
 "errors.fs.already_connecting_to_a_host" = "Already connecting to a host.";
+"errors.source_control.authentication_failed" = "Authentication failed: You might need to configure your git credentials.";
+"errors.source_control.clone_authentication_failed" = "Authentication failed: Either the repository url is wrong or you need to configure your git credentials.";
+"errors.source_control.no_staged_changes" = "There are no staged changes";
+"errors.source_control.empty_commit_message" = "Commit message cannot be empty";
+"errors.source_control.invalid_url" = "Invalid URL";
 
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";
@@ -278,4 +287,18 @@ Follow the steps in below link to create one if you don't own one:";
 "remote.connecting" = "Connecting to Host";
 "remote.connected" = "Connected successfully";
 
+"source_control.title" = "Source Control";
 "source_control.pat" = "Personal Access Token";
+"source_control.repository_initialized" = "Repository initialized";
+"source_control.commit_succeeded" = "Commit succeeded";
+"source_control.uploading_objects" = "Uploading objects";
+"source_control.pushing_to_remote" = "Pushing to remote";
+"source_control.push_succeeded" = "Push succeeded";
+"source_control.fetching_from_origin" = "Fetching from origin";
+"source_control.fetch_succeeded" = "Fetch succeeded";
+"source_control.clone_succeeded" = "Clone succeeded";
+"source_control.cloning_into" = "Cloning into %@";
+"source_control.error" = "Clone error: %@";
+"source_control.revert_succeeded" = "Revert succeeded";
+"source_control.remote_credentials" = "Remote Credentials";
+"source_control.setup_your_credentials" = "Set up your git credentials";
