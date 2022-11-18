@@ -107,7 +107,7 @@ private struct NotificationItemWtihProgress: View {
                         }
                     )
                     .progressViewStyle(LinearProgressViewStyle())
-            }
+            }.padding(.top, 4)
         }
         .onTapGesture {
             withAnimation {
