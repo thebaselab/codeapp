@@ -11,17 +11,23 @@ import SwiftUI
 
 struct ChangeLogView: View {
     @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
         NavigationView {
             SimpleMarkDownView(text: NSLocalizedString("Changelog.message", comment: ""))
-                .navigationBarTitle(NSLocalizedString("Release Notes", comment: ""))
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(
-                    trailing:
-                        Button(NSLocalizedString("Done", comment: "")) {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
+                .navigationBarTitle(
+                    NSLocalizedString("Release Notes", comment: ""), displayMode: .inline
                 )
+                .toolbar {
+                    Button(
+                        action: { self.presentationMode.wrappedValue.dismiss() }) {
+                            Text(NSLocalizedString("Done", comment: ""))
+                                .foregroundColor(.blue)
+                                .font(.body)
+                        }
+
+                }
+
         }
     }
 }
