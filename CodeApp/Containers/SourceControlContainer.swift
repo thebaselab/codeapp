@@ -306,7 +306,9 @@ struct SourceControlContainer: View {
         .sheet(
             isPresented: $showsPrompt,
             content: {
-                SourceControlAuthenticationConfiguration()
+                NavigationView {
+                    SourceControlAuthenticationConfiguration()
+                }
             })
     }
 }
