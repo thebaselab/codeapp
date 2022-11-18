@@ -180,9 +180,7 @@ struct SourceControlContainer: View {
             serviceProvider.clone(
                 from: gitURL, to: dirURL, progress: progress,
                 error: {
-                    if $0.localizedDescription
-                        == "could not find appropriate mechanism for credentials"
-                    {
+                    if $0.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
                         App.notificationManager.postActionNotification(
                             title:
                                 "errors.source_control.clone_authentication_failed",
