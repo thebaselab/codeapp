@@ -367,8 +367,7 @@
 "code.and.privacy" = "Datenschutz-Bestimmungen";
 "credentials.note" = "Hinweis: Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.
 
-Sie müssen ein persönliches Zugriffstoken anstelle eines Passworts verwenden, um eine Verbindung zu GitHub herzustellen.
-Befolgen Sie die Schritte im folgenden Link, um eines zu erstellen, wenn Sie noch keins besitzen:";
+In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffstoken anstelle eines Kennworts verwenden. Um mehr darüber zu erfahren:";
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
 
@@ -410,3 +409,4 @@ Befolgen Sie die Schritte im folgenden Link, um eines zu erstellen, wenn Sie noc
 "source_control.error" = "Klonfehler: %@";
 "source_control.revert_succeeded" = "Zurücksetzen erfolgreich";
 "source_control.remote_credentials" = "Remote-Anmeldeinformationen";
+"source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";

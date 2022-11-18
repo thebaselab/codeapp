@@ -13,8 +13,7 @@ struct SourceControlAuthenticationConfiguration: View {
 
     @State var username: String
     @State var password: String
-    @State var isGitHubDocumentationPresented: Bool = false
-    @State var isGitLabDocumentationPresented: Bool = false
+    @State var isDocumentationPresented: Bool = false
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -42,15 +41,9 @@ struct SourceControlAuthenticationConfiguration: View {
                             .padding(.bottom, 4)
 
                         Button(action: {
-                            isGitHubDocumentationPresented.toggle()
+                            isDocumentationPresented.toggle()
                         }) {
-                            Text("GitHub")
-                                .font(.footnote)
-                        }
-                        Button(action: {
-                            isGitLabDocumentationPresented.toggle()
-                        }) {
-                            Text("GitLab")
+                            Text("source_control.setup_your_credentials")
                                 .font(.footnote)
                         }
                     }
@@ -84,22 +77,13 @@ struct SourceControlAuthenticationConfiguration: View {
                 KeychainWrapper.standard.set(value, forKey: "git-password")
                 App.workSpaceStorage.gitServiceProvider?.auth(name: username, password: value)
             }
-            .sheet(isPresented: $isGitHubDocumentationPresented) {
+            .sheet(isPresented: $isDocumentationPresented) {
                 SafariView(
                     url: URL(
                         string:
-                            "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic"
+                            "https://code.thebaselab.com/guides/version-control#set-up-your-credentials"
                     )!)
 
             }
-            .sheet(isPresented: $isGitLabDocumentationPresented) {
-                SafariView(
-                    url: URL(
-                        string:
-                            "https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html"
-                    )!)
-
-            }
-
     }
 }
