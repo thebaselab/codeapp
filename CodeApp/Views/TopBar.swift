@@ -41,7 +41,9 @@ struct TopBar: View {
             Spacer()
 
             ForEach(toolBarManager.items) { item in
-                ToolbarItemView(item: item)
+                if item.shouldDisplay() {
+                    ToolbarItemView(item: item)
+                }
             }
 
             if App.branch != "" && App.activeEditor?.type == .file {
@@ -165,27 +167,7 @@ struct TopBar: View {
                 }
 
                 #if DEBUG
-                    Section("UI Debug Menu") {
-                        Button("Regular Notification") {
-                            App.notificationManager.showErrorMessage("Error")
-                        }
-                        Button("Progress Notification") {
-                            App.notificationManager.postProgressNotification(
-                                title: "Progress", progress: Progress())
-                        }
-                        Button("Action Notification") {
-                            App.notificationManager.postActionNotification(
-                                title: "Error", level: .error, primary: {},
-                                primaryTitle: "primaryTitle", source: "source")
-                        }
-                        Button("Async Notification") {
-                            App.notificationManager.showAsyncNotification(
-                                title: "Task Name",
-                                task: {
-                                    try? await Task.sleep(nanoseconds: 10 * 1_000_000_000)
-                                })
-                        }
-                    }
+                    DebugMenu()
                 #endif
 
             } label: {
@@ -214,11 +196,10 @@ private struct ToolbarItemView: View {
 
     var body: some View {
         Button(action: {
-            if item.shouldFocusPanelOnTap {
+            if let panelToFocus = item.panelToFocusOnTap {
                 showsPanel = true
-                currentPanel = item.extenionID
+                currentPanel = panelToFocus
             }
-
             item.onClick()
         }) {
             Image(systemName: item.icon)
