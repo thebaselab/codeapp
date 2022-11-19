@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private let EXTENSION_ID = "EXECUTION"
+private let EXTENSION_ID = "REMOTE_EXECUTION"
 
 class RemoteExecutionExtension: CodeAppExtension {
     let storage = CloudCodeExecutionManager()
@@ -42,7 +42,11 @@ class RemoteExecutionExtension: CodeAppExtension {
                 self.storage.runCode(directoryURL: url, source: editor.content, language: languageCode)
             },
             shortCut: .init("r", modifiers: [.command]),
-            shouldFocusPanelOnTap: true
+            panelToFocusOnTap: EXTENSION_ID,
+            shouldDisplay: {
+                let id = app.activeEditor?.languageIdentifier
+                return languageList.map{$0.value[1]}.contains(id)
+            }
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
     }
@@ -122,11 +126,6 @@ private struct PanelRemoteExecutionToolbarView: View {
 }
 
 let languageList = [
-    0: ["Python (3.9.2)", "py"],
-    1: ["JavaScript (Node.js 16.14.2)", "js"],
-    2: ["C (Clang 13.0.0)", "c"],
-    3: ["C++ (Clang 13.0.0)", "cpp"],
-    4: ["PHP (8.0.8)", "php"],
     62: ["Java (OpenJDK 13.0.1)", "java"],
     45: ["Assembly (NASM 2.14.02)", "asm"],
     //                    46:["Bash (5.0.0)", "sh"],

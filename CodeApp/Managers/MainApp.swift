@@ -30,7 +30,6 @@ class MainApp: ObservableObject {
     @Published var compilerCode: Int = 71
 
     @Published var notificationManager = NotificationManager()
-    @Published var compileManager = CloudCodeExecutionManager()
     @Published var searchManager = GitHubSearchManager()
     @Published var textSearchManager = TextSearchManager()
     @Published var workSpaceStorage: WorkSpaceStorage
@@ -154,9 +153,6 @@ class MainApp: ObservableObject {
         loadRepository(url: rootDir)
 
         NotificationCancellable = notificationManager.objectWillChange.sink { [weak self] (_) in
-            self?.objectWillChange.send()
-        }
-        CompilerCancellable = compileManager.objectWillChange.sink { [weak self] (_) in
             self?.objectWillChange.send()
         }
         searchCancellable = searchManager.objectWillChange.sink { [weak self] (_) in
@@ -327,92 +323,6 @@ class MainApp: ObservableObject {
             }
             self.closeEditor(url: url.absoluteString, type: EditorInstance.tabType.file)
             self.git_status()
-        }
-    }
-
-    func runCode(url: String, lang: Int) {
-        saveCurrentFile()
-        if lang < 10 {
-            switch compilerCode {
-            case 0:
-                let cmd =
-                    "python3 -u \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
-                if compilerShowPath {
-                    terminalInstance.executeScript("localEcho.println(`\(cmd)`);readLine('');")
-                } else {
-                    terminalInstance.executeScript("localEcho.println(`python`);readLine('');")
-                }
-                terminalInstance.executeScript(
-                    "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})"
-                )
-            case 1:
-                let cmd =
-                    "node \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
-                if compilerShowPath {
-                    terminalInstance.executeScript("localEcho.println(`\(cmd)`);")
-                } else {
-                    terminalInstance.executeScript("localEcho.println(`node`);")
-                }
-                terminalInstance.executeScript(
-                    "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})"
-                )
-            case 2:
-                if javascriptRunning {
-                    notificationManager.showErrorMessage("errors.script_already_running")
-                    return
-                }
-                let cmd =
-                    "clang \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
-                if compilerShowPath {
-                    terminalInstance.executeScript("localEcho.println(`\(cmd)`);readLine('');")
-                } else {
-                    terminalInstance.executeScript("localEcho.println(`clang`);readLine('');")
-                }
-                terminalInstance.executor?.evaluateCommands([
-                    "clang \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))",
-                    "wasm a.out",
-                ])
-            case 3:
-                if javascriptRunning {
-                    notificationManager.showErrorMessage("errors.script_already_running")
-                    return
-                }
-                let cmd =
-                    "clang++ \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#)) && wasm a.out"
-                if compilerShowPath {
-                    terminalInstance.executeScript("localEcho.println(`\(cmd)`);readLine('');")
-                } else {
-                    terminalInstance.executeScript("localEcho.println(`clang++`);readLine('');")
-                }
-                terminalInstance.executor?.evaluateCommands([
-                    "clang++ \(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))",
-                    "wasm a.out",
-                ])
-            case 4:
-                let cmd =
-                    "php \"\(URL(string: activeEditor!.url)!.path.replacingOccurrences(of: " ", with: #"\ "#))\""
-                if compilerShowPath {
-                    terminalInstance.executeScript("localEcho.println(`\(cmd)`);")
-                } else {
-                    terminalInstance.executeScript("localEcho.println(`php`);")
-                }
-                terminalInstance.executeScript(
-                    "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(cmd)`})"
-                )
-            default:
-                return
-            }
-        } else {
-            if let link = URL(string: url) {
-                readURL(url: url) { result, error in
-                    guard let result = result else {
-                        return
-                    }
-                    self.compileManager.runCode(
-                        directoryURL: link, source: result.0, language: lang)
-                }
-
-            }
         }
     }
 

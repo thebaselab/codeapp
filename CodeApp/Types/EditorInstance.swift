@@ -34,6 +34,9 @@ class EditorInstance: Identifiable, Equatable, Hashable, ObservableObject {
 
     var fileWatch: FolderMonitor?
     var isDeleted = false
+    var languageIdentifier: String {
+        url.components(separatedBy: ".").last ?? ""
+    }
 
     init(
         url: String, content: String, type: tabType, encoding: String.Encoding = .utf8,

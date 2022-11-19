@@ -14,6 +14,7 @@ class ExtensionManager: ObservableObject {
     private var extensions: [CodeAppExtension] = [
         MonacoIntellisenseExtension(),
         RemoteExecutionExtension(),
+        LocalExecutionExtension(),
         TerminalExtension(),
     ]
 

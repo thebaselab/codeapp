@@ -13,5 +13,6 @@ struct ToolbarItem: Identifiable {
     var icon: String
     var onClick: () -> Void
     var shortCut: KeyboardShortcut?
-    var shouldFocusPanelOnTap: Bool = false
+    var panelToFocusOnTap: String?
+    var shouldDisplay: () -> Bool
 }

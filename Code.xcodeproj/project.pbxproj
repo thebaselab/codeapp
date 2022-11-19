@@ -687,6 +687,10 @@
 		9FD5BCED292495DF00F20C4B /* DefaultUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */; };
 		9FD5BCEF29249F0200F20C4B /* WebViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */; };
 		9FD5BCF029249F0200F20C4B /* WebViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */; };
+		9FD5BCF42927859600F20C4B /* DebugMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCF32927859600F20C4B /* DebugMenu.swift */; };
+		9FD5BCF52927859600F20C4B /* DebugMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCF32927859600F20C4B /* DebugMenu.swift */; };
+		9FD5BCFB2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCFA2928E02300F20C4B /* LocalExecutionExtension.swift */; };
+		9FD5BCFC2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCFA2928E02300F20C4B /* LocalExecutionExtension.swift */; };
 		FFD081B82925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
 		FFD081B92925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
 		FFD081BB29260B00001D9373 /* Libgit2Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081BA29260B00001D9373 /* Libgit2Error.swift */; };
@@ -1649,6 +1653,8 @@
 		9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalExtension.swift; sourceTree = "<group>"; };
 		9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUIState.swift; sourceTree = "<group>"; };
 		9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewBase.swift; sourceTree = "<group>"; };
+		9FD5BCF32927859600F20C4B /* DebugMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenu.swift; sourceTree = "<group>"; };
+		9FD5BCFA2928E02300F20C4B /* LocalExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalExecutionExtension.swift; sourceTree = "<group>"; };
 		FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorWithPlaceholder.swift; sourceTree = "<group>"; };
 		FFD081BA29260B00001D9373 /* Libgit2Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Libgit2Error.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2351,6 +2357,7 @@
 		9F046C3729223CC000BDE4E9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9FD5BCF92928E01400F20C4B /* LocalExecution */,
 				9FD5BCE729238B5800F20C4B /* TerminalService */,
 				9FD5BCE12923872800F20C4B /* MonacoLanguageService */,
 				9F046C3829223CCF00BDE4E9 /* RemoteExecution */,
@@ -2435,6 +2442,7 @@
 				94A77822257BC7E5008FE7B2 /* DirectoryPickerView.swift */,
 				94A77828257BC951008FE7B2 /* DocumentPickerView.swift */,
 				FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */,
+				9FD5BCF32927859600F20C4B /* DebugMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2539,6 +2547,14 @@
 				94A4438F25A44CDB006643FF /* monaco-textmate.bundle */,
 			);
 			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		9FD5BCF92928E01400F20C4B /* LocalExecution */ = {
+			isa = PBXGroup;
+			children = (
+				9FD5BCFA2928E02300F20C4B /* LocalExecutionExtension.swift */,
+			);
+			path = LocalExecution;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2818,6 +2834,7 @@
 				9419695A280316C7008AAEB2 /* ArchiveDir.swift in Sources */,
 				9419695B280316C7008AAEB2 /* MarkdownView.swift in Sources */,
 				9F046C3629222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
+				9FD5BCFC2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
 				9419695C280316C7008AAEB2 /* MonacoEditor.swift in Sources */,
 				942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				9F3C2DC92918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
@@ -2865,6 +2882,7 @@
 				94196978280316C7008AAEB2 /* FileIcon.swift in Sources */,
 				94196979280316C7008AAEB2 /* ViewRepresentable.swift in Sources */,
 				9419697A280316C7008AAEB2 /* SourceControlEntry.swift in Sources */,
+				9FD5BCF52927859600F20C4B /* DebugMenu.swift in Sources */,
 				9419697B280316C7008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
 				9419697C280316C7008AAEB2 /* View+cornerRadius.swift in Sources */,
 				9419697E280316C7008AAEB2 /* MonacoIntellisenseExtension.swift in Sources */,
@@ -2958,6 +2976,7 @@
 				94A7781E257BC473008FE7B2 /* ArchiveDir.swift in Sources */,
 				94A5682B257CBDE4008A6530 /* MarkdownView.swift in Sources */,
 				9F046C3529222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
+				9FD5BCFB2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
 				94A777AC257B66CF008FE7B2 /* MonacoEditor.swift in Sources */,
 				942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
@@ -3005,6 +3024,7 @@
 				94A77792257AB805008FE7B2 /* FileIcon.swift in Sources */,
 				94801F95266FBC3500B29D80 /* ViewRepresentable.swift in Sources */,
 				94FC220B257F7D2A00B85D1B /* SourceControlEntry.swift in Sources */,
+				9FD5BCF42927859600F20C4B /* DebugMenu.swift in Sources */,
 				941969292802AB64008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
 				94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */,
 				949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */,
