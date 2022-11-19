@@ -219,7 +219,7 @@ struct NewFileView: View {
                                     Text("Python").onTapGesture {
                                         self.loadNewFile(lang: 0)
                                     }
-                                    Text("Javascript").onTapGesture {
+                                    Text("JavaScript").onTapGesture {
                                         self.loadNewFile(lang: 1)
                                     }
                                     Text("C").onTapGesture {
