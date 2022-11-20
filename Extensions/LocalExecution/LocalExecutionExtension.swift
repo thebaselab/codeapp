@@ -13,7 +13,7 @@ private let LOCAL_EXECUTION_COMMANDS = [
     "py": "python3 -u {url}",
     "js": "node {url}",
     "c": "clang {url} && wasm a.out",
-    "c++": "clang++ {url} && wasm a.out",
+    "cpp": "clang++ {url} && wasm a.out",
     "php": "php {url}"
 ]
 
