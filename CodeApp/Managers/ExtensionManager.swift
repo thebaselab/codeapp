@@ -10,6 +10,7 @@ import Foundation
 class ExtensionManager: ObservableObject {
     @Published var panelManager = PanelManager()
     @Published var toolbarManager = ToolbarManager()
+    @Published var editorProviderManager = EditorProviderManager()
 
     private var extensions: [CodeAppExtension] = [
         MonacoIntellisenseExtension(),
@@ -25,7 +26,8 @@ class ExtensionManager: ObservableObject {
     func initializeExtensions(app: MainApp) {
         let contribution = CodeAppExtension.Contribution(
             panel: self.panelManager,
-            toolbarItem: self.toolbarManager
+            toolbarItem: self.toolbarManager,
+            editorProvider: self.editorProviderManager
         )
 
         extensions.forEach { ex in

@@ -12,18 +12,17 @@ import ios_system
 
 struct MainScene: View {
     @StateObject var App = MainApp()
-    @StateObject var extensionManager = ExtensionManager()
 
     var body: some View {
         MainView()
             .environmentObject(App)
-            .environmentObject(extensionManager)
+            .environmentObject(App.extensionManager)
             .onAppear {
-                extensionManager.initializeExtensions(app: App)
+                App.extensionManager.initializeExtensions(app: App)
             }
             .onOpenURL { url in
                 _ = url.startAccessingSecurityScopedResource()
-                App.openEditor(urlString: url.standardizedFileURL.absoluteString, type: .file)
+                App.openFile(url: url.standardizedFileURL)
             }
     }
 }
@@ -323,6 +322,7 @@ private struct MainView: View {
                                         targetUrl: App.workSpaceStorage.currentDirectory.url
                                     ).environmentObject(App)
                                 }
+                                .environmentObject(extensionManager.editorProviderManager)
 
                                 if showsPanel {
                                     PanelView()
