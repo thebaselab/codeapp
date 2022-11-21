@@ -179,12 +179,3 @@ struct EditorKeyboardToolBar: View {
             })
     }
 }
-
-struct keyboardToolBar_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            EditorKeyboardToolBar()
-                .previewDevice(PreviewDevice(rawValue: "iPad (8th generation)"))
-        }
-    }
-}

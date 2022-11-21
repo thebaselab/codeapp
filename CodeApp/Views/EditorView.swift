@@ -14,6 +14,7 @@ import UniformTypeIdentifiers
 
 struct EditorView: View {
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var preivewProviderManager: EditorProviderManager
 
     @AppStorage("editorLightTheme") var editorLightTheme: String = "Default"
     @AppStorage("editorDarkTheme") var editorDarkTheme: String = "Default"
@@ -29,73 +30,76 @@ struct EditorView: View {
         HStack(spacing: 0) {
             ZStack {
                 Color.init(id: "editor.background")
-                if App.editors.isEmpty && App.urlQueue.isEmpty {
-                    DescriptionText("You don't have any open editor.")
-                }
-                App.monacoInstance
-                    .onReceive(
-                        NotificationCenter.default.publisher(
-                            for: Notification.Name("monaco.cursor.position.changed"),
-                            object: nil),
-                        perform: { notification in
-                            let sceneIdentifier = notification.userInfo?["sceneIdentifier"] as! UUID
-                            if sceneIdentifier != App.sceneIdentifier {
-                                App.monacoInstance.executeJavascript(
-                                    command: "document.getElementById('overlay').focus()")
-                            }
-                        })
 
                 if let editor = App.activeEditor {
-                    if editor.type == .preview, let content = App.activeEditor?.content {
-                        MarkDownView(
-                            text: content, showsNewFile: $showsNewFile,
-                            showsDirectory: $showsDirectory, showsFolderPicker: $showsFolderPicker,
-                            showsFilePicker: $showsFilePicker, directoryID: $directoryID)
-                    } else if editor.type == .image {
-                        ZStack {
-                            editor.image!.resizable().scaledToFit()
-                                .contextMenu {
-                                    Button {
-                                        guard let imageURL = URL(string: editor.url),
-                                            let uiImage = UIImage(contentsOfFile: imageURL.path)
-                                        else {
-                                            return
-                                        }
-                                        UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
-                                    } label: {
-                                        Label("Add to Photos", systemImage: "square.and.arrow.down")
-                                    }
-                                    Button {
-                                        guard let imageURL = URL(string: editor.url),
-                                            let uiImage = UIImage(contentsOfFile: imageURL.path)
-                                        else {
-                                            return
-                                        }
-                                        UIPasteboard.general.image = uiImage
-                                    } label: {
-                                        Label("Copy Image", systemImage: "doc.on.doc")
-                                    }
-                                }
-                        }.frame(
-                            minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity
-                        ).background(Color.init(id: "editor.background"))
-                    } else if editor.type == .video {
-                        VideoPlayer(player: AVPlayer(url: URL(string: editor.url)!))
-                            .onAppear {
-                                try? AVAudioSession.sharedInstance().setCategory(
-                                    AVAudioSession.Category.playback,
-                                    mode: AVAudioSession.Mode.default, options: [])
-                            }
-                    }
+
+                    editor.view
+
+                    // TODO: Support image, video, markdown preview through extensions
+
+                    //                    if editor.type == .preview, let content = App.activeEditor?.content {
+                    //                        MarkDownView(
+                    //                            text: content, showsNewFile: $showsNewFile,
+                    //                            showsDirectory: $showsDirectory, showsFolderPicker: $showsFolderPicker,
+                    //                            showsFilePicker: $showsFilePicker, directoryID: $directoryID)
+                    //                    } else if editor.type == .image {
+                    //                        ZStack {
+                    //                            editor.image!.resizable().scaledToFit()
+                    //                                .contextMenu {
+                    //                                    Button {
+                    //                                        guard let imageURL = URL(string: editor.url),
+                    //                                            let uiImage = UIImage(contentsOfFile: imageURL.path)
+                    //                                        else {
+                    //                                            return
+                    //                                        }
+                    //                                        UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                    //                                    } label: {
+                    //                                        Label("Add to Photos", systemImage: "square.and.arrow.down")
+                    //                                    }
+                    //                                    Button {
+                    //                                        guard let imageURL = URL(string: editor.url),
+                    //                                            let uiImage = UIImage(contentsOfFile: imageURL.path)
+                    //                                        else {
+                    //                                            return
+                    //                                        }
+                    //                                        UIPasteboard.general.image = uiImage
+                    //                                    } label: {
+                    //                                        Label("Copy Image", systemImage: "doc.on.doc")
+                    //                                    }
+                    //                                }
+                    //                        }.frame(
+                    //                            minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity
+                    //                        ).background(Color.init(id: "editor.background"))
+                    //                    } else if editor.type == .video {
+                    //                        VideoPlayer(player: AVPlayer(url: URL(string: editor.url)!))
+                    //                            .onAppear {
+                    //                                try? AVAudioSession.sharedInstance().setCategory(
+                    //                                    AVAudioSession.Category.playback,
+                    //                                    mode: AVAudioSession.Mode.default, options: [])
+                    //                            }
+                    //                    }
 
                     VStack {
                         InfinityProgressView(enabled: $App.workSpaceStorage.editorIsBusy)
                         Spacer()
                     }
 
+                } else {
+                    DescriptionText("You don't have any open editor.")
                 }
 
             }
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: Notification.Name("monaco.cursor.position.changed"),
+                    object: nil),
+                perform: { notification in
+                    let sceneIdentifier = notification.userInfo?["sceneIdentifier"] as! UUID
+                    if sceneIdentifier != App.sceneIdentifier {
+                        App.monacoInstance.executeJavascript(
+                            command: "document.getElementById('overlay').focus()")
+                    }
+                })
             .onReceive(
                 NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
                 perform: { data in
@@ -132,9 +136,9 @@ struct EditorView: View {
                         _ = provider.loadObject(
                             ofClass: URL.self,
                             completionHandler: { url, err in
-                                if let url = url {
-                                    DispatchQueue.main.async {
-                                        App.openEditor(urlString: url.absoluteString, type: .any)
+                                if let url {
+                                    Task {
+                                        try? await App.openFile(url: url)
                                     }
                                 }
                             })
@@ -142,8 +146,8 @@ struct EditorView: View {
                         provider.loadItem(forTypeIdentifier: UTType.item.identifier) {
                             data, error in
                             if let target = data as? URL {
-                                DispatchQueue.main.async {
-                                    App.openEditor(urlString: target.absoluteString, type: .any)
+                                Task {
+                                    try? await App.openFile(url: target)
                                 }
                             }
                         }

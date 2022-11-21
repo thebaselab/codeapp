@@ -28,7 +28,7 @@ class LocalExecutionExtension: CodeAppExtension {
             shortCut: .init("r", modifiers: [.command]),
             panelToFocusOnTap: "TERMINAL",
             shouldDisplay: {
-                LOCAL_EXECUTION_COMMANDS[app.activeEditor?.languageIdentifier ?? ""] != nil
+                LOCAL_EXECUTION_COMMANDS[app.activeTextEditor?.languageIdentifier ?? ""] != nil
             }
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
@@ -36,19 +36,15 @@ class LocalExecutionExtension: CodeAppExtension {
     
     private func runCodeLocally(app: MainApp){
         
-        guard let activeEditor = app.activeEditor else {
+        guard let activeTextEditor = app.activeTextEditor else {
             return
         }
         
-        guard let url = URL(string: activeEditor.url) else {
+        guard let command = LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] else {
             return
         }
         
-        guard let command = LOCAL_EXECUTION_COMMANDS[activeEditor.languageIdentifier] else {
-            return
-        }
-        
-        let sanitizedUrl = "\"" + url.path.replacingOccurrences(of: " ", with: #"\ "#) + "\""
+        let sanitizedUrl = "\"" + activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#) + "\""
         let fullCommand = command.replacingOccurrences(of: "{url}", with: sanitizedUrl)
         
         let compilerShowPath = UserDefaults.standard.bool(forKey: "compilerShowPath")

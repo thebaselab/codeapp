@@ -90,7 +90,7 @@ struct ExplorerFileTreeSection: View {
                     )
                     .frame(height: 16)
                     .listRowBackground(
-                        item.url == App.activeEditor?.url
+                        item.url == (App.activeEditor as? EditorInstanceWithURL)?.url.absoluteString
                             ? Color.init(id: "list.inactiveSelectionBackground")
                                 .cornerRadius(10.0)
                             : Color.clear.cornerRadius(10.0)

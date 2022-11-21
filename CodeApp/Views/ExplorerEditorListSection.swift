@@ -34,11 +34,11 @@ struct ExplorerEditorListSection: View {
                 .listRowSeparator(.hidden)
             }
 
-            ForEach(App.editors) { item in
-                EditorCell(item: item)
+            ForEach(App.editors) { editor in
+                EditorCell(editor: editor)
                     .frame(height: 16)
                     .listRowBackground(
-                        item.url == App.activeEditor?.url
+                        editor == App.activeEditor
                             ? Color.init(id: "list.inactiveSelectionBackground")
                                 .cornerRadius(10.0)
                             : Color.clear.cornerRadius(10.0)
@@ -54,69 +54,65 @@ private struct EditorCell: View {
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
-    @State var item: EditorInstance
+    let editor: EditorInstance
+    var editorURL: URL? {
+        (editor as? EditorInstanceWithURL)?.url
+    }
 
     func onOpenEditor() {
-        App.openEditor(urlString: item.url, type: item.type)
+        App.setActiveEditor(editor: editor)
     }
 
     func onOpenInFilesApp() {
+        guard let editorURL else { return }
         openSharedFilesApp(
-            urlString: URL(string: item.url)!.deletingLastPathComponent().absoluteString
+            urlString: editorURL.deletingLastPathComponent().absoluteString
         )
     }
 
     func onCopyRelativePath() {
-        let pasteboard = UIPasteboard.general
-        guard let targetURL = URL(string: item.url),
-            let baseURL = URL(string: App.currentURL())
-        else {
+        guard let editorURL else { return }
+        guard let baseURL = URL(string: App.workSpaceStorage.currentDirectory.url) else {
             return
         }
-        pasteboard.string = targetURL.relativePath(from: baseURL)
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = editorURL.relativePath(from: baseURL)
     }
 
     func onTrashEditor() {
-        guard let url = URL(string: item.url) else {
-            return
-        }
-        App.trashItem(url: url)
+        guard let editorURL else { return }
+        App.trashItem(url: editorURL)
     }
 
     var body: some View {
         Button(action: onOpenEditor) {
             ZStack {
                 HStack {
-                    FileIcon(url: item.url, iconSize: 14, type: item.type)
+                    FileIcon(url: editor.title, iconSize: 14, type: .file)
 
-                    if item.type == .file,
-                        let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL]
+                    if let editorURL,
+                        let status = App.gitTracks[editorURL.standardizedFileURL]
                     {
-                        FileDisplayName(gitStatus: status, name: editorDisplayName(editor: item))
+                        FileDisplayName(gitStatus: status, name: editor.title)
                     } else {
-                        FileDisplayName(gitStatus: nil, name: editorDisplayName(editor: item))
+                        FileDisplayName(gitStatus: nil, name: editor.title)
                     }
 
                 }.padding(5)
             }
         }
-        .if(item.url == App.activeEditor?.url && item.type == App.activeEditor?.type) { view in
-            view.listRowBackground(
-                Color.init(id: "list.inactiveSelectionBackground")
-                    .cornerRadius(10.0))
-        }
         .contextMenu {
-            Button(action: onOpenInFilesApp) {
-                Text("Show in Files App")
-                Image(systemName: "folder")
-            }
+            if editorURL != nil {
+                Button(action: onOpenInFilesApp) {
+                    Text("Show in Files App")
+                    Image(systemName: "folder")
+                }
 
-            Button(action: onCopyRelativePath) {
-                Text("Copy Relative Path")
-                Image(systemName: "link")
-            }
+                Button(action: onCopyRelativePath) {
+                    Text("Copy Relative Path")
+                    Image(systemName: "link")
+                }
 
-            if URL(string: item.url) != nil {
                 Button(action: onTrashEditor) {
                     Text("Delete")
                     Image(systemName: "trash")

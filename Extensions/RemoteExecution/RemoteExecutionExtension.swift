@@ -30,22 +30,20 @@ class RemoteExecutionExtension: CodeAppExtension {
                 if self.storage.displayMode == .input {
                     self.storage.displayMode = .output
                 }
-                guard let editor = app.activeEditor else {
+                guard let textEditor = app.activeEditor as? TextEditorInstance,
+                      let languageCode = compilerCodeForPath(path: textEditor.url.absoluteString)
+                else {
                     return
                 }
-                guard let url = URL(string: editor.url) else {
-                    return
-                }
-                guard let languageCode = compilerCodeForPath(path: editor.url) else {
-                    return
-                }
-                self.storage.runCode(directoryURL: url, source: editor.content, language: languageCode)
+                self.storage.runCode(directoryURL: textEditor.url, source: textEditor.content, language: languageCode)
             },
             shortCut: .init("r", modifiers: [.command]),
             panelToFocusOnTap: EXTENSION_ID,
             shouldDisplay: {
-                let id = app.activeEditor?.languageIdentifier
-                return languageList.map{$0.value[1]}.contains(id)
+                guard let textEditor = app.activeEditor as? TextEditorInstance else {
+                    return false
+                }
+                return languageList.map{$0.value[1]}.contains(textEditor.languageIdentifier)
             }
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)

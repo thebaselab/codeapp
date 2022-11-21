@@ -97,8 +97,7 @@ struct RemoteCreateSection: View {
 
     func showPublicKey() {
         let publicKeyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa.pub")
-        App.openEditor(
-            urlString: publicKeyUrl.absoluteString, type: .file, inNewTab: true)
+        App.openFile(url: publicKeyUrl)
     }
 
     func reloadKey() {

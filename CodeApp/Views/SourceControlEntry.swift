@@ -30,24 +30,19 @@ struct SourceControlEntry: View {
         }) {
             ZStack {
 
-                if itemUrl.absoluteString == App.activeEditor?.url {
+                if itemUrl == (App.activeTextEditor as? EditorInstanceWithURL)?.url {
                     Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
                 }
 
                 HStack {
                     FileIcon(
-                        url: itemUrl.absoluteString, iconSize: 14, type: EditorInstance.tabType.file
+                        url: itemUrl.absoluteString, iconSize: 14, type: .file
                     )
 
                     if let status =
-                        (isIndex ? App.indexedResources[itemUrl] : App.workingResources[itemUrl]),
-                        let name = editorDisplayName(
-                            editor: EditorInstance(
-                                url: itemUrl.absoluteString, content: "", type: .file
-                            )
-                        )
+                        (isIndex ? App.indexedResources[itemUrl] : App.workingResources[itemUrl])
                     {
-                        Text(name)
+                        Text(itemUrl.lastPathComponent)
                             .font(.subheadline)
                         Spacer()
                         Controls(

@@ -120,14 +120,15 @@ struct BottomBar: View {
                             }
                         }
                     }
-                    if let activeEditor = App.activeEditor, activeEditor.type == .image,
-                        let imageURL = URL(string: activeEditor.url),
-                        let uiImage = UIImage(contentsOfFile: imageURL.path)
-                    {
-                        Text(
-                            "\(activeEditor.url.components(separatedBy: ".").last?.uppercased() ?? "") \(String(describing: Int(uiImage.size.width * uiImage.scale)))x\(String(describing: Int(uiImage.size.height * uiImage.scale)))"
-                        )
-                    }
+                    // TODO: Display image dimension information
+                    //                    if let activeEditor = App.activeEditor, activeEditor.type == .image,
+                    //                        let imageURL = URL(string: activeEditor.url),
+                    //                        let uiImage = UIImage(contentsOfFile: imageURL.path)
+                    //                    {
+                    //                        Text(
+                    //                            "\(activeEditor.url.components(separatedBy: ".").last?.uppercased() ?? "") \(String(describing: Int(uiImage.size.width * uiImage.scale)))x\(String(describing: Int(uiImage.size.height * uiImage.scale)))"
+                    //                        )
+                    //                    }
                 }.padding(.leading, [UIApplication.shared.getSafeArea(edge: .bottom), 5].max())
 
                 Spacer()
@@ -154,8 +155,9 @@ struct BottomBar: View {
                                     ChangeLogView()
                                 })
                         Button("Close Editor") {
-                            App.closeEditor(
-                                url: App.currentURL(), type: App.activeEditor?.type ?? .any)
+                            if let activeEditor = App.activeEditor {
+                                App.closeEditor(editor: activeEditor)
+                            }
                         }
                         .keyboardShortcut("w", modifiers: [.command])
                         .sheet(isPresented: self.$showsDirectoryPicker) {
@@ -169,10 +171,11 @@ struct BottomBar: View {
                         }
                         .keyboardShortcut("p", modifiers: [.command, .shift])
                         .fullScreenCover(isPresented: self.$showSafari) {
-                            if let currentEditor = App.activeEditor?.url,
+                            if let activeEditorWithURL =
+                                (App.activeEditor as? EditorInstanceWithURL),
                                 let baseURL = URL(
                                     string: App.workSpaceStorage.currentDirectory.url),
-                                let relativePath = URL(string: currentEditor)?.relativePath(
+                                let relativePath = activeEditorWithURL.url.relativePath(
                                     from: baseURL)?.replacingOccurrences(of: " ", with: "%20"),
                                 let urlToGo = URL(string: "http://localhost:8000/\(relativePath)")
                             {
@@ -224,7 +227,7 @@ struct BottomBar: View {
                 Spacer()
                 HStack {
 
-                    if App.activeEditor?.type == .file || App.activeEditor?.type == .diff {
+                    if App.activeEditor is TextEditorInstance {
 
                         Text("Ln \(String(currentLine)), Col \(String(currentColumn))")
                             .onTapGesture {
@@ -246,7 +249,7 @@ struct BottomBar: View {
                             Text("READ-ONLY")
                         }
 
-                        if let editor = App.activeEditor {
+                        if let editor = (App.activeEditor as? TextEditorInstance) {
                             Text(
                                 "\((encodingTable[editor.encoding]) ?? editor.encoding.description)"
                             )

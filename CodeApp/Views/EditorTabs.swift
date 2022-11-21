@@ -57,13 +57,15 @@ struct EditorTabs: View {
                         currentEditor: currentEditor, isActive: (App.activeEditor == currentEditor),
                         index: i,
                         onOpenEditor: {
-                            App.openEditor(urlString: currentEditor.url, type: currentEditor.type)
+                            App.setActiveEditor(editor: currentEditor)
                         },
                         onCloseEditor: {
-                            App.closeEditor(url: currentEditor.url, type: currentEditor.type)
+                            App.closeEditor(editor: currentEditor)
                         },
                         onSaveEditor: {
-                            App.saveEditor(editor: currentEditor)
+                            if let currentTextEditor = currentEditor as? TextEditorInstance {
+                                App.saveTextEditor(editor: currentTextEditor)
+                            }
                         }
                     )
                     .onDrag {

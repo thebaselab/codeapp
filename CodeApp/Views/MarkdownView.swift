@@ -9,6 +9,15 @@ import MarkdownView
 import MessageUI
 import SwiftUI
 
+// TODO: Convert markdown preview to an extension
+class MarkdownEditorInstance: EditorInstance {
+    init(content: String, title: String) {
+        let view = MarkdownView()
+        view.load(markdown: content)
+        super.init(view: AnyView(ViewRepresentable(view)), title: title)
+    }
+}
+
 struct ChangeLogView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {

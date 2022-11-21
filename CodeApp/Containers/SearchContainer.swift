@@ -11,8 +11,8 @@ import ios_system
 struct SearchContainer: View {
     @EnvironmentObject var App: MainApp
 
-    func onTapSearchResult(result: SearchResult, fileURLString: String) {
-        App.openEditor(urlString: fileURLString, type: .file)
+    func onTapSearchResult(result: SearchResult, fileURL: URL) {
+        App.openFile(url: fileURL)
         App.monacoInstance.executeJavascript(
             command: "editor.focus()")
         App.monacoInstance.searchByTerm(

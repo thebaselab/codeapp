@@ -11,7 +11,7 @@ struct SearchResultsSection: View {
 
     @EnvironmentObject var App: MainApp
 
-    let onTapSearchResult: (SearchResult, String) -> Void
+    let onTapSearchResult: (SearchResult, URL) -> Void
 
     private func binding(for key: String) -> Binding<Bool> {
         return .init(
@@ -48,7 +48,7 @@ struct SearchResultsSection: View {
                                         .font(.custom("Menlo Regular", size: 14))
                                         .lineLimit(1)
                                         .onTapGesture {
-                                            onTapSearchResult(res, key)
+                                            onTapSearchResult(res, fileURL)
                                         }
                                     }
                                 }
@@ -57,14 +57,9 @@ struct SearchResultsSection: View {
                                 VStack(alignment: .leading) {
                                     HStack {
                                         FileIcon(url: key, iconSize: 10, type: .file)
-                                        Text(
-                                            editorDisplayName(
-                                                editor: EditorInstance(
-                                                    url: key, content: "", type: .file))
-                                                + " "
-                                        )
-                                        .font(.subheadline)
-                                        .foregroundColor(Color.init("T1"))
+                                        Text(fileURL.lastPathComponent + " ")
+                                            .font(.subheadline)
+                                            .foregroundColor(Color.init("T1"))
                                         Circle()
                                             .fill(Color.init("panel.border"))
                                             .frame(width: 14, height: 14)

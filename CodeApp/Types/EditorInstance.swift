@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import MarkdownView
 import SwiftUI
 
-class EditorInstance: Identifiable, Equatable, Hashable, ObservableObject {
-
+class EditorInstance: ObservableObject, Identifiable, Equatable, Hashable {
     static func == (lhs: EditorInstance, rhs: EditorInstance) -> Bool {
         return lhs.id == rhs.id
     }
@@ -18,39 +18,57 @@ class EditorInstance: Identifiable, Equatable, Hashable, ObservableObject {
         hasher.combine(id)
     }
 
-    var id = UUID()
-    var url: String
-    var content: String
+    let id = UUID()
+    let view: AnyView
+    var title: String
 
+    init(view: AnyView, title: String) {
+        self.view = view
+        self.title = title
+    }
+}
+
+class EditorInstanceWithURL: EditorInstance {
+    var url: URL {
+        didSet {
+            title = url.lastPathComponent
+        }
+    }
+
+    init(view: AnyView, title: String, url: URL) {
+        self.url = url
+        super.init(view: view, title: title)
+    }
+}
+
+class TextEditorInstance: EditorInstanceWithURL {
     @Published var lastSavedVersionId = 1
     @Published var currentVersionId = 1
 
-    let type: tabType
-
+    var content: String
+    let type: editorType
     var compareTo: String? = nil
-    var image: Image? = nil
-
     var encoding: String.Encoding = .utf8
-
     var fileWatch: FolderMonitor?
     var isDeleted = false
+
     var languageIdentifier: String {
-        url.components(separatedBy: ".").last ?? ""
+        url.pathExtension
     }
 
     init(
-        url: String, content: String, type: tabType, encoding: String.Encoding = .utf8,
-        compareTo: String? = nil, image: Image? = nil,
+        editor: MonacoEditor, url: URL, content: String, type: editorType,
+        encoding: String.Encoding = .utf8,
+        compareTo: String? = nil,
         fileDidChange: ((fileState, String?) -> Void)? = nil
     ) {
-        self.url = url
         self.content = content
         self.type = type
         self.encoding = encoding
         self.compareTo = compareTo
-        self.image = image
+        super.init(view: AnyView(editor), title: url.lastPathComponent, url: url)
 
-        if fileDidChange != nil, let url = URL(string: url), url.scheme == "file" {
+        if fileDidChange != nil, url.scheme == "file" {
             self.fileWatch = FolderMonitor(url: url)
 
             self.fileWatch?.folderDidChange = {
@@ -64,7 +82,6 @@ class EditorInstance: Identifiable, Equatable, Hashable, ObservableObject {
             }
             self.fileWatch?.startMonitoring()
         }
-
     }
 
     deinit {
@@ -76,12 +93,8 @@ class EditorInstance: Identifiable, Equatable, Hashable, ObservableObject {
         case modified
     }
 
-    enum tabType {
+    enum editorType {
         case file
-        case preview
         case diff
-        case image
-        case video
-        case any
     }
 }

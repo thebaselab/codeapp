@@ -14,20 +14,22 @@ import UniformTypeIdentifiers
 import ios_system
 
 class MainApp: ObservableObject {
+    let extensionManager = ExtensionManager()
+
     @Published var editors: [EditorInstance] = []
+    var textEditors: [TextEditorInstance] {
+        editors.filter { $0 is TextEditorInstance } as? [TextEditorInstance] ?? []
+    }
 
     @Published var isShowingCompilerLanguage = false
-    @Published var activeEditor: EditorInstance? = nil {
-        willSet {
-            if let pathextension = newValue?.url.split(separator: ".").last {
-                updateCompilerCode(pathExtension: String(pathextension))
-            }
-        }
+    @Published var activeEditor: EditorInstance? = nil
+    var activeTextEditor: TextEditorInstance? {
+        activeEditor as? TextEditorInstance
     }
+
     @Published var selectedForCompare = ""
 
     @Published var languageEnabled: [Bool] = langListInit()
-    @Published var compilerCode: Int = 71
 
     @Published var notificationManager = NotificationManager()
     @Published var searchManager = GitHubSearchManager()
@@ -57,7 +59,6 @@ class MainApp: ObservableObject {
     let monacoInstance = MonacoEditor()
     let webServer = GCDWebServer()
     var editorTypesMonitor: FolderMonitor? = nil
-    let readmeMessage = NSLocalizedString("Welcome Message", comment: "")
     let deviceSupportsBiometricAuth: Bool = biometricAuthSupported()
     let sceneIdentifier = UUID()
 
@@ -134,14 +135,17 @@ class MainApp: ObservableObject {
             if url.isDirectory {
                 self.loadFolder(url: url)
             } else {
-                self.openEditor(urlString: url.absoluteString, type: .any)
+                Task {
+                    try? await self.openFile(url: url)
+                }
             }
-
         }
+
+        // TODO: Support deleted files detection for remote files
         workSpaceStorage.onDirectoryChange { url in
-            for editor in self.editors {
-                if editor.url.contains(url), let urlToCheck = URL(string: editor.url) {
-                    if !FileManager.default.fileExists(atPath: urlToCheck.path) {
+            for editor in self.textEditors {
+                if editor.url.absoluteString.contains(url) {
+                    if !FileManager.default.fileExists(atPath: editor.url.path) {
                         editor.isDeleted = true
                     }
                 }
@@ -168,10 +172,7 @@ class MainApp: ObservableObject {
         }
 
         if urlQueue.isEmpty {
-            let newEditor = EditorInstance(
-                url: "welcome.md{welcome}", content: readmeMessage, type: .preview)
-            editors.append(newEditor)
-            activeEditor = newEditor
+            showWelcomeMessage()
         }
 
         let monacoPath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")
@@ -200,6 +201,14 @@ class MainApp: ObservableObject {
         git_status()
     }
 
+    func showWelcomeMessage() {
+        let readmeMessage = NSLocalizedString("Welcome Message", comment: "")
+        let title = NSLocalizedString("Welcome", comment: "")
+        let newEditor = MarkdownEditorInstance(content: readmeMessage, title: title)
+        editors.append(newEditor)
+        activeEditor = newEditor
+    }
+
     func updateView() {
         self.objectWillChange.send()
     }
@@ -218,14 +227,17 @@ class MainApp: ObservableObject {
             return
         }
 
+        // TODO: Also save non text files
         // Saving opened editors
-        let editorsBookmarks = editors.compactMap { try? URL(string: $0.url)?.bookmarkData() }
+        let editorsBookmarks = textEditors.compactMap { try? $0.url.bookmarkData() }
         UserDefaults.standard.setValue(editorsBookmarks, forKey: "uistate.openedURLs.bookmarks")
 
         // Save active editor
         if editors.isEmpty {
             UserDefaults.standard.setValue(nil, forKey: "uistate.activeEditor.bookmark")
-        } else if let data = try? URL(string: activeEditor?.url ?? "")?.bookmarkData() {
+        } else if let activeEditor = activeEditor as? TextEditorInstance,
+            let data = try? activeEditor.url.bookmarkData()
+        {
             UserDefaults.standard.setValue(data, forKey: "uistate.activeEditor.bookmark")
         }
 
@@ -266,35 +278,34 @@ class MainApp: ObservableObject {
             notificationManager.showErrorMessage(error.localizedDescription)
             return
         }
-        for i in editors.indices {
-            if editors[i].url == url.absoluteString {
-                editors[i].url =
-                    url.deletingLastPathComponent().appendingPathComponent(name).absoluteString
-                monacoInstance.renameModel(oldURL: url.absoluteString, newURL: editors[i].url)
-                if currentURL() == editors[i].url {
-                    monacoInstance.setModel(url: editors[i].url)
-                }
-            } else if editors[i].url == url.absoluteURL.absoluteString {
-                editors[i].url =
-                    url.deletingLastPathComponent().absoluteURL.appendingPathComponent(name)
-                    .absoluteString
-                monacoInstance.renameModel(oldURL: url.absoluteString, newURL: editors[i].url)
-                if currentURL() == editors[i].url {
-                    monacoInstance.setModel(url: editors[i].url)
-                }
-            }
+        let urlVariancesToRename = [url.absoluteString, url.absoluteURL.absoluteString]
+        let editorsToRename = textEditors.filter {
+            urlVariancesToRename.contains($0.url.absoluteString)
+        }
+
+        editorsToRename.forEach { editor in
+            monacoInstance.renameModel(
+                oldURL: editor.url.absoluteString, newURL: url.absoluteString)
+            editor.url = url
         }
     }
 
     func loadURLQueue() {
-        for i in urlQueue {
-            openEditor(urlString: i.absoluteString, type: .any, inNewTab: true)
+        Task {
+            // TODO: Handle overwriting existing editor + Orders
+            for url in urlQueue {
+                _ = try? await openFile(url: url)
+            }
+
+            urlQueue = []
         }
-        urlQueue = []
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            if self.editorToRestore != nil {
-                self.openEditor(urlString: self.editorToRestore!.absoluteString, type: .any)
-                self.editorToRestore = nil
+            if let editorToRestore = self.editorToRestore {
+                Task {
+                    _ = try? await self.openFile(url: editorToRestore)
+                    self.editorToRestore = nil
+                }
             }
         }
 
@@ -321,85 +332,76 @@ class MainApp: ObservableObject {
                 self.notificationManager.showErrorMessage(error.localizedDescription)
                 return
             }
-            self.closeEditor(url: url.absoluteString, type: EditorInstance.tabType.file)
+            if let editorToTrash = self.textEditors.first(where: { $0.url == url }) {
+                Task { @MainActor in
+                    self.closeEditor(editor: editorToTrash)
+                }
+            }
             self.git_status()
         }
     }
 
-    private func checkOccurancesOfURL(url: String) -> Int {
-        var count = 0
-        for i in editors {
-            if i.url == url {
-                count += 1
-            }
-            if i.compareTo == url {
-                count += 1
-            }
-        }
-        return count
-    }
-
     func compareWithPrevious(url: URL) {
-        guard gitTracks[url] != nil else {
-            notificationManager.showErrorMessage("No changes are made in this file")
-            return
-        }
-        workSpaceStorage.gitServiceProvider?.previous(
-            path: url.absoluteString,
-            error: {
-                self.notificationManager.showErrorMessage($0.localizedDescription)
-            }
-        ) { previousText in
-            self.readURL(url: url.absoluteString) { result, error in
-                guard let content = result?.0 else {
-                    if let error = error {
-                        self.notificationManager.showErrorMessage(error.localizedDescription)
-                    }
-                    return
-                }
-                let newEditor = EditorInstance(
-                    url: url.absoluteString, content: content, type: .diff,
-                    compareTo: "file://previous/\(url.path)")
-                self.editors.append(newEditor)
-                self.monacoInstance.switchToDiffView(
-                    originalContent: previousText, modifiedContent: content,
-                    url: newEditor.compareTo!, url2: url.absoluteString)
-                self.activeEditor = newEditor
-            }
-        }
+        //        guard gitTracks[url] != nil else {
+        //            notificationManager.showErrorMessage("No changes are made in this file")
+        //            return
+        //        }
+        //        workSpaceStorage.gitServiceProvider?.previous(
+        //            path: url.absoluteString,
+        //            error: {
+        //                self.notificationManager.showErrorMessage($0.localizedDescription)
+        //            }
+        //        ) { previousText in
+        //            self.readURL(url: url.absoluteString) { result, error in
+        //                guard let content = result?.0 else {
+        //                    if let error = error {
+        //                        self.notificationManager.showErrorMessage(error.localizedDescription)
+        //                    }
+        //                    return
+        //                }
+        //                let newEditor = EditorInstance(
+        //                    url: url.absoluteString, content: content, type: .diff,
+        //                    compareTo: "file://previous/\(url.path)")
+        //                self.editors.append(newEditor)
+        //                self.monacoInstance.switchToDiffView(
+        //                    originalContent: previousText, modifiedContent: content,
+        //                    url: newEditor.compareTo!, url2: url.absoluteString)
+        //                self.activeEditor = newEditor
+        //            }
+        //        }
     }
 
     func compareWithSelected(url: String) {
-        readURL(url: url) { result, error in
-            if let error = error {
-                self.notificationManager.showErrorMessage(error.localizedDescription)
-                return
-            }
-            guard let originalContent = result?.0 else { return }
-            self.readURL(url: self.selectedForCompare) { result, error in
-                if let error = error {
-                    self.notificationManager.showErrorMessage(error.localizedDescription)
-                    return
-                }
-                guard let diffContent = result?.0 else { return }
-                let newEditor = EditorInstance(
-                    url: url, content: originalContent, type: .diff,
-                    compareTo: self.selectedForCompare)
-                self.editors.append(newEditor)
-                self.activeEditor = newEditor
-                self.monacoInstance.switchToDiffView(
-                    originalContent: diffContent, modifiedContent: originalContent,
-                    url: self.selectedForCompare, url2: url)
-            }
-        }
+        //        readURL(url: url) { result, error in
+        //            if let error = error {
+        //                self.notificationManager.showErrorMessage(error.localizedDescription)
+        //                return
+        //            }
+        //            guard let originalContent = result?.0 else { return }
+        //            self.readURL(url: self.selectedForCompare) { result, error in
+        //                if let error = error {
+        //                    self.notificationManager.showErrorMessage(error.localizedDescription)
+        //                    return
+        //                }
+        //                guard let diffContent = result?.0 else { return }
+        //                let newEditor = EditorInstance(
+        //                    url: url, content: originalContent, type: .diff,
+        //                    compareTo: self.selectedForCompare)
+        //                self.editors.append(newEditor)
+        //                self.activeEditor = newEditor
+        //                self.monacoInstance.switchToDiffView(
+        //                    originalContent: diffContent, modifiedContent: originalContent,
+        //                    url: self.selectedForCompare, url2: url)
+        //            }
+        //        }
     }
 
     func reloadCurrentFileWithEncoding(encoding: String.Encoding) {
-        guard let url = URL(string: currentURL()) else {
+        guard let activeTextEditor = activeEditor as? TextEditorInstance else {
             return
         }
         workSpaceStorage.contents(
-            at: url,
+            at: activeTextEditor.url,
             completionHandler: { data, error in
                 guard let data = data else {
                     if let error = error {
@@ -408,8 +410,8 @@ class MainApp: ObservableObject {
                     return
                 }
                 if let string = String(data: data, encoding: encoding) {
-                    self.activeEditor?.encoding = encoding
-                    self.activeEditor?.content = string
+                    activeTextEditor.encoding = encoding
+                    activeTextEditor.content = string
                     self.monacoInstance.setCurrentModelValue(value: string)
                 } else {
                     self.notificationManager.showErrorMessage(
@@ -418,37 +420,14 @@ class MainApp: ObservableObject {
             })
     }
 
-    private func readURL(
-        url: String, completionHandler: @escaping ((String, String.Encoding)?, Error?) -> Void
-    ) {
-        guard let url = URL(string: url) else {
-            return
-        }
-        workSpaceStorage.contents(at: url) { data, error in
-            guard let data = data else {
-                if let error = error {
-                    completionHandler(nil, error)
-                }
-                return
-            }
-            let encodings: [String.Encoding] = [.utf8, .windowsCP1252, .gb_18030_2000, .EUC_KR]
-            for encoding in encodings {
-                if let string = String(data: data, encoding: encoding) {
-                    completionHandler((string, encoding), nil)
-                    return
-                }
-            }
-            completionHandler(nil, WorkSpaceStorage.FSError.UnsupportedEncoding)
-        }
-    }
-
-    func saveEditor(editor: EditorInstance) {
-        guard let url = URL(string: editor.url),
-            let data = editor.content.data(using: editor.encoding)
+    func saveTextEditor(editor: TextEditorInstance) {
+        guard let data = editor.content.data(using: editor.encoding)
         else {
             return
         }
-        self.workSpaceStorage.write(at: url, content: data, atomically: true, overwrite: true) {
+        self.workSpaceStorage.write(
+            at: editor.url, content: data, atomically: true, overwrite: true
+        ) {
             error in
             if let error = error {
                 self.notificationManager.showErrorMessage(error.localizedDescription)
@@ -462,39 +441,23 @@ class MainApp: ObservableObject {
                 self.git_status()
             }
             if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
-                self.monacoInstance.checkSpelling(text: editor.content, uri: editor.url)
+                self.monacoInstance.checkSpelling(
+                    text: editor.content, uri: editor.url.absoluteString)
             }
         }
     }
 
     func saveCurrentFile() {
         if editors.isEmpty { return }
-        if activeEditor?.type != .file && activeEditor?.type != .diff { return }
-        if activeEditor?.lastSavedVersionId == activeEditor?.currentVersionId
-            && !(activeEditor?.isDeleted ?? false)
+        guard let activeTextEditor = activeEditor as? TextEditorInstance else {
+            return
+        }
+        if (activeTextEditor.lastSavedVersionId == activeTextEditor.currentVersionId)
+            || activeTextEditor.isDeleted
         {
             return
         }
-
-        if let activeEditor = activeEditor {
-            saveEditor(editor: activeEditor)
-        }
-
-    }
-
-    func addMarkDownPreview(url: URL, content: String) {
-        if url.pathExtension != "md" && url.pathExtension != "markdown" {
-            return
-        }
-        let newURL = url.absoluteString + "{preview}"
-        for i in editors {
-            if i.url == newURL {
-                openEditor(urlString: i.url, type: .preview)
-                return
-            }
-        }
-        editors.append(EditorInstance(url: newURL, content: content, type: .preview))
-        openEditor(urlString: newURL, type: .preview)
+        saveTextEditor(editor: activeTextEditor)
     }
 
     private func restartWebServer(url: URL) {
@@ -512,10 +475,6 @@ class MainApp: ObservableObject {
         } catch let error {
             print(error)
         }
-    }
-
-    func currentURL() -> String {
-        return activeEditor?.url ?? ""
     }
 
     func reloadDirectory() {
@@ -649,234 +608,107 @@ class MainApp: ObservableObject {
             return
         }
         monacoInstance.removeAllModel()
-        if activeEditor?.type == .diff {
-            monacoInstance.switchToNormView()
-        }
         editors.removeAll(keepingCapacity: false)
         activeEditor = nil
     }
 
-    func updateCompilerCode(pathExtension: String) {
-        var found = false
-
-        if languageEnabled[0] && pathExtension == "py" {
-            found = true
-            compilerCode = 0
-            isShowingCompilerLanguage = true
-        } else if languageEnabled[1] && pathExtension == "js" {
-            found = true
-            compilerCode = 1
-            isShowingCompilerLanguage = true
-        } else {
-            for i in languageList.sorted(by: { $0.key < $1.key }) {
-                if i.value[1] == pathExtension && languageEnabled[i.key] {
-                    compilerCode = i.key
-                    isShowingCompilerLanguage = true
-                    found = true
-                    break
-                }
-            }
+    private func createExtensionEditorFromURL(url: URL) throws -> EditorInstance {
+        let fileExtension = url.lastPathComponent.components(separatedBy: ".").last ?? ""
+        let provider = extensionManager.editorProviderManager.providers.first {
+            $0.registeredFileExtensions.contains(fileExtension)
         }
 
-        if !found {
-            isShowingCompilerLanguage = false
+        guard let provider = provider else {
+            throw AppError.unknownFileFormat
+        }
+
+        return provider.onCreateEditor(url)
+    }
+
+    private func createTextEditorFromURL(url: URL) async throws -> TextEditorInstance {
+        let contentData: Data? = try await withCheckedThrowingContinuation { continuation in
+            workSpaceStorage.contents(
+                at: url,
+                completionHandler: { data, error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                    }
+                    continuation.resume(returning: data)
+                })
+        }
+        // TODO: Support different encoding
+        guard let contentData, let str = String(data: contentData, encoding: .utf8) else {
+            throw AppError.unknownFileFormat
+        }
+
+        return TextEditorInstance(
+            editor: monacoInstance,
+            url: url,
+            content: str,
+            type: .file
+        )
+
+    }
+
+    private func openTextEditorForURL(url: URL) throws -> TextEditorInstance {
+        guard let editor = (textEditors.first { $0.url == url }) else {
+            throw AppError.editorDoesNotExist
+        }
+
+        activeEditor = editor
+
+        return editor
+    }
+
+    private func appendAndFocusNewEditor(editor: EditorInstance) {
+        if let activeTextEditor,
+            activeTextEditor.currentVersionId == activeTextEditor.currentVersionId
+        {
+            editors.removeAll { $0 == activeTextEditor }
+        }
+
+        editors.append(editor)
+        activeEditor = editor
+    }
+
+    @MainActor
+    func openFile(url: URL) {
+        Task {
+            try await openFile(url: url)
         }
     }
 
-    func openEditor(urlString: String, type: EditorInstance.tabType, inNewTab: Bool = false) {
-
-        for editor in editors {
-            if type == .any && editor.type == .diff {
-                continue
-            }
-            if editor.url == urlString && (editor.type == type || type == .any) {
-                if activeEditor != editor {
-                    if editor.type == .file && activeEditor?.type == .diff {
-                        monacoInstance.switchToNormView()
-                    }
-                    if editor.type == .diff && activeEditor?.type == .file {
-                        monacoInstance.switchToDiffView(
-                            originalContent: "", modifiedContent: editor.content,
-                            url: editor.compareTo!, url2: editor.url)
-                    }
-                    if editor.type == .file {
-                        monacoInstance.setModel(from: currentURL(), url: urlString)
-                    }
-                    activeEditor = editor
-                }
-                return
-            }
+    @MainActor
+    func openFile(url: URL) async throws -> EditorInstance {
+        if let existingEditor = try? openTextEditorForURL(url: url) {
+            return existingEditor
         }
-
-        guard let url = URL(string: urlString) else {
-            if urlString == "welcome.md{welcome}" {
-                let newEditor = EditorInstance(
-                    url: "welcome.md{welcome}", content: readmeMessage, type: .preview)
-                editors.append(newEditor)
-                activeEditor = newEditor
-            }
-            return
+        if let textEditor = try? await createTextEditorFromURL(url: url) {
+            appendAndFocusNewEditor(editor: textEditor)
         }
-
-        UIApplication.shared.openSessions.first?.scene?.title = url.lastPathComponent
-
-        if url.pathExtension == "icloud" {
-            let fileManager = FileManager.default
-            do {
-                try fileManager.startDownloadingUbiquitousItem(at: url)
-                self.notificationManager.showInformationMessage(
-                    "Downloading \(url.lastPathComponent)")
-            } catch {
-                self.notificationManager.showErrorMessage(
-                    "Download failed: \(error.localizedDescription)")
-            }
-            return
-        }
-
-        if url.scheme == "file" {
-            guard
-                let typeID = try? url.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier,
-                let supertypes = UTType(typeID)?.supertypes
-            else {
-                return
-            }
-
-            //            if supertypes.contains(.mpeg4Movie) || supertypes.contains(.movie) {
-            //                let newEditor = EditorInstance(
-            //                    url: url.absoluteString, content: "Video", type: .video)
-            //                editors.append(newEditor)
-            //                activeEditor = newEditor
-            //                return
-            //            }
-        }
-
-        func newTab(editor: EditorInstance) {
-            if let activeEditor = activeEditor, !alwaysOpenInNewTab && !inNewTab {
-                if activeEditor.currentVersionId == 1 {
-                    for i in editors.indices {
-                        if editors[i] == activeEditor {
-                            editors[i] = editor
-                            break
-                        }
-                    }
-                    self.activeEditor = editor
-                    return
-                }
-            }
-            editors.append(editor)
-            activeEditor = editor
-        }
-
-        func newEditor(content: String, encoding: String.Encoding) {
-
-            guard monacoInstance.monacoWebView.isEditorInited else {
-                self.urlQueue.append(url)
-                return
-            }
-
-            // Add a new editor
-            let newEditor = EditorInstance(
-                url: url.absoluteString, content: content, type: .file, encoding: encoding
-            ) { state, content in
-                if state == .modified {
-                    DispatchQueue.main.async {
-                        self.monacoInstance.updateModelContent(
-                            url: url.absoluteString, content: content!)
-                    }
-                }
-            }
-
-            if activeEditor?.type == .diff {
-                monacoInstance.switchToNormView()
-            }
-            if let activeEditor = activeEditor, !alwaysOpenInNewTab && !inNewTab {
-                if activeEditor.currentVersionId == 1 {
-                    let oldurl = activeEditor.url
-                    for i in editors.indices {
-                        if editors[i] == activeEditor {
-                            editors[i] = newEditor
-                            break
-                        }
-                    }
-                    self.activeEditor = newEditor
-                    monacoInstance.newModel(url: url.absoluteString, content: content)
-                    monacoInstance.removeModel(url: oldurl)
-                    return
-                }
-            }
-            editors.append(newEditor)
-            activeEditor = newEditor
-            monacoInstance.newModel(url: url.absoluteString, content: content)
-        }
-
-        readURL(url: url.absoluteString) { result, error in
-            if let error = error {
-                self.workSpaceStorage.contents(at: url) { data, _ in
-                    if let data = data, let image = UIImage(data: data) {
-                        let newEditor = EditorInstance(
-                            url: url.absoluteString, content: "Image", type: .image,
-                            image: Image(uiImage: image))
-                        newTab(editor: newEditor)
-                    } else {
-                        self.notificationManager.showErrorMessage(error.localizedDescription)
-                    }
-                }
-                return
-            }
-            if let content = result?.0, let encoding = result?.1 {
-                newEditor(content: content, encoding: encoding)
-            }
-        }
+        let editor = try createExtensionEditorFromURL(url: url)
+        appendAndFocusNewEditor(editor: editor)
+        return editor
     }
 
-    func closeEditor(url: String, type: EditorInstance.tabType) {
-        var index = -1
-        for y in 0..<editors.count {
-            if editors[y].url == url && editors[y].type == type {
-                index = y
-            }
-        }
-        if index == -1 {
+    @MainActor
+    func setActiveEditor(editor: EditorInstance) {
+        activeEditor = editor
+    }
+
+    @MainActor
+    func closeEditor(editor: EditorInstance) {
+        guard let index = (editors.firstIndex { $0.id == editor.id }) else {
             return
         }
+        editors.remove(at: index)
 
-        if index - 1 >= 0 {
-            if editors[index].type == .diff && editors[index - 1].type != .diff {
-                if checkOccurancesOfURL(url: url) == 1 {
-                    monacoInstance.removeModel(url: url)
-                }
-                if checkOccurancesOfURL(url: editors[index].compareTo!) == 1 {
-                    monacoInstance.removeModel(url: editors[index].compareTo!)
-                }
-                monacoInstance.switchToNormView()
-            }
-            openEditor(urlString: editors[index - 1].url, type: editors[index - 1].type)
-            if checkOccurancesOfURL(url: url) == 1 {
-                monacoInstance.removeModel(url: url)
-            }
-            editors.remove(at: index)
-        } else if editors.count > 1 {
-            if editors[index].type == .diff && editors[index + 1].type != .diff {
-                if checkOccurancesOfURL(url: url) == 1 {
-                    monacoInstance.removeModel(url: url)
-                }
-                if checkOccurancesOfURL(url: editors[index].compareTo!) == 1 {
-                    monacoInstance.removeModel(url: editors[index].compareTo!)
-                }
-                monacoInstance.switchToNormView()
-            }
-            openEditor(urlString: editors[index + 1].url, type: editors[index + 1].type)
-            if checkOccurancesOfURL(url: url) == 1 {
-                monacoInstance.removeModel(url: url)
-            }
+        if editors.indices.contains(index - 1) {
+            activeEditor = editors[index - 1]
+        } else if editors.indices.contains(index + 1) {
             activeEditor = editors[index + 1]
-            editors.remove(at: index)
         } else {
-            monacoInstance.removeModel(url: url)
             activeEditor = nil
-            editors = []
-            monacoInstance.switchToNormView()
         }
     }
-
 }

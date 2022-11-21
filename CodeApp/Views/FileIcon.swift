@@ -83,16 +83,12 @@ private let fileNames = ["LICENSE": "license", "README.md": "info"]
 struct FileIcon: View {
     let url: String
     let iconSize: CGFloat
-    let type: EditorInstance.tabType
+    let type: TextEditorInstance.editorType
 
     @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
         switch type {
-        case .preview:
-            Image(systemName: "newspaper")
-                .foregroundColor(.gray)
-                .font(.system(size: iconSize - 2))
         default:
             let fileName = url.components(separatedBy: "/").last ?? ""
             switch fileName {

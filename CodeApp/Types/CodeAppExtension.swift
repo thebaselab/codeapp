@@ -11,6 +11,7 @@ class CodeAppExtension {
     struct Contribution {
         var panel: PanelManager
         var toolbarItem: ToolbarManager
+        var editorProvider: EditorProviderManager
     }
 
     func onInitialize(

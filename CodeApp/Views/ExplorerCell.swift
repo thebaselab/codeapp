@@ -55,7 +55,8 @@ private struct FileCell: View {
     }
 
     func onOpenEditor() {
-        App.openEditor(urlString: item.url, type: .any)
+        guard let url = item._url else { return }
+        App.openFile(url: url)
     }
 
     func onCopyItemToFolder(url: URL) {
@@ -275,7 +276,10 @@ private struct ContextMenu: View {
 
             if item.subFolderItems == nil {
                 Button(action: {
-                    App.openEditor(urlString: item.url, type: .any, inNewTab: true)
+                    if let url = item._url {
+                        // TODO: Support new tab
+                        App.openFile(url: url)
+                    }
                 }) {
                     Text("Open in Tab")
                     Image(systemName: "doc.plaintext")
@@ -328,7 +332,7 @@ private struct ContextMenu: View {
             Button(action: {
                 let pasteboard = UIPasteboard.general
                 guard let targetURL = URL(string: item.url),
-                    let baseURL = URL(string: App.currentURL())
+                    let baseURL = (App.activeEditor as? EditorInstanceWithURL)?.url
                 else {
                     return
                 }

@@ -183,15 +183,9 @@ struct NewFileView: View {
                     App.notificationManager.showErrorMessage(error.localizedDescription)
                     return
                 }
+                App.openFile(url: url)
+
                 DispatchQueue.main.async {
-                    let newEditor = EditorInstance(
-                        url: url.absoluteString, content: content, type: .file)
-                    App.editors.append(newEditor)
-                    App.activeEditor = newEditor
-                    App.monacoInstance.newModel(url: url.absoluteString, content: content)
-                    App.git_status()
-                    App.updateCompilerCode(
-                        pathExtension: name.components(separatedBy: ".").last ?? "")
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }

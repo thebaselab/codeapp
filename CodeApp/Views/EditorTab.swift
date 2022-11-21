@@ -30,92 +30,78 @@ struct EditorTab: View {
 
     var body: some View {
         Group {
-            if isActive && lastUpdateTime > Date.distantPast {
-                HStack(spacing: 4) {
-                    FileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
-                    Button(action: {}) {
-                        Group {
-                            if let url = URL(string: currentEditor.url)?.standardizedFileURL,
-                                let status = App.gitTracks[url]
-                            {
-                                FileDisplayName(
-                                    gitStatus: status,
-                                    name: editorDisplayName(editor: currentEditor))
-                            } else {
-                                FileDisplayName(
-                                    gitStatus: nil, name: editorDisplayName(editor: currentEditor))
-                            }
-                            if currentEditor.isDeleted {
-                                Text("(deleted)").italic()
-                            }
+            HStack(spacing: 4) {
+                // TODO: File Icons for extensions
+                FileIcon(url: currentEditor.title, iconSize: 12, type: .file)
+                Button(action: {
+                    onOpenEditor()
+                }) {
+                    Group {
+                        if let editorURL = (currentEditor as? EditorInstanceWithURL)?.url,
+                            let status = App.gitTracks[editorURL]
+                        {
+                            FileDisplayName(
+                                gitStatus: status,
+                                name: currentEditor.title)
+                        } else {
+                            FileDisplayName(
+                                gitStatus: nil, name: currentEditor.title)
                         }
-                        .lineLimit(1)
-                        .font(.system(size: 13, weight: .light))
-                        .foregroundColor(Color.init(id: "tab.activeForeground"))
-                    }.keyboardShortcut(EditorTab.keyForInt(int: index + 1), modifiers: .command)
+                        if let textEditor = currentEditor as? TextEditorInstance,
+                            textEditor.isDeleted
+                        {
+                            Text("(deleted)").italic()
+                        }
+                    }
+                    .lineLimit(1)
+                    .font(.system(size: 13, weight: .light))
+                    .foregroundColor(
+                        Color.init(id: isActive ? "tab.activeForeground" : "tab.inactiveForeground")
+                    )
+                }.keyboardShortcut(EditorTab.keyForInt(int: index + 1), modifiers: .command)
 
-                    if currentEditor.currentVersionId == currentEditor.lastSavedVersionId {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 8))
-                            .foregroundColor(Color.init(id: "tab.activeForeground"))
-                            .frame(width: 26, height: 26)
-                            .contentShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
-                            .hoverEffect(.highlight)
-                            .onTapGesture {
-                                onCloseEditor()
-                            }
-                    } else {
+                Group {
+                    if let textEditor = currentEditor as? TextEditorInstance,
+                        textEditor.currentVersionId != textEditor.lastSavedVersionId
+                    {
                         Image(systemName: "circle.fill")
                             .font(.system(size: 7))
-                            .foregroundColor(Color.init(id: "tab.activeForeground"))
+                            .foregroundColor(
+                                Color.init(
+                                    id: isActive ? "tab.activeForeground" : "tab.inactiveForeground"
+                                )
+                            )
                             .frame(width: 18, height: 18)
                             .contentShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
                             .hoverEffect(.highlight)
                             .onTapGesture {
                                 onCloseEditor()
                             }
+                    } else {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 8))
+                            .foregroundColor(
+                                Color.init(
+                                    id: isActive ? "tab.activeForeground" : "tab.inactiveForeground"
+                                )
+                            )
+                            .frame(width: 26, height: 26)
                     }
 
                 }
-                .frame(height: 40)
-                .padding(.horizontal, 8)
-                .background(Color.init(id: "tab.activeBackground"))
-                .cornerRadius(10, corners: [.topLeft, .topRight])
-            } else {
-                Button(action: { onOpenEditor() }) {
-                    HStack(spacing: 4) {
-                        FileIcon(url: currentEditor.url, iconSize: 12, type: currentEditor.type)
-                        if let url = URL(string: currentEditor.url)?.standardizedFileURL,
-                            let status = App.gitTracks[url]
-                        {
-                            FileDisplayName(
-                                gitStatus: status, name: editorDisplayName(editor: currentEditor))
-                        } else {
-                            Text(editorDisplayName(editor: currentEditor))
-                                .lineLimit(1)
-                                .font(.subheadline)
-                                .foregroundColor(Color.init(id: "tab.inactiveForeground"))
-                        }
-                        if currentEditor.currentVersionId != currentEditor.lastSavedVersionId {
-                            Image(systemName: "circle.fill")
-                                .font(.system(size: 7))
-                                .foregroundColor(Color.init(id: "tab.inactiveForeground"))
-                                .frame(width: 18, height: 18)
-                                .contentShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
-                                .hoverEffect(.highlight)
-                                .onTapGesture {
-                                    onCloseEditor()
-                                }
-                        }
-                    }
-                }.keyboardShortcut(EditorTab.keyForInt(int: index + 1), modifiers: .command)
-                    .frame(height: 40)
-                    .padding(.horizontal, 8)
+                .contentShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
+                .hoverEffect(.highlight)
+                .onTapGesture {
+                    onCloseEditor()
+                }
+
             }
-        }.onTapGesture {
-            if !(isActive) {
-                onOpenEditor()
+            .frame(height: 40)
+            .padding(.horizontal, 8)
+            .if(isActive) {
+                $0.background(Color(id: "tab.activeBackground"))
             }
+            .cornerRadius(10, corners: [.topLeft, .topRight])
         }
     }
 }

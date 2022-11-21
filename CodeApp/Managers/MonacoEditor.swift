@@ -11,7 +11,7 @@ import WebKit
 
 struct MonacoEditor: UIViewRepresentable {
 
-    @EnvironmentObject var status: MainApp
+    @EnvironmentObject var App: MainApp
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
@@ -314,12 +314,8 @@ struct MonacoEditor: UIViewRepresentable {
         }
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        return
-    }
-
     func makeCoordinator() -> MonacoEditor.Coordinator {
-        Coordinator(self, env: status)
+        Coordinator(self, env: App)
     }
 
     class Coordinator: NSObject, WKScriptMessageHandler, UIGestureRecognizerDelegate {
@@ -354,18 +350,18 @@ struct MonacoEditor: UIViewRepresentable {
             }
 
             // If the cache hasn't been invalidated, it means the editor also have the up-to-date model.
-            if let isCached = self.control.status.workSpaceStorage.gitServiceProvider?.isCached(
+            if let isCached = self.control.App.workSpaceStorage.gitServiceProvider?.isCached(
                 url: sanitizedUri),
                 !force, isCached
             {
                 return
             }
 
-            if let hasRepo = self.control.status.workSpaceStorage.gitServiceProvider?.hasRepository,
+            if let hasRepo = self.control.App.workSpaceStorage.gitServiceProvider?.hasRepository,
                 hasRepo
             {
                 DispatchQueue.global(qos: .utility).async {
-                    self.control.status.workSpaceStorage.gitServiceProvider?.previous(
+                    self.control.App.workSpaceStorage.gitServiceProvider?.previous(
                         path: sanitizedUri, error: { err in print(err) },
                         completionHandler: { value in
                             DispatchQueue.main.async {
@@ -387,7 +383,7 @@ struct MonacoEditor: UIViewRepresentable {
                         let jsonData = try JSONSerialization.data(
                             withJSONObject: result, options: [])
                         let decoded = try JSONDecoder().decode([action].self, from: jsonData)
-                        self.control.status.editorShortcuts = decoded
+                        self.control.App.editorShortcuts = decoded
                     } catch {
                         print(error)
                     }
@@ -415,24 +411,24 @@ struct MonacoEditor: UIViewRepresentable {
                     name: Notification.Name("monaco.cursor.position.changed"), object: nil,
                     userInfo: [
                         "lineNumber": lineNumber, "column": column,
-                        "sceneIdentifier": control.status.sceneIdentifier,
+                        "sceneIdentifier": control.App.sceneIdentifier,
                     ])
             case "Content changed":
                 let version = result["VersionID"] as! Int
                 let content = result["currentContent"] as! String
-                if (control.status.activeEditor?.lastSavedVersionId
-                    == control.status.activeEditor?.currentVersionId  // Saved -> Unsaved
-                    && version != control.status.activeEditor?.lastSavedVersionId)
-                    || (control.status.activeEditor?.lastSavedVersionId
-                        != control.status.activeEditor?.currentVersionId  // Unsaved -> Saved
-                        && version == control.status.activeEditor?.lastSavedVersionId)
+                if (control.App.activeTextEditor?.lastSavedVersionId
+                    == control.App.activeTextEditor?.currentVersionId  // Saved -> Unsaved
+                    && version != control.App.activeTextEditor?.lastSavedVersionId)
+                    || (control.App.activeTextEditor?.lastSavedVersionId
+                        != control.App.activeTextEditor?.currentVersionId  // Unsaved -> Saved
+                        && version == control.App.activeTextEditor?.lastSavedVersionId)
                 {
                     NotificationCenter.default.post(
                         name: Notification.Name("monaco.editor.currentContent.changed"),
                         object: nil, userInfo: nil)
                 }
-                control.status.activeEditor?.currentVersionId = version
-                control.status.activeEditor?.content = content
+                control.App.activeTextEditor?.currentVersionId = version
+                control.App.activeTextEditor?.content = content
 
                 let modelUri = result["URI"] as! String
                 requestDiffUpdate(modelUri: modelUri)
@@ -448,7 +444,7 @@ struct MonacoEditor: UIViewRepresentable {
                 control.monacoWebView.isEditorInited = true
                 control.monacoWebView.removeUIDropInteraction()
                 control.applyUserOptions()
-                control.status.loadURLQueue()
+                control.App.loadURLQueue()
                 if globalDarkTheme != nil {
                     if let theJSONData = try? JSONSerialization.data(
                         withJSONObject: globalDarkTheme!, options: .prettyPrinted),
@@ -474,13 +470,13 @@ struct MonacoEditor: UIViewRepresentable {
                 control.injectTypes(
                     url: Bundle.main.url(forResource: "npm", withExtension: "bundle")!
                         .appendingPathComponent("node_modules/@types"))
-                control.status.scanForTypes()
+                control.App.scanForTypes()
 
-                for editor in control.status.editors {
-                    control.newModel(url: editor.url, content: editor.content)
+                control.App.textEditors.forEach {
+                    control.newModel(url: $0.url.absoluteString, content: $0.content)
                 }
-                if !control.status.editors.isEmpty {
-                    control.setModel(url: control.status.currentURL())
+                if let activeURL = control.App.activeTextEditor?.url {
+                    control.setModel(url: activeURL.absoluteString)
                 }
                 if let state = UserDefaults.standard.string(forKey: "uistate.activeEditor.state") {
                     control.executeJavascript(command: "editor.restoreViewState(\(state))")
@@ -490,7 +486,7 @@ struct MonacoEditor: UIViewRepresentable {
                 getAllActions()
             case "Markers updated":
                 let markers = result["Markers"] as! [Any]
-                control.status.problems = [:]
+                control.App.problems = [:]
                 for mkr in markers {
                     let jsonData = try! JSONSerialization.data(withJSONObject: mkr, options: [])
                     let decoded = try! JSONDecoder().decode(marker.self, from: jsonData)
@@ -499,83 +495,15 @@ struct MonacoEditor: UIViewRepresentable {
                             decoded.resource.path.dropFirst().replacingOccurrences(
                                 of: " ", with: "%20")))
                     {
-                        if control.status.problems[url] != nil {
-                            control.status.problems[url]!.append(decoded)
+                        if control.App.problems[url] != nil {
+                            control.App.problems[url]!.append(decoded)
                         } else {
-                            control.status.problems[url] = [decoded]
+                            control.App.problems[url] = [decoded]
                         }
                     }
                 }
             default:
                 print("[Error] \(event) not handled")
-            }
-        }
-
-        var offsetY: CGFloat = 0.0
-        var offsetX: CGFloat = 0.0
-
-        @objc func panColor(_ gestureRecognizer: UIPanGestureRecognizer) {
-            guard let editor = control.status.activeEditor else {
-                return
-            }
-            let velocity = gestureRecognizer.velocity(in: control.monacoWebView)
-            if editor.type == .file {
-                control.executeJavascript(
-                    command:
-                        "editor.setScrollPosition({scrollTop: editor.getScrollTop() + (-1 * \(velocity.y / 100))}, 0)"
-                )
-                control.executeJavascript(
-                    command:
-                        "editor.setScrollPosition({scrollLeft: editor.getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)"
-                )
-            } else if editor.type == .diff {
-                control.executeJavascript(
-                    command:
-                        "editor.getOriginalEditor().setScrollPosition({scrollTop: editor.getOriginalEditor().getScrollTop() + (-1 * \(velocity.y / 100))}, 0)"
-                )
-                control.executeJavascript(
-                    command:
-                        "editor.getOriginalEditor().setScrollPosition({scrollLeft: editor.getOriginalEditor().getScrollLeft() + (-1 * \(velocity.x / 100))}, 0)"
-                )
-            }
-            offsetY = velocity.y
-            offsetX = velocity.x
-            if gestureRecognizer.state == .ended {
-                offsetY = 0.0
-                offsetX = 0.0
-            }
-        }
-
-        @objc func mousePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-            guard let editor = control.status.activeEditor else {
-                return
-            }
-            let translation = gestureRecognizer.translation(in: control.monacoWebView)
-            if editor.type == .file {
-                control.executeJavascript(
-                    command:
-                        "editor.setScrollPosition({scrollTop: editor.getScrollTop() + (-1 * \(translation.y - offsetY))}, 0)"
-                )
-                control.executeJavascript(
-                    command:
-                        "editor.setScrollPosition({scrollLeft: editor.getScrollLeft() + (-1 * \(translation.x - offsetX))}, 0)"
-                )
-            } else if editor.type == .diff {
-                control.executeJavascript(
-                    command:
-                        "editor.getOriginalEditor().setScrollPosition({scrollTop: editor.getOriginalEditor().getScrollTop() + (-1 * \(translation.y - offsetY))}, 0)"
-                )
-                control.executeJavascript(
-                    command:
-                        "editor.getOriginalEditor().setScrollPosition({scrollLeft: editor.getOriginalEditor().getScrollLeft() + (-1 * \(translation.x - offsetX))}, 0)"
-                )
-            }
-
-            offsetY = translation.y
-            offsetX = translation.x
-            if gestureRecognizer.state == .ended {
-                offsetY = 0.0
-                offsetX = 0.0
             }
         }
 
@@ -612,6 +540,14 @@ struct MonacoEditor: UIViewRepresentable {
             self.env = env
             super.init()
         }
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        if let activeTextEditor = App.activeTextEditor {
+            newModel(url: activeTextEditor.url.absoluteString, content: activeTextEditor.content)
+            setModel(url: activeTextEditor.url.absoluteString)
+        }
+        return
     }
 
     func makeUIView(context: Context) -> WKWebView {
