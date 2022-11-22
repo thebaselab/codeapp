@@ -17,6 +17,7 @@ class ExtensionManager: ObservableObject {
         RemoteExecutionExtension(),
         LocalExecutionExtension(),
         TerminalExtension(),
+        ImageEditorExtension(),
     ]
 
     func registerExtension(ex: CodeAppExtension) {

@@ -20,6 +20,9 @@ class MainApp: ObservableObject {
     var textEditors: [TextEditorInstance] {
         editors.filter { $0 is TextEditorInstance } as? [TextEditorInstance] ?? []
     }
+    var editorsWithURL: [EditorInstanceWithURL] {
+        editors.filter { $0 is EditorInstanceWithURL } as? [EditorInstanceWithURL] ?? []
+    }
 
     @Published var isShowingCompilerLanguage = false
     @Published var activeEditor: EditorInstance? = nil
@@ -644,8 +647,8 @@ class MainApp: ObservableObject {
 
     }
 
-    private func openTextEditorForURL(url: URL) throws -> TextEditorInstance {
-        guard let editor = (textEditors.first { $0.url == url }) else {
+    private func openEditorForURL(url: URL) throws -> EditorInstanceWithURL {
+        guard let editor = (editorsWithURL.first { $0.url == url }) else {
             throw AppError.editorDoesNotExist
         }
 
@@ -675,11 +678,13 @@ class MainApp: ObservableObject {
 
     @MainActor
     func openFile(url: URL, alwaysInNewTab: Bool = false) async throws -> EditorInstance {
-        if let existingEditor = try? openTextEditorForURL(url: url) {
+        if let existingEditor = try? openEditorForURL(url: url) {
             return existingEditor
         }
+        // TODO: Avoid reading the same file twice
         if let textEditor = try? await createTextEditorFromURL(url: url) {
             appendAndFocusNewEditor(editor: textEditor, alwaysInNewTab: alwaysInNewTab)
+            return textEditor
         }
         let editor = try createExtensionEditorFromURL(url: url)
         appendAndFocusNewEditor(editor: editor, alwaysInNewTab: alwaysInNewTab)
