@@ -290,25 +290,19 @@ class MainApp: ObservableObject {
         }
     }
 
+    @MainActor
     func loadURLQueue() {
-        Task {
-            // TODO: Handle overwriting existing editor + Orders
-            for url in urlQueue {
-                _ = try? await openFile(url: url)
-            }
-
-            urlQueue = []
+        // TODO: Confirm if order persists as openFile is now an async operation
+        for url in urlQueue {
+            openFile(url: url, alwaysInNewTab: true)
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             if let editorToRestore = self.editorToRestore {
-                Task {
-                    _ = try? await self.openFile(url: editorToRestore)
-                    self.editorToRestore = nil
-                }
+                self.openFile(url: editorToRestore)
+                self.editorToRestore = nil
             }
         }
-
     }
 
     func duplicateItem(from: URL) {
@@ -660,8 +654,9 @@ class MainApp: ObservableObject {
         return editor
     }
 
-    private func appendAndFocusNewEditor(editor: EditorInstance) {
-        if let activeTextEditor,
+    private func appendAndFocusNewEditor(editor: EditorInstance, alwaysInNewTab: Bool = false) {
+        if !alwaysInNewTab,
+            let activeTextEditor,
             activeTextEditor.currentVersionId == activeTextEditor.currentVersionId
         {
             editors.removeAll { $0 == activeTextEditor }
@@ -672,22 +667,22 @@ class MainApp: ObservableObject {
     }
 
     @MainActor
-    func openFile(url: URL) {
+    func openFile(url: URL, alwaysInNewTab: Bool = false) {
         Task {
-            try await openFile(url: url)
+            try await openFile(url: url, alwaysInNewTab: alwaysInNewTab)
         }
     }
 
     @MainActor
-    func openFile(url: URL) async throws -> EditorInstance {
+    func openFile(url: URL, alwaysInNewTab: Bool = false) async throws -> EditorInstance {
         if let existingEditor = try? openTextEditorForURL(url: url) {
             return existingEditor
         }
         if let textEditor = try? await createTextEditorFromURL(url: url) {
-            appendAndFocusNewEditor(editor: textEditor)
+            appendAndFocusNewEditor(editor: textEditor, alwaysInNewTab: alwaysInNewTab)
         }
         let editor = try createExtensionEditorFromURL(url: url)
-        appendAndFocusNewEditor(editor: editor)
+        appendAndFocusNewEditor(editor: editor, alwaysInNewTab: alwaysInNewTab)
         return editor
     }
 

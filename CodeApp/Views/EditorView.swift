@@ -99,7 +99,8 @@ struct EditorView: View {
                         App.monacoInstance.executeJavascript(
                             command: "document.getElementById('overlay').focus()")
                     }
-                })
+                }
+            )
             .onReceive(
                 NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
                 perform: { data in

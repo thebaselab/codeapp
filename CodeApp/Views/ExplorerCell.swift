@@ -277,8 +277,7 @@ private struct ContextMenu: View {
             if item.subFolderItems == nil {
                 Button(action: {
                     if let url = item._url {
-                        // TODO: Support new tab
-                        App.openFile(url: url)
+                        App.openFile(url: url, alwaysInNewTab: true)
                     }
                 }) {
                     Text("Open in Tab")
