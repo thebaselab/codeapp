@@ -74,10 +74,12 @@ struct EditorTab: View {
                             .frame(width: 18, height: 18)
                             .contentShape(RoundedRectangle(cornerRadius: 2, style: .continuous))
                             .hoverEffect(.highlight)
-                            .onTapGesture {
-                                onCloseEditor()
+                            .if(isActive) {
+                                $0.onTapGesture {
+                                    onCloseEditor()
+                                }
                             }
-                    } else {
+                    } else if isActive {
                         Image(systemName: "xmark")
                             .font(.system(size: 8))
                             .foregroundColor(
