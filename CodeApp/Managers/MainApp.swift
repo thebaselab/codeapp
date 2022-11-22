@@ -610,7 +610,8 @@ class MainApp: ObservableObject {
     }
 
     private func createExtensionEditorFromURL(url: URL) throws -> EditorInstance {
-        let fileExtension = url.lastPathComponent.components(separatedBy: ".").last ?? ""
+        let fileExtension =
+            url.lastPathComponent.components(separatedBy: ".").last?.lowercased() ?? ""
         let provider = extensionManager.editorProviderManager.providers.first {
             $0.registeredFileExtensions.contains(fileExtension)
         }
@@ -624,6 +625,7 @@ class MainApp: ObservableObject {
 
     private func createTextEditorFromURL(url: URL) async throws -> TextEditorInstance {
         let contentData: Data? = try await withCheckedThrowingContinuation { continuation in
+            // TODO: A more efficient way to determine whether file is supported
             workSpaceStorage.contents(
                 at: url,
                 completionHandler: { data, error in

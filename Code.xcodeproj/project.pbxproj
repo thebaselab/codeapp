@@ -669,6 +669,8 @@
 		9F3C2DF8291CCE9A00BFF14C /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF6291CCE9A00BFF14C /* Remote.swift */; };
 		9FAE498F292D062800B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FAE4990292D062D00B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
+		9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */; };
+		9FAE4994292D153F00B1B962 /* VideoViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */; };
 		9FC03E66291F21BD00DECD1B /* SourceControlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E65291F21BD00DECD1B /* SourceControlError.swift */; };
 		9FC03E67291F21BD00DECD1B /* SourceControlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E65291F21BD00DECD1B /* SourceControlError.swift */; };
 		9FC03E69291F303900DECD1B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E68291F303900DECD1B /* Utilities.swift */; };
@@ -1648,6 +1650,7 @@
 		9F3C2DF2291CB2B400BFF14C /* RemoteHostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteHostError.swift; sourceTree = "<group>"; };
 		9F3C2DF6291CCE9A00BFF14C /* Remote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remote.swift; sourceTree = "<group>"; };
 		9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerExtension.swift; sourceTree = "<group>"; };
+		9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewerExtension.swift; sourceTree = "<group>"; };
 		9FC03E65291F21BD00DECD1B /* SourceControlError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlError.swift; sourceTree = "<group>"; };
 		9FC03E68291F303900DECD1B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		9FC03E6D291F6EE700DECD1B /* ExplorerEditorListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerEditorListSection.swift; sourceTree = "<group>"; };
@@ -2501,6 +2504,7 @@
 		9FAE4991292D14E200B1B962 /* VideoViewer */ = {
 			isa = PBXGroup;
 			children = (
+				9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */,
 			);
 			path = VideoViewer;
 			sourceTree = "<group>";
@@ -2913,6 +2917,7 @@
 				9419697E280316C7008AAEB2 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC862807502A00939E4F /* ActivityBarItemView.swift in Sources */,
 				94A045F22804816000182275 /* RemoteCreateSection.swift in Sources */,
+				9FAE4994292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,
 				944112A2282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
 				94196980280316C7008AAEB2 /* URL+relativePath.swift in Sources */,
 				942A1886285B90650018801F /* Secrets.swift in Sources */,
@@ -3057,6 +3062,7 @@
 				949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC852807502A00939E4F /* ActivityBarItemView.swift in Sources */,
 				94A045F12804816000182275 /* RemoteCreateSection.swift in Sources */,
+				9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,
 				944112A1282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
 				949B3CB925DADCB900BC83B5 /* URL+relativePath.swift in Sources */,
 				942A1885285B90650018801F /* Secrets.swift in Sources */,

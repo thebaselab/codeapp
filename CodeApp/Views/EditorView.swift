@@ -35,50 +35,6 @@ struct EditorView: View {
 
                     editor.view
 
-                    // TODO: Support image, video, markdown preview through extensions
-
-                    //                    if editor.type == .preview, let content = App.activeEditor?.content {
-                    //                        MarkDownView(
-                    //                            text: content, showsNewFile: $showsNewFile,
-                    //                            showsDirectory: $showsDirectory, showsFolderPicker: $showsFolderPicker,
-                    //                            showsFilePicker: $showsFilePicker, directoryID: $directoryID)
-                    //                    } else if editor.type == .image {
-                    //                        ZStack {
-                    //                            editor.image!.resizable().scaledToFit()
-                    //                                .contextMenu {
-                    //                                    Button {
-                    //                                        guard let imageURL = URL(string: editor.url),
-                    //                                            let uiImage = UIImage(contentsOfFile: imageURL.path)
-                    //                                        else {
-                    //                                            return
-                    //                                        }
-                    //                                        UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
-                    //                                    } label: {
-                    //                                        Label("Add to Photos", systemImage: "square.and.arrow.down")
-                    //                                    }
-                    //                                    Button {
-                    //                                        guard let imageURL = URL(string: editor.url),
-                    //                                            let uiImage = UIImage(contentsOfFile: imageURL.path)
-                    //                                        else {
-                    //                                            return
-                    //                                        }
-                    //                                        UIPasteboard.general.image = uiImage
-                    //                                    } label: {
-                    //                                        Label("Copy Image", systemImage: "doc.on.doc")
-                    //                                    }
-                    //                                }
-                    //                        }.frame(
-                    //                            minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity
-                    //                        ).background(Color.init(id: "editor.background"))
-                    //                    } else if editor.type == .video {
-                    //                        VideoPlayer(player: AVPlayer(url: URL(string: editor.url)!))
-                    //                            .onAppear {
-                    //                                try? AVAudioSession.sharedInstance().setCategory(
-                    //                                    AVAudioSession.Category.playback,
-                    //                                    mode: AVAudioSession.Mode.default, options: [])
-                    //                            }
-                    //                    }
-
                     VStack {
                         InfinityProgressView(enabled: $App.workSpaceStorage.editorIsBusy)
                         Spacer()
