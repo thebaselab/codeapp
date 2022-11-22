@@ -56,7 +56,13 @@ private struct FileCell: View {
 
     func onOpenEditor() {
         guard let url = item._url else { return }
-        App.openFile(url: url)
+        Task {
+            do {
+                _ = try await App.openFile(url: url)
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+            }
+        }
     }
 
     func onCopyItemToFolder(url: URL) {

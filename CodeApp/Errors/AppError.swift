@@ -7,7 +7,14 @@
 
 import Foundation
 
-enum AppError: String, LocalizedError {
+// TODO: Add localization entries
+enum AppError: String {
     case unknownFileFormat = "errors.unknown_file_format"
     case editorDoesNotExist = "errors.editor_does_not_exist"
+}
+
+extension AppError: LocalizedError {
+    var errorDescription: String? {
+        NSLocalizedString(self.rawValue, comment: "")
+    }
 }
