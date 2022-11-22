@@ -667,8 +667,8 @@
 		9F3C2DF4291CB38100BFF14C /* RemoteHostError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF2291CB2B400BFF14C /* RemoteHostError.swift */; };
 		9F3C2DF7291CCE9A00BFF14C /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF6291CCE9A00BFF14C /* Remote.swift */; };
 		9F3C2DF8291CCE9A00BFF14C /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF6291CCE9A00BFF14C /* Remote.swift */; };
-		9FAE498F292D062800B1B962 /* ImageEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageEditorExtension.swift */; };
-		9FAE4990292D062D00B1B962 /* ImageEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageEditorExtension.swift */; };
+		9FAE498F292D062800B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
+		9FAE4990292D062D00B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FC03E66291F21BD00DECD1B /* SourceControlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E65291F21BD00DECD1B /* SourceControlError.swift */; };
 		9FC03E67291F21BD00DECD1B /* SourceControlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E65291F21BD00DECD1B /* SourceControlError.swift */; };
 		9FC03E69291F303900DECD1B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E68291F303900DECD1B /* Utilities.swift */; };
@@ -1647,7 +1647,7 @@
 		9F3C2DEC2918EDC400BFF14C /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		9F3C2DF2291CB2B400BFF14C /* RemoteHostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteHostError.swift; sourceTree = "<group>"; };
 		9F3C2DF6291CCE9A00BFF14C /* Remote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remote.swift; sourceTree = "<group>"; };
-		9FAE498E292D062800B1B962 /* ImageEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditorExtension.swift; sourceTree = "<group>"; };
+		9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerExtension.swift; sourceTree = "<group>"; };
 		9FC03E65291F21BD00DECD1B /* SourceControlError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlError.swift; sourceTree = "<group>"; };
 		9FC03E68291F303900DECD1B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		9FC03E6D291F6EE700DECD1B /* ExplorerEditorListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerEditorListSection.swift; sourceTree = "<group>"; };
@@ -2362,7 +2362,8 @@
 		9F046C3729223CC000BDE4E9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9FAE498D292D060F00B1B962 /* ImageEditor */,
+				9FAE4991292D14E200B1B962 /* VideoViewer */,
+				9FAE498D292D060F00B1B962 /* ImageViewer */,
 				9FD5BCF92928E01400F20C4B /* LocalExecution */,
 				9FD5BCE729238B5800F20C4B /* TerminalService */,
 				9FD5BCE12923872800F20C4B /* MonacoLanguageService */,
@@ -2489,12 +2490,19 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
-		9FAE498D292D060F00B1B962 /* ImageEditor */ = {
+		9FAE498D292D060F00B1B962 /* ImageViewer */ = {
 			isa = PBXGroup;
 			children = (
-				9FAE498E292D062800B1B962 /* ImageEditorExtension.swift */,
+				9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */,
 			);
-			path = ImageEditor;
+			path = ImageViewer;
+			sourceTree = "<group>";
+		};
+		9FAE4991292D14E200B1B962 /* VideoViewer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VideoViewer;
 			sourceTree = "<group>";
 		};
 		9FC03E64291CFD0200DECD1B /* Managers */ = {
@@ -2930,7 +2938,7 @@
 				9420698928284027007DE671 /* Store.swift in Sources */,
 				94A04608280493C600182275 /* SourceControlCloneSection.swift in Sources */,
 				FFD081BC29260B00001D9373 /* Libgit2Error.swift in Sources */,
-				9FAE4990292D062D00B1B962 /* ImageEditorExtension.swift in Sources */,
+				9FAE4990292D062D00B1B962 /* ImageViewerExtension.swift in Sources */,
 				94A045F82804822400182275 /* RemoteHostCell.swift in Sources */,
 				94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				9F046C332922203E00BDE4E9 /* ToolbarManager.swift in Sources */,
@@ -3074,7 +3082,7 @@
 				9420698828284027007DE671 /* Store.swift in Sources */,
 				94A04607280493C600182275 /* SourceControlCloneSection.swift in Sources */,
 				FFD081BB29260B00001D9373 /* Libgit2Error.swift in Sources */,
-				9FAE498F292D062800B1B962 /* ImageEditorExtension.swift in Sources */,
+				9FAE498F292D062800B1B962 /* ImageViewerExtension.swift in Sources */,
 				94A045F72804822400182275 /* RemoteHostCell.swift in Sources */,
 				94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				9F046C322922203E00BDE4E9 /* ToolbarManager.swift in Sources */,

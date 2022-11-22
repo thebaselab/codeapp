@@ -1,5 +1,5 @@
 //
-//  ImageEditorExtension.swift
+//  ImageViewerExtension.swift
 //  Code
 //
 //  Created by Ken Chung on 22/11/2022.
@@ -56,7 +56,7 @@ private struct ImageView: View {
 }
 
 
-class ImageEditorExtension: CodeAppExtension {
+class ImageViewerExtension: CodeAppExtension {
 
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
         let provider = EditorProvider(
