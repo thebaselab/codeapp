@@ -696,8 +696,6 @@ class MainApp: ObservableObject {
         guard let index = (editors.firstIndex { $0.id == editor.id }) else {
             return
         }
-        editors.remove(at: index)
-
         if editors.indices.contains(index - 1) {
             activeEditor = editors[index - 1]
         } else if editors.indices.contains(index + 1) {
@@ -705,5 +703,7 @@ class MainApp: ObservableObject {
         } else {
             activeEditor = nil
         }
+
+        editors.remove(at: index)
     }
 }
