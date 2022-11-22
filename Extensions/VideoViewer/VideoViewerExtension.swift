@@ -20,9 +20,6 @@ private struct VideoView: View {
         var body: some View {
             if let player = storage.player {
                 VideoPlayer(player: player)
-                    .onAppear {
-                        player.play()
-                    }
                     .statusBarHidden(false)
             }else if storage.isNonLocalResource {
                 Text("External video resource is not supported yet")
