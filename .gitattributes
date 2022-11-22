@@ -1,3 +1,2 @@
-Library/** linguist-vendored
-ClangLib/** linguist-vendored
-CodeApp/npm.bundle/** linguist-vendored
+Dependencies/** linguist-vendored
+LanguageResources/** linguist-vendored
