@@ -546,6 +546,8 @@ struct MonacoEditor: UIViewRepresentable {
         if let activeTextEditor = App.activeTextEditor {
             newModel(url: activeTextEditor.url.absoluteString, content: activeTextEditor.content)
             setModel(url: activeTextEditor.url.absoluteString)
+        } else {
+            setModel(url: "")
         }
         return
     }
