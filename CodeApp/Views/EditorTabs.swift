@@ -8,6 +8,30 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+struct CompactEditorTabs: View {
+    @EnvironmentObject var App: MainApp
+
+    var body: some View {
+        Menu {
+            ForEach(App.editors) { editor in
+                Button {
+                    App.setActiveEditor(editor: editor)
+                } label: {
+                    FileIcon(url: editor.title, iconSize: 12, type: .file)
+                    Text(editor.title)
+                }
+            }
+        } label: {
+            HStack {
+                Text(App.activeEditor?.title ?? "")
+                if App.editors.count > 0 {
+                    Image(systemName: "chevron.up.chevron.down")
+                }
+            }
+        }.id(UUID())
+    }
+}
+
 struct EditorTabs: View {
     @EnvironmentObject var App: MainApp
 

@@ -36,69 +36,20 @@ struct TopBar: View {
                         .padding()
                 }
             }
-            EditorTabs()
-            Spacer()
+
+            if horizontalSizeClass == .compact {
+                CompactEditorTabs()
+                    .frame(maxWidth: .infinity)
+            } else {
+                EditorTabs()
+                Spacer()
+            }
 
             ForEach(toolBarManager.items) { item in
                 if item.shouldDisplay() {
                     ToolbarItemView(item: item)
                 }
             }
-
-            // TODO: Support for diff editor
-            //            if App.branch != "" && App.activeEditor?.type == .file {
-            //                Button(action: {
-            //                    if let url = URL(string: App.currentURL()) {
-            //                        App.compareWithPrevious(url: url.standardizedFileURL)
-            //                    }
-            //                }) {
-            //                    Image(systemName: "arrow.2.squarepath").font(.system(size: 17)).foregroundColor(
-            //                        Color.init("T1")
-            //                    ).padding(5)
-            //                        .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            //                        .hoverEffect(.highlight)
-            //                        .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20)
-            //                        .padding()
-            //                }
-            //            }
-
-            //            if App.activeEditor?.type == .diff {
-            //                Image(systemName: "arrow.up").font(.system(size: 17)).foregroundColor(
-            //                    Color.init("T1")
-            //                ).padding(5)
-            //                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            //                    .hoverEffect(.highlight)
-            //                    .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20).padding()
-            //                    .onTapGesture {
-            //                        App.monacoInstance.executeJavascript(command: "navi.previous()")
-            //                    }
-            //                Image(systemName: "arrow.down").font(.system(size: 17)).foregroundColor(
-            //                    Color.init("T1")
-            //                ).padding(5)
-            //                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            //                    .hoverEffect(.highlight)
-            //                    .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20).padding()
-            //                    .onTapGesture { App.monacoInstance.executeJavascript(command: "navi.next()") }
-            //            }
-
-            //            if let ext = App.currentURL().lowercased().components(separatedBy: ".").last,
-            //                ext == "md" || ext == "markdown"
-            //            {
-            //                Image(systemName: "newspaper").font(.system(size: 17)).foregroundColor(
-            //                    Color.init("T1")
-            //                ).padding(5)
-            //                    .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            //                    .hoverEffect(.highlight)
-            //                    .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20).padding()
-            //                    .onTapGesture {
-            //                        guard let url = URL(string: App.activeEditor?.url ?? ""),
-            //                            let content = App.activeEditor?.content
-            //                        else {
-            //                            return
-            //                        }
-            //                        App.addMarkDownPreview(url: url, content: content)
-            //                    }
-            //            }
 
             if App.activeTextEditor != nil {
                 Image(systemName: "doc.text.magnifyingglass").font(.system(size: 17))
