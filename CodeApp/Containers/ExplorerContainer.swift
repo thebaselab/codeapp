@@ -83,21 +83,34 @@ struct ExplorerContainer: View {
         return true
     }
 
+    func scrollToActiveEditor(proxy: ScrollViewProxy) {
+        if let url = (App.activeEditor as? EditorInstanceWithURL)?.url {
+            proxy.scrollTo(url.absoluteString, anchor: .top)
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
 
             InfinityProgressView(enabled: $App.workSpaceStorage.explorerIsBusy)
 
-            List {
-                ExplorerEditorListSection(
-                    onOpenNewFile: onOpenNewFile,
-                    onPickNewDirectory: onPickNewDirectory
-                )
-                ExplorerFileTreeSection(
-                    searchString: searchString, onDrag: onDragCell, onDropToFolder: onDropToFolder)
-            }.listStyle(SidebarListStyle())
+            ScrollViewReader { proxy in
+                List {
+                    ExplorerEditorListSection(
+                        onOpenNewFile: onOpenNewFile,
+                        onPickNewDirectory: onPickNewDirectory
+                    )
+                    ExplorerFileTreeSection(
+                        searchString: searchString, onDrag: onDragCell,
+                        onDropToFolder: onDropToFolder)
+                }
+                .listStyle(SidebarListStyle())
                 .environment(\.defaultMinListRowHeight, 10)
                 .environment(\.editMode, $editMode)
+                .onAppear {
+                    scrollToActiveEditor(proxy: proxy)
+                }
+            }
 
             Spacer()
 

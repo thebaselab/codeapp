@@ -96,6 +96,7 @@ struct ExplorerFileTreeSection: View {
                             : Color.clear.cornerRadius(10.0)
                     )
                     .listRowSeparator(.hidden)
+                    .id(item.url)
                 },
                 onDisclose: { id in
                     if let id = id as? String {
