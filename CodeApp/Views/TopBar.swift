@@ -11,20 +11,19 @@ struct TopBar: View {
 
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var toolBarManager: ToolbarManager
+    @EnvironmentObject var stateManager: MainStateManager
+
+    @SceneStorage("sidebar.visible") var isSideBarExpanded: Bool = DefaultUIState.SIDEBAR_VISIBLE
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Binding var isShowingDirectory: Bool
-    @Binding var showingSettingsSheet: Bool
-    @Binding var showSafari: Bool
-    let runCode: () -> Void
     let openConsolePanel: () -> Void
 
     var body: some View {
         HStack(spacing: 0) {
-            if !isShowingDirectory && horizontalSizeClass == .compact {
+            if !isSideBarExpanded && horizontalSizeClass == .compact {
                 Button(action: {
                     withAnimation(.easeIn(duration: 0.2)) {
-                        isShowingDirectory.toggle()
+                        isSideBarExpanded.toggle()
                     }
                 }) {
                     Image(systemName: "sidebar.left")
@@ -132,7 +131,7 @@ struct TopBar: View {
                         Label("Close All", systemImage: "xmark")
                     }
                     if !App.workSpaceStorage.remoteConnected {
-                        Button(action: { self.showSafari.toggle() }) {
+                        Button(action: { stateManager.showsSafari.toggle() }) {
                             Label("Preview in Safari", systemImage: "safari")
                         }
                     }
@@ -161,7 +160,7 @@ struct TopBar: View {
                     }
 
                     Button(action: {
-                        showingSettingsSheet.toggle()
+                        stateManager.showsSettingsSheet.toggle()
                     }) {
                         Label("Settings", systemImage: "slider.horizontal.3")
                     }
@@ -179,7 +178,7 @@ struct TopBar: View {
                     .hoverEffect(.highlight)
                     .padding()
             }
-            .sheet(isPresented: $showingSettingsSheet) {
+            .sheet(isPresented: $stateManager.showsSettingsSheet) {
                 SettingsView()
                     .environmentObject(App)
             }

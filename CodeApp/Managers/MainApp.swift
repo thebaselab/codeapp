@@ -13,8 +13,21 @@ import SwiftUI
 import UniformTypeIdentifiers
 import ios_system
 
+class MainStateManager: ObservableObject {
+    @Published var showsNewFileSheet = false
+    @Published var showsDirectoryPicker = false
+    @Published var showsFilePicker = false
+    @Published var showsChangeLog: Bool = false
+    @Published var showsSettingsSheet: Bool = false
+    @Published var showsSafari: Bool = false
+    @Published var showsCheckoutAlert: Bool = false
+    @Published var selectedBranch: checkoutDest? = nil
+    @Published var checkoutDetached: Bool = false
+}
+
 class MainApp: ObservableObject {
     let extensionManager = ExtensionManager()
+    let stateManager = MainStateManager()
 
     @Published var editors: [EditorInstance] = []
     var textEditors: [TextEditorInstance] {
@@ -41,8 +54,6 @@ class MainApp: ObservableObject {
 
     // Editor States
     @Published var problems: [URL: [MonacoEditor.Coordinator.marker]] = [:]
-    @Published var showsNewFileSheet = false
-    @Published var showsDirectoryPicker = false
 
     // Git UI states
     @Published var gitTracks: [URL: Diff.Status] = [:]
@@ -205,11 +216,29 @@ class MainApp: ObservableObject {
     }
 
     func showWelcomeMessage() {
-        let readmeMessage = NSLocalizedString("Welcome Message", comment: "")
-        let title = NSLocalizedString("Welcome", comment: "")
-        let newEditor = MarkdownEditorInstance(content: readmeMessage, title: title)
-        editors.append(newEditor)
-        activeEditor = newEditor
+        let instnace = EditorInstance(
+            view: AnyView(
+                WelcomeView(
+                    onCreateNewFile: {
+                        self.stateManager.showsNewFileSheet.toggle()
+                    },
+                    onSelectFolderAsWorkspaceStorage: { url in
+                        self.loadFolder(url: url, resetEditors: true)
+                    },
+                    onSelectFolder: {
+                        self.stateManager.showsDirectoryPicker.toggle()
+                    },
+                    onSelectFile: {
+                        self.stateManager.showsFilePicker.toggle()
+                    },
+                    onNavigateToCloneSection: {
+                        // TODO: Modify SceneStorage?
+                    }
+                )
+
+            ), title: NSLocalizedString("Welcome", comment: ""))
+
+        appendAndFocusNewEditor(editor: instnace)
     }
 
     func updateView() {

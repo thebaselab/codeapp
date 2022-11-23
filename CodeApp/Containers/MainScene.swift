@@ -17,6 +17,7 @@ struct MainScene: View {
         MainView()
             .environmentObject(App)
             .environmentObject(App.extensionManager)
+            .environmentObject(App.stateManager)
             .onAppear {
                 App.extensionManager.initializeExtensions(app: App)
             }
@@ -31,16 +32,7 @@ private struct MainView: View {
 
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var extensionManager: ExtensionManager
-
-    @State var showChangeLog: Bool
-    @State var showingSettingsSheet: Bool = false
-    @State var showingNewFileSheet: Bool = false
-    @State var showsDirectoryPicker: Bool = false
-    @State var showsFilePicker: Bool = false
-    @State var showSafari: Bool = false
-    @State var isShowingCheckoutAlert: Bool = false
-    @State var selectedBranch: checkoutDest? = nil
-    @State var checkoutDetached: Bool = false
+    @EnvironmentObject var stateManager: MainStateManager
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -48,11 +40,12 @@ private struct MainView: View {
     @AppStorage("editorFontSize") var editorTextSize: Int = 14
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("compilerShowPath") var compilerShowPath = false
+    @AppStorage("changelog.lastread") var changeLogLastReadVersion = "0.0"
 
     @SceneStorage("sidebar.visible") var isShowingDirectory: Bool = false
     @SceneStorage("sidebar.tab") var currentDirectory: Int = 0
     @SceneStorage("panel.height") var panelHeight: Double = 200.0
-    @SceneStorage("panel.visible") var showsPanel: Bool = false
+    @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
 
     let sections: [Int: [String]] = [
         0: ["Files", "doc.on.doc"], 1: ["Search", "magnifyingglass"],
@@ -61,36 +54,27 @@ private struct MainView: View {
     ]
 
     init() {
-        if let lastReadVersion = UserDefaults.standard.string(forKey: "changelog.lastread") {
-            let currentVersion =
-                Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
-            if lastReadVersion != currentVersion {
-                _showChangeLog = State(initialValue: true)
-                UserDefaults.standard.setValue(currentVersion, forKey: "changelog.lastread")
-                return
-            } else {
-                _showChangeLog = State(initialValue: false)
-            }
-        } else {
-            let currentVersion =
-                Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
-            UserDefaults.standard.setValue(currentVersion, forKey: "changelog.lastread")
-            _showChangeLog = State(initialValue: true)
-            return
+        let appVersion =
+            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
+
+        if changeLogLastReadVersion != appVersion {
+            stateManager.showsChangeLog.toggle()
         }
+
+        changeLogLastReadVersion = appVersion
     }
 
     func openFolder() {
         self.isShowingDirectory = true
-        self.showsDirectoryPicker = true
+        stateManager.showsDirectoryPicker = true
     }
 
     func openFile() {
-        self.showsFilePicker.toggle()
+        stateManager.showsFilePicker.toggle()
     }
 
     func openNewFile() {
-        self.showingNewFileSheet.toggle()
+        stateManager.showsNewFileSheet.toggle()
     }
 
     func openConsolePanel() {
@@ -114,25 +98,6 @@ private struct MainView: View {
         } else {
             currentDirectory = index
         }
-    }
-
-    func runCode() {
-        //                guard let editor = App.activeEditor else {
-        //                    return
-        //                }
-        //                App.runCode(url: editor.url, lang: App.compilerCode)
-        //                DispatchQueue.main.async {
-        //                    if self.panelHeight < 70 {
-        //                        self.panelHeight = 200
-        //                    }
-        //                    self.showsPanel = true
-        //                    if App.compilerCode < 10 {
-        //                        self.currentPanelTab = PanelSection.terminal
-        //                    } else {
-        //                        self.currentPanelTab = PanelSection.remoteExecutionOutput
-        //                    }
-        //
-        //                }
     }
 
     var body: some View {
@@ -261,7 +226,7 @@ private struct MainView: View {
                                     activityBarItem:
                                         ActivityBarItem(
                                             action: {
-                                                showingSettingsSheet.toggle()
+                                                stateManager.showsSettingsSheet.toggle()
                                             },
                                             isActive: false,
                                             iconSystemName: "slider.horizontal.3",
@@ -282,9 +247,7 @@ private struct MainView: View {
 
                                 Group {
                                     if self.currentDirectory == 0 {
-                                        ExplorerContainer(
-                                            showingNewFileSheet: $showingNewFileSheet,
-                                            showsDirectoryPicker: $showsDirectoryPicker)
+                                        ExplorerContainer()
                                     } else if self.currentDirectory == 1 {
                                         SearchContainer()
                                     } else if self.currentDirectory == 3 {
@@ -300,29 +263,18 @@ private struct MainView: View {
 
                         ZStack {
                             VStack(spacing: 0) {
-                                TopBar(
-                                    isShowingDirectory: $isShowingDirectory,
-                                    showingSettingsSheet: $showingSettingsSheet,
-                                    showSafari: $showSafari, runCode: runCode,
-                                    openConsolePanel: openConsolePanel
-                                )
-                                .environmentObject(extensionManager.toolbarManager)
-                                .frame(height: 40)
+                                TopBar(openConsolePanel: openConsolePanel)
+                                    .environmentObject(extensionManager.toolbarManager)
+                                    .frame(height: 40)
 
-                                EditorView(
-                                    showsNewFile: $showingNewFileSheet,
-                                    showsDirectory: $isShowingDirectory,
-                                    showsFolderPicker: $showsDirectoryPicker,
-                                    showsFilePicker: $showsFilePicker,
-                                    directoryID: $currentDirectory
-                                )
-                                .disabled(horizontalSizeClass == .compact && isShowingDirectory)
-                                .sheet(isPresented: $showingNewFileSheet) {
-                                    NewFileView(
-                                        targetUrl: App.workSpaceStorage.currentDirectory.url
-                                    ).environmentObject(App)
-                                }
-                                .environmentObject(extensionManager.editorProviderManager)
+                                EditorView()
+                                    .disabled(horizontalSizeClass == .compact && isShowingDirectory)
+                                    .sheet(isPresented: $stateManager.showsNewFileSheet) {
+                                        NewFileView(
+                                            targetUrl: App.workSpaceStorage.currentDirectory.url
+                                        ).environmentObject(App)
+                                    }
+                                    .environmentObject(extensionManager.editorProviderManager)
 
                                 if showsPanel {
                                     PanelView()
@@ -356,7 +308,7 @@ private struct MainView: View {
                                                         maxHeight: 20
                                                     )
                                                     .padding()
-                                            }.sheet(isPresented: $showingNewFileSheet) {
+                                            }.sheet(isPresented: $stateManager.showsNewFileSheet) {
                                                 NewFileView(
                                                     targetUrl: App.workSpaceStorage
                                                         .currentDirectory.url
@@ -399,9 +351,7 @@ private struct MainView: View {
 
                                         Group {
                                             if self.currentDirectory == 0 {
-                                                ExplorerContainer(
-                                                    showingNewFileSheet: $showingNewFileSheet,
-                                                    showsDirectoryPicker: $showsDirectoryPicker)
+                                                ExplorerContainer()
                                             } else if self.currentDirectory == 1 {
                                                 SearchContainer()
                                             } else if self.currentDirectory == 3 {
@@ -428,11 +378,6 @@ private struct MainView: View {
                         }
                     }
                     BottomBar(
-                        showChangeLog: showChangeLog,
-                        showingNewFileSheet: $showingNewFileSheet,
-                        showSafari: $showSafari,
-                        showsFilePicker: $showsFilePicker,
-                        showsDirectoryPicker: $showsDirectoryPicker,
                         openConsolePanel: openConsolePanel,
                         onDirectoryPickerFinished: {
                             currentDirectory = 0

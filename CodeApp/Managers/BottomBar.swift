@@ -10,19 +10,19 @@ import SwiftUI
 struct BottomBar: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var stateManager: MainStateManager
 
     @State var isShowingCheckoutAlert: Bool = false
     @State var selectedBranch: checkoutDest? = nil
     @State var checkoutDetached: Bool = false
-    @State var showChangeLog: Bool
     @State var currentLine = 0
     @State var currentColumn = 0
-    @Binding var showingNewFileSheet: Bool
-    @Binding var showSafari: Bool
-    @Binding var showsFilePicker: Bool
-    @Binding var showsDirectoryPicker: Bool
+
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("editorFontSize") var editorTextSize: Int = 14
+
+    @SceneStorage("sidebar.visible") var isShowingDirectory: Bool = DefaultUIState.SIDEBAR_VISIBLE
+    @SceneStorage("sidebar.tab") var currentDirectory: Int = DefaultUIState.SIDEBAR_TAB
 
     let openConsolePanel: () -> Void
     let onDirectoryPickerFinished: () -> Void
@@ -136,13 +136,13 @@ struct BottomBar: View {
                 HStack {
                     Group {
                         Button("New File") {
-                            showingNewFileSheet.toggle()
+                            stateManager.showsNewFileSheet.toggle()
                         }.keyboardShortcut("n", modifiers: [.command])
 
                         Button("Open File") {
-                            showsFilePicker.toggle()
+                            stateManager.showsFilePicker.toggle()
                         }.keyboardShortcut("o", modifiers: [.command])
-                            .sheet(isPresented: self.$showsFilePicker) {
+                            .sheet(isPresented: $stateManager.showsFilePicker) {
                                 DocumentPickerView()
                             }
                         Button("Save") {
@@ -150,7 +150,7 @@ struct BottomBar: View {
 
                         }.keyboardShortcut("s", modifiers: [.command])
                             .sheet(
-                                isPresented: $showChangeLog,
+                                isPresented: $stateManager.showsChangeLog,
                                 content: {
                                     ChangeLogView()
                                 })
@@ -160,7 +160,7 @@ struct BottomBar: View {
                             }
                         }
                         .keyboardShortcut("w", modifiers: [.command])
-                        .sheet(isPresented: self.$showsDirectoryPicker) {
+                        .sheet(isPresented: $stateManager.showsDirectoryPicker) {
                             DirectoryPickerView(onOpen: { url in
                                 App.loadFolder(url: url)
                             })
@@ -170,7 +170,7 @@ struct BottomBar: View {
                                 command: "editor.trigger('', 'editor.action.quickCommand')")
                         }
                         .keyboardShortcut("p", modifiers: [.command, .shift])
-                        .fullScreenCover(isPresented: self.$showSafari) {
+                        .fullScreenCover(isPresented: $stateManager.showsSafari) {
                             if let activeEditorWithURL =
                                 (App.activeEditor as? EditorInstanceWithURL),
                                 let baseURL = URL(

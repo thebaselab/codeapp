@@ -46,39 +46,26 @@ struct ChangeLogView: View {
     }
 }
 
-struct MarkDownView: UIViewRepresentable {
-
-    @EnvironmentObject var App: MainApp
-
-    @State var text: String
-
-    @Binding var showsNewFile: Bool
-    @Binding var showsDirectory: Bool
-    @Binding var showsFolderPicker: Bool
-    @Binding var showsFilePicker: Bool
-    @Binding var directoryID: Int
-
-    @State var previousText = ""
+struct WelcomeView: UIViewRepresentable {
+    let onCreateNewFile: () -> Void
+    let onSelectFolderAsWorkspaceStorage: (URL) -> Void
+    let onSelectFolder: () -> Void
+    let onSelectFile: () -> Void
+    let onNavigateToCloneSection: () -> Void
 
     func updateUIView(_ uiView: MarkdownView, context: Context) {
-        if text != previousText && previousText != "" {
-            uiView.load(markdown: text)
-        }
         uiView.changeBackgroundColor(color: UIColor(Color.init(id: "editor.background")))
-        DispatchQueue.main.async {
-            previousText = text
-        }
         return
     }
 
-    func makeCoordinator() -> MarkDownView.Coordinator {
+    func makeCoordinator() -> WelcomeView.Coordinator {
         Coordinator(self)
     }
 
     class Coordinator: NSObject, UITextViewDelegate, MFMailComposeViewControllerDelegate {
-        var control: MarkDownView
+        var control: WelcomeView
 
-        init(_ control: MarkDownView) {
+        init(_ control: WelcomeView) {
             self.control = control
             super.init()
 
@@ -87,9 +74,10 @@ struct MarkDownView: UIViewRepresentable {
     }
 
     func loadMd(md: MarkdownView) {
-        var recentFolders = "\n"
-        var content = self.text
+        var content = NSLocalizedString("Welcome Message", comment: "")
         if let datas = UserDefaults.standard.value(forKey: "recentFolder") as? [Data] {
+            var recentFolders = "\n"
+
             for i in datas.indices.reversed() {
                 var isStale = false
                 if let newURL = try? URL(
@@ -100,10 +88,10 @@ struct MarkDownView: UIViewRepresentable {
                         + recentFolders
                 }
             }
-            content = self.text.replacingOccurrences(
-                of: "(https://thebaselab.com/code/clone)",
+            content = content.replacingOccurrences(
+                of: "(https://thebaselab.com/code/openfolder)",
                 with:
-                    "(https://thebaselab.com/code/clone)\n\n#### \(NSLocalizedString("Recent", comment: ""))"
+                    "(https://thebaselab.com/code/openfolder)\n\n#### \(NSLocalizedString("Recent", comment: ""))"
                     + recentFolders)
         }
 
@@ -121,14 +109,13 @@ struct MarkDownView: UIViewRepresentable {
             } else if url.scheme == "https" || url.scheme == "mailto" {
                 switch url.absoluteString {
                 case "https://thebaselab.com/code/newfile":
-                    self.showsNewFile = true
+                    onCreateNewFile()
                 case "https://thebaselab.com/code/openfolder":
-                    self.showsFolderPicker = true
+                    onSelectFolder()
                 case "https://thebaselab.com/code/openfile":
-                    self.showsFilePicker = true
+                    onSelectFile()
                 case "https://thebaselab.com/code/clone":
-                    self.showsDirectory = true
-                    self.directoryID = 3
+                    onNavigateToCloneSection()
                 case let i where i.hasPrefix("https://thebaselab.com/code/previousFolder/"):
                     let key = Int(
                         i.replacingOccurrences(
@@ -138,10 +125,7 @@ struct MarkDownView: UIViewRepresentable {
                         if let newURL = try? URL(
                             resolvingBookmarkData: datas[key], bookmarkDataIsStale: &isStale)
                         {
-                            DispatchQueue.main.async {
-                                App.loadFolder(url: newURL)
-                                self.showsDirectory = true
-                            }
+                            onSelectFolderAsWorkspaceStorage(newURL)
                         }
                     }
                 default:

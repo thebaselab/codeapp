@@ -23,7 +23,7 @@ private struct MarkdownPreview: UIViewRepresentable {
     }
 }
 
-private class MarkdownEditorInstance: EditorInstance {
+class MarkdownEditorInstance: EditorInstance {
     init(content: String, title: String) {
         let mdView = MarkdownView()
         mdView.load(markdown: content, backgroundColor: UIColor(id: "editor.background"))

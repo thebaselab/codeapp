@@ -11,22 +11,22 @@ import UniformTypeIdentifiers
 struct ExplorerContainer: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var stateManager: MainStateManager
 
     @State var selectedURL: String = ""
     @State private var selectKeeper = Set<String>()
     @State private var editMode = EditMode.inactive
-    @Binding var showingNewFileSheet: Bool
-    @Binding var showsDirectoryPicker: Bool
-    @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
     @State private var searchString: String = ""
     @State private var searching: Bool = false
 
+    @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
+
     func onOpenNewFile() {
-        showingNewFileSheet.toggle()
+        stateManager.showsNewFileSheet.toggle()
     }
 
     func onPickNewDirectory() {
-        showsDirectoryPicker = true
+        stateManager.showsDirectoryPicker.toggle()
     }
 
     func openSharedFilesApp(urlString: String) {
