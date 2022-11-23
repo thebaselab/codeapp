@@ -9,12 +9,23 @@ import MarkdownView
 import MessageUI
 import SwiftUI
 
-// TODO: Convert markdown preview to an extension
-class MarkdownEditorInstance: EditorInstance {
-    init(content: String, title: String) {
-        let view = MarkdownView()
-        view.load(markdown: content)
-        super.init(view: AnyView(ViewRepresentable(view)), title: title)
+struct SimpleMarkDownView: UIViewRepresentable {
+
+    var text: String
+
+    func updateUIView(_ uiView: MarkdownView, context: Context) {
+        uiView.changeBackgroundColor(color: UIColor(id: "editor.background"))
+    }
+
+    func makeUIView(context: Context) -> MarkdownView {
+        let md = MarkdownView()
+        md.load(markdown: text, backgroundColor: UIColor(Color.init(id: "editor.background")))
+        md.onTouchLink = { request in
+            guard let url = request.url else { return false }
+            UIApplication.shared.open(url)
+            return false
+        }
+        return md
     }
 }
 
@@ -35,25 +46,6 @@ struct ChangeLogView: View {
     }
 }
 
-struct SimpleMarkDownView: UIViewRepresentable {
-
-    var text: String
-
-    func updateUIView(_ uiView: MarkdownView, context: Context) {
-    }
-
-    func makeUIView(context: Context) -> MarkdownView {
-        let md = MarkdownView()
-        md.load(markdown: text, backgroundColor: UIColor(Color.init(id: "editor.background")))
-        md.onTouchLink = { request in
-            guard let url = request.url else { return false }
-            UIApplication.shared.open(url)
-            return false
-        }
-        return md
-    }
-
-}
 struct MarkDownView: UIViewRepresentable {
 
     @EnvironmentObject var App: MainApp

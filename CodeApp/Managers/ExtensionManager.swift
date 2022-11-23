@@ -19,6 +19,7 @@ class ExtensionManager: ObservableObject {
         TerminalExtension(),
         ImageViewerExtension(),
         VideoViewerExtension(),
+        MarkdownViewerExtension(),
     ]
 
     func registerExtension(ex: CodeAppExtension) {

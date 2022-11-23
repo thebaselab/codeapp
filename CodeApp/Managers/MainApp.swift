@@ -659,7 +659,7 @@ class MainApp: ObservableObject {
         return editor
     }
 
-    private func appendAndFocusNewEditor(editor: EditorInstance, alwaysInNewTab: Bool = false) {
+    func appendAndFocusNewEditor(editor: EditorInstance, alwaysInNewTab: Bool = false) {
         if !alwaysInNewTab,
             let activeTextEditor,
             activeTextEditor.currentVersionId == activeTextEditor.currentVersionId
