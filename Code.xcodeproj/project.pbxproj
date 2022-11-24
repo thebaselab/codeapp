@@ -638,6 +638,8 @@
 		94F52709259F9B7800337306 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F52708259F9B7800337306 /* KeychainItemAccessibility.swift */; };
 		94F6B510280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
 		94F6B511280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
+		94FA8977292FB86700163800 /* PDFViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8975292FB86700163800 /* PDFViewerExtension.swift */; };
+		94FA8978292FB86700163800 /* PDFViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8975292FB86700163800 /* PDFViewerExtension.swift */; };
 		94FC220B257F7D2A00B85D1B /* SourceControlEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC220A257F7D2900B85D1B /* SourceControlEntry.swift */; };
 		94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */; };
 		94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */; };
@@ -1635,6 +1637,7 @@
 		94F52708259F9B7800337306 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		94F5270E25A37E8D00337306 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDisplayName.swift; sourceTree = "<group>"; };
+		94FA8975292FB86700163800 /* PDFViewerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewerExtension.swift; sourceTree = "<group>"; };
 		94FC220A257F7D2900B85D1B /* SourceControlEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlEntry.swift; sourceTree = "<group>"; };
 		94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Hosts.swift"; sourceTree = "<group>"; };
 		94FF336D284348D0003DE5DD /* KBWebViewBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KBWebViewBase.h; sourceTree = "<group>"; };
@@ -2360,6 +2363,14 @@
 			path = PythonAux;
 			sourceTree = "<group>";
 		};
+		94FA8974292FB86700163800 /* PDFViewer */ = {
+			isa = PBXGroup;
+			children = (
+				94FA8975292FB86700163800 /* PDFViewerExtension.swift */,
+			);
+			path = PDFViewer;
+			sourceTree = "<group>";
+		};
 		94FF338728437438003DE5DD /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -2375,6 +2386,7 @@
 				9FAE4995292DD75900B1B962 /* MarkdownViewer */,
 				9FAE4991292D14E200B1B962 /* VideoViewer */,
 				9FAE498D292D060F00B1B962 /* ImageViewer */,
+				94FA8974292FB86700163800 /* PDFViewer */,
 				9FD5BCF92928E01400F20C4B /* LocalExecution */,
 				9FD5BCE729238B5800F20C4B /* TerminalService */,
 				9FD5BCE12923872800F20C4B /* MonacoLanguageService */,
@@ -2938,6 +2950,7 @@
 				9419697A280316C7008AAEB2 /* SourceControlEntry.swift in Sources */,
 				9FD5BCF52927859600F20C4B /* DebugMenu.swift in Sources */,
 				9419697B280316C7008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
+				94FA8978292FB86700163800 /* PDFViewerExtension.swift in Sources */,
 				9FAE499C292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				9419697C280316C7008AAEB2 /* View+cornerRadius.swift in Sources */,
 				9419697E280316C7008AAEB2 /* MonacoIntellisenseExtension.swift in Sources */,
@@ -3085,6 +3098,7 @@
 				94FC220B257F7D2A00B85D1B /* SourceControlEntry.swift in Sources */,
 				9FD5BCF42927859600F20C4B /* DebugMenu.swift in Sources */,
 				941969292802AB64008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
+				94FA8977292FB86700163800 /* PDFViewerExtension.swift in Sources */,
 				9FAE499B292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */,
 				949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */,
