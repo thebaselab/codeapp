@@ -53,17 +53,6 @@ private struct MainView: View {
         4: ["Remotes", "rectangle.connected.to.line.below"],
     ]
 
-    init() {
-        let appVersion =
-            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
-
-        if changeLogLastReadVersion != appVersion {
-            stateManager.showsChangeLog.toggle()
-        }
-
-        changeLogLastReadVersion = appVersion
-    }
-
     func openFolder() {
         self.isShowingDirectory = true
         stateManager.showsDirectoryPicker = true
@@ -406,6 +395,17 @@ private struct MainView: View {
                 App.updateView()
             }
             .environmentObject(App)
-        }.hiddenScrollableContentBackground()
+        }
+        .hiddenScrollableContentBackground()
+        .onAppear {
+            let appVersion =
+                Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.0"
+
+            if changeLogLastReadVersion != appVersion {
+                stateManager.showsChangeLog.toggle()
+            }
+
+            changeLogLastReadVersion = appVersion
+        }
     }
 }
