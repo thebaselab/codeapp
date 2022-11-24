@@ -18,10 +18,9 @@ class TerminalExtension: CodeAppExtension {
     }
 }
 
-
 private struct terminalView: View {
     @EnvironmentObject var App: MainApp
-    
+
     var body: some View {
         if let wv = App.terminalInstance.webView {
             ZStack {
@@ -46,9 +45,8 @@ private struct terminalView: View {
             }
             .foregroundColor(.clear)
             .font(.system(size: 1))
-        }else{
+        } else {
             Text("Terminal initialising")
         }
     }
 }
-

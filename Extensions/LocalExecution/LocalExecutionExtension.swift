@@ -14,7 +14,7 @@ private let LOCAL_EXECUTION_COMMANDS = [
     "js": "node {url}",
     "c": "clang {url} && wasm a.out",
     "cpp": "clang++ {url} && wasm a.out",
-    "php": "php {url}"
+    "php": "php {url}",
 ]
 
 class LocalExecutionExtension: CodeAppExtension {
@@ -33,28 +33,30 @@ class LocalExecutionExtension: CodeAppExtension {
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
     }
-    
-    private func runCodeLocally(app: MainApp){
-        
+
+    private func runCodeLocally(app: MainApp) {
+
         guard let activeTextEditor = app.activeTextEditor else {
             return
         }
-        
+
         guard let command = LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] else {
             return
         }
-        
-        let sanitizedUrl = "\"" + activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#) + "\""
+
+        let sanitizedUrl =
+            "\"" + activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#) + "\""
         let fullCommand = command.replacingOccurrences(of: "{url}", with: sanitizedUrl)
-        
+
         let compilerShowPath = UserDefaults.standard.bool(forKey: "compilerShowPath")
         if compilerShowPath {
             app.terminalInstance.executeScript("localEcho.println(`\(fullCommand)`);readLine('');")
-        }else{
+        } else {
             let commandName = command.components(separatedBy: " ").first ?? fullCommand
             app.terminalInstance.executeScript("localEcho.println(`\(commandName)`);readLine('');")
         }
         app.terminalInstance.executeScript(
-            "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(fullCommand)`})")
+            "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(fullCommand)`})"
+        )
     }
 }

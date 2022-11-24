@@ -75,7 +75,7 @@ class CloudCodeExecutionManager: ObservableObject {
 
         let parameters: [String: Any] =
             language == 62
-        ? generateJavaParameters(sourceURL: directoryURL, stdin: stdin)
+            ? generateJavaParameters(sourceURL: directoryURL, stdin: stdin)
             : [
                 "source_code": source.base64Encoded()!,
                 "language_id": language,

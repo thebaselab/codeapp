@@ -13,4 +13,4 @@ jobs:
       - name: Install swift-format
         run: brew install swift-format
       - name: Linting
-        run: swift-format lint -r -s ./CodeApp
+        run: swift-format lint -r -s ./CodeApp ./Extensions

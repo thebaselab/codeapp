@@ -23,12 +23,11 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                 }
             },
             shouldDisplay: {
-                app.activeEditor is TextEditorInstance &&
-                !(app.activeEditor is DiffTextEditorInstnace) &&
-                app.gitTracks.count > 0
+                app.activeEditor is TextEditorInstance
+                    && !(app.activeEditor is DiffTextEditorInstnace) && app.gitTracks.count > 0
             }
         )
-        
+
         let previousChangeItem = ToolbarItem(
             extenionID: EXTENSION_ID,
             icon: "arrow.up",
@@ -39,7 +38,7 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                 app.activeEditor is DiffTextEditorInstnace
             }
         )
-        
+
         let nextChangeItem = ToolbarItem(
             extenionID: EXTENSION_ID,
             icon: "arrow.down",
@@ -50,7 +49,7 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                 app.activeEditor is DiffTextEditorInstnace
             }
         )
-        
+
         contribution.toolbarItem.registerItem(item: compareWithPreviousitem)
         contribution.toolbarItem.registerItem(item: previousChangeItem)
         contribution.toolbarItem.registerItem(item: nextChangeItem)

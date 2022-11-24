@@ -5,8 +5,8 @@
 //  Created by Ken Chung on 22/11/2022.
 //
 
-import SwiftUI
 import AVKit
+import SwiftUI
 
 private class Storage: ObservableObject {
     @Published var player: AVPlayer? = nil
@@ -14,27 +14,29 @@ private class Storage: ObservableObject {
 }
 
 private struct VideoView: View {
-        
-        @EnvironmentObject var storage: Storage
-        
-        var body: some View {
-            if let player = storage.player {
-                VideoPlayer(player: player)
-                    .statusBarHidden(false)
-            }else if storage.isNonLocalResource {
-                Text("External video resource is not supported yet")
-            }else {
-                Text("Loading Video")
-            }
+
+    @EnvironmentObject var storage: Storage
+
+    var body: some View {
+        if let player = storage.player {
+            VideoPlayer(player: player)
+                .statusBarHidden(false)
+        } else if storage.isNonLocalResource {
+            Text("External video resource is not supported yet")
+        } else {
+            Text("Loading Video")
         }
-        
+    }
+
 }
 
 class VideoViewerExtension: CodeAppExtension {
-    
+
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
         let provider = EditorProvider(
-            registeredFileExtensions: ["mp4", "mov", "m4v", "avi", "mkv", "webm", "wmv", "flv", "mpg", "mpeg", "hevc"],
+            registeredFileExtensions: [
+                "mp4", "mov", "m4v", "avi", "mkv", "webm", "wmv", "flv", "mpg", "mpeg", "hevc",
+            ],
             onCreateEditor: { url in
                 // TODO: Support OutputStream
                 let storage = Storage()
@@ -46,7 +48,7 @@ class VideoViewerExtension: CodeAppExtension {
 
                 if url.isFileURL {
                     storage.player = AVPlayer(url: url)
-                }else{
+                } else {
                     storage.isNonLocalResource = true
                 }
 
@@ -56,5 +58,5 @@ class VideoViewerExtension: CodeAppExtension {
 
         contribution.editorProvider.register(provider: provider)
     }
-    
+
 }

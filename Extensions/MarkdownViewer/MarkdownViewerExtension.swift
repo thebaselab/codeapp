@@ -5,8 +5,8 @@
 //  Created by Ken Chung on 23/11/2022.
 //
 
-import SwiftUI
 import MarkdownView
+import SwiftUI
 
 // TODO: Localization
 
@@ -32,18 +32,19 @@ class MarkdownEditorInstance: EditorInstance {
 }
 
 class MarkdownViewerExtension: CodeAppExtension {
-    
+
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
         let item = ToolbarItem(
             extenionID: "MARKDOWN",
             icon: "newspaper",
             onClick: {
                 guard let content = app.activeTextEditor?.content,
-                      let url = app.activeTextEditor?.url
+                    let url = app.activeTextEditor?.url
                 else {
                     return
                 }
-                let instance = MarkdownEditorInstance(content: content, title: "Preview: " + url.lastPathComponent)
+                let instance = MarkdownEditorInstance(
+                    content: content, title: "Preview: " + url.lastPathComponent)
                 DispatchQueue.main.async {
                     app.appendAndFocusNewEditor(editor: instance, alwaysInNewTab: true)
                 }
@@ -54,5 +55,5 @@ class MarkdownViewerExtension: CodeAppExtension {
         )
         contribution.toolbarItem.registerItem(item: item)
     }
-    
+
 }

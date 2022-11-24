@@ -11,7 +11,7 @@ private let EXTENSION_ID = "REMOTE_EXECUTION"
 
 class RemoteExecutionExtension: CodeAppExtension {
     let storage = CloudCodeExecutionManager()
-    
+
     override func onInitialize(
         app: MainApp,
         contribution: CodeAppExtension.Contribution
@@ -31,11 +31,13 @@ class RemoteExecutionExtension: CodeAppExtension {
                     self.storage.displayMode = .output
                 }
                 guard let textEditor = app.activeEditor as? TextEditorInstance,
-                      let languageCode = compilerCodeForPath(path: textEditor.url.absoluteString)
+                    let languageCode = compilerCodeForPath(path: textEditor.url.absoluteString)
                 else {
                     return
                 }
-                self.storage.runCode(directoryURL: textEditor.url, source: textEditor.content, language: languageCode)
+                self.storage.runCode(
+                    directoryURL: textEditor.url, source: textEditor.content, language: languageCode
+                )
             },
             shortCut: .init("r", modifiers: [.command]),
             panelToFocusOnTap: EXTENSION_ID,
@@ -43,7 +45,7 @@ class RemoteExecutionExtension: CodeAppExtension {
                 guard let textEditor = app.activeEditor as? TextEditorInstance else {
                     return false
                 }
-                return languageList.map{$0.value[1]}.contains(textEditor.languageIdentifier)
+                return languageList.map { $0.value[1] }.contains(textEditor.languageIdentifier)
             }
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
@@ -52,7 +54,7 @@ class RemoteExecutionExtension: CodeAppExtension {
 
 private struct InputView: View {
     @EnvironmentObject var manager: CloudCodeExecutionManager
-    
+
     var body: some View {
 
         TextEditorWithPlaceholder(
@@ -60,7 +62,7 @@ private struct InputView: View {
             text: $manager.stdin,
             customFont: .custom("Menlo", size: 13, relativeTo: .footnote)
         )
-        
+
     }
 }
 
@@ -112,7 +114,7 @@ private struct PanelRemoteExecutionMainView: View {
 }
 
 private struct PanelRemoteExecutionToolbarView: View {
-    
+
     @EnvironmentObject var manager: CloudCodeExecutionManager
 
     var body: some View {
@@ -128,14 +130,14 @@ let languageList = [
     45: ["Assembly (NASM 2.14.02)", "asm"],
     //                    46:["Bash (5.0.0)", "sh"],
     47: ["Basic (FBC 1.07.1)", "bas"],
-//    75: ["C (Clang 7.0.1)", "c"],
-//    76: ["C++ (Clang 7.0.1)", "cpp"],
-//    48: ["C (GCC 7.4.0)", "c"],
-//    52: ["C++ (GCC 7.4.0)", "cpp"],
-//    49: ["C (GCC 8.3.0)", "c"],
-//    53: ["C++ (GCC 8.3.0)", "cpp"],
-//    50: ["C (GCC 9.2.0)", "c"],
-//    54: ["C++ (GCC 9.2.0)", "cpp"],
+    //    75: ["C (Clang 7.0.1)", "c"],
+    //    76: ["C++ (Clang 7.0.1)", "cpp"],
+    //    48: ["C (GCC 7.4.0)", "c"],
+    //    52: ["C++ (GCC 7.4.0)", "cpp"],
+    //    49: ["C (GCC 8.3.0)", "c"],
+    //    53: ["C++ (GCC 8.3.0)", "cpp"],
+    //    50: ["C (GCC 9.2.0)", "c"],
+    //    54: ["C++ (GCC 9.2.0)", "cpp"],
     51: ["C# (Mono 6.6.0.161)", "cs"],
     86: ["Clojure (1.10.1)", "clj"],
     77: ["COBOL (GnuCOBOL 2.2)", "cob"],
@@ -172,5 +174,5 @@ let languageList = [
 
 private func compilerCodeForPath(path: String) -> Int? {
     let sortedLanguages = languageList.sorted(by: { $0.key < $1.key })
-    return sortedLanguages.first(where: {path.hasSuffix(".\($0.value[1])") })?.key
+    return sortedLanguages.first(where: { path.hasSuffix(".\($0.value[1])") })?.key
 }
