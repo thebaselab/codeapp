@@ -19,6 +19,7 @@ class ExtensionManager: ObservableObject {
         TerminalExtension(),
         ImageViewerExtension(),
         VideoViewerExtension(),
+        PDFViewerExtension(),
         MarkdownViewerExtension(),
         SourceControlAuxiliaryExtension(),
     ]
