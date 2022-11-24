@@ -81,7 +81,7 @@ private struct FileCell: View {
     var body: some View {
         Button(action: onOpenEditor) {
             HStack {
-                FileIcon(url: newname, iconSize: 14, type: .file)
+                FileIcon(url: newname, iconSize: 14)
                     .frame(width: 14, height: 14)
 
                 if isRenaming {

@@ -32,7 +32,7 @@ struct EditorTab: View {
         Group {
             HStack(spacing: 4) {
                 // TODO: File Icons for extensions
-                FileIcon(url: currentEditor.title, iconSize: 12, type: .file)
+                FileIcon(url: currentEditor.title, iconSize: 12)
                 Button(action: {
                     onOpenEditor()
                 }) {

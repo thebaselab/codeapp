@@ -673,6 +673,8 @@
 		9FAE4994292D153F00B1B962 /* VideoViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */; };
 		9FAE4997292DD76A00B1B962 /* MarkdownViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4996292DD76A00B1B962 /* MarkdownViewerExtension.swift */; };
 		9FAE4998292DD76A00B1B962 /* MarkdownViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4996292DD76A00B1B962 /* MarkdownViewerExtension.swift */; };
+		9FAE499B292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE499A292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift */; };
+		9FAE499C292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE499A292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift */; };
 		9FC03E66291F21BD00DECD1B /* SourceControlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E65291F21BD00DECD1B /* SourceControlError.swift */; };
 		9FC03E67291F21BD00DECD1B /* SourceControlError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E65291F21BD00DECD1B /* SourceControlError.swift */; };
 		9FC03E69291F303900DECD1B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E68291F303900DECD1B /* Utilities.swift */; };
@@ -1654,6 +1656,7 @@
 		9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4996292DD76A00B1B962 /* MarkdownViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownViewerExtension.swift; sourceTree = "<group>"; };
+		9FAE499A292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlAuxiliaryExtension.swift; sourceTree = "<group>"; };
 		9FC03E65291F21BD00DECD1B /* SourceControlError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlError.swift; sourceTree = "<group>"; };
 		9FC03E68291F303900DECD1B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		9FC03E6D291F6EE700DECD1B /* ExplorerEditorListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerEditorListSection.swift; sourceTree = "<group>"; };
@@ -2368,6 +2371,7 @@
 		9F046C3729223CC000BDE4E9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9FAE4999292F52DB00B1B962 /* SourceControlAuxiliary */,
 				9FAE4995292DD75900B1B962 /* MarkdownViewer */,
 				9FAE4991292D14E200B1B962 /* VideoViewer */,
 				9FAE498D292D060F00B1B962 /* ImageViewer */,
@@ -2519,6 +2523,14 @@
 				9FAE4996292DD76A00B1B962 /* MarkdownViewerExtension.swift */,
 			);
 			path = MarkdownViewer;
+			sourceTree = "<group>";
+		};
+		9FAE4999292F52DB00B1B962 /* SourceControlAuxiliary */ = {
+			isa = PBXGroup;
+			children = (
+				9FAE499A292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift */,
+			);
+			path = SourceControlAuxiliary;
 			sourceTree = "<group>";
 		};
 		9FC03E64291CFD0200DECD1B /* Managers */ = {
@@ -2926,6 +2938,7 @@
 				9419697A280316C7008AAEB2 /* SourceControlEntry.swift in Sources */,
 				9FD5BCF52927859600F20C4B /* DebugMenu.swift in Sources */,
 				9419697B280316C7008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
+				9FAE499C292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				9419697C280316C7008AAEB2 /* View+cornerRadius.swift in Sources */,
 				9419697E280316C7008AAEB2 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC862807502A00939E4F /* ActivityBarItemView.swift in Sources */,
@@ -3072,6 +3085,7 @@
 				94FC220B257F7D2A00B85D1B /* SourceControlEntry.swift in Sources */,
 				9FD5BCF42927859600F20C4B /* DebugMenu.swift in Sources */,
 				941969292802AB64008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
+				9FAE499B292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */,
 				949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC852807502A00939E4F /* ActivityBarItemView.swift in Sources */,

@@ -272,7 +272,14 @@ struct SourceControlContainer: View {
             App.notificationManager.showErrorMessage("errors.source_control.invalid_url")
             throw SourceControlError.invalidURL
         }
-        App.compareWithPrevious(url: fileURL)
+        Task {
+            do {
+                try await App.compareWithPrevious(url: fileURL)
+            } catch {
+                print(error)
+            }
+
+        }
     }
 
     var body: some View {

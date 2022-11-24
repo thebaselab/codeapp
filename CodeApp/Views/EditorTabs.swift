@@ -17,7 +17,7 @@ struct CompactEditorTabs: View {
                 Button {
                     App.setActiveEditor(editor: editor)
                 } label: {
-                    FileIcon(url: editor.title, iconSize: 12, type: .file)
+                    FileIcon(url: editor.title, iconSize: 12)
                     Text(editor.title)
                 }
             }

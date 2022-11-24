@@ -75,7 +75,7 @@ private struct MarkersView: View {
                 }.padding(.leading, 20).padding(.vertical, 3)
             }
         } label: {
-            FileIcon(url: url.absoluteString, iconSize: 14, type: .file)
+            FileIcon(url: url.absoluteString, iconSize: 14)
             Text(url.lastPathComponent).foregroundColor(Color.init("T1"))
             Circle()
                 .fill(Color.init("panel.border"))

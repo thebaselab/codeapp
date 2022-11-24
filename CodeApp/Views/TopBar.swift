@@ -65,7 +65,7 @@ struct TopBar: View {
             }
 
             Menu {
-                if App.activeTextEditor?.type == .diff {
+                if App.activeTextEditor is DiffTextEditorInstnace {
                     Section {
                         Button(action: {
                             App.monacoInstance.applyOptions(options: "renderSideBySide: false")

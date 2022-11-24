@@ -56,7 +56,7 @@ struct SearchResultsSection: View {
                             label: {
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        FileIcon(url: key, iconSize: 10, type: .file)
+                                        FileIcon(url: key, iconSize: 10)
                                         Text(fileURL.lastPathComponent + " ")
                                             .font(.subheadline)
                                             .foregroundColor(Color.init("T1"))

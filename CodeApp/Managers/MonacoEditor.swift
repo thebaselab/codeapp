@@ -543,13 +543,27 @@ struct MonacoEditor: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        if let activeTextEditor = App.activeTextEditor {
-            newModel(url: activeTextEditor.url.absoluteString, content: activeTextEditor.content)
-            setModel(url: activeTextEditor.url.absoluteString)
-        } else {
+        guard let activeTextEditor = App.activeTextEditor else {
             setModel(url: "")
+            return
         }
-        return
+        if let diffEditor = activeTextEditor as? DiffTextEditorInstnace {
+            switchToDiffView(
+                originalContent: diffEditor.compareWith,
+                modifiedContent: diffEditor.content,
+                url: diffEditor.url.appendingPathComponent("?previous").absoluteString,
+                url2: diffEditor.url.absoluteString
+            )
+        } else {
+            Task {
+                if await isEditorInDiffMode() {
+                    switchToNormView()
+                }
+                newModel(
+                    url: activeTextEditor.url.absoluteString, content: activeTextEditor.content)
+                setModel(url: activeTextEditor.url.absoluteString)
+            }
+        }
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -576,5 +590,13 @@ struct MonacoEditor: UIViewRepresentable {
             name: Notification.Name("toolbarSettingChanged"), object: nil)
 
         return monacoWebView
+    }
+}
+
+extension MonacoEditor {
+    func isEditorInDiffMode() async -> Bool {
+        let result = try? await monacoWebView.evaluateJavaScript(
+            "editor.getEditorType() !== 'vs.editor.ICodeEditor'")
+        return (result as? Bool) ?? false
     }
 }

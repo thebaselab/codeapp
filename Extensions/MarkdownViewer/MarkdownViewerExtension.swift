@@ -44,7 +44,9 @@ class MarkdownViewerExtension: CodeAppExtension {
                     return
                 }
                 let instance = MarkdownEditorInstance(content: content, title: "Preview: " + url.lastPathComponent)
-                app.appendAndFocusNewEditor(editor: instance, alwaysInNewTab: true)
+                DispatchQueue.main.async {
+                    app.appendAndFocusNewEditor(editor: instance, alwaysInNewTab: true)
+                }
             },
             shouldDisplay: {
                 ["md", "markdown"].contains(app.activeTextEditor?.languageIdentifier.lowercased())

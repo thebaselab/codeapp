@@ -246,7 +246,7 @@ struct NewFileView: View {
 
                     Section(header: Text(NSLocalizedString("Custom", comment: ""))) {
                         HStack {
-                            FileIcon(url: name, iconSize: 14, type: .file)
+                            FileIcon(url: name, iconSize: 14)
                                 .frame(width: 16)
                                 .fixedSize()
                             TextField(

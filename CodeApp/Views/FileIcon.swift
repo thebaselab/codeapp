@@ -83,58 +83,52 @@ private let fileNames = ["LICENSE": "license", "README.md": "info"]
 struct FileIcon: View {
     let url: String
     let iconSize: CGFloat
-    let type: TextEditorInstance.editorType
 
     @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
-        switch type {
-        default:
-            let fileName = url.components(separatedBy: "/").last ?? ""
-            switch fileName {
-            case let x where fileNames[x] != nil:
-                Image(fileNames[x]!).resizable().frame(width: iconSize + 6, height: iconSize + 6)
-            case let x
-            where
+        let fileName = url.components(separatedBy: "/").last ?? ""
+        switch fileName {
+        case let x where fileNames[x] != nil:
+            Image(fileNames[x]!).resizable().frame(width: iconSize + 6, height: iconSize + 6)
+        case let x
+        where
+            level2ExtensionNames[
+                x.lowercased().components(separatedBy: ".").dropFirst().joined(separator: ".")]
+            != nil:
+            Image(
                 level2ExtensionNames[
-                    x.lowercased().components(separatedBy: ".").dropFirst().joined(separator: ".")]
-                != nil:
-                Image(
-                    level2ExtensionNames[
-                        x.lowercased().components(separatedBy: ".").dropFirst().joined(
-                            separator: ".")]!
-                ).resizable().frame(width: iconSize + 6, height: iconSize + 6)
+                    x.lowercased().components(separatedBy: ".").dropFirst().joined(
+                        separator: ".")]!
+            ).resizable().frame(width: iconSize + 6, height: iconSize + 6)
+        default:
+            switch fileName.lowercased().components(separatedBy: ".").last ?? "" {
+            case "swift":
+                Image(systemName: "swift")
+                    .foregroundColor(.orange)
+                    .font(.system(size: iconSize))
+                    .frame(width: iconSize + 6, height: iconSize + 6)
+            case "txt":
+                Image(systemName: "text.alignleft")
+                    .foregroundColor(.gray)
+                    .font(.system(size: iconSize - 2))
+                    .frame(width: iconSize + 6, height: iconSize + 6)
+            case "jpg", "png", "jpeg", "gif":
+                Image(systemName: "photo")
+                    .foregroundColor(.gray)
+                    .font(.system(size: iconSize - 2))
+                    .frame(width: iconSize + 6, height: iconSize + 6)
+            case let x where extensionNames[x] != nil:
+                Image(extensionNames[x]!)
+                    .resizable()
+                    .frame(width: iconSize + 6, height: iconSize + 6)
+            case "icloud":
+                Image(systemName: "icloud.and.arrow.down").foregroundColor(.gray).font(
+                    .system(size: iconSize - 2))
             default:
-                switch fileName.lowercased().components(separatedBy: ".").last ?? "" {
-                case "swift":
-                    Image(systemName: "swift")
-                        .foregroundColor(.orange)
-                        .font(.system(size: iconSize))
-                        .frame(width: iconSize + 6, height: iconSize + 6)
-                case "txt":
-                    Image(systemName: "text.alignleft")
-                        .foregroundColor(.gray)
-                        .font(.system(size: iconSize - 2))
-                        .frame(width: iconSize + 6, height: iconSize + 6)
-                case "jpg", "png", "jpeg", "gif":
-                    Image(systemName: "photo")
-                        .foregroundColor(.gray)
-                        .font(.system(size: iconSize - 2))
-                        .frame(width: iconSize + 6, height: iconSize + 6)
-                case let x where extensionNames[x] != nil:
-                    Image(extensionNames[x]!)
-                        .resizable()
-                        .frame(width: iconSize + 6, height: iconSize + 6)
-                case "icloud":
-                    Image(systemName: "icloud.and.arrow.down").foregroundColor(.gray).font(
-                        .system(size: iconSize - 2))
-                default:
-                    Image(systemName: "text.alignleft").foregroundColor(.gray).font(
-                        .system(size: iconSize - 2))
-                }
+                Image(systemName: "text.alignleft").foregroundColor(.gray).font(
+                    .system(size: iconSize - 2))
             }
-
         }
-
     }
 }

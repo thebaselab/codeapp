@@ -186,7 +186,9 @@ class MainApp: ObservableObject {
         }
 
         if urlQueue.isEmpty {
-            showWelcomeMessage()
+            DispatchQueue.main.async {
+                self.showWelcomeMessage()
+            }
         }
 
         let monacoPath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")
@@ -215,6 +217,7 @@ class MainApp: ObservableObject {
         git_status()
     }
 
+    @MainActor
     func showWelcomeMessage() {
         let instnace = EditorInstance(
             view: AnyView(
@@ -367,34 +370,55 @@ class MainApp: ObservableObject {
         }
     }
 
-    func compareWithPrevious(url: URL) {
-        //        guard gitTracks[url] != nil else {
-        //            notificationManager.showErrorMessage("No changes are made in this file")
-        //            return
-        //        }
-        //        workSpaceStorage.gitServiceProvider?.previous(
-        //            path: url.absoluteString,
-        //            error: {
-        //                self.notificationManager.showErrorMessage($0.localizedDescription)
-        //            }
-        //        ) { previousText in
-        //            self.readURL(url: url.absoluteString) { result, error in
-        //                guard let content = result?.0 else {
-        //                    if let error = error {
-        //                        self.notificationManager.showErrorMessage(error.localizedDescription)
-        //                    }
-        //                    return
-        //                }
-        //                let newEditor = EditorInstance(
-        //                    url: url.absoluteString, content: content, type: .diff,
-        //                    compareTo: "file://previous/\(url.path)")
-        //                self.editors.append(newEditor)
-        //                self.monacoInstance.switchToDiffView(
-        //                    originalContent: previousText, modifiedContent: content,
-        //                    url: newEditor.compareTo!, url2: url.absoluteString)
-        //                self.activeEditor = newEditor
-        //            }
-        //        }
+    func decodeStringData(data: Data) throws -> (String, String.Encoding) {
+        let tempFile = FileManager.default.temporaryDirectory.appendingPathComponent(
+            UUID().uuidString)
+        try data.write(to: tempFile)
+        var encoding: String.Encoding = .utf8
+        let fileContent = try String(contentsOf: tempFile, usedEncoding: &encoding)
+        try FileManager.default.removeItem(at: tempFile)
+        return (fileContent, encoding)
+    }
+
+    func compareWithPrevious(url: URL) async throws {
+
+        guard let provider = workSpaceStorage.gitServiceProvider else {
+            throw SourceControlError.gitServiceProviderUnavailable
+        }
+
+        let contentToCompareWith: String = try await withCheckedThrowingContinuation {
+            continuation in
+            provider.previous(
+                path: url.absoluteString,
+                error: {
+                    continuation.resume(throwing: $0)
+                },
+                completionHandler: {
+                    continuation.resume(returning: $0)
+                })
+        }
+
+        let contentData: Data = try await withCheckedThrowingContinuation { continuation in
+            workSpaceStorage.contents(at: url) { data, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else if let data {
+                    continuation.resume(returning: data)
+                }
+            }
+        }
+
+        let (content, encoding) = try decodeStringData(data: contentData)
+
+        let diffEditor = DiffTextEditorInstnace(
+            editor: monacoInstance,
+            url: url,
+            content: content,
+            encoding: encoding,
+            compareWith: contentToCompareWith
+        )
+
+        await appendAndFocusNewEditor(editor: diffEditor, alwaysInNewTab: true)
     }
 
     func compareWithSelected(url: String) {
@@ -629,15 +653,6 @@ class MainApp: ObservableObject {
         }
     }
 
-    func closeAllEditors() {
-        if editors.isEmpty {
-            return
-        }
-        monacoInstance.removeAllModel()
-        editors.removeAll(keepingCapacity: false)
-        activeEditor = nil
-    }
-
     private func createExtensionEditorFromURL(url: URL) throws -> EditorInstance {
         let fileExtension =
             url.lastPathComponent.components(separatedBy: ".").last?.lowercased() ?? ""
@@ -672,8 +687,16 @@ class MainApp: ObservableObject {
         return TextEditorInstance(
             editor: monacoInstance,
             url: url,
-            content: str,
-            type: .file
+            content: str
+                // TODO: Update using updateUIView?
+                //            fileDidChange: { state, content in
+                //                if state == .modified, let content {
+                //                    DispatchQueue.main.async {
+                //                        self.monacoInstance.updateModelContent(
+                //                            url: url.absoluteString, content: content)
+                //                    }
+                //                }
+                //            }
         )
 
     }
@@ -688,6 +711,17 @@ class MainApp: ObservableObject {
         return editor
     }
 
+    @MainActor
+    func closeAllEditors() {
+        if editors.isEmpty {
+            return
+        }
+        monacoInstance.removeAllModel()
+        editors.removeAll(keepingCapacity: false)
+        activeEditor = nil
+    }
+
+    @MainActor
     func appendAndFocusNewEditor(editor: EditorInstance, alwaysInNewTab: Bool = false) {
         if !alwaysInNewTab,
             let activeTextEditor,

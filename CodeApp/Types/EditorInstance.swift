@@ -46,8 +46,6 @@ class TextEditorInstance: EditorInstanceWithURL {
     @Published var currentVersionId = 1
 
     var content: String
-    let type: editorType
-    var compareTo: String? = nil
     var encoding: String.Encoding = .utf8
     var fileWatch: FolderMonitor?
     var isDeleted = false
@@ -57,15 +55,14 @@ class TextEditorInstance: EditorInstanceWithURL {
     }
 
     init(
-        editor: MonacoEditor, url: URL, content: String, type: editorType,
+        editor: MonacoEditor,
+        url: URL,
+        content: String,
         encoding: String.Encoding = .utf8,
-        compareTo: String? = nil,
         fileDidChange: ((fileState, String?) -> Void)? = nil
     ) {
         self.content = content
-        self.type = type
         self.encoding = encoding
-        self.compareTo = compareTo
         super.init(view: AnyView(editor), title: url.lastPathComponent, url: url)
 
         if fileDidChange != nil, url.scheme == "file" {
@@ -92,9 +89,22 @@ class TextEditorInstance: EditorInstanceWithURL {
         case deleted
         case modified
     }
+}
 
-    enum editorType {
-        case file
-        case diff
+class DiffTextEditorInstnace: TextEditorInstance {
+    var compareWith: String
+
+    init(
+        editor: MonacoEditor,
+        url: URL,
+        content: String,
+        encoding: String.Encoding = .utf8,
+        compareWith: String,
+        fileDidChange: ((fileState, String?) -> Void)? = nil
+    ) {
+        self.compareWith = compareWith
+        super.init(
+            editor: editor, url: url, content: content, encoding: encoding,
+            fileDidChange: fileDidChange)
     }
 }
