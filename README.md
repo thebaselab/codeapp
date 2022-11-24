@@ -19,7 +19,7 @@ We built it because there is nothing else on the App Store provides all these fe
 * Remote connection support (Files and terminal)
 
 {% hint style="info" %}
-**Good to know:** While we want to make the editing experience as close as a desktop offers, Code App is still bounded by iOS's limitations. For example, you cannot download arbitary commands or modlues with native components. Spawning subprocesses is also not possible.
+**Good to know:** While we want to make the editing experience as close as a desktop offers, Code App is still bounded by iOS's limitations. For example, you cannot download arbitary commands or modules with native components. Spawning subprocesses is also not possible.
 {% endhint %}
 
 ![Compiling a C++ file with Clang](<.gitbook/assets/image (1) (1) (1) (1).png>)
