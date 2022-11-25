@@ -43,7 +43,7 @@ class MainApp: ObservableObject {
         activeEditor as? TextEditorInstance
     }
 
-    @Published var selectedForCompare = ""
+    @Published var selectedURLForCompare: URL? = nil
 
     @Published var languageEnabled: [Bool] = langListInit()
 
@@ -280,6 +280,7 @@ class MainApp: ObservableObject {
             for url in urlQueue {
                 _ = try? await openFile(url: url, alwaysInNewTab: true)
             }
+            urlQueue = []
         }
     }
 
@@ -341,15 +342,7 @@ class MainApp: ObservableObject {
                 })
         }
 
-        let contentData: Data = try await withCheckedThrowingContinuation { continuation in
-            workSpaceStorage.contents(at: url) { data, error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else if let data {
-                    continuation.resume(returning: data)
-                }
-            }
-        }
+        let contentData: Data = try await workSpaceStorage.contents(at: url)
 
         let (content, encoding) = try decodeStringData(data: contentData)
 
@@ -364,29 +357,25 @@ class MainApp: ObservableObject {
         await appendAndFocusNewEditor(editor: diffEditor, alwaysInNewTab: true)
     }
 
-    func compareWithSelected(url: String) {
-        //        readURL(url: url) { result, error in
-        //            if let error = error {
-        //                self.notificationManager.showErrorMessage(error.localizedDescription)
-        //                return
-        //            }
-        //            guard let originalContent = result?.0 else { return }
-        //            self.readURL(url: self.selectedForCompare) { result, error in
-        //                if let error = error {
-        //                    self.notificationManager.showErrorMessage(error.localizedDescription)
-        //                    return
-        //                }
-        //                guard let diffContent = result?.0 else { return }
-        //                let newEditor = EditorInstance(
-        //                    url: url, content: originalContent, type: .diff,
-        //                    compareTo: self.selectedForCompare)
-        //                self.editors.append(newEditor)
-        //                self.activeEditor = newEditor
-        //                self.monacoInstance.switchToDiffView(
-        //                    originalContent: diffContent, modifiedContent: originalContent,
-        //                    url: self.selectedForCompare, url2: url)
-        //            }
-        //        }
+    func compareWithSelected(url: URL) async throws {
+
+        guard let selectedURLForCompare else { return }
+
+        let selectedData = try await workSpaceStorage.contents(at: selectedURLForCompare)
+        let data = try await workSpaceStorage.contents(at: url)
+
+        let (selectedContent, encoding) = try decodeStringData(data: selectedData)
+        let (content, _) = try decodeStringData(data: data)
+
+        let diffEditor = DiffTextEditorInstnace(
+            editor: monacoInstance,
+            url: url,
+            content: content,
+            encoding: encoding,
+            compareWith: selectedContent
+        )
+
+        await appendAndFocusNewEditor(editor: diffEditor, alwaysInNewTab: true)
     }
 
     func reloadCurrentFileWithEncoding(encoding: String.Encoding) {
@@ -611,27 +600,21 @@ class MainApp: ObservableObject {
     }
 
     private func createTextEditorFromURL(url: URL) async throws -> TextEditorInstance {
-        let contentData: Data? = try await withCheckedThrowingContinuation { continuation in
-            // TODO: A more efficient way to determine whether file is supported
-            workSpaceStorage.contents(
-                at: url,
-                completionHandler: { data, error in
-                    if let error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume(returning: data)
-                    }
-                })
-        }
-        // TODO: Support different encoding
-        guard let contentData, let str = String(data: contentData, encoding: .utf8) else {
+        // TODO: A more efficient way to determine whether file is supported
+        let contentData: Data? = try await workSpaceStorage.contents(
+            at: url
+        )
+
+        guard let contentData, let (content, encoding) = try? decodeStringData(data: contentData)
+        else {
             throw AppError.unknownFileFormat
         }
 
         return TextEditorInstance(
             editor: monacoInstance,
             url: url,
-            content: str
+            content: content,
+            encoding: encoding
                 // TODO: Update using updateUIView?
                 //            fileDidChange: { state, content in
                 //                if state == .modified, let content {

@@ -372,15 +372,23 @@ private struct ContextMenu: View {
 
             if item.subFolderItems == nil {
                 Button(action: {
-                    App.selectedForCompare = item.url
+                    App.selectedURLForCompare = item._url
                 }) {
                     Text("Select for compare")
                     Image(systemName: "square.split.2x1")
                 }
 
-                if App.selectedForCompare != "" && App.selectedForCompare != item.url {
+                if App.selectedURLForCompare != nil && App.selectedURLForCompare != item._url {
                     Button(action: {
-                        App.compareWithSelected(url: item.url)
+                        guard let url = item._url else { return }
+                        Task {
+                            do {
+                                try await App.compareWithSelected(url: url)
+                            } catch {
+                                App.notificationManager.showErrorMessage(error.localizedDescription)
+                            }
+
+                        }
                     }) {
                         Text("Compare with selected")
                         Image(systemName: "square.split.2x1")
