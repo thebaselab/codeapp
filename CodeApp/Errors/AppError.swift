@@ -11,6 +11,7 @@ import Foundation
 enum AppError: String {
     case unknownFileFormat = "errors.unknown_file_format"
     case editorDoesNotExist = "errors.editor_does_not_exist"
+    case editorIsNotReady = "errors.editor_is_not_ready"
 }
 
 extension AppError: LocalizedError {

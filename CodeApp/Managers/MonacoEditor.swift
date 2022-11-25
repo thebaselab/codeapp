@@ -32,6 +32,8 @@ struct MonacoEditor: UIViewRepresentable {
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
+    @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
+    @SceneStorage("activeEditor.monaco.state") var activeEditorMonacoState: String?
 
     let monacoWebView = WebViewBase()
 
@@ -441,7 +443,6 @@ struct MonacoEditor: UIViewRepresentable {
                     )
                 }
             case "Editor Initialising":
-                control.monacoWebView.isEditorInited = true
                 control.monacoWebView.removeUIDropInteraction()
                 control.applyUserOptions()
                 control.App.loadURLQueue()
@@ -478,12 +479,15 @@ struct MonacoEditor: UIViewRepresentable {
                 if let activeURL = control.App.activeTextEditor?.url {
                     control.setModel(url: activeURL.absoluteString)
                 }
-                if let state = UserDefaults.standard.string(forKey: "uistate.activeEditor.state") {
-                    control.executeJavascript(command: "editor.restoreViewState(\(state))")
+                if control.stateRestorationEnabled,
+                    let activeEditorMonacoState = control.activeEditorMonacoState
+                {
+                    control.executeJavascript(
+                        command: "editor.restoreViewState(\(activeEditorMonacoState))")
                 }
-                UserDefaults.standard.setValue(true, forKey: "uistate.restoredSuccessfully")
                 control.applyCustomShortcuts()
                 getAllActions()
+                control.monacoWebView.isEditorInited = true
             case "Markers updated":
                 let markers = result["Markers"] as! [Any]
                 control.App.problems = [:]
@@ -543,6 +547,7 @@ struct MonacoEditor: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
+        guard monacoWebView.isEditorInited else { return }
         guard let activeTextEditor = App.activeTextEditor else {
             setModel(url: "")
             return

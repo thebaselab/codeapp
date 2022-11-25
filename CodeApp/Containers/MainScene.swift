@@ -13,17 +13,97 @@ import ios_system
 struct MainScene: View {
     @StateObject var App = MainApp()
 
+    @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
+    @SceneStorage("root.bookmark") var rootDirectoryBookmark: Data?
+    @SceneStorage("openEditors.bookmarks") var openEditorsBookmarksData: Data?
+    @SceneStorage("activeEditor.bookmark") var activeEditorBookmark: Data?
+    @SceneStorage("activeEditor.monaco.state") var activeEditorMonacoState: String?
+
+    func getOpenEditorsBookmarks() -> [Data] {
+        guard let openEditorsBookmarksData else { return [] }
+        return try! PropertyListDecoder().decode([Data].self, from: openEditorsBookmarksData)
+    }
+
+    func setOpenEditorsBookmarks(_ v: [Data]) {
+        openEditorsBookmarksData = try? PropertyListEncoder().encode(v)
+    }
+
+    func saveSceneState() {
+        guard stateRestorationEnabled else { return }
+        guard let rootDir = App.workSpaceStorage.currentDirectory._url,
+            rootDir.isFileURL,
+            let rootDirBookmarkData = try? rootDir.bookmarkData()
+        else {
+            return
+        }
+        rootDirectoryBookmark = rootDirBookmarkData
+        setOpenEditorsBookmarks(App.editorsWithURL.compactMap { try? $0.url.bookmarkData() })
+
+        if let activeEditor = App.activeTextEditor,
+            let activeEditorBookmarkData = try? activeEditor.url.bookmarkData()
+        {
+            activeEditorBookmark = activeEditorBookmarkData
+            App.monacoInstance.monacoWebView.evaluateJavaScript(
+                "JSON.stringify(editor.saveViewState())"
+            ) {
+                res, err in
+                if let res = res as? String {
+                    activeEditorMonacoState = res
+                }
+            }
+        } else {
+            activeEditorBookmark = nil
+            activeEditorMonacoState = nil
+        }
+    }
+
+    func restoreSceneState() {
+
+        var isStale = false
+
+        guard stateRestorationEnabled else { return }
+        guard let rootDirBookmark = rootDirectoryBookmark,
+            let rootDir = try? URL(
+                resolvingBookmarkData: rootDirBookmark, bookmarkDataIsStale: &isStale)
+        else {
+            return
+        }
+        App.loadFolder(url: rootDir)
+
+        let editors = getOpenEditorsBookmarks().compactMap {
+            try? URL(resolvingBookmarkData: $0, bookmarkDataIsStale: &isStale)
+        }
+        for editor in editors {
+            App.openFile(url: editor, alwaysInNewTab: true)
+        }
+
+        if let activeEditorBookmark = activeEditorBookmark,
+            let activeEditor = try? URL(
+                resolvingBookmarkData: activeEditorBookmark, bookmarkDataIsStale: &isStale)
+        {
+            App.openFile(url: activeEditor)
+        }
+
+    }
+
     var body: some View {
         MainView()
             .environmentObject(App)
             .environmentObject(App.extensionManager)
             .environmentObject(App.stateManager)
             .onAppear {
+                restoreSceneState()
                 App.extensionManager.initializeExtensions(app: App)
             }
             .onOpenURL { url in
                 _ = url.startAccessingSecurityScopedResource()
                 App.openFile(url: url.standardizedFileURL)
+            }
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: UIApplication.willResignActiveNotification)
+            ) { _ in
+                saveSceneState()
             }
     }
 }

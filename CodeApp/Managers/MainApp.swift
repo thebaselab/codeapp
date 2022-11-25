@@ -66,7 +66,6 @@ class MainApp: ObservableObject {
     @Published var aheadBehind: (Int, Int)? = nil
 
     var urlQueue: [URL] = []
-    var editorToRestore: URL? = nil
     var editorShortcuts: [MonacoEditor.Coordinator.action] = []
 
     let terminalInstance: TerminalInstance
@@ -89,57 +88,7 @@ class MainApp: ObservableObject {
 
     init() {
 
-        let rootDir: URL
-
-        var stateRestorationEnabled = true
-
-        if UserDefaults.standard.object(forKey: "stateRestorationEnabled") != nil {
-            stateRestorationEnabled = UserDefaults.standard.bool(forKey: "stateRestorationEnabled")
-        }
-
-        if UserDefaults.standard.bool(forKey: "uistate.restoredSuccessfully") == false {
-            stateRestorationEnabled = false
-        }
-
-        UserDefaults.standard.setValue(false, forKey: "uistate.restoredSuccessfully")
-
-        if stateRestorationEnabled {
-            var isStale = false
-            if let bookmarkData = UserDefaults.standard.value(forKey: "uistate.root.bookmark")
-                as? Data,
-                let bookmarkedURL = try? URL(
-                    resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale)
-            {
-                rootDir = bookmarkedURL
-            } else {
-                rootDir = getRootDirectory()
-            }
-
-            if let bookmarkDatas = UserDefaults.standard.array(
-                forKey: "uistate.openedURLs.bookmarks") as? [Data]
-            {
-                for data in bookmarkDatas {
-                    var isStale = false
-                    let bookmarkedURL = try? URL(
-                        resolvingBookmarkData: data, bookmarkDataIsStale: &isStale)
-                    guard !isStale else {
-                        continue
-                    }
-                    if bookmarkedURL != nil {
-                        urlQueue.append(bookmarkedURL!)
-                    }
-                }
-            }
-            if let bookmarkData = UserDefaults.standard.value(
-                forKey: "uistate.activeEditor.bookmark") as? Data,
-                let bookmarkedURL = try? URL(
-                    resolvingBookmarkData: bookmarkData, bookmarkDataIsStale: &isStale)
-            {
-                editorToRestore = bookmarkedURL
-            }
-        } else {
-            rootDir = getRootDirectory()
-        }
+        let rootDir: URL = getRootDirectory()
 
         self.workSpaceStorage = WorkSpaceStorage(url: rootDir)
 
@@ -327,15 +276,9 @@ class MainApp: ObservableObject {
 
     @MainActor
     func loadURLQueue() {
-        // TODO: Confirm if order persists as openFile is now an async operation
-        for url in urlQueue {
-            openFile(url: url, alwaysInNewTab: true)
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            if let editorToRestore = self.editorToRestore {
-                self.openFile(url: editorToRestore)
-                self.editorToRestore = nil
+        Task {
+            for url in urlQueue {
+                _ = try? await openFile(url: url, alwaysInNewTab: true)
             }
         }
     }
@@ -675,8 +618,9 @@ class MainApp: ObservableObject {
                 completionHandler: { data, error in
                     if let error {
                         continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: data)
                     }
-                    continuation.resume(returning: data)
                 })
         }
         // TODO: Support different encoding
@@ -723,11 +667,14 @@ class MainApp: ObservableObject {
 
     @MainActor
     func appendAndFocusNewEditor(editor: EditorInstance, alwaysInNewTab: Bool = false) {
-        if !alwaysInNewTab,
-            let activeTextEditor,
-            activeTextEditor.currentVersionId == activeTextEditor.currentVersionId
-        {
-            editors.removeAll { $0 == activeTextEditor }
+        if !alwaysInNewTab {
+            if let activeTextEditor {
+                if activeTextEditor.currentVersionId == activeTextEditor.currentVersionId {
+                    editors.removeAll { $0 == activeTextEditor }
+                }
+            } else {
+                editors.removeAll { $0 == activeEditor }
+            }
         }
 
         editors.append(editor)
@@ -743,6 +690,10 @@ class MainApp: ObservableObject {
 
     @MainActor
     func openFile(url: URL, alwaysInNewTab: Bool = false) async throws -> EditorInstance {
+        guard monacoInstance.monacoWebView.isEditorInited else {
+            urlQueue.append(url)
+            throw AppError.editorIsNotReady
+        }
         if let existingEditor = try? openEditorForURL(url: url) {
             return existingEditor
         }
