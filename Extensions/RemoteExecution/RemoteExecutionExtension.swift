@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private let EXTENSION_ID = "REMOTE_EXECUTION"
+private let EXTENSION_ID = "EXECUTION"
 
 class RemoteExecutionExtension: CodeAppExtension {
     let storage = CloudCodeExecutionManager()
