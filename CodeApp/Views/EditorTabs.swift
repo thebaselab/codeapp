@@ -13,22 +13,38 @@ struct CompactEditorTabs: View {
 
     var body: some View {
         Menu {
-            ForEach(App.editors) { editor in
-                Button {
-                    App.setActiveEditor(editor: editor)
-                } label: {
-                    FileIcon(url: editor.title, iconSize: 12)
-                    Text(editor.title)
+
+            Button {
+                if let activeEditor = App.activeEditor {
+                    App.closeEditor(editor: activeEditor)
+                }
+            } label: {
+                Label("Close Editor", systemImage: "xmark")
+            }
+
+            Section("Open Editors") {
+                ForEach(App.editors) { editor in
+                    Button {
+                        App.setActiveEditor(editor: editor)
+                    } label: {
+                        FileIcon(url: editor.title, iconSize: 12)
+                        Text(editor.title)
+                    }
                 }
             }
         } label: {
             HStack {
                 Text(App.activeEditor?.title ?? "")
+                    .bold()
+
                 if App.editors.count > 0 {
-                    Image(systemName: "chevron.up.chevron.down")
+                    Image(systemName: "chevron.down.circle.fill")
                 }
             }
-        }.id(UUID())
+        }
+        .foregroundColor(Color(id: "activityBar.foreground"))
+        .id(UUID())
+
     }
 }
 
