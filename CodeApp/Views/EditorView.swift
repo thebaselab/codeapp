@@ -33,6 +33,11 @@ struct EditorView: View {
                 Color.init(id: "editor.background")
                 if !App.monacoInstance.monacoWebView.isEditorInited {
                     App.monacoInstance
+                        .overlay{
+                            ProgressView()
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .background(Color.init(id: "editor.background"))
+                        }
                 } else if let editor = App.activeEditor {
 
                     editor.view
