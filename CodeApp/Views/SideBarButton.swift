@@ -45,6 +45,6 @@ struct SideBarButton: View {
                 )
                 .cornerRadius(10.0)
             }
-        ).buttonStyle(NoAnim())
+        )
     }
 }
