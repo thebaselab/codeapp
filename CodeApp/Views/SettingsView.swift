@@ -262,6 +262,10 @@ struct SettingsView: View {
                     }
                 }
 
+                Section(header: Text("Languages (Local)")) {
+                    Toggle("Show Command in Terminal", isOn: $compilerShowPath)
+                }
+
                 Section(header: Text("Languages (Remote)")) {
                     VStack {
                         ForEach(languageList.keys.sorted().filter { $0 > 10 }, id: \.self) { i in
