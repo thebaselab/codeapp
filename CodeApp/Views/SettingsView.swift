@@ -260,29 +260,6 @@ struct SettingsView: View {
                             )
                         }
                     }
-
-                    //                        Toggle(NSLocalizedString("Show Keyboard Button (Will be effective in the next app launch)", comment: ""), isOn: self.$editorShowKeyboardButtonEnabled)
-                }
-
-                Section(header: Text("Languages (Local)")) {
-                    Toggle("Show Command in Terminal", isOn: $compilerShowPath)
-                    VStack {
-                        ForEach(languageList.keys.sorted().filter { $0 < 10 }, id: \.self) { i in
-                            Toggle(
-                                "\(languageList[i]![0]) (.\(languageList[i]![1]))",
-                                isOn: $App.languageEnabled[i]
-                            ).onTapGesture {
-                                let defaults = UserDefaults.standard
-                                if let languageList = defaults.object(forKey: "languageList")
-                                    as? [Bool]
-                                {
-                                    var languageEnabledTemp = languageList
-                                    languageEnabledTemp[i].toggle()
-                                    defaults.set(languageEnabledTemp, forKey: "languageList")
-                                }
-                            }
-                        }
-                    }
                 }
 
                 Section(header: Text("Languages (Remote)")) {
