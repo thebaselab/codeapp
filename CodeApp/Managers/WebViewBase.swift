@@ -9,7 +9,6 @@ import WebKit
 
 class WebViewBase: KBWebViewBase {
     private var ToolbarHandle: UInt8 = 0
-    var isEditorInited = false
 
     init() {
         let config = WKWebViewConfiguration()

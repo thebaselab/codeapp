@@ -487,7 +487,7 @@ struct MonacoEditor: UIViewRepresentable {
                 }
                 control.applyCustomShortcuts()
                 getAllActions()
-                control.monacoWebView.isEditorInited = true
+                control.App.stateManager.isMonacoEditorInitialized = true
             case "Markers updated":
                 let markers = result["Markers"] as! [Any]
                 control.App.problems = [:]
@@ -547,7 +547,7 @@ struct MonacoEditor: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        guard monacoWebView.isEditorInited else { return }
+        guard App.stateManager.isMonacoEditorInitialized else { return }
         guard let activeTextEditor = App.activeTextEditor else {
             setModel(url: "")
             return
@@ -579,7 +579,7 @@ struct MonacoEditor: UIViewRepresentable {
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
 
-        if !monacoWebView.isEditorInited {
+        if !App.stateManager.isMonacoEditorInitialized {
             let contentManager = monacoWebView.configuration.userContentController
             contentManager.add(context.coordinator, name: "toggleMessageHandler")
         }

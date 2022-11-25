@@ -24,6 +24,7 @@ class MainStateManager: ObservableObject {
     @Published var selectedBranch: checkoutDest? = nil
     @Published var checkoutDetached: Bool = false
     @Published var gitServiceIsBusy = false
+    @Published var isMonacoEditorInitialized = false
 }
 
 class MainApp: ObservableObject {
@@ -688,7 +689,7 @@ class MainApp: ObservableObject {
 
     @MainActor
     func openFile(url: URL, alwaysInNewTab: Bool = false) async throws -> EditorInstance {
-        guard monacoInstance.monacoWebView.isEditorInited else {
+        guard stateManager.isMonacoEditorInitialized else {
             urlQueue.append(url)
             throw AppError.editorIsNotReady
         }

@@ -31,7 +31,7 @@ struct EditorView: View {
         HStack(spacing: 0) {
             ZStack {
                 Color.init(id: "editor.background")
-                if !App.monacoInstance.monacoWebView.isEditorInited {
+                if !App.stateManager.isMonacoEditorInitialized {
                     App.monacoInstance
                         .overlay{
                             ProgressView()
