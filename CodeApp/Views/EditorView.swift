@@ -25,7 +25,7 @@ struct EditorView: View {
     func onDropURL(url: URL) {
         // TODO: Determine whether file is directory
         _ = url.startAccessingSecurityScopedResource()
-        App.openFile(url: url)
+        App.openFile(url: url, alwaysInNewTab: true)
     }
 
     var body: some View {
