@@ -530,3 +530,101 @@ extension WorkSpaceStorage: FileSystemProvider {
         }
     }
 }
+
+extension WorkSpaceStorage {
+    func write(at: URL, content: Data, atomically: Bool, overwrite: Bool) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            write(
+                at: at, content: content, atomically: atomically, overwrite: overwrite
+            ) { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+
+    func contentsOfDirectory(at url: URL) async throws -> [URL] {
+        return try await withCheckedThrowingContinuation { continuation in
+            contentsOfDirectory(at: url) { urls, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: urls ?? [])
+                }
+            }
+        }
+    }
+
+    func fileExists(at url: URL) async throws -> Bool {
+        return try await withCheckedThrowingContinuation { continuation in
+            fileExists(at: url) { exists in
+                continuation.resume(returning: exists)
+            }
+        }
+    }
+
+    func createDirectory(at: URL, withIntermediateDirectories: Bool) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            createDirectory(
+                at: at, withIntermediateDirectories: withIntermediateDirectories
+            ) { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+
+    func copyItem(at: URL, to: URL) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            copyItem(at: at, to: to) { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+
+    func moveItem(at: URL, to: URL) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            moveItem(at: at, to: to) { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+
+    func removeItem(at: URL) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            removeItem(at: at) { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+
+    func contents(at: URL) async throws -> Data {
+        return try await withCheckedThrowingContinuation { continuation in
+            contents(at: at) { data, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: data ?? Data())
+                }
+            }
+        }
+    }
+}
