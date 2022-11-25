@@ -14,11 +14,11 @@ struct CompactSidebar: View {
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
     
-    let sections: [Int: [String]] = [
-        0: ["Files", "doc.on.doc"],
-        1: ["Search", "magnifyingglass"],
-        3: ["source_control.title", "point.topleft.down.curvedto.point.bottomright.up"],
-        4: ["Remotes", "rectangle.connected.to.line.below"],
+    let sections: [SideBarSection: (LocalizedStringKey, String)] = [
+        .explorer: ("Files", "doc.on.doc"),
+        .search: ("Search", "magnifyingglass"),
+        .sourceControl: ("source_control.title", "point.topleft.down.curvedto.point.bottomright.up"),
+        .remote: ("Remotes", "rectangle.connected.to.line.below"),
     ]
     
     var body: some View {
@@ -56,10 +56,15 @@ struct CompactSidebar: View {
                             selection: $currentSideBarTab,
                             label: Text("Section")
                         ) {
-                            ForEach([0, 1, 3, 4], id: \.self) { value in
+                            ForEach([
+                                SideBarSection.explorer,
+                                SideBarSection.search,
+                                SideBarSection.sourceControl,
+                                SideBarSection.remote
+                            ], id: \.self) { value in
                                 Label(
-                                    sections[value]![0],
-                                    systemImage: sections[value]![1])
+                                    sections[value]!.0,
+                                    systemImage: sections[value]!.1)
                             }
                         }
                     } label: {
