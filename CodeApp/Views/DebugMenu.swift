@@ -32,9 +32,6 @@ struct DebugMenu: View {
                         try? await Task.sleep(nanoseconds: 10 * 1_000_000_000)
                     })
             }
-            Button("Show Changelog") {
-
-            }
         }
     }
 }
