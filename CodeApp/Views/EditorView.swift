@@ -22,12 +22,19 @@ struct EditorView: View {
 
     @State var targeted: Bool = false
 
+    func onDropURL(url: URL) {
+        // TODO: Determine whether file is directory
+        _ = url.startAccessingSecurityScopedResource()
+        App.openFile(url: url)
+    }
+
     var body: some View {
         HStack(spacing: 0) {
             ZStack {
                 Color.init(id: "editor.background")
-
-                if let editor = App.activeEditor {
+                if !App.monacoInstance.monacoWebView.isEditorInited {
+                    App.monacoInstance
+                } else if let editor = App.activeEditor {
 
                     editor.view
 
@@ -90,18 +97,14 @@ struct EditorView: View {
                             ofClass: URL.self,
                             completionHandler: { url, err in
                                 if let url {
-                                    Task {
-                                        try? await App.openFile(url: url)
-                                    }
+                                    onDropURL(url: url)
                                 }
                             })
                     } else {
                         provider.loadItem(forTypeIdentifier: UTType.item.identifier) {
                             data, error in
-                            if let target = data as? URL {
-                                Task {
-                                    try? await App.openFile(url: target)
-                                }
+                            if let url = data as? URL {
+                                onDropURL(url: url)
                             }
                         }
                     }
