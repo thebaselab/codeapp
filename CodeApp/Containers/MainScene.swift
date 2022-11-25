@@ -21,7 +21,7 @@ struct MainScene: View {
 
     func getOpenEditorsBookmarks() -> [Data] {
         guard let openEditorsBookmarksData else { return [] }
-        return try! PropertyListDecoder().decode([Data].self, from: openEditorsBookmarksData)
+        return (try? PropertyListDecoder().decode([Data].self, from: openEditorsBookmarksData)) ?? []
     }
 
     func setOpenEditorsBookmarks(_ v: [Data]) {
