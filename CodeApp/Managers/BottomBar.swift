@@ -21,9 +21,6 @@ struct BottomBar: View {
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("editorFontSize") var editorTextSize: Int = 14
 
-    @SceneStorage("sidebar.visible") var isShowingDirectory: Bool = DefaultUIState.SIDEBAR_VISIBLE
-    @SceneStorage("sidebar.tab") var currentDirectory: Int = DefaultUIState.SIDEBAR_TAB
-
     let openConsolePanel: () -> Void
     let onDirectoryPickerFinished: () -> Void
     // Somehow it doesn't compile with arguments in the function

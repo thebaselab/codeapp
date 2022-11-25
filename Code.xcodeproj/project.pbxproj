@@ -502,6 +502,10 @@
 		945C75E6281587DB00D22B35 /* ExplorerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945C75E5281587DB00D22B35 /* ExplorerCell.swift */; };
 		945C75E7281587DB00D22B35 /* ExplorerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945C75E5281587DB00D22B35 /* ExplorerCell.swift */; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		94795C452931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
+		94795C462931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
+		94795C4829314A0A0057C12F /* CompactSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4729314A0A0057C12F /* CompactSidebar.swift */; };
+		94795C4929314A0A0057C12F /* CompactSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4729314A0A0057C12F /* CompactSidebar.swift */; };
 		94798713280330080055B838 /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 94798712280330080055B838 /* GCDWebServers */; };
 		947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */; };
 		947BF349262453040015DAEB /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* SearchManager.swift */; };
@@ -1522,6 +1526,8 @@
 		945C75E5281587DB00D22B35 /* ExplorerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerCell.swift; sourceTree = "<group>"; };
 		945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NodeMobile.xcframework; path = Resources/NodeJS/NodeMobile.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
+		94795C442931489C0057C12F /* ActivityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBar.swift; sourceTree = "<group>"; };
+		94795C4729314A0A0057C12F /* CompactSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactSidebar.swift; sourceTree = "<group>"; };
 		947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+getSafeArea.swift"; sourceTree = "<group>"; };
 		947BF348262453040015DAEB /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		94801F92266FB5E400B29D80 /* TerminalInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalInstance.swift; sourceTree = "<group>"; };
@@ -2424,7 +2430,9 @@
 			children = (
 				94801F94266FBC3500B29D80 /* ViewRepresentable.swift */,
 				94D721DE268DA2B8007A63BD /* TopBar.swift */,
+				94795C442931489C0057C12F /* ActivityBar.swift */,
 				94E6CC842807502A00939E4F /* ActivityBarItemView.swift */,
+				94795C4729314A0A0057C12F /* CompactSidebar.swift */,
 				94A045FD2804853200182275 /* DescriptionText.swift */,
 				948E478126502B6900A6110D /* EditorTab.swift */,
 				94A7782F257BD680008FE7B2 /* EditorTabs.swift */,
@@ -2920,6 +2928,7 @@
 				FFD081B92925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */,
 				94196965280316C7008AAEB2 /* String+toCString.swift in Sources */,
 				9F3C2DF8291CCE9A00BFF14C /* Remote.swift in Sources */,
+				94795C4929314A0A0057C12F /* CompactSidebar.swift in Sources */,
 				94196967280316C7008AAEB2 /* Executor.swift in Sources */,
 				94196968280316C7008AAEB2 /* RemoteAuthView.swift in Sources */,
 				94196969280316C7008AAEB2 /* CodeApp.swift in Sources */,
@@ -2928,6 +2937,7 @@
 				9419696C280316C7008AAEB2 /* WorkSpaceStorage.swift in Sources */,
 				94A045EF280480E800182275 /* RemoteListSection.swift in Sources */,
 				9419696D280316C7008AAEB2 /* DirectoryFolderMonitor.swift in Sources */,
+				94795C462931489C0057C12F /* ActivityBar.swift in Sources */,
 				9419696E280316C7008AAEB2 /* fileName.swift in Sources */,
 				9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
@@ -3068,6 +3078,7 @@
 				FFD081B82925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */,
 				949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */,
 				9F3C2DF7291CCE9A00BFF14C /* Remote.swift in Sources */,
+				94795C4829314A0A0057C12F /* CompactSidebar.swift in Sources */,
 				948D12222583F2A5008F877A /* Executor.swift in Sources */,
 				9437155B26C3C745000376FB /* RemoteAuthView.swift in Sources */,
 				944EEBF42563C381009D77FE /* CodeApp.swift in Sources */,
@@ -3076,6 +3087,7 @@
 				94A777A2257ABDC3008FE7B2 /* WorkSpaceStorage.swift in Sources */,
 				94A045EE280480E800182275 /* RemoteListSection.swift in Sources */,
 				94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */,
+				94795C452931489C0057C12F /* ActivityBar.swift in Sources */,
 				94A5685E257E1249008A6530 /* fileName.swift in Sources */,
 				9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,

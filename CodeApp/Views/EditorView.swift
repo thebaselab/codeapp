@@ -18,7 +18,6 @@ struct EditorView: View {
 
     @AppStorage("editorLightTheme") var editorLightTheme: String = "Default"
     @AppStorage("editorDarkTheme") var editorDarkTheme: String = "Default"
-    @SceneStorage("sidebar.tab") var directoryID: Int = DefaultUIState.SIDEBAR_TAB
 
     @State var targeted: Bool = false
 

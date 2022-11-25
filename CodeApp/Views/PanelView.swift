@@ -123,8 +123,7 @@ struct PanelView: View {
     @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
 
     @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
-    @SceneStorage("panel.height") var panelHeight: Double = 200.0
-    @SceneStorage("panel.splitViewEnabled") var showSplitView: Bool = false
+    @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
 
     @State var showSheet = false
     @State var keyboardHeight: CGFloat = 0.0
