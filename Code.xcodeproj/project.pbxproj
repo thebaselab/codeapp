@@ -1911,7 +1911,6 @@
 		94A77799257ABC16008FE7B2 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				9F3C2DE82918E15A00BFF14C /* Setup */,
 				949B3CC625DEAAA600BC83B5 /* node.swift */,
 				94CF58E0265E8A4B00CB6A4B /* wasm.swift */,
 				94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */,
@@ -2416,13 +2415,6 @@
 				9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */,
 			);
 			path = Modifiers;
-			sourceTree = "<group>";
-		};
-		9F3C2DE82918E15A00BFF14C /* Setup */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Setup;
 			sourceTree = "<group>";
 		};
 		9F3C2DEF291CAD2200BFF14C /* Views */ = {
