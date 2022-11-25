@@ -151,7 +151,7 @@ struct ExplorerContainer: View {
                             ).onTapGesture { onPickNewDirectory() }
                         }
 
-                        Image(systemName: "magnifyingglass").contentShape(
+                        Image(systemName: "line.3.horizontal.decrease").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
