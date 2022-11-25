@@ -120,22 +120,19 @@ private struct NotificationItemWtihProgress: View {
 private struct AsyncProgressNotificationItem: View {
 
     let data: NotificationData
-    @State var enabled: Bool = false
 
     @Binding var isPresented: Bool
 
     var body: some View {
         NotificationItem(data: data) {
             VStack {
-                InfinityProgressView(enabled: $enabled)
+                InfinityProgressView(enabled: true)
             }
         }
         .onAppear {
-            enabled = true
             Task {
                 await data.task?()
                 await MainActor.run {
-                    enabled = false
                     isPresented = false
                 }
             }

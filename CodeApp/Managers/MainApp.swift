@@ -23,6 +23,7 @@ class MainStateManager: ObservableObject {
     @Published var showsCheckoutAlert: Bool = false
     @Published var selectedBranch: checkoutDest? = nil
     @Published var checkoutDetached: Bool = false
+    @Published var gitServiceIsBusy = false
 }
 
 class MainApp: ObservableObject {
@@ -468,6 +469,16 @@ class MainApp: ObservableObject {
 
     func git_status() {
 
+        DispatchQueue.main.async {
+            self.stateManager.gitServiceIsBusy = true
+        }
+
+        func onFinish() {
+            DispatchQueue.main.async {
+                self.stateManager.gitServiceIsBusy = false
+            }
+        }
+
         func clearUIState() {
             DispatchQueue.main.async {
                 self.remote = ""
@@ -484,8 +495,10 @@ class MainApp: ObservableObject {
 
         workSpaceStorage.gitServiceProvider?.status(error: { _ in
             clearUIState()
+            onFinish()
         }) { indexed, worktree, branch in
             guard let hasRemote = self.workSpaceStorage.gitServiceProvider?.hasRemote() else {
+                onFinish()
                 return
             }
             DispatchQueue.main.async {
@@ -505,10 +518,12 @@ class MainApp: ObservableObject {
 
             self.workSpaceStorage.gitServiceProvider?.aheadBehind(error: {
                 print($0.localizedDescription)
+                onFinish()
                 DispatchQueue.main.async {
                     self.aheadBehind = nil
                 }
             }) { result in
+                onFinish()
                 DispatchQueue.main.async {
                     self.aheadBehind = result
                 }

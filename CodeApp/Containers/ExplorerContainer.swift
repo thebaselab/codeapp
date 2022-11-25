@@ -92,7 +92,7 @@ struct ExplorerContainer: View {
     var body: some View {
         VStack(spacing: 0) {
 
-            InfinityProgressView(enabled: $App.workSpaceStorage.explorerIsBusy)
+            InfinityProgressView(enabled: App.workSpaceStorage.explorerIsBusy)
 
             ScrollViewReader { proxy in
                 List {

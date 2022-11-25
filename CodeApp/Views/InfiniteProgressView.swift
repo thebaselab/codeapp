@@ -10,7 +10,7 @@ import SwiftUI
 struct InfinityProgressView: View {
 
     @State private var atLeading: Bool = false
-    @Binding var enabled: Bool
+    let enabled: Bool
 
     private var repeatingAnimation: Animation {
         Animation
@@ -26,11 +26,12 @@ struct InfinityProgressView: View {
                     .frame(maxWidth: 30, maxHeight: 3)
                     .offset(x: atLeading ? geometry.size.width - 30 : 0, y: 0)
             }
-        }.frame(height: 8)
-            .onChange(of: enabled) { _ in
-                withAnimation(repeatingAnimation) {
-                    atLeading.toggle()
-                }
+        }
+        .frame(height: 8)
+        .onAppear {
+            withAnimation(repeatingAnimation) {
+                atLeading.toggle()
             }
+        }
     }
 }

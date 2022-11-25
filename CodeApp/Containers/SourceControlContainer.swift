@@ -11,7 +11,10 @@ import SwiftUI
 struct SourceControlContainer: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var stateManager: MainStateManager
+
     @State var showsPrompt = false
+
     func onInitializeRepository() async throws {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
@@ -274,37 +277,45 @@ struct SourceControlContainer: View {
         }
         Task {
             do {
-                try await App.compareWithPrevious(url: fileURL)
+                try await App.notificationManager.withAsyncNotification(
+                    title: "Retrieving changes",
+                    task: {
+                        try await App.compareWithPrevious(url: fileURL)
+                    })
             } catch {
-                print(error)
+                App.notificationManager.showErrorMessage(error.localizedDescription)
             }
 
         }
     }
 
     var body: some View {
-        List {
-            Group {
-                if App.workSpaceStorage.gitServiceProvider == nil {
-                    SourceControlUnsupportedSection()
-                } else if App.gitTracks.count > 0 || App.branch != "" {
-                    SourceControlSection(
-                        onCommit: onCommit,
-                        onPush: onPush,
-                        onFetch: onFetch,
-                        onStageAllChanges: onStageAllChanges,
-                        onUnstage: onUnstage,
-                        onRevert: onRevert,
-                        onStage: onStage,
-                        onShowChangesInDiffEditor: onShowChangesInDiffEditor
-                    )
-                } else {
-                    SourceControlEmptySection(onInitializeRepository: onInitializeRepository)
-                    SourceControlCloneSection(onClone: onClone)
+        VStack(spacing: 0) {
+            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
+
+            List {
+                Group {
+                    if App.workSpaceStorage.gitServiceProvider == nil {
+                        SourceControlUnsupportedSection()
+                    } else if App.gitTracks.count > 0 || App.branch != "" {
+                        SourceControlSection(
+                            onCommit: onCommit,
+                            onPush: onPush,
+                            onFetch: onFetch,
+                            onStageAllChanges: onStageAllChanges,
+                            onUnstage: onUnstage,
+                            onRevert: onRevert,
+                            onStage: onStage,
+                            onShowChangesInDiffEditor: onShowChangesInDiffEditor
+                        )
+                    } else {
+                        SourceControlEmptySection(onInitializeRepository: onInitializeRepository)
+                        SourceControlCloneSection(onClone: onClone)
+                    }
                 }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
-            .listRowSeparator(.hidden)
-            .listRowBackground(Color.clear)
         }
         .environment(\.defaultMinListRowHeight, 10)
         .listStyle(SidebarListStyle())

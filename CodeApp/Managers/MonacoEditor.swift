@@ -553,10 +553,11 @@ struct MonacoEditor: UIViewRepresentable {
             return
         }
         if let diffEditor = activeTextEditor as? DiffTextEditorInstnace {
+            let diffURL = URL(string: "git://" + diffEditor.url.path)!
             switchToDiffView(
                 originalContent: diffEditor.compareWith,
                 modifiedContent: diffEditor.content,
-                url: diffEditor.url.appendingPathComponent("?previous").absoluteString,
+                url: diffURL.absoluteString,
                 url2: diffEditor.url.absoluteString
             )
         } else {

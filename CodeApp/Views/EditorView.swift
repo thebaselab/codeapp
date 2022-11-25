@@ -39,7 +39,7 @@ struct EditorView: View {
                     editor.view
 
                     VStack {
-                        InfinityProgressView(enabled: $App.workSpaceStorage.editorIsBusy)
+                        InfinityProgressView(enabled: App.workSpaceStorage.editorIsBusy)
                         Spacer()
                     }
 
