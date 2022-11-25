@@ -13,14 +13,16 @@ struct CompactEditorTabs: View {
 
     var body: some View {
         Menu {
-
-            Button {
-                if let activeEditor = App.activeEditor {
-                    App.closeEditor(editor: activeEditor)
+            if let activeEditor = App.activeEditor {
+                Section((activeEditor as? EditorInstanceWithURL)?.pathAfterUUID ?? activeEditor.title){
+                    Button {
+                        App.closeEditor(editor: activeEditor)
+                    } label: {
+                        Label("Close Editor", systemImage: "xmark")
+                    }
                 }
-            } label: {
-                Label("Close Editor", systemImage: "xmark")
             }
+            
 
             Section("Open Editors") {
                 ForEach(App.editors) { editor in
