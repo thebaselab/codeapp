@@ -44,8 +44,6 @@ class Executor {
         onStderr: @escaping ((_ data: Data) -> Void),
         onRequestInput: @escaping ((_ prompt: String) -> Void)
     ) {
-        initializeEnvironment()
-        //        ios_setMiniRootURL(root)
         currentWorkingDirectory = root
         prompt = "\(root.lastPathComponent) $ "
         receivedStdout = onStdout

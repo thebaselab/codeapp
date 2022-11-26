@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 import WebKit
 import ios_system
+import SwiftGit2
 
 var globalThemes: [Theme] = []
 var globalDarkTheme: [String: Any]? = nil
@@ -350,6 +351,8 @@ struct CodeApp: App {
                 Resources.wasmHTML,
                 allowingReadAccessTo: Resources.wasmHTML)
         }
+        initializeEnvironment()
+        Repository.initialize_libgit2()
     }
 
     var window: UIWindow? {

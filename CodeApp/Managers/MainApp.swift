@@ -163,8 +163,6 @@ class MainApp: ObservableObject {
             print(error)
         }
 
-        Repository.initialize_libgit2()
-
         git_status()
     }
 
@@ -557,7 +555,7 @@ class MainApp: ObservableObject {
     }
 
     func loadFolder(url: URL, resetEditors: Bool = true) {
-        ios_setDirectoryURL(url)
+       ios_setDirectoryURL(url)
         scanForTypes()
 
         DispatchQueue.global(qos: .userInitiated).async {
