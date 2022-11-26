@@ -26,12 +26,11 @@ Use [VS Code](https://github.com/microsoft/vscode) as a design template while pr
 
 ## Building the project
 
-1. `./downloadFrameworks.sh`
-2. Open Code.xcworkspace
-3. Select project from file navigator
-4. Signing & Capabilities -> select your own team
-5. Change Bundle Identifier if needed
-6. Build and install on a real device (simulator is not supported)
+1. `git clone https://github.com/thebaselab/codeapp`
+2. `./downloadFrameworks.sh`
+3. Open Code.xcodeproj
+4. Switch to CodeUI target if you wish to run the app on a simulator
+5. Click build
 
 The source code of the built-in languages are hosted on these repositories.
 | Language | Repository |
