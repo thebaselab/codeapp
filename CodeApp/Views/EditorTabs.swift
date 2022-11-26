@@ -15,14 +15,13 @@ struct CompactEditorTabs: View {
         Menu {
             if let activeEditor = App.activeEditor {
                 Section((activeEditor as? EditorInstanceWithURL)?.pathAfterUUID ?? activeEditor.title){
-                    Button {
+                    Button(role: .destructive) {
                         App.closeEditor(editor: activeEditor)
                     } label: {
                         Label("Close Editor", systemImage: "xmark")
                     }
                 }
             }
-            
 
             Section("Open Editors") {
                 ForEach(App.editors) { editor in
@@ -38,13 +37,15 @@ struct CompactEditorTabs: View {
             HStack {
                 Text(App.activeEditor?.title ?? "")
                     .bold()
+                    .lineLimit(1)
+                    .foregroundColor(Color(id: "activityBar.foreground"))
 
                 if App.editors.count > 0 {
                     Image(systemName: "chevron.down.circle.fill")
+                        .symbolRenderingMode(.hierarchical)
                 }
             }
         }
-        .foregroundColor(Color(id: "activityBar.foreground"))
         .id(UUID())
 
     }
