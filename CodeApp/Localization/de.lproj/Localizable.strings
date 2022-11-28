@@ -386,6 +386,10 @@ In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffsto
 "errors.source_control.no_staged_changes" = "Es gibt keine inszenierten Änderungen.";
 "errors.source_control.empty_commit_message" = "Commit-Nachricht darf nicht leer sein";
 "errors.source_control.invalid_url" = "ungültige URL";
+"errors.unknown_file_format" = "Unbekanntes Dateiformat.";
+"errors.editor_does_not_exist" = "Der Editor existiert nicht.";
+"errors.editor_is_not_ready" = "Der Editor ist nicht bereit.";
+"errors.failed_to_save_file.encoding.failed" = "Fehler beim Speichern der Datei. Die Zeichenkodierung ist möglicherweise nicht unterstützt.";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";

@@ -506,6 +506,8 @@
 		94795C462931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C4829314A0A0057C12F /* CompactSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4729314A0A0057C12F /* CompactSidebar.swift */; };
 		94795C4929314A0A0057C12F /* CompactSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4729314A0A0057C12F /* CompactSidebar.swift */; };
+		94795C4B293259080057C12F /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4A293259080057C12F /* Encoding.swift */; };
+		94795C4C293259080057C12F /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4A293259080057C12F /* Encoding.swift */; };
 		94798713280330080055B838 /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 94798712280330080055B838 /* GCDWebServers */; };
 		947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */; };
 		947BF349262453040015DAEB /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* SearchManager.swift */; };
@@ -1528,6 +1530,7 @@
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
 		94795C442931489C0057C12F /* ActivityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBar.swift; sourceTree = "<group>"; };
 		94795C4729314A0A0057C12F /* CompactSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactSidebar.swift; sourceTree = "<group>"; };
+		94795C4A293259080057C12F /* Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
 		947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+getSafeArea.swift"; sourceTree = "<group>"; };
 		947BF348262453040015DAEB /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		94801F92266FB5E400B29D80 /* TerminalInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalInstance.swift; sourceTree = "<group>"; };
@@ -2574,6 +2577,7 @@
 				942A1884285B90650018801F /* Secrets.swift */,
 				9F3C2DEC2918EDC400BFF14C /* Resources.swift */,
 				9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */,
+				94795C4A293259080057C12F /* Encoding.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -2980,6 +2984,7 @@
 				9F3C2DEE2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC892807632B00939E4F /* biometricType.swift in Sources */,
 				942E31FC280876AA00233441 /* SearchSection.swift in Sources */,
+				94795C4C293259080057C12F /* Encoding.swift in Sources */,
 				94A046262804A67100182275 /* SourceControlSection.swift in Sources */,
 				9420698928284027007DE671 /* Store.swift in Sources */,
 				94A04608280493C600182275 /* SourceControlCloneSection.swift in Sources */,
@@ -3130,6 +3135,7 @@
 				9F3C2DED2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC882807632B00939E4F /* biometricType.swift in Sources */,
 				942E31FB280876AA00233441 /* SearchSection.swift in Sources */,
+				94795C4B293259080057C12F /* Encoding.swift in Sources */,
 				94A046252804A67100182275 /* SourceControlSection.swift in Sources */,
 				9420698828284027007DE671 /* Store.swift in Sources */,
 				94A04607280493C600182275 /* SourceControlCloneSection.swift in Sources */,

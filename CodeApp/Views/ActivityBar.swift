@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ActivityBar: View {
-    
+
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var stateManager: MainStateManager
-    
+
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
     @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
-    
+
     let openConsolePanel: () -> Void
-    
+
     func openSidePanel(index: SideBarSection) {
         if !isSideBarVisible {
             currentSideBarTab = index
@@ -32,7 +32,7 @@ struct ActivityBar: View {
             currentSideBarTab = index
         }
     }
-    
+
     func openFile() {
         stateManager.showsFilePicker.toggle()
     }
@@ -40,12 +40,12 @@ struct ActivityBar: View {
     func openNewFile() {
         stateManager.showsNewFileSheet.toggle()
     }
-    
+
     func openFolder() {
         self.isSideBarVisible = true
         stateManager.showsDirectoryPicker = true
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
 

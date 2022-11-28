@@ -21,7 +21,8 @@ struct MainScene: View {
 
     func getOpenEditorsBookmarks() -> [Data] {
         guard let openEditorsBookmarksData else { return [] }
-        return (try? PropertyListDecoder().decode([Data].self, from: openEditorsBookmarksData)) ?? []
+        return (try? PropertyListDecoder().decode([Data].self, from: openEditorsBookmarksData))
+            ?? []
     }
 
     func setOpenEditorsBookmarks(_ v: [Data]) {
@@ -91,6 +92,7 @@ struct MainScene: View {
             .environmentObject(App)
             .environmentObject(App.extensionManager)
             .environmentObject(App.stateManager)
+            .environmentObject(App.alertManager)
             .onAppear {
                 restoreSceneState()
                 App.extensionManager.initializeExtensions(app: App)
@@ -120,6 +122,7 @@ private struct MainView: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var extensionManager: ExtensionManager
     @EnvironmentObject var stateManager: MainStateManager
+    @EnvironmentObject var alertManager: AlertManager
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -133,7 +136,7 @@ private struct MainView: View {
     @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
     @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
-    
+
     func openConsolePanel() {
         if self.panelHeight < 70 {
             self.panelHeight = 200
@@ -149,7 +152,7 @@ private struct MainView: View {
                     HStack(spacing: 0) {
                         if horizontalSizeClass == .regular {
                             ActivityBar(openConsolePanel: openConsolePanel)
-                            
+
                             if isSideBarVisible {
                                 ZStack(alignment: .topLeading) {
                                     Group {
@@ -229,7 +232,6 @@ private struct MainView: View {
         .onChange(of: colorScheme) { newValue in
             App.updateView()
         }
-        .environmentObject(App)
         .hiddenScrollableContentBackground()
         .onAppear {
             let appVersion =
@@ -240,6 +242,9 @@ private struct MainView: View {
             }
 
             changeLogLastReadVersion = appVersion
+        }
+        .alert(alertManager.title, isPresented: $alertManager.isShowingAlert) {
+            alertManager.alertContent
         }
     }
 }

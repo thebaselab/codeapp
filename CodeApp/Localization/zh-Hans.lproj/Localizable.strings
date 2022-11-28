@@ -410,6 +410,9 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.source_control.empty_commit_message" = "备注不能为空";
 "errors.source_control.invalid_url" = "无效的网址";
 "errors.unknown_file_format" = "未知文件格式";
+"errors.editor_does_not_exist" = "编辑器不存在。";
+"errors.editor_is_not_ready" = "编辑器尚未准备好。";
+"errors.failed_to_save_file.encoding.failed" = "无法保存文件。 编码失败。";
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";

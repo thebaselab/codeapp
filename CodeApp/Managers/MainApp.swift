@@ -13,6 +13,19 @@ import SwiftUI
 import UniformTypeIdentifiers
 import ios_system
 
+class AlertManager: ObservableObject {
+    @Published var isShowingAlert = false
+
+    var title: String = ""
+    var alertContent: AnyView = AnyView(EmptyView())
+
+    func showAlert(title: String, content: AnyView) {
+        self.title = title
+        self.alertContent = content
+        isShowingAlert = true
+    }
+}
+
 class MainStateManager: ObservableObject {
     @Published var showsNewFileSheet = false
     @Published var showsDirectoryPicker = false
@@ -30,6 +43,7 @@ class MainStateManager: ObservableObject {
 class MainApp: ObservableObject {
     let extensionManager = ExtensionManager()
     let stateManager = MainStateManager()
+    let alertManager = AlertManager()
 
     @Published var editors: [EditorInstance] = []
     var textEditors: [TextEditorInstance] {
@@ -397,39 +411,38 @@ class MainApp: ObservableObject {
                     self.monacoInstance.setCurrentModelValue(value: string)
                 } else {
                     self.notificationManager.showErrorMessage(
-                        "Failed to read file with \(encodingTable[encoding]!)")
+                        "Failed to decode file with \(encoding.description).")
                 }
             })
     }
 
-    func saveTextEditor(editor: TextEditorInstance) {
+    func saveTextEditor(editor: TextEditorInstance) async throws {
         guard let data = editor.content.data(using: editor.encoding)
         else {
-            return
+            throw AppError.encodingFailed
         }
-        self.workSpaceStorage.write(
-            at: editor.url, content: data, atomically: true, overwrite: true
-        ) {
-            error in
-            if let error = error {
-                self.notificationManager.showErrorMessage(error.localizedDescription)
-                return
-            }
-            DispatchQueue.main.async {
-                editor.lastSavedVersionId = editor.currentVersionId
-                editor.isDeleted = false
-            }
-            DispatchQueue.global(qos: .utility).async {
-                self.git_status()
-            }
-            if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
-                self.monacoInstance.checkSpelling(
-                    text: editor.content, uri: editor.url.absoluteString)
-            }
+        try await workSpaceStorage.write(
+            at: editor.url, content: data, atomically: true, overwrite: true)
+
+        DispatchQueue.main.async {
+            editor.lastSavedVersionId = editor.currentVersionId
+            editor.isDeleted = false
+        }
+        DispatchQueue.global(qos: .utility).async {
+            self.git_status()
+        }
+        if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
+            await monacoInstance.checkSpelling(text: editor.content, uri: editor.url.absoluteString)
         }
     }
 
     func saveCurrentFile() {
+        Task {
+            await saveCurrentFile()
+        }
+    }
+
+    func saveCurrentFile() async {
         if editors.isEmpty { return }
         guard let activeTextEditor = activeEditor as? TextEditorInstance else {
             return
@@ -439,7 +452,11 @@ class MainApp: ObservableObject {
         {
             return
         }
-        saveTextEditor(editor: activeTextEditor)
+        do {
+            try await saveTextEditor(editor: activeTextEditor)
+        } catch {
+            self.notificationManager.showErrorMessage(error.localizedDescription)
+        }
     }
 
     private func restartWebServer(url: URL) {
@@ -555,7 +572,7 @@ class MainApp: ObservableObject {
     }
 
     func loadFolder(url: URL, resetEditors: Bool = true) {
-       ios_setDirectoryURL(url)
+        ios_setDirectoryURL(url)
         scanForTypes()
 
         DispatchQueue.global(qos: .userInitiated).async {
@@ -686,6 +703,7 @@ class MainApp: ObservableObject {
     }
 
     @MainActor
+    @discardableResult
     func openFile(url: URL, alwaysInNewTab: Bool = false) async throws -> EditorInstance {
         guard stateManager.isMonacoEditorInitialized else {
             urlQueue.append(url)
@@ -710,7 +728,42 @@ class MainApp: ObservableObject {
     }
 
     @MainActor
-    func closeEditor(editor: EditorInstance) {
+    func closeEditor(editor: EditorInstance, force: Bool = false) {
+        if !force, let textEditor = editor as? TextEditorInstance, !textEditor.isSaved {
+            alertManager.showAlert(
+                title: "Do you want to save the changes made to \(textEditor.title)?",
+                content: AnyView(
+                    Group {
+                        Button("Save") {
+                            Task {
+                                try await self.saveTextEditor(editor: textEditor)
+                                self.closeEditor(editor: textEditor)
+                            }
+                        }
+
+                        Button("Don't Save", role: .destructive) {
+                            Task {
+                                let dataToRevertTo = try await self.workSpaceStorage.contents(
+                                    at: textEditor.url)
+                                guard
+                                    let contentToRevertTo = String(
+                                        data: dataToRevertTo, encoding: textEditor.encoding)
+                                else {
+                                    return
+                                }
+                                try await self.monacoInstance.setValueForModel(
+                                    url: textEditor.url, value: contentToRevertTo)
+                            }
+                            self.closeEditor(editor: textEditor, force: true)
+                        }
+
+                        Divider()
+
+                        Button("Cancel", role: .cancel) {}
+                    }
+                ))
+            return
+        }
         guard let index = (editors.firstIndex { $0.id == editor.id }) else {
             return
         }

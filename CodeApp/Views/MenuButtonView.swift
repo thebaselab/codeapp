@@ -13,6 +13,7 @@ struct MenuButtonView<S>: UIViewRepresentable {
     struct Option {
         let value: S
         let title: String
+        let iconSystemName: String?
     }
 
     let options: [Option]
@@ -48,7 +49,8 @@ struct MenuButtonView<S>: UIViewRepresentable {
             children: options.map { option in
                 UIAction(
                     title: option.title,
-                    image: iconName == nil ? nil : UIImage(systemName: iconName!),
+                    image: option.iconSystemName == nil
+                        ? nil : UIImage(systemName: option.iconSystemName!),
                     state: .off,
                     handler: {
                         _action in

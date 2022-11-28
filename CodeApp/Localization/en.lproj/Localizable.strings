@@ -277,6 +277,10 @@ In many cases, you need to use a personal access token instead of password to au
 "errors.source_control.no_staged_changes" = "There are no staged changes";
 "errors.source_control.empty_commit_message" = "Commit message cannot be empty";
 "errors.source_control.invalid_url" = "Invalid URL";
+"errors.unknown_file_format" = "Unknown file format";
+"errors.editor_does_not_exist" = "Editor does not exist";
+"errors.editor_is_not_ready" = "Editor is not ready";
+"errors.failed_to_save_file.encoding.failed" = "Failed to save file. Encoding failed.";
 
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";

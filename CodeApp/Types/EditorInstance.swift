@@ -35,9 +35,16 @@ class EditorInstanceWithURL: EditorInstance {
         }
     }
     var pathAfterUUID: String {
-        let uuidRegex = try! NSRegularExpression(pattern: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", options: .caseInsensitive)
-        let lastMatchIndex = uuidRegex.matches(in: url.path, options: [], range: NSRange(location: 0, length: url.path.count)).last?.range.location ?? 0
-        return String(url.path.suffix(from: url.path.index(url.path.startIndex, offsetBy: lastMatchIndex + 37)))
+        let uuidRegex = try! NSRegularExpression(
+            pattern: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+            options: .caseInsensitive)
+        let lastMatchIndex =
+            uuidRegex.matches(
+                in: url.path, options: [], range: NSRange(location: 0, length: url.path.count)
+            ).last?.range.location ?? 0
+        return String(
+            url.path.suffix(
+                from: url.path.index(url.path.startIndex, offsetBy: lastMatchIndex + 37)))
     }
 
     init(view: AnyView, title: String, url: URL) {
@@ -57,6 +64,9 @@ class TextEditorInstance: EditorInstanceWithURL {
 
     var languageIdentifier: String {
         url.pathExtension
+    }
+    var isSaved: Bool {
+        lastSavedVersionId == currentVersionId
     }
 
     init(

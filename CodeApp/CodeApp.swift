@@ -5,11 +5,11 @@
 //  Created by Ken Chung on 17/11/2020.
 //
 
+import SwiftGit2
 import SwiftUI
 import UIKit
 import WebKit
 import ios_system
-import SwiftGit2
 
 var globalThemes: [Theme] = []
 var globalDarkTheme: [String: Any]? = nil

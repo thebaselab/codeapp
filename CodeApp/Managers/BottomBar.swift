@@ -83,7 +83,9 @@ struct BottomBar: View {
                             {
                                 MenuButtonView(
                                     options: destinations.map {
-                                        .init(value: $0, title: "\($0.name) at \($0.oid)")
+                                        .init(
+                                            value: $0, title: "\($0.name) at \($0.oid)",
+                                            iconSystemName: "arrow.triangle.branch")
                                     },
                                     onSelect: { branch in
                                         selectedBranch = branch
@@ -247,19 +249,20 @@ struct BottomBar: View {
                         }
 
                         if let editor = (App.activeEditor as? TextEditorInstance) {
-                            Text(
-                                "\((encodingTable[editor.encoding]) ?? editor.encoding.description)"
-                            )
-                            .contextMenu {
-                                ForEach(Array(encodingTable.keys), id: \.self) { value in
-                                    Button(action: {
-                                        App.reloadCurrentFileWithEncoding(encoding: value)
-                                    }) {
-                                        Text(encodingTable[value] ?? value.description)
-                                        Image(systemName: "textformat")
-                                    }
-                                }
-                            }
+                            MenuButtonView(
+                                options: AVAILABLE_ENCODING.map { encoding in
+                                    MenuButtonView.Option(
+                                        value: encoding, title: encoding.name,
+                                        iconSystemName: "textformat")
+                                },
+                                onSelect: { encoding in
+                                    App.reloadCurrentFileWithEncoding(encoding: encoding.encoding)
+                                },
+                                title: (AVAILABLE_ENCODING.first {
+                                    $0.encoding == editor.encoding
+                                })?.name ?? editor.encoding.description,
+                                iconName: nil
+                            ).fixedSize()
                         }
                     }
                 }

@@ -10,17 +10,19 @@ import SwiftUI
 struct CompactSidebar: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var stateManager: MainStateManager
-    
+
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
-    
+
     let sections: [SideBarSection: (LocalizedStringKey, String)] = [
         .explorer: ("Files", "doc.on.doc"),
         .search: ("Search", "magnifyingglass"),
-        .sourceControl: ("source_control.title", "point.topleft.down.curvedto.point.bottomright.up"),
+        .sourceControl: (
+            "source_control.title", "point.topleft.down.curvedto.point.bottomright.up"
+        ),
         .remote: ("Remotes", "rectangle.connected.to.line.below"),
     ]
-    
+
     var body: some View {
         HStack(spacing: 0) {
             VStack {
@@ -56,12 +58,14 @@ struct CompactSidebar: View {
                             selection: $currentSideBarTab,
                             label: Text("Section")
                         ) {
-                            ForEach([
-                                SideBarSection.explorer,
-                                SideBarSection.search,
-                                SideBarSection.sourceControl,
-                                SideBarSection.remote
-                            ], id: \.self) { value in
+                            ForEach(
+                                [
+                                    SideBarSection.explorer,
+                                    SideBarSection.search,
+                                    SideBarSection.sourceControl,
+                                    SideBarSection.remote,
+                                ], id: \.self
+                            ) { value in
                                 Label(
                                     sections[value]!.0,
                                     systemImage: sections[value]!.1)

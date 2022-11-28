@@ -549,7 +549,9 @@ struct MonacoEditor: UIViewRepresentable {
     func updateUIView(_ uiView: WKWebView, context: Context) {
         guard App.stateManager.isMonacoEditorInitialized else { return }
         guard let activeTextEditor = App.activeTextEditor else {
-            setModel(url: "")
+            Task {
+                try await setModelToEmpty()
+            }
             return
         }
         if let diffEditor = activeTextEditor as? DiffTextEditorInstnace {
@@ -599,10 +601,63 @@ struct MonacoEditor: UIViewRepresentable {
     }
 }
 
+extension WKWebView {
+    @discardableResult
+    func evaluateJavaScriptAsync(_ str: String) async throws -> Any? {
+        return try await withCheckedThrowingContinuation {
+            (continuation: CheckedContinuation<Any?, Error>) in
+            DispatchQueue.main.async {
+                self.evaluateJavaScript(str) { data, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: data)
+                    }
+                }
+            }
+        }
+    }
+}
+
 extension MonacoEditor {
     func isEditorInDiffMode() async -> Bool {
-        let result = try? await monacoWebView.evaluateJavaScript(
+        let result = try? await monacoWebView.evaluateJavaScriptAsync(
             "editor.getEditorType() !== 'vs.editor.ICodeEditor'")
         return (result as? Bool) ?? false
+    }
+
+    func editorModelExists(url: URL) async -> Bool {
+        let result = try? await monacoWebView.evaluateJavaScriptAsync(
+            "monaco.editor.getModel(monaco.Uri.parse('\(url.absoluteString)')) !== null")
+        return (result as? Bool) ?? false
+    }
+
+    func createModel(url: URL, value: String) async throws {
+        guard let encoded = value.base64Encoded() else {
+            return
+        }
+        let contentCommand = "decodeURIComponent(escape(window.atob('\(encoded)')))"
+        try await monacoWebView.evaluateJavaScriptAsync(
+            "editor.setModel(monaco.editor.createModel(\(contentCommand), undefined, monaco.Uri.parse('\(url.absoluteString)')));"
+        )
+    }
+
+    func setModel(url: URL) async throws {
+        try await monacoWebView.evaluateJavaScriptAsync(
+            "editor.setModel(monaco.editor.getModel(monaco.Uri.parse('\(url.absoluteString)')));")
+    }
+
+    func setModelToEmpty() async throws {
+        try await monacoWebView.evaluateJavaScriptAsync("editor.setModel()")
+    }
+
+    func setValueForModel(url: URL, value: String) async throws {
+        guard let encoded = value.base64Encoded() else {
+            return
+        }
+        let contentCommand = "decodeURIComponent(escape(window.atob('\(encoded)')))"
+        try await monacoWebView.evaluateJavaScriptAsync(
+            "monaco.editor.getModel(monaco.Uri.parse('\(url.absoluteString)')).setValue(\(contentCommand))"
+        )
     }
 }
