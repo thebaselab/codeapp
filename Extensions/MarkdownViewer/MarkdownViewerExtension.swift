@@ -12,20 +12,22 @@ import SwiftUI
 
 private struct MarkdownPreview: UIViewRepresentable {
 
-    let view: MarkdownView
+    weak var view: MarkdownView?
 
     func updateUIView(_ uiView: MarkdownView, context: Context) {
-        view.changeBackgroundColor(color: UIColor(id: "editor.background"))
+        uiView.changeBackgroundColor(color: UIColor(id: "editor.background"))
     }
 
     func makeUIView(context: Context) -> MarkdownView {
-        return view
+        return view ?? MarkdownView()
     }
 }
 
 class MarkdownEditorInstance: EditorInstance {
+    
+    let mdView = MarkdownView()
+    
     init(content: String, title: String) {
-        let mdView = MarkdownView()
         mdView.load(markdown: content, backgroundColor: UIColor(id: "editor.background"))
         super.init(view: AnyView(MarkdownPreview(view: mdView).id(UUID())), title: title)
     }
@@ -43,9 +45,9 @@ class MarkdownViewerExtension: CodeAppExtension {
                 else {
                     return
                 }
-                let instance = MarkdownEditorInstance(
-                    content: content, title: "Preview: " + url.lastPathComponent)
                 DispatchQueue.main.async {
+                    let instance = MarkdownEditorInstance(
+                        content: content, title: "Preview: " + url.lastPathComponent)
                     app.appendAndFocusNewEditor(editor: instance, alwaysInNewTab: true)
                 }
             },
