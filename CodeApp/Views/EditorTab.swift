@@ -19,7 +19,6 @@ struct EditorTab: View {
     var index: Int
     var onOpenEditor: () -> Void
     var onCloseEditor: () -> Void
-    var onSaveEditor: () -> Void
 
     static private func keyForInt(int: Int) -> KeyEquivalent {
         if int < 10 {

@@ -104,11 +104,6 @@ struct EditorTabs: View {
                         },
                         onCloseEditor: {
                             App.closeEditor(editor: currentEditor)
-                        },
-                        onSaveEditor: {
-                            if let currentTextEditor = currentEditor as? TextEditorInstance {
-                                App.saveTextEditor(editor: currentTextEditor)
-                            }
                         }
                     )
                     .onDrag {
