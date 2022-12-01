@@ -12,8 +12,6 @@ struct EditorTab: View {
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @ObservedObject var currentEditor: EditorInstance
-    // This is used for force updating the view.
-    @State private var lastUpdateTime: Date = Date()
 
     var isActive: Bool
     var index: Int
@@ -36,7 +34,8 @@ struct EditorTab: View {
                     onOpenEditor()
                 }) {
                     Group {
-                        if let editorURL = (currentEditor as? EditorInstanceWithURL)?.url,
+                        if let editorURL = (currentEditor as? EditorInstanceWithURL)?.url
+                            .standardizedFileURL,
                             let status = App.gitTracks[editorURL]
                         {
                             FileDisplayName(
