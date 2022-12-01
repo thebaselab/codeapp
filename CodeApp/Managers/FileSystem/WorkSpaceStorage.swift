@@ -34,6 +34,10 @@ class WorkSpaceStorage: ObservableObject {
         case AttemptingToCopyParentToChild = "errors.fs.attempting_to_copy_parent_to_child"
         case AttemptingToCopyOneself = "errors.fs.attempting_to_copy_oneself"
         case AlreadyConnectingToAHost = "errors.fs.already_connecting_to_a_host"
+
+        var errorDescription: String? {
+            NSLocalizedString(self.rawValue, comment: "")
+        }
     }
 
     var remoteConnected: Bool {
