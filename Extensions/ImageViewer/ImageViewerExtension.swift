@@ -48,7 +48,7 @@ private struct ImageView: View {
                 Text("Unsupported image")
             }
         } else {
-            Text("Loading Image")
+            ProgressView()
         }
     }
 
