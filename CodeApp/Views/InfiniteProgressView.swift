@@ -25,13 +25,13 @@ struct InfinityProgressView: View {
                     .fill(.blue)
                     .frame(maxWidth: 30, maxHeight: 3)
                     .offset(x: atLeading ? geometry.size.width - 30 : 0, y: 0)
+                    .onAppear {
+                        withAnimation(repeatingAnimation) {
+                            atLeading.toggle()
+                        }
+                    }
             }
         }
         .frame(height: 8)
-        .onAppear {
-            withAnimation(repeatingAnimation) {
-                atLeading.toggle()
-            }
-        }
     }
 }
