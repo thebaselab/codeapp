@@ -31,17 +31,22 @@ struct SimpleMarkDownView: UIViewRepresentable {
 
 struct ChangeLogView: View {
     @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationView {
             SimpleMarkDownView(text: NSLocalizedString("Changelog.message", comment: ""))
-                .navigationBarTitle(NSLocalizedString("Release Notes", comment: ""))
+                .navigationBarTitle("Release Notes")
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(
-                    trailing:
-                        Button(NSLocalizedString("Done", comment: "")) {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
-                )
+                .toolbar {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Text("Done")
+                            .foregroundColor(.blue)
+                            .font(.body)
+                    }
+
+                }
         }
     }
 }
