@@ -18,6 +18,7 @@ private struct PDFKitView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> PDFView {
         pdfView?.backgroundColor = UIColor(id: "editor.background")
+        pdfView?.autoScales = true
         return pdfView ?? PDFView()
     }
     func updateUIView(_ pdfView: PDFView, context: Context) {
