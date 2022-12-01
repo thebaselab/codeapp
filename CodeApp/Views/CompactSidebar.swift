@@ -15,7 +15,7 @@ struct CompactSidebar: View {
     @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
 
     let sections: [SideBarSection: (LocalizedStringKey, String)] = [
-        .explorer: ("Files", "doc.on.doc"),
+        .explorer: ("Explorer", "doc.on.doc"),
         .search: ("Search", "magnifyingglass"),
         .sourceControl: (
             "source_control.title", "point.topleft.down.curvedto.point.bottomright.up"
@@ -52,7 +52,11 @@ struct CompactSidebar: View {
                                 .currentDirectory.url
                         ).environmentObject(App)
                     }
+
                     Spacer()
+
+                }
+                .overlay {
                     Menu {
                         Picker(
                             selection: $currentSideBarTab,
@@ -72,20 +76,15 @@ struct CompactSidebar: View {
                             }
                         }
                     } label: {
-                        Image(systemName: "ellipsis.circle")
-                            .font(.system(size: 17))
-                            .foregroundColor(Color.init("T1"))
-                            .padding(5)
-                            .contentShape(
-                                RoundedRectangle(
-                                    cornerRadius: 8, style: .continuous)
-                            )
-                            .hoverEffect(.highlight)
-                            .frame(
-                                minWidth: 0, maxWidth: 20, minHeight: 0,
-                                maxHeight: 20
-                            )
-                            .padding()
+                        HStack {
+                            Text(sections[currentSideBarTab]?.0 ?? "")
+                                .bold()
+                                .lineLimit(1)
+                                .foregroundColor(Color.init("T1"))
+
+                            Image(systemName: "chevron.down.circle.fill")
+                                .symbolRenderingMode(.hierarchical)
+                        }.frame(width: 200.0)
                     }
                 }
                 .background(
