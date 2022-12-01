@@ -14,7 +14,9 @@ struct CompactEditorTabs: View {
     var body: some View {
         Menu {
             if let activeEditor = App.activeEditor {
-                Section((activeEditor as? EditorInstanceWithURL)?.pathAfterUUID ?? activeEditor.title){
+                Section(
+                    (activeEditor as? EditorInstanceWithURL)?.pathAfterUUID ?? activeEditor.title
+                ) {
                     Button(role: .destructive) {
                         App.closeEditor(editor: activeEditor)
                     } label: {

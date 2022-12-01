@@ -33,7 +33,7 @@ struct EditorView: View {
                 Color.init(id: "editor.background")
                 if !App.stateManager.isMonacoEditorInitialized {
                     App.monacoInstance
-                        .overlay{
+                        .overlay {
                             ProgressView()
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                                 .background(Color.init(id: "editor.background"))
