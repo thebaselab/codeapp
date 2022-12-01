@@ -28,7 +28,9 @@ class LocalExecutionExtension: CodeAppExtension {
             shortCut: .init("r", modifiers: [.command]),
             panelToFocusOnTap: "TERMINAL",
             shouldDisplay: {
-                LOCAL_EXECUTION_COMMANDS[app.activeTextEditor?.languageIdentifier ?? ""] != nil
+                guard let activeTextEditor = app.activeTextEditor else { return false }
+                return activeTextEditor.url.isFileURL &&
+                LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] != nil
             }
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
@@ -44,8 +46,7 @@ class LocalExecutionExtension: CodeAppExtension {
             return
         }
 
-        let sanitizedUrl =
-            "\"" + activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#) + "\""
+        let sanitizedUrl = activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#)
         let fullCommand = command.replacingOccurrences(of: "{url}", with: sanitizedUrl)
 
         let compilerShowPath = UserDefaults.standard.bool(forKey: "compilerShowPath")

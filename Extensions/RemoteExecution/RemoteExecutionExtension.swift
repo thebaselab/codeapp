@@ -45,7 +45,7 @@ class RemoteExecutionExtension: CodeAppExtension {
                 guard let textEditor = app.activeEditor as? TextEditorInstance else {
                     return false
                 }
-                return languageList.map { $0.value[1] }.contains(textEditor.languageIdentifier)
+                return textEditor.url.isFileURL && languageList.map { $0.value[1] }.contains(textEditor.languageIdentifier)
             }
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
