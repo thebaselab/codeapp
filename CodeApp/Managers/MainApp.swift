@@ -204,7 +204,7 @@ class MainApp: ObservableObject {
 
             ), title: NSLocalizedString("Welcome", comment: ""))
 
-        appendAndFocusNewEditor(editor: instnace)
+        appendAndFocusNewEditor(editor: instnace, alwaysInNewTab: true)
     }
 
     func updateView() {
@@ -645,16 +645,16 @@ class MainApp: ObservableObject {
             editor: monacoInstance,
             url: url,
             content: content,
-            encoding: encoding
-                // TODO: Update using updateUIView?
-                //            fileDidChange: { state, content in
-                //                if state == .modified, let content {
-                //                    DispatchQueue.main.async {
-                //                        self.monacoInstance.updateModelContent(
-                //                            url: url.absoluteString, content: content)
-                //                    }
-                //                }
-                //            }
+            encoding: encoding,
+            // TODO: Update using updateUIView?
+            fileDidChange: { state, content in
+                if state == .modified, let content {
+                    DispatchQueue.main.async {
+                        self.monacoInstance.updateModelContent(
+                            url: url.absoluteString, content: content)
+                    }
+                }
+            }
         )
 
     }
