@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.6 (October 2022)**
+##### **v1.4.0 (December 2022)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,11 @@
 
 "Changelog.message" =
 "
+### v1.4.0 (December 2022)
+- PDF-Vorschau
+- Allgemeine Leistungs- und Stabilitätsverbesserungents
+- Split-View-Unterstützung
+
 ### v1.3.6 (October 2022)
 - Aktualisieren Sie Node.js auf v16.17.0
 - Syntax-Highlighting für Svelte

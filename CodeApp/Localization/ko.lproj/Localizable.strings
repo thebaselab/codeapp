@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.3.6 (2022년 10월)**
+##### **v1.4.0 (2022년 12월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,11 @@
 
 "Changelog.message" =
 "
+### v1.4.0 (2022년 12월)
+- PDF 미리보기
+- 분할 보기 지원
+- 전반적인 성능 및 안정성 개선
+
 ### v1.3.6 (2022년 10월)
 - Node.js를 v16.17.0으로 업그레이드
 - svelte에 대한 구문 강조 표시
