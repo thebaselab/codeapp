@@ -25,7 +25,7 @@ private struct PanelCodeMarkersSection: View {
     var body: some View {
         Group {
             if App.problems.isEmpty {
-                Text("No problems detected in the workspace.")
+                Text("panel.problems.no_problems_detected")
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             } else {
                 ScrollView {

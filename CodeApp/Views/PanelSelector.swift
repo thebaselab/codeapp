@@ -14,17 +14,22 @@ struct PanelSelector<T: Hashable>: View {
     @State var buttons: [ActionSheet.Button] = [ActionSheet.Button.cancel()]
 
     @Binding var selection: T
-    let options: [T: String]
+    let options: [Option]
+
+    struct Option {
+        var titleKey: LocalizedStringKey
+        var value: T
+    }
 
     var body: some View {
         Menu {
             Picker(selection: $selection, label: Text("Selection")) {
-                ForEach(Array(options.keys), id: \.self) { value in
-                    Text(options[value]!).tag(value)
+                ForEach(options, id: \.value) { option in
+                    Text(option.titleKey).tag(option.value)
                 }
             }
         } label: {
-            Text(options[selection]!)
+            Text(options.first { $0.value == selection }?.titleKey ?? "")
                 .foregroundColor(Color.init("T1"))
                 .font(.system(size: 12, weight: .light))
                 .padding(.vertical, 2)

@@ -36,7 +36,7 @@ private struct PanelTabLabel: View {
     @SceneStorage("panel.focusedId") var currentPanelId: String = DefaultUIState.PANEL_FOCUSED_ID
 
     var body: some View {
-        Text(panel.labelId)
+        Text(LocalizedStringKey(panel.labelId))
             .foregroundColor(
                 Color.init(
                     id: panel.labelId == currentPanelId

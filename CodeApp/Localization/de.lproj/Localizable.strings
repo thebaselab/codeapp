@@ -223,6 +223,7 @@
 "Open File" = "Datei öffnen";
 "Open Editors" = "Editor öffnen";
 "EXPLORER" = "EXPLORER";
+"Explorer" = "Explorer";
 "SEARCH" = "SUCHEN";
 "Search" = "Suche";
 "Results" = "Ergebnisse";
@@ -334,6 +335,7 @@
 "Remotes" = "Remotes";
 "You don't have any saved remote." = "Sie haben keine gespeicherten Remote.";
 "New remote" = "Neuer remote";
+"Protocol" = "Protokoll";
 "Address" = "Adresse";
 "Port" = "Port";
 "Username" = "Benutzername";
@@ -395,6 +397,8 @@
 
 "remote.connecting" = "Verbindung zum Host herstellen";
 "remote.connected" = "Erfolgreich verbunden";
+"remote.ssh_key_not_found" = "SSH-Schlüssel nicht in Documents/.ssh/id_rsa gefunden. Generieren Sie eine, indem Sie ssh-keygen im Terminal ausführen.";
+"remote.reload_key" = "Schlüssel neu laden";
 
 "source_control.title" = "Quellcodeverwaltung";
 "source_control.pat" = "persönliches Zugangstoken";
@@ -412,3 +416,11 @@
 "source_control.remote_credentials" = "Remote-Anmeldeinformationen";
 "source_control.credentials.note" = "In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffstoken anstelle eines Kennworts verwenden. Um mehr darüber zu erfahren:";
 "source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";
+
+"panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
+"panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen.";
+"panel.execution.program_input" = "Programmeingabe..";
+"panel.execution.input" = "Eingabe";
+"panel.execution.output" = "Ausgabe";
+"panel.execution.split_view" = "Split View";
+"panel.execution.title" = "Ausführung";

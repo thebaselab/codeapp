@@ -223,6 +223,7 @@
 "Open File" = "파일 열기";
 "Open Editors" = "편집기 열기";
 "EXPLORER" = "탐색기";
+"Explorer" = "탐색기";
 "SEARCH" = "검색";
 "Search" = "검색";
 "Results" = "결과";
@@ -334,6 +335,7 @@
 "Remotes" = "원격 서버";
 "You don't have any saved remote." = "저장한 원격 서버가 없습니다.";
 "New remote" = "새 원격 서버";
+"Protocol" = "규약";
 "Address" = "주소";
 "Port" = "포트(Port)";
 "Username" = "사용자 이름";
@@ -395,6 +397,8 @@
 
 "remote.connecting" = "호스트에 연결";
 "remote.connected" = "성공적으로 연결됨";
+"remote.ssh_key_not_found" = "Documents/.ssh/id_rsa에서 SSH 키를 찾을 수 없습니다. 터미널에서 ssh-keygen을 실행하여 하나를 생성합니다.";
+"remote.reload_key" = "키 다시로드";
 
 "source_control.title" = "소스 제어";
 "source_control.pat" = "개인 액세스 토큰";
@@ -412,3 +416,11 @@
 "source_control.remote_credentials" = "원격 서버 자격 증명";
 "source_control.credentials.note" = "대부분의 경우 인증을 위해 암호 대신 개인용 액세스 토큰을 사용해야 합니다. 이에 대해 자세히 알아보려면:";
 "source_control.setup_your_credentials" = "git 자격 증명 설정(영어로만 제공)";
+
+"panel.problems.no_problems_detected" = "작업 공간에서 감지된 문제 없음.";
+"panel.execution.press_play_to_execute_code" = "코드를 실행하려면 실행 버튼을 누르십시오.";
+"panel.execution.program_input" = "프로그램 입력..";
+"panel.execution.input" = "입력";
+"panel.execution.output" = "출력";
+"panel.execution.split_view" = "분할 보기";
+"panel.execution.title" = "실행";

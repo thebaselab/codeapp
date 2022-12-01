@@ -14,7 +14,7 @@ struct TextEditorWithPlaceholder: View {
 
     init(placeholder: String, text: Binding<String>, customFont: Font? = nil) {
         _text = text
-        _placeholder = State(initialValue: placeholder)
+        _placeholder = State(initialValue: NSLocalizedString(placeholder, comment: ""))
         self.customFont = customFont
     }
 

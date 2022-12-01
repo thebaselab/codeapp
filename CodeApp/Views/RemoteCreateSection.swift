@@ -202,10 +202,10 @@ struct RemoteCreateSection: View {
 
             if usesPrivateKey && !hasSSHKey {
                 DescriptionText(
-                    "SSH key not found in Documents/.ssh/id_rsa. Generate one by running ssh-keygen in the terminal."
+                    "remote.ssh_key_not_found"
                 )
 
-                SideBarButton("Reload key") {
+                SideBarButton("remote.reload_key") {
                     reloadKey()
                 }
             } else {

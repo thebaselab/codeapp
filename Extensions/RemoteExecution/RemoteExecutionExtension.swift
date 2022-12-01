@@ -17,7 +17,7 @@ class RemoteExecutionExtension: CodeAppExtension {
         contribution: CodeAppExtension.Contribution
     ) {
         let panel = Panel(
-            labelId: EXTENSION_ID,
+            labelId: "panel.execution.title",
             mainView: AnyView(PanelRemoteExecutionMainView().environmentObject(storage)),
             toolBarView: AnyView(PanelRemoteExecutionToolbarView().environmentObject(storage))
         )
@@ -58,7 +58,7 @@ private struct InputView: View {
     var body: some View {
 
         TextEditorWithPlaceholder(
-            placeholder: "Program input..",
+            placeholder: "panel.execution.program_input",
             text: $manager.stdin,
             customFont: .custom("Menlo", size: 13, relativeTo: .footnote)
         )
@@ -73,7 +73,7 @@ private struct OutputView: View {
     var body: some View {
         Group {
             if manager.consoleContent.isEmpty {
-                Text("Press the play button to execute code.")
+                Text("panel.execution.press_play_to_execute_code")
                     .font(.footnote)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             } else {
@@ -120,7 +120,10 @@ private struct PanelRemoteExecutionToolbarView: View {
     var body: some View {
         PanelSelector<PanelDisplayMode>(
             selection: $manager.displayMode,
-            options: [.input: "Input", .output: "Output", .split: "Split View"]
+            options: [
+                .init(titleKey: "panel.execution.input", value: .input),
+                .init(titleKey: "panel.execution.output", value: .output),
+                .init(titleKey: "panel.execution.split_view", value: .split)]
         )
     }
 }
