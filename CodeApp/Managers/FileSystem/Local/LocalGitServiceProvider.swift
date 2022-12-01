@@ -901,44 +901,16 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
+    // TODO: Optimise the performance for large repo
     func previous(
         path: String, error: @escaping (NSError) -> Void,
         completionHandler: @escaping (String) -> Void
     ) {
-        if let cached = contentCache.object(forKey: path as NSString) {
-            completionHandler(cached as String)
-        }
-        if let url = URL(string: path), newAndIgnored.keys.contains(url) {
-            let _error = NSError(
-                domain: "", code: 401,
-                userInfo: [
-                    NSLocalizedDescriptionKey:
-                        "The requested file is not indexed and cannot be found on disk."
-                ])
-            error(_error)
-            return
-        }
-        load()
-        guard repository != nil else {
-            let _error = NSError(
-                domain: "", code: 401,
-                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-            error(_error)
-            return
-        }
-
-        let fullPath = path
-        let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
-            .replacingOccurrences(of: "%20", with: #"\ "#)
-
-        let indexedFiles = lsFiles()
-        guard let oid = indexedFiles[path] else {
-
-            // File is unmodified, using content from url directly.
-            if let url = URL(string: fullPath), let content = try? String(contentsOf: url) {
-                contentCache.setObject(content as NSString, forKey: path as NSString)
-                completionHandler(content)
-            } else {
+        workerQueue.async {
+            if let cached = self.contentCache.object(forKey: path as NSString) {
+                completionHandler(cached as String)
+            }
+            if let url = URL(string: path), self.newAndIgnored.keys.contains(url) {
                 let _error = NSError(
                     domain: "", code: 401,
                     userInfo: [
@@ -946,27 +918,58 @@ class LocalGitServiceProvider: GitServiceProvider {
                             "The requested file is not indexed and cannot be found on disk."
                     ])
                 error(_error)
-            }
-            return
-        }
-        guard let result = repository?.blob(oid) else {
-            return
-        }
-
-        switch result {
-        case let .success(blob):
-            if let content = String(data: blob.data, encoding: .utf8) {
-                contentCache.setObject(content as NSString, forKey: path as NSString)
-                completionHandler(content)
                 return
-            } else {
+            }
+            self.load()
+            guard self.repository != nil else {
                 let _error = NSError(
                     domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Unable to decode data"])
+                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
+                error(_error)
+                return
+            }
+
+            let fullPath = path
+            let path = path.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                .replacingOccurrences(of: "%20", with: #"\ "#)
+
+            let indexedFiles = self.lsFiles()
+            guard let oid = indexedFiles[path] else {
+
+                // File is unmodified, using content from url directly.
+                if let url = URL(string: fullPath), let content = try? String(contentsOf: url) {
+                    self.contentCache.setObject(content as NSString, forKey: path as NSString)
+                    completionHandler(content)
+                } else {
+                    let _error = NSError(
+                        domain: "", code: 401,
+                        userInfo: [
+                            NSLocalizedDescriptionKey:
+                                "The requested file is not indexed and cannot be found on disk."
+                        ])
+                    error(_error)
+                }
+                return
+            }
+            guard let result = self.repository?.blob(oid) else {
+                return
+            }
+
+            switch result {
+            case let .success(blob):
+                if let content = String(data: blob.data, encoding: .utf8) {
+                    self.contentCache.setObject(content as NSString, forKey: path as NSString)
+                    completionHandler(content)
+                    return
+                } else {
+                    let _error = NSError(
+                        domain: "", code: 401,
+                        userInfo: [NSLocalizedDescriptionKey: "Unable to decode data"])
+                    error(_error)
+                }
+            case let .failure(_error):
                 error(_error)
             }
-        case let .failure(_error):
-            error(_error)
         }
     }
 }

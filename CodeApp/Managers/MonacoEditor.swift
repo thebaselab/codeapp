@@ -362,15 +362,13 @@ struct MonacoEditor: UIViewRepresentable {
             if let hasRepo = self.control.App.workSpaceStorage.gitServiceProvider?.hasRepository,
                 hasRepo
             {
-                DispatchQueue.global(qos: .utility).async {
-                    self.control.App.workSpaceStorage.gitServiceProvider?.previous(
-                        path: sanitizedUri, error: { err in print(err) },
-                        completionHandler: { value in
-                            DispatchQueue.main.async {
-                                self.control.provideOriginalTextForUri(uri: modelUri, value: value)
-                            }
-                        })
-                }
+                self.control.App.workSpaceStorage.gitServiceProvider?.previous(
+                    path: sanitizedUri, error: { err in print(err) },
+                    completionHandler: { value in
+                        DispatchQueue.main.async {
+                            self.control.provideOriginalTextForUri(uri: modelUri, value: value)
+                        }
+                    })
             }
         }
 
