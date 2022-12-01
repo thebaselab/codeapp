@@ -291,7 +291,7 @@ struct SourceControlContainer: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
+//            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
 
             List {
                 Group {
