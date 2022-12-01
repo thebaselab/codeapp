@@ -46,12 +46,12 @@ struct RemoteHostCell: View {
             }
         }.sheet(isPresented: $showsPrompt) {
             RemoteAuthView(host: host) { username, password in
+                showsPrompt = false
+
                 let cred = URLCredential(
                     user: username, password: password, persistence: .forSession)
-
                 Task {
                     try? await onConnectWithCredentials(cred)
-                    showsPrompt = false
                 }
             }
         }.contextMenu {
