@@ -364,9 +364,7 @@
 "subscription.join" = "Code+ beitreten";
 "terms_of_use" = "Nutzungsbedingungen";
 "code.and.privacy" = "Datenschutz-Bestimmungen";
-"credentials.note" = "Hinweis: Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.
-
-In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffstoken anstelle eines Kennworts verwenden. Um mehr darüber zu erfahren:";
+"credentials.note" = "Hinweis: Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.";
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
 
@@ -412,4 +410,5 @@ In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffsto
 "source_control.error" = "Klonfehler: %@";
 "source_control.revert_succeeded" = "Zurücksetzen erfolgreich";
 "source_control.remote_credentials" = "Remote-Anmeldeinformationen";
+"source_control.credentials.note" = "In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffstoken anstelle eines Kennworts verwenden. Um mehr darüber zu erfahren:";
 "source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";

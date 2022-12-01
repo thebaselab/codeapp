@@ -40,6 +40,9 @@ struct SourceControlAuthenticationConfiguration: View {
                         Text("credentials.note")
                             .padding(.bottom, 4)
 
+                        Text("source_control.credentials.note")
+                            .padding(.bottom, 4)
+
                         Button(action: {
                             isDocumentationPresented.toggle()
                         }) {

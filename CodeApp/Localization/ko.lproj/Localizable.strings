@@ -364,9 +364,7 @@
 "subscription.join" = "Code+ 가입";
 "terms_of_use" = "이용 약관";
 "code.and.privacy" = "개인 정보 보호 정책";
-"credentials.note" = "참고: 자격 증명은 장치의 Secure Enclave 내부에 저장됩니다. 우리는 그것에 접근할 수 없습니다.
-
-대부분의 경우 인증을 위해 암호 대신 개인용 액세스 토큰을 사용해야 합니다. 이에 대해 자세히 알아보려면:";
+"credentials.note" = "참고: 자격 증명은 장치의 Secure Enclave 내부에 저장됩니다. 우리는 그것에 접근할 수 없습니다.";
 "settings.editor.font" = "편집기 글꼴";
 "settings.editor.font.reset" = "기본값";
 
@@ -412,4 +410,5 @@
 "source_control.error" = "복제 오류: %@";
 "source_control.revert_succeeded" = "되돌리기 성공";
 "source_control.remote_credentials" = "원격 서버 자격 증명";
+"source_control.credentials.note" = "대부분의 경우 인증을 위해 암호 대신 개인용 액세스 토큰을 사용해야 합니다. 이에 대해 자세히 알아보려면:";
 "source_control.setup_your_credentials" = "git 자격 증명 설정(영어로만 제공)";

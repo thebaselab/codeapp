@@ -387,9 +387,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "subscription.join" = "订阅 Code+";
 "terms_of_use" = "使用条款";
 "code.and.privacy" = "Code 隐私政策";
-"credentials.note" = "注意：凭据存储在您设备的 Secure Enclave 内。我们无权访问它。
-
-在许多情况下，您需要使用个人访问令牌而不是密码来进行身份验证。 要了解更多：";
+"credentials.note" = "注意：凭据存储在您设备的 Secure Enclave 内。我们无权访问它。";
 "settings.editor.font" = "编辑器字体";
 "settings.editor.font.reset" = "重置";
 
@@ -435,4 +433,5 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.error" = "克隆错误: %@";
 "source_control.revert_succeeded" = "还原成功";
 "source_control.remote_credentials" = "Git 凭证";
+"source_control.credentials.note" = "在许多情况下，您需要使用个人访问令牌而不是密码来进行身份验证。 要了解更多：";
 "source_control.setup_your_credentials" = "设置您的 git 凭据（仅提供英文版）";
