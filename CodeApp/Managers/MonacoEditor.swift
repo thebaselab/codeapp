@@ -320,7 +320,7 @@ struct MonacoEditor: UIViewRepresentable {
         Coordinator(self, env: App)
     }
 
-    class Coordinator: NSObject, WKScriptMessageHandler, UIGestureRecognizerDelegate {
+    class Coordinator: NSObject, WKScriptMessageHandler, UIGestureRecognizerDelegate, WKNavigationDelegate {
 
         struct action: Decodable, Identifiable {
             var id: String
@@ -341,6 +341,10 @@ struct MonacoEditor: UIViewRepresentable {
 
         struct resource: Decodable {
             let path: String
+        }
+        
+        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+            control.App.stateManager.isMonacoEditorInitialized = false
         }
 
         func requestDiffUpdate(modelUri: String, force: Bool = false) {
@@ -578,6 +582,7 @@ struct MonacoEditor: UIViewRepresentable {
         monacoWebView.customUserAgent =
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
+        monacoWebView.navigationDelegate = context.coordinator
 
         if !App.stateManager.isMonacoEditorInitialized {
             let contentManager = monacoWebView.configuration.userContentController
