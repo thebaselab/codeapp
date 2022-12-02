@@ -8,6 +8,7 @@
 import SwiftUI
 
 private let EXTENSION_ID = "EXECUTION"
+private let PANEL_ID = "panel.execution.title"
 
 class RemoteExecutionExtension: CodeAppExtension {
     let storage = CloudCodeExecutionManager()
@@ -17,7 +18,7 @@ class RemoteExecutionExtension: CodeAppExtension {
         contribution: CodeAppExtension.Contribution
     ) {
         let panel = Panel(
-            labelId: "panel.execution.title",
+            labelId: PANEL_ID,
             mainView: AnyView(PanelRemoteExecutionMainView().environmentObject(storage)),
             toolBarView: AnyView(PanelRemoteExecutionToolbarView().environmentObject(storage))
         )
@@ -40,7 +41,7 @@ class RemoteExecutionExtension: CodeAppExtension {
                 )
             },
             shortCut: .init("r", modifiers: [.command]),
-            panelToFocusOnTap: EXTENSION_ID,
+            panelToFocusOnTap: PANEL_ID,
             shouldDisplay: {
                 guard let textEditor = app.activeEditor as? TextEditorInstance else {
                     return false

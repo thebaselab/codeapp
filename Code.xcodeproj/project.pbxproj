@@ -693,6 +693,10 @@
 		9FC03E72291F6FE000DECD1B /* ExplorerFileTreeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E70291F6FE000DECD1B /* ExplorerFileTreeSection.swift */; };
 		9FC03E742920CF1700DECD1B /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E732920CF1700DECD1B /* Notification.swift */; };
 		9FC03E752920CF1700DECD1B /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E732920CF1700DECD1B /* Notification.swift */; };
+		9FD0FAF02938A14C007170F5 /* EncodingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */; };
+		9FD0FAF12938A14C007170F5 /* EncodingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */; };
+		9FD0FAF42939AD86007170F5 /* SimpleWebPreviewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0FAF32939AD86007170F5 /* SimpleWebPreviewExtension.swift */; };
+		9FD0FAF52939AD86007170F5 /* SimpleWebPreviewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0FAF32939AD86007170F5 /* SimpleWebPreviewExtension.swift */; };
 		9FD5BCE52923897200F20C4B /* PanelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCE42923897200F20C4B /* PanelManager.swift */; };
 		9FD5BCE62923897200F20C4B /* PanelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCE42923897200F20C4B /* PanelManager.swift */; };
 		9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */; };
@@ -1674,6 +1678,8 @@
 		9FC03E6D291F6EE700DECD1B /* ExplorerEditorListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerEditorListSection.swift; sourceTree = "<group>"; };
 		9FC03E70291F6FE000DECD1B /* ExplorerFileTreeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerFileTreeSection.swift; sourceTree = "<group>"; };
 		9FC03E732920CF1700DECD1B /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingMenu.swift; sourceTree = "<group>"; };
+		9FD0FAF32939AD86007170F5 /* SimpleWebPreviewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleWebPreviewExtension.swift; sourceTree = "<group>"; };
 		9FD5BCE42923897200F20C4B /* PanelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelManager.swift; sourceTree = "<group>"; };
 		9FD5BCE829238B6C00F20C4B /* TerminalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalExtension.swift; sourceTree = "<group>"; };
 		9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUIState.swift; sourceTree = "<group>"; };
@@ -2390,6 +2396,7 @@
 		9F046C3729223CC000BDE4E9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9FD0FAF22939AD59007170F5 /* SimpleWebPreview */,
 				9FAE4999292F52DB00B1B962 /* SourceControlAuxiliary */,
 				9FAE4995292DD75900B1B962 /* MarkdownViewer */,
 				9FAE4991292D14E200B1B962 /* VideoViewer */,
@@ -2476,6 +2483,7 @@
 				94A77828257BC951008FE7B2 /* DocumentPickerView.swift */,
 				FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */,
 				9FD5BCF32927859600F20C4B /* DebugMenu.swift */,
+				9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2580,6 +2588,14 @@
 				94795C4A293259080057C12F /* Encoding.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		9FD0FAF22939AD59007170F5 /* SimpleWebPreview */ = {
+			isa = PBXGroup;
+			children = (
+				9FD0FAF32939AD86007170F5 /* SimpleWebPreviewExtension.swift */,
+			);
+			path = SimpleWebPreview;
 			sourceTree = "<group>";
 		};
 		9FD5BCE12923872800F20C4B /* MonacoLanguageService */ = {
@@ -2893,6 +2909,7 @@
 				9FAE4998292DD76A00B1B962 /* MarkdownViewerExtension.swift in Sources */,
 				9F046C3B29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */,
 				94196952280316C7008AAEB2 /* EditorTab.swift in Sources */,
+				9FD0FAF52939AD86007170F5 /* SimpleWebPreviewExtension.swift in Sources */,
 				94196953280316C7008AAEB2 /* RemoteImage.swift in Sources */,
 				942E31F928086FE800233441 /* KeyChainAccessor.swift in Sources */,
 				94A046292804A6B300182275 /* SourceControlEmptySection.swift in Sources */,
@@ -2971,6 +2988,7 @@
 				94196982280316C7008AAEB2 /* ExplorerContainer.swift in Sources */,
 				94196983280316C7008AAEB2 /* InfiniteProgressView.swift in Sources */,
 				94196984280316C7008AAEB2 /* MainApp.swift in Sources */,
+				9FD0FAF12938A14C007170F5 /* EncodingMenu.swift in Sources */,
 				94196985280316C7008AAEB2 /* PanelSelector.swift in Sources */,
 				9FC03E752920CF1700DECD1B /* Notification.swift in Sources */,
 				94196986280316C7008AAEB2 /* node.swift in Sources */,
@@ -3044,6 +3062,7 @@
 				9FAE4997292DD76A00B1B962 /* MarkdownViewerExtension.swift in Sources */,
 				9F046C3A29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */,
 				948E478226502B6900A6110D /* EditorTab.swift in Sources */,
+				9FD0FAF42939AD86007170F5 /* SimpleWebPreviewExtension.swift in Sources */,
 				94A777F3257B91CA008FE7B2 /* RemoteImage.swift in Sources */,
 				942E31F828086FE800233441 /* KeyChainAccessor.swift in Sources */,
 				94A046282804A6B300182275 /* SourceControlEmptySection.swift in Sources */,
@@ -3122,6 +3141,7 @@
 				94A777C4257B8042008FE7B2 /* ExplorerContainer.swift in Sources */,
 				9419692D2803117D008AAEB2 /* InfiniteProgressView.swift in Sources */,
 				94A7779F257ABD7A008FE7B2 /* MainApp.swift in Sources */,
+				9FD0FAF02938A14C007170F5 /* EncodingMenu.swift in Sources */,
 				94A77808257BBA8A008FE7B2 /* PanelSelector.swift in Sources */,
 				9FC03E742920CF1700DECD1B /* Notification.swift in Sources */,
 				949B3CC725DEAAA700BC83B5 /* node.swift in Sources */,
