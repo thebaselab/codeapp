@@ -93,6 +93,7 @@ struct MainScene: View {
             .environmentObject(App.extensionManager)
             .environmentObject(App.stateManager)
             .environmentObject(App.alertManager)
+            .environmentObject(App.safariManager)
             .onAppear {
                 restoreSceneState()
                 App.extensionManager.initializeExtensions(app: App)
@@ -123,6 +124,7 @@ private struct MainView: View {
     @EnvironmentObject var extensionManager: ExtensionManager
     @EnvironmentObject var stateManager: MainStateManager
     @EnvironmentObject var alertManager: AlertManager
+    @EnvironmentObject var safariManager: SafariManager
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -245,6 +247,13 @@ private struct MainView: View {
         }
         .alert(alertManager.title, isPresented: $alertManager.isShowingAlert) {
             alertManager.alertContent
+        }
+        .fullScreenCover(isPresented: $safariManager.showsSafari) {
+            if let url = safariManager.urlToVisit {
+                SafariView(url: url)
+            } else {
+                EmptyView()
+            }
         }
     }
 }

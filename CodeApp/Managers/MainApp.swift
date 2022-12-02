@@ -7,11 +7,21 @@
 
 import Combine
 import CoreSpotlight
-import GCDWebServers
 import SwiftGit2
 import SwiftUI
 import UniformTypeIdentifiers
 import ios_system
+
+class SafariManager: ObservableObject {
+    @Published var showsSafari: Bool = false
+
+    var urlToVisit: URL?
+
+    func showSafari(url: URL) {
+        self.urlToVisit = url
+        showsSafari = true
+    }
+}
 
 class AlertManager: ObservableObject {
     @Published var isShowingAlert = false
@@ -32,7 +42,6 @@ class MainStateManager: ObservableObject {
     @Published var showsFilePicker = false
     @Published var showsChangeLog: Bool = false
     @Published var showsSettingsSheet: Bool = false
-    @Published var showsSafari: Bool = false
     @Published var showsCheckoutAlert: Bool = false
     @Published var selectedBranch: checkoutDest? = nil
     @Published var checkoutDetached: Bool = false
@@ -44,6 +53,7 @@ class MainApp: ObservableObject {
     let extensionManager = ExtensionManager()
     let stateManager = MainStateManager()
     let alertManager = AlertManager()
+    let safariManager = SafariManager()
 
     @Published var editors: [EditorInstance] = []
     var textEditors: [TextEditorInstance] {
@@ -86,7 +96,6 @@ class MainApp: ObservableObject {
 
     let terminalInstance: TerminalInstance
     let monacoInstance = MonacoEditor()
-    let webServer = GCDWebServer()
     var editorTypesMonitor: FolderMonitor? = nil
     let deviceSupportsBiometricAuth: Bool = biometricAuthSupported()
     let sceneIdentifier = UUID()
@@ -110,19 +119,19 @@ class MainApp: ObservableObject {
 
         terminalInstance = TerminalInstance(root: rootDir)
 
-        terminalInstance.openEditor = { url in
+        terminalInstance.openEditor = { [weak self] url in
             if url.isDirectory {
-                self.loadFolder(url: url)
-            } else {
-                Task {
-                    try? await self.openFile(url: url)
+                DispatchQueue.main.async {
+                    self?.loadFolder(url: url)
                 }
+            } else {
+                self?.openFile(url: url)
             }
         }
 
         // TODO: Support deleted files detection for remote files
-        workSpaceStorage.onDirectoryChange { url in
-            for editor in self.textEditors {
+        workSpaceStorage.onDirectoryChange { [weak self] url in
+            for editor in self?.textEditors ?? [] {
                 if editor.url.absoluteString.contains(url) {
                     if !FileManager.default.fileExists(atPath: editor.url.path) {
                         editor.isDeleted = true
@@ -130,8 +139,8 @@ class MainApp: ObservableObject {
                 }
             }
         }
-        workSpaceStorage.onTerminalData { data in
-            self.terminalInstance.write(data: data)
+        workSpaceStorage.onTerminalData { [weak self] data in
+            self?.terminalInstance.write(data: data)
         }
         loadRepository(url: rootDir)
 
@@ -162,19 +171,6 @@ class MainApp: ObservableObject {
             self.monacoInstance.monacoWebView.loadFileURL(
                 URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"),
                 allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
-        }
-
-        webServer.addGETHandler(
-            forBasePath: "/", directoryPath: rootDir.path, indexFilename: "index.html",
-            cacheAge: 10, allowRangeRequests: true)
-
-        do {
-            try webServer.start(options: [
-                GCDWebServerOption_AutomaticallySuspendInBackground: true,
-                GCDWebServerOption_Port: 8000,
-            ])
-        } catch let error {
-            print(error)
         }
 
         git_status()
@@ -459,23 +455,7 @@ class MainApp: ObservableObject {
         }
     }
 
-    private func restartWebServer(url: URL) {
-        webServer.stop()
-        webServer.removeAllHandlers()
-        webServer.addGETHandler(
-            forBasePath: "/", directoryPath: url.path, indexFilename: "index.html",
-            cacheAge: 10,
-            allowRangeRequests: true)
-        do {
-            try webServer.start(options: [
-                GCDWebServerOption_AutomaticallySuspendInBackground: true,
-                GCDWebServerOption_Port: 8000,
-            ])
-        } catch let error {
-            print(error)
-        }
-    }
-
+    @MainActor
     func reloadDirectory() {
         guard let url = URL(string: workSpaceStorage.currentDirectory.url) else {
             return
@@ -575,12 +555,8 @@ class MainApp: ObservableObject {
         ios_setDirectoryURL(url)
         scanForTypes()
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.workSpaceStorage.updateDirectory(
-                name: url.lastPathComponent, url: url.absoluteString)
-        }
-
-        restartWebServer(url: url)
+        self.workSpaceStorage.updateDirectory(
+            name: url.lastPathComponent, url: url.absoluteString)
 
         loadRepository(url: url)
 
@@ -614,6 +590,7 @@ class MainApp: ObservableObject {
                 self.terminalInstance.resetAndSetNewRootDirectory(url: url)
             }
         }
+        extensionManager.onWorkSpaceStorageChanged(newUrl: url)
     }
 
     private func createExtensionEditorFromURL(url: URL) throws -> EditorInstance {
@@ -695,7 +672,6 @@ class MainApp: ObservableObject {
         activeEditor = editor
     }
 
-    @MainActor
     func openFile(url: URL, alwaysInNewTab: Bool = false) {
         Task {
             try await openFile(url: url, alwaysInNewTab: alwaysInNewTab)

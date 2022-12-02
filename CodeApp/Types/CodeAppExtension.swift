@@ -8,16 +8,28 @@
 import Foundation
 
 class CodeAppExtension {
-    struct Contribution {
+    class Contribution {
         var panel: PanelManager
         var toolbarItem: ToolbarManager
         var editorProvider: EditorProviderManager
+
+        init(
+            panel: PanelManager, toolbarItem: ToolbarManager, editorProvider: EditorProviderManager
+        ) {
+            self.panel = panel
+            self.toolbarItem = toolbarItem
+            self.editorProvider = editorProvider
+        }
     }
 
     func onInitialize(
         app: MainApp,
         contribution: CodeAppExtension.Contribution
     ) {
+
+    }
+
+    func onWorkSpaceStorageChanged(newUrl: URL) {
 
     }
 

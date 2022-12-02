@@ -22,6 +22,7 @@ class ExtensionManager: ObservableObject {
         PDFViewerExtension(),
         MarkdownViewerExtension(),
         SourceControlAuxiliaryExtension(),
+        SimpleWebPreviewExtension(),
     ]
 
     func registerExtension(ex: CodeAppExtension) {
@@ -40,6 +41,12 @@ class ExtensionManager: ObservableObject {
                 app: app,
                 contribution: contribution
             )
+        }
+    }
+
+    func onWorkSpaceStorageChanged(newUrl: URL) {
+        extensions.forEach { ex in
+            ex.onWorkSpaceStorageChanged(newUrl: newUrl)
         }
     }
 }

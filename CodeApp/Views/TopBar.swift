@@ -77,14 +77,10 @@ struct TopBar: View {
                     }
                 }
                 Section {
-
-                    Button(action: { App.closeAllEditors() }) {
+                    Button(role: .destructive) {
+                        App.closeAllEditors()
+                    } label: {
                         Label("Close All", systemImage: "xmark")
-                    }
-                    if !App.workSpaceStorage.remoteConnected {
-                        Button(action: { stateManager.showsSafari.toggle() }) {
-                            Label("Preview in Safari", systemImage: "safari")
-                        }
                     }
                 }
                 Divider()

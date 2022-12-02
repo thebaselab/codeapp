@@ -21,6 +21,8 @@ struct BottomBar: View {
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("editorFontSize") var editorTextSize: Int = 14
 
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
     let openConsolePanel: () -> Void
     let onDirectoryPickerFinished: () -> Void
     // Somehow it doesn't compile with arguments in the function
@@ -169,20 +171,6 @@ struct BottomBar: View {
                                 command: "editor.trigger('', 'editor.action.quickCommand')")
                         }
                         .keyboardShortcut("p", modifiers: [.command, .shift])
-                        .fullScreenCover(isPresented: $stateManager.showsSafari) {
-                            if let activeEditorWithURL =
-                                (App.activeEditor as? EditorInstanceWithURL),
-                                let baseURL = URL(
-                                    string: App.workSpaceStorage.currentDirectory.url),
-                                let relativePath = activeEditorWithURL.url.relativePath(
-                                    from: baseURL)?.replacingOccurrences(of: " ", with: "%20"),
-                                let urlToGo = URL(string: "http://localhost:8000/\(relativePath)")
-                            {
-                                SafariView(url: urlToGo)
-                            } else {
-                                SafariView(url: URL(string: "http://localhost:8000/")!)
-                            }
-                        }
                     }
 
                     Group {
@@ -249,20 +237,7 @@ struct BottomBar: View {
                         }
 
                         if let editor = (App.activeEditor as? TextEditorInstance) {
-                            MenuButtonView(
-                                options: AVAILABLE_ENCODING.map { encoding in
-                                    MenuButtonView.Option(
-                                        value: encoding, title: encoding.name,
-                                        iconSystemName: "textformat")
-                                },
-                                onSelect: { encoding in
-                                    App.reloadCurrentFileWithEncoding(encoding: encoding.encoding)
-                                },
-                                title: (AVAILABLE_ENCODING.first {
-                                    $0.encoding == editor.encoding
-                                })?.name ?? editor.encoding.description,
-                                iconName: nil
-                            ).fixedSize()
+                            EncodingMenu(editor: editor)
                         }
                     }
                 }
