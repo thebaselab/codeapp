@@ -31,7 +31,7 @@ struct SimpleMarkDownView: UIViewRepresentable {
 
 struct ChangeLogView: View {
     @Environment(\.presentationMode) var presentationMode
-    
+
     var body: some View {
         NavigationView {
             SimpleMarkDownView(text: NSLocalizedString("Changelog.message", comment: ""))
