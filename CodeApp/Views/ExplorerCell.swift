@@ -316,12 +316,15 @@ private struct ContextMenu: View {
                     Image(systemName: "plus.square.on.square")
                 }
 
-                Button(action: {
-                    App.trashItem(url: URL(string: item.url)!)
-                }) {
-                    Text("Delete").foregroundColor(.red)
-                    Image(systemName: "trash").foregroundColor(.red)
-                }
+                Button(
+                    role: .destructive,
+                    action: {
+                        App.trashItem(url: URL(string: item.url)!)
+                    },
+                    label: {
+                        Text("Delete")
+                        Image(systemName: "trash")
+                    })
 
                 Button(action: {
                     onCopyFile()

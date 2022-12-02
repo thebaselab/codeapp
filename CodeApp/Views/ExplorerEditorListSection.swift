@@ -113,10 +113,12 @@ private struct EditorCell: View {
                     Image(systemName: "link")
                 }
 
-                Button(action: onTrashEditor) {
-                    Text("Delete")
-                    Image(systemName: "trash")
-                }.foregroundColor(.red)
+                Button(
+                    role: .destructive, action: onTrashEditor,
+                    label: {
+                        Text("Delete")
+                        Image(systemName: "trash")
+                    })
             }
         }
     }
