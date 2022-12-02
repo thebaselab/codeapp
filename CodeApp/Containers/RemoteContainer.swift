@@ -64,11 +64,11 @@ struct RemoteContainer: View {
         let context = LAContext()
         context.localizedCancelTitle = "Enter Credentials"
 
-        let biometricAuthSuccess = try await context.evaluatePolicy(
+        let biometricAuthSuccess = try? await context.evaluatePolicy(
             .deviceOwnerAuthenticationWithBiometrics,
             localizedReason: "Authenticate to \(hostUrl.host ?? "server")")
 
-        guard biometricAuthSuccess else {
+        guard biometricAuthSuccess == true else {
             onRequestCredentials()
             return
         }
