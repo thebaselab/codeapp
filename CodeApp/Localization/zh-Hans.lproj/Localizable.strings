@@ -418,6 +418,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.editor_does_not_exist" = "编辑器不存在。";
 "errors.editor_is_not_ready" = "编辑器尚未准备好。";
 "errors.failed_to_save_file.encoding.failed" = "无法保存文件。 编码失败。";
+"errors.file_modified_by_another_process" = "文件已被另一个进程修改。";
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";
@@ -446,7 +447,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.setup_your_credentials" = "设置您的 git 凭据（仅提供英文版）";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
-"panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。";
+"panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";
 "panel.execution.program_input" = "程序输入..";
 "panel.execution.input" = "输入";
 "panel.execution.output" = "输出";

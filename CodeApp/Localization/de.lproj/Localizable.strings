@@ -395,6 +395,7 @@
 "errors.editor_does_not_exist" = "Der Editor existiert nicht.";
 "errors.editor_is_not_ready" = "Der Editor ist nicht bereit.";
 "errors.failed_to_save_file.encoding.failed" = "Fehler beim Speichern der Datei. Die Zeichenkodierung ist möglicherweise nicht unterstützt.";
+"errors.file_modified_by_another_process" = "Die Datei wurde von einem anderen Prozess geändert.";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";
@@ -423,7 +424,7 @@
 "source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
-"panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen.";
+"panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";
 "panel.execution.program_input" = "Programmeingabe..";
 "panel.execution.input" = "Eingabe";
 "panel.execution.output" = "Ausgabe";

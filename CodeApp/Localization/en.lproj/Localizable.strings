@@ -283,6 +283,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.editor_does_not_exist" = "Editor does not exist";
 "errors.editor_is_not_ready" = "Editor is not ready";
 "errors.failed_to_save_file.encoding.failed" = "Failed to save file. Encoding failed.";
+"errors.file_modified_by_another_process" = "File modified by another process";
 
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";
@@ -312,7 +313,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.setup_your_credentials" = "Set up your git credentials";
 
 "panel.problems.no_problems_detected" = "No problems detected in the workspace.";
-"panel.execution.press_play_to_execute_code" = "Press the play button to execute code.";
+"panel.execution.press_play_to_execute_code" = "Press the play button to execute code. Program input needs to be filled before execution.";
 "panel.execution.program_input" = "Program input..";
 "panel.execution.input" = "Input";
 "panel.execution.output" = "Output";
