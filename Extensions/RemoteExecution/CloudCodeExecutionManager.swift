@@ -35,7 +35,7 @@ class CloudCodeExecutionManager: ObservableObject {
     @Published var isRunningCode = false
     @Published var consoleContent = ""
     @Published var stdin: String = ""
-    @Published var displayMode: PanelDisplayMode = .output
+    @Published var displayMode: PanelDisplayMode = .split
 
     private var mainSession: URLSession? = nil
 
