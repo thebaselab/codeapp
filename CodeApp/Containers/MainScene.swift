@@ -108,6 +108,7 @@ struct MainScene: View {
             ) { _ in
                 saveSceneState()
             }
+            .hiddenSystemOverlays()
     }
 }
 
