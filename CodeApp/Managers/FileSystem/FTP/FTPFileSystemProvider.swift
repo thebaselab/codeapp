@@ -83,4 +83,25 @@ class FTPFileSystemProvider: FileSystemProvider {
         }
     }
 
+    func attributesOfItem(
+        at: URL, completionHandler: @escaping ([FileAttributeKey: Any?]?, Error?) -> Void
+    ) {
+        fs.attributesOfItem(path: at.path) { file, error in
+            if let error {
+                completionHandler(nil, error)
+                return
+            }
+            guard let file else {
+                completionHandler(nil, WorkSpaceStorage.FSError.Unknown)
+                return
+            }
+            completionHandler(
+                [
+                    .size: file.size,
+                    .modificationDate: file.modifiedDate,
+                    .creationDate: file.creationDate,
+                ], nil)
+        }
+    }
+
 }

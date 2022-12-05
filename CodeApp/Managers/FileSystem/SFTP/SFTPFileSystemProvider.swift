@@ -212,6 +212,23 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
             }
         }
     }
+
+    func attributesOfItem(
+        at: URL, completionHandler: @escaping ([FileAttributeKey: Any?]?, Error?) -> Void
+    ) {
+        queue.async {
+            guard let attributes = self.session.sftp.infoForFile(atPath: at.path) else {
+                completionHandler(nil, WorkSpaceStorage.FSError.Unknown)
+                return
+            }
+
+            completionHandler(
+                [
+                    .modificationDate: attributes.modificationDate,
+                    .size: attributes.fileSize,
+                ], nil)
+        }
+    }
 }
 
 extension SFTPFileSystemProvider: NMSSHSessionDelegate {

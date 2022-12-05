@@ -90,4 +90,15 @@ class LocalFileSystemProvider: FileSystemProvider {
             completionHandler(nil, error)
         }
     }
+
+    func attributesOfItem(
+        at: URL, completionHandler: @escaping ([FileAttributeKey: Any?]?, Error?) -> Void
+    ) {
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: at.path)
+            completionHandler(attributes, nil)
+        } catch {
+            completionHandler(nil, error)
+        }
+    }
 }

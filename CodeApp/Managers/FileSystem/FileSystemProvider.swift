@@ -24,4 +24,6 @@ protocol FileSystemProvider {
     func write(
         at: URL, content: Data, atomically: Bool, overwrite: Bool,
         completionHandler: @escaping (Error?) -> Void)
+    func attributesOfItem(
+        at: URL, completionHandler: @escaping ([FileAttributeKey: Any?]?, Error?) -> Void)
 }
