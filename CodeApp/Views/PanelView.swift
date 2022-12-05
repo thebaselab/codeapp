@@ -37,6 +37,7 @@ private struct PanelTabLabel: View {
 
     var body: some View {
         Text(LocalizedStringKey(panel.labelId))
+            .textCase(.uppercase)
             .foregroundColor(
                 Color.init(
                     id: panel.labelId == currentPanelId
