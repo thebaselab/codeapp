@@ -170,10 +170,12 @@ private struct NotificationItemWithButton: View {
                                 }
                             }
                     }
-                    if data.secondaryAction != nil {
-                        Text(data.secondaryTitle)
-                    }
-
+                    Text("Cancel")
+                        .onTapGesture {
+                            withAnimation {
+                                isRemoved = true
+                            }
+                        }
                 }.foregroundColor(.white)
                     .lineLimit(1)
                     .font(.system(size: 12))
