@@ -34,9 +34,31 @@ private struct terminalView: View {
 
                 ViewRepresentable(wv)
                     .onTapGesture {
-                        App.monacoInstance.executeJavascript(
-                            command: "document.getElementById('overlay').focus()")
+                        let notification = Notification(
+                            name: Notification.Name("terminal.focus"),
+                            userInfo: ["sceneIdentifier": App.sceneIdentifier]
+                        )
+                        NotificationCenter.default.post(notification)
                     }
+                    .onReceive(
+                        NotificationCenter.default.publisher(
+                            for: Notification.Name("editor.focus"),
+                            object: nil),
+                        perform: { notification in
+                            App.terminalInstance.blur()
+                        }
+                    )
+                    .onReceive(
+                        NotificationCenter.default.publisher(
+                            for: Notification.Name("terminal.focus"),
+                            object: nil),
+                        perform: { notification in
+                            guard let sceneIdentifier = notification.userInfo?["sceneIdentifier"] as? UUID,
+                                sceneIdentifier != App.sceneIdentifier
+                            else { return }
+                            App.terminalInstance.blur()
+                        }
+                    )
                     .onAppear(perform: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             App.terminalInstance.executeScript("fitAddon.fit()")
@@ -46,7 +68,7 @@ private struct terminalView: View {
             .foregroundColor(.clear)
             .font(.system(size: 1))
         } else {
-            Text("Terminal initialising")
+            ProgressView()
         }
     }
 }

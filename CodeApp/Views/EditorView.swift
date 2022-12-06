@@ -54,39 +54,43 @@ struct EditorView: View {
             }
             .onReceive(
                 NotificationCenter.default.publisher(
-                    for: Notification.Name("monaco.cursor.position.changed"),
+                    for: Notification.Name("editor.focus"),
                     object: nil),
                 perform: { notification in
-                    let sceneIdentifier = notification.userInfo?["sceneIdentifier"] as! UUID
-                    if sceneIdentifier != App.sceneIdentifier {
-                        App.monacoInstance.executeJavascript(
-                            command: "document.getElementById('overlay').focus()")
+                    guard let sceneIdentifier = notification.userInfo?["sceneIdentifier"] as? UUID,
+                        sceneIdentifier != App.sceneIdentifier
+                    else { return }
+                    Task {
+                        try await App.monacoInstance.blur()
+                    }
+                }
+            )
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: Notification.Name("terminal.focus"),
+                    object: nil),
+                perform: { notification in
+                    Task {
+                        try await App.monacoInstance.blur()
                     }
                 }
             )
             .onReceive(
                 NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
                 perform: { data in
-                    if let beginRect = data.userInfo?["UIKeyboardFrameBeginUserInfoKey"] as? CGRect,
-                        let endRect = data.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
-                    {
+                    guard
+                        let beginRect = data.userInfo?["UIKeyboardFrameBeginUserInfoKey"]
+                            as? CGRect,
+                        let endRect = data.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect,
+                        beginRect.origin.y != endRect.origin.y
+                    else {
+                        return
+                    }
 
-                        App.saveCurrentFile()
-
-                        App.monacoInstance.monacoWebView.evaluateJavaScript(
-                            "document.activeElement.className"
-                        ) {
-                            result, error in
-                            if let res = result as? String {
-                                if res != "shadow-root-host" && res != "actions-container"
-                                    && !res.contains("monaco-list")
-                                {
-                                    if beginRect.origin.y != endRect.origin.y {
-                                        App.monacoInstance.executeJavascript(
-                                            command: "document.getElementById('overlay').focus()")
-                                    }
-                                }
-                            }
+                    Task {
+                        if await App.monacoInstance.isEditorInFocus() {
+                            await App.saveCurrentFile()
+                            try await App.monacoInstance.blur()
                         }
                     }
                 }

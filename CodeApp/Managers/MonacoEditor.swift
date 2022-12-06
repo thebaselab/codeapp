@@ -320,7 +320,9 @@ struct MonacoEditor: UIViewRepresentable {
         Coordinator(self, env: App)
     }
 
-    class Coordinator: NSObject, WKScriptMessageHandler, UIGestureRecognizerDelegate, WKNavigationDelegate {
+    class Coordinator: NSObject, WKScriptMessageHandler,
+        WKNavigationDelegate
+    {
 
         struct action: Decodable, Identifiable {
             var id: String
@@ -342,7 +344,7 @@ struct MonacoEditor: UIViewRepresentable {
         struct resource: Decodable {
             let path: String
         }
-        
+
         func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
             control.App.stateManager.isMonacoEditorInitialized = false
         }
@@ -404,6 +406,12 @@ struct MonacoEditor: UIViewRepresentable {
             guard let event = result["Event"] as? String else { return }
 
             switch event {
+            case "focus":
+                let notification = Notification(
+                    name: Notification.Name("editor.focus"),
+                    userInfo: ["sceneIdentifier": control.App.sceneIdentifier]
+                )
+                NotificationCenter.default.post(notification)
             case "Request Diff Update":
                 if let modelUri = result["URI"] as? String {
                     requestDiffUpdate(modelUri: modelUri, force: true)
@@ -420,17 +428,6 @@ struct MonacoEditor: UIViewRepresentable {
             case "Content changed":
                 let version = result["VersionID"] as! Int
                 let content = result["currentContent"] as! String
-                if (control.App.activeTextEditor?.lastSavedVersionId
-                    == control.App.activeTextEditor?.currentVersionId  // Saved -> Unsaved
-                    && version != control.App.activeTextEditor?.lastSavedVersionId)
-                    || (control.App.activeTextEditor?.lastSavedVersionId
-                        != control.App.activeTextEditor?.currentVersionId  // Unsaved -> Saved
-                        && version == control.App.activeTextEditor?.lastSavedVersionId)
-                {
-                    NotificationCenter.default.post(
-                        name: Notification.Name("monaco.editor.currentContent.changed"),
-                        object: nil, userInfo: nil)
-                }
                 control.App.activeTextEditor?.currentVersionId = version
                 control.App.activeTextEditor?.content = content
 
@@ -447,7 +444,9 @@ struct MonacoEditor: UIViewRepresentable {
             case "Editor Initialising":
                 control.monacoWebView.removeUIDropInteraction()
                 control.applyUserOptions()
-                control.App.loadURLQueue()
+                DispatchQueue.main.async {
+                    self.control.App.loadURLQueue()
+                }
                 if globalDarkTheme != nil {
                     if let theJSONData = try? JSONSerialization.data(
                         withJSONObject: globalDarkTheme!, options: .prettyPrinted),
@@ -523,12 +522,6 @@ struct MonacoEditor: UIViewRepresentable {
             }
         }
 
-        func gestureRecognizer(
-            _ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch
-        ) -> Bool {
-            return false
-        }
-
         @objc func injectBarButtons() {
             let toolbar = UIHostingController(
                 rootView: EditorKeyboardToolBar().environmentObject(env))
@@ -569,9 +562,8 @@ struct MonacoEditor: UIViewRepresentable {
                 if await isEditorInDiffMode() {
                     switchToNormView()
                 }
-                newModel(
-                    url: activeTextEditor.url.absoluteString, content: activeTextEditor.content)
-                setModel(url: activeTextEditor.url.absoluteString)
+                try await onRequestNewTextModel(
+                    url: activeTextEditor.url, value: activeTextEditor.content)
             }
         }
     }
@@ -635,13 +627,18 @@ extension MonacoEditor {
         return (result as? Bool) ?? false
     }
 
-    func createModel(url: URL, value: String) async throws {
+    func isEditorInFocus() async -> Bool {
+        let result = try? await monacoWebView.evaluateJavaScriptAsync(
+            "document.activeElement.tagName == 'TEXTAREA'")
+        return (result as? Bool) ?? false
+    }
+
+    func onRequestNewTextModel(url: URL, value: String) async throws {
         guard let encoded = value.base64Encoded() else {
             return
         }
-        let contentCommand = "decodeURIComponent(escape(window.atob('\(encoded)')))"
         try await monacoWebView.evaluateJavaScriptAsync(
-            "editor.setModel(monaco.editor.createModel(\(contentCommand), undefined, monaco.Uri.parse('\(url.absoluteString)')));"
+            "onRequestNewTextModel('\(url.absoluteString)', '\(encoded)')"
         )
     }
 
@@ -662,5 +659,10 @@ extension MonacoEditor {
         try await monacoWebView.evaluateJavaScriptAsync(
             "monaco.editor.getModel(monaco.Uri.parse('\(url.absoluteString)')).setValue(\(contentCommand))"
         )
+    }
+
+    func blur() async throws {
+        try await monacoWebView.evaluateJavaScriptAsync(
+            "document.getElementById('overlay').focus()")
     }
 }
