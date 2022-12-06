@@ -305,7 +305,7 @@
 "Initialize Repository" = "저장소 초기화하기";
 "Clone Repository" = "저장소 복제하기";
 "TERMINAL" = "터미널";
-"Keyboard Toolbar" = "키보드 툴바";
+"Keyboard Toolbar (Effective in next launch)" = "키보드 툴바(다음 실행 시 적용됨)";
 "Always Open In New Tab" = "항상 새 탭에서 열기";
 "Changes" = "변경 사항";
 "Message (⌘Enter to commit)" = "메시지(커밋하라면 ⌘Enter)";

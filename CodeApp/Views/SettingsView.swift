@@ -218,7 +218,10 @@ struct SettingsView: View {
                                 command: "editor.updateOptions({ lineNumbers: \(String(value)) })")
                         }
 
-                        Toggle("Keyboard Toolbar", isOn: self.$toolBarEnabled).onChange(
+                        Toggle(
+                            "Keyboard Toolbar (Effective in next launch)",
+                            isOn: self.$toolBarEnabled
+                        ).onChange(
                             of: toolBarEnabled
                         ) { value in
                             NotificationCenter.default.post(

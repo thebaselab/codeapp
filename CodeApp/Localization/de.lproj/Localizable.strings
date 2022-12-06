@@ -305,7 +305,7 @@
 "Initialize Repository" = "Repository initialisieren";
 "Clone Repository" = "Repository klonen";
 "TERMINAL" = "TERMINAL";
-"Keyboard Toolbar" = "Tastatursymbolleiste";
+"Keyboard Toolbar (Effective in next launch)" = "Tastaturleiste (wirksam beim nächsten Start)";
 "Always Open In New Tab" = "Immer in neuem Tab öffnen";
 "Changes" = "Änderungen";
 "Message (⌘Enter to commit)" = "Nachricht (⌘Enter zum committen)";
