@@ -10,11 +10,11 @@ import Foundation
 private let EXTENSION_ID = "LOCAL_EXECUTION"
 
 private let LOCAL_EXECUTION_COMMANDS = [
-    "py": "python3 -u {url}",
-    "js": "node {url}",
-    "c": "clang {url} && wasm a.out",
-    "cpp": "clang++ {url} && wasm a.out",
-    "php": "php {url}",
+    "py": ["python3 -u {url}"],
+    "js": ["node {url}"],
+    "c": ["clang {url}", "wasm a.out"],
+    "cpp": ["clang++ {url}","wasm a.out"],
+    "php": ["php {url}"],
 ]
 
 class LocalExecutionExtension: CodeAppExtension {
@@ -42,22 +42,20 @@ class LocalExecutionExtension: CodeAppExtension {
             return
         }
 
-        guard let command = LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] else {
+        guard let commands = LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] else {
             return
         }
 
         let sanitizedUrl = activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#)
-        let fullCommand = command.replacingOccurrences(of: "{url}", with: sanitizedUrl)
+        let parsedCommands = commands.map{$0.replacingOccurrences(of: "{url}", with: sanitizedUrl)}
 
         let compilerShowPath = UserDefaults.standard.bool(forKey: "compilerShowPath")
         if compilerShowPath {
-            app.terminalInstance.executeScript("localEcho.println(`\(fullCommand)`);readLine('');")
+            app.terminalInstance.executeScript("localEcho.println(`\(parsedCommands.joined(separator: " && "))`);readLine('');")
         } else {
-            let commandName = command.components(separatedBy: " ").first ?? fullCommand
+            let commandName = parsedCommands.first?.components(separatedBy: " ").first ?? activeTextEditor.languageIdentifier
             app.terminalInstance.executeScript("localEcho.println(`\(commandName)`);readLine('');")
         }
-        app.terminalInstance.executeScript(
-            "window.webkit.messageHandlers.toggleMessageHandler2.postMessage({\"Event\": \"Return\", \"Input\": `\(fullCommand)`})"
-        )
+        app.terminalInstance.executor?.evaluateCommands(parsedCommands)
     }
 }
