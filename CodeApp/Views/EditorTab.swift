@@ -11,8 +11,9 @@ struct EditorTab: View {
 
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-
-    var currentEditor: EditorInstance
+    
+    // TODO: Don't use ObservedObject because it leaks memory
+    @ObservedObject var currentEditor: EditorInstance
     var isActive: Bool
     var onOpenEditor: () -> Void
     var onCloseEditor: () -> Void
@@ -63,7 +64,7 @@ struct EditorTab: View {
 
                 Group {
                     if let textEditor = currentEditor as? TextEditorInstance,
-                        textEditor.currentVersionId != textEditor.lastSavedVersionId
+                        !textEditor.isSaved
                     {
                         Image(systemName: "circle.fill")
                             .font(.system(size: 7))

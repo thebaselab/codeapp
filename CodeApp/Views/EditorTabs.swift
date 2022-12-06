@@ -99,7 +99,8 @@ struct EditorTabs: View {
             HStack(spacing: 0) {
                 ForEach(App.editors) { currentEditor in
                     EditorTab(
-                        currentEditor: currentEditor, isActive: (App.activeEditor == currentEditor),
+                        currentEditor: currentEditor,
+                        isActive: (App.activeEditor == currentEditor),
                         onOpenEditor: {
                             App.setActiveEditor(editor: currentEditor)
                         },
