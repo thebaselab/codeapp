@@ -228,6 +228,12 @@ struct BottomBar: View {
                                     for: Notification.Name("monaco.cursor.position.changed"),
                                     object: nil),
                                 perform: { notification in
+                                    guard
+                                        let sceneIdentifier =
+                                            notification.userInfo?["sceneIdentifier"] as? UUID,
+                                        sceneIdentifier == App.sceneIdentifier
+                                    else { return }
+
                                     currentLine = notification.userInfo?["lineNumber"] as! Int
                                     currentColumn = notification.userInfo?["column"] as! Int
                                 })
