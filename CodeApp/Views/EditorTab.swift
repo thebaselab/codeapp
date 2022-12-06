@@ -11,7 +11,7 @@ struct EditorTab: View {
 
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    
+
     // TODO: Don't use ObservedObject because it leaks memory
     @ObservedObject var currentEditor: EditorInstance
     var isActive: Bool
