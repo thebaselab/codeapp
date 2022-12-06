@@ -330,8 +330,6 @@
 "UI State Restoration" = "UI 상태 복원";
 "Open in Tab" = "탭으로 열기";
 "Show Command in Terminal" = "터미널에서 명령 보기";
-"Languages (Local)" = "프로그래밍 언어 (로컬)";
-"Languages (Remote)" = "프로그래밍 언어 (원격)";
 "Duplicate" = "복사하기";
 "Console Font Size" = "콘솔 글꼴 크기";
 
@@ -432,3 +430,5 @@
 "panel.execution.output" = "출력";
 "panel.execution.split_view" = "분할 보기";
 "panel.execution.title" = "실행";
+
+"local.execution.title" = "로컬 실행";

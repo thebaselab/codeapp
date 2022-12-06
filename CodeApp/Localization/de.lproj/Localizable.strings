@@ -330,8 +330,6 @@
 "UI State Restoration" = "Wiederherstellung des UI-Status";
 "Open in Tab" = "Öffnen Sie in Tab";
 "Show Command in Terminal" = "Befehl im Terminal anzeigen";
-"Languages (Local)" = "Programmiersprachen (lokal)";
-"Languages (Remote)" = "Programmiersprachen (Remote)";
 "Duplicate" = "Duplikat";
 "Console Font Size" = "Konsolen-Schriftgröße";
 
@@ -432,3 +430,5 @@
 "panel.execution.output" = "Ausgabe";
 "panel.execution.split_view" = "Split View";
 "panel.execution.title" = "Ausführung";
+
+"local.execution.title" = "Lokale Ausführung";

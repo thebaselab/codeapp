@@ -55,6 +55,8 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
+                // TODO: Rework Editor / Terminal settings to support multiple scenes
+
                 Section(header: Text(NSLocalizedString("General", comment: ""))) {
 
                     NavigationLink(
@@ -261,28 +263,8 @@ struct SettingsView: View {
                     }
                 }
 
-                Section(header: Text("Languages (Local)")) {
+                Section(header: Text("local.execution.title")) {
                     Toggle("Show Command in Terminal", isOn: $compilerShowPath)
-                }
-
-                Section(header: Text("Languages (Remote)")) {
-                    VStack {
-                        ForEach(languageList.keys.sorted().filter { $0 > 10 }, id: \.self) { i in
-                            Toggle(
-                                "\(languageList[i]![0]) (.\(languageList[i]![1]))",
-                                isOn: $App.languageEnabled[i]
-                            ).onTapGesture {
-                                let defaults = UserDefaults.standard
-                                if let languageList = defaults.object(forKey: "languageList")
-                                    as? [Bool]
-                                {
-                                    var languageEnabledTemp = languageList
-                                    languageEnabledTemp[i].toggle()
-                                    defaults.set(languageEnabledTemp, forKey: "languageList")
-                                }
-                            }
-                        }
-                    }
                 }
 
                 Section("Experimental Features") {

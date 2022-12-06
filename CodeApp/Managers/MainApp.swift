@@ -70,9 +70,6 @@ class MainApp: ObservableObject {
     }
 
     @Published var selectedURLForCompare: URL? = nil
-
-    @Published var languageEnabled: [Bool] = langListInit()
-
     @Published var notificationManager = NotificationManager()
     @Published var searchManager = GitHubSearchManager()
     @Published var textSearchManager = TextSearchManager()

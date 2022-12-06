@@ -129,7 +129,7 @@ private struct PanelRemoteExecutionToolbarView: View {
     }
 }
 
-let languageList = [
+private let languageList = [
     62: ["Java (OpenJDK 13.0.1)", "java"],
     45: ["Assembly (NASM 2.14.02)", "asm"],
     //                    46:["Bash (5.0.0)", "sh"],

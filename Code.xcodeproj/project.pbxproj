@@ -79,7 +79,6 @@
 		94196984280316C7008AAEB2 /* MainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A7779E257ABD7A008FE7B2 /* MainApp.swift */; };
 		94196985280316C7008AAEB2 /* PanelSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77807257BBA8A008FE7B2 /* PanelSelector.swift */; };
 		94196986280316C7008AAEB2 /* node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC625DEAAA600BC83B5 /* node.swift */; };
-		94196987280316C7008AAEB2 /* langListInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777FE257B9526008FE7B2 /* langListInit.swift */; };
 		94196988280316C7008AAEB2 /* TerminalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F92266FB5E400B29D80 /* TerminalInstance.swift */; };
 		94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */; };
 		9419698A280316C7008AAEB2 /* NewFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77801257B960A008FE7B2 /* NewFileView.swift */; };
@@ -580,7 +579,6 @@
 		94A777EF257B9193008FE7B2 /* GitHubSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777EE257B9193008FE7B2 /* GitHubSearchManager.swift */; };
 		94A777F3257B91CA008FE7B2 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777F2257B91CA008FE7B2 /* RemoteImage.swift */; };
 		94A777F6257B9260008FE7B2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777F5257B9260008FE7B2 /* SettingsView.swift */; };
-		94A777FF257B9526008FE7B2 /* langListInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777FE257B9526008FE7B2 /* langListInit.swift */; };
 		94A77802257B960A008FE7B2 /* NewFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77801257B960A008FE7B2 /* NewFileView.swift */; };
 		94A77808257BBA8A008FE7B2 /* PanelSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77807257BBA8A008FE7B2 /* PanelSelector.swift */; };
 		94A7780B257BBCAC008FE7B2 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A7780A257BBCAC008FE7B2 /* PanelView.swift */; };
@@ -1594,7 +1592,6 @@
 		94A777EE257B9193008FE7B2 /* GitHubSearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchManager.swift; sourceTree = "<group>"; };
 		94A777F2257B91CA008FE7B2 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		94A777F5257B9260008FE7B2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		94A777FE257B9526008FE7B2 /* langListInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = langListInit.swift; sourceTree = "<group>"; };
 		94A77801257B960A008FE7B2 /* NewFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFileView.swift; sourceTree = "<group>"; };
 		94A77807257BBA8A008FE7B2 /* PanelSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelSelector.swift; sourceTree = "<group>"; };
 		94A7780A257BBCAC008FE7B2 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
@@ -1894,14 +1891,6 @@
 			path = KeychainWrapper;
 			sourceTree = "<group>";
 		};
-		94A4438D25A393A5006643FF /* language */ = {
-			isa = PBXGroup;
-			children = (
-				94A777FE257B9526008FE7B2 /* langListInit.swift */,
-			);
-			path = language;
-			sourceTree = "<group>";
-		};
 		94A4438E25A393B4006643FF /* file */ = {
 			isa = PBXGroup;
 			children = (
@@ -1930,7 +1919,6 @@
 				94CF58E0265E8A4B00CB6A4B /* wasm.swift */,
 				94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */,
 				94A4438E25A393B4006643FF /* file */,
-				94A4438D25A393A5006643FF /* language */,
 				94A4438725A390C3006643FF /* KeychainWrapper */,
 				94C893E5279D0C3000DFBF29 /* shortcutsMapping.swift */,
 				94E6CC872807632B00939E4F /* biometricType.swift */,
@@ -3002,7 +2990,6 @@
 				94196985280316C7008AAEB2 /* PanelSelector.swift in Sources */,
 				9FC03E752920CF1700DECD1B /* Notification.swift in Sources */,
 				94196986280316C7008AAEB2 /* node.swift in Sources */,
-				94196987280316C7008AAEB2 /* langListInit.swift in Sources */,
 				94196988280316C7008AAEB2 /* TerminalInstance.swift in Sources */,
 				94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */,
 				94FF337528435158003DE5DD /* SettingsFontPicker.swift in Sources */,
@@ -3157,7 +3144,6 @@
 				94A77808257BBA8A008FE7B2 /* PanelSelector.swift in Sources */,
 				9FC03E742920CF1700DECD1B /* Notification.swift in Sources */,
 				949B3CC725DEAAA700BC83B5 /* node.swift in Sources */,
-				94A777FF257B9526008FE7B2 /* langListInit.swift in Sources */,
 				94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */,
 				94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */,
 				94FF337428435158003DE5DD /* SettingsFontPicker.swift in Sources */,

@@ -353,8 +353,6 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "UI State Restoration" = "UI 状态恢复";
 "Open in Tab" = "在标签页中打开";
 "Show Command in Terminal" = "在终端中显示命令";
-"Languages (Local)" = "编程语言 (本地)";
-"Languages (Remote)" = "编程语言 (远程)";
 "Duplicate" = "复制";
 "Console Font Size" = "终端字体大小";
 
@@ -455,3 +453,5 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "panel.execution.output" = "输出";
 "panel.execution.split_view" = "分屏";
 "panel.execution.title" = "执行";
+
+"local.execution.title" = "本地执行";
