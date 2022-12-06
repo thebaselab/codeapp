@@ -7,8 +7,9 @@
 
 import WebKit
 
+private var ToolbarHandle: UInt8 = 0
+
 class WebViewBase: KBWebViewBase {
-    private var ToolbarHandle: UInt8 = 0
 
     init() {
         let config = WKWebViewConfiguration()
