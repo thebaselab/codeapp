@@ -16,7 +16,7 @@ class DirectoryMonitor {
         monitors.keys
     }
 
-    func monitorURL(url: String, directoryDidUpdate: @escaping () -> Void) {
+    func monitorURL(url: String, directoryDidUpdate: @escaping (Date) -> Void) {
         guard let url = URL(string: url), !monitors.keys.contains(url.absoluteString),
             self.numberOfFilesMonitored < 100
         else {
@@ -51,7 +51,7 @@ class FolderMonitor {
     /// URL for the directory being monitored.
     var url: Foundation.URL
 
-    var folderDidChange: (() -> Void)?
+    var folderDidChange: ((Date) -> Void)?
     // MARK: Initializers
     init(url: Foundation.URL) {
         self.url = url
@@ -77,7 +77,14 @@ class FolderMonitor {
             queue: folderMonitorQueue)
         // Define the block to call when a file change is detected.
         folderMonitorSource?.setEventHandler { [weak self] in
-            self?.folderDidChange?()
+            guard let strongSelf = self else { return }
+            guard
+                let attributes = try? FileManager.default.attributesOfItem(
+                    atPath: strongSelf.url.path)
+            else { return }
+            if let lastModified = attributes[.modificationDate] as? Date {
+                strongSelf.folderDidChange?(lastModified)
+            }
         }
         // Define a cancel handler to ensure the directory is closed when the source is cancelled.
         folderMonitorSource?.setCancelHandler { [weak self] in

@@ -383,6 +383,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "common.configure" = "配置";
 "common.open_folder" = "打开文件夹";
+"common.compare" = "比较";
+"common.overwrite" = "覆盖";
 
 "notification.source" = "来源: %@";
 

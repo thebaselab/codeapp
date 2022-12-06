@@ -61,6 +61,7 @@ class TextEditorInstance: EditorInstanceWithURL {
     var encoding: String.Encoding = .utf8
     var fileWatch: FolderMonitor?
     var isDeleted = false
+    var lastSavedDate: Date? = nil
 
     var languageIdentifier: String {
         url.pathExtension
@@ -74,21 +75,24 @@ class TextEditorInstance: EditorInstanceWithURL {
         url: URL,
         content: String,
         encoding: String.Encoding = .utf8,
+        lastSavedDate: Date? = nil,
         fileDidChange: ((fileState, String?) -> Void)? = nil
     ) {
         self.content = content
         self.encoding = encoding
+        self.lastSavedDate = lastSavedDate
         super.init(view: AnyView(editor), title: url.lastPathComponent, url: url)
 
         if fileDidChange != nil, url.scheme == "file" {
             self.fileWatch = FolderMonitor(url: url)
 
-            self.fileWatch?.folderDidChange = {
+            self.fileWatch?.folderDidChange = { [weak self] lastModified in
+                guard let self = self else { return }
                 if let content = try? String(contentsOf: url, encoding: self.encoding) {
-                    if self.lastSavedVersionId == self.currentVersionId {
+                    if lastModified > self.lastSavedDate ?? Date.distantPast, self.isSaved {
                         self.content = content
+                        self.lastSavedDate = lastModified
                         fileDidChange?(.modified, content)
-                        self.lastSavedVersionId = self.currentVersionId
                     }
                 }
             }

@@ -248,6 +248,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "common.configure" = "Configure";
 "common.open_folder" = "Open Folder";
+"common.compare" = "Compare";
+"common.overwrite" = "Overwrite";
 
 "notification.source" = "Source: %@";
 

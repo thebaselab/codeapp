@@ -199,7 +199,7 @@ class WorkSpaceStorage: ObservableObject {
             return
         }
         if !directoryMonitor.keys.contains(id) && id.hasPrefix("file://") {
-            directoryMonitor.monitorURL(url: id) {
+            directoryMonitor.monitorURL(url: id) { _ in
                 self.onDirectoryChangeAction?(id)
                 self.requestDirectoryUpdateAt(id: id, forceUpdate: true)
             }
@@ -533,6 +533,20 @@ extension WorkSpaceStorage: FileSystemProvider {
             }
         }
     }
+
+    func attributesOfItem(
+        at: URL, completionHandler: @escaping ([FileAttributeKey: Any?]?, Error?) -> Void
+    ) {
+        guard let scheme = at.scheme, let fs = fss[scheme] else {
+            completionHandler(nil, FSError.SchemeNotRegistered)
+            return
+        }
+        return fs.attributesOfItem(at: at) { attributes, error in
+            DispatchQueue.main.async {
+                completionHandler(attributes, error)
+            }
+        }
+    }
 }
 
 extension WorkSpaceStorage {
@@ -627,6 +641,18 @@ extension WorkSpaceStorage {
                     continuation.resume(throwing: error)
                 } else {
                     continuation.resume(returning: data ?? Data())
+                }
+            }
+        }
+    }
+
+    func attributesOfItem(at: URL) async throws -> [FileAttributeKey: Any?] {
+        return try await withCheckedThrowingContinuation { continuation in
+            attributesOfItem(at: at) { attributes, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: attributes ?? [:])
                 }
             }
         }

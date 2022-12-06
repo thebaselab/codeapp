@@ -13,6 +13,7 @@ enum AppError: String {
     case editorDoesNotExist = "errors.editor_does_not_exist"
     case editorIsNotReady = "errors.editor_is_not_ready"
     case encodingFailed = "errors.failed_to_save_file.encoding.failed"
+    case fileModifiedByAnotherProcess = "errors.file_modified_by_another_process"
 }
 
 extension AppError: LocalizedError {

@@ -360,6 +360,8 @@
 
 "common.configure" = "";
 "common.open_folder" = "Ordner öffnen";
+"common.compare" = "Vergleichen";
+"common.overwrite" = "Überschreiben";
 
 "notification.source" = "Quelle: %@";
 

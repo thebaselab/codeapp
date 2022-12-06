@@ -352,37 +352,32 @@ class MainApp: ObservableObject {
                 })
         }
 
-        let contentData: Data = try await workSpaceStorage.contents(at: url)
-
-        let (content, encoding) = try decodeStringData(data: contentData)
-
-        let diffEditor = DiffTextEditorInstnace(
-            editor: monacoInstance,
-            url: url,
-            content: content,
-            encoding: encoding,
-            compareWith: contentToCompareWith
-        )
-
-        await appendAndFocusNewEditor(editor: diffEditor, alwaysInNewTab: true)
+        try await compareWithContent(url: url, content: contentToCompareWith)
     }
 
     func compareWithSelected(url: URL) async throws {
 
         guard let selectedURLForCompare else { return }
 
-        let selectedData = try await workSpaceStorage.contents(at: selectedURLForCompare)
         let data = try await workSpaceStorage.contents(at: url)
-
-        let (selectedContent, encoding) = try decodeStringData(data: selectedData)
         let (content, _) = try decodeStringData(data: data)
+
+        try await compareWithContent(url: selectedURLForCompare, content: content)
+    }
+
+    private func compareWithContent(url: URL, content: String) async throws {
+        let data = try await workSpaceStorage.contents(at: url)
+        let (original, encoding) = try decodeStringData(data: data)
+
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        components.scheme = "modified"
 
         let diffEditor = DiffTextEditorInstnace(
             editor: monacoInstance,
-            url: url,
-            content: content,
+            url: components.url!,
+            content: original,
             encoding: encoding,
-            compareWith: selectedContent
+            compareWith: content
         )
 
         await appendAndFocusNewEditor(editor: diffEditor, alwaysInNewTab: true)
@@ -412,13 +407,28 @@ class MainApp: ObservableObject {
             })
     }
 
-    func saveTextEditor(editor: TextEditorInstance) async throws {
+    private func saveTextEditor(editor: TextEditorInstance, overwrite: Bool = false) async throws {
+
+        if !overwrite {
+            let attributes = try await workSpaceStorage.attributesOfItem(at: editor.url)
+            let modificationDate = attributes[.modificationDate] as? Date
+            if let modificationDate = modificationDate {
+                if modificationDate > editor.lastSavedDate ?? Date.distantFuture {
+                    throw AppError.fileModifiedByAnotherProcess
+                }
+            }
+        }
+
         guard let data = editor.content.data(using: editor.encoding)
         else {
             throw AppError.encodingFailed
         }
         try await workSpaceStorage.write(
-            at: editor.url, content: data, atomically: true, overwrite: true)
+            at: editor.url, content: data, atomically: false, overwrite: true)
+
+        let updatedAttributes = try await workSpaceStorage.attributesOfItem(at: editor.url)
+        let updatedModificationDate = updatedAttributes[.modificationDate] as? Date
+        editor.lastSavedDate = updatedModificationDate
 
         DispatchQueue.main.async {
             editor.lastSavedVersionId = editor.currentVersionId
@@ -450,6 +460,24 @@ class MainApp: ObservableObject {
         }
         do {
             try await saveTextEditor(editor: activeTextEditor)
+        } catch AppError.fileModifiedByAnotherProcess {
+            self.notificationManager.postActionNotification(
+                title: AppError.fileModifiedByAnotherProcess.localizedDescription,
+                level: .error,
+                primary: {
+                    Task {
+                        try await self.compareWithContent(
+                            url: activeTextEditor.url, content: activeTextEditor.content)
+                    }
+                },
+                primaryTitle: "common.compare",
+                secondary: {
+                    Task {
+                        try await self.saveTextEditor(editor: activeTextEditor, overwrite: true)
+                    }
+                },
+                secondaryTitle: "common.overwrite",
+                source: "Code App")
         } catch {
             self.notificationManager.showErrorMessage(error.localizedDescription)
         }
@@ -545,7 +573,7 @@ class MainApp: ObservableObject {
 
         if FileManager.default.fileExists(atPath: typesURL.path) {
             editorTypesMonitor?.startMonitoring()
-            editorTypesMonitor?.folderDidChange = {
+            editorTypesMonitor?.folderDidChange = { _ in
                 self.monacoInstance.injectTypes(url: typesURL)
             }
         }
@@ -617,15 +645,18 @@ class MainApp: ObservableObject {
         else {
             throw AppError.unknownFileFormat
         }
+        let attributes = try await workSpaceStorage.attributesOfItem(at: url)
+        let modificationDate = attributes[.modificationDate] as? Date
 
         return TextEditorInstance(
             editor: monacoInstance,
             url: url,
             content: content,
             encoding: encoding,
+            lastSavedDate: modificationDate,
             // TODO: Update using updateUIView?
-            fileDidChange: { state, content in
-                if state == .modified, let content {
+            fileDidChange: { [weak self] state, content in
+                if state == .modified, let content, let self {
                     DispatchQueue.main.async {
                         self.monacoInstance.updateModelContent(
                             url: url.absoluteString, content: content)

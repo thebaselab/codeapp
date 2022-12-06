@@ -360,6 +360,8 @@
 
 "common.configure" = "";
 "common.open_folder" = "폴더 열기";
+"common.compare" = "비교";
+"common.overwrite" = "덮어쓰기";
 
 "notification.source" = "원천: %@";
 

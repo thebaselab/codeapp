@@ -10,8 +10,9 @@
   </head>
   <style>
     @font-face {
-      font-family: 'Fira Code';
-      src: local('FiraCode-Regular'), url('fonts/FiraCode-Regular.ttf') format('truetype');
+      font-family: "Fira Code";
+      src: local("FiraCode-Regular"),
+        url("fonts/FiraCode-Regular.ttf") format("truetype");
     }
     body {
       font-family: system-ui, -apple-system;
@@ -64,7 +65,10 @@
   </style>
   <body>
     <div tabindex="0" id="overlay"></div>
-    <div id="container" style="width: 100%; height: 100vh; overflow: hidden;"></div>
+    <div
+      id="container"
+      style="width: 100%; height: 100vh; overflow: hidden"
+    ></div>
     <script src="app.bundle.js"></script>
     <script defer>
       var states = {};
@@ -78,36 +82,38 @@
       let devicehasCursor = false;
 
       setTimeout(() => {
-        if (typeof editor === 'undefined') {
+        if (typeof editor === "undefined") {
           location.reload();
         }
       }, 1000);
 
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        const newColorScheme = e.matches ? 'dark' : 'light';
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          const newColorScheme = e.matches ? "dark" : "light";
 
-        if (newColorScheme == 'dark') {
-          if (customDarkTheme === null) {
-            changeTheme('vs-dark');
+          if (newColorScheme == "dark") {
+            if (customDarkTheme === null) {
+              changeTheme("vs-dark");
+            } else {
+              setTheme(customDarkThemeName, customDarkTheme);
+            }
           } else {
-            setTheme(customDarkThemeName, customDarkTheme);
+            if (customLightTheme === null) {
+              changeTheme("vs");
+            } else {
+              setTheme(customLightThemeName, customLightTheme);
+            }
           }
-        } else {
-          if (customLightTheme === null) {
-            changeTheme('vs');
-          } else {
-            setTheme(customLightThemeName, customLightTheme);
-          }
-        }
-      });
+        });
 
       function getChangeType(change) {
         if (change.originalEndLineNumber === 0) {
-          return 'added'; // Add
+          return "added"; // Add
         } else if (change.modifiedEndLineNumber === 0) {
-          return 'deleted'; // Delete
+          return "deleted"; // Delete
         } else {
-          return 'modified'; // Modify
+          return "modified"; // Modify
         }
       }
 
@@ -116,7 +122,7 @@
       }
 
       function computeDiffForURI(uri) {
-        monaco.editor.computeDirtyDiff('original://' + uri, uri, true).then(
+        monaco.editor.computeDirtyDiff("original://" + uri, uri, true).then(
           function (result) {
             var changes = result;
             var jsonChanges = [];
@@ -125,52 +131,63 @@
               var decoration = {};
 
               const startLineNumber = change.modifiedStartLineNumber;
-              const endLineNumber = change.modifiedEndLineNumber || startLineNumber;
+              const endLineNumber =
+                change.modifiedEndLineNumber || startLineNumber;
 
               switch (getChangeType(change)) {
-                case 'modified':
+                case "modified":
                   decoration = {
-                    range: new monaco.Range(startLineNumber, 1, endLineNumber, 1),
+                    range: new monaco.Range(
+                      startLineNumber,
+                      1,
+                      endLineNumber,
+                      1
+                    ),
                     options: {
                       isWholeLine: true,
-                      linesDecorationsClassName: 'modifiedBackground',
+                      linesDecorationsClassName: "modifiedBackground",
                       minimap: {
-                        color: '#66afe0',
-                        darkColor: '#0c7d9d',
+                        color: "#66afe0",
+                        darkColor: "#0c7d9d",
                         position: 2,
                       },
                     },
                     // Position: 1 - Inline, 2 - Gutter
                   };
                   break;
-                case 'added':
+                case "added":
                   decoration = {
-                    range: new monaco.Range(startLineNumber, 1, endLineNumber, 1),
+                    range: new monaco.Range(
+                      startLineNumber,
+                      1,
+                      endLineNumber,
+                      1
+                    ),
                     options: {
                       isWholeLine: true,
-                      linesDecorationsClassName: 'addedBackground',
+                      linesDecorationsClassName: "addedBackground",
                       minimap: {
-                        color: '#81b88b',
-                        darkColor: '#587c0c',
+                        color: "#81b88b",
+                        darkColor: "#587c0c",
                         position: 2,
                       },
                     },
                   };
                   break;
-                case 'deleted':
+                case "deleted":
                   decoration = {
                     range: new monaco.Range(
                       startLineNumber,
                       Number.MAX_VALUE,
                       endLineNumber,
-                      Number.MAX_VALUE,
+                      Number.MAX_VALUE
                     ),
                     options: {
                       isWholeLine: false,
-                      linesDecorationsClassName: 'deletedBackground',
+                      linesDecorationsClassName: "deletedBackground",
                       minimap: {
-                        color: '#ca4b51',
-                        darkColor: '#94151b',
+                        color: "#ca4b51",
+                        darkColor: "#94151b",
                         position: 2,
                       },
                     },
@@ -180,38 +197,44 @@
               jsonChanges.push(decoration);
             }
             // console.log(jsonChanges);
-            previousDecoration = editor.deltaDecorations(previousDecoration, jsonChanges);
+            previousDecoration = editor.deltaDecorations(
+              previousDecoration,
+              jsonChanges
+            );
           },
           function (error) {
             console.log(error);
-          },
+          }
         );
       }
 
       function provideOriginalTextForUri(uri, value) {
         var decodedContent = decodeURIComponent(escape(window.atob(value)));
 
-        var originalUri = monaco.Uri.parse('original://' + uri);
+        var originalUri = monaco.Uri.parse("original://" + uri);
 
         if (monaco.editor.getModel(originalUri)) {
           monaco.editor.getModel(originalUri).setValue(decodedContent);
         } else {
-          monaco.editor.createModel(decodedContent, 'plaintext', originalUri);
+          monaco.editor.createModel(decodedContent, "plaintext", originalUri);
         }
 
         computeDiffForURI(uri);
       }
 
       function updateTheme() {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
           if (customDarkTheme === null) {
-            changeTheme('vs-dark');
+            changeTheme("vs-dark");
           } else {
             setTheme(customDarkThemeName, customDarkTheme);
           }
         } else {
           if (customLightTheme === null) {
-            changeTheme('vs');
+            changeTheme("vs");
           } else {
             setTheme(customLightThemeName, customLightTheme);
           }
@@ -246,7 +269,7 @@
       function getFirstNonSpaceColumn(line) {
         var firstNonSpaceCharPos = -1;
         for (let i = 0; i < line.length; i++) {
-          if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n') {
+          if (line[i] != " " && line[i] != "\t" && line[i] != "\n") {
             firstNonSpaceCharPos = i + 1;
             break;
           }
@@ -255,9 +278,12 @@
       }
 
       function applyListeners(instance) {
-        if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (
+          window.matchMedia &&
+          !window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
           if (customLightTheme === null) {
-            changeTheme('vs');
+            changeTheme("vs");
           } else {
             setTheme(customLightThemeName, customLightTheme);
           }
@@ -269,7 +295,7 @@
           window.webkit.messageHandlers.toggleMessageHandler
         ) {
           window.webkit.messageHandlers.toggleMessageHandler.postMessage({
-            Event: 'Editor Initialising',
+            Event: "Editor Initialising",
           });
         }
 
@@ -282,22 +308,28 @@
           }
 
           window.webkit.messageHandlers.toggleMessageHandler.postMessage({
-            Event: 'Request Diff Update',
+            Event: "Request Diff Update",
             URI: newModel,
           });
 
           var position = instance.getPosition();
           window.webkit.messageHandlers.toggleMessageHandler.postMessage({
-            Event: 'Crusor Position changed',
+            Event: "Crusor Position changed",
             Column: position.column,
             lineNumber: position.lineNumber,
+          });
+
+          const inputareaElement = document.getElementsByClassName("inputarea")[0];
+          inputareaElement?.addEventListener("focus", (event) => {
+            window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+              Event: "focus",
+            });
           });
         });
 
         instance.onDidChangeCursorPosition((event) => {
           var position = instance.getPosition();
-          // console.log(position)
-          var message = 'Crusor Position changed';
+          var message = "Crusor Position changed";
           if (
             window.webkit &&
             window.webkit.messageHandlers &&
@@ -312,9 +344,18 @@
         });
 
         instance.onDidChangeModelContent((event) => {
-          var currentModel = instance.getModel();
+          const currentModel = instance.getModel();
+          const modelPath = currentModel._associatedResource._formatted;
+          const originalUri = monaco.Uri.parse("original://" + modelPath);
+          if (monaco.editor.getModel(originalUri)) {
+            computeDiffForURI(modelPath);
+          }
+
+          if(event.isFlush){
+            return;
+          }
+
           var versionID = currentModel.getAlternativeVersionId();
-          var modelPath = currentModel._associatedResource._formatted;
           var position = instance.getPosition();
           var content = instance.getValue();
 
@@ -332,19 +373,22 @@
             column: 0,
             lineNumber: startLineNumber,
           });
-          const endOffset = currentModel.getOffsetAt({
+
+          const numberOfLines = currentModel.getLineCount();
+
+          const endOffset = numberOfLines < endLineNumber ? startOffset : 
+          currentModel.getOffsetAt({
             column: currentModel.getLineLength(endLineNumber),
             lineNumber: endLineNumber,
           });
 
-          var message = 'Content changed';
           if (
             window.webkit &&
             window.webkit.messageHandlers &&
             window.webkit.messageHandlers.toggleMessageHandler
           ) {
             window.webkit.messageHandlers.toggleMessageHandler.postMessage({
-              Event: message,
+              Event: "Content changed",
               VersionID: versionID,
               URI: modelPath,
               currentContent: content,
@@ -352,16 +396,10 @@
               endOffset: endOffset,
             });
           }
-
-          var originalUri = monaco.Uri.parse('original://' + modelPath);
-
-          if (monaco.editor.getModel(originalUri)) {
-            computeDiffForURI(modelPath);
-          }
         });
 
         monaco.editor.onDidChangeMarkers((markers) => {
-          var message = 'Markers updated';
+          var message = "Markers updated";
           if (
             window.webkit &&
             window.webkit.messageHandlers &&
@@ -375,11 +413,11 @@
         });
 
         monaco.editor.onWillDisposeModel((model) => {
-          monaco.editor.setModelMarkers(model, 'code.app.native', []);
+          monaco.editor.setModelMarkers(model, "code.app.native", []);
         });
       }
 
-      var lastOpenedURI = '';
+      var lastOpenedURI = "";
       var navi = null;
 
       function switchToDiffView(originalContent, modifiedContent, url1, url2) {
@@ -394,26 +432,37 @@
         if (monaco.editor.getModel(monaco.Uri.parse(url1))) {
           originalModel = monaco.editor.getModel(monaco.Uri.parse(url1));
         } else {
-          originalModel = monaco.editor.createModel(original, undefined, monaco.Uri.parse(url1));
+          originalModel = monaco.editor.createModel(
+            original,
+            undefined,
+            monaco.Uri.parse(url1)
+          );
         }
 
         if (monaco.editor.getModel(monaco.Uri.parse(url2))) {
           modifiedModel = monaco.editor.getModel(monaco.Uri.parse(url2));
         } else {
-          modifiedModel = monaco.editor.createModel(modified, undefined, monaco.Uri.parse(url2));
+          modifiedModel = monaco.editor.createModel(
+            modified,
+            undefined,
+            monaco.Uri.parse(url2)
+          );
         }
 
         editor.dispose();
         editor = null;
 
-        editor = monaco.editor.createDiffEditor(document.getElementById('container'), {
-          // You can optionally disable the resizing
-          enableSplitViewResizing: false,
-          automaticLayout: true,
+        editor = monaco.editor.createDiffEditor(
+          document.getElementById("container"),
+          {
+            // You can optionally disable the resizing
+            enableSplitViewResizing: false,
+            automaticLayout: true,
 
-          // Render the diff inline
-          renderSideBySide: true,
-        });
+            // Render the diff inline
+            renderSideBySide: true,
+          }
+        );
         navi = monaco.editor.createDiffNavigator(editor, {
           followsCaret: true, // resets the navigator state when the user selects something in the editor
           ignoreCharChanges: true, // jump from line to line
@@ -429,8 +478,8 @@
       function switchToNormalView() {
         editor.dispose();
         editor = null;
-        editor = monaco.editor.create(document.getElementById('container'), {
-          theme: 'vs-dark',
+        editor = monaco.editor.create(document.getElementById("container"), {
+          theme: "vs-dark",
           automaticLayout: true,
           unicodeHighlight: {
             ambiguousCharacters: false,
@@ -446,7 +495,7 @@
         var model2 = monaco.editor.createModel(
           model1.getValue(),
           undefined,
-          monaco.Uri.parse(newURL),
+          monaco.Uri.parse(newURL)
         );
 
         var cm2 = model2._commandManager;
@@ -478,14 +527,18 @@
             return !monaco.Range.areIntersecting(rangeToRemove, marker);
           });
 
-        monaco.editor.setModelMarkers(model, 'code.app.native', existingMarkers);
+        monaco.editor.setModelMarkers(
+          model,
+          "code.app.native",
+          existingMarkers
+        );
       }
 
       function provideDiagnostic(items, removeExisting) {
         const model = editor.getModel();
         const languageId = model.getLanguageId();
 
-        if (languageId !== 'markdown' && languageId !== 'plaintext') {
+        if (languageId !== "markdown" && languageId !== "plaintext") {
           return;
         }
         const markerLineNumbers = new Set();
@@ -507,8 +560,45 @@
           })
           .filter((marker) => !markerLineNumbers.has(marker.startLineNumber));
 
-        monaco.editor.setModelMarkers(model, 'code.app.native', markers.concat(existingMarkers));
+        monaco.editor.setModelMarkers(
+          model,
+          "code.app.native",
+          markers.concat(existingMarkers)
+        );
       }
+
+      function base64ToString(base64) {
+        return decodeURIComponent(escape(window.atob(base64)));
+      }
+
+      function onRequestNewTextModel(url, base64Content) {
+        const existingModelUri = editor.getModel()?.uri;
+        if (existingModelUri) {
+          states[existingModelUri] = editor.saveViewState();
+        }
+
+        const newModelUri = monaco.Uri.parse(url);
+        const existingModel = monaco.editor.getModel(newModelUri);
+        const newModelContent = base64ToString(base64Content);
+
+        if (existingModel) {
+          if (existingModel.getValue() !== newModelContent) {
+            existingModel.setValue(newModelContent);
+          }
+          if (editor.getModel() !== existingModel) {
+            editor.setModel(existingModel);
+          }
+        } else {
+          const newModel = monaco.editor.createModel(
+            newModelContent,
+            undefined,
+            newModelUri
+          );
+          editor.setModel(newModel);
+        }
+      }
+
+
     </script>
   </body>
 </html>

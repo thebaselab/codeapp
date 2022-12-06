@@ -55,7 +55,7 @@ private struct NotificationItem<V: View>: View {
         }
         .frame(minHeight: 50)
         .padding(10)
-        .frame(maxWidth: 300)
+        .frame(minWidth: 300, maxWidth: 400)
         .background(Color.init(id: "sideBar.background"))
         .cornerRadius(10)
     }
@@ -151,20 +151,31 @@ private struct NotificationItemWithButton: View {
     var body: some View {
         NotificationItem(data: data) {
             HStack {
-                Text(
-                    String(
-                        format: NSLocalizedString("notification.source", comment: ""),
-                        (data.source ?? ""))
-                )
-                .lineLimit(2)
-                .font(.system(size: 12))
-                .foregroundColor(Color.gray)
+                if data.secondaryAction == nil {
+                    Text(
+                        String(
+                            format: NSLocalizedString("notification.source", comment: ""),
+                            (data.source ?? ""))
+                    )
+                    .lineLimit(2)
+                    .font(.system(size: 12))
+                    .foregroundColor(Color.gray)
+                }
                 Spacer()
                 Group {
                     if data.primaryAction != nil {
                         Text(data.primaryTitle)
                             .onTapGesture {
                                 data.primaryAction?()
+                                withAnimation {
+                                    isRemoved = true
+                                }
+                            }
+                    }
+                    if data.secondaryAction != nil {
+                        Text(data.secondaryTitle)
+                            .onTapGesture {
+                                data.secondaryAction?()
                                 withAnimation {
                                     isRemoved = true
                                 }

@@ -32,6 +32,10 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 
     var isInteractive = false
 
+    func blur() {
+        executeScript("document.getElementById('overlay').focus()")
+    }
+
     func sendInterrupt() {
         executeScript("sendInterrupt()")
     }
@@ -379,6 +383,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             webView?.navigationDelegate = self
             webView?.customUserAgent =
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15"
+            webView?.contentMode = .scaleToFill
             if !terminalMessageHandlerAdded {
                 if let bundlePath = Bundle.main.path(forResource: "terminal", ofType: "bundle"),
                     let bundle = Bundle(path: bundlePath),

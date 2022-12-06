@@ -34,7 +34,26 @@ class NotificationManager: ObservableObject {
                         title: title, source: source, level: level, style: .action,
                         primaryAction: primary, primaryTitle: primaryTitle)))
         }
+    }
 
+    func postActionNotification(
+        title: String, level: NotificationData.Level, primary: @escaping (() -> Void),
+        primaryTitle: String, secondary: @escaping (() -> Void), secondaryTitle: String,
+        source: String, _ arguments: CVarArg...
+    ) {
+        let title = String(format: NSLocalizedString(title, comment: ""), arguments)
+        let primaryTitle = String(format: NSLocalizedString(primaryTitle, comment: ""), arguments)
+        let secondaryTitle = String(
+            format: NSLocalizedString(secondaryTitle, comment: ""), arguments)
+        let source = String(format: NSLocalizedString(source, comment: ""), arguments)
+        DispatchQueue.main.async {
+            self.notifications.append(
+                NotificationEntry.init(
+                    data: NotificationData.init(
+                        title: title, source: source, level: level, style: .action,
+                        primaryAction: primary, secondaryAction: secondary,
+                        primaryTitle: primaryTitle, secondaryTitle: secondaryTitle)))
+        }
     }
 
     func withAsyncNotification(
