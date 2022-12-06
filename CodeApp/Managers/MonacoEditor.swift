@@ -12,6 +12,7 @@ import WebKit
 struct MonacoEditor: UIViewRepresentable {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var themeManager: ThemeManager
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 

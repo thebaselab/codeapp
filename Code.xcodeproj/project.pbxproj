@@ -667,6 +667,8 @@
 		9F046C3B29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */; };
 		9F046C3D29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
 		9F046C3E29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
+		9F37391E293F37F8006886C1 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37391D293F37F8006886C1 /* ThemeManager.swift */; };
+		9F37391F293F37F8006886C1 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37391D293F37F8006886C1 /* ThemeManager.swift */; };
 		9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */; };
 		9F3C2DC92918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */; };
 		9F3C2DEA2918E19B00BFF14C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DE92918E19B00BFF14C /* Theme.swift */; };
@@ -1667,6 +1669,7 @@
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteExecutionExtension.swift; sourceTree = "<group>"; };
 		9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAppExtension.swift; sourceTree = "<group>"; };
+		9F37391D293F37F8006886C1 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hiddenScrollableContentBackground.swift; sourceTree = "<group>"; };
 		9F3C2DE92918E19B00BFF14C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		9F3C2DEC2918EDC400BFF14C /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
@@ -2579,6 +2582,7 @@
 				94A777AB257B66CF008FE7B2 /* MonacoEditor.swift */,
 				94A7FFB2268D085300369147 /* BottomBar.swift */,
 				9FD5BCFD2929F0F300F20C4B /* EditorProviderManager.swift */,
+				9F37391D293F37F8006886C1 /* ThemeManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2926,6 +2930,7 @@
 				9F046C3629222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
 				9FD5BCFC2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
 				9419695C280316C7008AAEB2 /* MonacoEditor.swift in Sources */,
+				9F37391F293F37F8006886C1 /* ThemeManager.swift in Sources */,
 				9FD5BCFF2929F0F300F20C4B /* EditorProviderManager.swift in Sources */,
 				942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				94A347BE293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */,
@@ -3080,6 +3085,7 @@
 				9F046C3529222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
 				9FD5BCFB2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
 				94A777AC257B66CF008FE7B2 /* MonacoEditor.swift in Sources */,
+				9F37391E293F37F8006886C1 /* ThemeManager.swift in Sources */,
 				9FD5BCFE2929F0F300F20C4B /* EditorProviderManager.swift in Sources */,
 				942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				94A347BD293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */,

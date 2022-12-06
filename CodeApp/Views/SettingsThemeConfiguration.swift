@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsThemeConfiguration: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var themeManager: ThemeManager
 
     static let defaultLightPlusTheme = Theme(
         name: "Light+", url: URL(string: "https://thebaselab.com")!, isDark: false,
@@ -33,7 +34,7 @@ struct SettingsThemeConfiguration: View {
 
                     ForEach(
                         [SettingsThemeConfiguration.defaultDarkPlusTheme]
-                            + globalThemes.sorted { $0.name < $1.name }.filter { $0.isDark },
+                            + themeManager.themes.sorted { $0.name < $1.name }.filter { $0.isDark },
                         id: \.id
                     ) { item in
                         ThemePreview(item: item)
@@ -50,7 +51,7 @@ struct SettingsThemeConfiguration: View {
                 HStack(spacing: 20) {
                     ForEach(
                         [SettingsThemeConfiguration.defaultLightPlusTheme]
-                            + globalThemes.sorted { $0.name < $1.name }.filter { !$0.isDark },
+                            + themeManager.themes.sorted { $0.name < $1.name }.filter { !$0.isDark },
                         id: \.id
                     ) { item in
                         ThemePreview(item: item)
@@ -71,9 +72,10 @@ struct SettingsThemeConfiguration: View {
     }
 }
 
-private struct ThemePreview: View {
+struct ThemePreview: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var themeManager: ThemeManager
 
     @State var item: Theme
 
@@ -81,43 +83,39 @@ private struct ThemePreview: View {
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
 
     func setTheme() {
-        App.updateView()
-
+        // Built-in themes
         if item.url.scheme == "https" {
+            themeManager.currentTheme = nil
+
             if item.isDark {
                 globalDarkTheme = nil
                 selectedTheme = item.name
-                App.monacoInstance.executeJavascript(command: "resetTheme(true)")
-                App.terminalInstance.executeScript("applyTheme(null, true)")
             } else {
                 globalLightTheme = nil
                 selectedLightTheme = item.name
-                App.monacoInstance.executeJavascript(command: "resetTheme(false)")
-                App.terminalInstance.executeScript("applyTheme(null, false)")
             }
+            let notification = Notification(
+                name: Notification.Name("theme.updated"),
+                userInfo: ["isDark": item.isDark]
+            )
+            NotificationCenter.default.post(notification)
             return
         }
 
-        let data = try! Data(contentsOf: item.url)
-        let jsonArray =
-            try! JSONSerialization.jsonObject(with: data, options: .allowFragments)
-            as! [String: Any]
-
         if item.isDark {
-            globalDarkTheme = jsonArray
+            globalDarkTheme = item.dictionary
             selectedTheme = item.name
         } else {
-            globalLightTheme = jsonArray
+            globalLightTheme = item.dictionary
             selectedLightTheme = item.name
         }
 
-        let content = String(data: data, encoding: .utf8)!
+        themeManager.currentTheme = item
 
-        App.monacoInstance.setTheme(
-            themeName: item.name.replacingOccurrences(of: " ", with: ""), data: content,
-            isDark: item.isDark)
-        App.terminalInstance.applyTheme(rawTheme: jsonArray)
-
+        let notification = Notification(
+            name: Notification.Name("theme.updated")
+        )
+        NotificationCenter.default.post(notification)
     }
 
     var body: some View {

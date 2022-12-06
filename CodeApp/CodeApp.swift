@@ -11,55 +11,12 @@ import UIKit
 import WebKit
 import ios_system
 
-var globalThemes: [Theme] = []
-var globalDarkTheme: [String: Any]? = nil
-var globalLightTheme: [String: Any]? = nil
-
 @main
 struct CodeApp: App {
     @StateObject var AppStore: Store = Store()
+    @StateObject var themeManager = ThemeManager()
 
-    @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
-    @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
     @AppStorage("preferredColorScheme") var colorScheme: Int = 0
-
-    func loadBuiltInThemes() {
-        globalThemes.removeAll()
-
-        let themesPaths = try! FileManager.default.contentsOfDirectory(
-            at: Resources.themes, includingPropertiesForKeys: nil)
-
-        for path in themesPaths {
-            if let data = try? Data(contentsOf: path),
-                let jsonArray = try? JSONSerialization.jsonObject(
-                    with: data, options: .allowFragments) as? [String: Any],
-                let name = jsonArray["name"] as? String,
-                let type = jsonArray["type"] as? String,
-                let colorArray = jsonArray["colors"] as? [String: String]
-            {
-                if selectedTheme == name && type == "dark" {
-                    globalDarkTheme = jsonArray
-                }
-                if selectedLightTheme == name && type != "dark" {
-                    globalLightTheme = jsonArray
-                }
-
-                let previewColors = [
-                    "editor.background", "activityBar.background", "statusBar.background",
-                    "sideBar.background",
-                ]
-
-                let preview = previewColors.map { Color.init(hexString: colorArray[$0] ?? $0) }
-
-                let result = (preview[0], preview[1], preview[2], preview[3])
-
-                globalThemes.append(
-                    Theme(name: name, url: path, isDark: type == "dark", preview: result))
-            } else {
-                print("READ ERROR: \(path)")
-            }
-        }
-    }
 
     func versionNumberIncreased() -> Bool {
         if let lastReadVersion = UserDefaults.standard.string(forKey: "changelog.lastread") {
@@ -329,8 +286,6 @@ struct CodeApp: App {
             nil,
             CFNotificationSuspensionBehavior.deliverImmediately)
 
-        loadBuiltInThemes()
-
         // Disable mini map and line number for iPhones
         if UIScreen.main.traitCollection.horizontalSizeClass == .compact {
             if UserDefaults.standard.object(forKey: "editorLineNumberEnabled") == nil {
@@ -371,6 +326,7 @@ struct CodeApp: App {
                 .ignoresSafeArea(.container, edges: .bottom)
                 .preferredColorScheme(colorScheme == 1 ? .dark : colorScheme == 2 ? .light : .none)
                 .environmentObject(AppStore)
+                .environmentObject(themeManager)
         }
     }
 }

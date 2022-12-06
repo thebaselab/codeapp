@@ -78,7 +78,6 @@ struct SettingsView: View {
                             windows.forEach({ $0.overrideUserInterfaceStyle = .light })
                         } else {
                             windows.forEach({ $0.overrideUserInterfaceStyle = .unspecified })
-
                         }
                         App.updateView()
                     }

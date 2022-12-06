@@ -11,6 +11,7 @@ import UIKit
 import ios_system
 
 struct MainScene: View {
+    @EnvironmentObject var themeManager: ThemeManager
     @StateObject var App = MainApp()
 
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
@@ -108,6 +109,26 @@ struct MainScene: View {
             ) { _ in
                 saveSceneState()
             }
+            .onReceive(
+                NotificationCenter.default.publisher(
+                    for: Notification.Name("theme.updated"),
+                    object: nil
+                ),
+                perform: { notification in
+                    guard var theme = themeManager.currentTheme else {
+                        if let isDark = notification.userInfo?["isDark"] as? Bool {
+                            App.monacoInstance.executeJavascript(command: "resetTheme(\(isDark))")
+                            App.terminalInstance.executeScript("applyTheme(null, \(isDark))")
+                        }
+                        return
+                    }
+                    App.monacoInstance.setTheme(
+                        themeName: theme.name.replacingOccurrences(of: " ", with: ""),
+                        data: theme.jsonString,
+                        isDark: theme.isDark)
+                    App.terminalInstance.applyTheme(rawTheme: theme.dictionary)
+                }
+            )
             .hiddenSystemOverlays()
     }
 }
@@ -126,6 +147,7 @@ private struct MainView: View {
     @EnvironmentObject var stateManager: MainStateManager
     @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var safariManager: SafariManager
+    @EnvironmentObject var themeManager: ThemeManager
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme: ColorScheme
