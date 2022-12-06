@@ -156,6 +156,7 @@ struct EditorKeyboardToolBar: View {
                     action: {
                         App.monacoInstance.executeJavascript(
                             command: "document.getElementById('overlay').focus()")
+                        App.saveCurrentFile()
                     },
                     label: {
                         Image(systemName: "keyboard.chevron.compact.down")
