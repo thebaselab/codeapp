@@ -42,6 +42,5 @@ struct PanelSelector<T: Hashable>: View {
         .frame(height: 18)
         .background(Color.init(id: "dropdown.background"))
         .cornerRadius(5)
-        .padding(.trailing)
     }
 }

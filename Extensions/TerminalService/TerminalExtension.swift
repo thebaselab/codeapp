@@ -11,27 +11,40 @@ class TerminalExtension: CodeAppExtension {
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
         let panel = Panel(
             labelId: "TERMINAL",
-            mainView: AnyView(terminalView()),
-            toolBarView: nil
+            mainView: AnyView(TerminalView()),
+            toolBarView: AnyView(ToolbarView())
         )
         contribution.panel.registerPanel(panel: panel)
     }
 }
 
-private struct terminalView: View {
+private struct ToolbarView: View {
     @EnvironmentObject var App: MainApp
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Button(action: {
+                App.terminalInstance.sendInterrupt()
+            } , label: {
+              Text("^C")
+            }).keyboardShortcut("c", modifiers: [.control])
+            
+            Button(action: {
+                App.terminalInstance.reset()
+            }, label: {
+                Image(systemName: "trash")
+            }).keyboardShortcut("k", modifiers: [.command])
+        }
+    }
+}
+
+private struct TerminalView: View {
+    @EnvironmentObject var App: MainApp
+    @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
 
     var body: some View {
         if let wv = App.terminalInstance.webView {
             ZStack {
-                Button("Clear Console") {
-                    App.terminalInstance.reset()
-                }.keyboardShortcut("k", modifiers: [.command])
-
-                Button("SIGINT") {
-                    App.terminalInstance.sendInterrupt()
-                }.keyboardShortcut("c", modifiers: [.control])
-
                 ViewRepresentable(wv)
                     .onTapGesture {
                         let notification = Notification(
@@ -66,7 +79,9 @@ private struct terminalView: View {
                     })
             }
             .foregroundColor(.clear)
-            .font(.system(size: 1))
+            .onChange(of: consoleFontSize) { value in
+                App.terminalInstance.setFontSize(size: value)
+            }
         } else {
             ProgressView()
         }

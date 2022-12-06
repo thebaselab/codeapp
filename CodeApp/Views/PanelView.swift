@@ -98,6 +98,7 @@ private struct Implementation: View {
 
                 currentPanel?
                     .toolBarView
+                    .padding(.horizontal)
                     .environmentObject(panelManager)
 
             }.frame(height: 14).padding(.vertical, 5)
@@ -111,6 +112,8 @@ private struct Implementation: View {
                 }
             }.frame(maxHeight: .infinity)
         }
+        .foregroundColor(Color(id: "panelTitle.activeForeground"))
+        .font(.system(size: 12, weight: .light))
     }
 
 }
@@ -120,8 +123,6 @@ struct PanelView: View {
     @EnvironmentObject var App: MainApp
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-
-    @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
 
     @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
@@ -142,6 +143,7 @@ struct PanelView: View {
     func evaluateProposedHeight(proposal: CGFloat) {
         if proposal < PANEL_MINIMUM_HEIGHT {
             showsPanel = false
+            panelHeight = DefaultUIState.PANEL_HEIGHT
         } else if proposal > maxHeight {
             panelHeight = maxHeight
         } else {
@@ -209,8 +211,5 @@ struct PanelView: View {
         //                    }
         //                }
         //            )
-        //            .onChange(of: consoleFontSize) { value in
-        //                App.terminalInstance.setFontSize(size: value)
-        //            }
     }
 }
