@@ -11,12 +11,15 @@ struct EditorTab: View {
 
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
-    @ObservedObject var currentEditor: EditorInstance
 
+    var currentEditor: EditorInstance
     var isActive: Bool
-    var index: Int
     var onOpenEditor: () -> Void
     var onCloseEditor: () -> Void
+
+    var index: Int {
+        App.editors.firstIndex { $0 == currentEditor } ?? 0
+    }
 
     static private func keyForInt(int: Int) -> KeyEquivalent {
         if int < 10 {

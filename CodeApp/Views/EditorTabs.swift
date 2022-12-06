@@ -97,10 +97,9 @@ struct EditorTabs: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 0) {
-                ForEach(Array(App.editors.enumerated()), id: \.element) { i, currentEditor in
+                ForEach(App.editors) { currentEditor in
                     EditorTab(
                         currentEditor: currentEditor, isActive: (App.activeEditor == currentEditor),
-                        index: i,
                         onOpenEditor: {
                             App.setActiveEditor(editor: currentEditor)
                         },

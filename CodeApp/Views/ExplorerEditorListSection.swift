@@ -54,7 +54,7 @@ private struct EditorCell: View {
     @EnvironmentObject var App: MainApp
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
-    let editor: EditorInstance
+    var editor: EditorInstance
     var editorURL: URL? {
         (editor as? EditorInstanceWithURL)?.url
     }

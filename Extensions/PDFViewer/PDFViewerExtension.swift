@@ -10,16 +10,16 @@ import SwiftUI
 
 private class Storage: ObservableObject {
     @Published var isLoading: Bool = true
+    weak var pdfView: PDFView?
 }
 
 private struct PDFKitView: UIViewRepresentable {
 
-    weak var pdfView: PDFView?
+    @EnvironmentObject var storage: Storage
 
     func makeUIView(context: Context) -> PDFView {
-        pdfView?.backgroundColor = UIColor(id: "editor.background")
-        pdfView?.autoScales = true
-        return pdfView ?? PDFView()
+        storage.pdfView?.backgroundColor = UIColor(id: "editor.background")
+        return storage.pdfView ?? PDFView()
     }
     func updateUIView(_ pdfView: PDFView, context: Context) {
         pdfView.backgroundColor = UIColor(id: "editor.background")
@@ -30,19 +30,20 @@ private struct PDFKitView: UIViewRepresentable {
 private struct PDFUIView: View {
 
     @EnvironmentObject var storage: Storage
-    weak var pdfView: PDFView?
 
     var body: some View {
         if storage.isLoading {
             ProgressView()
         } else {
-            PDFKitView(pdfView: pdfView)
+            PDFKitView()
         }
     }
 
 }
 
-private typealias PDFEditorInstance = EditorInstanceWithURL
+private class PDFEditorInstance: EditorInstanceWithURL {
+    var pdfView: PDFView? = nil
+}
 
 class PDFViewerExtension: CodeAppExtension {
 
@@ -51,13 +52,15 @@ class PDFViewerExtension: CodeAppExtension {
         let provider = EditorProvider(
             registeredFileExtensions: ["pdf"],
             onCreateEditor: { url in
-                let storage = Storage()
                 let pdfView = PDFView()
+                let storage = Storage()
+                storage.pdfView = pdfView
                 let editorInstance = PDFEditorInstance(
-                    view: AnyView(PDFUIView(pdfView: pdfView).environmentObject(storage)),
+                    view: AnyView(PDFUIView().environmentObject(storage).id(UUID())),
                     title: url.lastPathComponent,
                     url: url
                 )
+                editorInstance.pdfView = pdfView
 
                 app.workSpaceStorage.contents(at: url) {data, error in
                         if let data {
