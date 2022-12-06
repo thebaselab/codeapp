@@ -79,6 +79,7 @@ struct EditorView: View {
                 NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
                 perform: { data in
                     guard
+                        !App.alertManager.isShowingAlert,
                         let beginRect = data.userInfo?["UIKeyboardFrameBeginUserInfoKey"]
                             as? CGRect,
                         let endRect = data.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect,
