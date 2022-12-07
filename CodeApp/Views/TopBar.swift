@@ -158,6 +158,8 @@ private struct ToolbarItemView: View {
                 .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20)
                 .padding()
         }
+        .if(item.shortCut != nil) {
+            $0.keyboardShortcut(item.shortCut!.key, modifiers: item.shortCut!.modifiers)
+        }
     }
-
 }
