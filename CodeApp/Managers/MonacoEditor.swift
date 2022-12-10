@@ -38,8 +38,6 @@ struct MonacoEditor: UIViewRepresentable {
 
     let monacoWebView = WebViewBase()
 
-    private var contentView: UIView?
-
     func invalidateDecorations() {
         self.executeJavascript(command: "invalidateDecorations()")
     }
@@ -577,9 +575,10 @@ struct MonacoEditor: UIViewRepresentable {
         monacoWebView.contentMode = .scaleToFill
         monacoWebView.navigationDelegate = context.coordinator
 
-        if !App.stateManager.isMonacoEditorInitialized {
+        if !monacoWebView.isMessageHandlerAdded {
             let contentManager = monacoWebView.configuration.userContentController
             contentManager.add(context.coordinator, name: "toggleMessageHandler")
+            monacoWebView.isMessageHandlerAdded = true
         }
 
         if toolBarEnabled {

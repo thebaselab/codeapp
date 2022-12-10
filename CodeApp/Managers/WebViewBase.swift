@@ -11,6 +11,8 @@ private var ToolbarHandle: UInt8 = 0
 
 class WebViewBase: KBWebViewBase {
 
+    var isMessageHandlerAdded = false
+
     init() {
         let config = WKWebViewConfiguration()
         config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
