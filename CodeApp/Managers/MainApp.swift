@@ -425,9 +425,8 @@ class MainApp: ObservableObject {
 
         let updatedAttributes = try await workSpaceStorage.attributesOfItem(at: editor.url)
         let updatedModificationDate = updatedAttributes[.modificationDate] as? Date
-        editor.lastSavedDate = updatedModificationDate
-
         DispatchQueue.main.async {
+            editor.lastSavedDate = updatedModificationDate
             editor.lastSavedVersionId = editor.currentVersionId
             editor.isDeleted = false
         }
