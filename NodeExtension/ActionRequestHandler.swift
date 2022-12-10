@@ -23,13 +23,24 @@ class OutputListener {
     /// outputs messages back to STDOUT
     let outputErrorPipe = Pipe()
     
-    /// Buffers strings written to stdout
-    var contents = ""
-    
     let stdoutFileDescriptor = FileHandle.standardOutput.fileDescriptor
     let stderrFileDescriptor = FileHandle.standardError.fileDescriptor
     
     let coordinator = NSFileCoordinator(filePresenter: nil)
+    
+    func writeToSharedFile(data: Data){
+        
+        guard let string = String(data: data, encoding: String.Encoding.utf8) else { return }
+        
+        var error: NSError?
+        coordinator.coordinate(writingItemAt: sharedURL.appendingPathComponent("stdout"), options: .forReplacing, error: &error, byAccessor: { url in
+            try? string.write(to: url, atomically: true, encoding: .utf8)
+            
+            let notificationName = CFNotificationName("com.thebaselab.code.node.stdout" as CFString)
+            let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
+            CFNotificationCenterPostNotification(notificationCenter, notificationName, nil, nil, false)
+        })
+    }
     
     init(context: NSExtensionContext) {
         // Set up a read handler which fires when data is written to our inputPipe
@@ -37,16 +48,7 @@ class OutputListener {
             guard let strongSelf = self else { return }
             
             let data = fileHandle.availableData
-            if let string = String(data: data, encoding: String.Encoding.utf8) {
-                var error: NSError?
-                strongSelf.coordinator.coordinate(writingItemAt: sharedURL.appendingPathComponent("stdout"), options: .forReplacing, error: &error, byAccessor: { url in
-                    try? string.write(to: url, atomically: true, encoding: .utf8)
-                    
-                    let notificationName = CFNotificationName("com.thebaselab.code.node.stdout" as CFString)
-                    let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
-                    CFNotificationCenterPostNotification(notificationCenter, notificationName, nil, nil, false)
-                })
-            }
+            strongSelf.writeToSharedFile(data: data)
             // Write input back to stdout
             strongSelf.outputPipe.fileHandleForWriting.write(data)
         }
@@ -55,13 +57,7 @@ class OutputListener {
             guard let strongSelf = self else { return }
             
             let data = fileHandle.availableData
-            if let string = String(data: data, encoding: String.Encoding.utf8) {
-                let item = NSExtensionItem()
-                item.userInfo = ["result": string]
-                context.completeRequest(returningItems: [item], completionHandler: nil)
-                strongSelf.contents += string
-            }
-            
+            strongSelf.writeToSharedFile(data: data)
             // Write input back to stdout
             strongSelf.outputErrorPipe.fileHandleForWriting.write(data)
         }
