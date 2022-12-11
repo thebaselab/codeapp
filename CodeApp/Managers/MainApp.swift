@@ -128,10 +128,12 @@ class MainApp: ObservableObject {
 
         // TODO: Support deleted files detection for remote files
         workSpaceStorage.onDirectoryChange { [weak self] url in
-            for editor in self?.textEditors ?? [] {
-                if editor.url.absoluteString.contains(url) {
-                    if !FileManager.default.fileExists(atPath: editor.url.path) {
-                        editor.isDeleted = true
+            DispatchQueue.main.async {
+                for editor in self?.textEditors ?? [] {
+                    if editor.url.absoluteString.contains(url) {
+                        if !FileManager.default.fileExists(atPath: editor.url.path) {
+                            editor.isDeleted = true
+                        }
                     }
                 }
             }
@@ -259,25 +261,24 @@ class MainApp: ObservableObject {
         }
     }
 
-    func renameFile(url: URL, name: String) {
-        var rv = URLResourceValues()
-        rv.name = name
-        var URL = url
+    func renameFile(url: URL, name: String) async throws {
+        let newURL = url.deletingLastPathComponent().appendingPathComponent(name)
         do {
-            try URL.setResourceValues(rv)
+            try await workSpaceStorage.moveItem(at: url, to: newURL)
         } catch let error {
-            notificationManager.showErrorMessage(error.localizedDescription)
-            return
+            throw error
         }
-        let urlVariancesToRename = [url.absoluteString, url.absoluteURL.absoluteString]
         let editorsToRename = textEditors.filter {
-            urlVariancesToRename.contains($0.url.absoluteString)
+            [url.absoluteString, url.absoluteURL.absoluteString]
+                .contains($0.url.absoluteString)
         }
-
-        editorsToRename.forEach { editor in
-            monacoInstance.renameModel(
-                oldURL: editor.url.absoluteString, newURL: url.absoluteString)
-            editor.url = url
+        for editor in editorsToRename {
+            await MainActor.run {
+                monacoInstance.renameModel(
+                    oldURL: editor.url.absoluteString, newURL: url.absoluteString)
+                editor.url = newURL
+                editor.isDeleted = false
+            }
         }
     }
 
@@ -449,9 +450,7 @@ class MainApp: ObservableObject {
         guard let activeTextEditor = activeEditor as? TextEditorInstance else {
             return
         }
-        if (activeTextEditor.lastSavedVersionId == activeTextEditor.currentVersionId)
-            || activeTextEditor.isDeleted
-        {
+        if activeTextEditor.lastSavedVersionId == activeTextEditor.currentVersionId {
             return
         }
         do {

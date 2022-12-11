@@ -17,10 +17,10 @@ class EditorInstance: ObservableObject, Identifiable, Equatable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-
+    
+    @Published var title: String
     let id = UUID()
     let view: AnyView
-    var title: String
 
     init(view: AnyView, title: String) {
         self.view = view

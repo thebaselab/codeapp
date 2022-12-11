@@ -41,7 +41,7 @@ private struct FileCell: View {
     @State var isRenaming: Bool = false
 
     init(item: WorkSpaceStorage.FileItemRepresentable) {
-        self._item = State.init(initialValue: item)
+        self.item = item
         self._newname = State.init(initialValue: item.name.removingPercentEncoding!)
     }
 
@@ -50,8 +50,14 @@ private struct FileCell: View {
     }
 
     func onRename() {
-        App.renameFile(url: URL(string: item.url)!, name: newname)
-        focusedField = nil
+        Task {
+            do {
+                try await App.renameFile(url: URL(string: item.url)!, name: newname)
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+            }
+            focusedField = nil
+        }
     }
 
     func onOpenEditor() {
@@ -172,8 +178,14 @@ private struct FolderCell: View {
     }
 
     func onRename() {
-        App.renameFile(url: URL(string: item.url)!, name: newname)
-        focusedField = nil
+        Task {
+            do {
+                try await App.renameFile(url: URL(string: item.url)!, name: newname)
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+            }
+            focusedField = nil
+        }
     }
 
     var body: some View {
