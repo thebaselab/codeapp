@@ -238,7 +238,7 @@ struct SourceControlContainer: View {
                 title: "source_control.confirm_revert \(fileURL.lastPathComponent)",
                 content: AnyView(
                     Group {
-                        Button("common.discard", role: .destructive) {
+                        Button("common.revert", role: .destructive) {
                             Task {
                                 try await onRevert(urlString: urlString, confirm: true)
                             }
