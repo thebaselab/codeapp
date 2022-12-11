@@ -55,7 +55,7 @@ private struct NotificationItem<V: View>: View {
         }
         .frame(minHeight: 50)
         .padding(10)
-        .frame(minWidth: 300, maxWidth: 400)
+        .frame(maxWidth: 300)
         .background(Color.init(id: "sideBar.background"))
         .cornerRadius(10)
     }
