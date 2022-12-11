@@ -90,28 +90,27 @@ private struct NotificationItemWtihProgress: View {
     @Binding var isPresented: Bool
     @Binding var isRemoved: Bool
 
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+
     var body: some View {
         NotificationItem(data: data) {
             VStack {
                 ProgressView(data.progress!)
-                    .onChange(
-                        of: data.progress,
-                        perform: { value in
-                            if data.progress!.isFinished {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                    withAnimation {
-                                        isRemoved = true
-                                    }
-                                }
-                            }
-                        }
-                    )
                     .progressViewStyle(LinearProgressViewStyle())
             }.padding(.top, 4)
         }
         .onTapGesture {
             withAnimation {
                 isRemoved = true
+            }
+        }
+        .onReceive(timer) { _ in
+            if data.progress!.isFinished {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    withAnimation {
+                        isRemoved = true
+                    }
+                }
             }
         }
     }
@@ -181,7 +180,7 @@ private struct NotificationItemWithButton: View {
                                 }
                             }
                     }
-                    Text("Cancel")
+                    Text("common.cancel")
                         .onTapGesture {
                             withAnimation {
                                 isRemoved = true
