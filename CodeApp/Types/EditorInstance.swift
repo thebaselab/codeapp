@@ -88,7 +88,12 @@ class TextEditorInstance: EditorInstanceWithURL {
 
             self.fileWatch?.folderDidChange = { [weak self] lastModified in
                 guard let self = self else { return }
-                if let content = try? String(contentsOf: url, encoding: self.encoding) {
+
+                guard let content = try? String(contentsOf: url, encoding: self.encoding) else {
+                    return
+                }
+
+                DispatchQueue.main.async {
                     if lastModified > self.lastSavedDate ?? Date.distantPast, self.isSaved {
                         self.content = content
                         self.lastSavedDate = lastModified
