@@ -208,7 +208,7 @@ struct MonacoEditor: UIViewRepresentable {
         let modified = modifiedContent.base64Encoded()!
         self.executeJavascript(
             command: "switchToDiffView('\(original)','\(modified)','\(url)','\(url2)')")
-            
+
     }
 
     func switchToNormView() {
