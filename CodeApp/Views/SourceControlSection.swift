@@ -81,16 +81,14 @@ private struct MainSection: View {
                 .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             ZStack(alignment: .leading) {
-                if App.commitMessage.isEmpty {
-                    Text("Message (⌘Enter to commit)").font(.subheadline)
-                        .foregroundColor(.gray).padding(.leading, 3)
-                }
-                TextEditor(text: $App.commitMessage)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
+                TextEditorWithPlaceholder(
+                    placeholder: "Message (⌘Enter to commit)", text: $App.commitMessage
+                )
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
             }
-            .frame(minHeight: 35)
-            .padding(.horizontal, 7).padding(.top, 1)
+            .frame(minHeight: 25)
+            .padding(.horizontal, 4)
             .background(Color.init(id: "input.background"))
             .cornerRadius(15)
 
