@@ -12,6 +12,7 @@ struct SourceControlContainer: View {
 
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var stateManager: MainStateManager
+    @EnvironmentObject var alertManager: AlertManager
 
     @State var showsPrompt = false
 
@@ -223,13 +224,30 @@ struct SourceControlContainer: View {
         }
     }
 
-    func onRevert(urlString: String) async throws {
+    func onRevert(urlString: String, confirm: Bool = false) async throws {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
         guard let fileURL = URL(string: urlString) else {
             App.notificationManager.showErrorMessage("errors.source_control.invalid_url")
             throw SourceControlError.invalidURL
+        }
+
+        if !confirm {
+            alertManager.showAlert(
+                title: "source_control.confirm_revert \(fileURL.lastPathComponent)",
+                content: AnyView(
+                    Group {
+                        Button("common.discard", role: .destructive) {
+                            Task {
+                                try await onRevert(urlString: urlString, confirm: true)
+                            }
+                        }
+                        Button("common.cancel", role: .cancel) {}
+                    }
+                )
+            )
+            return
         }
 
         let fileExists = FileManager.default.fileExists(atPath: fileURL.path)
@@ -285,7 +303,6 @@ struct SourceControlContainer: View {
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
             }
-
         }
     }
 

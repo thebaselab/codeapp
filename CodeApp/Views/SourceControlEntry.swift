@@ -14,7 +14,7 @@ struct SourceControlEntry: View {
     @State var isIndex: Bool
 
     let onUnstage: (String) throws -> Void
-    let onRevert: (String) async throws -> Void
+    let onRevert: (String, Bool) async throws -> Void
     let onStage: ([String]) throws -> Void
     let onShowChangesInDiffEditor: (String) throws -> Void
 
@@ -68,7 +68,7 @@ private struct Controls: View {
     let status: Diff.Status
     let itemUrl: URL
     let onUnstage: (String) throws -> Void
-    let onRevert: (String) async throws -> Void
+    let onRevert: (String, Bool) async throws -> Void
     let onStage: ([String]) throws -> Void
 
     var body: some View {
@@ -89,7 +89,7 @@ private struct Controls: View {
                     .contentShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                     .onTapGesture {
                         Task {
-                            try await onRevert(itemUrl.absoluteString)
+                            try await onRevert(itemUrl.absoluteString, false)
                         }
                     }
                     .hoverEffect(.highlight)

@@ -19,7 +19,15 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                     return
                 }
                 Task {
-                    try await app.compareWithPrevious(url: url.standardizedFileURL)
+                    do {
+                        try await app.notificationManager.withAsyncNotification(
+                            title: "source_control.retrieving_changes",
+                            task: {
+                                try await app.compareWithPrevious(url: url.standardizedFileURL)
+                            })
+                    } catch {
+                        app.notificationManager.showErrorMessage(error.localizedDescription)
+                    }
                 }
             },
             shouldDisplay: {

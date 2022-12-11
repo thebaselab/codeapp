@@ -17,7 +17,7 @@ struct SourceControlSection: View {
     let onFetch: () async throws -> Void
     let onStageAllChanges: () throws -> Void
     let onUnstage: (String) throws -> Void
-    let onRevert: (String) async throws -> Void
+    let onRevert: (String, Bool) async throws -> Void
     let onStage: ([String]) throws -> Void
     let onShowChangesInDiffEditor: (String) throws -> Void
 
@@ -180,7 +180,7 @@ private struct WorkingChangesSection: View {
     @EnvironmentObject var App: MainApp
 
     let onUnstage: (String) throws -> Void
-    let onRevert: (String) async throws -> Void
+    let onRevert: (String, Bool) async throws -> Void
     let onStage: ([String]) throws -> Void
     let onShowChangesInDiffEditor: (String) throws -> Void
 
@@ -216,7 +216,7 @@ private struct StagedChangesSection: View {
     @EnvironmentObject var App: MainApp
 
     let onUnstage: (String) throws -> Void
-    let onRevert: (String) async throws -> Void
+    let onRevert: (String, Bool) async throws -> Void
     let onStage: ([String]) throws -> Void
     let onShowChangesInDiffEditor: (String) throws -> Void
 

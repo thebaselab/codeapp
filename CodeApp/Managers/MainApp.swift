@@ -26,10 +26,10 @@ class SafariManager: ObservableObject {
 class AlertManager: ObservableObject {
     @Published var isShowingAlert = false
 
-    var title: String = ""
+    var title: LocalizedStringKey = ""
     var alertContent: AnyView = AnyView(EmptyView())
 
-    func showAlert(title: String, content: AnyView) {
+    func showAlert(title: LocalizedStringKey, content: AnyView) {
         self.title = title
         self.alertContent = content
         isShowingAlert = true
@@ -747,17 +747,17 @@ class MainApp: ObservableObject {
     func closeEditor(editor: EditorInstance, force: Bool = false) {
         if !force, let textEditor = editor as? TextEditorInstance, !textEditor.isSaved {
             alertManager.showAlert(
-                title: "Do you want to save the changes made to \(textEditor.title)?",
+                title: "file.confirm_save \(textEditor.title)",
                 content: AnyView(
                     Group {
-                        Button("Save") {
+                        Button("common.save") {
                             Task {
                                 try await self.saveTextEditor(editor: textEditor)
                                 self.closeEditor(editor: textEditor)
                             }
                         }
 
-                        Button("Don't Save", role: .destructive) {
+                        Button("common.dont_save", role: .destructive) {
                             Task {
                                 let dataToRevertTo = try await self.workSpaceStorage.contents(
                                     at: textEditor.url)
@@ -775,7 +775,7 @@ class MainApp: ObservableObject {
 
                         Divider()
 
-                        Button("Cancel", role: .cancel) {}
+                        Button("common.cancel", role: .cancel) {}
                     }
                 ))
             return
