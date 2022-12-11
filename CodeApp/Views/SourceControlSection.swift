@@ -193,7 +193,10 @@ private struct WorkingChangesSection: View {
             if App.workingResources.isEmpty {
                 DescriptionText("No changes are made in the working directory.")
             }
-            ForEach(Array(App.workingResources.keys), id: \.self) { value in
+            ForEach(
+                Array(App.workingResources.keys.sorted { $0.absoluteString < $1.absoluteString }),
+                id: \.self
+            ) { value in
                 SourceControlEntry(
                     itemUrl: value,
                     isIndex: false,
@@ -223,7 +226,10 @@ private struct StagedChangesSection: View {
                 Text("Staged Changes")
                 .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
-            ForEach(Array(App.indexedResources.keys), id: \.self) { value in
+            ForEach(
+                Array(App.indexedResources.keys.sorted { $0.absoluteString < $1.absoluteString }),
+                id: \.self
+            ) { value in
                 SourceControlEntry(
                     itemUrl: value,
                     isIndex: true,
