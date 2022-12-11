@@ -19,7 +19,7 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                     return
                 }
                 Task {
-                    try await app.compareWithPrevious(url: url)
+                    try await app.compareWithPrevious(url: url.standardizedFileURL)
                 }
             },
             shouldDisplay: {

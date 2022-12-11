@@ -420,34 +420,24 @@
       var lastOpenedURI = "";
       var navi = null;
 
-      function switchToDiffView(originalContent, modifiedContent, url1, url2) {
-        // lastOpenedURI = editor.getModel().uri.path.substring(1);
+      function switchToDiffView(original, modified, url1, url2) {
+        const originalUri = monaco.Uri.parse(url1);
+        const modifiedUri = monaco.Uri.parse(url2);
 
-        var original = decodeURIComponent(escape(window.atob(originalContent)));
-        var modified = decodeURIComponent(escape(window.atob(modifiedContent)));
+        monaco.editor.getModel(originalUri)?.dispose();
+        monaco.editor.getModel(modifiedUri)?.dispose();
 
-        var originalModel = null;
-        var modifiedModel = null;
+        const originalModel = monaco.editor.createModel(
+          base64ToString(original),
+          undefined,
+          originalUri
+        );
 
-        if (monaco.editor.getModel(monaco.Uri.parse(url1))) {
-          originalModel = monaco.editor.getModel(monaco.Uri.parse(url1));
-        } else {
-          originalModel = monaco.editor.createModel(
-            original,
-            undefined,
-            monaco.Uri.parse(url1)
-          );
-        }
-
-        if (monaco.editor.getModel(monaco.Uri.parse(url2))) {
-          modifiedModel = monaco.editor.getModel(monaco.Uri.parse(url2));
-        } else {
-          modifiedModel = monaco.editor.createModel(
-            modified,
-            undefined,
-            monaco.Uri.parse(url2)
-          );
-        }
+        const modifiedModel = monaco.editor.createModel(
+          base64ToString(modified),
+          undefined,
+          modifiedUri
+        );
 
         editor.dispose();
         editor = null;
@@ -455,17 +445,14 @@
         editor = monaco.editor.createDiffEditor(
           document.getElementById("container"),
           {
-            // You can optionally disable the resizing
             enableSplitViewResizing: false,
             automaticLayout: true,
-
-            // Render the diff inline
             renderSideBySide: true,
           }
         );
         navi = monaco.editor.createDiffNavigator(editor, {
-          followsCaret: true, // resets the navigator state when the user selects something in the editor
-          ignoreCharChanges: true, // jump from line to line
+          followsCaret: true,
+          ignoreCharChanges: true,
         });
         editor.setModel({
           original: originalModel,

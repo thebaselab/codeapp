@@ -208,6 +208,7 @@ struct MonacoEditor: UIViewRepresentable {
         let modified = modifiedContent.base64Encoded()!
         self.executeJavascript(
             command: "switchToDiffView('\(original)','\(modified)','\(url)','\(url2)')")
+            
     }
 
     func switchToNormView() {
@@ -441,8 +442,10 @@ struct MonacoEditor: UIViewRepresentable {
                     )
                 }
             case "Editor Initialising":
+                // This is called when editor is being created, or switched to or from diff edtior
                 control.monacoWebView.removeUIDropInteraction()
                 control.applyUserOptions()
+                control.applyCustomShortcuts()
                 DispatchQueue.main.async {
                     self.control.App.loadURLQueue()
                 }
@@ -467,6 +470,8 @@ struct MonacoEditor: UIViewRepresentable {
                         control.setTheme(themeName: name, data: jsonText, isDark: type == "dark")
                     }
                 }
+
+                guard !control.App.stateManager.isMonacoEditorInitialized else { return }
                 // TypeScript / JavaScript Types
                 control.injectTypes(
                     url: Bundle.main.url(forResource: "npm", withExtension: "bundle")!
@@ -485,7 +490,6 @@ struct MonacoEditor: UIViewRepresentable {
                     control.executeJavascript(
                         command: "editor.restoreViewState(\(activeEditorMonacoState))")
                 }
-                control.applyCustomShortcuts()
                 getAllActions()
                 control.App.stateManager.isMonacoEditorInitialized = true
             case "Markers updated":
