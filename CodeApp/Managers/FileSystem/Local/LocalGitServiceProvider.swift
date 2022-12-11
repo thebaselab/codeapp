@@ -909,6 +909,7 @@ class LocalGitServiceProvider: GitServiceProvider {
         workerQueue.async {
             if let cached = self.contentCache.object(forKey: path as NSString) {
                 completionHandler(cached as String)
+                return
             }
             if let url = URL(string: path), self.newAndIgnored.keys.contains(url) {
                 let _error = NSError(
