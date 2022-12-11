@@ -36,7 +36,6 @@ struct BottomBar: View {
                 }
             ) {
                 App.notificationManager.showInformationMessage("Checkout succeeded")
-                App.git_status()
             }
 
         case .local_branch:
@@ -47,7 +46,6 @@ struct BottomBar: View {
                 }
             ) {
                 App.notificationManager.showInformationMessage("Checkout succeeded")
-                App.git_status()
             }
         case .remote_branch:
             App.workSpaceStorage.gitServiceProvider?.checkout(
@@ -57,7 +55,6 @@ struct BottomBar: View {
                 }
             ) {
                 App.notificationManager.showInformationMessage("Checkout succeeded")
-                App.git_status()
             }
         case .none:
             break

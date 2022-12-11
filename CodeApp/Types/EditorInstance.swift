@@ -17,7 +17,7 @@ class EditorInstance: ObservableObject, Identifiable, Equatable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+
     @Published var title: String
     let id = UUID()
     let view: AnyView
@@ -69,6 +69,7 @@ class TextEditorInstance: EditorInstanceWithURL {
     var isSaved: Bool {
         lastSavedVersionId == currentVersionId
     }
+    var isSaving: Bool = false
 
     init(
         editor: MonacoEditor,
@@ -94,7 +95,9 @@ class TextEditorInstance: EditorInstanceWithURL {
                 }
 
                 DispatchQueue.main.async {
-                    if lastModified > self.lastSavedDate ?? Date.distantPast, self.isSaved {
+                    if !self.isSaving, self.isSaved,
+                        lastModified > self.lastSavedDate ?? Date.distantPast
+                    {
                         self.content = content
                         self.lastSavedDate = lastModified
                         fileDidChange?(.modified, content)

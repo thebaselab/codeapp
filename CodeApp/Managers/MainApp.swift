@@ -137,6 +137,9 @@ class MainApp: ObservableObject {
                     }
                 }
             }
+            DispatchQueue.global(qos: .utility).async {
+                self?.git_status()
+            }
         }
         workSpaceStorage.onTerminalData { [weak self] data in
             self?.terminalInstance.write(data: data)
@@ -303,7 +306,6 @@ class MainApp: ObservableObject {
                 self.notificationManager.showErrorMessage(error.localizedDescription)
                 return
             }
-            self.git_status()
         }
     }
 
@@ -318,7 +320,6 @@ class MainApp: ObservableObject {
                     self.closeEditor(editor: editorToTrash)
                 }
             }
-            self.git_status()
         }
     }
 
@@ -421,16 +422,29 @@ class MainApp: ObservableObject {
         else {
             throw AppError.encodingFailed
         }
-        try await workSpaceStorage.write(
-            at: editor.url, content: data, atomically: false, overwrite: true)
 
-        let updatedAttributes = try await workSpaceStorage.attributesOfItem(at: editor.url)
-        let updatedModificationDate = updatedAttributes[.modificationDate] as? Date
         DispatchQueue.main.async {
-            editor.lastSavedDate = updatedModificationDate
-            editor.lastSavedVersionId = editor.currentVersionId
-            editor.isDeleted = false
+            editor.isSaving = true
         }
+
+        do {
+            try await workSpaceStorage.write(
+                at: editor.url, content: data, atomically: false, overwrite: true)
+            let updatedAttributes = try await workSpaceStorage.attributesOfItem(at: editor.url)
+            let updatedModificationDate = updatedAttributes[.modificationDate] as? Date
+            DispatchQueue.main.async {
+                editor.lastSavedDate = updatedModificationDate
+                editor.lastSavedVersionId = editor.currentVersionId
+                editor.isDeleted = false
+                editor.isSaving = false
+            }
+        } catch {
+            DispatchQueue.main.async {
+                editor.isSaving = false
+            }
+            throw error
+        }
+
         DispatchQueue.global(qos: .utility).async {
             self.git_status()
         }
@@ -450,7 +464,7 @@ class MainApp: ObservableObject {
         guard let activeTextEditor = activeEditor as? TextEditorInstance else {
             return
         }
-        if activeTextEditor.lastSavedVersionId == activeTextEditor.currentVersionId {
+        if activeTextEditor.isSaved {
             return
         }
         do {
