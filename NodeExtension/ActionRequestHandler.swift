@@ -99,6 +99,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         setenv("TMPDIR", FileManager.default.temporaryDirectory.path, 1)
         setenv("YARN_CACHE_FOLDER", FileManager.default.temporaryDirectory.path, 1)
         setenv("HOME", sharedURL.path, 1)
+        setenv("FORCE_COLOR", "3", 1)
         // Do not call super in an Action extension with no user interface
         self.extensionContext = context
         
