@@ -363,6 +363,10 @@
 "common.open_folder" = "폴더 열기";
 "common.compare" = "비교";
 "common.overwrite" = "덮어쓰기";
+"common.save" = "저장";
+"common.dont_save" = "저장하지 않음";
+"common.cancel" = "취소";
+"common.revert" = "되돌리기";
 
 "notification.source" = "원천: %@";
 
@@ -402,6 +406,8 @@
 
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";
+"file.confirm_save %@" = "파일을 저장하시겠습니까?";
+
 "actions.new_window" = "새창";
 
 "remote.connecting" = "호스트에 연결";
@@ -425,6 +431,8 @@
 "source_control.remote_credentials" = "원격 서버 자격 증명";
 "source_control.credentials.note" = "대부분의 경우 인증을 위해 암호 대신 개인용 액세스 토큰을 사용해야 합니다. 이에 대해 자세히 알아보려면:";
 "source_control.setup_your_credentials" = "git 자격 증명 설정(영어로만 제공)";
+"source_control.confirm_revert %@" = "%@의 변경 사항을 되돌리시겠습니까?";
+"source_control.retrieving_changes" = "변경 사항 검색";
 
 "panel.problems.no_problems_detected" = "작업 공간에서 감지된 문제 없음.";
 "panel.execution.press_play_to_execute_code" = "코드를 실행하려면 실행 버튼을 누르십시오. 실행하기 전에 프로그램 입력을 채워야 합니다.";

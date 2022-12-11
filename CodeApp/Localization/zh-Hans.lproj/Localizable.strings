@@ -386,6 +386,10 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "common.open_folder" = "打开文件夹";
 "common.compare" = "比较";
 "common.overwrite" = "覆盖";
+"common.save" = "保存";
+"common.dont_save" = "不保存";
+"common.cancel" = "取消";
+"common.revert" = "还原";
 
 "notification.source" = "来源: %@";
 
@@ -425,6 +429,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";
+"file.confirm_save %@" = "是否要保存 %@？";
+
 "actions.new_window" = "新窗口";
 
 "remote.connecting" = "正在连接到主机";
@@ -448,6 +454,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.remote_credentials" = "Git 凭证";
 "source_control.credentials.note" = "在许多情况下，您需要使用个人访问令牌而不是密码来进行身份验证。 要了解更多：";
 "source_control.setup_your_credentials" = "设置您的 git 凭据（仅提供英文版）";
+"source_control.confirm_revert %@" = "您确定要还原 %@ 吗？";
+"source_control.retrieving_changes" = "检索变更中";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
 "panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";

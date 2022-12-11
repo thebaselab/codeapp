@@ -363,6 +363,10 @@
 "common.open_folder" = "Ordner öffnen";
 "common.compare" = "Vergleichen";
 "common.overwrite" = "Überschreiben";
+"common.save" = "Speichern";
+"common.dont_save" = "Nicht speichern";
+"common.cancel" = "Abbrechen";
+"common.revert" = "Rückgängig machen";
 
 "notification.source" = "Quelle: %@";
 
@@ -402,6 +406,8 @@
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";
+"file.confirm_save %@" = "Möchten Sie die Änderungen an %@ speichern?";
+
 "actions.new_window" = "Neues Fenster";
 
 "remote.connecting" = "Verbindung zum Host herstellen";
@@ -425,6 +431,8 @@
 "source_control.remote_credentials" = "Remote-Anmeldeinformationen";
 "source_control.credentials.note" = "In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffstoken anstelle eines Kennworts verwenden. Um mehr darüber zu erfahren:";
 "source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";
+"source_control.confirm_revert %@" = "Möchten Sie %@ wirklich zurücksetzen?";
+"source_control.retrieving_changes" = "Änderungen abrufen";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

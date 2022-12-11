@@ -253,6 +253,10 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "common.open_folder" = "Open Folder";
 "common.compare" = "Compare";
 "common.overwrite" = "Overwrite";
+"common.save" = "Save";
+"common.dont_save" = "Don't Save";
+"common.cancel" = "Cancel";
+"common.revert" = "Revert";
 
 "notification.source" = "Source: %@";
 
@@ -292,6 +296,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";
+"file.confirm_save %@" = "Do you want to save the changes made to %@?";
 
 "actions.new_window" = "New Window";
 
@@ -316,6 +321,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.remote_credentials" = "Remote Credentials";
 "source_control.credentials.note" = "In many cases, you need to use a personal access token instead of password to authenticate. To know more about this:";
 "source_control.setup_your_credentials" = "Set up your git credentials";
+"source_control.confirm_revert %@" = "Are you sure you want to revert the changes in %@?";
+"source_control.retrieving_changes" = "Retrieving changes";
 
 "panel.problems.no_problems_detected" = "No problems detected in the workspace.";
 "panel.execution.press_play_to_execute_code" = "Press the play button to execute code. Program input needs to be filled before execution.";
