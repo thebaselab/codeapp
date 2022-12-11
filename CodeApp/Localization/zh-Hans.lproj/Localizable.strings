@@ -206,38 +206,6 @@
   - 可以在主屏幕上按住应用程序图标以打开最近文档
 ";
 
-"licenses" =
-"
-### Licenses
----
-#### vscode-terraform
- - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) is licensed under [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE)
-#### GCDWebServer
- - [GCDWebServer](https://github.com/swisspol/GCDWebServer) is licensed under [Custom License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
-#### libgit2
- - [libgit2](https://github.com/libgit2/libgit2) is licensed under [MIT License](https://github.com/libgit2/libgit2/blob/main/COPYING).
-#### highlight.js
- - [highlight.js](https://github.com/highlightjs/highlight.js) is licensed under [BSD-3-Clause License](https://github.com/highlightjs/highlight.js/blob/master/LICENSE).
-#### ios_system
- - [ios_system](https://github.com/holzschu/ios_system) is licensed under [BSD-3-Clause license](https://github.com/holzschu/ios_system/blob/master/LICENSE).
-#### judge0
- - [judge0](https://github.com/judge0/judge0) is licensed under [GNU General Public License v3.0](https://github.com/judge0/judge0/blob/master/LICENSE).
-#### libssh2
- - [libssh2](https://github.com/libssh2/libssh2) is licensed under [BSD-3-Clause License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
-#### MarkdownView
- - [MarkdownView](https://github.com/keitaoouchi/MarkdownView) is licensed under [MIT License](https://github.com/keitaoouchi/MarkdownView/blob/master/LICENSE).
-#### Monaco Editor
- - [Monaco Editor](https://github.com/microsoft/monaco-editor) is licensed under [MIT License](https://github.com/microsoft/monaco-editor/blob/master/LICENSE.md).
-#### Various Linux commands
- - `egrep, fgrep, grep, gzip, gunzip, cat, chflag, compress, cp, date, echo, env, link, ln, printenv, pwd, ed, sed, tar, uncompress, uptime, chgrp, chksum, chmod, chown, df, du, groups, id, ls, mkdir, mv, readlink, rm, rmdir, stat, sum, touch, tr, uname, wc, whoami`
-are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_licenses).
-#### ZIPFoundation
- - [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) is licensed under [MIT License](https://github.com/weichsel/ZIPFoundation/blob/development/LICENSE).
----
-> This project would not have been possible without the above open source projects.
-> Happy coding from Hong Kong 🇭🇰
-";
-
 "Send us an email" = "给我们发邮件";
 "Open an issue on GitHub" = "在 GitHub 上报告问题";
 "Clear console" = "清除终端";
