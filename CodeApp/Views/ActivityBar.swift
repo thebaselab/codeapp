@@ -14,7 +14,7 @@ struct ActivityBar: View {
 
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
-    @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
+    @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
 
     let openConsolePanel: () -> Void
 
@@ -142,9 +142,9 @@ struct ActivityBar: View {
                             action: {
                                 openConsolePanel()
                             },
-                            isActive: showsPanel,
+                            isActive: isPanelVisible,
                             iconSystemName: "chevron.left.slash.chevron.right",
-                            title: "Show Panel",
+                            title: isPanelVisible ? "Hide Panel" : "Show Panel",
                             shortcutKey: "j",
                             modifiers: [.command],
                             useBubble: false,

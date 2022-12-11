@@ -326,6 +326,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "Show Source Control" = "显示源代码控制";
 "User Settings" = "用户设置";
 "Show Panel" = "显示终端";
+"Hide Panel" = "隐藏终端";
 "Run Code" = "运行代码";
 "New Folder" = "新建文件夹";
 

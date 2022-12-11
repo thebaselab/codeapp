@@ -14,6 +14,7 @@ struct TopBar: View {
     @EnvironmentObject var stateManager: MainStateManager
 
     @SceneStorage("sidebar.visible") var isSideBarExpanded: Bool = DefaultUIState.SIDEBAR_VISIBLE
+    @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     let openConsolePanel: () -> Void
@@ -94,7 +95,9 @@ struct TopBar: View {
                     Button(action: {
                         openConsolePanel()
                     }) {
-                        Label("Show Panel", systemImage: "chevron.left.slash.chevron.right")
+                        Label(
+                            isPanelVisible ? "Hide Panel" : "Show Panel",
+                            systemImage: "chevron.left.slash.chevron.right")
                     }
 
                     if UIApplication.shared.supportsMultipleScenes {

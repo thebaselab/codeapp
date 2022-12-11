@@ -21,6 +21,8 @@ struct BottomBar: View {
     @AppStorage("editorReadOnly") var editorReadOnly = false
     @AppStorage("editorFontSize") var editorTextSize: Int = 14
 
+    @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
+
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     let openConsolePanel: () -> Void
@@ -171,7 +173,7 @@ struct BottomBar: View {
                     }
 
                     Group {
-                        Button("Show Panel") {
+                        Button(isPanelVisible ? "Hide Panel" : "Show Panel") {
                             openConsolePanel()
                         }.keyboardShortcut("j", modifiers: .command)
                         Button("Zoom in") {

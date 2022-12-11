@@ -160,13 +160,13 @@ private struct MainView: View {
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
-    @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
+    @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
 
     func openConsolePanel() {
-        if self.panelHeight < 70 {
-            self.panelHeight = 200
+        if panelHeight < 70 {
+            panelHeight = 200
         }
-        self.showsPanel.toggle()
+        isPanelVisible.toggle()
         App.terminalInstance.webView?.becomeFirstResponder()
     }
 
@@ -214,7 +214,7 @@ private struct MainView: View {
                                     }
                                     .environmentObject(extensionManager.editorProviderManager)
 
-                                if showsPanel {
+                                if isPanelVisible {
                                     PanelView()
                                         .environmentObject(extensionManager.panelManager)
                                 }

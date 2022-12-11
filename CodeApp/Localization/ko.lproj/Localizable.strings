@@ -300,6 +300,7 @@
 "Show Source Control" = "소스 제어 보기";
 "User Settings" = "사용자 설정";
 "Show Panel" = "패널 보기";
+"Hide Panel" = "패널 숨기기";
 "Run Code" = "코드 실행하기";
 "New Folder" = "새 폴더";
 
