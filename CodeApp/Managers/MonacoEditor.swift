@@ -347,6 +347,7 @@ struct MonacoEditor: UIViewRepresentable {
 
         func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
             control.App.stateManager.isMonacoEditorInitialized = false
+            webView.reload()
         }
 
         func requestDiffUpdate(modelUri: String, force: Bool = false) {
