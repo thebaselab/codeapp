@@ -38,6 +38,8 @@ class LocalExecutionExtension: CodeAppExtension {
 
     private func runCodeLocally(app: MainApp) {
 
+        guard app.terminalInstance.executor?.state == .idle else { return }
+        
         guard let activeTextEditor = app.activeTextEditor else {
             return
         }
