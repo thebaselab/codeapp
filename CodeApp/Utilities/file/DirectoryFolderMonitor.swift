@@ -66,10 +66,11 @@ class FolderMonitor {
     func startMonitoring() {
         guard folderMonitorSource == nil && monitoredFolderFileDescriptor == -1 else {
             return
-
         }
         // Open the directory referenced by URL for monitoring only.
         monitoredFolderFileDescriptor = open(url.path, O_EVTONLY)
+
+        guard monitoredFolderFileDescriptor != -1 else { return }
 
         // Define a dispatch source monitoring the directory for additions, deletions, and renamings.
         folderMonitorSource = DispatchSource.makeFileSystemObjectSource(
