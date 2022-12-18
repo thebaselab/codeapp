@@ -50,13 +50,16 @@ private struct FileCell: View {
     }
 
     func onRename() {
+        focusedField = nil
+
         Task {
             do {
-                try await App.renameFile(url: URL(string: item.url)!, name: newname)
+                try await App.renameFile(
+                    url: URL(string: item.url)!, name: newname)
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
+                newname = item.name.removingPercentEncoding!
             }
-            focusedField = nil
         }
     }
 
@@ -92,14 +95,30 @@ private struct FileCell: View {
 
                 if isRenaming {
                     HStack {
-                        TextField(
-                            item.name.removingPercentEncoding!, text: $newname,
-                            onCommit: onRename
-                        )
-                        .focused($focusedField, equals: .rename)
-                        .font(.subheadline)
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
+                        TextField(item.name.removingPercentEncoding!, text: $newname)
+                            .font(.subheadline)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+                            .focused($focusedField, equals: .rename)
+                            .onSubmit(onRename)
+                            .onReceive(
+                                NotificationCenter.default.publisher(
+                                    for: UITextField.textDidBeginEditingNotification)
+                            ) { obj in
+                                if let textField = obj.object as? UITextField {
+                                    textField.selectedTextRange = textField.textRange(
+                                        from: textField.beginningOfDocument,
+                                        to: textField.endOfDocument
+                                    )
+                                }
+                            }
+                            .onChange(of: focusedField) { field in
+                                if field == nil {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                        isRenaming = false
+                                    }
+                                }
+                            }
                         Spacer()
                         Image(systemName: "multiply.circle.fill")
                             .foregroundColor(.gray)
@@ -138,22 +157,7 @@ private struct FileCell: View {
                     onCopyFile: { showsDirectoryPicker.toggle() }
                 )
             }
-            .onReceive(
-                NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-            ) { _ in
-                isRenaming = false
-                newname = item.name.removingPercentEncoding!
-            }
-            .onReceive(
-                NotificationCenter.default.publisher(
-                    for: UITextField.textDidBeginEditingNotification)
-            ) { obj in
-                if let textField = obj.object as? UITextField {
-                    textField.selectedTextRange = textField.textRange(
-                        from: textField.beginningOfDocument, to: textField.endOfDocument
-                    )
-                }
-            }
+
         }
     }
 }
@@ -178,13 +182,16 @@ private struct FolderCell: View {
     }
 
     func onRename() {
+        focusedField = nil
+
         Task {
             do {
-                try await App.renameFile(url: URL(string: item.url)!, name: newname)
+                try await App.renameFile(
+                    url: URL(string: item.url)!, name: newname)
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
+                newname = item.name.removingPercentEncoding!
             }
-            focusedField = nil
         }
     }
 
@@ -198,23 +205,29 @@ private struct FolderCell: View {
 
             if isRenaming {
                 HStack {
-                    TextField(
-                        item.name.removingPercentEncoding!, text: $newname,
-                        onCommit: onRename
-                    )
-                    .focused($focusedField, equals: .rename)
-                    .font(.subheadline)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                    .onReceive(
-                        NotificationCenter.default.publisher(
-                            for: UITextField.textDidBeginEditingNotification)
-                    ) { obj in
-                        if let textField = obj.object as? UITextField {
-                            textField.selectedTextRange = textField.textRange(
-                                from: textField.beginningOfDocument, to: textField.endOfDocument)
+                    TextField(item.name.removingPercentEncoding!, text: $newname)
+                        .font(.subheadline)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
+                        .focused($focusedField, equals: .rename)
+                        .onSubmit(onRename)
+                        .onReceive(
+                            NotificationCenter.default.publisher(
+                                for: UITextField.textDidBeginEditingNotification)
+                        ) { obj in
+                            if let textField = obj.object as? UITextField {
+                                textField.selectedTextRange = textField.textRange(
+                                    from: textField.beginningOfDocument, to: textField.endOfDocument
+                                )
+                            }
                         }
-                    }
+                        .onChange(of: focusedField) { field in
+                            if field == nil {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    focusedField = .rename
+                                }
+                            }
+                        }
                     Spacer()
                     Image(systemName: "multiply.circle.fill")
                         .foregroundColor(.gray)
@@ -269,12 +282,6 @@ private struct FolderCell: View {
                 onCopyFile: {
                     showsDirectoryPicker.toggle()
                 })
-        }
-        .onReceive(
-            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
-        ) { _ in
-            isRenaming = false
-            newname = item.name.removingPercentEncoding!
         }
     }
 }
