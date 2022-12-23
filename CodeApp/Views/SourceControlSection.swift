@@ -189,6 +189,7 @@ private struct WorkingChangesSection: View {
             header:
                 Text("Changes")
                 .foregroundColor(Color(id: "sideBarSectionHeader.foreground")),
+            
             footer:
                 Text("To clone a new repo, please assign another folder as working directory without an existing repository ")                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {

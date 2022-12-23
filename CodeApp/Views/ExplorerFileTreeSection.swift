@@ -71,6 +71,7 @@ struct ExplorerFileTreeSection: View {
                 Text("Working Directory\n")
                 .font(.system(size: 10))
                 .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+            
             + Text(App.workSpaceStorage.currentDirectory.name.replacingOccurrences(of: "{default}", with: " ").removingPercentEncoding!)
                 .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
                 .fontWeight(.heavy)
