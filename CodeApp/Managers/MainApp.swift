@@ -328,9 +328,27 @@ class MainApp: ObservableObject {
             UUID().uuidString)
         try data.write(to: tempFile)
         var encoding: String.Encoding = .utf8
-        let fileContent = try String(contentsOf: tempFile, usedEncoding: &encoding)
-        try FileManager.default.removeItem(at: tempFile)
-        return (fileContent, encoding)
+        do{
+            let fileContent = try String(contentsOf: tempFile, usedEncoding: &encoding)
+            try FileManager.default.removeItem(at: tempFile)
+            return (fileContent, encoding)
+        }catch{
+            do{
+                let fileContent = try String(contentsOf: tempFile, encoding: .gb_18030_2000)
+                encoding = .gb_18030_2000
+                try FileManager.default.removeItem(at: tempFile)
+                return (fileContent, encoding)
+
+            }catch{
+              
+                    let fileContent = try String(contentsOf: tempFile, usedEncoding: &encoding)
+                    try FileManager.default.removeItem(at: tempFile)
+                    return (fileContent, encoding)                }
+                
+            
+        }
+        
+
     }
 
     func compareWithPrevious(url: URL) async throws {
@@ -653,6 +671,7 @@ class MainApp: ObservableObject {
         guard let contentData, let (content, encoding) = try? decodeStringData(data: contentData)
         else {
             throw AppError.unknownFileFormat
+           
         }
         let attributes = try await workSpaceStorage.attributesOfItem(at: url)
         let modificationDate = attributes[.modificationDate] as? Date
