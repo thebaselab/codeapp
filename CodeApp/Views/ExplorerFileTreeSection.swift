@@ -65,7 +65,7 @@ struct ExplorerFileTreeSection: View {
     }
 
     var body: some View {
-       
+    
         Section(
             header:
                 Text("Working Directory\n")
