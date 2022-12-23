@@ -23,7 +23,9 @@ class LocalExecutionExtension: CodeAppExtension {
             extenionID: EXTENSION_ID,
             icon: "play",
             onClick: {
-                self.runCodeLocally(app: app)
+                Task {
+                    await self.runCodeLocally(app: app)
+                }
             },
             shortCut: .init("r", modifiers: [.command]),
             panelToFocusOnTap: "TERMINAL",
@@ -36,7 +38,7 @@ class LocalExecutionExtension: CodeAppExtension {
         contribution.toolbarItem.registerItem(item: toolbarItem)
     }
 
-    private func runCodeLocally(app: MainApp) {
+    private func runCodeLocally(app: MainApp) async {
 
         guard app.terminalInstance.executor?.state == .idle else { return }
         
@@ -47,6 +49,8 @@ class LocalExecutionExtension: CodeAppExtension {
         guard let commands = LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] else {
             return
         }
+        
+        await app.saveCurrentFile()
 
         let sanitizedUrl = activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#)
         let parsedCommands = commands.map{$0.replacingOccurrences(of: "{url}", with: sanitizedUrl)}
