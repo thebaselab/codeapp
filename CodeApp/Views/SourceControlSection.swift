@@ -188,7 +188,10 @@ private struct WorkingChangesSection: View {
         Section(
             header:
                 Text("Changes")
-                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground")),
+            footer:
+                Text("To clone a new repo, please assign another folder as working directory without an existing repository ")                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+
         ) {
             if App.workingResources.isEmpty {
                 DescriptionText("No changes are made in the working directory.")
