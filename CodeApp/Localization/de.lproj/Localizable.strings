@@ -444,3 +444,5 @@
 "panel.execution.title" = "Ausführung";
 
 "local.execution.title" = "Lokale Ausführung";
+"Unknown Encoding" = "Unbekannte Codierung";
+"Open file in encoding..." = "Datei in Codierung öffnen...";

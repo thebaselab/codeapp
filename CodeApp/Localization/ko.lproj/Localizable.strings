@@ -444,3 +444,5 @@
 "panel.execution.title" = "실행";
 
 "local.execution.title" = "로컬 실행";
+"Unknown Encoding" = "알 수 없는 인코딩 형식";
+"Open file in encoding..." = "다른 인코딩으로 파일 열기";

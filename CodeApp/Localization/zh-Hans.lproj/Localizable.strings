@@ -435,3 +435,5 @@
 "panel.execution.title" = "执行";
 
 "local.execution.title" = "本地执行";
+"Unknown Encoding" = "未知的编码格式";
+"Open file in encoding..." = "以其他的编码方式打开文件";

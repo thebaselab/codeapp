@@ -715,6 +715,8 @@
 		9FD5BCFF2929F0F300F20C4B /* EditorProviderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BCFD2929F0F300F20C4B /* EditorProviderManager.swift */; };
 		9FD5BD01292A08D600F20C4B /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BD00292A08D600F20C4B /* AppError.swift */; };
 		9FD5BD02292A08D600F20C4B /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD5BD00292A08D600F20C4B /* AppError.swift */; };
+		FF2314F729598205002D6E82 /* EncodingErrorEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2314F629598205002D6E82 /* EncodingErrorEditorView.swift */; };
+		FF2314F829598205002D6E82 /* EncodingErrorEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2314F629598205002D6E82 /* EncodingErrorEditorView.swift */; };
 		FFD081B82925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
 		FFD081B92925F8FB001D9373 /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */; };
 		FFD081BB29260B00001D9373 /* Libgit2Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD081BA29260B00001D9373 /* Libgit2Error.swift */; };
@@ -1691,6 +1693,7 @@
 		9FD5BCFA2928E02300F20C4B /* LocalExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalExecutionExtension.swift; sourceTree = "<group>"; };
 		9FD5BCFD2929F0F300F20C4B /* EditorProviderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorProviderManager.swift; sourceTree = "<group>"; };
 		9FD5BD00292A08D600F20C4B /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		FF2314F629598205002D6E82 /* EncodingErrorEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingErrorEditorView.swift; sourceTree = "<group>"; };
 		FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorWithPlaceholder.swift; sourceTree = "<group>"; };
 		FFD081BA29260B00001D9373 /* Libgit2Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Libgit2Error.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2478,6 +2481,7 @@
 				94A77828257BC951008FE7B2 /* DocumentPickerView.swift */,
 				FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */,
 				9FD5BCF32927859600F20C4B /* DebugMenu.swift */,
+				FF2314F629598205002D6E82 /* EncodingErrorEditorView.swift */,
 				9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */,
 			);
 			path = Views;
@@ -2952,6 +2956,7 @@
 				9419696E280316C7008AAEB2 /* fileName.swift in Sources */,
 				9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
+				FF2314F829598205002D6E82 /* EncodingErrorEditorView.swift in Sources */,
 				941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94196970280316C7008AAEB2 /* SettingsKeyboardShortcuts.swift in Sources */,
 				942E3202280877C900233441 /* SearchServiceProvider.swift in Sources */,
@@ -3106,6 +3111,7 @@
 				94A5685E257E1249008A6530 /* fileName.swift in Sources */,
 				9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,
+				FF2314F729598205002D6E82 /* EncodingErrorEditorView.swift in Sources */,
 				941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94C893E2279D09D400DFBF29 /* SettingsKeyboardShortcuts.swift in Sources */,
 				942E3201280877C900233441 /* SearchServiceProvider.swift in Sources */,

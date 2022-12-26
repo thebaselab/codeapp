@@ -323,31 +323,38 @@ class MainApp: ObservableObject {
         }
     }
 
-    func decodeStringData(data: Data) throws -> (String, String.Encoding) {
+    func decodeStringData(data: Data, encoding: String.Encoding? = nil) throws -> (
+        String, String.Encoding
+    ) {
         let tempFile = FileManager.default.temporaryDirectory.appendingPathComponent(
             UUID().uuidString)
         try data.write(to: tempFile)
-        var encoding: String.Encoding = .utf8
-        do{
-            let fileContent = try String(contentsOf: tempFile, usedEncoding: &encoding)
-            try FileManager.default.removeItem(at: tempFile)
-            return (fileContent, encoding)
-        }catch{
-            do{
-                let fileContent = try String(contentsOf: tempFile, encoding: .gb_18030_2000)
-                encoding = .gb_18030_2000
-                try FileManager.default.removeItem(at: tempFile)
-                return (fileContent, encoding)
 
-            }catch{
-              
-                    let fileContent = try String(contentsOf: tempFile, usedEncoding: &encoding)
-                    try FileManager.default.removeItem(at: tempFile)
-                    return (fileContent, encoding)                }
-                
-            
+        var localEncoding: String.Encoding
+
+        if encoding == nil {
+            localEncoding = .utf8
+        } else {
+            //user input encoding
+            localEncoding = encoding!
+            let fileContent = try String(contentsOf: tempFile, encoding: localEncoding)
+            try FileManager.default.removeItem(at: tempFile)
+            return (fileContent, localEncoding)
         }
-        
+
+        //try
+        do {
+            let fileContent = try String(contentsOf: tempFile, usedEncoding: &localEncoding)
+            try FileManager.default.removeItem(at: tempFile)
+            return (fileContent, localEncoding)
+        } catch {
+
+            let fileContent = try String(contentsOf: tempFile, encoding: .gb_18030_2000)
+            localEncoding = .gb_18030_2000
+            try FileManager.default.removeItem(at: tempFile)
+            return (fileContent, localEncoding)
+
+        }
 
     }
 
@@ -662,16 +669,19 @@ class MainApp: ObservableObject {
         return provider.onCreateEditor(url)
     }
 
-    private func createTextEditorFromURL(url: URL) async throws -> TextEditorInstance {
+    private func createTextEditorFromURL(url: URL, encoding: String.Encoding? = nil) async throws
+        -> TextEditorInstance
+    {
         // TODO: A more efficient way to determine whether file is supported
         let contentData: Data? = try await workSpaceStorage.contents(
             at: url
         )
 
-        guard let contentData, let (content, encoding) = try? decodeStringData(data: contentData)
+        guard let contentData,
+            let (content, encoding) = try? decodeStringData(data: contentData, encoding: encoding)
         else {
             throw AppError.unknownFileFormat
-           
+
         }
         let attributes = try await workSpaceStorage.attributesOfItem(at: url)
         let modificationDate = attributes[.modificationDate] as? Date
@@ -695,6 +705,10 @@ class MainApp: ObservableObject {
 
     }
 
+    private func createEncodingErrorEditor(url: URL) -> EditorInstance {
+        return EncodingErrorEditorInstance(
+            view: AnyView(EncodingErrorEditorView(url: url)), title: url.lastPathComponent)
+    }
     private func openEditorForURL(url: URL) throws -> EditorInstanceWithURL {
         guard let editor = (editorsWithURL.first { $0.url == url }) else {
             throw AppError.editorDoesNotExist
@@ -739,7 +753,9 @@ class MainApp: ObservableObject {
 
     @MainActor
     @discardableResult
-    func openFile(url: URL, alwaysInNewTab: Bool = false) async throws -> EditorInstance {
+    func openFile(url: URL, alwaysInNewTab: Bool = false, encoding: String.Encoding? = nil)
+        async throws -> EditorInstance
+    {
         guard stateManager.isMonacoEditorInitialized else {
             urlQueue.append(url)
             throw AppError.editorIsNotReady
@@ -748,13 +764,21 @@ class MainApp: ObservableObject {
             return existingEditor
         }
         // TODO: Avoid reading the same file twice
-        if let textEditor = try? await createTextEditorFromURL(url: url) {
+        if let editor = try? createExtensionEditorFromURL(url: url) {
+            appendAndFocusNewEditor(editor: editor, alwaysInNewTab: alwaysInNewTab)
+            return editor
+        }
+
+        do {
+            let textEditor = try await createTextEditorFromURL(url: url, encoding: encoding)
             appendAndFocusNewEditor(editor: textEditor, alwaysInNewTab: alwaysInNewTab)
             return textEditor
+        } catch {
+            let encodingErrorEditor = createEncodingErrorEditor(url: url)
+            appendAndFocusNewEditor(editor: encodingErrorEditor, alwaysInNewTab: alwaysInNewTab)
+            return encodingErrorEditor
         }
-        let editor = try createExtensionEditorFromURL(url: url)
-        appendAndFocusNewEditor(editor: editor, alwaysInNewTab: alwaysInNewTab)
-        return editor
+
     }
 
     @MainActor
