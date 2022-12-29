@@ -55,7 +55,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     }
 
     func setFontSize(size: Int) {
-        executeScript("term.setOption('fontSize', \(size))")
+        executeScript("term.options.fontSize = \(size)")
     }
 
     func resetAndSetNewRootDirectory(url: URL) {
