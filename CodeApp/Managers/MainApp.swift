@@ -409,8 +409,8 @@ class MainApp: ObservableObject {
     private func saveTextEditor(editor: TextEditorInstance, overwrite: Bool = false) async throws {
 
         if !overwrite {
-            let attributes = try await workSpaceStorage.attributesOfItem(at: editor.url)
-            let modificationDate = attributes[.modificationDate] as? Date
+            let attributes = try? await workSpaceStorage.attributesOfItem(at: editor.url)
+            let modificationDate = attributes?[.modificationDate] as? Date
             if let modificationDate = modificationDate {
                 if modificationDate > editor.lastSavedDate ?? Date.distantFuture {
                     throw AppError.fileModifiedByAnotherProcess
@@ -430,8 +430,8 @@ class MainApp: ObservableObject {
         do {
             try await workSpaceStorage.write(
                 at: editor.url, content: data, atomically: false, overwrite: true)
-            let updatedAttributes = try await workSpaceStorage.attributesOfItem(at: editor.url)
-            let updatedModificationDate = updatedAttributes[.modificationDate] as? Date
+            let updatedAttributes = try? await workSpaceStorage.attributesOfItem(at: editor.url)
+            let updatedModificationDate = updatedAttributes?[.modificationDate] as? Date
             DispatchQueue.main.async {
                 editor.lastSavedDate = updatedModificationDate
                 editor.lastSavedVersionId = editor.currentVersionId
@@ -654,8 +654,8 @@ class MainApp: ObservableObject {
         else {
             throw AppError.unknownFileFormat
         }
-        let attributes = try await workSpaceStorage.attributesOfItem(at: url)
-        let modificationDate = attributes[.modificationDate] as? Date
+        let attributes = try? await workSpaceStorage.attributesOfItem(at: url)
+        let modificationDate = attributes?[.modificationDate] as? Date
 
         return TextEditorInstance(
             editor: monacoInstance,
