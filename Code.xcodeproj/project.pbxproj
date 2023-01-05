@@ -1153,6 +1153,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F30816829662CBF002708FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F30816929662D58002708FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		73F80B0F2850F7E5000EF3FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		73F80B102850F7EE000EF3FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94127C3F280335C8008C7F82 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
@@ -2748,6 +2750,7 @@
 				de,
 				Base,
 				ko,
+				ja,
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
@@ -3182,6 +3185,7 @@
 				9425205A263E103E0029427A /* zh-Hans */,
 				9425205C263E10490029427A /* de */,
 				73F80B102850F7EE000EF3FC /* ko */,
+				4F30816929662D58002708FD /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -3193,6 +3197,7 @@
 				94A56833257CC3AF008A6530 /* en */,
 				94D7DEE12632C6B000FA0760 /* de */,
 				73F80B0F2850F7E5000EF3FC /* ko */,
+				4F30816829662CBF002708FD /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

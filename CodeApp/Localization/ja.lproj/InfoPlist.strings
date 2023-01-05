@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  Code
+
+  Created by yuki futami on 2023/01/05.
+  
+*/
+"NSPhotoLibraryAddUsageDescription" = "画像を保存するには、写真ライブラリへのアクセス権限が必要です。";

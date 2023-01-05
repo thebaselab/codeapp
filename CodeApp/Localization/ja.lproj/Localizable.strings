@@ -1,0 +1,450 @@
+/*
+  Localizable.strings
+  Code App
+
+  Created by yuki futami on 2023/01/05.
+  
+*/
+
+"Welcome Message" =
+"# Code App
+##### **v1.4.2 (2023年 1月)**
+#### 開始
+[新しいファイル](https://thebaselab.com/code/newfile)
+[ファイルを開く](https://thebaselab.com/code/openfile)
+[フォルダーを開く](https://thebaselab.com/code/openfolder)
+
+#### ヘルプ
+[ドキュメント](https://code.thebaselab.com)
+[GitHub](https://github.com/thebaselab/codeapp)
+[Email](mailto:support@thebaselab.com)
+[Twitter](https://twitter.com/thebaselab)
+";
+
+"Changelog.message" =
+"
+### v1.4.2 (2023年 1月)
+- バグの修正
+
+### v1.4.1 (2022年 12月)
+- バグの修正
+
+### v1.4.0 (2022年 12月)
+- 分割ビューのサポート
+- PDFプレビュー
+- 全体的なパフォーマンスと安定性の向上
+
+### v1.3.6 (2022年 10月)
+- Node.js を v16.17.0 にアップグレード
+- svelte のシンタックスハイライト
+- 新しいエディターのテーマの追加
+- 端末終了シグナルを適切に処理します
+- `code` コマンドによるディレクトリのオープンをサポート
+- emmet が動作しないバグを修正
+
+### v1.3.5 (2022年 9月)
+- UI の改善
+- エクスプローラーでのファイル移動のサポート
+- リモート サーバーからのファイルのダウンロードのサポート
+- git push 用に異なるリモートを選択する機能
+### v1.3.4 (2022年 6月)
+- SFTP の端末サポート
+- Fira Code とカスタム フォントのサポート
+- 韓国語ローカライズ
+- 新しいドキュメントの Web サイト
+- 一般的な改善
+### v1.3.3 (2022年 5月)
+- バグの修正
+### v1.3.2 (2022年 5月)
+- 既存のユーザーがテーマにアクセスできないバグを修正
+### v1.3.1 (2022年 5月)
+- バグの修正
+- カスタム Java エントリ クラス名を使用できるようになりました
+- Code+ のご紹介 - Code をすべての人に提供し、すべてのテーマのロックを解除できるサブスクリプションサービスです。 既存のユーザーは引き続きアプリにフルアクセスできます。
+### v1.3.0 (2022年 5月)
+- リモートサポート (SFTP および FTP)
+- 動的タイプのサポート
+- 実験的機能: テキストファイルのスペルチェック
+### v1.2.13 (2022年 3月)
+- iOS 15.4 との互換性
+- Node.js の国際化サポート
+### v1.2.12 (2022年 3月)
+- 重大なバグ修正
+### v1.2.10 (2022年 3月)
+- カスタム キーボード ショートカット
+- 行番号の上をスライドしてテキストを選択
+- UI の改善
+- エディターが時々読み込まれない問題を修正
+- Node.js 16.13.2
+### v1.2.9 (2022年 1月)
+- 問題を修正:
+   - 特定のキーがヨーロッパのキーボード レイアウトで機能しない (#237)
+   - `curl` が機能しなくなりました (#330)
+   - デフォルトの引数により、一部の npm コマンドがクラッシュする (#326)
+### v1.2.8 (2021年 12月)
+- 問題を修正:
+   - ssh-keygen が原因で端末が停止する (#314)
+   - エディターで空白の画面が表示されることがある
+- Terraform の構文強調表示を追加 (#319)
+### v1.2.7 (2021年 12月)
+- 一般的な改善
+### v1.2.6 (2021年 9月)
+- 最新の iOS バージョンとの互換性
+- その他の改善
+### v1.2.5 (2021年 7月)
+- ターミナル
+   - clang / clang++ に関するいくつかの問題を修正しました
+### v1.2.4 (2021年 6月)
+- エディター
+   - マウス/トラックパッドの選択が機能しなくなる問題を修正
+   - TypeScript 定義を 4.2.4 に更新
+- インターフェース
+   - iPhone 用の新しいコンパクトなサイドバーデザイン
+   - エディターのタブを並べ替える機能
+   - Xcode テーマの読みやすさの向上
+   - コンテキスト メニューでファイルまたはフォルダを複製する機能
+- パフォーマンス
+   - ファイル アプリから SMB ドライブを開く際のパフォーマンスの向上
+- Git
+   - さまざまなリポジトリ リモートとの互換性の向上
+   - インライン Diff インジケーター
+   - 実験的な Git CLI ツール
+- ターミナル
+   - ファイルパスのオートコンプリート
+   - `code <file>` を使用してエディタでコードを開く
+- ランタイム
+   - Clang (`clang main.c` と `./a.out` で C プログラムを実行)
+   - Clang++ (`clang++ main.cpp` と `./a.out` で C++ プログラムを実行)
+   - PHP (`php` で PHP プログラムを実行し、`php -S localhost:<port>` で Web サーバーをホストします)
+
+---
+
+### v1.2.3 (2021年 4月)
+- エディター
+   - 6 つの追加カラー テーマ
+   - 読み取り専用モード
+   - Node.js の組み込み型
+   - @types 定義のサポート
+- エクスプローラー
+   - 複数ファイル検索
+- Python ランタイム
+   - 組み込みの Matplotlib、Pandas
+- その他
+   - UI 状態の復元
+   - ドイツ語のローカライズ
+   - バグ修正とその他の改善
+
+---
+
+### v1.2.1 (2021年 3月)
+- Node.js ランタイム
+   - Javascript をオフラインで実行する
+   - npm モジュールをインストールする
+   - Javascript コマンドをグローバルにインストールする (tsc、prettier など)
+   - 新しい端末コマンド: npm、npx、node
+- Python 3.9.2 ランタイム
+   - Python をオフラインで実行
+   - pip でモジュールをインストールする
+   - Python コマンドをグローバルにインストールする
+   - 新しい端末コマンド: pip、python、python3
+- エディター
+   - 「問題」タブ
+   - 新しいマークダウン スタイル
+   - Vue の構文強調表示
+   - リフレッシュ レートの高いデバイス向けのスムーズ スクロール オプション
+- ターミナル
+   - 明るい配色をサポートするようになりました
+- ファイルエクスプローラー
+   - 行の高さを減らしました
+- バグの修正
+
+---
+
+### v1.1.9 (2021年 2月)
+- 言語
+   - より速い実行
+- バグの修正
+
+---
+
+### v1.1.8 (2021年 2月)
+- テキストエディタ
+   - TextMate 文法への移行 (より高度な構文の強調表示)
+   - より多くの言語のサポート (Groovy、HLSL、Log、Makefile、Shaderlab、Fortran、Matlab)
+   - エディターが時々ポインターをクリックしないバグを修正しました
+   - 新しいキーボード ツールバー
+- バージョン管理
+   - パフォーマンスと信頼性の向上
+   - ステージングの変更
+   - ブランチの切り替え
+   - デタッチヘッドモード
+   - 変更を元に戻す
+- 言語
+   - Groovyのサポート
+- ビルトイン ターミナル
+   - SSHのサポート
+   - バグの修正
+- エクスプローラー
+   - サイドバーをオフにすると、ディレクトリの折りたたみ状態が保持されるようになりました
+   - フォルダ名をタップしてフォルダを展開する機能
+- その他
+   - サイドバーの幅が縮小されました
+   - 新しい構文強調表示システムをサポートするために、テーマが一時的に削除されました
+   - JSON Intellisense は一時的に無効になっています
+
+---
+
+### v1.1.7 (2021年 1月)
+- テキストエディタ
+   - コードを実行するか、キーボードを閉じると、変更がディスクに書き込まれるようになりました
+   - 仮想キーボードが時々表示されない問題を修正
+- バージョン管理
+   - プライベート リポジトリのクローン作成機能
+   - リモートからプッシュ、プル、同期する機能
+   - 複製されたリポジトリに適切な名前が付けられない問題を修正
+- ビルトイン ターミナル
+   - 70 以上の Linux コマンド (ls、cd、nslookup など)
+   - パイピング、履歴、補完などの Bash ライクなユーザー プリミティブ
+   - Tab キーを押して、使用可能なすべてのコマンドを表示します
+- エクスプローラー
+   - ファイルとディレクトリがアルファベット順にソートされるようになりました
+   - ドットで始まるファイルまたはディレクトリはデフォルトで非表示になりました
+   - 2 本指のパン ジェスチャでアイテムを選択する機能
+- その他の改善
+   - Code App を使用してファイル アプリまたは他のアプリから直接ファイルを開くことができるようになりました
+   - ホーム画面からアプリのアイコンを長押しして、最近のドキュメントを表示できるようになりました
+   - タイプミスを修正
+";
+
+"Send us an email" = "メールで報告";
+"Open an issue on GitHub" = "GitHubで問題を報告";
+"Clear console" = "コンソールのクリア";
+"Kill Process" = "プロセスの中止";
+"Sync" = "同期";
+"Synchronize Changes" = "変更の同期(Git: Pull & Push)";
+"You don't have any open editor." = "開いているエディタがありません。";
+"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "これは、リモートの変更がローカルリポジトリにプルされ、ローカルでのコミットを上流ブランチにプッシュします。競合はローカルコピーにマージされ、上書きされます。";
+"User Name" = "ユーザー名";
+"Show hidden files" = "隠しファイルを表示";
+"Erase" = "消去";
+"This will erase all user settings, including author identity and credentials." = "これにより、作成者の ID と資格情報を含むすべてのユーザー設定が消去されます。";
+"Erase all settings" = "すべての設定を消去";
+"Release Notes" = "リリースノート";
+
+"New File" = "新しいファイル";
+"Open File" = "開く";
+"Open Editors" = "開いているエディター";
+"EXPLORER" = "エクスプローラー";
+"Explorer" = "エクスプローラー";
+"SEARCH" = "検索";
+"Search" = "検索";
+"Results" = "結果";
+"Search Text" = "テキスト検索";
+"Search File" = "ファイル検索";
+"Quick add" = "追加";
+"Custom" = "カスタム";
+"Where" = "場所";
+"Current Folder" = "現在のフォルダ";
+"Add File" = "ファイルを追加";
+"INPUT" = "インプラント";
+"PROBLEMS" = "問題";
+"OUTPUT" = "アウトプット";
+"Options" = "オプション";
+"Close All" = "すべて閉じる";
+"Preview in Safari" = "Safariで開く";
+"Mini Map" = "ミニマップ";
+"Line Numbers" = "行番号";
+"OTHERS" = "その他";
+"Tab Size" = "タブサイズ";
+
+"Settings" = "設定";
+"General" = "一般";
+"Editor" = "編集";
+"Compiler" = "コンパイラ";
+"Accent" = "アクセント";
+"Font Size" = "フォントサイズ";
+"Editor Font Size" = "エディターのフォントサイズ";
+"Terminal Font Size" = "ターミナルのフォントサイズ";
+"Bracket Completion" = "ブラケットの補完";
+"Theme" = "テーマ";
+"Rate Code App" = "Code App を評価";
+"About" = "製品について";
+"Version" = "バージョン";
+
+"Done" = "完了";
+
+"Recent" = "最近";
+"Show in Files App" = "ファイルアプリから開く";
+"Copy Relative Path" = "相対パスをコピー";
+"Delete" = "削除";
+"Color Scheme" = "外観";
+"Dark Theme" = "ダーク";
+"Dark Themes" = "ダーク";
+"Light Theme" = "ライト";
+"Light Themes" = "ライト";
+"Text Wrap" = "テキストの折返し";
+"Render Whitespace" = "空文字の表示";
+
+"Share" = "共有";
+"Rename" = "名前の変更";
+"Assign as workplace folder" = "ワークスペースのフォルダに割り当てる";
+"Select for compare" = "比較対象を選択";
+"Compare with selected" = "選択項目の比較";
+"Version Control" = "バージョン管理";
+"Author Identity" = "Author Identity";
+"Authentication" = "Authentication";
+"Name" = "Name";
+"Email address" = "Email address";
+"Save" = "保存";
+"Close Editor" = "エディターを閉じる";
+"Zoom in" = "ズームイン";
+"Zoom out" = "ズームアウト";
+"Show Explorer" = "エクスプローラーを表示";
+"Show Search" = "検索を表示";
+"Show Source Control" = "バージョン管理を表示";
+"User Settings" = "ユーザー設定";
+"Show Panel" = "パネルを表示";
+"Hide Panel" = "パネルを隠す";
+"Run Code" = "実行";
+"New Folder" = "新しいフォルダー";
+
+"The folder currently opened doesn't have a git repository." = "現在開いているフォルダーには Git リポジトリがありません。";
+"Example: https://github.com/thebaselab/codeapp.git" = "例: https://github.com/thebaselab/codeapp.git";
+"Initialize Repository" = "リポジトリを初期化する";
+"Clone Repository" = "リポジトリのクローン";
+"TERMINAL" = "ターミナル";
+"Keyboard Toolbar (Effective in next launch)" = "キーボードツールバー (次回起動時より有効)";
+"Always Open In New Tab" = "常に新しいタブで開く";
+"Changes" = "変更";
+"Message (⌘Enter to commit)" = "メッセージ (⌘Enterでコミット)";
+"Staged Changes" = "ステージされている変更";
+"No changes are made in the working directory." = "作業ディレクトリに変更はありません。";
+"Git checkout: Uncommitted Changes" = "Git チェックアウト: コミットされていない変更";
+"Uncommited changes will be lost. Do you wish to proceed?" = "コミットされていない変更は失われます。続行しますか？";
+"No changes are made in this file" = "このファイルは変更されていません";
+
+"Smooth Scrolling" = "滑らかなスクロール";
+"Stage All Changes" = "すべての変更をステージ";
+"Push" = "プッシュ";
+"Fetch" = "フェッチ";
+
+"Welcome" = "作業の開始";
+"Licenses" = "ライセンス";
+"Version" = "バージョン";
+"Code App by thebaselab" = "Code App by thebaselab";
+"Themes" = "テーマ";
+"Read-only Mode" = "読み取り専用モード";
+"Show Welcome Page" = "ウェルカムページを表示";
+"UI State Restoration" = "UI 状態の復元";
+"Open in Tab" = "タブで開く";
+"Show Command in Terminal" = "ターミナルにコマンドを表示する";
+"Duplicate" = "複製";
+"Console Font Size" = "コンソールのフォントサイズ";
+
+"Custom Keyboard Shortcuts" = "キーボードショートカット";
+
+"Remotes" = "リモート";
+"You don't have any saved remote." = "保存されたリモートがありません。";
+"New remote" = "新しいリモート";
+"Protocol" = "Protocol";
+"Address" = "Adress";
+"Port" = "Port";
+"Username" = "Username";
+"Password" = "Password";
+"Use key authentication" = "Use key authentication";
+"Remember address" = "Remember address";
+"Connect" = "接続";
+"Disconnect" = "切断";
+"Current Remote" = "現在のリモート";
+"Remember credentials" = "Remember credentials";
+"Key passphrase" = "Key passphrase";
+"Show public key" = "Show public key";
+
+"Expermimental Features" = "実験的機能";
+"Enable spell check in text files" = "テキストファイルでスペルチェックを有効にする";
+"Spell checking on content changed" = "コンテンツのスペルチェックが変更されました";
+
+"common.configure" = "設定";
+"common.open_folder" = "フォルダを開く";
+"common.compare" = "比較";
+"common.overwrite" = "上書き";
+"common.save" = "保存";
+"common.dont_save" = "保存しない";
+"common.cancel" = "キャンセル";
+"common.revert" = "元に戻す";
+
+"notification.source" = "Source: %@";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "12ヶ月 %@ から。";
+"subscription.message" = "Codeをすべてで利用できるようにし、すべてのテーマのロックを解除します。 Codeはオープンソースのままであり、既存の機能はサブスクリプションなしで引き続き利用できます。";
+"subscription.payment.description %@ %@" = "%@ から、メンバーシップはキャンセルされるまで、毎年 %@ で自動的に更新されます。";
+"subscription.payment.disallowed" = "お使いのデバイスの設定では支払いが許可されていません。";
+"subscription.join" = "Code+ に加入";
+"code.and.privacy" = "Codeとプライバシーについて";
+"terms_of_use" = "利用規約";
+"credentials.note" = "注意：認証情報はお使いのデバイスの Secure Enclave に保存されます。私たちはそれにアクセスすることはできません。";
+"settings.editor.font" = "フォント";
+"settings.editor.font.reset" = "デフォルトにリセット";
+
+"errors.script_already_running" = "スクリプトがすでに実行されています。次のスクリプトを実行する前に終了してください。";
+"errors.fs.not_implemented" = "その操作は実装されていません";
+"errors.fs.scheme_not_registered" = "ファイル URI スキームが登録されていません";
+"errors.fs.invalid_host" = "無効なホスト";
+"errors.fs.unsupported_encoding" = "サポートされていないエンコードです";
+"errors.fs.unknown" = "不明なエラー";
+"errors.fs.connection_failure" = "接続に失敗しました";
+"errors.fs.authentication_failure" = "認証に失敗しました";
+"errors.fs.attempting_to_copy_parent_to_child" = "ソースはターゲットの親です。";
+"errors.fs.attempting_to_copy_oneself" = "ソースは親と同じパスを持っています。";
+"errors.fs.already_connecting_to_a_host" = "すでにホストに接続しています。";
+"errors.source_control.authentication_failed" = "認証に失敗しました。Git の認証情報を設定する必要があるかもしれません。";
+"errors.source_control.clone_authentication_failed" = "認証に失敗しました。リポジトリの URL が間違っているか、Git の認証情報を設定する必要があります。";
+"errors.source_control.no_staged_changes" = "コミットする必要のあるステージされている変更はありません。";
+"errors.source_control.empty_commit_message" = "コミット メッセージを空にすることはできません";
+"errors.source_control.invalid_url" = "無効なURLです";
+"errors.unknown_file_format" = "不明なファイル形式です";
+"errors.editor_does_not_exist" = "エディターが存在しません";
+"errors.editor_is_not_ready" = "エディターの準備ができていません";
+"errors.failed_to_save_file.encoding.failed" = "ファイルの保存に失敗しました。 エンコードに失敗しました。";
+"errors.file_modified_by_another_process" = "別のプロセスによって変更されたファイルです";
+
+"file.copy" = "コピー..";
+"file.download" = "ダウンロード..";
+"file.confirm_save %@" = "%@ に加えた変更を保存しますか?";
+
+"actions.new_window" = "新しいウィンドウ";
+
+"remote.connecting" = "ホストに接続中";
+"remote.connected" = "正常に接続されました";
+"remote.ssh_key_not_found" = "SSH キーが Documents/.ssh/id_rsaに見つかりませんでした。ターミナルで ssh-keygen を実行して生成してください。";
+"remote.reload_key" = "キーをリロードします";
+
+"source_control.title" = "ソース管理";
+"source_control.pat" = "個人用アクセストークン";
+"source_control.repository_initialized" = "リポジトリが初期化されました";
+"source_control.commit_succeeded" = "コミットに成功しました";
+"source_control.uploading_objects" = "オブジェクトのアップロード";
+"source_control.pushing_to_remote" = "リモートにプッシュしています";
+"source_control.push_succeeded" = "プッシュが成功しました";
+"source_control.fetching_from_origin" = "origin からフェッチしています";
+"source_control.fetch_succeeded" = "フェッチに成功しました";
+"source_control.clone_succeeded" = "クローンに成功しました。";
+"source_control.cloning_into" = "%@ からクローンしています";
+"source_control.error" = "クローン エラー: %@";
+"source_control.revert_succeeded" = "元に戻しました";
+"source_control.remote_credentials" = "リモート認証情報";
+"source_control.credentials.note" = "多くの場合、パスワードの代わりに個人用アクセストークンを使用して認証する必要があります。これについて詳しく知るには:";
+"source_control.setup_your_credentials" = "Git 認証情報を設定する";
+"source_control.confirm_revert %@" = "%@ の変更を元に戻しますか?";
+"source_control.retrieving_changes" = "変更を取得しています";
+
+"panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
+"panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";
+"panel.execution.program_input" = "Program input..";
+"panel.execution.input" = "インプット";
+"panel.execution.output" = "アウトプット";
+"panel.execution.split_view" = "スプリットビュー";
+"panel.execution.title" = "実行";
+
+"local.execution.title" = "ローカル実行";
