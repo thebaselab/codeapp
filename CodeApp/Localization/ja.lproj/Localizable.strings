@@ -291,10 +291,10 @@
 "Select for compare" = "比較対象を選択";
 "Compare with selected" = "選択項目の比較";
 "Version Control" = "バージョン管理";
-"Author Identity" = "Author Identity";
-"Authentication" = "Authentication";
-"Name" = "Name";
-"Email address" = "Email address";
+"Author Identity" = "著者のアイデンティティ";
+"Authentication" = "認証";
+"Name" = "名前";
+"Email address" = "電子メールアドレス";
 "Save" = "保存";
 "Close Editor" = "エディターを閉じる";
 "Zoom in" = "ズームイン";
@@ -346,19 +346,19 @@
 "Remotes" = "リモート";
 "You don't have any saved remote." = "保存されたリモートがありません。";
 "New remote" = "新しいリモート";
-"Protocol" = "Protocol";
-"Address" = "Adress";
-"Port" = "Port";
-"Username" = "Username";
-"Password" = "Password";
-"Use key authentication" = "Use key authentication";
-"Remember address" = "Remember address";
+"Protocol" = "プロトコル";
+"Address" = "IPアドレス";
+"Port" = "サーバポート";
+"Username" = "ユーザー名";
+"Password" = "パスワード";
+"Use key authentication" = "SSHで鍵認証";
+"Remember address" = "IPアドレスを覚える";
 "Connect" = "接続";
 "Disconnect" = "切断";
 "Current Remote" = "現在のリモート";
-"Remember credentials" = "Remember credentials";
-"Key passphrase" = "Key passphrase";
-"Show public key" = "Show public key";
+"Remember credentials" = "資格情報を記憶する";
+"Key passphrase" = "キーパスフレーズ";
+"Show public key" = "公開鍵を表示";
 
 "Expermimental Features" = "実験的機能";
 "Enable spell check in text files" = "テキストファイルでスペルチェックを有効にする";
@@ -441,7 +441,7 @@
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";
-"panel.execution.program_input" = "Program input..";
+"panel.execution.program_input" = "プログラム入力..";
 "panel.execution.input" = "インプット";
 "panel.execution.output" = "アウトプット";
 "panel.execution.split_view" = "スプリットビュー";
