@@ -137,9 +137,7 @@ class MainApp: ObservableObject {
                     }
                 }
             }
-            DispatchQueue.global(qos: .utility).async {
-                self?.git_status()
-            }
+            self?.git_status()
         }
         workSpaceStorage.onTerminalData { [weak self] data in
             self?.terminalInstance.write(data: data)
@@ -445,9 +443,8 @@ class MainApp: ObservableObject {
             throw error
         }
 
-        DispatchQueue.global(qos: .utility).async {
-            self.git_status()
-        }
+        self.git_status()
+
         if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
             await monacoInstance.checkSpelling(text: editor.content, uri: editor.url.absoluteString)
         }
