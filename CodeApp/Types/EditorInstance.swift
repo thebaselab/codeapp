@@ -38,13 +38,15 @@ class EditorInstanceWithURL: EditorInstance {
         let uuidRegex = try! NSRegularExpression(
             pattern: "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
             options: .caseInsensitive)
-        guard let lastMatchIndex =
-            uuidRegex.matches(
-                in: url.path, options: [], range: NSRange(location: 0, length: url.path.count)
-            ).last?.range.location else {
+        guard
+            let lastMatchIndex =
+                uuidRegex.matches(
+                    in: url.path, options: [], range: NSRange(location: 0, length: url.path.count)
+                ).last?.range.location
+        else {
             return self.url.path
         }
-        
+
         return String(
             url.path.suffix(
                 from: url.path.index(url.path.startIndex, offsetBy: lastMatchIndex + 37)))
