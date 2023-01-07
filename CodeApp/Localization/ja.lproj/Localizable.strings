@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.2 (2023年 1月)**
+##### **v1.4.3 (2023年 1月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -23,8 +23,9 @@
 
 "Changelog.message" =
 "
-### v1.4.2 (2023年 1月)
+### v1.4.3 (2023年 1月)
 - バグの修正
+- 日本語化
 
 ### v1.4.1 (2022年 12月)
 - バグの修正

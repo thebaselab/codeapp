@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.2 (2023 年 1 月)**
+##### **v1.4.3 (2023 年 1 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,8 +23,9 @@
 
 "Changelog.message" =
 "
-### v1.4.2 (2023 年 1 月)
+### v1.4.3 (2023 年 1 月)
 - Bug 修复
+- 日语本地化
 
 ### v1.4.1 (2022 年 12 月)
 - Bug 修复
