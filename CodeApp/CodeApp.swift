@@ -320,11 +320,15 @@ struct CodeApp: App {
         return window
     }
 
+    var colorSchemePreference: ColorScheme? {
+        colorScheme == 1 ? .dark : colorScheme == 2 ? .light : nil
+    }
+
     var body: some Scene {
         WindowGroup {
             MainScene()
                 .ignoresSafeArea(.container, edges: .bottom)
-                .preferredColorScheme(colorScheme == 1 ? .dark : colorScheme == 2 ? .light : .none)
+                .preferredColorScheme(colorSchemePreference)
                 .environmentObject(AppStore)
                 .environmentObject(themeManager)
         }

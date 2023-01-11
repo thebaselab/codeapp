@@ -44,14 +44,6 @@ struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
-    var windows: [UIWindow] {
-        let windows: [UIWindow] = UIApplication.shared.connectedScenes.compactMap({ scene in
-            let windowSceneDelegate = scene.delegate as? UIWindowSceneDelegate
-            return windowSceneDelegate?.window as? UIWindow
-        })
-        return windows
-    }
-
     var body: some View {
         NavigationView {
             Form {
@@ -72,18 +64,6 @@ struct SettingsView: View {
                             Text(self.colorSchemes[$0])
                         }
                     }
-
-                    .onChange(of: preferredColorScheme) { value in
-                        if value == 1 {
-                            windows.forEach({ $0.overrideUserInterfaceStyle = .dark })
-                        } else if value == 2 {
-                            windows.forEach({ $0.overrideUserInterfaceStyle = .light })
-                        } else {
-                            windows.forEach({ $0.overrideUserInterfaceStyle = .unspecified })
-                        }
-                        App.updateView()
-                    }
-
                     Stepper(
                         "\(NSLocalizedString("Editor Font Size", comment: "")) (\(fontSize))",
                         value: $fontSize, in: 10...30

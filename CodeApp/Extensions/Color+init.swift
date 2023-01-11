@@ -11,66 +11,54 @@ extension UIColor {
     convenience init(id: String) {
         self.init(Color(id: id))
     }
+
+    // Defining dynamic colors in Swift
+    // https://www.swiftbysundell.com/articles/defining-dynamic-colors-in-swift/
+    convenience init(
+        light lightModeColor: @escaping @autoclosure () -> UIColor,
+        dark darkModeColor: @escaping @autoclosure () -> UIColor
+    ) {
+        self.init { traitCollection in
+            switch traitCollection.userInterfaceStyle {
+            case .light:
+                return lightModeColor()
+            case .dark:
+                return darkModeColor()
+            case .unspecified:
+                return lightModeColor()
+            @unknown default:
+                return lightModeColor()
+            }
+        }
+    }
 }
 
 extension Color {
     init(id: String) {
 
-        let jsonArray: [String: Any]
+        var lightColor = UIColor(named: id) ?? .gray
+        var darkColor = UIColor(named: id) ?? .gray
 
-        if UserDefaults.standard.integer(forKey: "preferredColorScheme") == 1 {
-            if globalDarkTheme != nil {
-                jsonArray = globalDarkTheme!
-            } else {
-                let color =
-                    UIColor(named: id)?.resolvedColor(
-                        with: UITraitCollection(userInterfaceStyle: .dark)) ?? UIColor.gray
-                self.init(color)
-                return
-            }
-        } else if UserDefaults.standard.integer(forKey: "preferredColorScheme") == 2 {
-            if globalLightTheme != nil {
-                jsonArray = globalLightTheme!
-            } else {
-                let color =
-                    UIColor(named: id)?.resolvedColor(
-                        with: UITraitCollection(userInterfaceStyle: .light)) ?? UIColor.gray
-                self.init(color)
-                return
-            }
-        } else {
-            if UITraitCollection.current.userInterfaceStyle == .dark && globalDarkTheme != nil {
-                jsonArray = globalDarkTheme!
-            } else if UITraitCollection.current.userInterfaceStyle != .dark
-                && globalLightTheme != nil
-            {
-                jsonArray = globalLightTheme!
-            } else {
-                if UITraitCollection.current.userInterfaceStyle == .dark {
-                    let color =
-                        UIColor(named: id)?.resolvedColor(
-                            with: UITraitCollection(userInterfaceStyle: .dark)) ?? UIColor.gray
-                    self.init(color)
-                } else {
-                    let color =
-                        UIColor(named: id)?.resolvedColor(
-                            with: UITraitCollection(userInterfaceStyle: .light)) ?? UIColor.gray
-                    self.init(color)
-                }
-                return
+        if let globalDarkTheme {
+            let darkColorDict = globalDarkTheme["colors"] as! [String: String]
+            if let hexString = darkColorDict[id] {
+                darkColor = UIColor(Color(hexString: hexString))
             }
         }
 
-        let colorArray = jsonArray["colors"] as! [String: String]
-
-        for key in colorArray.keys {
-            if key == id {
-                self.init(hexString: colorArray[key]!)
-                return
+        if let globalLightTheme {
+            let lightColorDict = globalLightTheme["colors"] as! [String: String]
+            if let hexString = lightColorDict[id] {
+                lightColor = UIColor(Color(hexString: hexString))
             }
         }
 
-        self.init(id)
+        self.init(
+            UIColor(
+                light: lightColor,
+                dark: darkColor
+            )
+        )
     }
 
     init(hexString: String) {
