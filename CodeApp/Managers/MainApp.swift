@@ -322,13 +322,18 @@ class MainApp: ObservableObject {
     }
 
     func decodeStringData(data: Data) throws -> (String, String.Encoding) {
-        let tempFile = FileManager.default.temporaryDirectory.appendingPathComponent(
-            UUID().uuidString)
-        try data.write(to: tempFile)
-        var encoding: String.Encoding = .utf8
-        let fileContent = try String(contentsOf: tempFile, usedEncoding: &encoding)
-        try FileManager.default.removeItem(at: tempFile)
-        return (fileContent, encoding)
+        // Most popular encodings according to Wikipedia.
+        // Although the list is not exhaustive,
+        // other encoding will likely be decoded using one of these anyway.
+        let encodingsToTry: [String.Encoding] = [
+            .utf8, .windowsCP1250, .gb_18030_2000, .EUC_KR, .japaneseEUC,
+        ]
+        for encoding in encodingsToTry {
+            if let str = String(data: data, encoding: encoding) {
+                return (str, encoding)
+            }
+        }
+        throw AppError.unknownFileFormat
     }
 
     func compareWithPrevious(url: URL) async throws {
