@@ -43,17 +43,16 @@ struct GitHubSearchResultCell: View {
 
                 Spacer()
 
-                Button {
-                    let url = URL(
-                        string:
-                            "https://support.github.com/contact/report-abuse?category=report-abuse&report=other&report_type=unspecified"
-                    )!
-                    UIApplication.shared.open(url)
-                } label: {
-                    Image(systemName: "hand.raised")
-                        .font(.system(.caption))
-                        .foregroundColor(.gray)
-                }
+                Image(systemName: "hand.raised")
+                    .font(.system(.caption))
+                    .foregroundColor(.gray)
+                    .onTapGesture {
+                        let url = URL(
+                            string:
+                                "https://support.github.com/contact/report-abuse?category=report-abuse&report=other&report_type=unspecified"
+                        )!
+                        UIApplication.shared.open(url)
+                    }
             }
 
             Text(item.name)
