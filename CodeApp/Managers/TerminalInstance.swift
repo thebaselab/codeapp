@@ -333,7 +333,9 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         guard let content = notification.userInfo?["content"] as? String else {
             return
         }
-        executeScript("localEcho.println(base64ToString('\(content.base64Encoded()!)'))")
+        if let data = content.data(using: .utf8) {
+            writeToLocalTerminal(data: data)
+        }
     }
 
     func write(data: Data) {
@@ -341,69 +343,66 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             "term.write(base64ToString('\(data.base64EncodedString())'));")
     }
 
+    private func writeToLocalTerminal(data: Data) {
+        let str = String(decoding: data, as: UTF8.self)
+        DispatchQueue.main.async {
+            if self.isInteractive || str.contains("\u{8}") || str.contains("\u{13}")
+                || str.contains("\r")
+            {
+                self.executeScript(
+                    "term.write(base64ToString('\(str.base64Encoded()!)'));")
+            } else {
+                self.executeScript(
+                    "localEcho.print(base64ToString('\(str.base64Encoded()!)'));")
+            }
+        }
+    }
+
     init(root: URL) {
         super.init()
-        DispatchQueue.main.async { [self] in
-
-            self.executor = Executor(
-                root: root,
-                onStdout: { data in
-                    let str = String(decoding: data, as: UTF8.self)
-                    DispatchQueue.main.async { [self] in
-                        if isInteractive || str.contains("\u{8}") || str.contains("\u{13}")
-                            || str.contains("\r")
-                        {
-                            self.executeScript(
-                                "term.write(base64ToString('\(str.base64Encoded()!)'));")
-                        } else {
-                            self.executeScript(
-                                "localEcho.print(base64ToString('\(str.base64Encoded()!)'));")
-                        }
-                    }
-                },
-                onStderr: { data in
-                    let str = String(decoding: data, as: UTF8.self)
-                    DispatchQueue.main.async {
-                        self.executeScript(
-                            "localEcho.print(base64ToString('\(str.base64Encoded()!)'));")
-                    }
-                },
-                onRequestInput: { prompt in
-                    let prompt = prompt.replacingOccurrences(of: "\n", with: "\r\n")
-                    DispatchQueue.main.async {
-                        self.executeScript("readLine(base64ToString('\(prompt.base64Encoded()!)'))")
-                    }
-                })
-
-            webView = WebViewBase()
-            webView?.addInputAccessoryView(toolbar: UIView.init())
-            webView?.scrollView.bounces = false
-            webView?.uiDelegate = self
-            webView?.isOpaque = false
-            webView?.navigationDelegate = self
-            webView?.customUserAgent =
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15"
-            webView?.contentMode = .scaleToFill
-            if !terminalMessageHandlerAdded {
-                if let bundlePath = Bundle.main.path(forResource: "terminal", ofType: "bundle"),
-                    let bundle = Bundle(path: bundlePath),
-                    let url = bundle.url(forResource: "index", withExtension: "html")
-                {
-                    webView?.loadFileURL(url, allowingReadAccessTo: url)
-                    let request = URLRequest(url: url)
-                    webView?.load(request)
+        self.executor = Executor(
+            root: root,
+            onStdout: { [weak self] data in
+                self?.writeToLocalTerminal(data: data)
+            },
+            onStderr: { [weak self] data in
+                self?.writeToLocalTerminal(data: data)
+            },
+            onRequestInput: { [weak self] prompt in
+                let prompt = prompt.replacingOccurrences(of: "\n", with: "\r\n")
+                DispatchQueue.main.async {
+                    self?.executeScript("readLine(base64ToString('\(prompt.base64Encoded()!)'))")
                 }
-                let contentManager = webView?.configuration.userContentController
-                terminalMessageHandlerAdded = true
-                contentManager?.add(self, name: "toggleMessageHandler2")
+            })
+
+        webView = WebViewBase()
+        webView?.addInputAccessoryView(toolbar: UIView.init())
+        webView?.scrollView.bounces = false
+        webView?.uiDelegate = self
+        webView?.isOpaque = false
+        webView?.navigationDelegate = self
+        webView?.customUserAgent =
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15"
+        webView?.contentMode = .scaleToFill
+        if !terminalMessageHandlerAdded {
+            if let bundlePath = Bundle.main.path(forResource: "terminal", ofType: "bundle"),
+                let bundle = Bundle(path: bundlePath),
+                let url = bundle.url(forResource: "index", withExtension: "html")
+            {
+                webView?.loadFileURL(url, allowingReadAccessTo: url)
+                let request = URLRequest(url: url)
+                webView?.load(request)
             }
-
-            let nc = NotificationCenter.default
-            nc.addObserver(
-                self, selector: #selector(onNodeStdout), name: Notification.Name("node.stdout"),
-                object: nil)
-
+            let contentManager = webView?.configuration.userContentController
+            terminalMessageHandlerAdded = true
+            contentManager?.add(self, name: "toggleMessageHandler2")
         }
+
+        let nc = NotificationCenter.default
+        nc.addObserver(
+            self, selector: #selector(onNodeStdout), name: Notification.Name("node.stdout"),
+            object: nil)
+
     }
 
 }
