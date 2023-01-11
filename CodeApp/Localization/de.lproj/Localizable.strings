@@ -26,6 +26,7 @@
 ### v1.4.3 (January 2023)
 - Fehlerbehebung
 - Japanische Lokalisierung
+- Community-Vorlagen
 
 ### v1.4.1 (December 2022)
 - Fehlerbehebung
@@ -438,6 +439,9 @@
 "source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";
 "source_control.confirm_revert %@" = "Möchten Sie %@ wirklich zurücksetzen?";
 "source_control.retrieving_changes" = "Änderungen abrufen";
+"source_control.community_templates" = "Community-Vorlagen";
+"source_control.community_templates.description" = "Community-Vorlagen sind Repositories auf GitHub mit dem Tag #codeapp-template. Sie können dies im Einstellungsmenü deaktivieren.";
+"source_control.clone" = "Klonen";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

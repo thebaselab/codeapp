@@ -26,6 +26,7 @@
 ### v1.4.3 (2023 年 1 月)
 - Bug 修复
 - 日语本地化
+- 社区模板
 
 ### v1.4.1 (2022 年 12 月)
 - Bug 修复
@@ -429,6 +430,9 @@
 "source_control.setup_your_credentials" = "设置您的 git 凭据（仅提供英文版）";
 "source_control.confirm_revert %@" = "您确定要还原 %@ 吗？";
 "source_control.retrieving_changes" = "检索变更中";
+"source_control.community_templates" = "社区模板";
+"source_control.community_templates.description" = "社区模板是 GitHub 上带有#codeapp-template 标签的存储库。 您可以在设置菜单中禁用此功能。";
+"source_control.clone" = "克隆";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
 "panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";

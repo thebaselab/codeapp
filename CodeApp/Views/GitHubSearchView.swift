@@ -18,13 +18,14 @@ struct GitHubSearchView: View {
             text: $App.searchManager.searchTerm,
             searchAction: { App.searchManager.search() }, placeholder: "GitHub",
             cornerRadius: 15)
+
         ForEach(App.searchManager.searchResultItems, id: \.html_url) { item in
             GitHubSearchResultCell(item: item, onClone: onClone)
         }.listRowBackground(Color.init(id: "sideBar.background"))
     }
 }
 
-private struct GitHubSearchResultCell: View {
+struct GitHubSearchResultCell: View {
 
     @State var item: GitHubSearchManager.item
 
@@ -39,6 +40,20 @@ private struct GitHubSearchResultCell: View {
                 Text(item.owner.login)
                     .font(.system(size: 12))
                     .foregroundColor(Color.init("T1"))
+
+                Spacer()
+
+                Button {
+                    let url = URL(
+                        string:
+                            "https://support.github.com/contact/report-abuse?category=report-abuse&report=other&report_type=unspecified"
+                    )!
+                    UIApplication.shared.open(url)
+                } label: {
+                    Image(systemName: "hand.raised")
+                        .font(.system(.caption))
+                        .foregroundColor(.gray)
+                }
             }
 
             Text(item.name)
@@ -83,7 +98,7 @@ private struct CloneButton: View {
     let onClone: (String) async throws -> Void
 
     var body: some View {
-        Text("Clone")
+        Text("source_control.clone")
             .foregroundColor(.white)
             .lineLimit(1)
             .font(.system(size: 12))

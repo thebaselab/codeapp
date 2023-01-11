@@ -10,8 +10,11 @@ import SwiftUI
 class GitHubSearchManager: ObservableObject {
 
     @Published var searchResultItems: [item] = []
+    @Published var templates: [item]? = nil
     @Published var searchTerm: String = ""
     @Published var errorMessage: String = ""
+
+    static let endpoint = "https://api.github.com/search/repositories"
 
     struct searchResult: Decodable {
         let items: [item]
@@ -38,29 +41,36 @@ class GitHubSearchManager: ObservableObject {
             return
         }
         self.errorMessage = ""
-        var request = URLRequest(
-            url: URL(
-                string:
-                    "https://api.github.com/search/repositories?q=\(searchTerm.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&per_page=10"
-            )!)
-        request.httpMethod = "GET"
 
-        let session = URLSession.shared
-        session.dataTask(with: request) { data, response, err in
-            if data != nil {
-                DispatchQueue.main.async {
-                    do {
-                        let result = try JSONDecoder().decode(searchResult.self, from: data!)
-                        self.searchResultItems = result.items
-                    } catch {
-                        print("search error: \(error)")
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Could not connect to GitHub's server."
-                }
+        let query = searchTerm + "&per_page=10"
+
+        Task {
+            let items = try await executeQuery(query: query)
+            await MainActor.run {
+                self.searchResultItems = items
             }
-        }.resume()
+        }
+    }
+
+    func listTemplates() {
+        let query = "topic:codeapp-template sort:stars"
+        Task {
+            let templates = try await executeQuery(query: query)
+            await MainActor.run {
+                self.templates = templates
+            }
+        }
+    }
+
+    private func executeQuery(query: String) async throws -> [item] {
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        else {
+            return []
+        }
+        let url = URL(string: GitHubSearchManager.endpoint + "?q=\(query)")!
+        print(url.absoluteString)
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode(searchResult.self, from: data)
+        return result.items
     }
 }

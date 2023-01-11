@@ -14,6 +14,7 @@ struct SourceControlContainer: View {
     @EnvironmentObject var stateManager: MainStateManager
     @EnvironmentObject var alertManager: AlertManager
 
+    @AppStorage("communityTemplatesEnabled") var communityTemplatesEnabled = true
     @State var showsPrompt = false
 
     func onInitializeRepository() async throws {
@@ -328,6 +329,9 @@ struct SourceControlContainer: View {
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)
                         SourceControlCloneSection(onClone: onClone)
+                        if communityTemplatesEnabled {
+                            SourceControlTemplateSection(onClone: onClone)
+                        }
                     }
                 }
                 .listRowSeparator(.hidden)

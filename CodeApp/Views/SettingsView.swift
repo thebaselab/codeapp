@@ -33,6 +33,7 @@ struct SettingsView: View {
     @AppStorage("compilerShowPath") var compilerShowPath = false
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
+    @AppStorage("communityTemplatesEnabled") var communityTemplatesEnabled = true
 
     @State var showsEraseAlert: Bool = false
     @State var showReceiptInformation: Bool = false
@@ -111,6 +112,7 @@ struct SettingsView: View {
                     NavigationLink(destination: SourceControlAuthenticationConfiguration()) {
                         Text("Authentication")
                     }
+                    Toggle("source_control.community_templates", isOn: $communityTemplatesEnabled)
                 }
 
                 Section(header: Text(NSLocalizedString("EXPLORER", comment: ""))) {

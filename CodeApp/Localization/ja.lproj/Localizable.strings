@@ -26,6 +26,7 @@
 ### v1.4.3 (2023年 1月)
 - バグの修正
 - 日本語化
+- コミュニティ テンプレート
 
 ### v1.4.1 (2022年 12月)
 - バグの修正
@@ -439,6 +440,9 @@
 "source_control.setup_your_credentials" = "Git 認証情報を設定する";
 "source_control.confirm_revert %@" = "%@ の変更を元に戻しますか?";
 "source_control.retrieving_changes" = "変更を取得しています";
+"source_control.community_templates" = "コミュニティ テンプレート";
+"source_control.community_templates.description" = "コミュニティ テンプレートは、#codeapp-template タグが付いた GitHub のリポジトリです。 設定メニューでこれを無効にすることができます。";
+"source_control.clone" = "クローン";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";
