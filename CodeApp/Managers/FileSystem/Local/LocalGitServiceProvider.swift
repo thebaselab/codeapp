@@ -129,7 +129,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     func aheadBehind(
         error: @escaping (NSError) -> Void, completionHandler: @escaping ((Int, Int)) -> Void
     ) {
-        DispatchQueue.global(qos: .utility).async {
+        workerQueue.async {
             guard self.repository != nil else {
                 let _error = NSError(
                     domain: "", code: 401,
