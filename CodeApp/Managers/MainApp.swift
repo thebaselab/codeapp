@@ -136,8 +136,8 @@ class MainApp: ObservableObject {
                         }
                     }
                 }
+                self?.git_status()
             }
-            self?.git_status()
         }
         workSpaceStorage.onTerminalData { [weak self] data in
             self?.terminalInstance.write(data: data)
