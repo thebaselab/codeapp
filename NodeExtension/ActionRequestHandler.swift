@@ -139,11 +139,9 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         _ = url.startAccessingSecurityScopedResource()
         FileManager.default.changeCurrentDirectoryPath(url.path)
         
-        guard var args = item.userInfo?["args"] as? [String] else {
+        guard let args = item.userInfo?["args"] as? [String] else {
             return
         }
-        
-        args.append("--optimize_for_size")
         
         DispatchQueue.global(qos: .default).async {
             NodeRunner.startEngine(withArguments: args)
