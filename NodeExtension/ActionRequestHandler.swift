@@ -100,6 +100,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         setenv("YARN_CACHE_FOLDER", FileManager.default.temporaryDirectory.path, 1)
         setenv("HOME", sharedURL.path, 1)
         setenv("FORCE_COLOR", "3", 1)
+        setenv("NODE_OPTIONS", "--max-old-space-size=250", 1)
         // Do not call super in an Action extension with no user interface
         self.extensionContext = context
         
@@ -138,9 +139,11 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         _ = url.startAccessingSecurityScopedResource()
         FileManager.default.changeCurrentDirectoryPath(url.path)
         
-        guard let args = item.userInfo?["args"] as? [String] else {
+        guard var args = item.userInfo?["args"] as? [String] else {
             return
         }
+        
+        args.append("--optimize_for_size")
         
         DispatchQueue.global(qos: .default).async {
             NodeRunner.startEngine(withArguments: args)

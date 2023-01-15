@@ -32,14 +32,14 @@
             $extensionItem.attachments,
             $attachment,
             (
-            ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.thebaselab.source"
+            ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.thebaselab.source&quot;
             )
             ).@count == 1
             ).@count == 1
             </string>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.share-services</string>
+		<string>com.apple.ui-services</string>
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).ActionRequestHandler</string>
 	</dict>
