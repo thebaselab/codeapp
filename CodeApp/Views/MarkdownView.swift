@@ -19,7 +19,7 @@ struct SimpleMarkDownView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> MarkdownView {
         let md = MarkdownView()
-        md.load(markdown: text, backgroundColor: UIColor(Color.init(id: "editor.background")))
+        md.load(markdown: text, backgroundColor: UIColor(id: "editor.background"))
         md.onTouchLink = { request in
             guard let url = request.url else { return false }
             UIApplication.shared.open(url)
