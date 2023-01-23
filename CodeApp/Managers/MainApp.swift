@@ -401,7 +401,9 @@ class MainApp: ObservableObject {
                 if let string = String(data: data, encoding: encoding) {
                     activeTextEditor.encoding = encoding
                     activeTextEditor.content = string
-                    self.monacoInstance.setCurrentModelValue(value: string)
+                    Task {
+                        try await self.monacoInstance.setValueForModel(url: activeTextEditor.url, value: string)
+                    }
                 } else {
                     self.notificationManager.showErrorMessage(
                         "Failed to decode file with \(encoding.description).")
@@ -426,23 +428,24 @@ class MainApp: ObservableObject {
             throw AppError.encodingFailed
         }
 
-        DispatchQueue.main.async {
-            editor.isSaving = true
-        }
-
         do {
+            await MainActor.run {
+                editor.isSaving = true
+            }
+
             try await workSpaceStorage.write(
                 at: editor.url, content: data, atomically: false, overwrite: true)
+
             let updatedAttributes = try? await workSpaceStorage.attributesOfItem(at: editor.url)
             let updatedModificationDate = updatedAttributes?[.modificationDate] as? Date
-            DispatchQueue.main.async {
+            await MainActor.run {
                 editor.lastSavedDate = updatedModificationDate
                 editor.lastSavedVersionId = editor.currentVersionId
                 editor.isDeleted = false
                 editor.isSaving = false
             }
         } catch {
-            DispatchQueue.main.async {
+            await MainActor.run {
                 editor.isSaving = false
             }
             throw error
@@ -668,9 +671,8 @@ class MainApp: ObservableObject {
             // TODO: Update using updateUIView?
             fileDidChange: { [weak self] state, content in
                 if state == .modified, let content, let self {
-                    DispatchQueue.main.async {
-                        self.monacoInstance.updateModelContent(
-                            url: url.absoluteString, content: content)
+                    Task {
+                        try await self.monacoInstance.setValueForModel(url: url, value: content)
                     }
                 }
             }
