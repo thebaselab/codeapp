@@ -602,6 +602,7 @@ struct MonacoEditor: UIViewRepresentable {
 }
 
 extension WKWebView {
+    @MainActor
     @discardableResult
     func evaluateJavaScriptAsync(_ str: String) async throws -> Any? {
         return try await withCheckedThrowingContinuation {
