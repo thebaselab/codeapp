@@ -402,7 +402,8 @@ class MainApp: ObservableObject {
                     activeTextEditor.encoding = encoding
                     activeTextEditor.content = string
                     Task {
-                        try await self.monacoInstance.setValueForModel(url: activeTextEditor.url, value: string)
+                        try await self.monacoInstance.setValueForModel(
+                            url: activeTextEditor.url, value: string)
                     }
                 } else {
                     self.notificationManager.showErrorMessage(
