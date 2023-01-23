@@ -135,13 +135,6 @@ struct MonacoEditor: UIViewRepresentable {
             command: "monaco.editor.getModel(monaco.Uri.parse('\(url)')).setValue(decodedCommand)")
     }
 
-    func setCurrentModelValue(value: String) {
-        let encoded = value.base64Encoded()!
-        self.executeJavascript(
-            command: "var decodedCommand = decodeURIComponent(escape(window.atob('\(encoded)')))")
-        self.executeJavascript(command: "editor.getModel().setValue(decodedCommand)")
-    }
-
     func setModel(url: String) {
         self.executeJavascript(
             command: "editor.setModel(monaco.editor.getModel(monaco.Uri.parse('\(url)')));")
@@ -657,13 +650,13 @@ extension MonacoEditor {
         try await monacoWebView.evaluateJavaScriptAsync("editor.setModel()")
     }
 
+    @MainActor
     func setValueForModel(url: URL, value: String) async throws {
         guard let encoded = value.base64Encoded() else {
             return
         }
-        let contentCommand = "decodeURIComponent(escape(window.atob('\(encoded)')))"
         try await monacoWebView.evaluateJavaScriptAsync(
-            "monaco.editor.getModel(monaco.Uri.parse('\(url.absoluteString)')).setValue(\(contentCommand))"
+            "setValueForModel('\(url.absoluteString)', '\(encoded)')"
         )
     }
 

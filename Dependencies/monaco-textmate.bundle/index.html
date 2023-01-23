@@ -585,7 +585,20 @@
         }
       }
 
+      function setValueForModel(url, base64Content) {
+        const model = monaco.editor.getModel(monaco.Uri.parse(url));
+        if (!model) return;
 
+        if (editor.getModel() === model){
+          editor.executeEdits("code.app.native", [{
+            range: model.getFullModelRange(),
+            text: base64ToString(base64Content),
+            forceMoveMarkers: true,
+          }]);
+        }else {
+          model.setValue(base64ToString(base64Content));
+        }
+      }
     </script>
   </body>
 </html>
