@@ -540,19 +540,23 @@ class MainApp: ObservableObject {
                 onFinish()
                 return
             }
+            
             DispatchQueue.main.async {
+                let indexedDictionary = Dictionary(uniqueKeysWithValues: indexed)
+                let workingDictionary = Dictionary(uniqueKeysWithValues: worktree)
+                
                 if hasRemote {
                     self.remote = "origin"
                 } else {
                     self.remote = ""
                 }
                 self.branch = branch
-                self.indexedResources = indexed
-                self.workingResources = worktree
-                self.gitTracks = indexed
-                worktree.forEach { key, value in
-                    self.gitTracks[key] = value
-                }
+                self.indexedResources = indexedDictionary
+                self.workingResources = workingDictionary
+                
+                self.gitTracks = indexedDictionary.merging(workingDictionary, uniquingKeysWith: { current, _ in
+                    current
+                })
             }
 
             self.workSpaceStorage.gitServiceProvider?.aheadBehind(error: {

@@ -205,7 +205,7 @@ class LocalGitServiceProvider: GitServiceProvider {
 
     func status(
         error: @escaping (NSError) -> Void,
-        completionHandler: @escaping ([URL: Diff.Status], [URL: Diff.Status], String) -> Void
+        completionHandler: @escaping ([(URL, Diff.Status)], [(URL, Diff.Status)], String) -> Void
     ) {
         workerQueue.async {
             self.load()
@@ -221,8 +221,8 @@ class LocalGitServiceProvider: GitServiceProvider {
             ])
             switch result {
             case let .success(entries):
-                var indexedGroup = [URL: Diff.Status]()
-                var workingGroup = [URL: Diff.Status]()
+                var indexedGroup = [(URL, Diff.Status)]()
+                var workingGroup = [(URL, Diff.Status)]()
                 self.newAndIgnored = [:]
 
                 for i in entries {
@@ -245,29 +245,29 @@ class LocalGitServiceProvider: GitServiceProvider {
                         }
                         let url = self.workingURL.appendingPathComponent(path)
                         if x.rawValue != 132 {
-                            indexedGroup[url] = .indexModified
+                            indexedGroup.append((url, .indexModified))
                         }
-                        workingGroup[url] = .workTreeModified
+                        workingGroup.append((url, .workTreeModified))
                     case let x where x.rawValue == 514:
                         guard let path = i.headToIndex?.newFile?.path else {
                             continue
                         }
                         let url = self.workingURL.appendingPathComponent(path)
-                        workingGroup[url] = .workTreeDeleted
+                        workingGroup.append((url, .workTreeDeleted))
                     case .indexDeleted, .indexRenamed, .indexModified, .indexDeleted,
                         .indexTypeChange, .indexNew:
                         guard let path = i.headToIndex?.newFile?.path else {
                             continue
                         }
                         let url = self.workingURL.appendingPathComponent(path)
-                        indexedGroup[url] = status
+                        indexedGroup.append((url, status))
                     case .workTreeNew, .workTreeDeleted, .workTreeRenamed, .workTreeModified,
                         .workTreeUnreadable, .workTreeTypeChange:
                         guard let path = i.indexToWorkDir?.newFile?.path else {
                             continue
                         }
                         let url = self.workingURL.appendingPathComponent(path)
-                        workingGroup[url] = status
+                        workingGroup.append((url, status))
                     default:
                         continue
                     }

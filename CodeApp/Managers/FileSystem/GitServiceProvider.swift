@@ -31,7 +31,7 @@ protocol GitServiceProvider {
         error: @escaping (NSError) -> Void, completionHandler: @escaping ((Int, Int)) -> Void)
     func status(
         error: @escaping (NSError) -> Void,
-        completionHandler: @escaping ([URL: Diff.Status], [URL: Diff.Status], String) -> Void
+        completionHandler: @escaping ([(URL, Diff.Status)], [(URL, Diff.Status)], String) -> Void
     )
     func initialize(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void)
     func clone(
