@@ -71,7 +71,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     public var requiresSignature: Bool {
         return signature == nil
     }
-    private let workerQueue = DispatchQueue.global(qos: .userInitiated)
+    private let workerQueue = DispatchQueue(label: "git.serial.queue", qos: .userInitiated)
 
     init(root: URL) {
         self.workingURL = root
