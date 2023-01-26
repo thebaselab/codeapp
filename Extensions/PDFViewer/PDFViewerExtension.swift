@@ -46,12 +46,24 @@ private class PDFEditorInstance: EditorInstanceWithURL {
 }
 
 class PDFViewerExtension: CodeAppExtension {
+    
+    private func loadPDFToStorage(url: URL, app: MainApp, storage: Storage){
+        app.workSpaceStorage.contents(at: url) {data, error in
+            if let data {
+                storage.pdfView?.document = PDFDocument(data: data)
+            }
+            if let error {
+                app.notificationManager.showErrorMessage(error.localizedDescription)
+            }
+            storage.isLoading = false
+        }
+    }
 
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
 
         let provider = EditorProvider(
             registeredFileExtensions: ["pdf"],
-            onCreateEditor: { url in
+            onCreateEditor: { [weak self] url in
                 let pdfView = PDFView()
                 let storage = Storage()
                 storage.pdfView = pdfView
@@ -61,16 +73,12 @@ class PDFViewerExtension: CodeAppExtension {
                     url: url
                 )
                 editorInstance.pdfView = pdfView
-
-                app.workSpaceStorage.contents(at: url) {data, error in
-                        if let data {
-                            pdfView.document = PDFDocument(data: data)
-                        }
-                        if let error {
-                            app.notificationManager.showErrorMessage(error.localizedDescription)
-                        }
-                        storage.isLoading = false
+                
+                self?.loadPDFToStorage(url: url, app: app, storage: storage)
+                editorInstance.fileWatch?.folderDidChange = { _ in
+                    self?.loadPDFToStorage(url: url, app: app, storage: storage)
                 }
+                editorInstance.fileWatch?.startMonitoring()
 
                 return editorInstance
             }

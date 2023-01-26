@@ -55,6 +55,17 @@ private struct ImageView: View {
 }
 
 class ImageViewerExtension: CodeAppExtension {
+    
+    private func loadImageToStorage(url: URL, app: MainApp, storage: Storage){
+        app.workSpaceStorage.contents(
+            at: url,
+            completionHandler: { data, error in
+                storage.data = data
+                if let error {
+                    app.notificationManager.showErrorMessage(error.localizedDescription)
+                }
+            })
+    }
 
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
         let provider = EditorProvider(
@@ -62,22 +73,21 @@ class ImageViewerExtension: CodeAppExtension {
                 "png", "tiff", "tif", "jpeg", "jpg", "gif", "bmp", "bmp", "BMPf", "ico", "cur",
                 "xbm", "heic", "webp",
             ],
-            onCreateEditor: { url in
+            onCreateEditor: { [weak self] url in
                 let storage = Storage()
                 let editorInstance = EditorInstanceWithURL(
                     view: AnyView(ImageView().environmentObject(storage)),
                     title: url.lastPathComponent,
                     url: url
                 )
-
-                app.workSpaceStorage.contents(
-                    at: url,
-                    completionHandler: { data, error in
-                        storage.data = data
-                        if let error {
-                            app.notificationManager.showErrorMessage(error.localizedDescription)
-                        }
-                    })
+                
+                self?.loadImageToStorage(url: url, app: app, storage: storage)
+                editorInstance.fileWatch?.folderDidChange = { [weak self] _ in
+                    DispatchQueue.main.async {
+                        self?.loadImageToStorage(url: url, app: app, storage: storage)
+                    }
+                }
+                editorInstance.fileWatch?.startMonitoring()
 
                 return editorInstance
             }

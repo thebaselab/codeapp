@@ -29,6 +29,12 @@ class EditorInstance: ObservableObject, Identifiable, Equatable, Hashable {
 }
 
 class EditorInstanceWithURL: EditorInstance {
+    
+    enum FileState {
+        case deleted
+        case modified
+    }
+    
     var url: URL {
         didSet {
             title = url.lastPathComponent
@@ -51,10 +57,20 @@ class EditorInstanceWithURL: EditorInstance {
             url.path.suffix(
                 from: url.path.index(url.path.startIndex, offsetBy: lastMatchIndex + 37)))
     }
+    var fileWatch: FolderMonitor?
 
     init(view: AnyView, title: String, url: URL) {
         self.url = url
+        
+        if url.scheme == "file" {
+            self.fileWatch = FolderMonitor(url: url)
+        }
+        
         super.init(view: view, title: title)
+    }
+    
+    deinit {
+        self.fileWatch?.stopMonitoring()
     }
 }
 
@@ -64,7 +80,6 @@ class TextEditorInstance: EditorInstanceWithURL {
 
     var content: String
     var encoding: String.Encoding = .utf8
-    var fileWatch: FolderMonitor?
     var isDeleted = false
     var lastSavedDate: Date? = nil
 
@@ -82,44 +97,31 @@ class TextEditorInstance: EditorInstanceWithURL {
         content: String,
         encoding: String.Encoding = .utf8,
         lastSavedDate: Date? = nil,
-        fileDidChange: ((fileState, String?) -> Void)? = nil
+        fileDidChange: ((FileState, String?) -> Void)? = nil
     ) {
         self.content = content
         self.encoding = encoding
         self.lastSavedDate = lastSavedDate
         super.init(view: AnyView(editor), title: url.lastPathComponent, url: url)
 
-        if fileDidChange != nil, url.scheme == "file" {
-            self.fileWatch = FolderMonitor(url: url)
+        self.fileWatch?.folderDidChange = { [weak self] lastModified in
+            guard let self = self else { return }
 
-            self.fileWatch?.folderDidChange = { [weak self] lastModified in
-                guard let self = self else { return }
-
-                guard let content = try? String(contentsOf: url, encoding: self.encoding) else {
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    if !self.isSaving, self.isSaved,
-                        lastModified > self.lastSavedDate ?? Date.distantFuture
-                    {
-                        self.content = content
-                        self.lastSavedDate = lastModified
-                        fileDidChange?(.modified, content)
-                    }
+            guard let content = try? String(contentsOf: url, encoding: self.encoding) else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if !self.isSaving, self.isSaved,
+                    lastModified > self.lastSavedDate ?? Date.distantFuture
+                {
+                    self.content = content
+                    self.lastSavedDate = lastModified
+                    fileDidChange?(.modified, content)
                 }
             }
-            self.fileWatch?.startMonitoring()
         }
-    }
-
-    deinit {
-        self.fileWatch?.stopMonitoring()
-    }
-
-    enum fileState {
-        case deleted
-        case modified
+        self.fileWatch?.startMonitoring()
     }
 }
 
@@ -132,7 +134,7 @@ class DiffTextEditorInstnace: TextEditorInstance {
         content: String,
         encoding: String.Encoding = .utf8,
         compareWith: String,
-        fileDidChange: ((fileState, String?) -> Void)? = nil
+        fileDidChange: ((FileState, String?) -> Void)? = nil
     ) {
         self.compareWith = compareWith
         super.init(
