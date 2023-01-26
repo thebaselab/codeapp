@@ -98,10 +98,10 @@ class TextEditorInstance: EditorInstanceWithURL {
                 guard let content = try? String(contentsOf: url, encoding: self.encoding) else {
                     return
                 }
-
+                
                 DispatchQueue.main.async {
                     if !self.isSaving, self.isSaved,
-                        lastModified > self.lastSavedDate ?? Date.distantPast
+                        lastModified > self.lastSavedDate ?? Date.distantFuture
                     {
                         self.content = content
                         self.lastSavedDate = lastModified

@@ -79,12 +79,16 @@ class FolderMonitor {
         // Define the block to call when a file change is detected.
         folderMonitorSource?.setEventHandler { [weak self] in
             guard let strongSelf = self else { return }
-            guard
-                let attributes = try? FileManager.default.attributesOfItem(
-                    atPath: strongSelf.url.path)
-            else { return }
-            if let lastModified = attributes[.modificationDate] as? Date {
-                strongSelf.folderDidChange?(lastModified)
+            
+            // #722: There could be a race condition where modificationDate is updated after file change is detected
+            strongSelf.folderMonitorQueue.asyncAfter(deadline: .now() + 0.5){
+                guard
+                    let attributes = try? FileManager.default.attributesOfItem(
+                        atPath: strongSelf.url.path)
+                else { return }
+                if let lastModified = attributes[.modificationDate] as? Date {
+                    strongSelf.folderDidChange?(lastModified)
+                }
             }
         }
         // Define a cancel handler to ensure the directory is closed when the source is cancelled.

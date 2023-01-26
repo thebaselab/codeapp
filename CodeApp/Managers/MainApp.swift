@@ -675,6 +675,9 @@ class MainApp: ObservableObject {
             lastSavedDate: modificationDate,
             // TODO: Update using updateUIView?
             fileDidChange: { [weak self] state, content in
+                if let editor = self?.textEditors.first(where: { $0.url == url }){
+                    editor.lastSavedVersionId += 1
+                }
                 if state == .modified, let content, let self {
                     Task {
                         try await self.monacoInstance.setValueForModel(url: url, value: content)
