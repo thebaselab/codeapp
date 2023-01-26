@@ -709,7 +709,9 @@ class MainApp: ObservableObject {
     func appendAndFocusNewEditor(editor: EditorInstance, alwaysInNewTab: Bool = false) {
         if !alwaysInNewTab {
             if let activeTextEditor {
-                if activeTextEditor.currentVersionId == activeTextEditor.currentVersionId {
+                if activeTextEditor.currentVersionId == 1,
+                   activeTextEditor.isSaved
+                {
                     editors.removeAll { $0 == activeTextEditor }
                 }
             } else {
