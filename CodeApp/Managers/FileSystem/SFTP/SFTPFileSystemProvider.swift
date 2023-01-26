@@ -22,7 +22,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
     var fingerPrint: String? = nil
 
     private var didDisconnect: (Error) -> Void
-    private var session: NMSSHSession
+    private var session: NMSSHSession!
     private let queue = DispatchQueue(label: "sftp.serial.queue")
 
     init?(
@@ -37,10 +37,14 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
             return nil
         }
         self.didDisconnect = didDisconnect
-        session = NMSSHSession(host: host, port: port, andUsername: username)
+        
         super.init()
-
-        session.delegate = self
+        
+        queue.async {
+            self.session = NMSSHSession(host: host, port: port, andUsername: username)
+            self.session.delegate = self
+        }
+        
         self._terminalServiceProvider = SFTPTerminalServiceProvider(
             baseURL: baseURL, cred: cred)
         if let onTerminalData = onTerminalData {

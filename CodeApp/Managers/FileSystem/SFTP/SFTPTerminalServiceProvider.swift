@@ -9,7 +9,7 @@ import Foundation
 import NMSSH
 
 class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
-    private var session: NMSSHSession
+    private var session: NMSSHSession!
     private var didDisconnect: (() -> Void)? = nil
 
     private var onStdout: ((Data) -> Void)? = nil
@@ -24,11 +24,13 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
         else {
             return nil
         }
-        session = NMSSHSession(host: host, port: port, andUsername: username)
         super.init()
-
-        session.delegate = self
-        session.channel.delegate = self
+        
+        queue.async {
+            self.session = NMSSHSession(host: host, port: port, andUsername: username)
+            self.session.delegate = self
+            self.session.channel.delegate = self
+        }
     }
 
     func connect(password: String, usesKey: Bool, completionHandler: @escaping (Error?) -> Void) {
