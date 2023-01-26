@@ -177,6 +177,14 @@ struct RemoteCreateSection: View {
             .padding(7)
             .background(Color.init(id: "input.background"))
             .cornerRadius(15)
+            
+            Button(action: {
+                App.safariManager.showSafari(url: URL(string: "https://code.thebaselab.com/guides/connecting-to-a-remote-server-ssh-ftp#set-up-your-remote-server")!)
+            }){
+                Text("remote.setup_remote_server_on_mac")
+                    .font(.footnote)
+                    .foregroundColor(.blue)
+            }
 
             if serverType == .sftp {
                 Toggle("Use key authentication", isOn: $usesPrivateKey)

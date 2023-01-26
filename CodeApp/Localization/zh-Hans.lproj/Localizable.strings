@@ -443,3 +443,5 @@
 "panel.execution.title" = "执行";
 
 "local.execution.title" = "本地执行";
+
+"remote.setup_remote_server_on_mac" = "在 Mac 上设置远程服务器";

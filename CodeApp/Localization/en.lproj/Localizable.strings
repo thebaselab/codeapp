@@ -344,3 +344,5 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "panel.execution.title" = "Execution";
 
 "local.execution.title" = "Local Execution";
+
+"remote.setup_remote_server_on_mac" = "Setting up a remote server on macOS";

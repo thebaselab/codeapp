@@ -453,3 +453,5 @@
 "panel.execution.title" = "実行";
 
 "local.execution.title" = "ローカル実行";
+
+"remote.setup_remote_server_on_mac" = "Mac でリモートサーバーをセットアップする";

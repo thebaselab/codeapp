@@ -452,3 +452,5 @@
 "panel.execution.title" = "실행";
 
 "local.execution.title" = "로컬 실행";
+
+"remote.setup_remote_server_on_mac" = "맥에서 원격 서버 설정";

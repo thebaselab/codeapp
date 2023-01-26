@@ -452,3 +452,5 @@
 "panel.execution.title" = "Ausführung";
 
 "local.execution.title" = "Lokale Ausführung";
+
+"remote.setup_remote_server_on_mac" = "Remote-Server auf Mac einrichten";
