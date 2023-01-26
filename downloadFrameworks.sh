@@ -62,7 +62,7 @@ unzip -q php.xcframework.zip -d PHP
 rm -f php.xcframework.zip
 
 # NMSSH
-curl -OL https://github.com/thebaselab/NMSSH/releases/download/2.3.1/NMSSH.xcframework.zip
+curl -OL https://github.com/thebaselab/NMSSH/releases/download/2.3.1p/NMSSH.xcframework.zip
 unzip -q NMSSH.xcframework.zip
 rm -f NMSSH.xcframework.zip
 
