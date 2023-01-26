@@ -6,7 +6,11 @@ description: Connect to a self-hosted server and get access to its files and ter
 
 ### Set up your remote server
 
-Before using this feature, you'll need to set up a ssh or ftp server on your computer or server. On a Mac, you can do this by enabling Remote Login and full disk access in the `Sharing` section of System Preferences.
+Before using this feature, you'll need to set up a SSH (SFTP) or FTP server on your computer or server. On a Mac, you can do this by enabling Remote Login and full disk access in the `Sharing` section of System Preferences.
+
+{% hint style="info" %}
+If you are using macOS Ventura, additional configuration might be needed. Please refer to [https://github.com/thebaselab/codeapp/issues/715#issuecomment-1368351403](https://github.com/thebaselab/codeapp/issues/715#issuecomment-1368351403)
+{% endhint %}
 
 ![Enabling SSH server on a Mac](<../.gitbook/assets/image (6).png>)
 

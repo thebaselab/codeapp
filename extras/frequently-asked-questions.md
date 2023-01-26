@@ -28,6 +28,12 @@ You'll need to set your credentials at `Settings > Version Control > Authenticat
 
 You'll need to set the editor's root folder to another location. You can do this by selecting the configure folder tool located in file explorer. (Folder icon with a gear)
 
+### Remote Connection
+
+**I can't connect to a macOS Ventura SSH server using key authentication**
+
+Currently, there is a compatibility issue with macOS Ventura and additional configuration is needed. Please refer to [https://github.com/thebaselab/codeapp/issues/715#issuecomment-1368351403](https://github.com/thebaselab/codeapp/issues/715#issuecomment-1368351403)
+
 ### Others
 
 #### How to change display language?
