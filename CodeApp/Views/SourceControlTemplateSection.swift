@@ -13,7 +13,11 @@ struct SourceControlTemplateSection: View {
     let onClone: (String) async throws -> Void
 
     var body: some View {
-        Section("source_control.community_templates") {
+        Section(
+            header:
+                Text("source_control.community_templates")
+                    .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+        ) {
             if let templates = App.searchManager.templates {
                 ForEach(templates, id: \.html_url) { item in
                     GitHubSearchResultCell(item: item, onClone: onClone)
