@@ -104,24 +104,26 @@ class TextEditorInstance: EditorInstanceWithURL {
         self.lastSavedDate = lastSavedDate
         super.init(view: AnyView(editor), title: url.lastPathComponent, url: url)
 
-        self.fileWatch?.folderDidChange = { [weak self] lastModified in
-            guard let self = self else { return }
+        // Disable this until #722 is fixed.
+        
+        // self.fileWatch?.folderDidChange = { [weak self] lastModified in
+        //     guard let self = self else { return }
 
-            guard let content = try? String(contentsOf: url, encoding: self.encoding) else {
-                return
-            }
+        //     guard let content = try? String(contentsOf: url, encoding: self.encoding) else {
+        //         return
+        //     }
             
-            DispatchQueue.main.async {
-                if !self.isSaving, self.isSaved,
-                    lastModified > self.lastSavedDate ?? Date.distantFuture
-                {
-                    self.content = content
-                    self.lastSavedDate = lastModified
-                    fileDidChange?(.modified, content)
-                }
-            }
-        }
-        self.fileWatch?.startMonitoring()
+        //     DispatchQueue.main.async {
+        //         if !self.isSaving, self.isSaved,
+        //             lastModified > self.lastSavedDate ?? Date.distantFuture
+        //         {
+        //             self.content = content
+        //             self.lastSavedDate = lastModified
+        //             fileDidChange?(.modified, content)
+        //         }
+        //     }
+        // }
+        // self.fileWatch?.startMonitoring()
     }
 }
 
