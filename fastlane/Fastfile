@@ -60,6 +60,8 @@ platform :ios do
       sh(%Q[echo 'let JUDGE0_KEY = "#{JUDGE0_KEY}"' >> CodeApp/Constants/Secrets.swift])
     end
 
+    run_tests(scheme: "Code UI")
+
     match(
       type: 'appstore',
       app_identifier: ["#{DEVELOPER_APP_IDENTIFIER}", "#{DEVELOPER_APP_EXTENSION_IDENTIFIER}"],
@@ -91,5 +93,12 @@ platform :ios do
     )
 
     delete_temp_keychain(keychain_name)
+  end
+
+  lane :tests do
+    Dir.chdir("..") do
+      sh("./downloadFrameworks.sh")
+    end
+    run_tests(scheme: "Code UI")
   end
 end
