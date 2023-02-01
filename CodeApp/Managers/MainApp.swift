@@ -707,6 +707,10 @@ class MainApp: ObservableObject {
 
     @MainActor
     func appendAndFocusNewEditor(editor: EditorInstance, alwaysInNewTab: Bool = false) {
+        var alwaysInNewTab = alwaysInNewTab
+        if alwaysOpenInNewTab {
+            alwaysInNewTab = true
+        }
         if !alwaysInNewTab {
             if let activeTextEditor {
                 if activeTextEditor.currentVersionId == 1,
