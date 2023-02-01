@@ -16,7 +16,7 @@ struct SourceControlTemplateSection: View {
         Section(
             header:
                 Text("source_control.community_templates")
-                    .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
+                .foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
         ) {
             if let templates = App.searchManager.templates {
                 ForEach(templates, id: \.html_url) { item in

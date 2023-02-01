@@ -37,14 +37,14 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
             return nil
         }
         self.didDisconnect = didDisconnect
-        
+
         super.init()
-        
+
         queue.async {
             self.session = NMSSHSession(host: host, port: port, andUsername: username)
             self.session.delegate = self
         }
-        
+
         self._terminalServiceProvider = SFTPTerminalServiceProvider(
             baseURL: baseURL, cred: cred)
         if let onTerminalData = onTerminalData {

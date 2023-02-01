@@ -25,7 +25,7 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
             return nil
         }
         super.init()
-        
+
         queue.async {
             self.session = NMSSHSession(host: host, port: port, andUsername: username)
             self.session.delegate = self

@@ -20,20 +20,26 @@ class TerminalExtension: CodeAppExtension {
 
 private struct ToolbarView: View {
     @EnvironmentObject var App: MainApp
-    
+
     var body: some View {
         HStack(spacing: 12) {
-            Button(action: {
-                App.terminalInstance.sendInterrupt()
-            } , label: {
-              Text("^C")
-            }).keyboardShortcut("c", modifiers: [.control])
-            
-            Button(action: {
-                App.terminalInstance.reset()
-            }, label: {
-                Image(systemName: "trash")
-            }).keyboardShortcut("k", modifiers: [.command])
+            Button(
+                action: {
+                    App.terminalInstance.sendInterrupt()
+                },
+                label: {
+                    Text("^C")
+                }
+            ).keyboardShortcut("c", modifiers: [.control])
+
+            Button(
+                action: {
+                    App.terminalInstance.reset()
+                },
+                label: {
+                    Image(systemName: "trash")
+                }
+            ).keyboardShortcut("k", modifiers: [.command])
         }
     }
 }
@@ -66,7 +72,9 @@ private struct TerminalView: View {
                             for: Notification.Name("terminal.focus"),
                             object: nil),
                         perform: { notification in
-                            guard let sceneIdentifier = notification.userInfo?["sceneIdentifier"] as? UUID,
+                            guard
+                                let sceneIdentifier = notification.userInfo?["sceneIdentifier"]
+                                    as? UUID,
                                 sceneIdentifier != App.sceneIdentifier
                             else { return }
                             App.terminalInstance.blur()

@@ -24,13 +24,13 @@ private struct MarkdownPreview: UIViewRepresentable {
 }
 
 class MarkdownEditorInstance: EditorInstanceWithURL {
-    
+
     let mdView = MarkdownView()
-    
-    func load(content: String){
+
+    func load(content: String) {
         mdView.load(markdown: content, backgroundColor: UIColor(id: "editor.background"))
     }
-    
+
     init(url: URL, content: String, title: String) {
         super.init(view: AnyView(MarkdownPreview(view: mdView).id(UUID())), title: title, url: url)
         load(content: content)
@@ -49,7 +49,8 @@ class MarkdownViewerExtension: CodeAppExtension {
                 else {
                     return
                 }
-                let instance = MarkdownEditorInstance(url: url,
+                let instance = MarkdownEditorInstance(
+                    url: url,
                     content: content, title: "Preview: " + url.lastPathComponent)
                 instance.fileWatch?.folderDidChange = { _ in
                     Task {
@@ -62,7 +63,7 @@ class MarkdownViewerExtension: CodeAppExtension {
                     }
                 }
                 instance.fileWatch?.startMonitoring()
-                
+
                 DispatchQueue.main.async {
                     app.appendAndFocusNewEditor(editor: instance, alwaysInNewTab: true)
                 }

@@ -55,8 +55,8 @@ private struct ImageView: View {
 }
 
 class ImageViewerExtension: CodeAppExtension {
-    
-    private func loadImageToStorage(url: URL, app: MainApp, storage: Storage){
+
+    private func loadImageToStorage(url: URL, app: MainApp, storage: Storage) {
         app.workSpaceStorage.contents(
             at: url,
             completionHandler: { data, error in
@@ -80,7 +80,7 @@ class ImageViewerExtension: CodeAppExtension {
                     title: url.lastPathComponent,
                     url: url
                 )
-                
+
                 self?.loadImageToStorage(url: url, app: app, storage: storage)
                 editorInstance.fileWatch?.folderDidChange = { [weak self] _ in
                     DispatchQueue.main.async {

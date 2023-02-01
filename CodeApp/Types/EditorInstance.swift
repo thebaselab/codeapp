@@ -29,12 +29,12 @@ class EditorInstance: ObservableObject, Identifiable, Equatable, Hashable {
 }
 
 class EditorInstanceWithURL: EditorInstance {
-    
+
     enum FileState {
         case deleted
         case modified
     }
-    
+
     var url: URL {
         didSet {
             title = url.lastPathComponent
@@ -61,14 +61,14 @@ class EditorInstanceWithURL: EditorInstance {
 
     init(view: AnyView, title: String, url: URL) {
         self.url = url
-        
+
         if url.scheme == "file" {
             self.fileWatch = FolderMonitor(url: url)
         }
-        
+
         super.init(view: view, title: title)
     }
-    
+
     deinit {
         self.fileWatch?.stopMonitoring()
     }
@@ -105,14 +105,14 @@ class TextEditorInstance: EditorInstanceWithURL {
         super.init(view: AnyView(editor), title: url.lastPathComponent, url: url)
 
         // Disable this until #722 is fixed.
-        
+
         // self.fileWatch?.folderDidChange = { [weak self] lastModified in
         //     guard let self = self else { return }
 
         //     guard let content = try? String(contentsOf: url, encoding: self.encoding) else {
         //         return
         //     }
-            
+
         //     DispatchQueue.main.async {
         //         if !self.isSaving, self.isSaved,
         //             lastModified > self.lastSavedDate ?? Date.distantFuture

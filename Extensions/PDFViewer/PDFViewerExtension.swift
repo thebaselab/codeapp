@@ -46,9 +46,9 @@ private class PDFEditorInstance: EditorInstanceWithURL {
 }
 
 class PDFViewerExtension: CodeAppExtension {
-    
-    private func loadPDFToStorage(url: URL, app: MainApp, storage: Storage){
-        app.workSpaceStorage.contents(at: url) {data, error in
+
+    private func loadPDFToStorage(url: URL, app: MainApp, storage: Storage) {
+        app.workSpaceStorage.contents(at: url) { data, error in
             if let data {
                 storage.pdfView?.document = PDFDocument(data: data)
             }
@@ -73,7 +73,7 @@ class PDFViewerExtension: CodeAppExtension {
                     url: url
                 )
                 editorInstance.pdfView = pdfView
-                
+
                 self?.loadPDFToStorage(url: url, app: app, storage: storage)
                 editorInstance.fileWatch?.folderDidChange = { _ in
                     self?.loadPDFToStorage(url: url, app: app, storage: storage)

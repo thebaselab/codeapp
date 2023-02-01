@@ -46,7 +46,8 @@ class RemoteExecutionExtension: CodeAppExtension {
                 guard let textEditor = app.activeEditor as? TextEditorInstance else {
                     return false
                 }
-                return textEditor.url.isFileURL && languageList.map { $0.value[1] }.contains(textEditor.languageIdentifier)
+                return textEditor.url.isFileURL
+                    && languageList.map { $0.value[1] }.contains(textEditor.languageIdentifier)
             }
         )
         contribution.toolbarItem.registerItem(item: toolbarItem)
@@ -124,7 +125,8 @@ private struct PanelRemoteExecutionToolbarView: View {
             options: [
                 .init(titleKey: "panel.execution.input", value: .input),
                 .init(titleKey: "panel.execution.output", value: .output),
-                .init(titleKey: "panel.execution.split_view", value: .split)]
+                .init(titleKey: "panel.execution.split_view", value: .split),
+            ]
         )
     }
 }

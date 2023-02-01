@@ -540,11 +540,11 @@ class MainApp: ObservableObject {
                 onFinish()
                 return
             }
-            
+
             DispatchQueue.main.async {
                 let indexedDictionary = Dictionary(uniqueKeysWithValues: indexed)
                 let workingDictionary = Dictionary(uniqueKeysWithValues: worktree)
-                
+
                 if hasRemote {
                     self.remote = "origin"
                 } else {
@@ -553,10 +553,12 @@ class MainApp: ObservableObject {
                 self.branch = branch
                 self.indexedResources = indexedDictionary
                 self.workingResources = workingDictionary
-                
-                self.gitTracks = indexedDictionary.merging(workingDictionary, uniquingKeysWith: { current, _ in
-                    current
-                })
+
+                self.gitTracks = indexedDictionary.merging(
+                    workingDictionary,
+                    uniquingKeysWith: { current, _ in
+                        current
+                    })
             }
 
             self.workSpaceStorage.gitServiceProvider?.aheadBehind(error: {
@@ -714,7 +716,7 @@ class MainApp: ObservableObject {
         if !alwaysInNewTab {
             if let activeTextEditor {
                 if activeTextEditor.currentVersionId == 1,
-                   activeTextEditor.isSaved
+                    activeTextEditor.isSaved
                 {
                     editors.removeAll { $0 == activeTextEditor }
                 }
