@@ -474,7 +474,7 @@
 		942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E32062808805F00233441 /* SearchUnsupportedSection.swift */; };
 		94369AFF25E3B933008419A0 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94369AFE25E3B933008419A0 /* Media.xcassets */; };
 		94369B0125E3B933008419A0 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94369B0025E3B933008419A0 /* ActionRequestHandler.swift */; };
-		94369B0725E3B933008419A0 /* extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		94369B0725E3B933008419A0 /* extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		94369B1325E3DE02008419A0 /* NodeRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94369B1225E3DE02008419A0 /* NodeRunner.mm */; };
 		94369B4A25EAB262008419A0 /* npm.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94369B4925EAB175008419A0 /* npm.bundle */; };
 		9437153F26BF9FC3000376FB /* RemoteContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437153E26BF9FC3000376FB /* RemoteContainer.swift */; };
@@ -774,25 +774,25 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		94196B13280316C7008AAEB2 /* Embed App Extensions */ = {
+		94196B13280316C7008AAEB2 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		94369B0B25E3B933008419A0 /* Embed App Extensions */ = {
+		94369B0B25E3B933008419A0 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				94369B0725E3B933008419A0 /* extension.appex in Embed App Extensions */,
+				94369B0725E3B933008419A0 /* extension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		94A77817257BC13F008FE7B2 /* Embed Frameworks */ = {
@@ -2708,7 +2708,7 @@
 				9419698E280316C7008AAEB2 /* Frameworks */,
 				9419699A280316C7008AAEB2 /* Resources */,
 				941969AA280316C7008AAEB2 /* Embed Frameworks */,
-				94196B13280316C7008AAEB2 /* Embed App Extensions */,
+				94196B13280316C7008AAEB2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -2754,7 +2754,7 @@
 				944EEBED2563C381009D77FE /* Frameworks */,
 				944EEBEE2563C381009D77FE /* Resources */,
 				94A77817257BC13F008FE7B2 /* Embed Frameworks */,
-				94369B0B25E3B933008419A0 /* Embed App Extensions */,
+				94369B0B25E3B933008419A0 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -2810,7 +2810,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					9419692E280316C7008AAEB2 = {
 						LastSwiftMigration = 1330;
