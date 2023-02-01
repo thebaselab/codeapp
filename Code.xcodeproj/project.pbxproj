@@ -87,7 +87,6 @@
 		94196990280316C7008AAEB2 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 94196931280316C7008AAEB2 /* ZIPFoundation */; };
 		94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; };
 		94196993280316C7008AAEB2 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 94196935280316C7008AAEB2 /* MarkdownView */; };
-		94196994280316C7008AAEB2 /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; };
 		94196995280316C7008AAEB2 /* Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 94196933280316C7008AAEB2 /* Dynamic */; };
 		94196998280316C7008AAEB2 /* SwiftGit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 94196939280316C7008AAEB2 /* SwiftGit2 */; };
 		9419699B280316C7008AAEB2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBFA2563C386009D77FE /* Preview Assets.xcassets */; };
@@ -105,7 +104,6 @@
 		941969A8280316C7008AAEB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBF72563C386009D77FE /* Assets.xcassets */; };
 		941969AC280316C7008AAEB2 /* network_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AB25F5518700F1EF4E /* network_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		941969AD280316C7008AAEB2 /* freetype.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94F2FEA326A2D44D007EBC6D /* freetype.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		94196A26280316C7008AAEB2 /* openssl.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94196A2E280316C7008AAEB2 /* NodeMobile.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94196B0A280316C7008AAEB2 /* libpng.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D7DEC02631D0CA00FA0760 /* libpng.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94196B0B280316C7008AAEB2 /* harfbuzz.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D7DED42631D16C00FA0760 /* harfbuzz.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -725,7 +723,6 @@
 		9FE3E2A3298A167800F63DD0 /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; };
 		9FE3E2A5298A167F00F63DD0 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A4298A167F00F63DD0 /* MarkdownView */; };
 		9FE3E2A7298A168400F63DD0 /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A6298A168400F63DD0 /* GCDWebServers */; };
-		9FE3E2A8298A168B00F63DD0 /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D721E3268DBB94007A63BD /* openssl.xcframework */; };
 		9FE3E2AA298A169300F63DD0 /* Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A9298A169300F63DD0 /* Dynamic */; };
 		9FE3E2AC298A169B00F63DD0 /* SwiftGit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2AB298A169A00F63DD0 /* SwiftGit2 */; };
 		9FE3E2AD298A16A300F63DD0 /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
@@ -761,7 +758,6 @@
 			files = (
 				941969AC280316C7008AAEB2 /* network_ios.xcframework in Embed Frameworks */,
 				941969AD280316C7008AAEB2 /* freetype.xcframework in Embed Frameworks */,
-				94196A26280316C7008AAEB2 /* openssl.xcframework in Embed Frameworks */,
 				94465DDD28094920001DACDF /* NMSSH.xcframework in Embed Frameworks */,
 				94196A2E280316C7008AAEB2 /* NodeMobile.xcframework in Embed Frameworks */,
 				94196B0A280316C7008AAEB2 /* libpng.xcframework in Embed Frameworks */,
@@ -1743,7 +1739,6 @@
 				94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */,
 				94196993280316C7008AAEB2 /* MarkdownView in Frameworks */,
 				94127C43280336B6008C7F82 /* GCDWebServers in Frameworks */,
-				94196994280316C7008AAEB2 /* openssl.xcframework in Frameworks */,
 				94196995280316C7008AAEB2 /* Dynamic in Frameworks */,
 				94196998280316C7008AAEB2 /* SwiftGit2 in Frameworks */,
 				94465DDC28094920001DACDF /* NMSSH.xcframework in Frameworks */,
@@ -1783,7 +1778,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FE3E2AD298A16A300F63DD0 /* NMSSH.xcframework in Frameworks */,
-				9FE3E2A8298A168B00F63DD0 /* openssl.xcframework in Frameworks */,
 				9FE3E2A3298A167800F63DD0 /* ios_system.xcframework in Frameworks */,
 				9FE3E2A7298A168400F63DD0 /* GCDWebServers in Frameworks */,
 				9FE3E29C298A163200F63DD0 /* AppReceiptValidator in Frameworks */,
