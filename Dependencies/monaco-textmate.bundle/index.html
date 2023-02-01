@@ -415,6 +415,13 @@
         monaco.editor.onWillDisposeModel((model) => {
           monaco.editor.setModelMarkers(model, "code.app.native", []);
         });
+
+        instance.getContribution('editor.linkDetector').openerService._defaultExternalOpener.openExternal = (url) => {
+          window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+              Event: "Open URL",
+              url: url
+          })
+        };
       }
 
       var lastOpenedURI = "";

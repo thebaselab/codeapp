@@ -504,6 +504,15 @@ struct MonacoEditor: UIViewRepresentable {
                         }
                     }
                 }
+            case "Open URL":
+                let urlString = result["url"] as! String
+                if let url = URL(string: urlString) {
+                    if url.scheme == "http" || url.scheme == "https" {
+                        control.App.safariManager.showSafari(url: url)
+
+                    }
+                }
+
             default:
                 print("[Error] \(event) not handled")
             }
