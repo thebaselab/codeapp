@@ -20,6 +20,7 @@ public struct SettingsFontPicker: UIViewControllerRepresentable {
         let configuration = UIFontPickerViewController.Configuration()
         configuration.includeFaces = false
         configuration.displayUsingSystemFont = false
+        configuration.filteredTraits = .traitMonoSpace
 
         let vc = UIFontPickerViewController(configuration: configuration)
         vc.delegate = context.coordinator
