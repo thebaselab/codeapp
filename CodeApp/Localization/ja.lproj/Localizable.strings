@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.3 (2023年 1月)**
+##### **v1.4.4 (2023年 2月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### v1.4.4 (2023年 2月)
+- フォント合字を無効にするオプション
+
 ### v1.4.3 (2023年 1月)
 - バグの修正
 - 日本語化

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.3 (January 2023)**
+##### **v1.4.4 (February 2023)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### v1.4.4 (February 2023)
+- Option to disable font ligatures
+
 ### v1.4.3 (January 2023)
 - Bug fixes
 - Japanese localization

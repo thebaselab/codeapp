@@ -32,7 +32,7 @@
             $extensionItem.attachments,
             $attachment,
             (
-            ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.thebaselab.source&quot;
+            ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.thebaselab.source"
             )
             ).@count == 1
             ).@count == 1

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.3 (2023년 1월)**
+##### **v1.4.4 (2023년 2월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### v1.4.4 (2023년 2월)
+- 글꼴 합자를 비활성화하는 옵션
+
 ### v1.4.3 (2023년 1월)
 - 버그 수정
 - 일본어 현지화
