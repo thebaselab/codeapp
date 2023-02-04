@@ -387,6 +387,7 @@
 "credentials.note" = "Hinweis: Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.";
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
+"settings.editor.font.ligatures" = "Schrift Ligaturen";
 
 "errors.script_already_running" = "Ein Skript wird bereits ausgeführt. Beenden Sie es, bevor Sie ein anderes ausführen.";
 "errors.fs.not_implemented" = "Diese Funktion ist noch nicht implementiert.";

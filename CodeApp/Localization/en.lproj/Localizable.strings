@@ -278,6 +278,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "credentials.note" = "Note: Credentials are stored inside the Secure Enclave in your device. We do not have access to it.";
 "settings.editor.font" = "Font";
 "settings.editor.font.reset" = "Reset to default";
+"settings.editor.font.ligatures" = "Font Ligatures";
 
 "errors.script_already_running" = "A script is already running. Finish it before running another one.";
 "errors.fs.not_implemented" = "Operation not implemented";

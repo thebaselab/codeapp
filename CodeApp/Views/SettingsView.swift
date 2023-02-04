@@ -14,6 +14,7 @@ struct SettingsView: View {
 
     @AppStorage("editorFontSize") var fontSize: Int = 14
     @AppStorage("editorFontFamily") var fontFamily: String = "Menlo"
+    @AppStorage("fontLigatures") var fontLigatures: Bool = false
     @AppStorage("quoteAutoCompletionEnabled") var quoteAutoCompleteEnabled: Bool = true
     @AppStorage("suggestionEnabled") var suggestionEnabled: Bool = true
     @AppStorage("editorMiniMapEnabled") var miniMapEnabled: Bool = true
@@ -144,6 +145,12 @@ struct SettingsView: View {
                         App.monacoInstance.executeJavascript(
                             command: "editor.updateOptions({fontFamily: \"\(value)\"})")
                     }
+
+                    Toggle("settings.editor.font.ligatures", isOn: $fontLigatures)
+                        .onChange(of: fontLigatures) { value in
+                            App.monacoInstance.executeJavascript(
+                                command: "editor.updateOptions({fontLigatures: \(value)})")
+                        }
 
                     NavigationLink(
                         destination:

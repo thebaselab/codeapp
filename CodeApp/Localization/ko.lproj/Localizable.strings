@@ -387,6 +387,7 @@
 "credentials.note" = "참고: 자격 증명은 장치의 Secure Enclave 내부에 저장됩니다. 우리는 그것에 접근할 수 없습니다.";
 "settings.editor.font" = "편집기 글꼴";
 "settings.editor.font.reset" = "기본값";
+"settings.editor.font.ligatures" = "글꼴 합자";
 
 "errors.script_already_running" = "스크립트가 이미 실행 중입니다. 다른 것을 실행하기 전에 완료하십시오.";
 "errors.fs.not_implemented" = "이 기능은 아직 구현되지 않았습니다.";

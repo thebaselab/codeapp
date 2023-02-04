@@ -18,6 +18,7 @@ struct MonacoEditor: UIViewRepresentable {
 
     @AppStorage("editorFontSize") var fontSize: Int = 14
     @AppStorage("editorFontFamily") var fontFamily: String = "Menlo"
+    @AppStorage("fontLigatures") var fontLigatures: Bool = false
     @AppStorage("quoteAutoCompletionEnabled") var bracketCompletionEnabled: Bool = true
     @AppStorage("editorMiniMapEnabled") var miniMapEnabled: Bool = true
     @AppStorage("editorLineNumberEnabled") var editorLineNumberEnabled: Bool = true
@@ -89,7 +90,9 @@ struct MonacoEditor: UIViewRepresentable {
 
         executeJavascript(command: "editor.updateOptions({fontSize: \(String(fontSize))})")
         executeJavascript(
-            command: "editor.updateOptions({fontFamily: \"\(fontFamily)\", fontLigatures: true})")
+            command: "editor.updateOptions({fontFamily: \"\(fontFamily)\"})")
+        executeJavascript(
+            command: "editor.updateOptions({fontLigatures: \(String(fontLigatures))})")
 
         if !bracketCompletionEnabled {
             executeJavascript(command: "editor.updateOptions({ autoClosingBrackets: false });")
