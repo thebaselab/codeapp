@@ -35,6 +35,7 @@ struct SettingsView: View {
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
     @AppStorage("communityTemplatesEnabled") var communityTemplatesEnabled = true
+    @AppStorage("showAllFonts") var showAllFonts = false
 
     @State var showsEraseAlert: Bool = false
     @State var showReceiptInformation: Bool = false
@@ -124,9 +125,12 @@ struct SettingsView: View {
                 Section(header: Text(NSLocalizedString("Editor", comment: ""))) {
 
                     NavigationLink(
-                        destination: SettingsFontPicker(onFontPick: { descriptor in
-                            fontFamily = descriptor.object(forKey: .family) as! String
-                        }).toolbar {
+                        destination: SettingsFontPicker(
+                            showAllFonts: showAllFonts,
+                            onFontPick: { descriptor in
+                                fontFamily = descriptor.object(forKey: .family) as! String
+                            }
+                        ).toolbar {
                             Button("settings.editor.font.reset") {
                                 fontFamily = "Menlo"
                             }
@@ -145,6 +149,8 @@ struct SettingsView: View {
                         App.monacoInstance.executeJavascript(
                             command: "editor.updateOptions({fontFamily: \"\(value)\"})")
                     }
+
+                    Toggle("settings.editor.font.show_all_fonts", isOn: $showAllFonts)
 
                     Toggle("settings.editor.font.ligatures", isOn: $fontLigatures)
                         .onChange(of: fontLigatures) { value in

@@ -6,11 +6,8 @@ import UIKit
 public struct SettingsFontPicker: UIViewControllerRepresentable {
 
     @Environment(\.presentationMode) var presentationMode
-    private let onFontPick: (UIFontDescriptor) -> Void
-
-    public init(onFontPick: @escaping (UIFontDescriptor) -> Void) {
-        self.onFontPick = onFontPick
-    }
+    @State var showAllFonts: Bool
+    var onFontPick: (UIFontDescriptor) -> Void
 
     public func makeUIViewController(
         context: UIViewControllerRepresentableContext<SettingsFontPicker>
@@ -20,7 +17,7 @@ public struct SettingsFontPicker: UIViewControllerRepresentable {
         let configuration = UIFontPickerViewController.Configuration()
         configuration.includeFaces = false
         configuration.displayUsingSystemFont = false
-        configuration.filteredTraits = .traitMonoSpace
+        configuration.filteredTraits = showAllFonts ? [] : .traitMonoSpace
 
         let vc = UIFontPickerViewController(configuration: configuration)
         vc.delegate = context.coordinator

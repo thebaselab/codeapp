@@ -391,6 +391,7 @@
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
 "settings.editor.font.ligatures" = "Schrift Ligaturen";
+"settings.editor.font.show_all_fonts" = "Alle Schriftarten anzeigen";
 
 "errors.script_already_running" = "Ein Skript wird bereits ausgeführt. Beenden Sie es, bevor Sie ein anderes ausführen.";
 "errors.fs.not_implemented" = "Diese Funktion ist noch nicht implementiert.";

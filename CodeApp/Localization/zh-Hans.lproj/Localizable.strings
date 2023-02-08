@@ -382,6 +382,7 @@
 "settings.editor.font" = "编辑器字体";
 "settings.editor.font.reset" = "重置";
 "settings.editor.font.ligatures" = "合字";
+"settings.editor.font.show_all_fonts" = "显示所有字体";
 
 "errors.script_already_running" = "脚本已在运行。 在运行另一个之前完成它。";
 "errors.fs.not_implemented" = "文件系统不支持此操作。";
