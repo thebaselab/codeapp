@@ -20,6 +20,10 @@ struct RemoteHost: Codable {
     var displayName: String?
     var privateKeyContentKeychainID: String?
     var privateKeyPath: String?
+
+    var rowDisplayName: String {
+        displayName ?? URL(string: self.url)?.host ?? ""
+    }
 }
 
 enum RemoteAuthenticationMode {

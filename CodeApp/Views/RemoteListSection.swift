@@ -15,6 +15,7 @@ struct RemoteListSection: View {
     let onRemoveHost: (RemoteHost) -> Void
     let onConnectToHost: (RemoteHost, () -> Void) async throws -> Void
     let onConnectToHostWithCredentials: (RemoteHost, URLCredential) async throws -> Void
+    let onRenameHost: (RemoteHost, String) -> Void
 
     var body: some View {
         Section(
@@ -37,6 +38,9 @@ struct RemoteListSection: View {
                     },
                     onConnectWithCredentials: { cred in
                         try await onConnectToHostWithCredentials(host, cred)
+                    },
+                    onRenameHost: { name in
+                        onRenameHost(host, name)
                     }
                 )
             }

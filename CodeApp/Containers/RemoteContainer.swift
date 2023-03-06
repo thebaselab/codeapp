@@ -54,6 +54,14 @@ struct RemoteContainer: View {
         }
     }
 
+    func onRenameHost(host: RemoteHost, name: String) {
+        guard let hostIndexToModify = hosts.firstIndex(where: { $0.url == host.url }) else {
+            return
+        }
+        hosts[hostIndexToModify].displayName = name.isEmpty ? nil : name
+        UserDefaults.standard.remoteHosts = hosts
+    }
+
     func onConnectToHost(host: RemoteHost, onRequestCredentials: () -> Void) async throws {
         guard let hostUrl = URL(string: host.url) else {
             throw RemoteHostError.invalidUrl
@@ -141,7 +149,8 @@ struct RemoteContainer: View {
                 } else {
                     RemoteListSection(
                         hosts: hosts, onRemoveHost: onRemoveHost, onConnectToHost: onConnectToHost,
-                        onConnectToHostWithCredentials: onConnectToHostWithCredentials)
+                        onConnectToHostWithCredentials: onConnectToHostWithCredentials,
+                        onRenameHost: onRenameHost)
                     RemoteCreateSection(
                         hosts: hosts,
                         onConnectToHostWithCredentials: onConnectToHostWithCredentials,
