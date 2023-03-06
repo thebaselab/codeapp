@@ -40,7 +40,8 @@ class RemoteExecutionExtension: CodeAppExtension {
                     await app.saveCurrentFile()
 
                     self.storage.runCode(
-                        directoryURL: textEditor.url, source: textEditor.content, language: languageCode
+                        directoryURL: textEditor.url, source: textEditor.content,
+                        language: languageCode
                     )
                 }
             },
