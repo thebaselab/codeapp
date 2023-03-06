@@ -36,9 +36,13 @@ class RemoteExecutionExtension: CodeAppExtension {
                 else {
                     return
                 }
-                self.storage.runCode(
-                    directoryURL: textEditor.url, source: textEditor.content, language: languageCode
-                )
+                Task {
+                    await app.saveCurrentFile()
+
+                    self.storage.runCode(
+                        directoryURL: textEditor.url, source: textEditor.content, language: languageCode
+                    )
+                }
             },
             shortCut: .init("r", modifiers: [.command]),
             panelToFocusOnTap: PANEL_ID,
