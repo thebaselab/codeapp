@@ -119,7 +119,11 @@ struct RemoteCreateSection: View {
 
                     Picker("Protocol", selection: $serverType) {
                         ForEach(RemoteType.allCases, id: \.self) { type in
-                            Text(type.rawValue.uppercased())
+                            if type == .sftp {
+                                Text("SSH")
+                            } else {
+                                Text(type.rawValue.uppercased())
+                            }
                         }
                     }
                     .pickerStyle(MenuPickerStyle())

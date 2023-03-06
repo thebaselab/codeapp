@@ -11,7 +11,7 @@ struct RemoteTypeLabel: View {
     let type: RemoteType
 
     var body: some View {
-        Text(type.rawValue.uppercased())
+        Text(type == .sftp ? "SSH" : type.rawValue.uppercased())
             .font(.system(size: 12, weight: .medium, design: .monospaced))
             .foregroundColor(Color.gray)
             .padding(2)
