@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.4 (2023 年 2 月)**
+##### **v1.4.4 (2023 年 3 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,8 +23,9 @@
 
 "Changelog.message" =
 "
-### v1.4.4 (2023 年 2 月)
+### v1.4.4 (2023 年 3 月)
 - 启用字体连字的选项
+- 内存中的 SSH 私钥
 
 ### v1.4.3 (2023 年 1 月)
 - Bug 修复
@@ -449,4 +450,6 @@
 
 "local.execution.title" = "本地执行";
 
-"remote.setup_remote_server_on_mac" = "在 Mac 上设置远程服务器";
+"remote.setup_remote_server" = "有关远程访问功能的文档";
+"remote.private_key_content" = "私钥内容";
+"remote.setup_note" = "要生成密钥，请在终端中运行 ssh-keygen。如果没有密钥密码，请留空。";

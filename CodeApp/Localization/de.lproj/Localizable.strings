@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.4 (February 2023)**
+##### **v1.4.4 (March 2023)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,8 +23,9 @@
 
 "Changelog.message" =
 "
-### v1.4.4 (February 2023)
+### v1.4.4 (March 2023)
 - Option zum Deaktivieren von Schriftligaturen
+- Privater In-Memory-SSH-Schlüssel
 
 ### v1.4.3 (January 2023)
 - Fehlerbehebung
@@ -458,4 +459,6 @@
 
 "local.execution.title" = "Lokale Ausführung";
 
-"remote.setup_remote_server_on_mac" = "Remote-Server auf Mac einrichten";
+"remote.setup_remote_server" = "Dokumentation zur Fernzugriffsfunktion";
+"remote.private_key_content" = "Inhalt des privaten Schlüssels";
+"remote.setup_note" = "Um Schlüsselpaare zu generieren, führen Sie ssh-keygen im Terminal aus. Lassen Sie die Passphrase leer, falls keine vorhanden ist.";

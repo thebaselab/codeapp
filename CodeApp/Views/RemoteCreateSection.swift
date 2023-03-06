@@ -13,6 +13,7 @@ struct RemoteCreateSection: View {
         case port
         case username
         case password
+        case privateKeyContent
     }
 
     let hosts: [RemoteHost]
@@ -26,8 +27,7 @@ struct RemoteCreateSection: View {
     @State var serverType: RemoteType = .sftp
     @State var address: String = ""
     @State var password: String = ""
-    @State var privateKey: String = ""
-    @State var privateKeyURL: String = ""
+    @State var privateKeyContent: String = ""
     @State var usesPrivateKey: Bool = false
     @State var showFileImporter: Bool = false
     @State var port: String = "22"
@@ -42,8 +42,7 @@ struct RemoteCreateSection: View {
         serverType = .sftp
         address = ""
         password = ""
-        privateKey = ""
-        privateKeyURL = ""
+        privateKeyContent = ""
         usesPrivateKey = false
         showFileImporter = false
         port = "22"
@@ -80,29 +79,30 @@ struct RemoteCreateSection: View {
             return
         }
 
+        let privateKeyContentKeyChainId = UUID().uuidString
         let cred = URLCredential(
             user: username, password: password, persistence: .none)
         let remoteHost = RemoteHost(
-            url: url.absoluteString, useKeyAuth: usesPrivateKey)
+            url: url.absoluteString, useKeyAuth: false,
+            privateKeyContentKeychainID: usesPrivateKey ? privateKeyContentKeyChainId : nil)
+
+        if usesPrivateKey {
+            KeychainAccessor.shared.storeObject(
+                for: privateKeyContentKeyChainId, value: privateKeyContent)
+        }
 
         Task {
-            try await onConnectToHostWithCredentials(remoteHost, cred)
-            onSaveHost(remoteHost)
-            if saveCredentials {
-                try onSaveCredentialsForHost(remoteHost, cred)
+            do {
+                try await onConnectToHostWithCredentials(remoteHost, cred)
+                onSaveHost(remoteHost)
+                if saveCredentials {
+                    try onSaveCredentialsForHost(remoteHost, cred)
+                }
+                resetAllFields()
+            } catch {
+                KeychainAccessor.shared.removeObjectForKey(for: privateKeyContentKeyChainId)
             }
-            resetAllFields()
         }
-    }
-
-    func showPublicKey() {
-        let publicKeyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa.pub")
-        App.openFile(url: publicKeyUrl)
-    }
-
-    func reloadKey() {
-        let keyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa")
-        hasSSHKey = FileManager.default.fileExists(atPath: keyUrl.path)
     }
 
     var body: some View {
@@ -160,6 +160,25 @@ struct RemoteCreateSection: View {
                             .autocapitalization(.none)
                     }
 
+                    if usesPrivateKey {
+                        HStack {
+                            Image(systemName: "key")
+                                .foregroundColor(.gray)
+                                .font(.subheadline)
+
+                            TextEditorWithPlaceholder(
+                                placeholder:
+                                    "remote.private_key_content",
+                                text: $privateKeyContent,
+                                customFont: .custom("Menlo", size: 13, relativeTo: .footnote)
+                            )
+                            .focused($focusedField, equals: .privateKeyContent)
+                            .disableAutocorrection(true)
+                            .autocapitalization(.none)
+
+                        }.frame(height: 300)
+                    }
+
                     HStack {
                         Image(systemName: "key")
                             .foregroundColor(.gray)
@@ -178,6 +197,12 @@ struct RemoteCreateSection: View {
             .background(Color.init(id: "input.background"))
             .cornerRadius(15)
 
+            if usesPrivateKey {
+                DescriptionText(
+                    "remote.setup_note"
+                )
+            }
+
             Button(action: {
                 App.safariManager.showSafari(
                     url: URL(
@@ -185,7 +210,7 @@ struct RemoteCreateSection: View {
                             "https://code.thebaselab.com/guides/connecting-to-a-remote-server-ssh-ftp#set-up-your-remote-server"
                     )!)
             }) {
-                Text("remote.setup_remote_server_on_mac")
+                Text("remote.setup_remote_server")
                     .font(.footnote)
                     .foregroundColor(.blue)
             }
@@ -206,22 +231,10 @@ struct RemoteCreateSection: View {
                 )
             }
 
-            if usesPrivateKey && hasSSHKey {
-                SideBarButton("Show public key") {
-                    showPublicKey()
-                }
-            }
-
-            if usesPrivateKey && !hasSSHKey {
-                DescriptionText(
-                    "remote.ssh_key_not_found"
-                )
-
-                SideBarButton("remote.reload_key") {
-                    reloadKey()
-                }
-            } else {
-                SideBarButton("Connect") {
+            SideBarButton("Connect") {
+                if usesPrivateKey && privateKeyContent.isEmpty {
+                    focusedField = .privateKeyContent
+                } else {
                     connect()
                 }
             }
@@ -238,9 +251,6 @@ struct RemoteCreateSection: View {
             if !value {
                 saveCredentials = false
             }
-        }
-        .onAppear {
-            reloadKey()
         }
     }
 }

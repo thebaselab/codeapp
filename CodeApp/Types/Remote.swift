@@ -16,5 +16,15 @@ enum RemoteType: String, CaseIterable, Identifiable {
 
 struct RemoteHost: Codable {
     var url: String
-    var useKeyAuth: Bool
+    var useKeyAuth: Bool  // Legacy flag for in-file id_rsa key authentication (.ssh/id_rsa)
+    var displayName: String?
+    var privateKeyContentKeychainID: String?
+    var privateKeyPath: String?
+}
+
+enum RemoteAuthenticationMode {
+    case plainUsernamePassword(URLCredential)
+    // File path of the ssh keys, default to Documents/.ssh
+    case inFileSSHKey(URLCredential, URL?)
+    case inMemorySSHKey(URLCredential, String)
 }

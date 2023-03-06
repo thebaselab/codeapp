@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.4 (2023年 2月)**
+##### **v1.4.4 (2023年 3月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -23,8 +23,9 @@
 
 "Changelog.message" =
 "
-### v1.4.4 (2023年 2月)
+### v1.4.4 (2023年 3月)
 - フォント合字を無効にするオプション
+- インメモリ SSH 秘密鍵
 
 ### v1.4.3 (2023年 1月)
 - バグの修正
@@ -459,4 +460,6 @@
 
 "local.execution.title" = "ローカル実行";
 
-"remote.setup_remote_server_on_mac" = "Mac でリモートサーバーをセットアップする";
+"remote.setup_remote_server" = "リモート アクセス機能に関するドキュメント";
+"remote.private_key_content" = "秘密鍵の内容";
+"remote.setup_note" = "キーペアを生成するには、ターミナルで ssh-keygen を実行します。 パスフレーズがない場合は空のままにします。";

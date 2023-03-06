@@ -11,6 +11,19 @@ class KeychainAccessor {
 
     static let shared = KeychainAccessor()
 
+    public func storeObject(for key: String, value: String) {
+        KeychainWrapper.standard.set(value, forKey: key)
+    }
+
+    public func getObjectString(for key: String) -> String? {
+        KeychainWrapper.standard.string(forKey: key)
+    }
+
+    @discardableResult
+    public func removeObjectForKey(for key: String) -> Bool {
+        KeychainWrapper.standard.removeObject(forKey: key)
+    }
+
     public func hasCredentials(for url: String) -> Bool {
         KeychainWrapper.standard.hasValue(forKey: "username;\(url)")
             && KeychainWrapper.standard.hasValue(forKey: "password;\(url)")

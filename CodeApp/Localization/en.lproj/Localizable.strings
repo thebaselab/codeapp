@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.4 (February 2023)**
+##### **v1.4.4 (March 2023)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,8 +23,9 @@
 
 "Changelog.message" =
 "
-### v1.4.4 (February 2023)
+### v1.4.4 (March 2023)
 - Option to disable font ligatures
+- In-memory SSH private key
 
 ### v1.4.3 (January 2023)
 - Bug fixes
@@ -350,4 +351,6 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 
 "local.execution.title" = "Local Execution";
 
-"remote.setup_remote_server_on_mac" = "Setting up a remote server on macOS";
+"remote.setup_remote_server" = "Documentation on remote access feature";
+"remote.private_key_content" = "Private key content";
+"remote.setup_note" = "To generate key-pairs, run ssh-keygen in the terminal. Leave the passphrase empty if there isn't one.";

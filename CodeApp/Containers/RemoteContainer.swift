@@ -44,6 +44,9 @@ struct RemoteContainer: View {
 
     func onRemoveHost(host: RemoteHost) {
         _ = KeychainAccessor.shared.removeCredentials(for: host.url)
+        if let keyChainId = host.privateKeyContentKeychainID {
+            _ = KeychainAccessor.shared.removeObjectForKey(for: keyChainId)
+        }
 
         DispatchQueue.main.async {
             hosts.removeAll(where: { $0.url == host.url })
@@ -73,14 +76,32 @@ struct RemoteContainer: View {
             return
         }
 
-        let cred = KeychainAccessor.shared.getCredentials(for: host.url)!
+        guard let cred = KeychainAccessor.shared.getCredentials(for: host.url) else {
+            throw WorkSpaceStorage.FSError.AuthFailure
+        }
 
         try await onConnectToHostWithCredentials(host: host, cred: cred)
     }
 
-    func onConnectToHostWithCredentials(host: RemoteHost, cred: URLCredential) async throws {
+    func onConnectToHostWithCredentials(
+        host: RemoteHost, cred: URLCredential
+    ) async throws {
         guard let hostUrl = URL(string: host.url) else {
             throw RemoteHostError.invalidUrl
+        }
+
+        var authenticationMode: RemoteAuthenticationMode
+
+        if host.useKeyAuth {
+            // Legacy in-file id_rsa authentication
+            authenticationMode = .inFileSSHKey(cred, nil)
+        } else if let keyContentId = host.privateKeyContentKeychainID {
+            guard let keyContent = KeychainAccessor.shared.getObjectString(for: keyContentId) else {
+                throw WorkSpaceStorage.FSError.AuthFailure
+            }
+            authenticationMode = .inMemorySSHKey(cred, keyContent)
+        } else {
+            authenticationMode = .plainUsernamePassword(cred)
         }
 
         try await App.notificationManager.withAsyncNotification(
@@ -89,7 +110,7 @@ struct RemoteContainer: View {
                 try await withCheckedThrowingContinuation {
                     (continuation: CheckedContinuation<Void, Error>) in
                     App.workSpaceStorage.connectToServer(
-                        host: hostUrl, credentials: cred, usesKey: host.useKeyAuth
+                        host: hostUrl, authenticationMode: authenticationMode
                     ) {
                         error in
                         if let error = error {

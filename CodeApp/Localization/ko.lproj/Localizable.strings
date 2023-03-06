@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.4 (2023년 2월)**
+##### **v1.4.4 (2023년 3월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,8 +23,9 @@
 
 "Changelog.message" =
 "
-### v1.4.4 (2023년 2월)
+### v1.4.4 (2023년 3월)
 - 글꼴 합자를 비활성화하는 옵션
+- 메모리 내 SSH 개인 키
 
 ### v1.4.3 (2023년 1월)
 - 버그 수정
@@ -458,4 +459,6 @@
 
 "local.execution.title" = "로컬 실행";
 
-"remote.setup_remote_server_on_mac" = "맥에서 원격 서버 설정";
+"remote.setup_remote_server" = "원격 액세스 기능에 대한 설명서";
+"remote.private_key_content" = "개인 키 내용";
+"remote.setup_note" = "키 쌍을 생성하려면 터미널에서 ssh-keygen을 실행하십시오. 암호가 없는 경우 암호를 비워 둡니다.";

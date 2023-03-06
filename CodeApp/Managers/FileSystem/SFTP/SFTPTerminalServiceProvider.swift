@@ -33,22 +33,32 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
         }
     }
 
-    func connect(password: String, usesKey: Bool, completionHandler: @escaping (Error?) -> Void) {
+    func connect(
+        authentication: RemoteAuthenticationMode,
+        completionHandler: @escaping (Error?) -> Void
+    ) {
         queue.async {
             self.session.connect()
 
             if self.session.isConnected {
-                if usesKey {
-                    let privateKeyUrl = getRootDirectory().appendingPathComponent(".ssh/id_rsa")
-                    if let privateKeyContent = try? String(contentsOf: privateKeyUrl) {
+                switch authentication {
+                case .plainUsernamePassword(let credentials):
+                    self.session.authenticate(byPassword: credentials.password ?? "")
+
+                case .inMemorySSHKey(let credentials, let privateKeyContent):
+                    self.session.authenticateBy(
+                        inMemoryPublicKey: nil, privateKey: privateKeyContent,
+                        andPassword: credentials.password)
+
+                case .inFileSSHKey(let credentials, let _privateKeyURL):
+                    let privateKeyURL =
+                        _privateKeyURL ?? getRootDirectory().appendingPathComponent(".ssh/id_rsa")
+                    if let privateKeyContent = try? String(contentsOf: privateKeyURL) {
                         self.session.authenticateBy(
                             inMemoryPublicKey: nil, privateKey: privateKeyContent,
-                            andPassword: password.isEmpty ? nil : password)
+                            andPassword: credentials.password)
                     }
-                } else {
-                    self.session.authenticate(byPassword: password)
                 }
-
             }
 
             guard self.session.isConnected && self.session.isAuthorized else {

@@ -34,6 +34,7 @@ class WorkSpaceStorage: ObservableObject {
         case AttemptingToCopyParentToChild = "errors.fs.attempting_to_copy_parent_to_child"
         case AttemptingToCopyOneself = "errors.fs.attempting_to_copy_oneself"
         case AlreadyConnectingToAHost = "errors.fs.already_connecting_to_a_host"
+        case UnsupportedAuthenticationMethod = "errors.fs.unsupported_auth"
 
         var errorDescription: String? {
             NSLocalizedString(self.rawValue, comment: "")
@@ -64,7 +65,7 @@ class WorkSpaceStorage: ObservableObject {
     }
 
     func connectToServer(
-        host: URL, credentials: URLCredential, usesKey: Bool = false,
+        host: URL, authenticationMode: RemoteAuthenticationMode,
         completionHandler: @escaping (Error?) -> Void
     ) {
         if isConnecting {
@@ -73,8 +74,7 @@ class WorkSpaceStorage: ObservableObject {
         }
         isConnecting = true
         _connectToServer(
-            host: host, credentials: credentials,
-            usesKey: usesKey,
+            host: host, authenticationMode: authenticationMode,
             completionHandler: { error in
                 completionHandler(error)
                 self.isConnecting = false
@@ -82,11 +82,15 @@ class WorkSpaceStorage: ObservableObject {
     }
 
     private func _connectToServer(
-        host: URL, credentials: URLCredential, usesKey: Bool = false,
+        host: URL, authenticationMode: RemoteAuthenticationMode,
         completionHandler: @escaping (Error?) -> Void
     ) {
         switch host.scheme {
         case "ftp", "ftps":
+            guard case .plainUsernamePassword(value: let credentials) = authenticationMode else {
+                completionHandler(FSError.UnsupportedAuthenticationMethod)
+                return
+            }
             guard let fs = FTPFileSystemProvider(baseURL: host, cred: credentials) else {
                 completionHandler(FSError.InvalidHost)
                 return
@@ -101,7 +105,20 @@ class WorkSpaceStorage: ObservableObject {
                 completionHandler(nil)
             }
         case "sftp":
-            guard let password = credentials.password,
+            guard
+                let credentials: URLCredential = {
+                    switch authenticationMode {
+                    case .inFileSSHKey(let credentials, _), .inMemorySSHKey(let credentials, _),
+                        .plainUsernamePassword(let credentials):
+                        return credentials
+                    }
+                }()
+            else {
+                completionHandler(FSError.UnsupportedAuthenticationMethod)
+                return
+            }
+
+            guard
                 let fs = SFTPFileSystemProvider(
                     baseURL: host, cred: credentials,
                     didDisconnect: { error in
@@ -111,7 +128,8 @@ class WorkSpaceStorage: ObservableObject {
                 completionHandler(FSError.Unknown)
                 return
             }
-            fs.connect(password: password, usesKey: usesKey) { error in
+
+            fs.connect(authentication: authenticationMode) { error in
                 if let error = error {
                     completionHandler(error)
                     return
