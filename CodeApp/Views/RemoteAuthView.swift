@@ -28,7 +28,9 @@ struct RemoteAuthView: View {
                     .autocapitalization(.none)
 
                 SecureField(
-                    host.useKeyAuth ? "Passphrase for private key" : "Password", text: $password
+                    (host.useKeyAuth || host.privateKeyContentKeychainID != nil
+                        || host.privateKeyPath != nil) ? "Passphrase for private key" : "Password",
+                    text: $password
                 )
                 .textContentType(.password)
                 .disableAutocorrection(true)
