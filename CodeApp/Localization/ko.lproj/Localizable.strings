@@ -415,6 +415,7 @@
 "errors.editor_is_not_ready" = "편집기가 준비되지 않았습니다.";
 "errors.failed_to_save_file.encoding.failed" = "파일을 저장하지 못했습니다. 인코딩에 실패했습니다.";
 "errors.file_modified_by_another_process" = "파일이 다른 프로세스에 의해 수정되었습니다.";
+"errors.failed_to_import_key" = "키를 가져 오지 못했습니다.";
 
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";
@@ -462,3 +463,4 @@
 "remote.setup_remote_server" = "원격 액세스 기능에 대한 설명서";
 "remote.private_key_content" = "개인 키 내용";
 "remote.setup_note" = "키 쌍을 생성하려면 터미널에서 ssh-keygen을 실행하십시오. 암호가 없는 경우 암호를 비워 둡니다.";
+"remote.import_from_file" = "파일에서 가져 오기";

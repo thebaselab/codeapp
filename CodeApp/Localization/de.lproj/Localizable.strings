@@ -415,6 +415,7 @@
 "errors.editor_is_not_ready" = "Der Editor ist nicht bereit.";
 "errors.failed_to_save_file.encoding.failed" = "Fehler beim Speichern der Datei. Die Zeichenkodierung ist möglicherweise nicht unterstützt.";
 "errors.file_modified_by_another_process" = "Die Datei wurde von einem anderen Prozess geändert.";
+"errors.failed_to_import_key" = "Fehler beim Importieren des Schlüssels.";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";
@@ -462,3 +463,4 @@
 "remote.setup_remote_server" = "Dokumentation zur Fernzugriffsfunktion";
 "remote.private_key_content" = "Inhalt des privaten Schlüssels";
 "remote.setup_note" = "Um Schlüsselpaare zu generieren, führen Sie ssh-keygen im Terminal aus. Lassen Sie die Passphrase leer, falls keine vorhanden ist.";
+"remote.import_from_file" = "Importieren aus Datei";

@@ -306,6 +306,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.editor_is_not_ready" = "Editor is not ready";
 "errors.failed_to_save_file.encoding.failed" = "Failed to save file. Encoding failed.";
 "errors.file_modified_by_another_process" = "File modified by another process";
+"errors.failed_to_import_key" = "Failed to import key";
 
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";
@@ -354,3 +355,4 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.setup_remote_server" = "Documentation on remote access feature";
 "remote.private_key_content" = "Private key content";
 "remote.setup_note" = "To generate key-pairs, run ssh-keygen in the terminal. Leave the passphrase empty if there isn't one.";
+"remote.import_from_file" = "Import from file";

@@ -416,6 +416,7 @@
 "errors.editor_is_not_ready" = "エディターの準備ができていません";
 "errors.failed_to_save_file.encoding.failed" = "ファイルの保存に失敗しました。 エンコードに失敗しました。";
 "errors.file_modified_by_another_process" = "別のプロセスによって変更されたファイルです";
+"errors.failed_to_import_key" = "キーのインポートに失敗しました";
 
 "file.copy" = "コピー..";
 "file.download" = "ダウンロード..";
@@ -463,3 +464,4 @@
 "remote.setup_remote_server" = "リモート アクセス機能に関するドキュメント";
 "remote.private_key_content" = "秘密鍵の内容";
 "remote.setup_note" = "キーペアを生成するには、ターミナルで ssh-keygen を実行します。 パスフレーズがない場合は空のままにします。";
+"remote.import_from_file" = "ファイルからインポート";

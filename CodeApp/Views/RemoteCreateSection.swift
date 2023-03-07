@@ -181,6 +181,27 @@ struct RemoteCreateSection: View {
                             .autocapitalization(.none)
 
                         }.frame(height: 300)
+
+                        Button(action: {
+                            showFileImporter.toggle()
+                        }) {
+                            Text("remote.import_from_file")
+                                .font(.footnote)
+                                .foregroundColor(.blue)
+                        }
+                        .fileImporter(
+                            isPresented: $showFileImporter, allowedContentTypes: [.x509Certificate]
+                        ) { result in
+                            guard let url = try? result.get(),
+                                let keyFileContent = try? String(contentsOfFile: url.path)
+                            else {
+                                App.notificationManager.showErrorMessage(
+                                    "errors.failed_to_import_key")
+                                return
+                            }
+                            privateKeyContent = keyFileContent
+                        }
+                        .frame(maxWidth: .infinity)
                     }
 
                     HStack {
