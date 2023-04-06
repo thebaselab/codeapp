@@ -19,7 +19,8 @@ protocol FileSystemProvider {
         at: URL, withIntermediateDirectories: Bool, completionHandler: @escaping (Error?) -> Void)
     func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void)
     func moveItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void)
-    func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void)
+    func removeItem(
+        at: URL, trashItemIfAvailable: Bool, completionHandler: @escaping (Error?) -> Void)
     func contents(at: URL, completionHandler: @escaping (Data?, Error?) -> Void)
     func write(
         at: URL, content: Data, atomically: Bool, overwrite: Bool,

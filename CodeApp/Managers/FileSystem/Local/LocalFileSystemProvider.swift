@@ -73,9 +73,15 @@ class LocalFileSystemProvider: FileSystemProvider {
         }
     }
 
-    func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
+    func removeItem(
+        at: URL, trashItemIfAvailable: Bool, completionHandler: @escaping (Error?) -> Void
+    ) {
         do {
-            try FileManager.default.removeItem(at: at)
+            if trashItemIfAvailable {
+                try FileManager.default.trashItem(at: at, resultingItemURL: nil)
+            } else {
+                try FileManager.default.removeItem(at: at)
+            }
             completionHandler(nil)
         } catch {
             completionHandler(error)

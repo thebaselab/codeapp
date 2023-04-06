@@ -186,7 +186,9 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
         }
     }
 
-    func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
+    func removeItem(
+        at: URL, trashItemIfAvailable: Bool, completionHandler: @escaping (Error?) -> Void
+    ) {
         queue.async {
             let success = self.session.sftp.removeFile(atPath: at.path)
             if success {

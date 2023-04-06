@@ -521,12 +521,14 @@ extension WorkSpaceStorage: FileSystemProvider {
         }
     }
 
-    func removeItem(at: URL, completionHandler: @escaping (Error?) -> Void) {
+    func removeItem(
+        at: URL, trashItemIfAvailable: Bool, completionHandler: @escaping (Error?) -> Void
+    ) {
         guard let scheme = at.scheme, let fs = fss[scheme] else {
             completionHandler(FSError.SchemeNotRegistered)
             return
         }
-        return fs.removeItem(at: at) { error in
+        return fs.removeItem(at: at, trashItemIfAvailable: trashItemIfAvailable) { error in
             if scheme != "file" && error == nil {
                 self.removeFromTree(url: at)
             }
@@ -640,9 +642,9 @@ extension WorkSpaceStorage {
         }
     }
 
-    func removeItem(at: URL) async throws {
+    func removeItem(at: URL, trashItemIfAvailable: Bool) async throws {
         return try await withCheckedThrowingContinuation { continuation in
-            removeItem(at: at) { error in
+            removeItem(at: at, trashItemIfAvailable: trashItemIfAvailable) { error in
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else {

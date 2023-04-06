@@ -60,4 +60,30 @@ final class CodeUITests: XCTestCase {
 
         UserDefaults.standard.removeObject(forKey: "alwaysOpenInNewTab")
     }
+
+    @MainActor
+    func testLocalFileManagerTrashItem() async throws {
+        let app = MainApp()
+
+        let trashDirectory = app.workSpaceStorage.currentDirectory._url!.appending(path: ".Trash")
+        try! FileManager.default.removeItem(at: trashDirectory)
+
+        let testFile = app.workSpaceStorage.currentDirectory._url!.appending(path: "test")
+        try! "".write(to: testFile, atomically: true, encoding: .utf8)
+        try! await app.workSpaceStorage.removeItem(at: testFile, trashItemIfAvailable: true)
+
+        let fileCount = try! FileManager.default.contentsOfDirectory(
+            at: trashDirectory, includingPropertiesForKeys: nil)
+        print(fileCount)
+        XCTAssertEqual(fileCount.count, 1)
+
+        let testFile2 = app.workSpaceStorage.currentDirectory._url!.appending(path: "test2")
+        try! "".write(to: testFile2, atomically: true, encoding: .utf8)
+        try! await app.workSpaceStorage.removeItem(at: testFile2, trashItemIfAvailable: false)
+
+        let fileCount2 = try! FileManager.default.contentsOfDirectory(
+            at: trashDirectory, includingPropertiesForKeys: nil
+        ).count
+        XCTAssertEqual(fileCount2, 1)
+    }
 }

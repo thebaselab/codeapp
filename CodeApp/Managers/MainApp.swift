@@ -308,7 +308,7 @@ class MainApp: ObservableObject {
     }
 
     func trashItem(url: URL) {
-        workSpaceStorage.removeItem(at: url) { error in
+        workSpaceStorage.removeItem(at: url, trashItemIfAvailable: true) { error in
             if let error = error {
                 self.notificationManager.showErrorMessage(error.localizedDescription)
                 return
