@@ -65,7 +65,8 @@ private let extensionNames = [
     "stylelintrc.yml": "stylelint", "stylelintrc.js": "stylelint", "stylelintignore": "stylelint",
     "direnv": "config", "env": "config", "static": "config", "editorconfig": "config",
     "slugignore": "config", "tmp": "clock", "htaccess": "config", "key": "lock", "cert": "lock",
-    "DS_Store": "ignored", "svelte": "svelte",
+    "DS_Store": "ignored", "svelte": "svelte", "mjs": "javascript", "cjs": "javascript",
+    "mts": "typescript", "cts": "typescript"
 ]
 private let level2ExtensionNames = [
     "css.map": "css", "js.map": "javascript", "spec.js": "javascript_yellow",
@@ -78,7 +79,11 @@ private let level2ExtensionNames = [
     "stylelintrc.json": "stylelint", "stylelintrc.yaml": "stylelint",
     "stylelintrc.yml": "stylelint", "stylelintrc.js": "stylelint",
 ]
-private let fileNames = ["LICENSE": "license", "README.md": "info"]
+private let fileNames = [
+    "license": "license", "licence": "license", "license.txt": "license", "licence.txt": "license",
+    "license.md": "license", "licence.md": "license", "readme.txt": "info", "readme.md": "info",
+    "readme": "info"
+]
 
 struct FileIcon: View {
     let url: String
@@ -87,22 +92,18 @@ struct FileIcon: View {
     @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
-        let fileName = url.components(separatedBy: "/").last ?? ""
-        switch fileName {
-        case let x where fileNames[x] != nil:
-            Image(fileNames[x]!).resizable().frame(width: iconSize + 6, height: iconSize + 6)
-        case let x
-        where
-            level2ExtensionNames[
-                x.lowercased().components(separatedBy: ".").dropFirst().joined(separator: ".")]
-            != nil:
-            Image(
-                level2ExtensionNames[
-                    x.lowercased().components(separatedBy: ".").dropFirst().joined(
-                        separator: ".")]!
-            ).resizable().frame(width: iconSize + 6, height: iconSize + 6)
-        default:
-            switch fileName.lowercased().components(separatedBy: ".").last ?? "" {
+        let fileName = url.components(separatedBy: "/").last?.lowercased() ?? ""
+        if let image = fileNames[fileName] {
+            Image(image)
+                .resizable()
+                .frame(width: iconSize + 6, height: iconSize + 6)
+        } else if let image = level2ExtensionNames[
+            fileName.components(separatedBy: ".").suffix(2).joined(separator: ".")] {
+            Image(image)
+                .resizable()
+                .frame(width: iconSize + 6, height: iconSize + 6)
+        } else if fileName.contains(".") {
+            switch fileName.components(separatedBy: ".").last ?? "" {
             case "swift":
                 Image(systemName: "swift")
                     .foregroundColor(.orange)
@@ -118,17 +119,25 @@ struct FileIcon: View {
                     .foregroundColor(.gray)
                     .font(.system(size: iconSize - 2))
                     .frame(width: iconSize + 6, height: iconSize + 6)
-            case let x where extensionNames[x] != nil:
-                Image(extensionNames[x]!)
-                    .resizable()
-                    .frame(width: iconSize + 6, height: iconSize + 6)
             case "icloud":
-                Image(systemName: "icloud.and.arrow.down").foregroundColor(.gray).font(
-                    .system(size: iconSize - 2))
-            default:
-                Image(systemName: "text.alignleft").foregroundColor(.gray).font(
-                    .system(size: iconSize - 2))
+                Image(systemName: "icloud.and.arrow.down")
+                    .foregroundColor(.gray)
+                    .font(.system(size: iconSize - 2))
+            case let x:
+                if let image = extensionNames[x] {
+                    Image(image)
+                        .resizable()
+                        .frame(width: iconSize + 6, height: iconSize + 6)
+                } else {
+                    Image(systemName: "text.alignleft")
+                        .foregroundColor(.gray)
+                        .font(.system(size: iconSize - 2))
+                }
             }
+        } else {
+            Image(systemName: "text.alignleft")
+                .foregroundColor(.gray)
+                .font(.system(size: iconSize - 2))
         }
     }
 }
