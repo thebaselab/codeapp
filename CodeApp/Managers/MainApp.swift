@@ -308,17 +308,26 @@ class MainApp: ObservableObject {
     }
 
     func trashItem(url: URL) {
-        workSpaceStorage.removeItem(at: url) { error in
-            if let error = error {
-                self.notificationManager.showErrorMessage(error.localizedDescription)
-                return
-            }
-            if let editorToTrash = self.textEditors.first(where: { $0.url == url }) {
-                Task { @MainActor in
-                    self.closeEditor(editor: editorToTrash)
+        alertManager.showAlert(
+            title: "file.confirm_delete \(url.lastPathComponent)",
+            content: AnyView(
+                Group {
+                    Button("common.delete", role: .destructive) {
+                        self.workSpaceStorage.removeItem(at: url) { error in
+                            if let error = error {
+                                self.notificationManager.showErrorMessage(error.localizedDescription)
+                                return
+                            }
+                            if let editorToTrash = self.textEditors.first(where: { $0.url == url }) {
+                                Task { @MainActor in
+                                    self.closeEditor(editor: editorToTrash)
+                                }
+                            }
+                        }
+                    }
+                    Button("common.cancel", role: .cancel) {}
                 }
-            }
-        }
+            ))
     }
 
     func decodeStringData(data: Data) throws -> (String, String.Encoding) {

@@ -268,6 +268,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "common.dont_save" = "Don't Save";
 "common.cancel" = "Cancel";
 "common.revert" = "Revert";
+"common.delete" = "Delete";
 
 "notification.source" = "Source: %@";
 
@@ -311,6 +312,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";
 "file.confirm_save %@" = "Do you want to save the changes made to %@?";
+"file.confirm_delete %@" = "Are you sure you want to delete %@?";
 
 "actions.new_window" = "New Window";
 
