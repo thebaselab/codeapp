@@ -256,6 +256,7 @@
 "OUTPUT" = "출력";
 "Options" = "옵션";
 "Close All" = "모두 닫기";
+"Close Workspace" = "작업 공간(Workspace) 닫기";
 "Preview in Safari" = "Safari에서 미리보기";
 "Mini Map" = "미니맵";
 "Line Numbers" = "행 번호";
@@ -292,7 +293,7 @@
 
 "Share" = "공유";
 "Rename" = "이름 바꾸기";
-"Assign as workplace folder" = "작업 공간(Workplace) 폴더로 지정하기";
+"Assign as workspace folder" = "작업 공간(Workspace) 폴더로 지정하기";
 "Select for compare" = "비교를 위해 선택하기";
 "Compare with selected" = "선택 항목과 비교하기";
 "Version Control" = "형상 관리";

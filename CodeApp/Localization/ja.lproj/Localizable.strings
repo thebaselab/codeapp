@@ -257,6 +257,7 @@
 "OUTPUT" = "アウトプット";
 "Options" = "オプション";
 "Close All" = "すべて閉じる";
+"Close Workspace" = "ワークスペースを閉じる";
 "Preview in Safari" = "Safariで開く";
 "Mini Map" = "ミニマップ";
 "Line Numbers" = "行番号";
@@ -293,7 +294,7 @@
 
 "Share" = "共有";
 "Rename" = "名前の変更";
-"Assign as workplace folder" = "ワークスペースのフォルダに割り当てる";
+"Assign as workspace folder" = "ワークスペースのフォルダに割り当てる";
 "Select for compare" = "比較対象を選択";
 "Compare with selected" = "選択項目の比較";
 "Version Control" = "バージョン管理";

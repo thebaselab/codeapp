@@ -387,7 +387,7 @@ private struct ContextMenu: View {
                 Button(action: {
                     App.loadFolder(url: URL(string: item.url)!)
                 }) {
-                    Text("Assign as workplace folder")
+                    Text("Assign as workspace folder")
                     Image(systemName: "folder.badge.gear")
                 }
             }
