@@ -369,7 +369,7 @@
 "Enable spell check in text files" = "텍스트 파일에서 맞춤법 검사 활성화";
 "Spell checking on content changed" = "변경한 내용에 대해 맞춤법 검사";
 
-"common.configure" = "";
+"common.configure" = "설정";
 "common.open_folder" = "폴더 열기";
 "common.compare" = "비교";
 "common.overwrite" = "덮어쓰기";
@@ -377,6 +377,7 @@
 "common.dont_save" = "저장하지 않음";
 "common.cancel" = "취소";
 "common.revert" = "되돌리기";
+"common.delete" = "삭제";
 
 "notification.source" = "원천: %@";
 
@@ -419,7 +420,8 @@
 
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";
-"file.confirm_save %@" = "파일을 저장하시겠습니까?";
+"file.confirm_save %@" = "%@을 저장하시겠습니까?";
+"file.confirm_delete %@" = "%@을 삭제하시겠습니까?";
 
 "actions.new_window" = "새창";
 
