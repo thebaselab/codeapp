@@ -83,6 +83,14 @@ struct TopBar: View {
                     } label: {
                         Label("Close All", systemImage: "xmark")
                     }
+                    Button(role: .destructive) {
+                        App.loadFolder(url: getRootDirectory())
+                        DispatchQueue.main.async {
+                            App.showWelcomeMessage()
+                        }
+                    } label: {
+                        Label("Close Workspace", systemImage: "xmark")
+                    }
                 }
                 Divider()
                 Section {

@@ -256,6 +256,7 @@
 "OUTPUT" = "OUTPUT";
 "Options" = "Optionen";
 "Close All" = "Alles schliessen";
+"Close Workspace" = "Arbeitsbereich schliessen";
 "Preview in Safari" = "Vorschau in Safari";
 "Mini Map" = "Minikarte";
 "Line Numbers" = "Zeilennummern";
@@ -292,7 +293,7 @@
 
 "Share" = "Teilen";
 "Rename" = "Umbenennen";
-"Assign as workplace folder" = "Als Arbeitsplatzordner zuweisen";
+"Assign as workspace folder" = "Als Arbeitsbereichsordner zuweisen";
 "Select for compare" = "Zum Vergleich auswählen";
 "Compare with selected" = "Vergleiche mit ausgewählten";
 "Version Control" = "Versionskontrolle";

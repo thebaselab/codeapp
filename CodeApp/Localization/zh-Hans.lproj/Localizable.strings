@@ -250,6 +250,7 @@
 "OUTPUT" = "输出";
 "Options" = "选项";
 "Close All" = "全部关闭";
+"Close Workspace" = "关闭工作区";
 "Preview in Safari" = "在 Safari 中预览";
 "Mini Map" = "小地图";
 "Line Numbers" = "行号";
@@ -286,7 +287,7 @@
 
 "Share" = "分享";
 "Rename" = "重命名";
-"Assign as workplace folder" = "设置为工作文件夹";
+"Assign as workspace folder" = "设置为工作文件夹";
 "Select for compare" = "选择进行比较";
 "Compare with selected" = "与选定内容做比较";
 "Version Control" = "版本控制";
