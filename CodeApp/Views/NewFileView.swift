@@ -28,7 +28,7 @@ struct NewFileView: View {
 
         if checkFileExist(fileName: (defaultName + "." + extensionName)) {
             while num < 100 {
-                if checkFileExist(fileName: (defaultName + "%20(\(num))" + "." + extensionName)) {
+                if checkFileExist(fileName: (defaultName + "(\(num))" + "." + extensionName)) {
                     num += 1
                 } else {
                     break
@@ -37,7 +37,7 @@ struct NewFileView: View {
         } else {
             return (defaultName + "." + extensionName)
         }
-        return (defaultName + "%20(\(num))" + "." + extensionName)
+        return (defaultName + "(\(num))" + "." + extensionName)
     }
 
     func checkNameValidity() -> Bool {

@@ -20,7 +20,7 @@ func newFileName(defaultName: String, extensionName: String, urlString: String) 
         while num < 100 {
             if checkFileExist(
                 fileName: (extensionName == ""
-                    ? defaultName + "%20(\(num))" : defaultName + "%20(\(num))" + "." + extensionName))
+                    ? defaultName + "(\(num))" : defaultName + "(\(num))" + "." + extensionName))
             {
                 num += 1
             } else {
@@ -30,5 +30,5 @@ func newFileName(defaultName: String, extensionName: String, urlString: String) 
     } else {
         return (extensionName == "" ? defaultName : defaultName + "." + extensionName)
     }
-    return (defaultName + "%20(\(num))" + (extensionName == "" ? "" : "." + extensionName))
+    return (defaultName + "(\(num))" + (extensionName == "" ? "" : "." + extensionName))
 }
