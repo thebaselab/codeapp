@@ -27,6 +27,12 @@ struct ExplorerEditorListSection: View {
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
 
+                SideBarButton("New Folder") {
+                    App.createFolder(urlString: App.workSpaceStorage.currentDirectory.url)
+                }
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+
                 SideBarButton("common.open_folder") {
                     onPickNewDirectory()
                 }
