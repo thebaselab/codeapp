@@ -57,7 +57,6 @@
 		9419696B280316C7008AAEB2 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF9260526D200C4F2B1 /* View+If.swift */; };
 		9419696C280316C7008AAEB2 /* WorkSpaceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777A1257ABDC3008FE7B2 /* WorkSpaceStorage.swift */; };
 		9419696D280316C7008AAEB2 /* DirectoryFolderMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777A7257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift */; };
-		9419696E280316C7008AAEB2 /* fileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5685D257E1249008A6530 /* fileName.swift */; };
 		9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941969242802AB2C008AAEB2 /* FileSystemProvider.swift */; };
 		94196970280316C7008AAEB2 /* SettingsKeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C893E1279D09D400DFBF29 /* SettingsKeyboardShortcuts.swift */; };
 		94196972280316C7008AAEB2 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F52706259F9B4800337306 /* KeychainWrapper.swift */; };
@@ -556,7 +555,6 @@
 		94A5682B257CBDE4008A6530 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5682A257CBDE4008A6530 /* MarkdownView.swift */; };
 		94A56830257CC3A1008A6530 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94A56832257CC3A1008A6530 /* Localizable.strings */; };
 		94A56835257CC60E008A6530 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A56834257CC60E008A6530 /* LaunchScreen.storyboard */; };
-		94A5685E257E1249008A6530 /* fileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5685D257E1249008A6530 /* fileName.swift */; };
 		94A7418C25F74A85007A9728 /* Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 94A7418B25F74A85007A9728 /* Dynamic */; };
 		94A77792257AB805008FE7B2 /* FileIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77791257AB805008FE7B2 /* FileIcon.swift */; };
 		94A77796257ABB69008FE7B2 /* EditorInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77795257ABB69008FE7B2 /* EditorInstance.swift */; };
@@ -1602,7 +1600,6 @@
 		94A56833257CC3AF008A6530 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		94A56834257CC60E008A6530 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		94A56854257CEBC8008A6530 /* Code App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Code App.entitlements"; sourceTree = "<group>"; };
-		94A5685D257E1249008A6530 /* fileName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileName.swift; sourceTree = "<group>"; };
 		94A77791257AB805008FE7B2 /* FileIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileIcon.swift; sourceTree = "<group>"; };
 		94A77795257ABB69008FE7B2 /* EditorInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorInstance.swift; sourceTree = "<group>"; };
 		94A7779E257ABD7A008FE7B2 /* MainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
@@ -1948,7 +1945,6 @@
 				94A7781D257BC473008FE7B2 /* ArchiveDir.swift */,
 				94A777DB257B8C99008FE7B2 /* openFilesApp.swift */,
 				94A7782C257BCEE2008FE7B2 /* getRootDirectory.swift */,
-				94A5685D257E1249008A6530 /* fileName.swift */,
 			);
 			path = file;
 			sourceTree = "<group>";
@@ -3049,7 +3045,6 @@
 				94A045EF280480E800182275 /* RemoteListSection.swift in Sources */,
 				9419696D280316C7008AAEB2 /* DirectoryFolderMonitor.swift in Sources */,
 				94795C462931489C0057C12F /* ActivityBar.swift in Sources */,
-				9419696E280316C7008AAEB2 /* fileName.swift in Sources */,
 				9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
 				941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */,
@@ -3204,7 +3199,6 @@
 				94A045EE280480E800182275 /* RemoteListSection.swift in Sources */,
 				94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */,
 				94795C452931489C0057C12F /* ActivityBar.swift in Sources */,
-				94A5685E257E1249008A6530 /* fileName.swift in Sources */,
 				9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,
 				941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */,

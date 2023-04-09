@@ -140,7 +140,12 @@ struct ExplorerContainer: View {
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture {
-                            App.createFolder(urlString: App.workSpaceStorage.currentDirectory.url)
+                            Task {
+                                guard let url = App.workSpaceStorage.currentDirectory._url else {
+                                    return
+                                }
+                                try await App.createFolder(at: url)
+                            }
                         }
 
                         if !App.workSpaceStorage.remoteConnected {
@@ -190,7 +195,11 @@ struct ExplorerContainer: View {
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(
                             Color.init(id: "activityBar.foreground")
                         ).onTapGesture {
-                            for i in selectKeeper { App.duplicateItem(from: URL(string: i)!) }
+                            for i in selectKeeper {
+                                Task {
+                                    try await App.duplicateItem(at: URL(string: i)!)
+                                }
+                            }
                             editMode = EditMode.inactive
                         }
                     }

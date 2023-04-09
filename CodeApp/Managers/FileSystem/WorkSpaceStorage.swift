@@ -35,6 +35,7 @@ class WorkSpaceStorage: ObservableObject {
         case AttemptingToCopyOneself = "errors.fs.attempting_to_copy_oneself"
         case AlreadyConnectingToAHost = "errors.fs.already_connecting_to_a_host"
         case UnsupportedAuthenticationMethod = "errors.fs.unsupported_auth"
+        case UnableToFindASuitableName = "errors.fs.unable_to_find_suitable_name"
 
         var errorDescription: String? {
             NSLocalizedString(self.rawValue, comment: "")
@@ -62,6 +63,27 @@ class WorkSpaceStorage: ObservableObject {
         self.currentDirectory = FileItemRepresentable(
             name: url.lastPathComponent, url: url.absoluteString, isDirectory: true)
         self.requestDirectoryUpdateAt(id: url.absoluteString)
+    }
+
+    private func fileURLWithSuffix(url: URL, suffix: String) -> URL {
+        let pathExtension = url.pathExtension
+        let newName = "\(url.deletingPathExtension().lastPathComponent) (\(suffix))"
+        return url.deletingLastPathComponent().appendingPathComponent(newName)
+            .appendingPathExtension(pathExtension)
+    }
+
+    func urlWithSuffixIfExistingFileExist(url: URL) async throws -> URL {
+        if !(try await self.fileExists(at: url)) {
+            return url
+        }
+        var num = 2
+        while try await self.fileExists(at: fileURLWithSuffix(url: url, suffix: String(num))) {
+            num += 1
+            if num > 100 {
+                throw FSError.UnableToFindASuitableName
+            }
+        }
+        return fileURLWithSuffix(url: url, suffix: String(num))
     }
 
     func connectToServer(

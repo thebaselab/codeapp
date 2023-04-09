@@ -28,7 +28,14 @@ struct ExplorerEditorListSection: View {
                 .listRowSeparator(.hidden)
 
                 SideBarButton("New Folder") {
-                    App.createFolder(urlString: App.workSpaceStorage.currentDirectory.url)
+                    Task {
+                        Task {
+                            guard let url = App.workSpaceStorage.currentDirectory._url else {
+                                return
+                            }
+                            try await App.createFolder(at: url)
+                        }
+                    }
                 }
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)

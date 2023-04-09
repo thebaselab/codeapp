@@ -329,7 +329,10 @@ private struct ContextMenu: View {
                 }
 
                 Button(action: {
-                    App.duplicateItem(from: URL(string: item.url)!)
+                    Task {
+                        guard let url = item._url else { return }
+                        try await App.duplicateItem(at: url)
+                    }
                 }) {
                     Text("Duplicate")
                     Image(systemName: "plus.square.on.square")
@@ -378,7 +381,10 @@ private struct ContextMenu: View {
                 }
 
                 Button(action: {
-                    App.createFolder(urlString: item.url)
+                    Task {
+                        guard let url = item._url else { return }
+                        try await App.createFolder(at: url)
+                    }
                 }) {
                     Text("New Folder")
                     Image(systemName: "folder.badge.plus")

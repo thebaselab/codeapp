@@ -17,29 +17,6 @@ struct NewFileView: View {
 
     @Environment(\.presentationMode) var presentationMode
 
-    func returnFileName(defaultName: String, extensionName: String) -> String {
-        var num = 2
-
-        func checkFileExist(fileName: String) -> Bool {
-
-            let url = URL(string: targetUrl)?.appendingPathComponent(fileName)
-            return FileManager.default.fileExists(atPath: url!.path)
-        }
-
-        if checkFileExist(fileName: (defaultName + "." + extensionName)) {
-            while num < 100 {
-                if checkFileExist(fileName: (defaultName + "%20(\(num))" + "." + extensionName)) {
-                    num += 1
-                } else {
-                    break
-                }
-            }
-        } else {
-            return (defaultName + "." + extensionName)
-        }
-        return (defaultName + "%20(\(num))" + "." + extensionName)
-    }
-
     func checkNameValidity() -> Bool {
         if name.contains(":") || name.contains("/") {
             return false
@@ -48,7 +25,7 @@ struct NewFileView: View {
         }
     }
 
-    func loadNewFile(lang: Int, useTemplate: Bool = true) {
+    func createNewFile(lang: Int, useTemplate: Bool = true) async throws {
         var content = ""
 
         if !useTemplate && (!checkNameValidity() || name.isEmpty) {
@@ -58,7 +35,7 @@ struct NewFileView: View {
 
         switch lang {
         case 0:
-            name = returnFileName(defaultName: "default", extensionName: "py")
+            name = "default.py"
             content = """
                 # Created on \(UIDevice.current.name).
 
@@ -66,14 +43,14 @@ struct NewFileView: View {
 
                 """
         case 1:
-            name = returnFileName(defaultName: "default", extensionName: "js")
+            name = "default.js"
             content = """
                 // Created on \(UIDevice.current.name).
 
                 console.log("Hello, World!")
                 """
         case 3:
-            name = returnFileName(defaultName: "default", extensionName: "cpp")
+            name = "default.cpp"
             content = """
                 // Created on \(UIDevice.current.name).
 
@@ -86,7 +63,7 @@ struct NewFileView: View {
                 }
                 """
         case 2:
-            name = returnFileName(defaultName: "default", extensionName: "c")
+            name = "default.c"
             content = """
                 // Created on \(UIDevice.current.name).
 
@@ -99,7 +76,7 @@ struct NewFileView: View {
                 }
                 """
         case 4:
-            name = returnFileName(defaultName: "default", extensionName: "php")
+            name = "default.php"
             content = """
                 // Created on \(UIDevice.current.name).
 
@@ -108,7 +85,7 @@ struct NewFileView: View {
                 ?>
                 """
         case 62:
-            name = returnFileName(defaultName: "Main", extensionName: "java")
+            name = "Main.java"
             content = """
                 // Created on \(UIDevice.current.name).
 
@@ -119,7 +96,7 @@ struct NewFileView: View {
                 }
                 """
         case 83:
-            name = returnFileName(defaultName: "default", extensionName: "swift")
+            name = "default.swift"
             content = """
                 // Created on \(UIDevice.current.name).
 
@@ -127,7 +104,7 @@ struct NewFileView: View {
                 print("Hello, World!")
                 """
         case -2:
-            name = returnFileName(defaultName: "index", extensionName: "html")
+            name = "index.html"
             content = """
                 <!doctype html>
                 <html>
@@ -141,7 +118,7 @@ struct NewFileView: View {
                 </html>
                 """
         case -3:
-            name = returnFileName(defaultName: "style", extensionName: "css")
+            name = "style.css"
             content = """
                 /* Applies to the entire body of the HTML document (except where overridden by more specific
                 selectors). */
@@ -166,41 +143,43 @@ struct NewFileView: View {
                 #someid { color: green; }
                 """
         default:
-            if name.contains(".") {
-                name = returnFileName(
-                    defaultName: name.components(separatedBy: ".").dropLast().joined(separator: "."),
-                    extensionName: name.components(separatedBy: ".").last ?? "")
-            }
-            content = ""
+            break
         }
 
-        let url = URL(string: targetUrl)!.appendingPathComponent(name)
+        guard let targetURL = URL(string: targetUrl)?.appendingPathComponent(name) else {
+            throw WorkSpaceStorage.FSError.UnableToFindASuitableName
+        }
+        let destinationURL = try await App.workSpaceStorage.urlWithSuffixIfExistingFileExist(
+            url: targetURL)
+
         do {
-            App.workSpaceStorage.write(
-                at: url, content: content.data(using: .utf8)!, atomically: true, overwrite: true
-            ) { error in
-                if let error = error {
-                    App.notificationManager.showErrorMessage(error.localizedDescription)
-                    return
-                }
-                App.openFile(url: url)
-
-                DispatchQueue.main.async {
-                    self.presentationMode.wrappedValue.dismiss()
-                }
-            }
+            try await App.workSpaceStorage.write(
+                at: destinationURL, content: content.data(using: .utf8)!, atomically: true,
+                overwrite: true
+            )
+            try await App.openFile(url: destinationURL)
+            self.presentationMode.wrappedValue.dismiss()
+        } catch {
+            App.notificationManager.showErrorMessage(error.localizedDescription)
         }
     }
 
-    func getRootDirectory() -> String {
-        if let documentsPathURL = FileManager.default.urls(
-            for: .documentDirectory, in: .userDomainMask
-        ).first {
-            return documentsPathURL.absoluteString
-        } else {
-            return ""
-        }
+    struct LanguageTemplateMapping {
+        let code: Int
+        let name: String
     }
+
+    let languageMapping: [LanguageTemplateMapping] = [
+        .init(code: 0, name: "Python"),
+        .init(code: 1, name: "JavaScript"),
+        .init(code: 2, name: "C"),
+        .init(code: 3, name: "C++"),
+        .init(code: 4, name: "PHP"),
+        .init(code: 62, name: "Java"),
+        .init(code: 83, name: "Swift"),
+        .init(code: -2, name: "HTML"),
+        .init(code: -3, name: "CSS"),
+    ]
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -209,37 +188,17 @@ struct NewFileView: View {
                     Section(header: Text(NSLocalizedString("Templates", comment: ""))) {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                Group {
-                                    Text("Python").onTapGesture {
-                                        self.loadNewFile(lang: 0)
-                                    }
-                                    Text("JavaScript").onTapGesture {
-                                        self.loadNewFile(lang: 1)
-                                    }
-                                    Text("C").onTapGesture {
-                                        self.loadNewFile(lang: 2)
-                                    }
-                                    Text("C++").onTapGesture {
-                                        self.loadNewFile(lang: 3)
-                                    }
-                                    Text("PHP").onTapGesture {
-                                        self.loadNewFile(lang: 4)
-                                    }
-                                }.padding().background(Color.init("B3_A")).cornerRadius(12)
-                                Group {
-                                    Text("Java").onTapGesture {
-                                        self.loadNewFile(lang: 62)
-                                    }
-                                    Text("Swift").onTapGesture {
-                                        self.loadNewFile(lang: 83)
-                                    }
-                                    Text("HTML").onTapGesture {
-                                        self.loadNewFile(lang: -2)
-                                    }
-                                    Text("CSS").onTapGesture {
-                                        self.loadNewFile(lang: -3)
-                                    }
-                                }.padding().background(Color.init("B3_A")).cornerRadius(12)
+                                ForEach(languageMapping, id: \.code) { language in
+                                    Text(language.name)
+                                        .onTapGesture {
+                                            Task {
+                                                try await createNewFile(lang: language.code)
+                                            }
+                                        }
+                                        .padding()
+                                        .background(Color.init("B3_A"))
+                                        .cornerRadius(12)
+                                }
                             }
                         }
                     }
@@ -252,7 +211,9 @@ struct NewFileView: View {
                             TextField(
                                 "example.py", text: $name,
                                 onCommit: {
-                                    self.loadNewFile(lang: -1, useTemplate: false)
+                                    Task {
+                                        try await createNewFile(lang: -1, useTemplate: false)
+                                    }
                                 }
                             )
                             .autocapitalization(.none)
@@ -261,7 +222,9 @@ struct NewFileView: View {
 
                             Spacer()
                             Button(action: {
-                                self.loadNewFile(lang: -1, useTemplate: false)
+                                Task {
+                                    try await createNewFile(lang: -1, useTemplate: false)
+                                }
                             }) {
                                 Text(NSLocalizedString("Add File", comment: ""))
                             }

@@ -248,17 +248,14 @@ class MainApp: ObservableObject {
         }
     }
 
-    func createFolder(urlString: String) {
-        let newurl =
-            urlString
-            + newFileName(defaultName: "New%20Folder", extensionName: "", urlString: urlString)
-        guard let url = URL(string: newurl) else {
-            return
-        }
-        workSpaceStorage.createDirectory(at: url, withIntermediateDirectories: true) { error in
-            if let error = error {
-                self.notificationManager.showErrorMessage(error.localizedDescription)
-            }
+    func createFolder(at: URL, named: String = "New Folder") async throws {
+        let folderURL = at.appendingPathComponent(named)
+        let url = try await workSpaceStorage.urlWithSuffixIfExistingFileExist(url: folderURL)
+        do {
+            try await workSpaceStorage.createDirectory(at: url, withIntermediateDirectories: true)
+        } catch {
+            self.notificationManager.showErrorMessage(error.localizedDescription)
+            throw error
         }
     }
 
@@ -293,17 +290,13 @@ class MainApp: ObservableObject {
         }
     }
 
-    func duplicateItem(from: URL) {
-        let newName = newFileName(
-            defaultName: from.deletingPathExtension().lastPathComponent,
-            extensionName: from.pathExtension,
-            urlString: from.deletingLastPathComponent().absoluteString)
-        let newURL = from.deletingLastPathComponent().absoluteString + newName
-        workSpaceStorage.copyItem(at: from, to: URL(string: newURL)!) { error in
-            if let error = error {
-                self.notificationManager.showErrorMessage(error.localizedDescription)
-                return
-            }
+    func duplicateItem(at: URL) async throws {
+        let destinationURL = try await workSpaceStorage.urlWithSuffixIfExistingFileExist(url: at)
+        do {
+            try await workSpaceStorage.copyItem(at: at, to: destinationURL)
+        } catch {
+            self.notificationManager.showErrorMessage(error.localizedDescription)
+            throw error
         }
     }
 
@@ -315,10 +308,12 @@ class MainApp: ObservableObject {
                     Button("common.delete", role: .destructive) {
                         self.workSpaceStorage.removeItem(at: url) { error in
                             if let error = error {
-                                self.notificationManager.showErrorMessage(error.localizedDescription)
+                                self.notificationManager.showErrorMessage(
+                                    error.localizedDescription)
                                 return
                             }
-                            if let editorToTrash = self.textEditors.first(where: { $0.url == url }) {
+                            if let editorToTrash = self.textEditors.first(where: { $0.url == url })
+                            {
                                 Task { @MainActor in
                                     self.closeEditor(editor: editorToTrash)
                                 }

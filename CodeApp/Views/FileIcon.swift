@@ -66,7 +66,7 @@ private let extensionNames = [
     "direnv": "config", "env": "config", "static": "config", "editorconfig": "config",
     "slugignore": "config", "tmp": "clock", "htaccess": "config", "key": "lock", "cert": "lock",
     "DS_Store": "ignored", "svelte": "svelte", "mjs": "javascript", "cjs": "javascript",
-    "mts": "typescript", "cts": "typescript"
+    "mts": "typescript", "cts": "typescript",
 ]
 private let level2ExtensionNames = [
     "css.map": "css", "js.map": "javascript", "spec.js": "javascript_yellow",
@@ -82,7 +82,7 @@ private let level2ExtensionNames = [
 private let fileNames = [
     "license": "license", "licence": "license", "license.txt": "license", "licence.txt": "license",
     "license.md": "license", "licence.md": "license", "readme.txt": "info", "readme.md": "info",
-    "readme": "info"
+    "readme": "info",
 ]
 
 struct FileIcon: View {
@@ -98,7 +98,8 @@ struct FileIcon: View {
                 .resizable()
                 .frame(width: iconSize + 6, height: iconSize + 6)
         } else if let image = level2ExtensionNames[
-            fileName.components(separatedBy: ".").suffix(2).joined(separator: ".")] {
+            fileName.components(separatedBy: ".").suffix(2).joined(separator: ".")]
+        {
             Image(image)
                 .resizable()
                 .frame(width: iconSize + 6, height: iconSize + 6)
