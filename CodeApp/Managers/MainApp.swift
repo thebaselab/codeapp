@@ -605,6 +605,10 @@ class MainApp: ObservableObject {
     }
 
     func loadFolder(url: URL, resetEditors: Bool = true) {
+        if workSpaceStorage.remoteConnected && url.isFileURL {
+            workSpaceStorage.disconnect()
+        }
+
         ios_setDirectoryURL(url)
         scanForTypes()
 
