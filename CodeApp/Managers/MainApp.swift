@@ -643,6 +643,9 @@ class MainApp: ObservableObject {
     }
 
     private func createExtensionEditorFromURL(url: URL) throws -> EditorInstance {
+        guard url.lastPathComponent.contains(".") else {
+            throw AppError.unknownFileFormat
+        }
         let fileExtension =
             url.lastPathComponent.components(separatedBy: ".").last?.lowercased() ?? ""
         let provider = extensionManager.editorProviderManager.providers.first {

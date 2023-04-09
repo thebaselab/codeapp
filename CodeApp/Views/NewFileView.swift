@@ -168,7 +168,7 @@ struct NewFileView: View {
         default:
             if name.contains(".") {
                 name = returnFileName(
-                    defaultName: name.components(separatedBy: ".").dropLast().joined(),
+                    defaultName: name.components(separatedBy: ".").dropLast().joined(separator: "."),
                     extensionName: name.components(separatedBy: ".").last ?? "")
             }
             content = ""

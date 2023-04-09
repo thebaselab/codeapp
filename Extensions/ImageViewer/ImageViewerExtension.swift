@@ -70,7 +70,7 @@ class ImageViewerExtension: CodeAppExtension {
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
         let provider = EditorProvider(
             registeredFileExtensions: [
-                "png", "tiff", "tif", "jpeg", "jpg", "gif", "bmp", "bmp", "BMPf", "ico", "cur",
+                "png", "tiff", "tif", "jpeg", "jpg", "gif", "bmp", "bmpf", "ico", "cur",
                 "xbm", "heic", "webp",
             ],
             onCreateEditor: { [weak self] url in
