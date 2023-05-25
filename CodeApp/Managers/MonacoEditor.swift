@@ -626,15 +626,15 @@ extension WKWebView {
 }
 
 extension MonacoEditor {
+    enum Failure: Error {
+        case failedToEncodeDataAsBase64
+    }
+}
+
+extension MonacoEditor {
     func isEditorInDiffMode() async -> Bool {
         let result = try? await monacoWebView.evaluateJavaScriptAsync(
             "editor.getEditorType() !== 'vs.editor.ICodeEditor'")
-        return (result as? Bool) ?? false
-    }
-
-    func editorModelExists(url: URL) async -> Bool {
-        let result = try? await monacoWebView.evaluateJavaScriptAsync(
-            "monaco.editor.getModel(monaco.Uri.parse('\(url.absoluteString)')) !== null")
         return (result as? Bool) ?? false
     }
 
@@ -645,17 +645,21 @@ extension MonacoEditor {
     }
 
     func onRequestNewTextModel(url: URL, value: String) async throws {
-        guard let encoded = value.base64Encoded() else {
-            return
+        guard let encodedContent = value.base64Encoded(),
+            let encodedUrl = url.absoluteString.base64Encoded()
+        else {
+            throw MonacoEditor.Failure.failedToEncodeDataAsBase64
         }
         try await monacoWebView.evaluateJavaScriptAsync(
-            "onRequestNewTextModel('\(url.absoluteString)', '\(encoded)')"
+            "onRequestNewTextModel('\(encodedUrl)', '\(encodedContent)')"
         )
     }
 
     func setModel(url: URL) async throws {
-        try await monacoWebView.evaluateJavaScriptAsync(
-            "editor.setModel(monaco.editor.getModel(monaco.Uri.parse('\(url.absoluteString)')));")
+        guard let encodedUrl = url.absoluteString.base64Encoded() else {
+            throw MonacoEditor.Failure.failedToEncodeDataAsBase64
+        }
+        try await monacoWebView.evaluateJavaScriptAsync("setModel('\(encodedUrl)');")
     }
 
     func setModelToEmpty() async throws {
@@ -664,11 +668,13 @@ extension MonacoEditor {
 
     @MainActor
     func setValueForModel(url: URL, value: String) async throws {
-        guard let encoded = value.base64Encoded() else {
-            return
+        guard let encodedContent = value.base64Encoded(),
+            let encodedUrl = url.absoluteString.base64Encoded()
+        else {
+            throw MonacoEditor.Failure.failedToEncodeDataAsBase64
         }
         try await monacoWebView.evaluateJavaScriptAsync(
-            "setValueForModel('\(url.absoluteString)', '\(encoded)')"
+            "setValueForModel('\(encodedUrl)', '\(encodedContent)')"
         )
     }
 

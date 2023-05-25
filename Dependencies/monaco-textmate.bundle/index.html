@@ -565,13 +565,13 @@
         return decodeURIComponent(escape(window.atob(base64)));
       }
 
-      function onRequestNewTextModel(url, base64Content) {
+      function onRequestNewTextModel(base64Url, base64Content) {
         const existingModelUri = editor.getModel()?.uri;
         if (existingModelUri) {
           states[existingModelUri] = editor.saveViewState();
         }
 
-        const newModelUri = monaco.Uri.parse(url);
+        const newModelUri = monaco.Uri.parse(base64ToString(base64Url));
         const existingModel = monaco.editor.getModel(newModelUri);
         const newModelContent = base64ToString(base64Content);
 
@@ -592,7 +592,8 @@
         }
       }
 
-      function setValueForModel(url, base64Content) {
+      function setValueForModel(base64Url, base64Content) {
+        const url = base64ToString(base64Url);
         const model = monaco.editor.getModel(monaco.Uri.parse(url));
         if (!model) return;
 
@@ -605,6 +606,12 @@
         }else {
           model.setValue(base64ToString(base64Content));
         }
+      }
+
+      function setModel(base64Url) {
+        const model = monaco.editor.getModel(monaco.Uri.parse(base64ToString(base64Url)));
+        if (!model) return;
+        editor.setModel(model);
       }
     </script>
   </body>
