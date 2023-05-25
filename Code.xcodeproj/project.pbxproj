@@ -661,6 +661,8 @@
 		9F046C3B29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */; };
 		9F046C3D29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
 		9F046C3E29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
+		9F29759C2A1F488E007FDB3D /* deferredRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F29759B2A1F488E007FDB3D /* deferredRendering.swift */; };
+		9F29759D2A1F488E007FDB3D /* deferredRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F29759B2A1F488E007FDB3D /* deferredRendering.swift */; };
 		9F37391E293F37F8006886C1 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37391D293F37F8006886C1 /* ThemeManager.swift */; };
 		9F37391F293F37F8006886C1 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37391D293F37F8006886C1 /* ThemeManager.swift */; };
 		9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */; };
@@ -1693,6 +1695,7 @@
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteExecutionExtension.swift; sourceTree = "<group>"; };
 		9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAppExtension.swift; sourceTree = "<group>"; };
+		9F29759B2A1F488E007FDB3D /* deferredRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deferredRendering.swift; sourceTree = "<group>"; };
 		9F37391D293F37F8006886C1 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hiddenScrollableContentBackground.swift; sourceTree = "<group>"; };
 		9F3C2DE92918E19B00BFF14C /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -2464,6 +2467,7 @@
 			children = (
 				9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */,
 				94A347BC293DE24B00A59658 /* hiddenSystemOverlays.swift */,
+				9F29759B2A1F488E007FDB3D /* deferredRendering.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -3008,6 +3012,7 @@
 				9F3C2DEB2918E19B00BFF14C /* Theme.swift in Sources */,
 				94196957280316C7008AAEB2 /* SettingsView.swift in Sources */,
 				94196958280316C7008AAEB2 /* wasm.swift in Sources */,
+				9F29759D2A1F488E007FDB3D /* deferredRendering.swift in Sources */,
 				94196959280316C7008AAEB2 /* SearchManager.swift in Sources */,
 				9419695A280316C7008AAEB2 /* ArchiveDir.swift in Sources */,
 				9419695B280316C7008AAEB2 /* MarkdownView.swift in Sources */,
@@ -3162,6 +3167,7 @@
 				9F3C2DEA2918E19B00BFF14C /* Theme.swift in Sources */,
 				94A777F6257B9260008FE7B2 /* SettingsView.swift in Sources */,
 				94CF58E1265E8A4B00CB6A4B /* wasm.swift in Sources */,
+				9F29759C2A1F488E007FDB3D /* deferredRendering.swift in Sources */,
 				947BF349262453040015DAEB /* SearchManager.swift in Sources */,
 				94A7781E257BC473008FE7B2 /* ArchiveDir.swift in Sources */,
 				94A5682B257CBDE4008A6530 /* MarkdownView.swift in Sources */,

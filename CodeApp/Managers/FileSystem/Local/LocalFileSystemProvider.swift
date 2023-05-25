@@ -83,10 +83,24 @@ class LocalFileSystemProvider: FileSystemProvider {
     }
 
     func contents(at: URL, completionHandler: @escaping (Data?, Error?) -> Void) {
-        do {
-            let data = try Data(contentsOf: at)
-            completionHandler(data, nil)
-        } catch {
+        // Using a FileCoordinator allows downloading iCloud file using a completion handler pattern
+        // Reference: https://developer.apple.com/forums/thread/681520
+        var error: NSError?
+        let fileCoordinator = NSFileCoordinator()
+
+        fileCoordinator.coordinate(
+            readingItemAt: at, options: .withoutChanges, error: &error
+        ) { newURL in
+            do {
+                let data = try Data(contentsOf: newURL)
+                completionHandler(data, nil)
+            } catch {
+                completionHandler(nil, error)
+            }
+            return
+        }
+
+        if let error {
             completionHandler(nil, error)
         }
     }

@@ -753,17 +753,28 @@ class MainApp: ObservableObject {
             urlQueue.append(url)
             throw AppError.editorIsNotReady
         }
+        var url = url
+        if url.pathExtension == "icloud" {
+            let originalFileName = String(
+                url.lastPathComponent.dropFirst(".".count).dropLast(".icloud".count))
+            url = url.deletingLastPathComponent().appendingPathComponent(originalFileName)
+        }
         if let existingEditor = try? openEditorForURL(url: url) {
             return existingEditor
         }
         // TODO: Avoid reading the same file twice
-        if let textEditor = try? await createTextEditorFromURL(url: url) {
+        do {
+            let textEditor = try await createTextEditorFromURL(url: url)
             appendAndFocusNewEditor(editor: textEditor, alwaysInNewTab: alwaysInNewTab)
             return textEditor
+        } catch NSFileProviderError.serverUnreachable {
+            throw NSFileProviderError(.serverUnreachable)
+        } catch {
+            // Otherwise, fallback to using extensions
+            let editor = try createExtensionEditorFromURL(url: url)
+            appendAndFocusNewEditor(editor: editor, alwaysInNewTab: alwaysInNewTab)
+            return editor
         }
-        let editor = try createExtensionEditorFromURL(url: url)
-        appendAndFocusNewEditor(editor: editor, alwaysInNewTab: alwaysInNewTab)
-        return editor
     }
 
     @MainActor

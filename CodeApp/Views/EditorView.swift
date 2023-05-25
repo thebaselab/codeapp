@@ -39,16 +39,14 @@ struct EditorView: View {
                                 .background(Color.init(id: "editor.background"))
                         }
                 } else if let editor = App.activeEditor {
-
                     editor.view
-
-                    VStack {
-                        InfinityProgressView(enabled: App.workSpaceStorage.editorIsBusy)
-                        Spacer()
-                    }
-
                 } else {
                     DescriptionText("You don't have any open editor.")
+                }
+
+                VStack {
+                    InfinityProgressView(enabled: App.workSpaceStorage.editorIsBusy)
+                    Spacer()
                 }
 
             }
