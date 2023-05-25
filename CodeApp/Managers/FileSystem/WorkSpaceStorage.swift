@@ -36,6 +36,7 @@ class WorkSpaceStorage: ObservableObject {
         case AlreadyConnectingToAHost = "errors.fs.already_connecting_to_a_host"
         case UnsupportedAuthenticationMethod = "errors.fs.unsupported_auth"
         case UnableToFindASuitableName = "errors.fs.unable_to_find_suitable_name"
+        case TargetIsiCloudFile = "errors.fs.icloud.file"
 
         var errorDescription: String? {
             NSLocalizedString(self.rawValue, comment: "")
