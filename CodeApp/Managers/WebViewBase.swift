@@ -82,7 +82,7 @@ class WebViewBase: KBWebViewBase {
         let newMethod = class_getInstanceMethod(
             WebViewBase.self, #selector(WebViewBase.getCustomInputAccessoryView))
         class_addMethod(
-            newClass.self, #selector(getter:UIResponder.inputAccessoryView),
+            newClass.self, #selector(getter: UIResponder.inputAccessoryView),
             method_getImplementation(newMethod!), method_getTypeEncoding(newMethod!))
 
         objc_registerClassPair(newClass!)
