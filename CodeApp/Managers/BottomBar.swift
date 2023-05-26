@@ -10,7 +10,6 @@ import SwiftUI
 struct BottomBar: View {
 
     @EnvironmentObject var App: MainApp
-    @EnvironmentObject var stateManager: MainStateManager
 
     @State var isShowingCheckoutAlert: Bool = false
     @State var selectedBranch: checkoutDest? = nil
@@ -19,8 +18,6 @@ struct BottomBar: View {
     @State var currentColumn = 0
 
     @AppStorage("editorReadOnly") var editorReadOnly = false
-    @AppStorage("editorFontSize") var editorTextSize: Int = 14
-
     @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -133,84 +130,6 @@ struct BottomBar: View {
 
                 Spacer()
 
-                HStack {
-                    Group {
-                        Button("New File") {
-                            stateManager.showsNewFileSheet.toggle()
-                        }.keyboardShortcut("n", modifiers: [.command])
-
-                        Button("Open File") {
-                            stateManager.showsFilePicker.toggle()
-                        }.keyboardShortcut("o", modifiers: [.command])
-                            .sheet(isPresented: $stateManager.showsFilePicker) {
-                                DocumentPickerView()
-                            }
-                        Button("Save") {
-                            App.saveCurrentFile()
-
-                        }.keyboardShortcut("s", modifiers: [.command])
-                            .sheet(
-                                isPresented: $stateManager.showsChangeLog,
-                                content: {
-                                    ChangeLogView()
-                                })
-                        Button("Close Editor") {
-                            if let activeEditor = App.activeEditor {
-                                App.closeEditor(editor: activeEditor)
-                            }
-                        }
-                        .keyboardShortcut("w", modifiers: [.command])
-                        .sheet(isPresented: $stateManager.showsDirectoryPicker) {
-                            DirectoryPickerView(onOpen: { url in
-                                App.loadFolder(url: url)
-                            })
-                        }
-                        Button("Command Palatte") {
-                            App.monacoInstance.executeJavascript(
-                                command: "editor.trigger('', 'editor.action.quickCommand')")
-                        }
-                        .keyboardShortcut("p", modifiers: [.command, .shift])
-                    }
-
-                    Group {
-                        Button(isPanelVisible ? "Hide Panel" : "Show Panel") {
-                            openConsolePanel()
-                        }.keyboardShortcut("j", modifiers: .command)
-                        Button("Zoom in") {
-                            if self.editorTextSize < 30 {
-                                self.editorTextSize += 1
-                                App.monacoInstance.executeJavascript(
-                                    command:
-                                        "editor.updateOptions({fontSize: \(String(self.editorTextSize))})"
-                                )
-                            }
-                        }.keyboardShortcut("+", modifiers: [.command])
-                        Button(action: {
-                            if self.editorTextSize < 30 {
-                                self.editorTextSize += 1
-                                App.monacoInstance.executeJavascript(
-                                    command:
-                                        "editor.updateOptions({fontSize: \(String(self.editorTextSize))})"
-                                )
-                            }
-                        }) {
-                            Image(systemName: "plus")
-                        }.keyboardShortcut("=", modifiers: [.command])
-
-                        Button("Zoom out") {
-                            if self.editorTextSize > 10 {
-                                self.editorTextSize -= 1
-                                App.monacoInstance.executeJavascript(
-                                    command:
-                                        "editor.updateOptions({fontSize: \(String(self.editorTextSize))})"
-                                )
-                            }
-                        }.keyboardShortcut("-", modifiers: [.command])
-                    }
-
-                }.foregroundColor(.clear).font(.system(size: 1))
-
-                Spacer()
                 HStack {
 
                     if App.activeEditor is TextEditorInstance {

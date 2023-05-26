@@ -106,7 +106,7 @@ struct TopBar: View {
                         Label(
                             isPanelVisible ? "Hide Panel" : "Show Panel",
                             systemImage: "chevron.left.slash.chevron.right")
-                    }
+                    }.keyboardShortcut("j", modifiers: .command)
 
                     if UIApplication.shared.supportsMultipleScenes {
                         Button(action: {

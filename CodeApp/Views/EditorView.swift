@@ -15,9 +15,11 @@ import UniformTypeIdentifiers
 struct EditorView: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var preivewProviderManager: EditorProviderManager
+    @EnvironmentObject var stateManager: MainStateManager
 
     @AppStorage("editorLightTheme") var editorLightTheme: String = "Default"
     @AppStorage("editorDarkTheme") var editorDarkTheme: String = "Default"
+    @AppStorage("editorFontSize") var editorTextSize: Int = 14
 
     @State var targeted: Bool = false
 
@@ -30,7 +32,46 @@ struct EditorView: View {
     var body: some View {
         HStack(spacing: 0) {
             ZStack {
+                // Invisible buttons for creating keyboard shortcuts in SwiftUI
+                VStack {
+                    Button("New File") {
+                        stateManager.showsNewFileSheet.toggle()
+                    }.keyboardShortcut("n", modifiers: [.command])
+
+                    Button("Open File") {
+                        stateManager.showsFilePicker.toggle()
+                    }
+                    .keyboardShortcut("o", modifiers: [.command])
+                    .sheet(isPresented: $stateManager.showsFilePicker) {
+                        DocumentPickerView()
+                    }
+
+                    Button("Save") {
+                        App.saveCurrentFile()
+
+                    }
+                    .keyboardShortcut("s", modifiers: [.command])
+                    .sheet(
+                        isPresented: $stateManager.showsChangeLog,
+                        content: {
+                            ChangeLogView()
+                        })
+
+                    Button("Close Editor") {
+                        if let activeEditor = App.activeEditor {
+                            App.closeEditor(editor: activeEditor)
+                        }
+                    }
+                    .keyboardShortcut("w", modifiers: [.command])
+                    .sheet(isPresented: $stateManager.showsDirectoryPicker) {
+                        DirectoryPickerView(onOpen: { url in
+                            App.loadFolder(url: url)
+                        })
+                    }
+                }.foregroundColor(.clear).font(.system(size: 1))
+
                 Color.init(id: "editor.background")
+
                 if !App.stateManager.isMonacoEditorInitialized {
                     App.monacoInstance
                         .overlay {
@@ -39,7 +80,38 @@ struct EditorView: View {
                                 .background(Color.init(id: "editor.background"))
                         }
                 } else if let editor = App.activeEditor {
-                    editor.view
+                    ZStack {
+
+                        VStack {
+                            Button("Command Palatte") {
+                                App.monacoInstance.executeJavascript(
+                                    command: "editor.trigger('', 'editor.action.quickCommand')")
+                            }
+                            .keyboardShortcut("p", modifiers: [.command, .shift])
+
+                            Button("Zoom in") {
+                                if self.editorTextSize < 30 {
+                                    self.editorTextSize += 1
+                                    App.monacoInstance.executeJavascript(
+                                        command:
+                                            "editor.updateOptions({fontSize: \(String(self.editorTextSize))})"
+                                    )
+                                }
+                            }.keyboardShortcut("+", modifiers: [.command])
+
+                            Button("Zoom out") {
+                                if self.editorTextSize > 10 {
+                                    self.editorTextSize -= 1
+                                    App.monacoInstance.executeJavascript(
+                                        command:
+                                            "editor.updateOptions({fontSize: \(String(self.editorTextSize))})"
+                                    )
+                                }
+                            }.keyboardShortcut("-", modifiers: [.command])
+                        }.foregroundColor(.clear).font(.system(size: 1))
+
+                        editor.view
+                    }
                 } else {
                     DescriptionText("You don't have any open editor.")
                 }
