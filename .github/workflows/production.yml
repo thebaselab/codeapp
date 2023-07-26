@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Deploy production build to App Store via Fastlane
-        run: fastlane open_beta
+        run: fastlane beta
         env:
           APP_STORE_CONNECT_TEAM_ID: "${{ secrets.APP_STORE_CONNECT_TEAM_ID }}"
           DEVELOPER_APP_ID: "${{ secrets.DEVELOPER_APP_ID }}"
@@ -36,3 +36,4 @@ jobs:
           APPLE_KEY_CONTENT: "${{ secrets.APPLE_KEY_CONTENT }}"
           JUDGE0_KEY: "${{ secrets.JUDGE0_KEY }}"
           JUDGE0_ENDPOINT: "${{ secrets.JUDGE0_ENDPOINT }}"
+          DISTRIBUTE_EXTERNAL: "false"

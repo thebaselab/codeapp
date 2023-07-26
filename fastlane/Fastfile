@@ -12,6 +12,7 @@ GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 
 JUDGE0_KEY = ENV["JUDGE0_KEY"]
 JUDGE0_ENDPOINT = ENV["JUDGE0_ENDPOINT"]
+DISTRIBUTE_EXTERNAL = ENV["DISTRIBUTE_EXTERNAL"] == "true"
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -34,7 +35,7 @@ def ensure_temp_keychain(name, password)
 end
 
 platform :ios do
-  lane :open_beta do
+  lane :beta do
     keychain_name = TEMP_KEYCHAIN_USER
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)
@@ -82,7 +83,7 @@ platform :ios do
     pilot(
       apple_id: "#{DEVELOPER_APP_ID}",
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
-      distribute_external: true,
+      distribute_external: DISTRIBUTE_EXTERNAL,
       notify_external_testers: true,
       ipa: "./Code.ipa",
       changelog: "GitHub Action automatic build. For detailed changes, " + 
@@ -91,6 +92,7 @@ platform :ios do
       groups: ["Public"],
       wait_processing_interval: 300
     )
+    
 
     delete_temp_keychain(keychain_name)
   end
