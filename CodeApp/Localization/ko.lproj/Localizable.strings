@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.5 (2023년 6월)**
+##### **v1.4.5 (2023년 7월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### v1.4.5 (2023년 7월)
+- iCloud 파일을 정상적으로 처리
+- UI 개선
+
 ### v1.4.4 (2023년 5월)
 - 글꼴 합자를 비활성화하는 옵션
 - 메모리 내 SSH 개인 키

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.5 (2023 年 6 月)**
+##### **v1.4.5 (2023 年 7 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### v1.4.5 (2023 年 7 月)
+- 改进 iCloud 文件处理
+- 用户界面改进
+
 ### v1.4.4 (2023 年 5 月)
 - 启用字体连字的选项
 - 内存中的 SSH 私钥
