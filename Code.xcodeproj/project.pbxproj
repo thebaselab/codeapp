@@ -3803,7 +3803,7 @@
 		};
 		94196938280316C7008AAEB2 /* XCRemoteSwiftPackageReference "FileProvider" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/amosavian/FileProvider";
+			repositoryURL = "https://github.com/thebaselab/FileProvider";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -3835,7 +3835,7 @@
 		};
 		948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/amosavian/FileProvider";
+			repositoryURL = "https://github.com/thebaselab/FileProvider";
 			requirement = {
 				branch = master;
 				kind = branch;
