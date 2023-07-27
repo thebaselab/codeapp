@@ -57,7 +57,7 @@
       },
       {
         "package": "FilesProvider",
-        "repositoryURL": "https://github.com/amosavian/FileProvider",
+        "repositoryURL": "https://github.com/thebaselab/FileProvider",
         "state": {
           "branch": "master",
           "revision": "abf68a62541a4193c8d106367ddb3648e8ab693f",
