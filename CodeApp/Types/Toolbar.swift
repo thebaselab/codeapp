@@ -11,6 +11,7 @@ struct ToolbarItem: Identifiable {
     let id = UUID()
     var extenionID: String
     var icon: String
+    var secondaryIcon: String?
     var onClick: () -> Void
     var shortCut: KeyboardShortcut?
     var panelToFocusOnTap: String?

@@ -26,7 +26,8 @@ class RemoteExecutionExtension: CodeAppExtension {
 
         let toolbarItem = ToolbarItem(
             extenionID: EXTENSION_ID,
-            icon: "play",
+            icon: "server.rack",
+            secondaryIcon: "play.circle.fill",
             onClick: {
                 if self.storage.displayMode == .input {
                     self.storage.displayMode = .output
@@ -147,8 +148,8 @@ private let languageList = [
     //    52: ["C++ (GCC 7.4.0)", "cpp"],
     //    49: ["C (GCC 8.3.0)", "c"],
     //    53: ["C++ (GCC 8.3.0)", "cpp"],
-    //    50: ["C (GCC 9.2.0)", "c"],
-    //    54: ["C++ (GCC 9.2.0)", "cpp"],
+    50: ["C (GCC 9.2.0)", "c"],
+    54: ["C++ (GCC 9.2.0)", "cpp"],
     51: ["C# (Mono 6.6.0.161)", "cs"],
     86: ["Clojure (1.10.1)", "clj"],
     77: ["COBOL (GnuCOBOL 2.2)", "cob"],

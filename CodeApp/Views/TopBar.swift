@@ -145,6 +145,27 @@ struct TopBar: View {
     }
 }
 
+private struct StackedImageIconView: View {
+
+    var primaryIcon: String
+    var secondaryIcon: String?
+
+    var body: some View {
+        Image(systemName: primaryIcon)
+            .font(.system(size: 17))
+            .overlay(alignment: .bottomTrailing) {
+                if let secondaryIcon {
+                    Image(systemName: secondaryIcon)
+                        .foregroundStyle(.background, Color.init("T1"))
+                        .font(.system(size: 9))
+                } else {
+                    EmptyView()
+                }
+            }
+
+    }
+}
+
 private struct ToolbarItemView: View {
 
     @SceneStorage("panel.visible") var showsPanel: Bool = DefaultUIState.PANEL_IS_VISIBLE
@@ -160,7 +181,7 @@ private struct ToolbarItemView: View {
             }
             item.onClick()
         }) {
-            Image(systemName: item.icon)
+            StackedImageIconView(primaryIcon: item.icon, secondaryIcon: item.secondaryIcon)
                 .font(.system(size: 17))
                 .foregroundColor(Color.init("T1"))
                 .padding(5)
