@@ -241,8 +241,8 @@
  - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) is licensed under [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE).
 #### GCDWebServer
  - [GCDWebServer](https://github.com/swisspol/GCDWebServer) is licensed under [Custom License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
-#### libgit2
- - [libgit2](https://github.com/libgit2/libgit2) is licensed under [MIT License](https://github.com/libgit2/libgit2/blob/main/COPYING).
+#### holzschu/libgit2
+ - [libgit2](https://github.com/holzschu/libgit2) is licensed under [GPLv2 with a special Linking Exception](https://github.com/holzschu/libgit2/blob/main/COPYING).
 #### highlight.js
  - [highlight.js](https://github.com/highlightjs/highlight.js) is licensed under [BSD-3-Clause License](https://github.com/highlightjs/highlight.js/blob/master/LICENSE).
 #### ios_system
