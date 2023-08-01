@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>lg2</key>
+	<array>
+		<string>lg2.framework/lg2</string>
+		<string>main</string>
+		<string></string>
+		<string>directory</string>
+	</array>
 	<key>chmod</key>
 	<array>
 		<string>files.framework/files</string>

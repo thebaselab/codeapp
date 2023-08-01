@@ -41,6 +41,11 @@ curl -OL https://github.com/holzschu/libssh2-for-iOS/releases/download/v1.2/libs
 unzip -q libssh2.xcframework.zip -d Term
 rm -f libssh2.xcframework.zip
 
+# lg2
+curl -OL https://github.com/holzschu/libgit2/releases/download/ios_1.0/lg2.xcframework.zip
+unzip -q lg2.xcframework.zip -d Term
+rm -f lg2.xcframework.zip
+
 # Python auxiliaries
 for lib in harfbuzz freetype libpng; do
     curl -OL https://github.com/holzschu/Python-aux/releases/download/1.0/$lib.xcframework.zip
