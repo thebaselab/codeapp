@@ -69,4 +69,6 @@ protocol GitServiceProvider {
         completionHandler: @escaping (String) -> Void
     )
     func remotes() async throws -> [Remote]
+    func pull(branch: Branch, Remote from: Remote) async throws
+    func remoteBranches() async throws -> [Branch]
 }

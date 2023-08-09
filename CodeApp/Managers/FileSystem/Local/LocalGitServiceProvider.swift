@@ -832,6 +832,24 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
+    func remoteBranches() async throws -> [Branch] {
+        guard let repository = self.repository else {
+            throw NSError(
+                domain: "", code: 401,
+                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
+        }
+        return try await withCheckedThrowingContinuation { continuation in
+            workerQueue.async {
+                switch repository.remoteBranches() {
+                case .success(let branches):
+                    continuation.resume(returning: branches)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+
     func checkoutDestinations() -> [checkoutDest] {
         return branches(isRemote: true) + branches(isRemote: false) + tags()
     }
@@ -970,6 +988,30 @@ class LocalGitServiceProvider: GitServiceProvider {
                 }
             case let .failure(_error):
                 error(_error)
+            }
+        }
+    }
+
+    func pull(branch: Branch, Remote from: Remote) async throws {
+        guard let repository = self.repository else {
+            throw NSError(
+                domain: "", code: 401,
+                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
+        }
+        guard let credential = self.credential else {
+            throw NSError(
+                domain: "", code: -16,
+                userInfo: [NSLocalizedDescriptionKey: "Credentials are not configured"])
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            workerQueue.async {
+                do {
+                    try repository.pull(branch: branch, from: from, credentials: credential)
+                    continuation.resume()
+                } catch {
+                    continuation.resume(throwing: error)
+                }
             }
         }
     }
