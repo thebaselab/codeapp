@@ -261,80 +261,174 @@ public final class Repository {
 				return .success(())
 			}
 		}
-		
-		
-		/*
-		let repository: OpaquePointer = self.pointer
-		var remote: OpaquePointer? = nil
-		let result_git_remote_lookup = git_remote_lookup(&remote, repository, "origin" )
-		print(result_git_remote_lookup)
-		
-		var master: String = ""
-		if(branch == nil){
-			if case .success = reference(named: "refs/heads/main") {
-				master = "refs/heads/main"
-			} else {
-				let branchResult = self.localBranches()
-				switch branchResult {
-				case .success(let branches):
-					print("found repo to use: \(branches[0].longName)") //get the first one for now :)
-					master = branches[0].longName
-					break
-				case .failure:
-					print("Failed to get any branches...")
-					break
-				}
-			}
-		} else {
-			if case .success = reference(named: branch!) {
-				master = "\(branch!)"
-			} else {
-				// Branch not found.
-				var gitBranch: OpaquePointer?
-
-				git_branch_create(&gitBranch, repository, branch!, nil, 1);
-			
-				master = "\(branch!)"
-			}
-		}
-		
-		if(master == ""){
-			master = "refs/heads/main" // Prevents a crash below
-		}
-
-		let strings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = [master].withUnsafeBufferPointer {
-			let buffer = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>.allocate(capacity: $0.count + 1)
-			let val = $0.map
-			{ $0.withCString(strdup) }
-			buffer.initialize(from: val, count: 1)
-			buffer[$0.count] = nil
-		return buffer
-		}
-		var gitstr = git_strarray()
-		gitstr.strings = strings
-		gitstr.count = 1
-		
-		let push_result = git_remote_push(remote, &gitstr, &options)
-		print(push_result)
-		git_remote_free(remote)
-*/
 	}
-	
-//	public func pull(branch: Branch, Remote from: Remote, credentials: Credentials) -> Result<Repository, NSError>{
-//		let result = fetch(from, credentials: credentials)
-//		switch result {
-//		case .success:
-//			break
-//		case let .failure(error):
-//			return .failure(error)
-//		}
-//
-//		guard branch.isLocal else{
-//			return .failure(NSError(domain: "branchIsNotLocal", code: 401, userInfo: nil))
-//		}
-//
-//	}
+    
+    // MARK: - Pulling / Merging Repositories
+    
+    /// Fetch from and integrate with another repository or a local branch
+    ///
+    /// branch - The branch to pull
+    /// from - The remote to pull from
+    /// credentials - Credentials to use when fetching
+    ///
+    /// Returns nothing on success
+	public func pull(branch: Branch, from remote: Remote, credentials: Credentials) throws {
+		let result = fetch(remote, credentials: credentials)
+		switch result {
+		case .success:
+			break
+		case let .failure(error):
+            throw error
+		}
 
+        var trackingBranch: Branch
+        
+		if branch.isLocal {
+            // TODO: Handle local branch
+            throw NSError(
+                domain: libGit2ErrorDomain,
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Local branch is unsupported yet.",
+                ]
+            )
+        }else{
+            let refResult = self.reference(named: branch.longName)
+            switch refResult {
+            case let .success(resultBranch):
+                trackingBranch = resultBranch as! Branch
+            case let .failure(error):
+                throw error
+            }
+        }
+        
+        try self.mergeBranchIntoCurrentBranch(branch: trackingBranch)
+	}
+    
+    private func currentBranch() throws -> Branch {
+        
+        let head = self.HEAD()
+        
+        guard case let .success(data) = head,
+              let branch = data as? Branch else {
+            throw NSError(
+                domain: libGit2ErrorDomain,
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Cannot locate current branch.",
+                ]
+            )
+        }
+        
+        return branch
+    }
+    
+    private func analyzeMerge(fromBranch: Branch) throws -> MergeAnalysisResult {
+        var annotatedCommit: OpaquePointer? = nil
+        var fromBranchCommitOid = fromBranch.commit.oid.oid
+        
+        let commitLookupResult = git_annotated_commit_lookup(&annotatedCommit, self.pointer, &fromBranchCommitOid)
+        guard commitLookupResult == GIT_OK.rawValue else {
+            throw NSError(gitError: commitLookupResult, pointOfFailure: "git_annotated_commit_lookup")
+        }
+        
+        let analysis = UnsafeMutablePointer<git_merge_analysis_t>.allocate(capacity: 1)
+        var preference = git_merge_preference_t(GIT_MERGE_PREFERENCE_NONE.rawValue)
+        
+        let mergeAnalysisResult = git_merge_analysis(
+            analysis,
+            &preference,
+            self.pointer,
+            &annotatedCommit,
+            1
+        )
+        
+        git_annotated_commit_free(annotatedCommit)
+        
+        guard mergeAnalysisResult == GIT_OK.rawValue else {
+            analysis.deallocate()
+            throw NSError(gitError: mergeAnalysisResult, pointOfFailure: "git_merge_preference_t")
+        }
+        
+        return MergeAnalysisResult(rawValue: analysis.move().rawValue)
+    }
+    
+    // Merging: https://github.com/libgit2/objective-git/blob/c5ff513bee3c0d02c48e11c38f049577db0f3554/ObjectiveGit/GTRepository%2BMerging.m#L76
+    
+    private func updateReferenceTarget(reference: ReferenceType, newTarget: OID, message: String) throws -> ReferenceType {
+        var refPointer: OpaquePointer? = nil
+        let gitError = git_reference_lookup(&refPointer, self.pointer, reference.longName)
+        
+        guard gitError == GIT_OK.rawValue else {
+            throw NSError(gitError: gitError, pointOfFailure: "git_reference_lookup")
+        }
+        
+        var newReferencePointer: OpaquePointer? = nil
+        var newTargetOID = newTarget.oid
+        
+        let setReferenceError = git_reference_set_target(
+            &newReferencePointer,
+            refPointer,
+            &newTargetOID,
+            message
+        )
+        guard setReferenceError == GIT_OK.rawValue else {
+            throw NSError(gitError: setReferenceError, pointOfFailure: "git_reference_set_target")
+        }
+        return referenceWithLibGit2Reference(newReferencePointer!)
+    }
+    
+    private func mergeBranchIntoCurrentBranch(branch: Branch) throws {
+        let localBranch = try self.currentBranch()
+        
+        if localBranch.commit.oid.description == branch.commit.oid.description {
+            return
+        }
+        
+        let analysis = try analyzeMerge(fromBranch: branch)
+        
+        if (analysis.contains(.upToDate)){
+            // Do nothing
+            return
+        }else if (analysis.contains(.fastForward) || analysis.contains(.unborn)){
+            // Fast-forward branch
+            let newReference = try updateReferenceTarget(
+                reference: localBranch,
+                newTarget: branch.commit.oid,
+                message: "merge \(branch.name): Fast-forward"
+            )
+            
+            switch self.checkout(newReference, strategy: .Force){
+            case .success():
+                return
+            case .failure(let error):
+                throw error
+            }
+        }else if analysis.contains(.normal) {
+            // Do normal merge
+            let localTree = self.safeTreeForCommitId(localBranch.commit.oid)
+            let remoteTree = self.safeTreeForCommitId(branch.commit.oid)
+            
+            // TODO: Find common ancestor
+            var ancestorTree: Tree? = nil
+            
+            throw NSError(
+                domain: libGit2ErrorDomain,
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Currently only fast-forward merging is supported.",
+                ]
+            )
+        }else {
+            throw NSError(
+                domain: libGit2ErrorDomain,
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Failed to merge branch",
+                ]
+            )
+        }
+    }
 	
 	// MARK: - Creating Repositories
 

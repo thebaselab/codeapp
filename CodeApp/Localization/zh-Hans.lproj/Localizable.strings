@@ -448,6 +448,8 @@
 "source_control.community_templates" = "社区模板";
 "source_control.community_templates.description" = "社区模板是 GitHub 上带有#codeapp-template 标签的存储库。 您可以在设置菜单中禁用此功能。";
 "source_control.clone" = "克隆";
+"source_control.pull" = "拉取";
+"source_control.pulling_from_remote" = "拉取中";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
 "panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";

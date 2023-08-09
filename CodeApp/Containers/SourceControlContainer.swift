@@ -307,6 +307,17 @@ struct SourceControlContainer: View {
         }
     }
 
+    func onPull(branch: Branch, remote: Remote) async throws {
+        guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
+            throw SourceControlError.gitServiceProviderUnavailable
+        }
+
+        // TODO: Progress, error handling
+        try await App.notificationManager.withAsyncNotification(title: "source_control.pulling_from_remote") {
+            try await serviceProvider.pull(branch: branch, Remote: remote)
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             //            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
@@ -324,7 +335,8 @@ struct SourceControlContainer: View {
                             onUnstage: onUnstage,
                             onRevert: onRevert,
                             onStage: onStage,
-                            onShowChangesInDiffEditor: onShowChangesInDiffEditor
+                            onShowChangesInDiffEditor: onShowChangesInDiffEditor,
+                            onPull: onPull
                         )
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)
