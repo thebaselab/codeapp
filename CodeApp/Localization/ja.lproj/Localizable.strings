@@ -458,6 +458,8 @@
 "source_control.community_templates" = "コミュニティ テンプレート";
 "source_control.community_templates.description" = "コミュニティ テンプレートは、#codeapp-template タグが付いた GitHub のリポジトリです。 設定メニューでこれを無効にすることができます。";
 "source_control.clone" = "クローン";
+"source_control.pull" = "プル";
+"source_control.pulling_from_remote" = "リモートからプルしています";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

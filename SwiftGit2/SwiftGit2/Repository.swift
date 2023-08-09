@@ -406,6 +406,12 @@ public final class Repository {
             }
         }else if analysis.contains(.normal) {
             // Do normal merge
+            let localTree = self.safeTreeForCommitId(localBranch.commit.oid)
+            let remoteTree = self.safeTreeForCommitId(branch.commit.oid)
+            
+            // TODO: Find common ancestor
+            var ancestorTree: Tree? = nil
+            
             throw NSError(
                 domain: libGit2ErrorDomain,
                 code: 1,

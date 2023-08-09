@@ -20,12 +20,17 @@ struct SourceControlSection: View {
     let onRevert: (String, Bool) async throws -> Void
     let onStage: ([String]) throws -> Void
     let onShowChangesInDiffEditor: (String) throws -> Void
+    let onPull: (Branch, Remote) async throws -> Void
 
     var body: some View {
         Group {
             MainSection(
-                onCommit: onCommit, onPush: onPush, onFetch: onFetch,
-                onStageAllChanges: onStageAllChanges)
+                onCommit: onCommit,
+                onPush: onPush,
+                onFetch: onFetch,
+                onStageAllChanges: onStageAllChanges,
+                onPull: onPull
+            )
             if !App.indexedResources.isEmpty {
                 StagedChangesSection(
                     onUnstage: onUnstage,
@@ -51,11 +56,13 @@ private struct MainSection: View {
 
     @State var showsIdentitySheet: Bool = false
     @State var remotes: [Remote] = []
+    @State var branches: [Branch] = []
 
     let onCommit: () async throws -> Void
     let onPush: (Remote) async throws -> Void
     let onFetch: () async throws -> Void
     let onStageAllChanges: () throws -> Void
+    let onPull: (Branch, Remote) async throws -> Void
 
     func onPushButtonTapped(remote: Remote) {
         Task {
@@ -136,6 +143,24 @@ private struct MainSection: View {
                             Label("Push", systemImage: "square.and.arrow.up")
                         }
 
+                        Menu {
+                            ForEach(remotes, id: \.hashValue) { remote in
+                                Menu {
+                                    ForEach(branches, id: \.hashValue) { branch in
+                                        Button("\(branch.name)") {
+                                            Task {
+                                                try await onPull(branch, remote)
+                                            }
+                                        }
+                                    }
+                                } label: {
+                                    Text("\(remote.name) - \(remote.URL)")
+                                }
+                            }
+                        } label: {
+                            Label("source_control.pull", systemImage: "square.and.arrow.down")
+                        }
+
                         Button(action: {
                             Task {
                                 try await onFetch()
@@ -161,12 +186,18 @@ private struct MainSection: View {
                 }
                 .onAppear {
                     Task {
-                        self.remotes =
+                        let remotesResult =
                             (try? await App.workSpaceStorage.gitServiceProvider?
                                 .remotes()) ?? []
+                        let remoteBranchesResult =
+                            (try? await App.workSpaceStorage.gitServiceProvider?.remoteBranches())
+                            ?? []
+                        await MainActor.run {
+                            self.remotes = remotesResult
+                            self.branches = remoteBranchesResult
+                        }
                     }
                 }
-
             }.sheet(isPresented: $showsIdentitySheet) {
                 NavigationView {
                     SourceControlIdentityConfiguration()
