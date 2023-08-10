@@ -460,6 +460,7 @@
 "source_control.clone" = "クローン";
 "source_control.pull" = "プル";
 "source_control.pulling_from_remote" = "リモートからプルしています";
+"source_control.pull_succeeded" = "プルに成功しました";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

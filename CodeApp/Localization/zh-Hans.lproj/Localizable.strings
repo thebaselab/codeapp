@@ -450,6 +450,7 @@
 "source_control.clone" = "克隆";
 "source_control.pull" = "拉取";
 "source_control.pulling_from_remote" = "拉取中";
+"source_control.pull_succeeded" = "拉取成功";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
 "panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";

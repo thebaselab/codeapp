@@ -318,6 +318,7 @@ struct SourceControlContainer: View {
         ) {
             do {
                 try await serviceProvider.pull(branch: branch, Remote: remote)
+                App.notificationManager.showInformationMessage("source_control.pull_succeeded")
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
             }

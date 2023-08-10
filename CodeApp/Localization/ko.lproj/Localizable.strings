@@ -459,6 +459,7 @@
 "source_control.clone" = "복제";
 "source_control.pull" = "풀";
 "source_control.pulling_from_remote" = "원격 서버에서 풀";
+"source_control.pull_succeeded" = "풀 성공";
 
 "panel.problems.no_problems_detected" = "작업 공간에서 감지된 문제 없음.";
 "panel.execution.press_play_to_execute_code" = "코드를 실행하려면 실행 버튼을 누르십시오. 실행하기 전에 프로그램 입력을 채워야 합니다.";

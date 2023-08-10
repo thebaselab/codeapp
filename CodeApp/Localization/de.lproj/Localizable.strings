@@ -459,6 +459,7 @@
 "source_control.clone" = "Klonen";
 "source_control.pull" = "Pull";
 "source_control.pulling_from_remote" = "Vom Remote-Server abrufen";
+"source_control.pull_succeeded" = "Pull erfolgreich";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";
