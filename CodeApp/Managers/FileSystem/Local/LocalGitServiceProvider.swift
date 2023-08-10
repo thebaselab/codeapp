@@ -1003,11 +1003,17 @@ class LocalGitServiceProvider: GitServiceProvider {
                 domain: "", code: -16,
                 userInfo: [NSLocalizedDescriptionKey: "Credentials are not configured"])
         }
+        guard let signature else {
+            throw NSError(
+                domain: "", code: -16,
+                userInfo: [NSLocalizedDescriptionKey: "Signauture is not configured"])
+        }
 
         return try await withCheckedThrowingContinuation { continuation in
             workerQueue.async {
                 do {
-                    try repository.pull(branch: branch, from: from, credentials: credential)
+                    try repository.pull(
+                        branch: branch, from: from, credentials: credential, signature: signature)
                     continuation.resume()
                 } catch {
                     continuation.resume(throwing: error)

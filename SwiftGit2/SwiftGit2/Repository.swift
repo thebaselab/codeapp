@@ -272,7 +272,7 @@ public final class Repository {
     /// credentials - Credentials to use when fetching
     ///
     /// Returns nothing on success
-	public func pull(branch: Branch, from remote: Remote, credentials: Credentials) throws {
+    public func pull(branch: Branch, from remote: Remote, credentials: Credentials, signature: Signature) throws {
 		let result = fetch(remote, credentials: credentials)
 		switch result {
 		case .success:
@@ -302,7 +302,7 @@ public final class Repository {
             }
         }
         
-        try self.mergeBranchIntoCurrentBranch(branch: trackingBranch)
+        try self.mergeBranchIntoCurrentBranch(branch: trackingBranch, signature: signature)
 	}
     
     private func currentBranch() throws -> Branch {
@@ -378,7 +378,7 @@ public final class Repository {
         return referenceWithLibGit2Reference(newReferencePointer!)
     }
     
-    private func mergeBranchIntoCurrentBranch(branch: Branch) throws {
+    private func mergeBranchIntoCurrentBranch(branch: Branch, signature: Signature) throws {
         let localBranch = try self.currentBranch()
         
         if localBranch.commit.oid.description == branch.commit.oid.description {
@@ -398,27 +398,50 @@ public final class Repository {
                 message: "merge \(branch.name): Fast-forward"
             )
             
-            switch self.checkout(newReference, strategy: .Force){
-            case .success():
-                return
-            case .failure(let error):
-                throw error
-            }
+            try self.checkout(newReference, strategy: .Force).get()
         }else if analysis.contains(.normal) {
             // Do normal merge
-            let localTree = self.safeTreeForCommitId(localBranch.commit.oid)
-            let remoteTree = self.safeTreeForCommitId(branch.commit.oid)
+            let localTree = try safeTreeForCommitId(localBranch.commit.oid).get()
+            let remoteTree = try safeTreeForCommitId(branch.commit.oid).get()
             
             // TODO: Find common ancestor
-            var ancestorTree: Tree? = nil
+            let ancestorTree: Tree? = nil
             
-            throw NSError(
-                domain: libGit2ErrorDomain,
-                code: 1,
-                userInfo: [
-                    NSLocalizedDescriptionKey: "Currently only fast-forward merging is supported.",
-                ]
-            )
+            // Merge
+            let index = try mergeTree(tree: localTree, otherTree: remoteTree, ancestor: ancestorTree)
+            
+            // Check for conflict
+            if (git_index_has_conflicts(index) != 0) {
+                // TODO: Write conflicts
+                throw NSError(
+                    domain: libGit2ErrorDomain,
+                    code: 1,
+                    userInfo: [
+                        NSLocalizedDescriptionKey: "Conflicts with target branch are found.",
+                    ]
+                )
+            }
+            
+            let newTree = try writeUnsafeTree(tree: index)
+            
+            // Create merge commit
+            let parents = [
+                try commit(localBranch.commit.oid).get(),
+                try commit(branch.commit.oid).get()
+            ]
+            
+            // FIXME: This is stepping on the local tree
+            _ = try self.commit(
+                tree: newTree.oid,
+                parents: parents,
+                message: "Merge branch \(localBranch.name)",
+                signature: signature
+            ).get()
+            
+            let updatedBranch = try self.currentBranch()
+            
+            try self.checkout(updatedBranch, strategy: .Force).get()
+            
         }else {
             throw NSError(
                 domain: libGit2ErrorDomain,
@@ -581,6 +604,28 @@ public final class Repository {
 
 		return transform(pointers)
 	}
+    
+    private func withGitObjects<T>(_ oids: [OID], type: git_object_t, transform: ([OpaquePointer]) throws -> T) throws -> T {
+        var pointers = [OpaquePointer]()
+        defer {
+            for pointer in pointers {
+                git_object_free(pointer)
+            }
+        }
+
+        for oid in oids {
+            var pointer: OpaquePointer? = nil
+            var oid = oid.oid
+            let result = git_object_lookup(&pointer, self.pointer, &oid, type)
+
+            guard result == GIT_OK.rawValue else {
+                throw NSError(gitError: result, pointOfFailure: "git_object_lookup")
+            }
+
+            pointers.append(pointer!)
+        }
+        return try transform(pointers)
+    }
 
 	/// Loads the object with the given OID.
 	///
@@ -969,23 +1014,6 @@ public final class Repository {
 			}
 			
 			return .success(())
-//			let result = HEAD()
-//			switch result{
-//			case let .success(ref):
-//				ref.oid.oid
-//			}
-			
-			
-//			let addResult = git_index_remove_all(index, &paths, nil, nil)
-//			guard addResult == GIT_OK.rawValue else {
-//				return .failure(NSError(gitError: addResult, pointOfFailure: "git_index_remove_all"))
-//			}
-//			// write index to disk
-//			let writeResult = git_index_write(index)
-//			guard writeResult == GIT_OK.rawValue else {
-//				return .failure(NSError(gitError: writeResult, pointOfFailure: "git_index_write"))
-//			}
-//			return .success(())
 		}
 	}
 
@@ -1292,6 +1320,61 @@ public final class Repository {
 
 		return Result<OpaquePointer, NSError>.success(tree!)
 	}
+    
+//    private func unsafeTree(_ tree: Tree) throws -> OpaquePointer {
+//        var tree: OpaquePointer? = nil
+//        let treeResult = git_object_lookup(&tree, self.pointer, tree.oid.oid, GIT_OBJECT_TREE)
+//    }
+    
+    /// Write the index to the given repository as a tree.
+    /// Will fail if the receiver's index has conflicts.
+    ///
+    /// repository - The repository to write the tree to. Can't be nil.
+    /// error      - The error if one occurred.
+    ///
+    /// Returns a new GTTree or nil if an error occurred.
+    private func writeUnsafeTree(tree: OpaquePointer) throws -> Tree {
+        var oid = git_oid()
+        let gitStatus = git_index_write_tree_to(&oid, tree, self.pointer)
+        guard gitStatus == GIT_OK.rawValue else {
+            throw NSError(gitError: gitStatus, pointOfFailure: "git_index_write_tree_to")
+        }
+
+        return try self.tree(OID(oid)).get()
+    }
+    
+    /// Merges the given tree into the receiver in memory and produces the result as
+    /// an index.
+    ///
+    /// otherTree    - The tree with which the receiver should be merged. Cannot be
+    ///                nil.
+    /// ancestorTree - The common ancestor of the two trees, or nil if none.
+    /// error        - The error if one occurred.
+    ///
+    /// Returns an index which represents the result of the merge, or nil if an error
+    /// occurred.
+    ///
+    private func mergeTree(tree: Tree, otherTree: Tree, ancestor: Tree?) throws -> OpaquePointer {
+        var index: OpaquePointer? = nil
+        
+        return try withGitObjects([tree.oid, otherTree.oid],
+            type: GIT_OBJECT_TREE){ objects in
+                let ancestorTreePointer = (ancestor == nil ? nil : try unsafeTreeForCommitId(ancestor!.oid).get())
+                
+                let gitResult = git_merge_trees (
+                    &index,
+                    self.pointer,
+                    ancestorTreePointer,
+                    objects[0],
+                    objects[1],
+                    nil
+                )
+                guard gitResult == GIT_OK.rawValue, let index else {
+                    throw NSError(gitError: gitResult, pointOfFailure: "git_merge_trees")
+                }
+                return index
+            }
+    }
 
 	// MARK: - Status
 

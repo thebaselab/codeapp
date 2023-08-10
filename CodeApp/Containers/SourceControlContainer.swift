@@ -316,7 +316,12 @@ struct SourceControlContainer: View {
         try await App.notificationManager.withAsyncNotification(
             title: "source_control.pulling_from_remote"
         ) {
-            try await serviceProvider.pull(branch: branch, Remote: remote)
+            do {
+                try await serviceProvider.pull(branch: branch, Remote: remote)
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+            }
+
         }
     }
 
