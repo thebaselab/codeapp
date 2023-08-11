@@ -323,14 +323,18 @@ public final class Repository {
         return branch
     }
     
-    private func analyzeMerge(fromBranch: Branch) throws -> MergeAnalysisResult {
+    private func unsafeAnnotatedCommit(oid: OID) throws -> OpaquePointer {
+        var oid = oid.oid
         var annotatedCommit: OpaquePointer? = nil
-        var fromBranchCommitOid = fromBranch.commit.oid.oid
-        
-        let commitLookupResult = git_annotated_commit_lookup(&annotatedCommit, self.pointer, &fromBranchCommitOid)
-        guard commitLookupResult == GIT_OK.rawValue else {
+        let commitLookupResult = git_annotated_commit_lookup(&annotatedCommit, self.pointer, &oid)
+        guard commitLookupResult == GIT_OK.rawValue, let annotatedCommit else {
             throw NSError(gitError: commitLookupResult, pointOfFailure: "git_annotated_commit_lookup")
         }
+        return annotatedCommit
+    }
+    
+    private func analyzeMerge(fromBranch: Branch) throws -> MergeAnalysisResult {
+        var annotatedCommit: OpaquePointer? = try unsafeAnnotatedCommit(oid: fromBranch.commit.oid)
         
         let analysis = UnsafeMutablePointer<git_merge_analysis_t>.allocate(capacity: 1)
         var preference = git_merge_preference_t(GIT_MERGE_PREFERENCE_NONE.rawValue)
@@ -409,10 +413,31 @@ public final class Repository {
             
             // Merge
             let index = try mergeTree(tree: localTree, otherTree: remoteTree, ancestor: ancestorTree)
+            defer { git_index_free(index) }
             
             // Check for conflict
             if (git_index_has_conflicts(index) != 0) {
-                // TODO: Write conflicts
+                var mergeOptions = {
+                    let pointer = UnsafeMutablePointer<git_merge_options>.allocate(capacity: 1)
+                    git_merge_options_init(pointer, UInt32(GIT_MERGE_OPTIONS_VERSION))
+                    return pointer.move()
+                }()
+                
+                var checkoutOptions = {
+                    let pointer = UnsafeMutablePointer<git_checkout_options>.allocate(capacity: 1)
+                    git_checkout_options_init(pointer, UInt32(GIT_CHECKOUT_OPTIONS_VERSION))
+                    return pointer.move()
+                }()
+                
+                let strategy: CheckoutStrategy = [CheckoutStrategy.Safe, CheckoutStrategy.AllowConflicts]
+                checkoutOptions.checkout_strategy = strategy.gitCheckoutStrategy.rawValue
+                
+                var annotatedCommit: OpaquePointer? = try unsafeAnnotatedCommit(oid: branch.commit.oid)
+                
+                git_merge(self.pointer, &annotatedCommit, 1, &mergeOptions, &checkoutOptions)
+                
+                git_annotated_commit_free(annotatedCommit)
+                
                 throw NSError(
                     domain: libGit2ErrorDomain,
                     code: 1,
@@ -1320,11 +1345,6 @@ public final class Repository {
 
 		return Result<OpaquePointer, NSError>.success(tree!)
 	}
-    
-//    private func unsafeTree(_ tree: Tree) throws -> OpaquePointer {
-//        var tree: OpaquePointer? = nil
-//        let treeResult = git_object_lookup(&tree, self.pointer, tree.oid.oid, GIT_OBJECT_TREE)
-//    }
     
     /// Write the index to the given repository as a tree.
     /// Will fail if the receiver's index has conflicts.
