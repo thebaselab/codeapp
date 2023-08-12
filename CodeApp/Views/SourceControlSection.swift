@@ -14,7 +14,7 @@ struct SourceControlSection: View {
 
     let onCommit: () async throws -> Void
     let onPush: (Remote) async throws -> Void
-    let onFetch: () async throws -> Void
+    let onFetch: (Remote) async throws -> Void
     let onStageAllChanges: () throws -> Void
     let onUnstage: (String) throws -> Void
     let onRevert: (String, Bool) async throws -> Void
@@ -60,7 +60,7 @@ private struct MainSection: View {
 
     let onCommit: () async throws -> Void
     let onPush: (Remote) async throws -> Void
-    let onFetch: () async throws -> Void
+    let onFetch: (Remote) async throws -> Void
     let onStageAllChanges: () throws -> Void
     let onPull: (Branch, Remote) async throws -> Void
 
@@ -161,11 +161,15 @@ private struct MainSection: View {
                             Label("source_control.pull", systemImage: "square.and.arrow.down")
                         }
 
-                        Button(action: {
-                            Task {
-                                try await onFetch()
+                        Menu {
+                            ForEach(remotes, id: \.hashValue) { remote in
+                                Button("\(remote.name) - \(remote.URL)") {
+                                    Task {
+                                        try await onFetch(remote)
+                                    }
+                                }
                             }
-                        }) {
+                        } label: {
                             Label("Fetch", systemImage: "square.and.arrow.down")
                         }
                     }

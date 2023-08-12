@@ -100,25 +100,22 @@ struct SourceControlContainer: View {
         }
     }
 
-    func onFetch() async throws {
+    func onFetch(remote: Remote) async throws {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
 
-        App.notificationManager.showInformationMessage(
-            "source_control.fetching_from_origin")
-
-        return try await withCheckedThrowingContinuation { continuation in
-            serviceProvider.fetch(error: {
-                App.notificationManager.showErrorMessage(
-                    $0.localizedDescription)
-                continuation.resume(throwing: $0)
-            }) {
+        try await App.notificationManager.withAsyncNotification(
+            title: "source_control.fetching_from_origin"
+        ) {
+            do {
+                try await serviceProvider.fetch(remote: remote)
                 App.notificationManager.showInformationMessage(
                     "source_control.fetch_succeeded")
                 App.git_status()
-
-                continuation.resume()
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+                throw error
             }
         }
     }
@@ -307,12 +304,11 @@ struct SourceControlContainer: View {
             throw SourceControlError.gitServiceProviderUnavailable
         }
 
-        // TODO: Progress, error handling
         try await App.notificationManager.withAsyncNotification(
             title: "source_control.pulling_from_remote"
         ) {
             do {
-                try await serviceProvider.pull(branch: branch, Remote: remote)
+                try await serviceProvider.pull(branch: branch, remote: remote)
                 App.notificationManager.showInformationMessage("source_control.pull_succeeded")
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)

@@ -41,7 +41,6 @@ protocol GitServiceProvider {
     func commit(message: String) async throws
     func unstage(paths: [String]) throws
     func stage(paths: [String]) throws
-    func fetch(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void)
     func checkout(
         tagName: String, detached: Bool, error: @escaping (NSError) -> Void,
         completionHandler: @escaping () -> Void
@@ -67,6 +66,7 @@ protocol GitServiceProvider {
         completionHandler: @escaping (String) -> Void
     )
     func remotes() async throws -> [Remote]
-    func pull(branch: Branch, Remote from: Remote) async throws
+    func pull(branch: Branch, remote from: Remote) async throws
+    func fetch(remote from: Remote) async throws
     func remoteBranches() async throws -> [Branch]
 }

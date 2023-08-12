@@ -92,6 +92,39 @@ class LocalGitServiceProvider: GitServiceProvider {
         loadDirectory(url: root)
     }
 
+    private func checkedRepository() throws -> Repository {
+        if let repository {
+            return repository
+        } else {
+            throw NSError(descriptionKey: "Repository doesn't exist")
+        }
+    }
+    private func checkedSignature() throws -> Signature {
+        if let signature {
+            return signature
+        } else {
+            throw NSError(descriptionKey: "Signature is not configured")
+        }
+    }
+    private func checkedCredentials() throws -> Credentials {
+        if let credential {
+            return credential
+        } else {
+            throw NSError(descriptionKey: "Credentials are not configured")
+        }
+    }
+    private func WorkerQueueTask<T>(_ body: @escaping () throws -> T) async throws -> T {
+        return try await withCheckedThrowingContinuation { continuation in
+            workerQueue.async {
+                do {
+                    continuation.resume(returning: try body())
+                } catch {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+
     func loadDirectory(url: URL) {
         contentCache.removeAllObjects()
 
@@ -527,49 +560,6 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
-    func fetch(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void) {
-        workerQueue.async {
-            guard self.repository != nil else {
-                let err = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(err)
-                return
-            }
-            guard self.credential != nil else {
-                let err = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Credentials are not configured"])
-                error(err)
-                return
-            }
-            let result = self.repository!.allRemotes()
-            switch result {
-            case let .success(remotes):
-                for remote in remotes {
-                    if remote.name == "origin" {
-                        let result = self.repository!.fetch(remote, credentials: self.credential!)
-                        switch result {
-                        case .success:
-                            completionHandler()
-                            return
-                        case let .failure(err):
-                            error(err)
-                            return
-                        }
-                    }
-                }
-                let err = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "No remote named origin found."])
-                error(err)
-                return
-            case let .failure(err):
-                error(err)
-            }
-        }
-    }
-
     private func checkout(oid: OID) throws {
         let result = repository!.checkout(oid, strategy: .Force)
         switch result {
@@ -982,33 +972,21 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
-    func pull(branch: Branch, Remote from: Remote) async throws {
-        guard let repository = self.repository else {
-            throw NSError(
-                domain: "", code: 401,
-                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
+    func pull(branch: Branch, remote from: Remote) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            let credentials = try self.checkedCredentials()
+            let signature = try self.checkedSignature()
+            try repository.pull(
+                branch: branch, from: from, credentials: credentials, signature: signature)
         }
-        guard let credential = self.credential else {
-            throw NSError(
-                domain: "", code: -16,
-                userInfo: [NSLocalizedDescriptionKey: "Credentials are not configured"])
-        }
-        guard let signature else {
-            throw NSError(
-                domain: "", code: -16,
-                userInfo: [NSLocalizedDescriptionKey: "Signauture is not configured"])
-        }
+    }
 
-        return try await withCheckedThrowingContinuation { continuation in
-            workerQueue.async {
-                do {
-                    try repository.pull(
-                        branch: branch, from: from, credentials: credential, signature: signature)
-                    continuation.resume()
-                } catch {
-                    continuation.resume(throwing: error)
-                }
-            }
+    func fetch(remote from: Remote) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            let credentials = try self.checkedCredentials()
+            try repository.fetch(from, credentials: credentials).get()
         }
     }
 }
