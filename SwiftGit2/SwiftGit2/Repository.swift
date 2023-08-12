@@ -263,7 +263,26 @@ public final class Repository {
 		}
 	}
     
-    // MARK: - Pulling / Merging Repositories
+    // MARK: - Merging Repositories
+    
+    // TODO: Evaluate whether this is a memory-safe code
+    public func enumerateMergeHeadEntries() throws -> [OID] {
+        struct EnumeratePayload {
+            var buffer: [OID]
+        }
+        var payload = EnumeratePayload(buffer: [])
+        
+        let cb: git_repository_mergehead_foreach_cb = { oid, payload in
+            let buffer = payload?.assumingMemoryBound(to: EnumeratePayload.self)
+            buffer!.pointee.buffer.append(OID(oid!.pointee))
+            return 0
+        }
+        let gitResult = git_repository_mergehead_foreach(self.pointer, cb, &payload)
+        guard gitResult == GIT_OK.rawValue else {
+            throw NSError(gitError: gitResult, pointOfFailure: "git_repository_mergehead_foreach")
+        }
+        return payload.buffer
+    }
     
     /// Fetch from and integrate with another repository or a local branch
     ///
@@ -1128,6 +1147,22 @@ public final class Repository {
 		}
 	}
 
+    /// Write the index as a tree
+    /// This method will scan the index and write a representation of its current state back to disk; it recursively creates tree objects for each of the subtrees stored in the index, but only returns the OID of the root tree. This is the OID that can be used e.g. to create a commit.
+    /// The index instance cannot be bare, and needs to be associated to an existing repository.
+    /// The index must not contain any file in conflict.
+    public func writeIndexAsTree() throws -> OID {
+        let index = try unsafeIndex().get()
+        defer { git_index_free(index) }
+        
+        var treeOID = git_oid()
+        let treeResult = git_index_write_tree(&treeOID, index)
+        guard treeResult == GIT_OK.rawValue else {
+            throw NSError(gitError: treeResult, pointOfFailure: "git_index_write_tree")
+        }
+        return OID(treeOID)
+    }
+    
 	/// Perform a commit of the staged files with the specified message and signature,
 	/// assuming we are not doing a merge and using the current tip as the parent.
 	public func commit(message: String, signature: Signature) -> Result<Commit, NSError> {
@@ -1139,6 +1174,7 @@ public final class Repository {
 				let err = NSError(gitError: treeResult, pointOfFailure: "git_index_write_tree")
 				return .failure(err)
 			}
+            
 			var parentID = git_oid()
 			let nameToIDResult = git_reference_name_to_id(&parentID, self.pointer, "HEAD")
 			guard nameToIDResult == GIT_OK.rawValue else {
@@ -1153,6 +1189,19 @@ public final class Repository {
 			}
 		}
 	}
+    
+    // MARK: - Repository State
+    
+    public func repositoryState() -> RepositoryState {
+        return RepositoryState(rawValue: UInt32(git_repository_state(self.pointer)))
+    }
+    
+    private func cleanUpState() throws {
+        let gitResult = git_repository_state_cleanup(self.pointer)
+        guard gitResult == GIT_OK.rawValue else {
+            throw NSError(gitError: gitResult, pointOfFailure: "git_repository_state_cleanup")
+        }
+    }
 
 	// MARK: - Diffs
 
