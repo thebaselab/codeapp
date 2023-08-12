@@ -38,9 +38,7 @@ protocol GitServiceProvider {
         from: URL, to: URL, progress: Progress?, error: @escaping (NSError) -> Void,
         completionHandler: @escaping () -> Void
     )
-    func commit(
-        message: String, error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void
-    )
+    func commit(message: String) async throws
     func unstage(paths: [String]) throws
     func stage(paths: [String]) throws
     func fetch(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void)
