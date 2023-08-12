@@ -8,7 +8,22 @@
 import Foundation
 import SwiftGit2
 
-extension Diff.Status {
+extension Diff.Status: CaseIterable {
+    public static var allCases: [SwiftGit2.Diff.Status] {
+        [
+            .conflicted, .current, .ignored, .indexDeleted, .indexModified, .indexNew,
+            .indexRenamed, .indexTypeChange, .workTreeDeleted, .workTreeNew, .workTreeRenamed,
+            .workTreeModified, .workTreeUnreadable, .workTreeTypeChange,
+        ]
+    }
+
+    var allIncludedCases: [Diff.Status] {
+        return Diff.Status.allCases.compactMap {
+            if self.contains($0) { return $0 }
+            return nil
+        }
+    }
+
     func str() -> String {
         switch self {
         case .conflicted:
@@ -63,7 +78,6 @@ class LocalGitServiceProvider: GitServiceProvider {
     private var signature: Signature? = nil
     private var credential: Credentials? = nil
     private var contentCache = NSCache<NSString, NSString>()
-    private var newAndIgnored = [URL: Diff.Status]()
 
     public var hasRepository: Bool {
         return repository != nil
@@ -80,7 +94,6 @@ class LocalGitServiceProvider: GitServiceProvider {
 
     func loadDirectory(url: URL) {
         contentCache.removeAllObjects()
-        newAndIgnored.removeAll()
 
         if url.absoluteString.contains("com.apple.filesystems.smbclientd") {
             return
@@ -223,53 +236,35 @@ class LocalGitServiceProvider: GitServiceProvider {
             case let .success(entries):
                 var indexedGroup = [(URL, Diff.Status)]()
                 var workingGroup = [(URL, Diff.Status)]()
-                self.newAndIgnored = [:]
 
                 for i in entries {
                     let status = i.status
 
-                    if status == .ignored || status == .workTreeNew || status == .indexNew {
-                        var path: String? = nil
-                        path = i.headToIndex?.newFile?.path
-                        path = i.indexToWorkDir?.newFile?.path
-                        if let path = path {
-                            let url = self.workingURL.appendingPathComponent(path)
-                            self.newAndIgnored[url] = status
-                        }
-                    }
-
-                    switch status {
-                    case let x where x.rawValue == 258 || x.rawValue == 257:
+                    let headToIndexURL: URL? = {
                         guard let path = i.headToIndex?.newFile?.path else {
-                            continue
+                            return nil
                         }
-                        let url = self.workingURL.appendingPathComponent(path)
-                        if x.rawValue != 132 {
-                            indexedGroup.append((url, .indexModified))
-                        }
-                        workingGroup.append((url, .workTreeModified))
-                    case let x where x.rawValue == 514:
-                        guard let path = i.headToIndex?.newFile?.path else {
-                            continue
-                        }
-                        let url = self.workingURL.appendingPathComponent(path)
-                        workingGroup.append((url, .workTreeDeleted))
-                    case .indexDeleted, .indexRenamed, .indexModified, .indexDeleted,
-                        .indexTypeChange, .indexNew:
-                        guard let path = i.headToIndex?.newFile?.path else {
-                            continue
-                        }
-                        let url = self.workingURL.appendingPathComponent(path)
-                        indexedGroup.append((url, status))
-                    case .workTreeNew, .workTreeDeleted, .workTreeRenamed, .workTreeModified,
-                        .workTreeUnreadable, .workTreeTypeChange:
+                        return self.workingURL.appendingPathComponent(path)
+                    }()
+                    let indexToWorkURL: URL? = {
                         guard let path = i.indexToWorkDir?.newFile?.path else {
-                            continue
+                            return nil
                         }
-                        let url = self.workingURL.appendingPathComponent(path)
-                        workingGroup.append((url, status))
-                    default:
-                        continue
+                        return self.workingURL.appendingPathComponent(path)
+                    }()
+
+                    status.allIncludedCases.forEach { includedCase in
+                        if [
+                            .indexDeleted, .indexRenamed, .indexModified, .indexDeleted,
+                            .indexTypeChange, .indexNew,
+                        ].contains(includedCase) {
+                            indexedGroup.append((headToIndexURL!, includedCase))
+                        } else if [
+                            .workTreeNew, .workTreeDeleted, .workTreeRenamed, .workTreeModified,
+                            .workTreeUnreadable, .workTreeTypeChange, .conflicted,
+                        ].contains(includedCase) {
+                            workingGroup.append((indexToWorkURL!, includedCase))
+                        }
                     }
                 }
                 completionHandler(indexedGroup, workingGroup, self.branch())
@@ -360,32 +355,37 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
-    func commit(
-        message: String, error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void
-    ) {
-        workerQueue.async {
-            guard self.repository != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(_error)
-                return
-            }
-            guard self.signature != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Signature is not configured"])
-                error(_error)
-                return
-            }
-            let result = self.repository!.commit(message: message, signature: self.signature!)
-            switch result {
-            case .success:
-                self.contentCache.removeAllObjects()
-                completionHandler()
-                return
-            case let .failure(_error):
-                error(_error)
+    func commit(message: String) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            workerQueue.async {
+                do {
+                    guard let repository = self.repository else {
+                        throw NSError(descriptionKey: "Repository doesn't exist")
+                    }
+                    guard let signature = self.signature else {
+                        throw NSError(descriptionKey: "Signature is not configured")
+                    }
+
+                    let isMerging = repository.repositoryState().contains(.merge)
+                    if isMerging {
+                        let head = try repository.HEAD().get()
+                        let oids = try [head.oid] + repository.enumerateMergeHeadEntries()
+                        let parents = try oids.map { oid in
+                            try repository.commit(oid).get()
+                        }
+                        let treeOid = try repository.writeIndexAsTree()
+
+                        _ = try repository.commit(
+                            tree: treeOid, parents: parents, message: message, signature: signature
+                        ).get()
+                    } else {
+                        _ = try repository.commit(message: message, signature: signature).get()
+                    }
+                    self.contentCache.removeAllObjects()
+                    continuation.resume()
+                } catch {
+                    continuation.resume(throwing: error)
+                }
             }
         }
     }
@@ -927,16 +927,6 @@ class LocalGitServiceProvider: GitServiceProvider {
         workerQueue.async {
             if let cached = self.contentCache.object(forKey: path as NSString) {
                 completionHandler(cached as String)
-                return
-            }
-            if let url = URL(string: path), self.newAndIgnored.keys.contains(url) {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [
-                        NSLocalizedDescriptionKey:
-                            "The requested file is not indexed and cannot be found on disk."
-                    ])
-                error(_error)
                 return
             }
             self.load()

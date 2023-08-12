@@ -509,6 +509,8 @@
 		947BF349262453040015DAEB /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* SearchManager.swift */; };
 		94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F92266FB5E400B29D80 /* TerminalInstance.swift */; };
 		94801F95266FBC3500B29D80 /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F94266FBC3500B29D80 /* ViewRepresentable.swift */; };
+		948A5FE92A87B09500303C12 /* NSError+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948A5FE82A87B09500303C12 /* NSError+init.swift */; };
+		948A5FEA2A87B09500303C12 /* NSError+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948A5FE82A87B09500303C12 /* NSError+init.swift */; };
 		948D12002583F20D008F877A /* extraCommandsDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 948D11FE2583F20C008F877A /* extraCommandsDictionary.plist */; };
 		948D12012583F20D008F877A /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 948D11FF2583F20C008F877A /* commandDictionary.plist */; };
 		948D12222583F2A5008F877A /* Executor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D12212583F2A5008F877A /* Executor.swift */; };
@@ -1573,6 +1575,7 @@
 		947BF348262453040015DAEB /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		94801F92266FB5E400B29D80 /* TerminalInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalInstance.swift; sourceTree = "<group>"; };
 		94801F94266FBC3500B29D80 /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
+		948A5FE82A87B09500303C12 /* NSError+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+init.swift"; sourceTree = "<group>"; };
 		948D11FE2583F20C008F877A /* extraCommandsDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = extraCommandsDictionary.plist; sourceTree = "<group>"; };
 		948D11FF2583F20C008F877A /* commandDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = commandDictionary.plist; sourceTree = "<group>"; };
 		948D12202583F24E008F877A /* terminal.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = terminal.bundle; sourceTree = "<group>"; };
@@ -1997,6 +2000,7 @@
 				94CF58DC265E4E0F00CB6A4B /* URL+isDirectory.swift */,
 				947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */,
 				94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */,
+				948A5FE82A87B09500303C12 /* NSError+init.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3054,6 +3058,7 @@
 				94A045EF280480E800182275 /* RemoteListSection.swift in Sources */,
 				9419696D280316C7008AAEB2 /* DirectoryFolderMonitor.swift in Sources */,
 				94795C462931489C0057C12F /* ActivityBar.swift in Sources */,
+				948A5FEA2A87B09500303C12 /* NSError+init.swift in Sources */,
 				9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
 				941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */,
@@ -3209,6 +3214,7 @@
 				94A045EE280480E800182275 /* RemoteListSection.swift in Sources */,
 				94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */,
 				94795C452931489C0057C12F /* ActivityBar.swift in Sources */,
+				948A5FE92A87B09500303C12 /* NSError+init.swift in Sources */,
 				9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,
 				941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */,

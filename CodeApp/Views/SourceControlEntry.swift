@@ -49,7 +49,7 @@ struct SourceControlEntry: View {
                             status: status, itemUrl: itemUrl, onUnstage: onUnstage,
                             onRevert: onRevert, onStage: onStage)
                         Text(status.symbol)
-                            .foregroundColor(Color.init("git.added"))
+                            .foregroundColor(status.backgroundColor)
                             .font(.system(size: 14, weight: .semibold))
                             .padding(.horizontal, 5)
                     } else {
@@ -81,8 +81,8 @@ private struct Controls: View {
                     try? onUnstage(itemUrl.absoluteString)
                 }
                 .hoverEffect(.highlight)
-        case .workTreeModified, .workTreeNew, .workTreeDeleted:
-            if status != .workTreeNew {
+        case .workTreeModified, .workTreeNew, .workTreeDeleted, .conflicted:
+            if status != .workTreeNew, status != .conflicted {
                 Image(systemName: "arrow.uturn.backward")
                     .font(.system(size: 12))
                     .padding(2)
@@ -114,12 +114,12 @@ extension Diff.Status {
             return Color.init("git.modified")
         case .workTreeNew:
             return Color.init("git.untracked")
-        case .workTreeDeleted, .indexDeleted:
+        case .workTreeDeleted, .indexDeleted, .conflicted:
             return Color.init("git.deleted")
         case .indexNew:
             return Color.init("git.added")
         default:
-            return Color.init("BW")
+            return Color.init(id: "list.inactiveSelectionForeground")
         }
     }
 
@@ -133,6 +133,8 @@ extension Diff.Status {
             return "D"
         case .indexNew:
             return "A"
+        case .conflicted:
+            return "C"
         default:
             return "X"
         }

@@ -45,21 +45,16 @@ struct SourceControlContainer: View {
             App.notificationManager.showWarningMessage(
                 "errors.source_control.empty_commit_message")
         } else {
-            serviceProvider.commit(
-                message: App.commitMessage,
-                error: {
-                    App.notificationManager.showErrorMessage(
-                        $0.localizedDescription)
-                }
-            ) {
-                App.git_status()
-                DispatchQueue.main.async {
-                    App.commitMessage = ""
-                    App.monacoInstance.invalidateDecorations()
-                }
+            do {
+                try await serviceProvider.commit(message: App.commitMessage)
                 App.notificationManager.showInformationMessage(
                     "source_control.commit_succeeded")
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
             }
+            App.git_status()
+            App.commitMessage = ""
+            App.monacoInstance.invalidateDecorations()
         }
     }
 
