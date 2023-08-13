@@ -69,34 +69,26 @@ struct SourceControlContainer: View {
 
         App.notificationManager.postProgressNotification(
             title: "source_control.pushing_to_remote", progress: progress)
-
-        return try await withCheckedThrowingContinuation { continuation in
-            serviceProvider.push(
-                error: {
-                    if $0.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
-                        App.notificationManager.postActionNotification(
-                            title:
-                                "errors.source_control.authentication_failed",
-                            level: .error,
-                            primary: {
-
-                                showsPrompt = true
-
-                            }, primaryTitle: "common.configure", source: "source_control.title")
-                    } else {
-                        App.notificationManager.showErrorMessage(
-                            $0.localizedDescription)
-                    }
-
-                    continuation.resume(throwing: $0)
-                }, remote: remote.name, progress: progress
-            ) {
-                App.notificationManager.showInformationMessage(
-                    "source_control.push_succeeded")
-                App.git_status()
-
-                continuation.resume()
+        
+        do {
+            let currentBranch = try await serviceProvider.currentBranch()
+            try await serviceProvider.push(branch: currentBranch, remote: remote, progress: progress)
+            App.notificationManager.showInformationMessage(
+                "source_control.push_succeeded")
+            App.git_status()
+        } catch {
+            let error = error as NSError
+            if error.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
+                App.notificationManager.postActionNotification(
+                    title:
+                        "errors.source_control.authentication_failed",
+                    level: .error,
+                    primary: { showsPrompt = true }, primaryTitle: "common.configure", source: "source_control.title")
+            } else {
+                App.notificationManager.showErrorMessage(
+                    error.localizedDescription)
             }
+            throw error
         }
     }
 

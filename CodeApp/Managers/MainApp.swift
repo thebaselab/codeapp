@@ -595,8 +595,10 @@ class MainApp: ObservableObject {
                 }
                 
                 let aheadBehind = try await gitServiceProvider.aheadBehind(remote: nil)
+                let currentBranch = try await gitServiceProvider.currentBranch()
                 await MainActor.run {
                     self.aheadBehind = aheadBehind
+                    self.branch = currentBranch.name
                 }
                 onFinish()
                 

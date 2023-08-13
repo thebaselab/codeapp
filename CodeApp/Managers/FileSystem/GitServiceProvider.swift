@@ -24,9 +24,8 @@ protocol GitServiceProvider {
     func unstage(paths: [String]) throws
     func stage(paths: [String]) throws
     func checkout(paths: [String]) throws
-    func push(
-        error: @escaping (NSError) -> Void, remote: String, progress: Progress?,
-        completionHandler: @escaping () -> Void)
+    func currentBranch() async throws -> Branch
+    func push(branch: Branch, remote to: Remote, progress: Progress?) async throws
     func tags() async throws -> [TagReference]
     func remotes() async throws -> [Remote]
     func pull(branch: Branch, remote from: Remote) async throws
