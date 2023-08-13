@@ -15,15 +15,12 @@ protocol GitServiceProvider {
     func isCached(url: String) -> Bool
     func sign(name: String, email: String)
     func auth(name: String, password: String)
-    func initialize(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void)
-    func clone(
-        from: URL, to: URL, progress: Progress?, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    )
+    func createRepository() async throws
+    func clone(from: URL, to: URL, progress: Progress?) async throws
     func commit(message: String) async throws
-    func unstage(paths: [String]) throws
-    func stage(paths: [String]) throws
-    func checkout(paths: [String]) throws
+    func unstage(paths: [String]) async throws
+    func stage(paths: [String]) async throws
+    func checkout(paths: [String]) async throws
     func currentBranch() async throws -> Branch
     func push(branch: Branch, remote to: Remote, progress: Progress?) async throws
     func tags() async throws -> [TagReference]

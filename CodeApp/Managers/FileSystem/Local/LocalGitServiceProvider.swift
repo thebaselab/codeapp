@@ -196,296 +196,113 @@ class LocalGitServiceProvider: GitServiceProvider {
             ]).get()
         }
     }
-
-    func initialize(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void) {
-        workerQueue.async {
-            guard self.repository == nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository already exists"])
-                error(_error)
-                return
+    
+    func createRepository() async throws {
+        try await WorkerQueueTask {
+            guard !self.hasRepository else {
+                throw NSError(descriptionKey: "Repository already exists")
             }
-            let result = Repository.create(at: self.workingURL)
-            switch result {
-            case let .success(repo):
-                self.repository = repo
-                completionHandler()
-            case let .failure(err):
-                error(err)
-            }
+            self.repository = try Repository.create(at: self.workingURL).get()
         }
-
     }
 
-    func clone(
-        from: URL, to: URL, progress: Progress?, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    ) {
-        workerQueue.async {
+    func clone(from: URL, to: URL, progress: Progress?) async throws {
+        try await WorkerQueueTask {
             progress?.fileOperationKind = .downloading
-            var result: Result<Repository, NSError>
-            if self.credential == nil {
-                result = Repository.clone(
-                    from: from, to: to,
-                    checkoutProgress: { (message, current, total) in
-                        DispatchQueue.main.async {
-                            progress?.localizedDescription = "Updating files"
-                            progress?.totalUnitCount = Int64(total)
-                            progress?.completedUnitCount = Int64(current)
-                        }
-                    },
-                    fetchProgress: { current, total in
-                        DispatchQueue.main.async {
-                            progress?.localizedDescription = "Receiving objects"
-                            progress?.fileOperationKind = .downloading
-                            progress?.totalUnitCount = Int64(total)
-                            progress?.completedUnitCount = Int64(current)
-                        }
-                    }
-                )
-            } else {
-                result = Repository.clone(
-                    from: from, to: to, credentials: self.credential!,
-                    checkoutProgress: { (message, current, total) in
-                        DispatchQueue.main.async {
-                            progress?.localizedDescription = "Updating files"
-                            progress?.totalUnitCount = Int64(total)
-                            progress?.completedUnitCount = Int64(current)
-                        }
-                    },
-                    fetchProgress: { current, total in
-                        DispatchQueue.main.async {
-                            progress?.localizedDescription = "Receiving objects"
-                            progress?.fileOperationKind = .downloading
-                            progress?.totalUnitCount = Int64(total)
-                            progress?.completedUnitCount = Int64(current)
-                        }
-                    }
-                )
+            let checkoutProgressBlock: CheckoutProgressBlock = { (message, current, total) in
+                DispatchQueue.main.async {
+                    progress?.localizedDescription = "Updating files"
+                    progress?.totalUnitCount = Int64(total)
+                    progress?.completedUnitCount = Int64(current)
+                }
             }
-            switch result {
-            case .success:
+            let fetchProgressBlock: FetchProgressBlock = { current, total in
                 DispatchQueue.main.async {
-                    completionHandler()
+                    progress?.localizedDescription = "Receiving objects"
+                    progress?.fileOperationKind = .downloading
+                    progress?.totalUnitCount = Int64(total)
+                    progress?.completedUnitCount = Int64(current)
                 }
-            case let .failure(_error):
-                DispatchQueue.main.async {
-                    progress?.cancel()
-                    error(_error)
-                }
+            }
+            if let credentials = self.credential {
+                _ = try Repository.clone(
+                    from: from,
+                    to: to,
+                    credentials: credentials,
+                    checkoutProgress: checkoutProgressBlock,
+                    fetchProgress: fetchProgressBlock
+                ).get()
+            } else {
+                _  = try Repository.clone(
+                    from: from,
+                    to: to,
+                    checkoutProgress: checkoutProgressBlock,
+                    fetchProgress: fetchProgressBlock
+                ).get()
             }
         }
     }
 
     func commit(message: String) async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            workerQueue.async {
-                do {
-                    guard let repository = self.repository else {
-                        throw NSError(descriptionKey: "Repository doesn't exist")
-                    }
-                    guard let signature = self.signature else {
-                        throw NSError(descriptionKey: "Signature is not configured")
-                    }
-
-                    let isMerging = repository.repositoryState().contains(.merge)
-                    if isMerging {
-                        let head = try repository.HEAD().get()
-                        let oids = try [head.oid] + repository.enumerateMergeHeadEntries()
-                        let parents = try oids.map { oid in
-                            try repository.commit(oid).get()
-                        }
-                        let treeOid = try repository.writeIndexAsTree()
-
-                        _ = try repository.commit(
-                            tree: treeOid, parents: parents, message: message, signature: signature
-                        ).get()
-                    } else {
-                        _ = try repository.commit(message: message, signature: signature).get()
-                    }
-                    self.contentCache.removeAllObjects()
-                    continuation.resume()
-                } catch {
-                    continuation.resume(throwing: error)
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            let signature = try self.checkedSignature()
+            let isMerging = repository.repositoryState().contains(.merge)
+            if isMerging {
+                let head = try repository.HEAD().get()
+                let oids = try [head.oid] + repository.enumerateMergeHeadEntries()
+                let parents = try oids.map { oid in
+                    try repository.commit(oid).get()
                 }
+                let treeOid = try repository.writeIndexAsTree()
+                _ = try repository.commit(
+                    tree: treeOid, parents: parents, message: message, signature: signature
+                ).get()
+            } else {
+                _ = try repository.commit(message: message, signature: signature).get()
+            }
+            self.contentCache.removeAllObjects()
+        }
+    }
+    
+    func unstage(paths: [String]) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            try paths.forEach {
+                let path = $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                    .removingPercentEncoding!
+                try repository.unstage(path: path).get()
             }
         }
     }
 
-    private func createBranch(name: String, oid: OID) -> [String: Any] {
-        let result = repository!.commit(oid)
-        switch result {
-        case let .success(commit):
-            let result = repository!.createBranch(at: commit, branchName: name)
-            switch result {
-            case let .success(branch):
-                let result = repository!.setHEAD(branch)
-                switch result {
-                case .success:
-                    return ["result": "OK"]
-                case let .failure(error):
-                    return ["result": "Failed", "error": error.localizedDescription]
-                }
-            case let .failure(error):
-                return ["result": "Failed", "error": error.localizedDescription]
-            }
-        case let .failure(error):
-            return ["result": "Failed", "error": error.localizedDescription]
-        }
-
-    }
-
-    private func createBranch(name: String) -> [String: Any] {
-        guard repository != nil else {
-            return ["result": "Failed", "error": "There is no repository."]
-        }
-        let result = repository!.HEAD()
-        switch result {
-        case let .success(ref):
-            return createBranch(name: name, oid: ref.oid)
-        case let .failure(error):
-            return ["result": "Failed", "error": error.localizedDescription]
-        }
-    }
-
-    private func createBranch(name: String, fromTag tagName: String) -> [String: Any] {
-        guard repository != nil else {
-            return ["result": "Failed", "error": "There is no repository."]
-        }
-        let result = repository!.tag(named: tagName)
-        switch result {
-        case let .success(tag):
-            let result = repository!.checkout(tag, strategy: .Force)
-            switch result {
-            case .success:
-                return createBranch(name: name, oid: tag.oid)
-            case let .failure(error):
-                return ["result": "Failed", "error": error.localizedDescription]
-            }
-        case let .failure(error):
-            return ["result": "Failed", "error": error.localizedDescription]
-        }
-    }
-
-    private func createBranch(name: String, fromLocalBranch localBranchName: String) -> [String:
-        Any]
-    {
-        guard repository != nil else {
-            return ["result": "Failed", "error": "There is no repository."]
-        }
-        let result = repository!.localBranch(named: localBranchName)
-        switch result {
-        case let .success(branch):
-            let result = repository!.checkout(branch, strategy: .Force)
-            switch result {
-            case .success:
-                return createBranch(name: name, oid: branch.oid)
-            case let .failure(error):
-                return ["result": "Failed", "error": error.localizedDescription]
-            }
-        case let .failure(error):
-            return ["result": "Failed", "error": error.localizedDescription]
-        }
-    }
-
-    private func createBranch(name: String, fromRemoteBranch remoteBranchName: String) -> [String:
-        Any]
-    {
-        guard repository != nil else {
-            return ["result": "Failed", "error": "There is no repository"]
-        }
-        let result = repository!.remoteBranch(named: remoteBranchName)
-        switch result {
-        case let .success(branch):
-            let result = repository!.checkout(branch, strategy: .Force)
-            switch result {
-            case .success:
-                return createBranch(name: name, oid: branch.oid)
-            case let .failure(error):
-                return ["result": "Failed", "error": error.localizedDescription]
-            }
-        case let .failure(error):
-            return ["result": "Failed", "error": error.localizedDescription]
-        }
-    }
-
-    func unstage(paths: [String]) throws {
-        guard repository != nil else {
-            let error = NSError(
-                domain: "", code: 401,
-                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-            throw error
-        }
-        for path in paths {
-            let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
-                .replacingOccurrences(of: "%20", with: #"\ "#)
-            let result = repository!.unstage(path: path)
-            switch result {
-            case .success:
-                continue
-            case let .failure(error):
-                throw error
+    func stage(paths: [String]) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            try paths.forEach {
+                let path = $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                    .removingPercentEncoding!
+                try repository.add(path: path).get()
             }
         }
     }
 
-    func stage(paths: [String]) throws {
-        guard repository != nil else {
-            let error = NSError(
-                domain: "", code: 401,
-                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-            throw error
-        }
-        for path in paths {
-            let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
-                .removingPercentEncoding!
-            let result = repository!.add(path: path)
-            switch result {
-            case .success:
-                continue
-            case let .failure(error):
-                throw error
-            }
-        }
-    }
-
-    func checkout(paths: [String]) throws {
-        guard repository != nil else {
-            throw NSError(
-                domain: "", code: 401,
-                userInfo: [NSLocalizedDescriptionKey: "There is no repository to checkout"])
-        }
-        for path in paths {
-            let path = path.replacingOccurrences(of: workingURL.absoluteString, with: "")
-                .replacingOccurrences(of: "%20", with: #"\ "#)
-            let result = repository!.checkout(path: path, strategy: .Force)
-            switch result {
-            case .success:
-                continue
-            case let .failure(error):
-                throw error
+    /// Checkout given files at HEAD
+    func checkout(paths: [String]) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            try paths.forEach {
+                let path = $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                    .replacingOccurrences(of: "%20", with: #"\ "#)
+                try repository.checkout(path: path, strategy: .Force).get()
             }
         }
     }
     
     func remotes() async throws -> [Remote] {
-        guard let repository = self.repository else {
-            throw NSError(
-                domain: "", code: 401,
-                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-        }
-
-        return try await withCheckedThrowingContinuation { continuation in
-            workerQueue.async {
-                let result = repository.allRemotes()
-                switch result {
-                case let .success(remotes):
-                    continuation.resume(returning: remotes)
-                case let .failure(error):
-                    continuation.resume(throwing: error)
-                }
-            }
+        return try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            return try repository.allRemotes().get()
         }
     }
     
