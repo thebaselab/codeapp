@@ -8,18 +8,6 @@
 import Foundation
 import SwiftGit2
 
-struct checkoutDest: Identifiable {
-    let oid: String
-    let name: String
-    let id = UUID()
-    let type: type
-    enum type {
-        case local_branch
-        case remote_branch
-        case tag
-    }
-}
-
 protocol GitServiceProvider {
     var hasRepository: Bool { get }
     var requiresSignature: Bool { get }
@@ -27,46 +15,22 @@ protocol GitServiceProvider {
     func isCached(url: String) -> Bool
     func sign(name: String, email: String)
     func auth(name: String, password: String)
-    func aheadBehind(
-        error: @escaping (NSError) -> Void, completionHandler: @escaping ((Int, Int)) -> Void)
-    func status(
-        error: @escaping (NSError) -> Void,
-        completionHandler: @escaping ([(URL, Diff.Status)], [(URL, Diff.Status)], String) -> Void
-    )
-    func initialize(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void)
-    func clone(
-        from: URL, to: URL, progress: Progress?, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    )
+    func createRepository() async throws
+    func clone(from: URL, to: URL, progress: Progress?) async throws
     func commit(message: String) async throws
-    func unstage(paths: [String]) throws
-    func stage(paths: [String]) throws
-    func checkout(
-        tagName: String, detached: Bool, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    )
-    func checkout(
-        localBranchName: String, detached: Bool, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    )
-    func checkout(
-        remoteBranchName: String, detached: Bool, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    )
-    func checkout(paths: [String]) throws
-    func push(
-        error: @escaping (NSError) -> Void, remote: String, progress: Progress?,
-        completionHandler: @escaping () -> Void)
-    func hasRemote() -> Bool
-    func checkoutDestinations() -> [checkoutDest]
-    func branches(isRemote: Bool) -> [checkoutDest]
-    func tags() -> [checkoutDest]
-    func previous(
-        path: String, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping (String) -> Void
-    )
+    func unstage(paths: [String]) async throws
+    func stage(paths: [String]) async throws
+    func checkout(paths: [String]) async throws
+    func currentBranch() async throws -> Branch
+    func push(branch: Branch, remote to: Remote, progress: Progress?) async throws
+    func tags() async throws -> [TagReference]
     func remotes() async throws -> [Remote]
     func pull(branch: Branch, remote from: Remote) async throws
     func fetch(remote from: Remote) async throws
     func remoteBranches() async throws -> [Branch]
+    func localBranches() async throws -> [Branch]
+    func previous(path: String) async throws -> String
+    func checkout(oid: OID) async throws
+    func aheadBehind(remote: Remote?) async throws -> (Int, Int)
+    func status() async throws -> [StatusEntry]
 }

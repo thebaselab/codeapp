@@ -12,6 +12,18 @@ import SwiftUI
 import UniformTypeIdentifiers
 import ios_system
 
+struct CheckoutDestination: Identifiable {
+    var id = UUID()
+    var reference: ReferenceType
+
+    var shortOID: String {
+        String(self.reference.oid.description.dropLast(32))
+    }
+    var name: String {
+        self.reference.shortName ?? self.reference.longName
+    }
+}
+
 class SafariManager: ObservableObject {
     @Published var showsSafari: Bool = false
 
@@ -27,11 +39,14 @@ class AlertManager: ObservableObject {
     @Published var isShowingAlert = false
 
     var title: LocalizedStringKey = ""
+    var message: LocalizedStringKey? = nil
     var alertContent: AnyView = AnyView(EmptyView())
 
-    func showAlert(title: LocalizedStringKey, content: AnyView) {
+    func showAlert(title: LocalizedStringKey, message: LocalizedStringKey? = nil, content: AnyView)
+    {
         self.title = title
         self.alertContent = content
+        self.message = message
         isShowingAlert = true
     }
 }
@@ -43,8 +58,7 @@ class MainStateManager: ObservableObject {
     @Published var showsChangeLog: Bool = false
     @Published var showsSettingsSheet: Bool = false
     @Published var showsCheckoutAlert: Bool = false
-    @Published var selectedBranch: checkoutDest? = nil
-    @Published var checkoutDetached: Bool = false
+    @Published var availableCheckoutDestination: [CheckoutDestination] = []
     @Published var gitServiceIsBusy = false
     @Published var isMonacoEditorInitialized = false
 }
@@ -83,7 +97,6 @@ class MainApp: ObservableObject {
     @Published var indexedResources: [URL: Diff.Status] = [:]
     @Published var workingResources: [URL: Diff.Status] = [:]
     @Published var branch: String = ""
-    @Published var remote: String = ""
     @Published var commitMessage: String = ""
     @Published var isSyncing: Bool = false
     @Published var aheadBehind: (Int, Int)? = nil
@@ -341,23 +354,10 @@ class MainApp: ObservableObject {
     }
 
     func compareWithPrevious(url: URL) async throws {
-
         guard let provider = workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
-
-        let contentToCompareWith: String = try await withCheckedThrowingContinuation {
-            continuation in
-            provider.previous(
-                path: url.absoluteString,
-                error: {
-                    continuation.resume(throwing: $0)
-                },
-                completionHandler: {
-                    continuation.resume(returning: $0)
-                })
-        }
-
+        let contentToCompareWith = try await provider.previous(path: url.absoluteString)
         try await compareWithContent(url: url, content: contentToCompareWith)
     }
 
@@ -510,21 +510,62 @@ class MainApp: ObservableObject {
         loadFolder(url: url, resetEditors: false)
     }
 
+    private func groupStatusEntries(entries: [StatusEntry]) -> (
+        [(URL, Diff.Status)], [(URL, Diff.Status)]
+    ) {
+        var indexedGroup = [(URL, Diff.Status)]()
+        var workingGroup = [(URL, Diff.Status)]()
+
+        let workingURL = workSpaceStorage.currentDirectory._url!
+
+        for i in entries {
+            let status = i.status
+
+            let headToIndexURL: URL? = {
+                guard let path = i.headToIndex?.newFile?.path else {
+                    return nil
+                }
+                return workingURL.appendingPathComponent(path)
+            }()
+            let indexToWorkURL: URL? = {
+                guard let path = i.indexToWorkDir?.newFile?.path else {
+                    return nil
+                }
+                return workingURL.appendingPathComponent(path)
+            }()
+
+            status.allIncludedCases.forEach { includedCase in
+                if [
+                    .indexDeleted, .indexRenamed, .indexModified, .indexDeleted,
+                    .indexTypeChange, .indexNew,
+                ].contains(includedCase) {
+                    indexedGroup.append((headToIndexURL!, includedCase))
+                } else if [
+                    .workTreeNew, .workTreeDeleted, .workTreeRenamed, .workTreeModified,
+                    .workTreeUnreadable, .workTreeTypeChange, .conflicted,
+                ].contains(includedCase) {
+                    workingGroup.append((indexToWorkURL!, includedCase))
+                }
+            }
+        }
+        return (indexedGroup, workingGroup)
+    }
+
     func git_status() {
 
         DispatchQueue.main.async {
             self.stateManager.gitServiceIsBusy = true
         }
 
-        func onFinish() {
+        @Sendable func onFinish() {
             DispatchQueue.main.async {
                 self.stateManager.gitServiceIsBusy = false
             }
         }
 
-        func clearUIState() {
+        @Sendable func clearUIState() {
             DispatchQueue.main.async {
-                self.remote = ""
+                self.aheadBehind = nil
                 self.branch = ""
                 self.gitTracks = [:]
                 self.indexedResources = [:]
@@ -532,49 +573,53 @@ class MainApp: ObservableObject {
             }
         }
 
-        if workSpaceStorage.gitServiceProvider == nil {
+        guard let gitServiceProvider = workSpaceStorage.gitServiceProvider else {
             clearUIState()
+            return
         }
 
-        workSpaceStorage.gitServiceProvider?.status(error: { _ in
-            clearUIState()
-            onFinish()
-        }) { indexed, worktree, branch in
-            guard let hasRemote = self.workSpaceStorage.gitServiceProvider?.hasRemote() else {
-                onFinish()
-                return
-            }
+        Task {
+            do {
+                let entries = try await gitServiceProvider.status()
+                let (indexed, worktree) = groupStatusEntries(entries: entries)
 
-            DispatchQueue.main.async {
                 let indexedDictionary = Dictionary(uniqueKeysWithValues: indexed)
                 let workingDictionary = Dictionary(uniqueKeysWithValues: worktree)
 
-                if hasRemote {
-                    self.remote = "origin"
-                } else {
-                    self.remote = ""
+                await MainActor.run {
+                    self.branch = branch
+                    self.indexedResources = indexedDictionary
+                    self.workingResources = workingDictionary
+                    self.gitTracks = indexedDictionary.merging(
+                        workingDictionary,
+                        uniquingKeysWith: { current, _ in
+                            current
+                        })
                 }
-                self.branch = branch
-                self.indexedResources = indexedDictionary
-                self.workingResources = workingDictionary
 
-                self.gitTracks = indexedDictionary.merging(
-                    workingDictionary,
-                    uniquingKeysWith: { current, _ in
-                        current
-                    })
+                let aheadBehind = try await gitServiceProvider.aheadBehind(remote: nil)
+                let currentBranch = try await gitServiceProvider.currentBranch()
+                await MainActor.run {
+                    self.aheadBehind = aheadBehind
+                    self.branch = currentBranch.name
+                }
+                onFinish()
+
+            } catch {
+                clearUIState()
+                onFinish()
             }
 
-            self.workSpaceStorage.gitServiceProvider?.aheadBehind(error: {
-                print($0.localizedDescription)
-                onFinish()
-                DispatchQueue.main.async {
-                    self.aheadBehind = nil
-                }
-            }) { result in
-                onFinish()
-                DispatchQueue.main.async {
-                    self.aheadBehind = result
+        }
+
+        Task {
+            let references: [ReferenceType] =
+                (try await gitServiceProvider.remoteBranches())
+                + (try await gitServiceProvider.localBranches())
+                + (try await gitServiceProvider.tags())
+            await MainActor.run {
+                self.stateManager.availableCheckoutDestination = references.map {
+                    CheckoutDestination(reference: $0)
                 }
             }
         }

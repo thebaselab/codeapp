@@ -429,6 +429,7 @@
 "file.download" = "ダウンロード..";
 "file.confirm_save %@" = "%@ に加えた変更を保存しますか?";
 "file.confirm_delete %@" = "%@ を削除しますか?";
+"file.reopen_with_encoding" = "エンコードで再オープン";
 
 "actions.new_window" = "新しいウィンドウ";
 
@@ -461,6 +462,7 @@
 "source_control.pull" = "プル";
 "source_control.pulling_from_remote" = "リモートからプルしています";
 "source_control.pull_succeeded" = "プルに成功しました";
+"source_control.checkout.select_branch_or_tag" = "ブランチまたはタグを選択してください";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

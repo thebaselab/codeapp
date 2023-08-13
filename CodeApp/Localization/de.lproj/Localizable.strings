@@ -428,6 +428,7 @@
 "file.download" = "Herunterladen auf..";
 "file.confirm_save %@" = "Möchten Sie die Änderungen an %@ speichern?";
 "file.confirm_delete %@" = "Möchten Sie %@ wirklich löschen?";
+"file.reopen_with_encoding" = "Mit Zeichenkodierung erneut öffnen";
 
 "actions.new_window" = "Neues Fenster";
 
@@ -460,6 +461,7 @@
 "source_control.pull" = "Pull";
 "source_control.pulling_from_remote" = "Vom Remote-Server abrufen";
 "source_control.pull_succeeded" = "Pull erfolgreich";
+"source_control.checkout.select_branch_or_tag" = "Wählen Sie einen Branch oder Tag aus";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

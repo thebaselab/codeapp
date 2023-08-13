@@ -21,14 +21,15 @@ struct SourceControlContainer: View {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
-        serviceProvider.initialize(error: { err in
-            App.notificationManager.showErrorMessage(
-                err.localizedDescription
-            )
-        }) {
+        do {
+            try await serviceProvider.createRepository()
             App.notificationManager.showInformationMessage(
                 "source_control.repository_initialized")
             App.git_status()
+        } catch {
+            App.notificationManager.showErrorMessage(
+                error.localizedDescription
+            )
         }
     }
 
@@ -70,33 +71,27 @@ struct SourceControlContainer: View {
         App.notificationManager.postProgressNotification(
             title: "source_control.pushing_to_remote", progress: progress)
 
-        return try await withCheckedThrowingContinuation { continuation in
-            serviceProvider.push(
-                error: {
-                    if $0.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
-                        App.notificationManager.postActionNotification(
-                            title:
-                                "errors.source_control.authentication_failed",
-                            level: .error,
-                            primary: {
-
-                                showsPrompt = true
-
-                            }, primaryTitle: "common.configure", source: "source_control.title")
-                    } else {
-                        App.notificationManager.showErrorMessage(
-                            $0.localizedDescription)
-                    }
-
-                    continuation.resume(throwing: $0)
-                }, remote: remote.name, progress: progress
-            ) {
-                App.notificationManager.showInformationMessage(
-                    "source_control.push_succeeded")
-                App.git_status()
-
-                continuation.resume()
+        do {
+            let currentBranch = try await serviceProvider.currentBranch()
+            try await serviceProvider.push(
+                branch: currentBranch, remote: remote, progress: progress)
+            App.notificationManager.showInformationMessage(
+                "source_control.push_succeeded")
+            App.git_status()
+        } catch {
+            let error = error as NSError
+            if error.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
+                App.notificationManager.postActionNotification(
+                    title:
+                        "errors.source_control.authentication_failed",
+                    level: .error,
+                    primary: { showsPrompt = true }, primaryTitle: "common.configure",
+                    source: "source_control.title")
+            } else {
+                App.notificationManager.showErrorMessage(
+                    error.localizedDescription)
             }
+            throw error
         }
     }
 
@@ -124,17 +119,17 @@ struct SourceControlContainer: View {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
-
         guard paths.count > 0 else {
             return
         }
-
-        do {
-            try serviceProvider.stage(paths: paths)
-            App.git_status()
-        } catch {
-            App.notificationManager.showErrorMessage(error.localizedDescription)
-            throw error
+        Task {
+            do {
+                try await serviceProvider.stage(paths: paths)
+                App.git_status()
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+                throw error
+            }
         }
     }
 
@@ -173,33 +168,29 @@ struct SourceControlContainer: View {
             progress: progress,
             gitURL.absoluteString)
 
-        return try await withCheckedThrowingContinuation { continuation in
-            serviceProvider.clone(
-                from: gitURL, to: dirURL, progress: progress,
-                error: {
-                    if $0.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
-                        App.notificationManager.postActionNotification(
-                            title:
-                                "errors.source_control.clone_authentication_failed",
-                            level: .error,
-                            primary: {
-                                showsPrompt = true
-                            }, primaryTitle: "common.configure",
-                            source: "source_control.title")
-                    } else {
-                        App.notificationManager.showErrorMessage(
-                            "source_control.error", $0.localizedDescription)
-                    }
-                    continuation.resume(throwing: $0)
-                }
-            ) {
+        do {
+            try await serviceProvider.clone(from: gitURL, to: dirURL, progress: progress)
+            App.notificationManager.postActionNotification(
+                title: "source_control.clone_succeeded", level: .success,
+                primary: {
+                    App.loadFolder(url: dirURL)
+                }, primaryTitle: "common.open_folder", source: repo)
+        } catch {
+            let error = error as NSError
+            if error.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
                 App.notificationManager.postActionNotification(
-                    title: "source_control.clone_succeeded", level: .success,
+                    title:
+                        "errors.source_control.clone_authentication_failed",
+                    level: .error,
                     primary: {
-                        App.loadFolder(url: dirURL)
-                    }, primaryTitle: "common.open_folder", source: repo)
-                continuation.resume()
+                        showsPrompt = true
+                    }, primaryTitle: "common.configure",
+                    source: "source_control.title")
+            } else {
+                App.notificationManager.showErrorMessage(
+                    "source_control.error", error.localizedDescription)
             }
+            throw error
         }
     }
 
@@ -207,14 +198,16 @@ struct SourceControlContainer: View {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
-
-        do {
-            try serviceProvider.unstage(paths: [urlString])
-            App.git_status()
-        } catch {
-            App.notificationManager.showErrorMessage(error.localizedDescription)
-            throw error
+        Task {
+            do {
+                try await serviceProvider.unstage(paths: [urlString])
+                App.git_status()
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+                throw error
+            }
         }
+
     }
 
     func onRevert(urlString: String, confirm: Bool = false) async throws {
@@ -247,7 +240,7 @@ struct SourceControlContainer: View {
 
         if !fileExists {
             do {
-                try serviceProvider.checkout(paths: [fileURL.absoluteString])
+                try await serviceProvider.checkout(paths: [fileURL.absoluteString])
                 App.git_status()
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
@@ -256,28 +249,14 @@ struct SourceControlContainer: View {
             return
         }
 
-        return try await withCheckedThrowingContinuation { continuation in
-            serviceProvider.previous(
-                path: fileURL.absoluteString,
-                error: {
-                    App.notificationManager.showErrorMessage(
-                        $0.localizedDescription)
-                    continuation.resume(throwing: $0)
-                }
-            ) { content in
-                do {
-                    try content.write(
-                        to: fileURL, atomically: true, encoding: .utf8)
-                    App.git_status()
-                    App.notificationManager.showInformationMessage(
-                        "source_control.revert_succeeded")
-                    continuation.resume()
-                } catch {
-                    App.notificationManager.showErrorMessage(
-                        error.localizedDescription)
-                    continuation.resume(throwing: error)
-                }
-            }
+        do {
+            let previousContent = try await serviceProvider.previous(path: fileURL.absoluteString)
+            try previousContent.write(to: fileURL, atomically: true, encoding: .utf8)
+            App.git_status()
+            App.notificationManager.showInformationMessage("source_control.revert_succeeded")
+        } catch {
+            App.notificationManager.showErrorMessage(error.localizedDescription)
+            throw error
         }
     }
 

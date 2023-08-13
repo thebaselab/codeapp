@@ -419,6 +419,7 @@
 "file.download" = "下载到..";
 "file.confirm_save %@" = "是否要保存 %@？";
 "file.confirm_delete %@" = "你确定要删除 %@ 吗？";
+"file.reopen_with_encoding" = "使用其他编码重新打开";
 
 "actions.new_window" = "新窗口";
 
@@ -451,6 +452,7 @@
 "source_control.pull" = "拉取";
 "source_control.pulling_from_remote" = "拉取中";
 "source_control.pull_succeeded" = "拉取成功";
+"source_control.checkout.select_branch_or_tag" = "选择分支或标签";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
 "panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";

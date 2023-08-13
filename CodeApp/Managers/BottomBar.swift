@@ -5,15 +5,13 @@
 //  Created by Ken Chung on 1/7/2021.
 //
 
+import SwiftGit2
 import SwiftUI
 
 struct BottomBar: View {
 
     @EnvironmentObject var App: MainApp
 
-    @State var isShowingCheckoutAlert: Bool = false
-    @State var selectedBranch: checkoutDest? = nil
-    @State var checkoutDetached: Bool = false
     @State var currentLine = 0
     @State var currentColumn = 0
 
@@ -24,41 +22,29 @@ struct BottomBar: View {
 
     let openConsolePanel: () -> Void
     let onDirectoryPickerFinished: () -> Void
-    // Somehow it doesn't compile with arguments in the function
-    func checkout() {
-        switch selectedBranch?.type {
-        case .tag:
-            App.workSpaceStorage.gitServiceProvider?.checkout(
-                tagName: selectedBranch!.name, detached: checkoutDetached,
-                error: {
-                    App.notificationManager.showErrorMessage($0.localizedDescription)
-                }
-            ) {
-                App.notificationManager.showInformationMessage("Checkout succeeded")
-            }
 
-        case .local_branch:
-            App.workSpaceStorage.gitServiceProvider?.checkout(
-                localBranchName: selectedBranch!.name, detached: checkoutDetached,
-                error: {
-                    App.notificationManager.showErrorMessage($0.localizedDescription)
-                }
-            ) {
-                App.notificationManager.showInformationMessage("Checkout succeeded")
-            }
-        case .remote_branch:
-            App.workSpaceStorage.gitServiceProvider?.checkout(
-                remoteBranchName: selectedBranch!.name, detached: checkoutDetached,
-                error: {
-                    App.notificationManager.showErrorMessage($0.localizedDescription)
-                }
-            ) {
-                App.notificationManager.showInformationMessage("Checkout succeeded")
-            }
-        case .none:
-            break
+    func checkout(destination: CheckoutDestination) async throws {
+        guard let gitServiceProvider = App.workSpaceStorage.gitServiceProvider else {
+            throw SourceControlError.gitServiceProviderUnavailable
+        }
+        do {
+            try await gitServiceProvider.checkout(oid: destination.reference.oid)
+            App.notificationManager.showInformationMessage("Checkout succeeded")
+        } catch {
+            App.notificationManager.showErrorMessage(error.localizedDescription)
+            throw error
         }
     }
+
+    func iconNameForReferenceType(_ reference: ReferenceType) -> String {
+        if reference is TagReference {
+            return "tag"
+        } else if let reference = reference as? Branch {
+            return (reference.isRemote ? "cloud" : "arrow.triangle.branch")
+        }
+        return "circle"
+    }
+
     var body: some View {
         ZStack(alignment: .center) {
             Color.init(id: "statusBar.background").frame(maxHeight: 20)
@@ -75,46 +61,45 @@ struct BottomBar: View {
                     }
 
                     if (App.branch) != "" {
-                        HStack {
-                            if let destinations = App.workSpaceStorage.gitServiceProvider?
-                                .checkoutDestinations()
-                            {
-                                MenuButtonView(
-                                    options: destinations.map {
-                                        .init(
-                                            value: $0, title: "\($0.name) at \($0.oid)",
-                                            iconSystemName: "arrow.triangle.branch")
-                                    },
-                                    onSelect: { branch in
-                                        selectedBranch = branch
-                                        checkoutDetached = false
-                                        if !App.gitTracks.isEmpty {
-                                            isShowingCheckoutAlert = true
-                                        } else {
-                                            checkout()
-                                        }
-                                    }, title: App.branch, iconName: "arrow.triangle.branch")
-                            }
-                        }
+                        MenuButtonView(
+                            options: App.stateManager.availableCheckoutDestination.map {
+                                .init(
+                                    value: $0, title: "\($0.name) at \($0.shortOID)",
+                                    iconSystemName: iconNameForReferenceType($0.reference))
+                            },
+                            onSelect: { destination in
+                                if !App.gitTracks.isEmpty {
+
+                                    App.alertManager.showAlert(
+                                        title: "Git checkout: Uncommitted Changes",
+                                        message:
+                                            "Uncommited changes will be lost. Do you wish to proceed?",
+                                        content: AnyView(
+                                            Group {
+                                                Button("Checkout", role: .destructive) {
+                                                    Task {
+                                                        try await checkout(destination: destination)
+                                                    }
+                                                }
+                                                Button("common.cancel", role: .cancel) {}
+                                            }
+                                        )
+                                    )
+                                } else {
+                                    Task {
+                                        try await checkout(destination: destination)
+                                    }
+                                }
+                            }, title: App.branch, iconName: "arrow.triangle.branch",
+                            menuTitle: "source_control.checkout.select_branch_or_tag"
+                        )
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(height: 20)
-                        .alert(isPresented: $isShowingCheckoutAlert) {
-                            Alert(
-                                title: Text("Git checkout: Uncommitted Changes"),
-                                message: Text(
-                                    "Uncommited changes will be lost. Do you wish to proceed?"),
-                                primaryButton: .destructive(Text("Checkout")) {
-                                    checkout()
-                                }, secondaryButton: .cancel())
-                        }
 
-                        if App.remote != "" {
-
-                            if App.aheadBehind != nil {
-                                Text("\(App.aheadBehind!.1)↓ \(App.aheadBehind!.0)↑").font(
-                                    .system(size: 12)
-                                )
-                            }
+                        if let aheadBehind = App.aheadBehind {
+                            Text("\(aheadBehind.1)↓ \(aheadBehind.0)↑").font(
+                                .system(size: 12)
+                            )
                         }
                     }
                     // TODO: Display image dimension information
