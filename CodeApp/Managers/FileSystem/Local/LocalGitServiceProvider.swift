@@ -560,156 +560,6 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
-    private func checkout(oid: OID) throws {
-        let result = repository!.checkout(oid, strategy: .Force)
-        switch result {
-        case .success:
-            contentCache.removeAllObjects()
-            return
-        case let .failure(error):
-            throw error
-        }
-    }
-
-    private func checkout(ref: ReferenceType, createBranch: Bool) throws {
-        let result = repository!.checkout(ref, strategy: .Force)
-        switch result {
-        case .success:
-            if createBranch {
-                let result = repository!.commit(ref.oid)
-                switch result {
-                case let .success(commit):
-                    var result: Result<Branch, NSError>
-                    if ref.longName.hasPrefix("refs/tags/") {
-                        result = repository!.createBranch(
-                            at: commit,
-                            branchName: String(ref.longName.dropFirst("refs/tags/".count)))
-                    } else {
-                        result = repository!.createBranch(
-                            at: commit,
-                            branchName: ref.longName.components(separatedBy: "/").dropFirst(3)
-                                .joined(separator: "/"))
-                    }
-                    switch result {
-                    case let .success(branch):
-                        let result = repository!.setHEAD(branch)
-                        switch result {
-                        case .success:
-                            contentCache.removeAllObjects()
-                            return
-                        case let .failure(error):
-                            throw error
-                        }
-                    case let .failure(error):
-                        throw error
-                    }
-                case let .failure(error):
-                    throw error
-                }
-            } else {
-                return
-            }
-        case let .failure(error):
-            throw error
-        }
-    }
-
-    func checkout(
-        tagName: String, detached: Bool, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    ) {
-        workerQueue.async {
-            guard self.repository != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(_error)
-                return
-            }
-            let result = self.repository!.tag(named: tagName)
-            switch result {
-            case let .success(tag):
-                do {
-                    if detached {
-                        try self.checkout(oid: tag.oid)
-                    } else {
-                        try self.checkout(ref: tag, createBranch: true)
-                    }
-                } catch let _error {
-                    error(_error as NSError)
-                    return
-                }
-                completionHandler()
-            case let .failure(_error):
-                error(_error)
-            }
-        }
-    }
-
-    func checkout(
-        localBranchName: String, detached: Bool, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    ) {
-        workerQueue.async {
-            guard self.repository != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(_error)
-                return
-            }
-            let result = self.repository!.localBranch(named: localBranchName)
-            switch result {
-            case let .success(branch):
-                do {
-                    if detached {
-                        try self.checkout(oid: branch.oid)
-                    } else {
-                        try self.checkout(ref: branch, createBranch: false)
-                    }
-                } catch let _error {
-                    error(_error as NSError)
-                    return
-                }
-                completionHandler()
-            case let .failure(_error):
-                error(_error)
-            }
-        }
-    }
-
-    func checkout(
-        remoteBranchName: String, detached: Bool, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping () -> Void
-    ) {
-        workerQueue.async {
-            guard self.repository != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(_error)
-                return
-            }
-            let result = self.repository!.remoteBranch(named: remoteBranchName)
-            switch result {
-            case let .success(branch):
-                do {
-                    if detached {
-                        try self.checkout(oid: branch.oid)
-                    } else {
-                        try self.checkout(ref: branch, createBranch: true)
-                    }
-                } catch let _error {
-                    error(_error as NSError)
-                    return
-                }
-                completionHandler()
-            case let .failure(_error):
-                error(_error)
-            }
-        }
-    }
-
     func checkout(paths: [String]) throws {
         guard repository != nil else {
             throw NSError(
@@ -728,7 +578,7 @@ class LocalGitServiceProvider: GitServiceProvider {
             }
         }
     }
-
+    
     func remotes() async throws -> [Remote] {
         guard let repository = self.repository else {
             throw NSError(
@@ -821,72 +671,33 @@ class LocalGitServiceProvider: GitServiceProvider {
             return false
         }
     }
+    
+    func checkout(oid: OID) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            try repository.checkout(oid, strategy: .Force).get()
+            self.contentCache.removeAllObjects()
+        }
+    }
+    
+    func localBranches() async throws -> [Branch] {
+        return try await WorkerQueueTask{
+            let repository = try self.checkedRepository()
+            return try repository.localBranches().get()
+        }
+    }
 
     func remoteBranches() async throws -> [Branch] {
-        guard let repository = self.repository else {
-            throw NSError(
-                domain: "", code: 401,
-                userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-        }
-        return try await withCheckedThrowingContinuation { continuation in
-            workerQueue.async {
-                switch repository.remoteBranches() {
-                case .success(let branches):
-                    continuation.resume(returning: branches)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
+        return try await WorkerQueueTask{
+            let repository = try self.checkedRepository()
+            return try repository.remoteBranches().get()
         }
     }
 
-    func checkoutDestinations() -> [checkoutDest] {
-        return branches(isRemote: true) + branches(isRemote: false) + tags()
-    }
-
-    func branches(isRemote: Bool = false) -> [checkoutDest] {
-        guard repository != nil else {
-            return []
-        }
-        let result: Result<[Branch], NSError>
-
-        if isRemote {
-            result = repository!.remoteBranches()
-        } else {
-            result = repository!.localBranches()
-        }
-
-        switch result {
-        case let .success(branches):
-            var output = [checkoutDest]()
-            for branch in branches {
-                output.append(
-                    checkoutDest.init(
-                        oid: String(branch.oid.description.dropLast(32)), name: branch.name,
-                        type: isRemote ? .remote_branch : .local_branch))
-            }
-            return output
-        default:
-            return []
-        }
-    }
-
-    func tags() -> [checkoutDest] {
-        guard repository != nil else {
-            return []
-        }
-        let result = repository!.allTags()
-        switch result {
-        case let .success(tags):
-            var output = [checkoutDest]()
-            for tag in tags {
-                output.append(
-                    checkoutDest.init(
-                        oid: String(tag.oid.description.dropLast(32)), name: tag.name, type: .tag))
-            }
-            return output
-        default:
-            return []
+    func tags() async throws -> [TagReference] {
+        return try await WorkerQueueTask{
+            let repository = try self.checkedRepository()
+            return try repository.allTags().get()
         }
     }
     

@@ -12,6 +12,18 @@ import SwiftUI
 import UniformTypeIdentifiers
 import ios_system
 
+struct CheckoutDestination: Identifiable {
+    var id = UUID()
+    var reference: ReferenceType
+    
+    var shortOID: String {
+        String(self.reference.oid.description.dropLast(32))
+    }
+    var name: String {
+        self.reference.shortName ?? self.reference.longName
+    }
+}
+
 class SafariManager: ObservableObject {
     @Published var showsSafari: Bool = false
 
@@ -27,11 +39,13 @@ class AlertManager: ObservableObject {
     @Published var isShowingAlert = false
 
     var title: LocalizedStringKey = ""
+    var message: LocalizedStringKey? = nil
     var alertContent: AnyView = AnyView(EmptyView())
 
-    func showAlert(title: LocalizedStringKey, content: AnyView) {
+    func showAlert(title: LocalizedStringKey, message: LocalizedStringKey? = nil, content: AnyView) {
         self.title = title
         self.alertContent = content
+        self.message = message
         isShowingAlert = true
     }
 }
@@ -43,8 +57,7 @@ class MainStateManager: ObservableObject {
     @Published var showsChangeLog: Bool = false
     @Published var showsSettingsSheet: Bool = false
     @Published var showsCheckoutAlert: Bool = false
-    @Published var selectedBranch: checkoutDest? = nil
-    @Published var checkoutDetached: Bool = false
+    @Published var availableCheckoutDestination: [CheckoutDestination] = []
     @Published var gitServiceIsBusy = false
     @Published var isMonacoEditorInitialized = false
 }
@@ -563,6 +576,18 @@ class MainApp: ObservableObject {
                 DispatchQueue.main.async {
                     self.aheadBehind = result
                 }
+            }
+        }
+        
+        Task {
+            guard let gitServiceProvider = workSpaceStorage.gitServiceProvider else {
+                throw SourceControlError.gitServiceProviderUnavailable
+            }
+            let references: [ReferenceType] = (try await gitServiceProvider.remoteBranches()) +
+                                              (try await gitServiceProvider.localBranches()) +
+                                              (try await gitServiceProvider.tags())
+            await MainActor.run {
+                self.stateManager.availableCheckoutDestination = references.map { CheckoutDestination(reference: $0)}
             }
         }
     }
