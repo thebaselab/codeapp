@@ -15,7 +15,7 @@ import ios_system
 struct CheckoutDestination: Identifiable {
     var id = UUID()
     var reference: ReferenceType
-    
+
     var shortOID: String {
         String(self.reference.oid.description.dropLast(32))
     }
@@ -42,7 +42,8 @@ class AlertManager: ObservableObject {
     var message: LocalizedStringKey? = nil
     var alertContent: AnyView = AnyView(EmptyView())
 
-    func showAlert(title: LocalizedStringKey, message: LocalizedStringKey? = nil, content: AnyView) {
+    func showAlert(title: LocalizedStringKey, message: LocalizedStringKey? = nil, content: AnyView)
+    {
         self.title = title
         self.alertContent = content
         self.message = message
@@ -508,16 +509,18 @@ class MainApp: ObservableObject {
         }
         loadFolder(url: url, resetEditors: false)
     }
-    
-    private func groupStatusEntries(entries: [StatusEntry]) -> ([(URL, Diff.Status)], [(URL, Diff.Status)]) {
+
+    private func groupStatusEntries(entries: [StatusEntry]) -> (
+        [(URL, Diff.Status)], [(URL, Diff.Status)]
+    ) {
         var indexedGroup = [(URL, Diff.Status)]()
         var workingGroup = [(URL, Diff.Status)]()
 
         let workingURL = workSpaceStorage.currentDirectory._url!
-        
+
         for i in entries {
             let status = i.status
-            
+
             let headToIndexURL: URL? = {
                 guard let path = i.headToIndex?.newFile?.path else {
                     return nil
@@ -569,17 +572,17 @@ class MainApp: ObservableObject {
                 self.workingResources = [:]
             }
         }
-        
+
         guard let gitServiceProvider = workSpaceStorage.gitServiceProvider else {
             clearUIState()
             return
         }
-        
+
         Task {
             do {
                 let entries = try await gitServiceProvider.status()
                 let (indexed, worktree) = groupStatusEntries(entries: entries)
-                
+
                 let indexedDictionary = Dictionary(uniqueKeysWithValues: indexed)
                 let workingDictionary = Dictionary(uniqueKeysWithValues: worktree)
 
@@ -593,7 +596,7 @@ class MainApp: ObservableObject {
                             current
                         })
                 }
-                
+
                 let aheadBehind = try await gitServiceProvider.aheadBehind(remote: nil)
                 let currentBranch = try await gitServiceProvider.currentBranch()
                 await MainActor.run {
@@ -601,21 +604,23 @@ class MainApp: ObservableObject {
                     self.branch = currentBranch.name
                 }
                 onFinish()
-                
-                
-            }catch {
+
+            } catch {
                 clearUIState()
                 onFinish()
             }
-            
+
         }
-        
+
         Task {
-            let references: [ReferenceType] = (try await gitServiceProvider.remoteBranches()) +
-                                              (try await gitServiceProvider.localBranches()) +
-                                              (try await gitServiceProvider.tags())
+            let references: [ReferenceType] =
+                (try await gitServiceProvider.remoteBranches())
+                + (try await gitServiceProvider.localBranches())
+                + (try await gitServiceProvider.tags())
             await MainActor.run {
-                self.stateManager.availableCheckoutDestination = references.map { CheckoutDestination(reference: $0)}
+                self.stateManager.availableCheckoutDestination = references.map {
+                    CheckoutDestination(reference: $0)
+                }
             }
         }
     }

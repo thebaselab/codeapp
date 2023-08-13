@@ -268,16 +268,20 @@ private struct MainView: View {
 
             changeLogLastReadVersion = appVersion
         }
-        
-        .alert(alertManager.title, isPresented: $alertManager.isShowingAlert, actions: {
-            alertManager.alertContent
-        }, message: {
-            if let message = alertManager.message {
-                Text(message)
-            }else {
-                EmptyView()
+
+        .alert(
+            alertManager.title, isPresented: $alertManager.isShowingAlert,
+            actions: {
+                alertManager.alertContent
+            },
+            message: {
+                if let message = alertManager.message {
+                    Text(message)
+                } else {
+                    EmptyView()
+                }
             }
-        })
+        )
         .fullScreenCover(isPresented: $safariManager.showsSafari) {
             if let url = safariManager.urlToVisit {
                 SafariView(url: url)

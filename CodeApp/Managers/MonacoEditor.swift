@@ -356,23 +356,22 @@ struct MonacoEditor: UIViewRepresentable {
             }
 
             // If the cache hasn't been invalidated, it means the editor also have the up-to-date model.
-           if gitServiceProvider.isCached(url: sanitizedUri) && !force{
-               return
-           }
+            if gitServiceProvider.isCached(url: sanitizedUri) && !force {
+                return
+            }
             guard gitServiceProvider.hasRepository else { return }
-            
+
             Task {
                 do {
                     let originalText = try await gitServiceProvider.previous(path: sanitizedUri)
                     await MainActor.run {
                         self.control.provideOriginalTextForUri(uri: modelUri, value: originalText)
                     }
-                }catch {
+                } catch {
                     print(error)
                     throw error
                 }
-                
-                
+
             }
         }
 

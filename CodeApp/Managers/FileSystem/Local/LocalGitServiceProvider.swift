@@ -179,15 +179,17 @@ class LocalGitServiceProvider: GitServiceProvider {
             let repository = try self.checkedRepository()
             let ref = try repository.HEAD().get()
             guard let branch = ref as? Branch,
-                  let branchName = branch.shortName
+                let branchName = branch.shortName
             else {
                 throw NSError(descriptionKey: "Git is in detached mode")
             }
-            let remoteBranch = try repository.remoteBranch(named: "\(remote?.name ?? "origin")/\(branchName)").get()
+            let remoteBranch = try repository.remoteBranch(
+                named: "\(remote?.name ?? "origin")/\(branchName)"
+            ).get()
             return try repository.aheadBehind(local: ref.oid, upstream: remoteBranch.oid).get()
         }
     }
-    
+
     func status() async throws -> [StatusEntry] {
         return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
@@ -196,7 +198,7 @@ class LocalGitServiceProvider: GitServiceProvider {
             ]).get()
         }
     }
-    
+
     func createRepository() async throws {
         try await WorkerQueueTask {
             guard !self.hasRepository else {
@@ -233,7 +235,7 @@ class LocalGitServiceProvider: GitServiceProvider {
                     fetchProgress: fetchProgressBlock
                 ).get()
             } else {
-                _  = try Repository.clone(
+                _ = try Repository.clone(
                     from: from,
                     to: to,
                     checkoutProgress: checkoutProgressBlock,
@@ -264,7 +266,7 @@ class LocalGitServiceProvider: GitServiceProvider {
             self.contentCache.removeAllObjects()
         }
     }
-    
+
     func unstage(paths: [String]) async throws {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
@@ -298,21 +300,21 @@ class LocalGitServiceProvider: GitServiceProvider {
             }
         }
     }
-    
+
     func remotes() async throws -> [Remote] {
         return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             return try repository.allRemotes().get()
         }
     }
-    
+
     func currentBranch() async throws -> Branch {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             let head = try repository.HEAD().get()
             if let branch = head as? Branch {
                 return branch
-            }else {
+            } else {
                 throw NSError(descriptionKey: "Repository is in detached mode")
             }
         }
@@ -322,7 +324,9 @@ class LocalGitServiceProvider: GitServiceProvider {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             let credentials = try self.checkedCredentials()
-            try repository.push(credentials: credentials, branch: branch.longName, remoteName: to.name){ current, total in
+            try repository.push(
+                credentials: credentials, branch: branch.longName, remoteName: to.name
+            ) { current, total in
                 DispatchQueue.main.async {
                     progress?.totalUnitCount = Int64(current)
                     progress?.completedUnitCount = Int64(total)
@@ -338,46 +342,47 @@ class LocalGitServiceProvider: GitServiceProvider {
             self.contentCache.removeAllObjects()
         }
     }
-    
+
     func localBranches() async throws -> [Branch] {
-        return try await WorkerQueueTask{
+        return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             return try repository.localBranches().get()
         }
     }
 
     func remoteBranches() async throws -> [Branch] {
-        return try await WorkerQueueTask{
+        return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             return try repository.remoteBranches().get()
         }
     }
 
     func tags() async throws -> [TagReference] {
-        return try await WorkerQueueTask{
+        return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             return try repository.allTags().get()
         }
     }
-    
+
     /// Returns the OID of the path at the current HEAD
     private func fileOidAtPathForLastCommit(path: String) throws -> OID {
         let repository = try self.checkedRepository()
         let entries = try repository.status(options: [.includeUnmodified]).get()
         for entry in entries {
             if let oldFilePath = entry.headToIndex?.oldFile?.path,
-               path == oldFilePath,
-               let oid = entry.headToIndex?.oldFile?.oid {
+                path == oldFilePath,
+                let oid = entry.headToIndex?.oldFile?.oid
+            {
                 return oid
             }
         }
         throw NSError(descriptionKey: "Unable to locate OID for \(path)")
     }
-    
+
     func previous(path: String) async throws -> String {
         return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
-            
+
             if let cached = self.contentCache.object(forKey: path as NSString) {
                 return (cached as String)
             }
@@ -386,7 +391,7 @@ class LocalGitServiceProvider: GitServiceProvider {
 
             let oid = try self.fileOidAtPathForLastCommit(path: path)
             let blob = try repository.blob(oid).get()
-            
+
             guard let content = String(data: blob.data, encoding: .utf8) else {
                 throw NSError(descriptionKey: "Unable to decode data")
             }

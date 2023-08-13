@@ -46,7 +46,7 @@ struct MenuButtonView<S>: UIViewRepresentable {
         }
         button.tintColor = UIColor(id: "statusBar.foreground")
         button.setTitleColor(button.tintColor, for: .normal)
-        
+
         let children = options.map { option in
             UIAction(
                 title: option.title,
@@ -59,8 +59,9 @@ struct MenuButtonView<S>: UIViewRepresentable {
                 })
         }
         if let menuTitle {
-            button.menu = UIMenu(title: NSLocalizedString(menuTitle, comment: ""), children: children)
-        }else {
+            button.menu = UIMenu(
+                title: NSLocalizedString(menuTitle, comment: ""), children: children)
+        } else {
             button.menu = UIMenu(children: children)
         }
         return button

@@ -5,8 +5,8 @@
 //  Created by Ken Chung on 1/7/2021.
 //
 
-import SwiftUI
 import SwiftGit2
+import SwiftUI
 
 struct BottomBar: View {
 
@@ -30,21 +30,21 @@ struct BottomBar: View {
         do {
             try await gitServiceProvider.checkout(oid: destination.reference.oid)
             App.notificationManager.showInformationMessage("Checkout succeeded")
-        }catch {
+        } catch {
             App.notificationManager.showErrorMessage(error.localizedDescription)
             throw error
         }
     }
-    
+
     func iconNameForReferenceType(_ reference: ReferenceType) -> String {
         if reference is TagReference {
             return "tag"
-        }else if let reference = reference as? Branch {
+        } else if let reference = reference as? Branch {
             return (reference.isRemote ? "cloud" : "arrow.triangle.branch")
         }
         return "circle"
     }
-    
+
     var body: some View {
         ZStack(alignment: .center) {
             Color.init(id: "statusBar.background").frame(maxHeight: 20)
@@ -69,13 +69,14 @@ struct BottomBar: View {
                             },
                             onSelect: { destination in
                                 if !App.gitTracks.isEmpty {
-                                    
+
                                     App.alertManager.showAlert(
                                         title: "Git checkout: Uncommitted Changes",
-                                        message: "Uncommited changes will be lost. Do you wish to proceed?",
-                                        content: AnyView (
+                                        message:
+                                            "Uncommited changes will be lost. Do you wish to proceed?",
+                                        content: AnyView(
                                             Group {
-                                                Button("Checkout", role: .destructive){
+                                                Button("Checkout", role: .destructive) {
                                                     Task {
                                                         try await checkout(destination: destination)
                                                     }
@@ -89,7 +90,9 @@ struct BottomBar: View {
                                         try await checkout(destination: destination)
                                     }
                                 }
-                        }, title: App.branch, iconName: "arrow.triangle.branch", menuTitle: "source_control.checkout.select_branch_or_tag")
+                            }, title: App.branch, iconName: "arrow.triangle.branch",
+                            menuTitle: "source_control.checkout.select_branch_or_tag"
+                        )
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(height: 20)
 

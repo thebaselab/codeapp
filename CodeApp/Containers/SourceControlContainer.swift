@@ -26,7 +26,7 @@ struct SourceControlContainer: View {
             App.notificationManager.showInformationMessage(
                 "source_control.repository_initialized")
             App.git_status()
-        }catch {
+        } catch {
             App.notificationManager.showErrorMessage(
                 error.localizedDescription
             )
@@ -70,10 +70,11 @@ struct SourceControlContainer: View {
 
         App.notificationManager.postProgressNotification(
             title: "source_control.pushing_to_remote", progress: progress)
-        
+
         do {
             let currentBranch = try await serviceProvider.currentBranch()
-            try await serviceProvider.push(branch: currentBranch, remote: remote, progress: progress)
+            try await serviceProvider.push(
+                branch: currentBranch, remote: remote, progress: progress)
             App.notificationManager.showInformationMessage(
                 "source_control.push_succeeded")
             App.git_status()
@@ -84,7 +85,8 @@ struct SourceControlContainer: View {
                     title:
                         "errors.source_control.authentication_failed",
                     level: .error,
-                    primary: { showsPrompt = true }, primaryTitle: "common.configure", source: "source_control.title")
+                    primary: { showsPrompt = true }, primaryTitle: "common.configure",
+                    source: "source_control.title")
             } else {
                 App.notificationManager.showErrorMessage(
                     error.localizedDescription)
@@ -173,7 +175,7 @@ struct SourceControlContainer: View {
                 primary: {
                     App.loadFolder(url: dirURL)
                 }, primaryTitle: "common.open_folder", source: repo)
-        }catch {
+        } catch {
             let error = error as NSError
             if error.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
                 App.notificationManager.postActionNotification(
@@ -205,7 +207,7 @@ struct SourceControlContainer: View {
                 throw error
             }
         }
-        
+
     }
 
     func onRevert(urlString: String, confirm: Bool = false) async throws {
@@ -246,13 +248,13 @@ struct SourceControlContainer: View {
             }
             return
         }
-        
+
         do {
             let previousContent = try await serviceProvider.previous(path: fileURL.absoluteString)
             try previousContent.write(to: fileURL, atomically: true, encoding: .utf8)
             App.git_status()
             App.notificationManager.showInformationMessage("source_control.revert_succeeded")
-        }catch {
+        } catch {
             App.notificationManager.showErrorMessage(error.localizedDescription)
             throw error
         }
