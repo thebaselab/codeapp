@@ -889,86 +889,39 @@ class LocalGitServiceProvider: GitServiceProvider {
             return []
         }
     }
-
-    private func lsFiles(options: StatusOptions = [.includeUnmodified]) -> [String: OID] {
-        let result = repository?.status(options: options)
-        switch result {
-        case let .success(entries):
-            var pathRef: [String: OID] = [:]
-            for i in entries {
-                if let path = i.headToIndex?.oldFile?.path, let oid = i.headToIndex?.oldFile?.oid {
-                    pathRef[path] = oid
-                }
+    
+    /// Returns the OID of the path at the current HEAD
+    private func fileOidAtPathForLastCommit(path: String) throws -> OID {
+        let repository = try self.checkedRepository()
+        let entries = try repository.status(options: [.includeUnmodified]).get()
+        for entry in entries {
+            if let oldFilePath = entry.headToIndex?.oldFile?.path,
+               path == oldFilePath,
+               let oid = entry.headToIndex?.oldFile?.oid {
+                return oid
             }
-            return pathRef
-        case let .failure(error):
-            print(error.localizedDescription)
-            return [:]
-        case .none:
-            return [:]
         }
+        throw NSError(descriptionKey: "Unable to locate OID for \(path)")
     }
-
-    // TODO: Optimise the performance for large repo
-    func previous(
-        path: String, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping (String) -> Void
-    ) {
-        workerQueue.async {
+    
+    func previous(path: String) async throws -> String {
+        return try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            
             if let cached = self.contentCache.object(forKey: path as NSString) {
-                completionHandler(cached as String)
-                return
+                return (cached as String)
             }
-            self.load()
-            guard self.repository != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(_error)
-                return
-            }
-
-            let fullPath = path
             let path = path.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
                 .replacingOccurrences(of: "%20", with: #"\ "#)
 
-            let indexedFiles = self.lsFiles()
-            guard let oid = indexedFiles[path] else {
-
-                // File is unmodified, using content from url directly.
-                if let url = URL(string: fullPath), let content = try? String(contentsOf: url) {
-                    self.contentCache.setObject(content as NSString, forKey: path as NSString)
-                    completionHandler(content)
-                } else {
-                    let _error = NSError(
-                        domain: "", code: 401,
-                        userInfo: [
-                            NSLocalizedDescriptionKey:
-                                "The requested file is not indexed and cannot be found on disk."
-                        ])
-                    error(_error)
-                }
-                return
+            let oid = try self.fileOidAtPathForLastCommit(path: path)
+            let blob = try repository.blob(oid).get()
+            
+            guard let content = String(data: blob.data, encoding: .utf8) else {
+                throw NSError(descriptionKey: "Unable to decode data")
             }
-            guard let result = self.repository?.blob(oid) else {
-                return
-            }
-
-            switch result {
-            case let .success(blob):
-                if let content = String(data: blob.data, encoding: .utf8) {
-                    self.contentCache.setObject(content as NSString, forKey: path as NSString)
-                    completionHandler(content)
-                    return
-                } else {
-                    let _error = NSError(
-                        domain: "", code: 401,
-                        userInfo: [NSLocalizedDescriptionKey: "Unable to decode data"])
-                    error(_error)
-                }
-            case let .failure(_error):
-                error(_error)
-            }
+            self.contentCache.setObject(content as NSString, forKey: path as NSString)
+            return content
         }
     }
 

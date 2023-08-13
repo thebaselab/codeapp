@@ -255,29 +255,15 @@ struct SourceControlContainer: View {
             }
             return
         }
-
-        return try await withCheckedThrowingContinuation { continuation in
-            serviceProvider.previous(
-                path: fileURL.absoluteString,
-                error: {
-                    App.notificationManager.showErrorMessage(
-                        $0.localizedDescription)
-                    continuation.resume(throwing: $0)
-                }
-            ) { content in
-                do {
-                    try content.write(
-                        to: fileURL, atomically: true, encoding: .utf8)
-                    App.git_status()
-                    App.notificationManager.showInformationMessage(
-                        "source_control.revert_succeeded")
-                    continuation.resume()
-                } catch {
-                    App.notificationManager.showErrorMessage(
-                        error.localizedDescription)
-                    continuation.resume(throwing: error)
-                }
-            }
+        
+        do {
+            let previousContent = try await serviceProvider.previous(path: fileURL.absoluteString)
+            try previousContent.write(to: fileURL, atomically: true, encoding: .utf8)
+            App.git_status()
+            App.notificationManager.showInformationMessage("source_control.revert_succeeded")
+        }catch {
+            App.notificationManager.showErrorMessage(error.localizedDescription)
+            throw error
         }
     }
 

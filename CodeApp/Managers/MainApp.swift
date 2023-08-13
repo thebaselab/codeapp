@@ -341,23 +341,10 @@ class MainApp: ObservableObject {
     }
 
     func compareWithPrevious(url: URL) async throws {
-
         guard let provider = workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
-
-        let contentToCompareWith: String = try await withCheckedThrowingContinuation {
-            continuation in
-            provider.previous(
-                path: url.absoluteString,
-                error: {
-                    continuation.resume(throwing: $0)
-                },
-                completionHandler: {
-                    continuation.resume(returning: $0)
-                })
-        }
-
+        let contentToCompareWith = try await provider.previous(path: url.absoluteString)
         try await compareWithContent(url: url, content: contentToCompareWith)
     }
 

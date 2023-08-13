@@ -61,12 +61,9 @@ protocol GitServiceProvider {
     func checkoutDestinations() -> [checkoutDest]
     func branches(isRemote: Bool) -> [checkoutDest]
     func tags() -> [checkoutDest]
-    func previous(
-        path: String, error: @escaping (NSError) -> Void,
-        completionHandler: @escaping (String) -> Void
-    )
     func remotes() async throws -> [Remote]
     func pull(branch: Branch, remote from: Remote) async throws
     func fetch(remote from: Remote) async throws
     func remoteBranches() async throws -> [Branch]
+    func previous(path: String) async throws -> String
 }

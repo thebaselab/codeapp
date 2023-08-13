@@ -349,29 +349,30 @@ struct MonacoEditor: UIViewRepresentable {
         func requestDiffUpdate(modelUri: String, force: Bool = false) {
             guard
                 let sanitizedUri = URL(string: modelUri)?.standardizedFileURL.absoluteString
-                    .removingPercentEncoding
+                    .removingPercentEncoding,
+                let gitServiceProvider = self.control.App.workSpaceStorage.gitServiceProvider
             else {
                 return
             }
 
             // If the cache hasn't been invalidated, it means the editor also have the up-to-date model.
-            if let isCached = self.control.App.workSpaceStorage.gitServiceProvider?.isCached(
-                url: sanitizedUri),
-                !force, isCached
-            {
-                return
-            }
-
-            if let hasRepo = self.control.App.workSpaceStorage.gitServiceProvider?.hasRepository,
-                hasRepo
-            {
-                self.control.App.workSpaceStorage.gitServiceProvider?.previous(
-                    path: sanitizedUri, error: { err in print(err) },
-                    completionHandler: { value in
-                        DispatchQueue.main.async {
-                            self.control.provideOriginalTextForUri(uri: modelUri, value: value)
-                        }
-                    })
+           if gitServiceProvider.isCached(url: sanitizedUri) && !force{
+               return
+           }
+            guard gitServiceProvider.hasRepository else { return }
+            
+            Task {
+                do {
+                    let originalText = try await gitServiceProvider.previous(path: sanitizedUri)
+                    await MainActor.run {
+                        self.control.provideOriginalTextForUri(uri: modelUri, value: originalText)
+                    }
+                }catch {
+                    print(error)
+                    throw error
+                }
+                
+                
             }
         }
 
