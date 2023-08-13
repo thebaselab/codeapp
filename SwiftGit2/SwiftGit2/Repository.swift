@@ -1471,10 +1471,6 @@ public final class Repository {
 
 		for i in 0..<count {
 			let s = git_status_byindex(unwrapStatusResult, i)
-			if s?.pointee.status.rawValue == GIT_STATUS_CURRENT.rawValue {
-				continue
-			}
-
 			let statusEntry = StatusEntry(from: s!.pointee)
 			returnArray.append(statusEntry)
 		}
