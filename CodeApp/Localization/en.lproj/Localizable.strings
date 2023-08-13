@@ -350,6 +350,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.pull" = "Pull";
 "source_control.pulling_from_remote" = "Pulling from remote";
 "source_control.pull_succeeded" = "Pull succeeded";
+"source_control.checkout.select_branch_or_tag" = "Select a branch or tag to checkout";
 
 
 "panel.problems.no_problems_detected" = "No problems detected in the workspace.";

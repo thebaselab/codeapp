@@ -89,7 +89,7 @@ struct BottomBar: View {
                                         try await checkout(destination: destination)
                                     }
                                 }
-                        }, title: App.branch, iconName: "arrow.triangle.branch")
+                        }, title: App.branch, iconName: "arrow.triangle.branch", menuTitle: "source_control.checkout.select_branch_or_tag")
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(height: 20)
 

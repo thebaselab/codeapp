@@ -25,7 +25,8 @@ struct EncodingMenu: View {
             title: (AVAILABLE_ENCODING.first {
                 $0.encoding == editor.encoding
             })?.name ?? editor.encoding.description,
-            iconName: nil
+            iconName: nil,
+            menuTitle: nil
         ).fixedSize()
 
     }

@@ -20,6 +20,7 @@ struct MenuButtonView<S>: UIViewRepresentable {
     let onSelect: (S) -> (Void)
     let title: String
     let iconName: String?
+    let menuTitle: String?
 
     func makeUIView(context: Context) -> UIButton {
         let button = UIButton(type: .system)
@@ -45,20 +46,23 @@ struct MenuButtonView<S>: UIViewRepresentable {
         }
         button.tintColor = UIColor(id: "statusBar.foreground")
         button.setTitleColor(button.tintColor, for: .normal)
-        button.menu = UIMenu(
-            children: options.map { option in
-                UIAction(
-                    title: option.title,
-                    image: option.iconSystemName == nil
-                        ? nil : UIImage(systemName: option.iconSystemName!),
-                    state: .off,
-                    handler: {
-                        _action in
-                        onSelect(option.value)
-                    })
-            }
-        )
-
+        
+        let children = options.map { option in
+            UIAction(
+                title: option.title,
+                image: option.iconSystemName == nil
+                    ? nil : UIImage(systemName: option.iconSystemName!),
+                state: .off,
+                handler: {
+                    _action in
+                    onSelect(option.value)
+                })
+        }
+        if let menuTitle {
+            button.menu = UIMenu(title: NSLocalizedString(menuTitle, comment: ""), children: children)
+        }else {
+            button.menu = UIMenu(children: children)
+        }
         return button
     }
 
