@@ -96,7 +96,6 @@ class MainApp: ObservableObject {
     @Published var indexedResources: [URL: Diff.Status] = [:]
     @Published var workingResources: [URL: Diff.Status] = [:]
     @Published var branch: String = ""
-    @Published var remote: String = ""
     @Published var commitMessage: String = ""
     @Published var isSyncing: Bool = false
     @Published var aheadBehind: (Int, Int)? = nil
@@ -524,36 +523,27 @@ class MainApp: ObservableObject {
 
         func clearUIState() {
             DispatchQueue.main.async {
-                self.remote = ""
+                self.aheadBehind = nil
                 self.branch = ""
                 self.gitTracks = [:]
                 self.indexedResources = [:]
                 self.workingResources = [:]
             }
         }
-
-        if workSpaceStorage.gitServiceProvider == nil {
+        
+        guard let gitServiceProvider = workSpaceStorage.gitServiceProvider else {
             clearUIState()
+            return
         }
 
-        workSpaceStorage.gitServiceProvider?.status(error: { _ in
+        gitServiceProvider.status(error: { _ in
             clearUIState()
             onFinish()
         }) { indexed, worktree, branch in
-            guard let hasRemote = self.workSpaceStorage.gitServiceProvider?.hasRemote() else {
-                onFinish()
-                return
-            }
-
             DispatchQueue.main.async {
                 let indexedDictionary = Dictionary(uniqueKeysWithValues: indexed)
                 let workingDictionary = Dictionary(uniqueKeysWithValues: worktree)
 
-                if hasRemote {
-                    self.remote = "origin"
-                } else {
-                    self.remote = ""
-                }
                 self.branch = branch
                 self.indexedResources = indexedDictionary
                 self.workingResources = workingDictionary
@@ -565,24 +555,16 @@ class MainApp: ObservableObject {
                     })
             }
 
-            self.workSpaceStorage.gitServiceProvider?.aheadBehind(error: {
-                print($0.localizedDescription)
-                onFinish()
-                DispatchQueue.main.async {
-                    self.aheadBehind = nil
-                }
-            }) { result in
-                onFinish()
-                DispatchQueue.main.async {
-                    self.aheadBehind = result
+            Task {
+                defer { onFinish() }
+                let aheadBehind = try await gitServiceProvider.aheadBehind(remote: nil)
+                await MainActor.run {
+                    self.aheadBehind = aheadBehind
                 }
             }
         }
         
         Task {
-            guard let gitServiceProvider = workSpaceStorage.gitServiceProvider else {
-                throw SourceControlError.gitServiceProviderUnavailable
-            }
             let references: [ReferenceType] = (try await gitServiceProvider.remoteBranches()) +
                                               (try await gitServiceProvider.localBranches()) +
                                               (try await gitServiceProvider.tags())

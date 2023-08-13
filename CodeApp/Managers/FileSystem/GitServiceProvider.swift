@@ -15,8 +15,6 @@ protocol GitServiceProvider {
     func isCached(url: String) -> Bool
     func sign(name: String, email: String)
     func auth(name: String, password: String)
-    func aheadBehind(
-        error: @escaping (NSError) -> Void, completionHandler: @escaping ((Int, Int)) -> Void)
     func status(
         error: @escaping (NSError) -> Void,
         completionHandler: @escaping ([(URL, Diff.Status)], [(URL, Diff.Status)], String) -> Void
@@ -33,7 +31,6 @@ protocol GitServiceProvider {
     func push(
         error: @escaping (NSError) -> Void, remote: String, progress: Progress?,
         completionHandler: @escaping () -> Void)
-    func hasRemote() -> Bool
     func tags() async throws -> [TagReference]
     func remotes() async throws -> [Remote]
     func pull(branch: Branch, remote from: Remote) async throws
@@ -42,4 +39,5 @@ protocol GitServiceProvider {
     func localBranches() async throws -> [Branch]
     func previous(path: String) async throws -> String
     func checkout(oid: OID) async throws
+    func aheadBehind(remote: Remote?) async throws -> (Int, Int)
 }

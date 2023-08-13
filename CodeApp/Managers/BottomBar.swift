@@ -93,13 +93,10 @@ struct BottomBar: View {
                         .fixedSize(horizontal: true, vertical: false)
                         .frame(height: 20)
 
-                        if App.remote != "" {
-
-                            if App.aheadBehind != nil {
-                                Text("\(App.aheadBehind!.1)↓ \(App.aheadBehind!.0)↑").font(
-                                    .system(size: 12)
-                                )
-                            }
+                        if let aheadBehind = App.aheadBehind {
+                            Text("\(aheadBehind.1)↓ \(aheadBehind.0)↑").font(
+                                .system(size: 12)
+                            )
                         }
                     }
                     // TODO: Display image dimension information

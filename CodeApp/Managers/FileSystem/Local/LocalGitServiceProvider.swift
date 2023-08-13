@@ -172,62 +172,19 @@ class LocalGitServiceProvider: GitServiceProvider {
         credential = Credentials.plaintext(username: name, password: password)
     }
 
-    func aheadBehind(
-        error: @escaping (NSError) -> Void, completionHandler: @escaping ((Int, Int)) -> Void
-    ) {
-        workerQueue.async {
-            guard self.repository != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(_error)
-                return
+    /// Count the number of unique commits between HEAD and the specified remote
+    /// If remote is nil, origin will be used
+    func aheadBehind(remote: Remote?) async throws -> (Int, Int) {
+        return try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            let ref = try repository.HEAD().get()
+            guard let branch = ref as? Branch,
+                  let branchName = branch.shortName
+            else {
+                throw NSError(descriptionKey: "Git is in detached mode")
             }
-
-            let result = self.repository!.HEAD()
-            switch result {
-            case let .success(ref):
-                guard let branchName = ref.shortName else {
-                    // Error: In detached mode
-                    let _error = NSError(
-                        domain: "", code: 401,
-                        userInfo: [NSLocalizedDescriptionKey: "Git is in detached mode"])
-                    error(_error)
-                    return
-                }
-                let result = self.repository!.remoteBranches()
-                switch result {
-                case let .success(branches):
-                    for branch in branches {
-                        if branch.longName.components(separatedBy: "/").dropFirst().joined(
-                            separator: "/"
-                        ).contains(branchName) {
-                            let result = self.repository!.aheadBehind(
-                                local: ref.oid, upstream: branch.oid)
-                            switch result {
-                            case let .success(tuple):
-                                completionHandler(tuple)
-                                return
-                            case let .failure(err):
-                                error(err)
-                                return
-                            }
-                        }
-                    }
-                    let _error = NSError(
-                        domain: "", code: 401,
-                        userInfo: [NSLocalizedDescriptionKey: "Cannot find upstream remote branch."]
-                    )
-                    error(_error)
-                    return
-                case let .failure(err):
-                    error(err)
-                    return
-                }
-            case let .failure(err):
-                error(err)
-                return
-            }
+            let remoteBranch = try repository.remoteBranch(named: "\(remote?.name ?? "origin")/\(branchName)").get()
+            return try repository.aheadBehind(local: ref.oid, upstream: remoteBranch.oid).get()
         }
     }
 
@@ -655,23 +612,6 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
-    func hasRemote() -> Bool {
-        guard repository != nil else {
-            return false
-        }
-        let result = repository!.allRemotes()
-        switch result {
-        case let .success(remotes):
-            if remotes.isEmpty {
-                return false
-            } else {
-                return true
-            }
-        default:
-            return false
-        }
-    }
-    
     func checkout(oid: OID) async throws {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
