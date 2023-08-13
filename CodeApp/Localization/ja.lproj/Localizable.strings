@@ -429,6 +429,7 @@
 "file.download" = "ダウンロード..";
 "file.confirm_save %@" = "%@ に加えた変更を保存しますか?";
 "file.confirm_delete %@" = "%@ を削除しますか?";
+"file.reopen_with_encoding" = "エンコードで再オープン";
 
 "actions.new_window" = "新しいウィンドウ";
 

@@ -428,6 +428,7 @@
 "file.download" = "다운로드..";
 "file.confirm_save %@" = "%@을 저장하시겠습니까?";
 "file.confirm_delete %@" = "%@을 삭제하시겠습니까?";
+"file.reopen_with_encoding" = "인코딩으로 다시 열기";
 
 "actions.new_window" = "새창";
 
