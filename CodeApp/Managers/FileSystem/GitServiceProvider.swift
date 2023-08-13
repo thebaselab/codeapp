@@ -15,10 +15,6 @@ protocol GitServiceProvider {
     func isCached(url: String) -> Bool
     func sign(name: String, email: String)
     func auth(name: String, password: String)
-    func status(
-        error: @escaping (NSError) -> Void,
-        completionHandler: @escaping ([(URL, Diff.Status)], [(URL, Diff.Status)], String) -> Void
-    )
     func initialize(error: @escaping (NSError) -> Void, completionHandler: @escaping () -> Void)
     func clone(
         from: URL, to: URL, progress: Progress?, error: @escaping (NSError) -> Void,
@@ -40,4 +36,5 @@ protocol GitServiceProvider {
     func previous(path: String) async throws -> String
     func checkout(oid: OID) async throws
     func aheadBehind(remote: Remote?) async throws -> (Int, Int)
+    func status() async throws -> [StatusEntry]
 }

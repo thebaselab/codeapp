@@ -205,62 +205,13 @@ class LocalGitServiceProvider: GitServiceProvider {
             return ""
         }
     }
-
-    func status(
-        error: @escaping (NSError) -> Void,
-        completionHandler: @escaping ([(URL, Diff.Status)], [(URL, Diff.Status)], String) -> Void
-    ) {
-        workerQueue.async {
-            self.load()
-            guard self.repository != nil else {
-                let _error = NSError(
-                    domain: "", code: 401,
-                    userInfo: [NSLocalizedDescriptionKey: "Repository doesn't exist"])
-                error(_error)
-                return
-            }
-            let result = self.repository!.status(options: [
+    
+    func status() async throws -> [StatusEntry] {
+        return try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            return try repository.status(options: [
                 .recurseUntrackedDirs, .includeIgnored, .includeUntracked, .excludeSubmodules,
-            ])
-            switch result {
-            case let .success(entries):
-                var indexedGroup = [(URL, Diff.Status)]()
-                var workingGroup = [(URL, Diff.Status)]()
-
-                for i in entries {
-                    let status = i.status
-
-                    let headToIndexURL: URL? = {
-                        guard let path = i.headToIndex?.newFile?.path else {
-                            return nil
-                        }
-                        return self.workingURL.appendingPathComponent(path)
-                    }()
-                    let indexToWorkURL: URL? = {
-                        guard let path = i.indexToWorkDir?.newFile?.path else {
-                            return nil
-                        }
-                        return self.workingURL.appendingPathComponent(path)
-                    }()
-
-                    status.allIncludedCases.forEach { includedCase in
-                        if [
-                            .indexDeleted, .indexRenamed, .indexModified, .indexDeleted,
-                            .indexTypeChange, .indexNew,
-                        ].contains(includedCase) {
-                            indexedGroup.append((headToIndexURL!, includedCase))
-                        } else if [
-                            .workTreeNew, .workTreeDeleted, .workTreeRenamed, .workTreeModified,
-                            .workTreeUnreadable, .workTreeTypeChange, .conflicted,
-                        ].contains(includedCase) {
-                            workingGroup.append((indexToWorkURL!, includedCase))
-                        }
-                    }
-                }
-                completionHandler(indexedGroup, workingGroup, self.branch())
-            case let .failure(_error):
-                error(_error)
-            }
+            ]).get()
         }
     }
 

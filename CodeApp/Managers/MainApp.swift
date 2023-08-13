@@ -508,6 +508,45 @@ class MainApp: ObservableObject {
         }
         loadFolder(url: url, resetEditors: false)
     }
+    
+    private func groupStatusEntries(entries: [StatusEntry]) -> ([(URL, Diff.Status)], [(URL, Diff.Status)]) {
+        var indexedGroup = [(URL, Diff.Status)]()
+        var workingGroup = [(URL, Diff.Status)]()
+
+        let workingURL = workSpaceStorage.currentDirectory._url!
+        
+        for i in entries {
+            let status = i.status
+            
+            let headToIndexURL: URL? = {
+                guard let path = i.headToIndex?.newFile?.path else {
+                    return nil
+                }
+                return workingURL.appendingPathComponent(path)
+            }()
+            let indexToWorkURL: URL? = {
+                guard let path = i.indexToWorkDir?.newFile?.path else {
+                    return nil
+                }
+                return workingURL.appendingPathComponent(path)
+            }()
+
+            status.allIncludedCases.forEach { includedCase in
+                if [
+                    .indexDeleted, .indexRenamed, .indexModified, .indexDeleted,
+                    .indexTypeChange, .indexNew,
+                ].contains(includedCase) {
+                    indexedGroup.append((headToIndexURL!, includedCase))
+                } else if [
+                    .workTreeNew, .workTreeDeleted, .workTreeRenamed, .workTreeModified,
+                    .workTreeUnreadable, .workTreeTypeChange, .conflicted,
+                ].contains(includedCase) {
+                    workingGroup.append((indexToWorkURL!, includedCase))
+                }
+            }
+        }
+        return (indexedGroup, workingGroup)
+    }
 
     func git_status() {
 
@@ -515,13 +554,13 @@ class MainApp: ObservableObject {
             self.stateManager.gitServiceIsBusy = true
         }
 
-        func onFinish() {
+        @Sendable func onFinish() {
             DispatchQueue.main.async {
                 self.stateManager.gitServiceIsBusy = false
             }
         }
 
-        func clearUIState() {
+        @Sendable func clearUIState() {
             DispatchQueue.main.async {
                 self.aheadBehind = nil
                 self.branch = ""
@@ -535,33 +574,38 @@ class MainApp: ObservableObject {
             clearUIState()
             return
         }
-
-        gitServiceProvider.status(error: { _ in
-            clearUIState()
-            onFinish()
-        }) { indexed, worktree, branch in
-            DispatchQueue.main.async {
+        
+        Task {
+            do {
+                let entries = try await gitServiceProvider.status()
+                let (indexed, worktree) = groupStatusEntries(entries: entries)
+                
                 let indexedDictionary = Dictionary(uniqueKeysWithValues: indexed)
                 let workingDictionary = Dictionary(uniqueKeysWithValues: worktree)
 
-                self.branch = branch
-                self.indexedResources = indexedDictionary
-                self.workingResources = workingDictionary
-
-                self.gitTracks = indexedDictionary.merging(
-                    workingDictionary,
-                    uniquingKeysWith: { current, _ in
-                        current
-                    })
-            }
-
-            Task {
-                defer { onFinish() }
+                await MainActor.run {
+                    self.branch = branch
+                    self.indexedResources = indexedDictionary
+                    self.workingResources = workingDictionary
+                    self.gitTracks = indexedDictionary.merging(
+                        workingDictionary,
+                        uniquingKeysWith: { current, _ in
+                            current
+                        })
+                }
+                
                 let aheadBehind = try await gitServiceProvider.aheadBehind(remote: nil)
                 await MainActor.run {
                     self.aheadBehind = aheadBehind
                 }
+                onFinish()
+                
+                
+            }catch {
+                clearUIState()
+                onFinish()
             }
+            
         }
         
         Task {
