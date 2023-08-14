@@ -12,5 +12,6 @@ class DefaultUIState {
     static let PANEL_IS_VISIBLE = false
     static let SIDEBAR_TAB = SideBarSection.explorer
     static let SIDEBAR_VISIBLE = false
+    static let SIDEBAR_WIDTH: Double = 280.0
     static let PANEL_HEIGHT: Double = 200.0
 }

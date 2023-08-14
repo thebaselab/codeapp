@@ -179,23 +179,7 @@ private struct MainView: View {
                             ActivityBar(openConsolePanel: openConsolePanel)
 
                             if isSideBarVisible {
-                                ZStack(alignment: .topLeading) {
-                                    Group {
-                                        switch currentSideBarTab {
-                                        case .explorer:
-                                            ExplorerContainer()
-                                        case .search:
-                                            SearchContainer()
-                                        case .sourceControl:
-                                            SourceControlContainer()
-                                        case .remote:
-                                            RemoteContainer()
-                                        }
-                                    }
-                                    .background(Color.init(id: "sideBar.background"))
-                                }
-                                .frame(width: 280.0, height: geometry.size.height - 20)
-                                .background(Color.init(id: "sideBar.background"))
+                                RegularSidebar(windowWidth: geometry.size.width)
                             }
                         }
 

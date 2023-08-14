@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+var ACTIVITY_BAR_WIDTH: CGFloat = 50.0
+
 struct ActivityBar: View {
 
     @EnvironmentObject var App: MainApp
@@ -179,7 +181,7 @@ struct ActivityBar: View {
                         contextMenuItems: nil
                     ))
         }
-        .frame(minWidth: 0, maxWidth: 50.0, minHeight: 0, maxHeight: .infinity)
+        .frame(minWidth: 0, maxWidth: ACTIVITY_BAR_WIDTH, minHeight: 0, maxHeight: .infinity)
         .background(Color.init(id: "activityBar.background"))
     }
 }
