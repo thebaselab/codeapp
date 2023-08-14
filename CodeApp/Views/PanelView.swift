@@ -188,28 +188,5 @@ struct PanelView: View {
                     keyboardHeight = 0.0
                 }
             )
-        //            .onReceive(
-        //                NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification),
-        //                perform: { notification in
-        //                    if let keyboardSize =
-        //                        (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
-        //                        .cgRectValue
-        //                    {
-        //                        let keyboardHeight = keyboardSize.height
-        //                        let topPadding = UIApplication.shared.getSafeArea(edge: .top)
-        //                        let bottomPadding = UIApplication.shared.getSafeArea(edge: .bottom)
-        //                        if self.panelHeight
-        //                            > (UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0)
-        //                                - topPadding - bottomPadding - keyboardHeight)
-        //                        {
-        //                            DispatchQueue.main.async {
-        //                                self.panelHeight =
-        //                                    UIScreen.main.bounds.height - (bottomPadding == 0 ? 60 : 0)
-        //                                    - topPadding - bottomPadding - keyboardHeight
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //            )
     }
 }
