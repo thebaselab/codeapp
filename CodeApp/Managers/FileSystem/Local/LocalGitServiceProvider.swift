@@ -376,9 +376,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     private func fileOidAtPathForLastCommit(path: String) throws -> OID {
         let repository = try self.checkedRepository()
         let entries = try repository.status(options: [.includeUnmodified]).get()
-        print(path)
         for entry in entries {
-            print(entry)
             if let oldFilePath = entry.headToIndex?.oldFile?.path,
                 path == oldFilePath,
                 let oid = entry.headToIndex?.oldFile?.oid
