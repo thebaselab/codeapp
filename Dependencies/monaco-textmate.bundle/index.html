@@ -83,7 +83,22 @@
 
       setTimeout(() => {
         if (typeof editor === "undefined") {
-          location.reload();
+          // Special handling for Lockdown Mode (no WebAssembly)
+          // https://github.com/thebaselab/codeapp/issues/895
+          if (typeof WebAssembly === "undefined") {
+            const editor = monaco.editor.create(
+              document.getElementById("container"),
+              {
+                value: '',
+                language: "javascript",
+                theme: "vs-dark",
+              }
+            );
+            window.editor = editor;
+            applyListeners(editor)
+          }else {
+            location.reload();
+          }
         }
       }, 1000);
 
