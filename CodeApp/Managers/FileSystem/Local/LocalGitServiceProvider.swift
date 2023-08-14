@@ -159,8 +159,14 @@ class LocalGitServiceProvider: GitServiceProvider {
     }
 
     func isCached(url: String) -> Bool {
-        let path = url.replacingOccurrences(of: workingURL.absoluteString, with: "")
-            .replacingOccurrences(of: "%20", with: #"\ "#)
+        guard
+            let path =
+                url
+                .replacingOccurrences(of: workingURL.absoluteString, with: "")
+                .removingPercentEncoding
+        else {
+            return false
+        }
         return contentCache.object(forKey: path as NSString) != nil
     }
 
@@ -271,8 +277,8 @@ class LocalGitServiceProvider: GitServiceProvider {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             try paths.forEach {
-                let path = $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
-                    .removingPercentEncoding!
+                let path = try $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                    .removingPercentEncoding
                 try repository.unstage(path: path).get()
             }
         }
@@ -282,8 +288,8 @@ class LocalGitServiceProvider: GitServiceProvider {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             try paths.forEach {
-                let path = $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
-                    .removingPercentEncoding!
+                let path = try $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                    .removingPercentEncoding
                 try repository.add(path: path).get()
             }
         }
@@ -294,8 +300,10 @@ class LocalGitServiceProvider: GitServiceProvider {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
             try paths.forEach {
-                let path = $0.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
-                    .replacingOccurrences(of: "%20", with: #"\ "#)
+                let path =
+                    try $0
+                    .replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                    .removingPercentEncoding
                 try repository.checkout(path: path, strategy: .Force).get()
             }
         }
@@ -368,7 +376,9 @@ class LocalGitServiceProvider: GitServiceProvider {
     private func fileOidAtPathForLastCommit(path: String) throws -> OID {
         let repository = try self.checkedRepository()
         let entries = try repository.status(options: [.includeUnmodified]).get()
+        print(path)
         for entry in entries {
+            print(entry)
             if let oldFilePath = entry.headToIndex?.oldFile?.path,
                 path == oldFilePath,
                 let oid = entry.headToIndex?.oldFile?.oid
@@ -386,8 +396,10 @@ class LocalGitServiceProvider: GitServiceProvider {
             if let cached = self.contentCache.object(forKey: path as NSString) {
                 return (cached as String)
             }
-            let path = path.replacingOccurrences(of: self.workingURL.absoluteString, with: "")
-                .replacingOccurrences(of: "%20", with: #"\ "#)
+            let path =
+                try path
+                .replacingOccurrences(of: self.workingURL.absoluteString, with: "")
+                .removingPercentEncoding
 
             let oid = try self.fileOidAtPathForLastCommit(path: path)
             let blob = try repository.blob(oid).get()

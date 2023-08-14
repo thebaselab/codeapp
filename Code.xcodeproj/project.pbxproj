@@ -663,6 +663,8 @@
 		9F046C3B29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */; };
 		9F046C3D29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
 		9F046C3E29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
+		9F170D012A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F170D002A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift */; };
+		9F170D022A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F170D002A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift */; };
 		9F29759C2A1F488E007FDB3D /* deferredRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F29759B2A1F488E007FDB3D /* deferredRendering.swift */; };
 		9F29759D2A1F488E007FDB3D /* deferredRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F29759B2A1F488E007FDB3D /* deferredRendering.swift */; };
 		9F37391E293F37F8006886C1 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F37391D293F37F8006886C1 /* ThemeManager.swift */; };
@@ -1700,6 +1702,7 @@
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteExecutionExtension.swift; sourceTree = "<group>"; };
 		9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAppExtension.swift; sourceTree = "<group>"; };
+		9F170D002A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+throwingRemovingPercentEncoding.swift"; sourceTree = "<group>"; };
 		9F29759B2A1F488E007FDB3D /* deferredRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deferredRendering.swift; sourceTree = "<group>"; };
 		9F37391D293F37F8006886C1 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		9F3C2DC72918A31000BFF14C /* hiddenScrollableContentBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hiddenScrollableContentBackground.swift; sourceTree = "<group>"; };
@@ -2001,6 +2004,7 @@
 				947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */,
 				94FE0C93281E50F200C05529 /* UserDefaults+Hosts.swift */,
 				948A5FE82A87B09500303C12 /* NSError+init.swift */,
+				9F170D002A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3080,6 +3084,7 @@
 				9419697A280316C7008AAEB2 /* SourceControlEntry.swift in Sources */,
 				9FD5BCF52927859600F20C4B /* DebugMenu.swift in Sources */,
 				9419697B280316C7008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
+				9F170D022A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */,
 				94FA8978292FB86700163800 /* PDFViewerExtension.swift in Sources */,
 				9FAE499C292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				9419697C280316C7008AAEB2 /* View+cornerRadius.swift in Sources */,
@@ -3236,6 +3241,7 @@
 				94FC220B257F7D2A00B85D1B /* SourceControlEntry.swift in Sources */,
 				9FD5BCF42927859600F20C4B /* DebugMenu.swift in Sources */,
 				941969292802AB64008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
+				9F170D012A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */,
 				94FA8977292FB86700163800 /* PDFViewerExtension.swift in Sources */,
 				9FAE499B292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */,

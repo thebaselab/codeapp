@@ -495,10 +495,8 @@ struct MonacoEditor: UIViewRepresentable {
                 for mkr in markers {
                     let jsonData = try! JSONSerialization.data(withJSONObject: mkr, options: [])
                     let decoded = try! JSONDecoder().decode(marker.self, from: jsonData)
-                    if let url = URL(
-                        string: String(
-                            decoded.resource.path.dropFirst().replacingOccurrences(
-                                of: " ", with: "%20")))
+                    if let sanitisedURL = decoded.resource.path.dropFirst().removingPercentEncoding,
+                        let url = URL(string: sanitisedURL)
                     {
                         if control.App.problems[url] != nil {
                             control.App.problems[url]!.append(decoded)
