@@ -11,6 +11,7 @@ import SwiftUI
 struct StatusBar: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var statusBarManager: StatusBarManager
+    @EnvironmentObject var themeManager: ThemeManager
 
     var leftMostItems: [StatusBarItem] {
         statusBarManager.items
