@@ -682,8 +682,8 @@
 		9F58738E2A78FE950001F374 /* lg2.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9F58738A2A78FE6D0001F374 /* lg2.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9FA122592A8B17E400E7B417 /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122582A8B17E400E7B417 /* StatusBarManager.swift */; };
 		9FA1225A2A8B17E400E7B417 /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122582A8B17E400E7B417 /* StatusBarManager.swift */; };
-		9FA1225C2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */; };
-		9FA1225D2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */; };
+		9FA1225C2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* CodeAppContributionPointManager.swift */; };
+		9FA1225D2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* CodeAppContributionPointManager.swift */; };
 		9FA122602A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */; };
 		9FA122612A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */; };
 		9FA122642A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */; };
@@ -1730,7 +1730,7 @@
 		9F3C2DF6291CCE9A00BFF14C /* Remote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remote.swift; sourceTree = "<group>"; };
 		9F58738A2A78FE6D0001F374 /* lg2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = lg2.xcframework; sourceTree = "<group>"; };
 		9FA122582A8B17E400E7B417 /* StatusBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarManager.swift; sourceTree = "<group>"; };
-		9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionViewItemManager.swift; sourceTree = "<group>"; };
+		9FA1225B2A8B209500E7B417 /* CodeAppContributionPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAppContributionPointManager.swift; sourceTree = "<group>"; };
 		9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoEditorExtension.swift; sourceTree = "<group>"; };
 		9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorReadOnlyLabel.swift; sourceTree = "<group>"; };
 		9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLineColumnIndicator.swift; sourceTree = "<group>"; };
@@ -2701,7 +2701,7 @@
 				94801F92266FB5E400B29D80 /* TerminalInstance.swift */,
 				9F046C312922203E00BDE4E9 /* ToolbarManager.swift */,
 				9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */,
-				9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */,
+				9FA1225B2A8B209500E7B417 /* CodeAppContributionPointManager.swift */,
 				9FD5BCE42923897200F20C4B /* PanelManager.swift */,
 				948D12212583F2A5008F877A /* Executor.swift */,
 				9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */,
@@ -3185,7 +3185,7 @@
 				94196985280316C7008AAEB2 /* PanelSelector.swift in Sources */,
 				9FA122612A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */,
 				9FC03E752920CF1700DECD1B /* Notification.swift in Sources */,
-				9FA1225D2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */,
+				9FA1225D2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */,
 				94196986280316C7008AAEB2 /* node.swift in Sources */,
 				94196988280316C7008AAEB2 /* TerminalInstance.swift in Sources */,
 				94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */,
@@ -3351,7 +3351,7 @@
 				94A77808257BBA8A008FE7B2 /* PanelSelector.swift in Sources */,
 				9FA122602A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */,
 				9FC03E742920CF1700DECD1B /* Notification.swift in Sources */,
-				9FA1225C2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */,
+				9FA1225C2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */,
 				949B3CC725DEAAA700BC83B5 /* node.swift in Sources */,
 				94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */,
 				94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */,

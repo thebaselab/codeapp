@@ -1,5 +1,5 @@
 //
-//  ExtensionViewItemManager.swift
+//  CodeAppContributionPointManager.swift
 //  Code
 //
 //  Created by Ken Chung on 15/8/2023.
