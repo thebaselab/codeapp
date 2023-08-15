@@ -45,7 +45,7 @@ class SimpleWebPreviewExtension: CodeAppExtension {
                 }
                 return textEditor.url.isFileURL && textEditor.languageIdentifier == "html"
             })
-        contribution.toolbarItem.registerItem(item: toolbarItem)
+        contribution.toolBar.registerItem(item: toolbarItem)
     }
 
     override func onWorkSpaceStorageChanged(newUrl: URL) {

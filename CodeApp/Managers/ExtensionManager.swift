@@ -11,8 +11,10 @@ class ExtensionManager: ObservableObject {
     @Published var panelManager = PanelManager()
     @Published var toolbarManager = ToolbarManager()
     @Published var editorProviderManager = EditorProviderManager()
+    @Published var statusBarManager = StatusBarManager()
 
     private var extensions: [CodeAppExtension] = [
+        MonacoEditorAuxiliaryExtension(),
         MonacoIntellisenseExtension(),
         RemoteExecutionExtension(),
         LocalExecutionExtension(),
@@ -23,6 +25,7 @@ class ExtensionManager: ObservableObject {
         MarkdownViewerExtension(),
         SourceControlAuxiliaryExtension(),
         SimpleWebPreviewExtension(),
+        RemoteAuxiliaryExtension(),
     ]
 
     func registerExtension(ex: CodeAppExtension) {
@@ -33,7 +36,8 @@ class ExtensionManager: ObservableObject {
         let contribution = CodeAppExtension.Contribution(
             panel: self.panelManager,
             toolbarItem: self.toolbarManager,
-            editorProvider: self.editorProviderManager
+            editorProvider: self.editorProviderManager,
+            statusBarManager: self.statusBarManager
         )
 
         extensions.forEach { ex in

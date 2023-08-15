@@ -653,8 +653,6 @@
 		94FF337528435158003DE5DD /* SettingsFontPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FF337328435158003DE5DD /* SettingsFontPicker.swift */; };
 		94FF33892843744C003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */; };
 		94FF338A2843744C003DE5DD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */; };
-		9F046C2E29221D5200BDE4E9 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C2D29221D5200BDE4E9 /* Toolbar.swift */; };
-		9F046C2F29221D5200BDE4E9 /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C2D29221D5200BDE4E9 /* Toolbar.swift */; };
 		9F046C322922203E00BDE4E9 /* ToolbarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C312922203E00BDE4E9 /* ToolbarManager.swift */; };
 		9F046C332922203E00BDE4E9 /* ToolbarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C312922203E00BDE4E9 /* ToolbarManager.swift */; };
 		9F046C3529222D8E00BDE4E9 /* ExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */; };
@@ -682,6 +680,24 @@
 		9F3C2DF7291CCE9A00BFF14C /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF6291CCE9A00BFF14C /* Remote.swift */; };
 		9F3C2DF8291CCE9A00BFF14C /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF6291CCE9A00BFF14C /* Remote.swift */; };
 		9F58738E2A78FE950001F374 /* lg2.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9F58738A2A78FE6D0001F374 /* lg2.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9FA122592A8B17E400E7B417 /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122582A8B17E400E7B417 /* StatusBarManager.swift */; };
+		9FA1225A2A8B17E400E7B417 /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122582A8B17E400E7B417 /* StatusBarManager.swift */; };
+		9FA1225C2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */; };
+		9FA1225D2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */; };
+		9FA122602A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */; };
+		9FA122612A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */; };
+		9FA122642A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */; };
+		9FA122652A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */; };
+		9FA122672A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */; };
+		9FA122682A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */; };
+		9FA1226B2A8B519A00E7B417 /* CheckoutMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1226A2A8B519A00E7B417 /* CheckoutMenu.swift */; };
+		9FA1226C2A8B519A00E7B417 /* CheckoutMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1226A2A8B519A00E7B417 /* CheckoutMenu.swift */; };
+		9FA1226E2A8B522100E7B417 /* AheadBehindIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1226D2A8B522100E7B417 /* AheadBehindIndicator.swift */; };
+		9FA1226F2A8B522100E7B417 /* AheadBehindIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1226D2A8B522100E7B417 /* AheadBehindIndicator.swift */; };
+		9FA122722A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122712A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift */; };
+		9FA122732A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122712A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift */; };
+		9FA122762A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */; };
+		9FA122772A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */; };
 		9FAE498F292D062800B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FAE4990292D062D00B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */; };
@@ -1699,7 +1715,6 @@
 		94FF3370284348F1003DE5DD /* KBWebViewBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBWebViewBase.m; sourceTree = "<group>"; };
 		94FF337328435158003DE5DD /* SettingsFontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFontPicker.swift; sourceTree = "<group>"; };
 		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "Dependencies/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
-		9F046C2D29221D5200BDE4E9 /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
 		9F046C312922203E00BDE4E9 /* ToolbarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarManager.swift; sourceTree = "<group>"; };
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteExecutionExtension.swift; sourceTree = "<group>"; };
@@ -1714,6 +1729,15 @@
 		9F3C2DF2291CB2B400BFF14C /* RemoteHostError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteHostError.swift; sourceTree = "<group>"; };
 		9F3C2DF6291CCE9A00BFF14C /* Remote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remote.swift; sourceTree = "<group>"; };
 		9F58738A2A78FE6D0001F374 /* lg2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = lg2.xcframework; sourceTree = "<group>"; };
+		9FA122582A8B17E400E7B417 /* StatusBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarManager.swift; sourceTree = "<group>"; };
+		9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionViewItemManager.swift; sourceTree = "<group>"; };
+		9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoEditorExtension.swift; sourceTree = "<group>"; };
+		9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorReadOnlyLabel.swift; sourceTree = "<group>"; };
+		9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLineColumnIndicator.swift; sourceTree = "<group>"; };
+		9FA1226A2A8B519A00E7B417 /* CheckoutMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutMenu.swift; sourceTree = "<group>"; };
+		9FA1226D2A8B522100E7B417 /* AheadBehindIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AheadBehindIndicator.swift; sourceTree = "<group>"; };
+		9FA122712A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAuxiliaryExtension.swift; sourceTree = "<group>"; };
+		9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConnectedLabel.swift; sourceTree = "<group>"; };
 		9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4996292DD76A00B1B962 /* MarkdownViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownViewerExtension.swift; sourceTree = "<group>"; };
@@ -2454,6 +2478,8 @@
 		9F046C3729223CC000BDE4E9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9FA122702A8B5A0200E7B417 /* RemoteAuxiliary */,
+				9FA1225E2A8B29E400E7B417 /* MonacoEditor */,
 				9FD0FAF22939AD59007170F5 /* SimpleWebPreview */,
 				9FAE4999292F52DB00B1B962 /* SourceControlAuxiliary */,
 				9FAE4995292DD75900B1B962 /* MarkdownViewer */,
@@ -2544,7 +2570,6 @@
 				94A77828257BC951008FE7B2 /* DocumentPickerView.swift */,
 				FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */,
 				9FD5BCF32927859600F20C4B /* DebugMenu.swift */,
-				9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */,
 				9F170D032A89F88D00D6D7C1 /* RegularSidebar.swift */,
 			);
 			path = Views;
@@ -2580,10 +2605,54 @@
 				9FC03E732920CF1700DECD1B /* Notification.swift */,
 				9F3C2DE92918E19B00BFF14C /* Theme.swift */,
 				94A77795257ABB69008FE7B2 /* EditorInstance.swift */,
-				9F046C2D29221D5200BDE4E9 /* Toolbar.swift */,
 				9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		9FA1225E2A8B29E400E7B417 /* MonacoEditor */ = {
+			isa = PBXGroup;
+			children = (
+				9FA122622A8B2A2400E7B417 /* Views */,
+				9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */,
+			);
+			path = MonacoEditor;
+			sourceTree = "<group>";
+		};
+		9FA122622A8B2A2400E7B417 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */,
+				9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */,
+				9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9FA122692A8B516C00E7B417 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9FA1226A2A8B519A00E7B417 /* CheckoutMenu.swift */,
+				9FA1226D2A8B522100E7B417 /* AheadBehindIndicator.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9FA122702A8B5A0200E7B417 /* RemoteAuxiliary */ = {
+			isa = PBXGroup;
+			children = (
+				9FA122742A8B5A3B00E7B417 /* Views */,
+				9FA122712A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift */,
+			);
+			path = RemoteAuxiliary;
+			sourceTree = "<group>";
+		};
+		9FA122742A8B5A3B00E7B417 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		9FAE498D292D060F00B1B962 /* ImageViewer */ = {
@@ -2613,6 +2682,7 @@
 		9FAE4999292F52DB00B1B962 /* SourceControlAuxiliary */ = {
 			isa = PBXGroup;
 			children = (
+				9FA122692A8B516C00E7B417 /* Views */,
 				9FAE499A292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift */,
 			);
 			path = SourceControlAuxiliary;
@@ -2631,6 +2701,7 @@
 				94801F92266FB5E400B29D80 /* TerminalInstance.swift */,
 				9F046C312922203E00BDE4E9 /* ToolbarManager.swift */,
 				9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */,
+				9FA1225B2A8B209500E7B417 /* ExtensionViewItemManager.swift */,
 				9FD5BCE42923897200F20C4B /* PanelManager.swift */,
 				948D12212583F2A5008F877A /* Executor.swift */,
 				9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */,
@@ -2638,6 +2709,7 @@
 				94A7FFB2268D085300369147 /* BottomBar.swift */,
 				9FD5BCFD2929F0F300F20C4B /* EditorProviderManager.swift */,
 				9F37391D293F37F8006886C1 /* ThemeManager.swift */,
+				9FA122582A8B17E400E7B417 /* StatusBarManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -3004,6 +3076,7 @@
 				94196946280316C7008AAEB2 /* shortcutsMapping.swift in Sources */,
 				94196947280316C7008AAEB2 /* BottomBar.swift in Sources */,
 				94196948280316C7008AAEB2 /* SearchBar.swift in Sources */,
+				9FA122732A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift in Sources */,
 				94196949280316C7008AAEB2 /* Color+init.swift in Sources */,
 				9FD5BD02292A08D600F20C4B /* AppError.swift in Sources */,
 				9419694A280316C7008AAEB2 /* PanelView.swift in Sources */,
@@ -3019,6 +3092,7 @@
 				9FD5BCF029249F0200F20C4B /* WebViewBase.swift in Sources */,
 				9FD5BCE62923897200F20C4B /* PanelManager.swift in Sources */,
 				9FAE4998292DD76A00B1B962 /* MarkdownViewerExtension.swift in Sources */,
+				9FA1226F2A8B522100E7B417 /* AheadBehindIndicator.swift in Sources */,
 				9F046C3B29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */,
 				94196952280316C7008AAEB2 /* EditorTab.swift in Sources */,
 				9FD0FAF52939AD86007170F5 /* SimpleWebPreviewExtension.swift in Sources */,
@@ -3049,7 +3123,6 @@
 				94196961280316C7008AAEB2 /* String.Encoding.swift in Sources */,
 				94196962280316C7008AAEB2 /* SettingsThemeConfiguration.swift in Sources */,
 				94196963280316C7008AAEB2 /* RemoteContainer.swift in Sources */,
-				9F046C2F29221D5200BDE4E9 /* Toolbar.swift in Sources */,
 				94196964280316C7008AAEB2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				9F046C3E29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */,
@@ -3069,6 +3142,7 @@
 				948A5FEA2A87B09500303C12 /* NSError+init.swift in Sources */,
 				9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
+				9FA122652A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */,
 				941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94196970280316C7008AAEB2 /* SettingsKeyboardShortcuts.swift in Sources */,
 				942E3202280877C900233441 /* SearchServiceProvider.swift in Sources */,
@@ -3085,6 +3159,7 @@
 				94F6B511280EFD07000DBAE2 /* FileDisplayName.swift in Sources */,
 				9F170D052A89F88D00D6D7C1 /* RegularSidebar.swift in Sources */,
 				94196978280316C7008AAEB2 /* FileIcon.swift in Sources */,
+				9FA1225A2A8B17E400E7B417 /* StatusBarManager.swift in Sources */,
 				94196979280316C7008AAEB2 /* ViewRepresentable.swift in Sources */,
 				9419697A280316C7008AAEB2 /* SourceControlEntry.swift in Sources */,
 				9FD5BCF52927859600F20C4B /* DebugMenu.swift in Sources */,
@@ -3104,10 +3179,13 @@
 				94196981280316C7008AAEB2 /* KeychainItemAccessibility.swift in Sources */,
 				94196982280316C7008AAEB2 /* ExplorerContainer.swift in Sources */,
 				94196983280316C7008AAEB2 /* InfiniteProgressView.swift in Sources */,
+				9FA1226C2A8B519A00E7B417 /* CheckoutMenu.swift in Sources */,
 				94196984280316C7008AAEB2 /* MainApp.swift in Sources */,
 				9FD0FAF12938A14C007170F5 /* EncodingMenu.swift in Sources */,
 				94196985280316C7008AAEB2 /* PanelSelector.swift in Sources */,
+				9FA122612A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */,
 				9FC03E752920CF1700DECD1B /* Notification.swift in Sources */,
+				9FA1225D2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */,
 				94196986280316C7008AAEB2 /* node.swift in Sources */,
 				94196988280316C7008AAEB2 /* TerminalInstance.swift in Sources */,
 				94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */,
@@ -3118,6 +3196,7 @@
 				9F3C2DEE2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC892807632B00939E4F /* biometricType.swift in Sources */,
 				942E31FC280876AA00233441 /* SearchSection.swift in Sources */,
+				9FA122682A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4C293259080057C12F /* Encoding.swift in Sources */,
 				94A046262804A67100182275 /* SourceControlSection.swift in Sources */,
 				9420698928284027007DE671 /* Store.swift in Sources */,
@@ -3126,6 +3205,7 @@
 				9FDAD1BA296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift in Sources */,
 				9FAE4990292D062D00B1B962 /* ImageViewerExtension.swift in Sources */,
 				94A045F82804822400182275 /* RemoteHostCell.swift in Sources */,
+				9FA122772A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */,
 				94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				9F046C332922203E00BDE4E9 /* ToolbarManager.swift in Sources */,
 			);
@@ -3162,6 +3242,7 @@
 				94C893E6279D0C3000DFBF29 /* shortcutsMapping.swift in Sources */,
 				94A7FFB3268D085300369147 /* BottomBar.swift in Sources */,
 				94A777D6257B8A88008FE7B2 /* SearchBar.swift in Sources */,
+				9FA122722A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift in Sources */,
 				94B3DDF1260344E800C4F2B1 /* Color+init.swift in Sources */,
 				9FD5BD01292A08D600F20C4B /* AppError.swift in Sources */,
 				94A7780B257BBCAC008FE7B2 /* PanelView.swift in Sources */,
@@ -3177,6 +3258,7 @@
 				9FD5BCEF29249F0200F20C4B /* WebViewBase.swift in Sources */,
 				9FD5BCE52923897200F20C4B /* PanelManager.swift in Sources */,
 				9FAE4997292DD76A00B1B962 /* MarkdownViewerExtension.swift in Sources */,
+				9FA1226E2A8B522100E7B417 /* AheadBehindIndicator.swift in Sources */,
 				9F046C3A29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */,
 				948E478226502B6900A6110D /* EditorTab.swift in Sources */,
 				9FD0FAF42939AD86007170F5 /* SimpleWebPreviewExtension.swift in Sources */,
@@ -3207,7 +3289,6 @@
 				94E3B96B25866C79006AC043 /* String.Encoding.swift in Sources */,
 				94B3DDF82604F90800C4F2B1 /* SettingsThemeConfiguration.swift in Sources */,
 				9437153F26BF9FC3000376FB /* RemoteContainer.swift in Sources */,
-				9F046C2E29221D5200BDE4E9 /* Toolbar.swift in Sources */,
 				94A77819257BC332008FE7B2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3371284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				9F046C3D29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */,
@@ -3227,6 +3308,7 @@
 				948A5FE92A87B09500303C12 /* NSError+init.swift in Sources */,
 				9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,
+				9FA122642A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */,
 				941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94C893E2279D09D400DFBF29 /* SettingsKeyboardShortcuts.swift in Sources */,
 				942E3201280877C900233441 /* SearchServiceProvider.swift in Sources */,
@@ -3243,6 +3325,7 @@
 				94F6B510280EFD07000DBAE2 /* FileDisplayName.swift in Sources */,
 				9F170D042A89F88D00D6D7C1 /* RegularSidebar.swift in Sources */,
 				94A77792257AB805008FE7B2 /* FileIcon.swift in Sources */,
+				9FA122592A8B17E400E7B417 /* StatusBarManager.swift in Sources */,
 				94801F95266FBC3500B29D80 /* ViewRepresentable.swift in Sources */,
 				94FC220B257F7D2A00B85D1B /* SourceControlEntry.swift in Sources */,
 				9FD5BCF42927859600F20C4B /* DebugMenu.swift in Sources */,
@@ -3262,10 +3345,13 @@
 				94F52709259F9B7800337306 /* KeychainItemAccessibility.swift in Sources */,
 				94A777C4257B8042008FE7B2 /* ExplorerContainer.swift in Sources */,
 				9419692D2803117D008AAEB2 /* InfiniteProgressView.swift in Sources */,
+				9FA1226B2A8B519A00E7B417 /* CheckoutMenu.swift in Sources */,
 				94A7779F257ABD7A008FE7B2 /* MainApp.swift in Sources */,
 				9FD0FAF02938A14C007170F5 /* EncodingMenu.swift in Sources */,
 				94A77808257BBA8A008FE7B2 /* PanelSelector.swift in Sources */,
+				9FA122602A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */,
 				9FC03E742920CF1700DECD1B /* Notification.swift in Sources */,
+				9FA1225C2A8B209500E7B417 /* ExtensionViewItemManager.swift in Sources */,
 				949B3CC725DEAAA700BC83B5 /* node.swift in Sources */,
 				94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */,
 				94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */,
@@ -3276,6 +3362,7 @@
 				9F3C2DED2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC882807632B00939E4F /* biometricType.swift in Sources */,
 				942E31FB280876AA00233441 /* SearchSection.swift in Sources */,
+				9FA122672A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4B293259080057C12F /* Encoding.swift in Sources */,
 				94A046252804A67100182275 /* SourceControlSection.swift in Sources */,
 				9420698828284027007DE671 /* Store.swift in Sources */,
@@ -3284,6 +3371,7 @@
 				9FDAD1B9296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift in Sources */,
 				9FAE498F292D062800B1B962 /* ImageViewerExtension.swift in Sources */,
 				94A045F72804822400182275 /* RemoteHostCell.swift in Sources */,
+				9FA122762A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */,
 				94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
 				9F046C322922203E00BDE4E9 /* ToolbarManager.swift in Sources */,
 			);

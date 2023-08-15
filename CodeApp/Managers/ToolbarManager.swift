@@ -5,16 +5,20 @@
 //  Created by Ken Chung on 14/11/2022.
 //
 
-import Foundation
+import SwiftUI
 
-class ToolbarManager: ObservableObject {
+struct ToolbarItem: Identifiable {
+    let id = UUID()
+    var extenionID: String
+    var icon: String
+    var secondaryIcon: String?
+    var onClick: () -> Void
+    var shortCut: KeyboardShortcut?
+    var panelToFocusOnTap: String?
+    var shouldDisplay: () -> Bool
+}
+
+
+class ToolbarManager: CodeAppContributionPointManager {
     @Published var items: [ToolbarItem] = []
-
-    func registerItem(item: ToolbarItem) {
-        items.append(item)
-    }
-
-    func deregister(id: UUID) {
-        items.removeAll(where: { $0.id == id })
-    }
 }

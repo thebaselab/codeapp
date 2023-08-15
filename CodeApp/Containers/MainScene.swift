@@ -212,14 +212,9 @@ private struct MainView: View {
                             }
                         }
                     }
-                    BottomBar(
-                        openConsolePanel: openConsolePanel,
-                        onDirectoryPickerFinished: {
-                            currentSideBarTab = .explorer
-                            isSideBarVisible = true
-                        }
-                    )
-                    .frame(width: geometry.size.width, height: 20)
+                    StatusBar()
+                        .environmentObject(extensionManager.statusBarManager)
+                        .frame(width: geometry.size.width, height: 20)
                 }
 
                 HStack {

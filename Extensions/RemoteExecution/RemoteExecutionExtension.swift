@@ -56,7 +56,7 @@ class RemoteExecutionExtension: CodeAppExtension {
                     && languageList.map { $0.value[1] }.contains(textEditor.languageIdentifier)
             }
         )
-        contribution.toolbarItem.registerItem(item: toolbarItem)
+        contribution.toolBar.registerItem(item: toolbarItem)
     }
 }
 

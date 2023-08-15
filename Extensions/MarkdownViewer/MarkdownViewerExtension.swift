@@ -72,7 +72,7 @@ class MarkdownViewerExtension: CodeAppExtension {
                 ["md", "markdown"].contains(app.activeTextEditor?.languageIdentifier.lowercased())
             }
         )
-        contribution.toolbarItem.registerItem(item: item)
+        contribution.toolBar.registerItem(item: item)
     }
 
 }

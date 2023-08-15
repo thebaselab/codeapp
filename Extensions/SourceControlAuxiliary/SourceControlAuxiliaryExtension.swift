@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 private let EXTENSION_ID = "SOURCE_CONTROL_AUX"
 
@@ -14,28 +15,12 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
         let compareWithPreviousitem = ToolbarItem(
             extenionID: EXTENSION_ID,
             icon: "arrow.2.squarepath",
-            onClick: {
-                guard let url = app.activeTextEditor?.url else {
-                    return
-                }
-                Task {
-                    do {
-                        try await app.notificationManager.withAsyncNotification(
-                            title: "source_control.retrieving_changes",
-                            task: {
-                                try await app.compareWithPrevious(url: url.standardizedFileURL)
-                            })
-                    } catch {
-                        app.notificationManager.showErrorMessage(error.localizedDescription)
-                    }
-                }
-            },
+            onClick: { onCompareWithPreviousItemClick(app: app) },
             shouldDisplay: {
                 app.activeEditor is TextEditorInstance
                     && !(app.activeEditor is DiffTextEditorInstnace) && app.gitTracks.count > 0
             }
         )
-
         let previousChangeItem = ToolbarItem(
             extenionID: EXTENSION_ID,
             icon: "arrow.up",
@@ -46,7 +31,6 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                 app.activeEditor is DiffTextEditorInstnace
             }
         )
-
         let nextChangeItem = ToolbarItem(
             extenionID: EXTENSION_ID,
             icon: "arrow.down",
@@ -57,9 +41,41 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                 app.activeEditor is DiffTextEditorInstnace
             }
         )
+        let aheadBehindIndicatorItem = StatusBarItem(
+            extensionID: EXTENSION_ID,
+            view: AnyView(AheadBehindIndicator()),
+            shouldDisplay: { app.aheadBehind != nil },
+            positionPreference: .left
+        )
+        let checkoutMenuItem = StatusBarItem(
+            extensionID: EXTENSION_ID,
+            view: AnyView(CheckoutMenu()),
+            shouldDisplay: { !app.branch.isEmpty },
+            positionPreference: .left,
+            positionPrecedence: 1
+        )
 
-        contribution.toolbarItem.registerItem(item: compareWithPreviousitem)
-        contribution.toolbarItem.registerItem(item: previousChangeItem)
-        contribution.toolbarItem.registerItem(item: nextChangeItem)
+        contribution.toolBar.registerItem(item: compareWithPreviousitem)
+        contribution.toolBar.registerItem(item: previousChangeItem)
+        contribution.toolBar.registerItem(item: nextChangeItem)
+        contribution.statusBar.registerItem(item: aheadBehindIndicatorItem)
+        contribution.statusBar.registerItem(item: checkoutMenuItem)
+    }
+}
+
+private func onCompareWithPreviousItemClick(app: MainApp) {
+    guard let url = app.activeTextEditor?.url else {
+        return
+    }
+    Task {
+        do {
+            try await app.notificationManager.withAsyncNotification(
+                title: "source_control.retrieving_changes",
+                task: {
+                    try await app.compareWithPrevious(url: url.standardizedFileURL)
+                })
+        } catch {
+            app.notificationManager.showErrorMessage(error.localizedDescription)
+        }
     }
 }

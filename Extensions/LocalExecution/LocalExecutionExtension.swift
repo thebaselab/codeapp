@@ -35,7 +35,7 @@ class LocalExecutionExtension: CodeAppExtension {
                     && LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] != nil
             }
         )
-        contribution.toolbarItem.registerItem(item: toolbarItem)
+        contribution.toolBar.registerItem(item: toolbarItem)
     }
 
     private func runCodeLocally(app: MainApp) async {

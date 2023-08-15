@@ -10,15 +10,20 @@ import Foundation
 class CodeAppExtension {
     class Contribution {
         var panel: PanelManager
-        var toolbarItem: ToolbarManager
+        var toolBar: ToolbarManager
         var editorProvider: EditorProviderManager
+        var statusBar: StatusBarManager
 
         init(
-            panel: PanelManager, toolbarItem: ToolbarManager, editorProvider: EditorProviderManager
+            panel: PanelManager,
+            toolbarItem: ToolbarManager,
+            editorProvider: EditorProviderManager,
+            statusBarManager: StatusBarManager
         ) {
             self.panel = panel
-            self.toolbarItem = toolbarItem
+            self.toolBar = toolbarItem
             self.editorProvider = editorProvider
+            self.statusBar = statusBarManager
         }
     }
 
