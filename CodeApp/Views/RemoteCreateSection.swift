@@ -190,15 +190,17 @@ struct RemoteCreateSection: View {
                                 .foregroundColor(.blue)
                         }
                         .fileImporter(
-                            isPresented: $showFileImporter, allowedContentTypes: [.x509Certificate]
+                            isPresented: $showFileImporter, allowedContentTypes: [.data]
                         ) { result in
                             guard let url = try? result.get(),
+                                url.startAccessingSecurityScopedResource(),
                                 let keyFileContent = try? String(contentsOfFile: url.path)
                             else {
                                 App.notificationManager.showErrorMessage(
                                     "errors.failed_to_import_key")
                                 return
                             }
+                            url.stopAccessingSecurityScopedResource()
                             privateKeyContent = keyFileContent
                         }
                         .frame(maxWidth: .infinity)
