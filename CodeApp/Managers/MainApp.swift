@@ -149,7 +149,7 @@ class MainApp: ObservableObject {
                         }
                     }
                 }
-                self?.git_status()
+                self?.updateGitRepositoryStatus()
             }
         }
         workSpaceStorage.onTerminalData { [weak self] data in
@@ -186,7 +186,7 @@ class MainApp: ObservableObject {
                 allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
         }
 
-        git_status()
+        updateGitRepositoryStatus()
 
         Task {
             await MainActor.run {
@@ -542,7 +542,7 @@ class MainApp: ObservableObject {
             throw error
         }
 
-        self.git_status()
+        self.updateGitRepositoryStatus()
 
         if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
             await monacoInstance.checkSpelling(text: editor.content, uri: editor.url.absoluteString)
@@ -637,7 +637,7 @@ class MainApp: ObservableObject {
         return (indexedGroup, workingGroup)
     }
 
-    func git_status() {
+    func updateGitRepositoryStatus() {
 
         DispatchQueue.main.async {
             self.stateManager.gitServiceIsBusy = true
@@ -713,7 +713,7 @@ class MainApp: ObservableObject {
 
     func loadRepository(url: URL) {
         workSpaceStorage.gitServiceProvider?.loadDirectory(url: url)
-        git_status()
+        updateGitRepositoryStatus()
     }
 
     // Injecting JavaScript / TypeScript types

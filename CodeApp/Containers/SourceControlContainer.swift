@@ -25,7 +25,7 @@ struct SourceControlContainer: View {
             try await serviceProvider.createRepository()
             App.notificationManager.showInformationMessage(
                 "source_control.repository_initialized")
-            App.git_status()
+            App.updateGitRepositoryStatus()
         } catch {
             App.notificationManager.showErrorMessage(
                 error.localizedDescription
@@ -53,7 +53,7 @@ struct SourceControlContainer: View {
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
             }
-            App.git_status()
+            App.updateGitRepositoryStatus()
             App.commitMessage = ""
             App.monacoInstance.invalidateDecorations()
         }
@@ -77,7 +77,7 @@ struct SourceControlContainer: View {
                 branch: currentBranch, remote: remote, progress: progress)
             App.notificationManager.showInformationMessage(
                 "source_control.push_succeeded")
-            App.git_status()
+            App.updateGitRepositoryStatus()
         } catch {
             let error = error as NSError
             if error.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
@@ -107,7 +107,7 @@ struct SourceControlContainer: View {
                 try await serviceProvider.fetch(remote: remote)
                 App.notificationManager.showInformationMessage(
                     "source_control.fetch_succeeded")
-                App.git_status()
+                App.updateGitRepositoryStatus()
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
                 throw error
@@ -125,7 +125,7 @@ struct SourceControlContainer: View {
         Task {
             do {
                 try await serviceProvider.stage(paths: paths)
-                App.git_status()
+                App.updateGitRepositoryStatus()
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
                 throw error
@@ -201,7 +201,7 @@ struct SourceControlContainer: View {
         Task {
             do {
                 try await serviceProvider.unstage(paths: [urlString])
-                App.git_status()
+                App.updateGitRepositoryStatus()
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
                 throw error
@@ -241,7 +241,7 @@ struct SourceControlContainer: View {
         if !fileExists {
             do {
                 try await serviceProvider.checkout(paths: [fileURL.absoluteString])
-                App.git_status()
+                App.updateGitRepositoryStatus()
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
                 throw error
@@ -252,7 +252,7 @@ struct SourceControlContainer: View {
         do {
             let previousContent = try await serviceProvider.previous(path: fileURL.absoluteString)
             try previousContent.write(to: fileURL, atomically: true, encoding: .utf8)
-            App.git_status()
+            App.updateGitRepositoryStatus()
             App.notificationManager.showInformationMessage("source_control.revert_succeeded")
         } catch {
             App.notificationManager.showErrorMessage(error.localizedDescription)
@@ -289,6 +289,7 @@ struct SourceControlContainer: View {
             do {
                 try await serviceProvider.pull(branch: branch, remote: remote)
                 App.notificationManager.showInformationMessage("source_control.pull_succeeded")
+                App.updateGitRepositoryStatus()
             } catch {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
             }
