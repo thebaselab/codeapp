@@ -305,7 +305,7 @@ struct SourceControlContainer: View {
                 Group {
                     if App.workSpaceStorage.gitServiceProvider == nil {
                         SourceControlUnsupportedSection()
-                    } else if App.gitTracks.count > 0 || App.branch != "" {
+                    } else if App.workSpaceStorage.gitServiceProvider!.hasRepository {
                         SourceControlSection(
                             onCommit: onCommit,
                             onPush: onPush,
