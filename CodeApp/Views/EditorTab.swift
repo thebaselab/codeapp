@@ -43,10 +43,11 @@ struct EditorTab: View {
                         {
                             FileDisplayName(
                                 gitStatus: status,
-                                name: currentEditor.title)
+                                name: currentEditor.title, useAllSpaceAvailableHorizontally: false)
                         } else {
                             FileDisplayName(
-                                gitStatus: nil, name: currentEditor.title)
+                                gitStatus: nil, name: currentEditor.title,
+                                useAllSpaceAvailableHorizontally: false)
                         }
                         if let textEditor = currentEditor as? TextEditorInstance,
                             textEditor.isDeleted
