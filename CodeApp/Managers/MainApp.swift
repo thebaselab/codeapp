@@ -673,7 +673,6 @@ class MainApp: ObservableObject {
                 let workingDictionary = Dictionary(uniqueKeysWithValues: worktree)
 
                 await MainActor.run {
-                    self.branch = branch
                     self.indexedResources = indexedDictionary
                     self.workingResources = workingDictionary
                     self.gitTracks = indexedDictionary.merging(
@@ -685,9 +684,22 @@ class MainApp: ObservableObject {
 
                 let aheadBehind = try await gitServiceProvider.aheadBehind(remote: nil)
                 let currentBranch = try await gitServiceProvider.currentBranch()
+
                 await MainActor.run {
                     self.aheadBehind = aheadBehind
-                    self.branch = currentBranch.name
+                    var branchLabel = currentBranch.name
+
+                    if entries.first(where: { $0.status.contains(.workTreeModified) }) != nil {
+                        branchLabel += "*"
+                    }
+                    if entries.first(where: { $0.status.contains(.indexModified) }) != nil {
+                        branchLabel += "+"
+                    }
+                    if entries.first(where: { $0.status.contains(.conflicted) }) != nil {
+                        branchLabel += "!"
+                    }
+
+                    self.branch = branchLabel
                 }
                 onFinish()
 
