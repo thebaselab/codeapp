@@ -712,7 +712,7 @@ class MainApp: ObservableObject {
     }
 
     func loadRepository(url: URL) {
-        workSpaceStorage.gitServiceProvider?.loadDirectory(url: url.standardizedFileURL)
+        workSpaceStorage.gitServiceProvider?.loadDirectory(url: url)
         git_status()
     }
 
@@ -736,6 +736,7 @@ class MainApp: ObservableObject {
     }
 
     func loadFolder(url: URL, resetEditors: Bool = true) {
+        let url = url.standardizedFileURL
         if workSpaceStorage.remoteConnected && url.isFileURL {
             workSpaceStorage.disconnect()
         }
@@ -884,7 +885,7 @@ class MainApp: ObservableObject {
             urlQueue.append(url)
             throw AppError.editorIsNotReady
         }
-        var url = url
+        var url = url.standardizedFileURL
         if url.pathExtension == "icloud" {
             let originalFileName = String(
                 url.lastPathComponent.dropFirst(".".count).dropLast(".icloud".count))

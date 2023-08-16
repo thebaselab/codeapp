@@ -129,7 +129,7 @@ private struct FileCell: View {
                             )
                     }
                 } else {
-                    if let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL] {
+                    if let status = App.gitTracks[URL(string: item.url)!] {
                         FileDisplayName(
                             gitStatus: status, name: item.name.removingPercentEncoding!)
                     } else {
@@ -238,7 +238,7 @@ private struct FolderCell: View {
                         )
                 }
             } else {
-                if let status = App.gitTracks[URL(string: item.url)!.standardizedFileURL] {
+                if let status = App.gitTracks[URL(string: item.url)!] {
                     FileDisplayName(
                         gitStatus: status, name: item.name.removingPercentEncoding!)
                 } else {

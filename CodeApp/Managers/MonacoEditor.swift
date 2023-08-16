@@ -348,7 +348,7 @@ struct MonacoEditor: UIViewRepresentable {
 
         func requestDiffUpdate(modelUri: String, force: Bool = false) {
             guard
-                let sanitizedUri = URL(string: modelUri)?.standardizedFileURL.absoluteString
+                let sanitizedUri = URL(string: modelUri)?.absoluteString
                     .removingPercentEncoding,
                 let gitServiceProvider = self.control.App.workSpaceStorage.gitServiceProvider
             else {

@@ -101,7 +101,7 @@ struct MainScene: View {
             }
             .onOpenURL { url in
                 _ = url.startAccessingSecurityScopedResource()
-                App.openFile(url: url.standardizedFileURL)
+                App.openFile(url: url)
             }
             .onReceive(
                 NotificationCenter.default.publisher(

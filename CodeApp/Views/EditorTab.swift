@@ -38,8 +38,7 @@ struct EditorTab: View {
                     onOpenEditor()
                 }) {
                     Group {
-                        if let editorURL = (currentEditor as? EditorInstanceWithURL)?.url
-                            .standardizedFileURL,
+                        if let editorURL = (currentEditor as? EditorInstanceWithURL)?.url,
                             let status = App.gitTracks[editorURL]
                         {
                             FileDisplayName(

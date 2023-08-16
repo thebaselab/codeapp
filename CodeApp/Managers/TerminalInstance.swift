@@ -260,7 +260,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                     self.readLine()
                     return
                 }
-                openEditor?(fileUrl.standardized)
+                openEditor?(fileUrl)
                 self.readLine()
             case "clear":
                 self.executeScript("localEcho._input='';" + #"term.write('\033c')"#)

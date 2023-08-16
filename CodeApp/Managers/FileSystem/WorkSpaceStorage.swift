@@ -331,6 +331,7 @@ class WorkSpaceStorage: ObservableObject {
             var files: [FileItemRepresentable] = []
 
             for i in fileURLs {
+                let i = i.standardizedFileURL
                 var name = i.lastPathComponent.removingPercentEncoding ?? ""
                 if name.isEmpty {
                     name = i.host ?? ""
