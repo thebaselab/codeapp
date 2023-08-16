@@ -187,6 +187,92 @@ class MainApp: ObservableObject {
         }
 
         git_status()
+
+        Task {
+            await MainActor.run {
+                setUpActivityBarItems()
+            }
+        }
+    }
+
+    @MainActor
+    private func setUpActivityBarItems() {
+
+        let openFile = {
+            self.stateManager.showsFilePicker.toggle()
+        }
+        let openNewFile = {
+            self.stateManager.showsNewFileSheet.toggle()
+        }
+        let openFolder = {
+            self.stateManager.showsDirectoryPicker = true
+        }
+
+        let explorer = ActivityBarItem(
+            itemID: "EXPLORER",
+            iconSystemName: "doc.on.doc",
+            title: "Explorer",
+            shortcutKey: "e",
+            modifiers: [.command, .shift],
+            view: AnyView(ExplorerContainer()),
+            contextMenuItems: {
+                [
+                    ContextMenuItem(
+                        action: openNewFile, text: "New File",
+                        imageSystemName: "doc.badge.plus"),
+                    ContextMenuItem(
+                        action: openFile, text: "Open File",
+                        imageSystemName: "doc"),
+                ]
+                    + (self.workSpaceStorage.remoteConnected
+                        ? []
+                        : [
+                            ContextMenuItem(
+                                action: openFolder,
+                                text: "Open Folder",
+                                imageSystemName: "folder.badge.gear"
+                            )
+                        ])
+            },
+            bubbleText: { nil }
+        )
+        let search = ActivityBarItem(
+            itemID: "SEARCH",
+            iconSystemName: "magnifyingglass",
+            title: "Search",
+            shortcutKey: "f",
+            modifiers: [.command, .shift],
+            view: AnyView(SearchContainer()),
+            contextMenuItems: nil,
+            bubbleText: { nil }
+        )
+        let sourceControl = ActivityBarItem(
+            itemID: "SOURCE_CONTROL",
+            iconSystemName:
+                "point.topleft.down.curvedto.point.bottomright.up",
+            title: "Source Control",
+            shortcutKey: "g",
+            modifiers: [.control, .shift],
+            view: AnyView(SourceControlContainer()),
+            contextMenuItems: nil,
+            bubbleText: { self.gitTracks.isEmpty ? nil : "\(self.gitTracks.count)" }
+        )
+        let remote = ActivityBarItem(
+            itemID: "REMOTE",
+            iconSystemName: "rectangle.connected.to.line.below",
+            title: "Remotes",
+            shortcutKey: "r",
+            modifiers: [.command, .shift],
+            view: AnyView(RemoteContainer()),
+            contextMenuItems: nil,
+            bubbleText: { self.workSpaceStorage.remoteConnected ? "" : nil }
+        )
+
+        extensionManager.activityBarManager.registerItem(item: explorer)
+        extensionManager.activityBarManager.registerItem(item: search)
+        extensionManager.activityBarManager.registerItem(item: sourceControl)
+        extensionManager.activityBarManager.registerItem(item: remote)
+
     }
 
     @MainActor

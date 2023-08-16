@@ -14,27 +14,28 @@ struct ContextMenuItem {
     let imageSystemName: String
 }
 
-struct ActivityBarItem {
-    let action: () -> Void
-    let isActive: Bool
-    let iconSystemName: String
-    let title: String
-    let shortcutKey: KeyEquivalent
-    let modifiers: EventModifiers
-    let useBubble: Bool
+struct ActivityBarIconView: View {
 
-    let bubbleText: String?
-    let contextMenuItems: [ContextMenuItem]?
-}
-
-struct ActivityBarItemView: View {
-
+    @EnvironmentObject var activityBarManager: ActivityBarManager
     let activityBarItem: ActivityBarItem
+
+    @SceneStorage("activitybar.selected.item") var activeItemId: String = DefaultUIState
+        .ACTIVITYBAR_SELECTED_ITEM
+    @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
 
     var body: some View {
         ZStack {
             Button(action: {
-                activityBarItem.action()
+                if isSideBarVisible && activeItemId == activityBarItem.itemID {
+                    withAnimation(.easeIn(duration: 0.2)) {
+                        isSideBarVisible = false
+                    }
+                } else {
+                    activeItemId = activityBarItem.itemID
+                    withAnimation(.easeIn(duration: 0.2)) {
+                        isSideBarVisible = true
+                    }
+                }
             }) {
                 ZStack {
                     Text(activityBarItem.title)
@@ -45,7 +46,7 @@ struct ActivityBarItemView: View {
                         .font(.system(size: 20, weight: .light))
                         .foregroundColor(
                             Color.init(
-                                id: (activityBarItem.isActive)
+                                id: (activeItemId == activityBarItem.itemID && isSideBarVisible)
                                     ? "activityBar.foreground"
                                     : "activityBar.inactiveForeground")
                         )
@@ -56,7 +57,7 @@ struct ActivityBarItemView: View {
             .if(activityBarItem.contextMenuItems != nil) { view in
                 view
                     .contextMenu {
-                        ForEach(activityBarItem.contextMenuItems!, id: \.id) { item in
+                        ForEach(activityBarItem.contextMenuItems!(), id: \.id) { item in
                             Button(action: {
                                 item.action()
                             }) {
@@ -67,10 +68,15 @@ struct ActivityBarItemView: View {
                     }
             }
 
-            if activityBarItem.useBubble {
-                if activityBarItem.bubbleText != nil {
+            if let bubbleText = activityBarItem.bubbleText() {
+                if bubbleText.isEmpty {
+                    Circle()
+                        .fill(Color.init(id: "statusBar.background"))
+                        .frame(width: 10, height: 10)
+                        .offset(x: 10, y: -10)
+                } else {
                     ZStack {
-                        Text("\(activityBarItem.bubbleText ?? " ")")
+                        Text(bubbleText)
                             .font(.system(size: 12))
                     }
                     .padding(.horizontal, 3)
@@ -82,13 +88,7 @@ struct ActivityBarItemView: View {
                     )
                     .cornerRadius(5)
                     .offset(x: 10, y: -10)
-                } else {
-                    Circle()
-                        .fill(Color.init(id: "statusBar.background"))
-                        .frame(width: 10, height: 10)
-                        .offset(x: 10, y: -10)
                 }
-
             }
         }
         .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))

@@ -11,8 +11,12 @@ private var EDITOR_MIN_WIDTH: CGFloat = 200.0
 private var REGULAR_SIDEBAR_MIN_WIDTH: CGFloat = DefaultUIState.SIDEBAR_WIDTH
 
 struct RegularSidebar: View {
-    @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
+    @EnvironmentObject var activityBarManager: ActivityBarManager
+
     @SceneStorage("sidebar.width") var sideBarWidth: Double = DefaultUIState.SIDEBAR_WIDTH
+    @SceneStorage("activitybar.selected.item") var activeItemId: String = DefaultUIState
+        .ACTIVITYBAR_SELECTED_ITEM
+    @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
 
     @GestureState var sideBarWidthTranslation: CGFloat = 0
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -38,19 +42,12 @@ struct RegularSidebar: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Group {
-                switch currentSideBarTab {
-                case .explorer:
-                    ExplorerContainer()
-                case .search:
-                    SearchContainer()
-                case .sourceControl:
-                    SourceControlContainer()
-                case .remote:
-                    RemoteContainer()
-                }
+            Color.init(id: "sideBar.background")
+            if let item = activityBarManager.itemForItemID(itemID: activeItemId) {
+                item.view
+            } else {
+                DescriptionText("panels.no_panel_selected")
             }
-            .background(Color.init(id: "sideBar.background"))
         }
         .gesture(
             DragGesture()

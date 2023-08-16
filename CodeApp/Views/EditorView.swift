@@ -20,6 +20,7 @@ struct EditorView: View {
     @AppStorage("editorLightTheme") var editorLightTheme: String = "Default"
     @AppStorage("editorDarkTheme") var editorDarkTheme: String = "Default"
     @AppStorage("editorFontSize") var editorTextSize: Int = 14
+    @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
 
     @State var targeted: Bool = false
 
@@ -66,6 +67,7 @@ struct EditorView: View {
                     .sheet(isPresented: $stateManager.showsDirectoryPicker) {
                         DirectoryPickerView(onOpen: { url in
                             App.loadFolder(url: url)
+                            isSideBarVisible = true
                         })
                     }
                 }.foregroundColor(.clear).font(.system(size: 1))

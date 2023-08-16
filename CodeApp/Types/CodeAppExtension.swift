@@ -13,17 +13,20 @@ class CodeAppExtension {
         var toolBar: ToolbarManager
         var editorProvider: EditorProviderManager
         var statusBar: StatusBarManager
+        var activityBar: ActivityBarManager
 
         init(
             panel: PanelManager,
             toolbarItem: ToolbarManager,
             editorProvider: EditorProviderManager,
-            statusBarManager: StatusBarManager
+            statusBarManager: StatusBarManager,
+            activityBarManager: ActivityBarManager
         ) {
             self.panel = panel
             self.toolBar = toolbarItem
             self.editorProvider = editorProvider
             self.statusBar = statusBarManager
+            self.activityBar = activityBarManager
         }
     }
 

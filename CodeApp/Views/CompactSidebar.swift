@@ -10,18 +10,11 @@ import SwiftUI
 struct CompactSidebar: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var stateManager: MainStateManager
+    @EnvironmentObject var activityBarManager: ActivityBarManager
 
+    @SceneStorage("activitybar.selected.item") var activeItemId: String = DefaultUIState
+        .ACTIVITYBAR_SELECTED_ITEM
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
-    @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
-
-    let sections: [SideBarSection: (LocalizedStringKey, String)] = [
-        .explorer: ("Explorer", "doc.on.doc"),
-        .search: ("Search", "magnifyingglass"),
-        .sourceControl: (
-            "source_control.title", "point.topleft.down.curvedto.point.bottomright.up"
-        ),
-        .remote: ("Remotes", "rectangle.connected.to.line.below"),
-    ]
 
     var body: some View {
         HStack(spacing: 0) {
@@ -59,28 +52,22 @@ struct CompactSidebar: View {
                 .overlay {
                     Menu {
                         Picker(
-                            selection: $currentSideBarTab,
+                            selection: $activeItemId,
                             label: Text("Section")
                         ) {
-                            ForEach(
-                                [
-                                    SideBarSection.explorer,
-                                    SideBarSection.search,
-                                    SideBarSection.sourceControl,
-                                    SideBarSection.remote,
-                                ], id: \.self
-                            ) { value in
-                                Label(
-                                    sections[value]!.0,
-                                    systemImage: sections[value]!.1)
+                            ForEach(activityBarManager.items) {
+                                Label($0.title, systemImage: $0.iconSystemName)
+                                    .tag($0.itemID)
                             }
                         }
                     } label: {
                         HStack {
-                            Text(sections[currentSideBarTab]?.0 ?? "")
-                                .bold()
-                                .lineLimit(1)
-                                .foregroundColor(Color.init("T1"))
+                            Text(
+                                activityBarManager.itemForItemID(itemID: activeItemId)?.title ?? ""
+                            )
+                            .bold()
+                            .lineLimit(1)
+                            .foregroundColor(Color.init("T1"))
 
                             Image(systemName: "chevron.down.circle.fill")
                                 .symbolRenderingMode(.hierarchical)
@@ -93,19 +80,10 @@ struct CompactSidebar: View {
                 )
                 .frame(height: 40)
 
-                Group {
-                    switch currentSideBarTab {
-                    case .explorer:
-                        ExplorerContainer()
-                    case .search:
-                        SearchContainer()
-                    case .sourceControl:
-                        SourceControlContainer()
-                    case .remote:
-                        RemoteContainer()
-                    }
-                }.background(Color.init(id: "sideBar.background"))
-
+                if let item = activityBarManager.itemForItemID(itemID: activeItemId) {
+                    item.view
+                        .background(Color.init(id: "sideBar.background"))
+                }
             }
             .frame(width: 280.0)
             .background(Color.init(id: "sideBar.background"))

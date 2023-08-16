@@ -401,6 +401,7 @@
 "settings.editor.font.reset" = "デフォルトにリセット";
 "settings.editor.font.ligatures" = "フォント合字";
 "settings.editor.font.show_all_fonts" = "すべてのフォントを表示";
+"panels.no_panel_selected" = "パネルが選択されていません";
 
 "errors.script_already_running" = "スクリプトがすでに実行されています。次のスクリプトを実行する前に終了してください。";
 "errors.fs.not_implemented" = "その操作は実装されていません";

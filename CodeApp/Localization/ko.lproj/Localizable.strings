@@ -400,6 +400,7 @@
 "settings.editor.font.reset" = "기본값";
 "settings.editor.font.ligatures" = "글꼴 합자";
 "settings.editor.font.show_all_fonts" = "모든 글꼴 표시";
+"panels.no_panel_selected" = "패널이 선택되지 않았습니다.";
 
 "errors.script_already_running" = "스크립트가 이미 실행 중입니다. 다른 것을 실행하기 전에 완료하십시오.";
 "errors.fs.not_implemented" = "이 기능은 아직 구현되지 않았습니다.";

@@ -158,7 +158,6 @@ private struct MainView: View {
     @AppStorage("changelog.lastread") var changeLogLastReadVersion = "0.0"
 
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
-    @SceneStorage("sidebar.tab") var currentSideBarTab: SideBarSection = DefaultUIState.SIDEBAR_TAB
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
     @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
 
@@ -176,10 +175,12 @@ private struct MainView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack(spacing: 0) {
                         if horizontalSizeClass == .regular {
-                            ActivityBar(openConsolePanel: openConsolePanel)
+                            ActivityBar(togglePanel: openConsolePanel)
+                                .environmentObject(extensionManager.activityBarManager)
 
                             if isSideBarVisible {
                                 RegularSidebar(windowWidth: geometry.size.width)
+                                    .environmentObject(extensionManager.activityBarManager)
                             }
                         }
 
@@ -209,6 +210,7 @@ private struct MainView: View {
 
                             if isSideBarVisible && horizontalSizeClass == .compact {
                                 CompactSidebar()
+                                    .environmentObject(extensionManager.activityBarManager)
                             }
                         }
                     }

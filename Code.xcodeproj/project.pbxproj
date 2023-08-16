@@ -698,6 +698,8 @@
 		9FA122732A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122712A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift */; };
 		9FA122762A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */; };
 		9FA122772A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */; };
+		9FA122792A8B6C9700E7B417 /* ActivityBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */; };
+		9FA1227A2A8B6C9700E7B417 /* ActivityBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */; };
 		9FAE498F292D062800B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FAE4990292D062D00B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */; };
@@ -1738,6 +1740,7 @@
 		9FA1226D2A8B522100E7B417 /* AheadBehindIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AheadBehindIndicator.swift; sourceTree = "<group>"; };
 		9FA122712A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAuxiliaryExtension.swift; sourceTree = "<group>"; };
 		9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConnectedLabel.swift; sourceTree = "<group>"; };
+		9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBarManager.swift; sourceTree = "<group>"; };
 		9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4996292DD76A00B1B962 /* MarkdownViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownViewerExtension.swift; sourceTree = "<group>"; };
@@ -2710,6 +2713,7 @@
 				9FD5BCFD2929F0F300F20C4B /* EditorProviderManager.swift */,
 				9F37391D293F37F8006886C1 /* ThemeManager.swift */,
 				9FA122582A8B17E400E7B417 /* StatusBarManager.swift */,
+				9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -3062,6 +3066,7 @@
 				9419693D280316C7008AAEB2 /* GitHubSearchManager.swift in Sources */,
 				9419693E280316C7008AAEB2 /* MainScene.swift in Sources */,
 				94A045FB2804842500182275 /* RemoteConnectedSection.swift in Sources */,
+				9FA1227A2A8B6C9700E7B417 /* ActivityBarManager.swift in Sources */,
 				9419693F280316C7008AAEB2 /* HighlightedText.swift in Sources */,
 				94A046022804865000182275 /* SideBarButton.swift in Sources */,
 				94196940280316C7008AAEB2 /* LocalFileSystemProvider.swift in Sources */,
@@ -3228,6 +3233,7 @@
 				94A777EF257B9193008FE7B2 /* GitHubSearchManager.swift in Sources */,
 				94A77820257BC5AA008FE7B2 /* MainScene.swift in Sources */,
 				94A045FA2804842500182275 /* RemoteConnectedSection.swift in Sources */,
+				9FA122792A8B6C9700E7B417 /* ActivityBarManager.swift in Sources */,
 				94A777D9257B8AF1008FE7B2 /* HighlightedText.swift in Sources */,
 				94A046012804865000182275 /* SideBarButton.swift in Sources */,
 				9419692B2802AB88008AAEB2 /* LocalFileSystemProvider.swift in Sources */,

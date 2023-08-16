@@ -18,7 +18,6 @@ struct ToolbarItem: Identifiable {
     var shouldDisplay: () -> Bool
 }
 
-
 class ToolbarManager: CodeAppContributionPointManager {
     @Published var items: [ToolbarItem] = []
 }

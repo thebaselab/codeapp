@@ -12,6 +12,7 @@ class ExtensionManager: ObservableObject {
     @Published var toolbarManager = ToolbarManager()
     @Published var editorProviderManager = EditorProviderManager()
     @Published var statusBarManager = StatusBarManager()
+    @Published var activityBarManager = ActivityBarManager()
 
     private var extensions: [CodeAppExtension] = [
         MonacoEditorAuxiliaryExtension(),
@@ -37,7 +38,8 @@ class ExtensionManager: ObservableObject {
             panel: self.panelManager,
             toolbarItem: self.toolbarManager,
             editorProvider: self.editorProviderManager,
-            statusBarManager: self.statusBarManager
+            statusBarManager: self.statusBarManager,
+            activityBarManager: self.activityBarManager
         )
 
         extensions.forEach { ex in
