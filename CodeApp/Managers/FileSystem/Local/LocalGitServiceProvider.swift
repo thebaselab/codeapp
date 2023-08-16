@@ -23,52 +23,6 @@ extension Diff.Status: CaseIterable {
             return nil
         }
     }
-
-    func str() -> String {
-        switch self {
-        case .conflicted:
-            return "CONFLICTED"
-        case .current:
-            return "CURRENT"
-        case .ignored:
-            return "IGNORED"
-        case .indexDeleted:
-            return "INDEX_DELETED"
-        case .indexModified:
-            return "INDEX_MODIFIED"
-        case .indexNew:
-            return "INDEX_ADDED"
-        case .indexRenamed:
-            return "INDEX_RENAMED"
-        case .indexTypeChange:
-            return "INDEX_TYPE_CHANGED"
-        case .workTreeDeleted:
-            return "DELETED"
-        case .workTreeNew:
-            return "UNTRACKED"
-        case .workTreeRenamed:
-            return "RENAMED"
-        case .workTreeModified:
-            return "MODIFIED"
-        case .workTreeUnreadable:
-            return "UNREADABLE"
-        case .workTreeTypeChange:
-            return "TYPE_CHANGED"
-        default:
-            switch self.rawValue {
-            case 257:  // Untracked -> Staged -> Modify content
-                return "MODIFIED"
-            case 258:  // Modified -> Staged -> Modify content
-                return "MODIFIED"
-            case 514:  // Untracked -> Staged -> Delete file
-                return "DELETED"
-            default:
-                print("Unknown Status found: \(self)")
-                return "UNKNOWN"
-            }
-
-        }
-    }
 }
 
 class LocalGitServiceProvider: GitServiceProvider {
