@@ -95,28 +95,26 @@ struct EditorTabs: View {
     }
 
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
-                ForEach(App.editors) { currentEditor in
-                    EditorTab(
-                        currentEditor: currentEditor,
-                        isActive: (App.activeEditor == currentEditor),
-                        onOpenEditor: {
-                            App.setActiveEditor(editor: currentEditor)
-                        },
-                        onCloseEditor: {
-                            App.closeEditor(editor: currentEditor)
-                        }
-                    )
-                    .onDrag {
-                        self.dragging = currentEditor
-                        return NSItemProvider(object: currentEditor.id.uuidString as NSString)
+        HStack(spacing: 0) {
+            ForEach(App.editors) { currentEditor in
+                EditorTab(
+                    currentEditor: currentEditor,
+                    isActive: (App.activeEditor == currentEditor),
+                    onOpenEditor: {
+                        App.setActiveEditor(editor: currentEditor)
+                    },
+                    onCloseEditor: {
+                        App.closeEditor(editor: currentEditor)
                     }
-                    .onDrop(
-                        of: [UTType.text],
-                        delegate: DragRelocateDelegate(
-                            item: currentEditor, listData: $App.editors, current: $dragging))
+                )
+                .onDrag {
+                    self.dragging = currentEditor
+                    return NSItemProvider(object: currentEditor.id.uuidString as NSString)
                 }
+                .onDrop(
+                    of: [UTType.text],
+                    delegate: DragRelocateDelegate(
+                        item: currentEditor, listData: $App.editors, current: $dragging))
             }
         }
     }

@@ -42,8 +42,21 @@ struct TopBar: View {
                 CompactEditorTabs()
                     .frame(maxWidth: .infinity)
             } else {
-                EditorTabs()
-                Spacer()
+                if #available(iOS 16.0, *) {
+                    ViewThatFits(in: .horizontal) {
+                        HStack {
+                            EditorTabs()
+                            Spacer()
+                        }
+                        CompactEditorTabs()
+                            .frame(maxWidth: .infinity)
+                    }
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        EditorTabs()
+                    }
+                    Spacer()
+                }
             }
 
             ForEach(toolBarManager.items) { item in
