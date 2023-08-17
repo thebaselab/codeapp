@@ -375,6 +375,8 @@
 "common.cancel" = "取消";
 "common.revert" = "还原";
 "common.delete" = "删除";
+"common.reset" = "重置";
+"common.done" = "完成";
 
 "notification.source" = "来源: %@";
 
@@ -386,7 +388,7 @@
 "subscription.join" = "订阅 Code+";
 "terms_of_use" = "使用条款";
 "code.and.privacy" = "Code 隐私政策";
-"credentials.note" = "注意：凭据存储在您设备的 Secure Enclave 内。我们无权访问它。";
+"credentials.note" = "凭据存储在您设备的 Secure Enclave 内。我们无权访问它。";
 "settings.editor.font" = "编辑器字体";
 "settings.editor.font.reset" = "重置";
 "settings.editor.font.ligatures" = "合字";
@@ -430,7 +432,17 @@
 "remote.reload_key" = "重新加载密钥";
 
 "source_control.title" = "源码管理";
+"source_control.username" = "用户名";
+"source_control.password_based_authentication" = "基于密码的身份验证";
+"source_control.ssh_authentication" = "SSH 身份验证";
+"source_control.private_key_content" = "私钥内容";
+"source_control.editing_ssh_private_key" = "编辑 SSH 私钥";
 "source_control.pat" = "个人访问令牌";
+"source_control.pat_or_password" = "个人访问令牌或密码";
+"source_control.ssh_key_reset_confirmation" = "您确定要重置 SSH 密钥吗？";
+"source_control.url_specific_credentials" = "指定URL 的凭据";
+"source_control.add_new_credentials" = "添加新凭据";
+"source_control.git_authentication" = "Git 身份验证";
 "source_control.repository_initialized" = "存储库已初始化";
 "source_control.commit_succeeded" = "提交成功";
 "source_control.uploading_objects" = "上传中";
@@ -444,7 +456,6 @@
 "source_control.revert_succeeded" = "还原成功";
 "source_control.remote_credentials" = "Git 凭证";
 "source_control.credentials.note" = "在许多情况下，您需要使用个人访问令牌而不是密码来进行身份验证。 要了解更多：";
-"source_control.setup_your_credentials" = "设置您的 git 凭据（仅提供英文版）";
 "source_control.confirm_revert %@" = "您确定要还原 %@ 吗？";
 "source_control.retrieving_changes" = "检索变更中";
 "source_control.community_templates" = "社区模板";

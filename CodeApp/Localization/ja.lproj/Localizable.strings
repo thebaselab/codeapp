@@ -385,6 +385,8 @@
 "common.cancel" = "キャンセル";
 "common.revert" = "元に戻す";
 "common.delete" = "削除";
+"common.reset" = "リセット";
+"common.done" = "完了";
 
 "notification.source" = "Source: %@";
 
@@ -396,7 +398,7 @@
 "subscription.join" = "Code+ に加入";
 "code.and.privacy" = "Codeとプライバシーについて";
 "terms_of_use" = "利用規約";
-"credentials.note" = "注意：認証情報はお使いのデバイスの Secure Enclave に保存されます。私たちはそれにアクセスすることはできません。";
+"credentials.note" = "認証情報はお使いのデバイスの Secure Enclave に保存されます。私たちはそれにアクセスすることはできません。";
 "settings.editor.font" = "フォント";
 "settings.editor.font.reset" = "デフォルトにリセット";
 "settings.editor.font.ligatures" = "フォント合字";
@@ -440,7 +442,17 @@
 "remote.reload_key" = "キーをリロードします";
 
 "source_control.title" = "ソース管理";
-"source_control.pat" = "個人用アクセストークン";
+"source_control.username" = "ユーザー名";
+"source_control.password_based_authentication" = "パスワード認証";
+"source_control.ssh_authentication" = "SSH 認証";
+"source_control.private_key_content" = "秘密鍵の内容";
+"source_control.editing_ssh_private_key" = "SSH 秘密鍵の編集";
+"source_control.pat" = "パーソナル アクセス トークン";
+"source_control.pat_or_password" = "パーソナル アクセス トークンまたはパスワード";
+"source_control.ssh_key_reset_confirmation" = "SSH キーをリセットしますか?";
+"source_control.url_specific_credentials" = "URL 固有の認証情報";
+"source_control.add_new_credentials" = "新しい認証情報を追加";
+"source_control.git_authentication" = "Git 認証";
 "source_control.repository_initialized" = "リポジトリが初期化されました";
 "source_control.commit_succeeded" = "コミットに成功しました";
 "source_control.uploading_objects" = "オブジェクトのアップロード";
@@ -454,7 +466,6 @@
 "source_control.revert_succeeded" = "元に戻しました";
 "source_control.remote_credentials" = "リモート認証情報";
 "source_control.credentials.note" = "多くの場合、パスワードの代わりに個人用アクセストークンを使用して認証する必要があります。これについて詳しく知るには:";
-"source_control.setup_your_credentials" = "Git 認証情報を設定する";
 "source_control.confirm_revert %@" = "%@ の変更を元に戻しますか?";
 "source_control.retrieving_changes" = "変更を取得しています";
 "source_control.community_templates" = "コミュニティ テンプレート";

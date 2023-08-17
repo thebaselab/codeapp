@@ -384,6 +384,8 @@
 "common.cancel" = "Abbrechen";
 "common.revert" = "Rückgängig machen";
 "common.delete" = "Löschen";
+"common.reset" = "Zurücksetzen";
+"common.done" = "Fertig";
 
 "notification.source" = "Quelle: %@";
 
@@ -395,7 +397,7 @@
 "subscription.join" = "Code+ beitreten";
 "terms_of_use" = "Nutzungsbedingungen";
 "code.and.privacy" = "Datenschutz-Bestimmungen";
-"credentials.note" = "Hinweis: Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.";
+"credentials.note" = "Anmeldedaten werden in der Secure Enclave auf Ihrem Gerät gespeichert. Wir haben keinen Zugriff darauf.";
 "settings.editor.font" = "Editor-Schriftart";
 "settings.editor.font.reset" = "Standard";
 "settings.editor.font.ligatures" = "Schrift Ligaturen";
@@ -439,7 +441,17 @@
 "remote.reload_key" = "Schlüssel neu laden";
 
 "source_control.title" = "Quellcodeverwaltung";
+"source_control.username" = "Benutzername";
+"source_control.password_based_authentication" = "Authentifizierung mit Passwort";
+"source_control.ssh_authentication" = "SSH-Authentifizierung";
+"source_control.private_key_content" = "Inhalt des privaten Schlüssels";
+"source_control.editing_ssh_private_key" = "Bearbeiten des SSH-Privatschlüssels";
 "source_control.pat" = "persönliches Zugangstoken";
+"source_control.pat_or_password" = "persönliches Zugangstoken oder Passwort";
+"source_control.ssh_key_reset_confirmation" = "Möchten Sie den SSH-Schlüssel wirklich zurücksetzen?";
+"source_control.url_specific_credentials" = "URL-spezifische Anmeldeinformationen";
+"source_control.add_new_credentials" = "Neue Anmeldeinformationen hinzufügen";
+"source_control.git_authentication" = "Git-Authentifizierung";
 "source_control.repository_initialized" = "Repository initialisiert";
 "source_control.commit_succeeded" = "Commit erfolgreich";
 "source_control.uploading_objects" = "Hochladen von Objekten";
@@ -453,7 +465,6 @@
 "source_control.revert_succeeded" = "Zurücksetzen erfolgreich";
 "source_control.remote_credentials" = "Remote-Anmeldeinformationen";
 "source_control.credentials.note" = "In vielen Fällen müssen Sie zur Authentifizierung ein persönliches Zugriffstoken anstelle eines Kennworts verwenden. Um mehr darüber zu erfahren:";
-"source_control.setup_your_credentials" = "Richten Sie Ihre Git-Anmeldeinformationen ein (nur auf Englisch verfügbar)";
 "source_control.confirm_revert %@" = "Möchten Sie %@ wirklich zurücksetzen?";
 "source_control.retrieving_changes" = "Änderungen abrufen";
 "source_control.community_templates" = "Community-Vorlagen";
