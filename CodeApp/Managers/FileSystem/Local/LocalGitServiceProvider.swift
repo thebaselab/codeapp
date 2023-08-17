@@ -30,8 +30,8 @@ class LocalGitServiceProvider: GitServiceProvider {
     private var workingURL: URL
     private var repository: Repository? = nil
     private var signature: Signature? = nil
-    private var credential: Credentials? = nil
     private var contentCache = NSCache<NSString, NSString>()
+    private var credentialsHelper = LocalGitCredentialsHelper()
 
     public var hasRepository: Bool {
         return repository != nil
@@ -60,13 +60,6 @@ class LocalGitServiceProvider: GitServiceProvider {
             throw NSError(descriptionKey: "Signature is not configured")
         }
     }
-    private func checkedCredentials() throws -> Credentials {
-        if let credential {
-            return credential
-        } else {
-            throw NSError(descriptionKey: "Credentials are not configured")
-        }
-    }
     private func WorkerQueueTask<T>(_ body: @escaping () throws -> T) async throws -> T {
         return try await withCheckedThrowingContinuation { continuation in
             workerQueue.async {
@@ -86,12 +79,6 @@ class LocalGitServiceProvider: GitServiceProvider {
             return
         }
         workingURL = url
-
-        if let usr_name = KeychainWrapper.standard.string(forKey: "git-username"),
-            let usr_pwd = KeychainWrapper.standard.string(forKey: "git-password")
-        {
-            credential = Credentials.plaintext(username: usr_name, password: usr_pwd)
-        }
 
         if let usr = UserDefaults.standard.object(forKey: "user_name") as? String,
             let email = UserDefaults.standard.object(forKey: "user_email") as? String
@@ -126,10 +113,6 @@ class LocalGitServiceProvider: GitServiceProvider {
 
     func sign(name: String, email: String) {
         signature = Signature(name: name, email: email)
-    }
-
-    func auth(name: String, password: String) {
-        credential = Credentials.plaintext(username: name, password: password)
     }
 
     /// Count the number of unique commits between HEAD and the specified remote
@@ -186,7 +169,7 @@ class LocalGitServiceProvider: GitServiceProvider {
                     progress?.completedUnitCount = Int64(current)
                 }
             }
-            if let credentials = self.credential {
+            if let credentials = try? self.credentialsHelper.credentialsForRemoteURL(url: from) {
                 _ = try Repository.clone(
                     from: from,
                     to: to,
@@ -285,7 +268,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     func push(branch: Branch, remote to: Remote, progress: Progress?) async throws {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
-            let credentials = try self.checkedCredentials()
+            let credentials = try self.credentialsHelper.credentialsForRemote(remote: to)
             try repository.push(
                 credentials: credentials, branch: branch.longName, remoteName: to.name
             ) { current, total in
@@ -367,7 +350,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     func pull(branch: Branch, remote from: Remote) async throws {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
-            let credentials = try self.checkedCredentials()
+            let credentials = try self.credentialsHelper.credentialsForRemote(remote: from)
             let signature = try self.checkedSignature()
             try repository.pull(
                 branch: branch, from: from, credentials: credentials, signature: signature)
@@ -377,7 +360,7 @@ class LocalGitServiceProvider: GitServiceProvider {
     func fetch(remote from: Remote) async throws {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
-            let credentials = try self.checkedCredentials()
+            let credentials = try self.credentialsHelper.credentialsForRemote(remote: from)
             try repository.fetch(from, credentials: credentials).get()
         }
     }

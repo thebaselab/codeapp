@@ -14,7 +14,6 @@ protocol GitServiceProvider {
     func loadDirectory(url: URL)
     func isCached(url: String) -> Bool
     func sign(name: String, email: String)
-    func auth(name: String, password: String)
     func createRepository() async throws
     func clone(from: URL, to: URL, progress: Progress?) async throws
     func commit(message: String) async throws
