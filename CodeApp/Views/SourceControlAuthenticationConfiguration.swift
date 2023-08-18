@@ -118,12 +118,14 @@ private struct KeyBasedAuthenticationSections: View {
 
     var body: some View {
         Group {
+            /*
             Section("source_control.username") {
                 TextField("source_control.username", text: $username)
                     .textContentType(.username)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
             }
+             */
 
             Section("source_control.public_key") {
                 DeviceOwnerProtectedField(
@@ -342,7 +344,7 @@ private struct CreateKeyBasedCredentialsView: View {
     @Environment(\.dismiss) var dismiss
 
     @State var hostname: String = ""
-    @State var username: String = ""
+    @State var username: String = "git"
     @State var publicKey: String = ""
     @State var privateKey: String = ""
     @State var passphrase: String = ""
