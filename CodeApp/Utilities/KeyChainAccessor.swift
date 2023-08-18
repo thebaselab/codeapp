@@ -11,6 +11,12 @@ class KeychainAccessor {
 
     static let shared = KeychainAccessor()
 
+    public func storeObject(value: String) -> UUID {
+        let uuid = UUID()
+        KeychainWrapper.standard.set(value, forKey: uuid.uuidString)
+        return uuid
+    }
+
     public func storeObject(for key: String, value: String) {
         KeychainWrapper.standard.set(value, forKey: key)
     }

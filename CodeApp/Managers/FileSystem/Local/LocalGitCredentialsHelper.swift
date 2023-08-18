@@ -7,21 +7,16 @@
 
 import SwiftGit2
 
-struct LocalGitDomainSpecificCredentials: Codable {
-    var matchingURL: String
+struct GitCredentials: Codable, Identifiable {
+    var id: UUID = UUID()
+    var hostname: String
     var credentials: LookupEntry
 
     enum LookupEntry: Codable {
         case https(usernameObjectID: String, passwordObjectID: String)
         case ssh(
             usernameObjectID: String, publicKeyObjectID: String, privateKeyObjectID: String,
-            passphraseObjectID: String)
-    }
-}
-
-extension LocalGitDomainSpecificCredentials {
-    var _matchingURL: URL? {
-        URL(string: self.matchingURL)
+            passphraseObjectID: String?)
     }
 }
 
@@ -31,6 +26,8 @@ final class LocalGitCredentialsHelper {
         case UnsupportedRemoteURL
         case UnableToAccessKeychain
         case UnableToLocateSuitableCredentials
+        case EmptyCredentials
+        case CredentialsDoesNotExist
     }
 
     enum SchemeType {
@@ -47,36 +44,139 @@ final class LocalGitCredentialsHelper {
         }
     }
 
-    private func accessLookupEntry(_ entry: LocalGitDomainSpecificCredentials.LookupEntry) throws
+    static var credentials: [GitCredentials] {
+        UserDefaults.standard.gitCredentialsLookupEntries
+    }
+
+    static func removeCredentials(credentialsID: UUID) throws {
+        guard let credentialsToRemove = credentials.first(where: { $0.id == credentialsID }) else {
+            throw HelperError.CredentialsDoesNotExist
+        }
+        switch credentialsToRemove.credentials {
+        case let .https(usernameObjectID, passwordObjectID):
+            KeychainAccessor.shared.removeObjectForKey(for: usernameObjectID)
+            KeychainAccessor.shared.removeObjectForKey(for: passwordObjectID)
+        case let .ssh(usernameObjectID, publicKeyObjectID, privateKeyObjectID, passphraseObjectID):
+            KeychainAccessor.shared.removeObjectForKey(for: usernameObjectID)
+            KeychainAccessor.shared.removeObjectForKey(for: publicKeyObjectID)
+            KeychainAccessor.shared.removeObjectForKey(for: privateKeyObjectID)
+            if let passphraseObjectID {
+                KeychainAccessor.shared.removeObjectForKey(for: passphraseObjectID)
+            }
+        }
+        UserDefaults.standard.gitCredentialsLookupEntries.removeAll { $0.id == credentialsID }
+    }
+
+    static func updateCredentials(
+        hostname: String, username: String, password: String, for id: UUID
+    ) throws {
+        guard credentials.first(where: { $0.id == id }) != nil else {
+            throw HelperError.CredentialsDoesNotExist
+        }
+        try removeCredentials(credentialsID: id)
+        try addCredentials(hostname: hostname, username: username, password: password)
+    }
+
+    static func updateCredentials(
+        hostname: String, username: String, publicKey: String, privateKey: String,
+        passphrase: String?, for id: UUID
+    ) throws {
+        guard credentials.first(where: { $0.id == id }) != nil else {
+            throw HelperError.CredentialsDoesNotExist
+        }
+        try removeCredentials(credentialsID: id)
+        try addCredentials(
+            hostname: hostname, username: username, publicKey: publicKey, privateKey: privateKey,
+            passphrase: passphrase)
+    }
+
+    @discardableResult
+    static func addCredentials(hostname: String, username: String, password: String) throws
+        -> GitCredentials
+    {
+        guard !hostname.isEmpty, !username.isEmpty, !password.isEmpty else {
+            throw HelperError.EmptyCredentials
+        }
+        let usernameObjectID = KeychainAccessor.shared.storeObject(value: username).uuidString
+        let passwordObjectID = KeychainAccessor.shared.storeObject(value: password).uuidString
+
+        let credentials = GitCredentials(
+            hostname: hostname,
+            credentials: .https(
+                usernameObjectID: usernameObjectID, passwordObjectID: passwordObjectID)
+        )
+        UserDefaults.standard.gitCredentialsLookupEntries.append(credentials)
+        return credentials
+    }
+
+    @discardableResult
+    static func addCredentials(
+        hostname: String, username: String, publicKey: String, privateKey: String,
+        passphrase: String?
+    ) throws -> GitCredentials {
+        guard !hostname.isEmpty, !username.isEmpty, !publicKey.isEmpty, !privateKey.isEmpty else {
+            throw HelperError.EmptyCredentials
+        }
+        let usernameObjectID = KeychainAccessor.shared.storeObject(value: username).uuidString
+        let publicKeyObjectID = KeychainAccessor.shared.storeObject(value: publicKey).uuidString
+        let privateKeyObjectID = KeychainAccessor.shared.storeObject(value: privateKey).uuidString
+        let passphraseObjectID =
+            passphrase == nil
+            ? nil : KeychainAccessor.shared.storeObject(value: passphrase!).uuidString
+
+        let credentials = GitCredentials(
+            hostname: hostname,
+            credentials: .ssh(
+                usernameObjectID: usernameObjectID,
+                publicKeyObjectID: publicKeyObjectID,
+                privateKeyObjectID: privateKeyObjectID,
+                passphraseObjectID: passphraseObjectID
+            )
+        )
+        UserDefaults.standard.gitCredentialsLookupEntries.append(credentials)
+        return credentials
+
+    }
+
+    private func accessLookupEntry(_ entry: GitCredentials.LookupEntry) throws
         -> Credentials
     {
         switch entry {
         case .https(let usernameID, let passwordID):
-            guard let username = KeychainWrapper.standard.string(forKey: usernameID),
-                let password = KeychainWrapper.standard.string(forKey: passwordID)
+            guard let username = KeychainAccessor.shared.getObjectString(for: usernameID),
+                let password = KeychainAccessor.shared.getObjectString(for: passwordID)
             else {
                 throw HelperError.UnableToAccessKeychain
             }
             return Credentials.plaintext(username: username, password: password)
         case let .ssh(usernameObjectID, publicKeyObjectID, privateKeyObjectID, passphraseObjectID):
-            guard let username = KeychainWrapper.standard.string(forKey: usernameObjectID),
-                let publicKey = KeychainWrapper.standard.string(forKey: publicKeyObjectID),
-                let privateKey = KeychainWrapper.standard.string(forKey: privateKeyObjectID),
-                let passPhrase = KeychainWrapper.standard.string(forKey: passphraseObjectID)
+            guard let username = KeychainAccessor.shared.getObjectString(for: usernameObjectID),
+                let publicKey = KeychainAccessor.shared.getObjectString(for: publicKeyObjectID),
+                let privateKey = KeychainAccessor.shared.getObjectString(for: privateKeyObjectID)
             else {
                 throw HelperError.UnableToAccessKeychain
             }
-            return Credentials.sshMemory(
-                username: username, publicKey: publicKey, privateKey: privateKey,
-                passphrase: passPhrase)
+            if let passphraseObjectID {
+                guard
+                    let passPhrase = KeychainAccessor.shared.getObjectString(
+                        for: passphraseObjectID)
+                else {
+                    throw HelperError.UnableToAccessKeychain
+                }
+                return Credentials.sshMemory(
+                    username: username, publicKey: publicKey, privateKey: privateKey,
+                    passphrase: passPhrase)
+            } else {
+                return Credentials.sshMemory(
+                    username: username, publicKey: publicKey, privateKey: privateKey,
+                    passphrase: "")
+            }
         }
     }
 
-    private func queryDomainSpecificCredentialsEntry(url: URL, schemeType: SchemeType)
-        -> LocalGitDomainSpecificCredentials?
+    private func queryDomainSpecificCredentialsEntry(hostname: String, schemeType: SchemeType)
+        -> GitCredentials?
     {
-        guard let queryHostname = url.host else { return nil }
-
         var candidates = UserDefaults.standard.gitCredentialsLookupEntries
 
         switch schemeType {
@@ -99,10 +199,7 @@ final class LocalGitCredentialsHelper {
         }
 
         return candidates.first { candidate in
-            guard let candidateURLHost = candidate._matchingURL?.host else {
-                return false
-            }
-            return candidateURLHost == queryHostname
+            return candidate.hostname == hostname
         }
     }
 
@@ -113,21 +210,30 @@ final class LocalGitCredentialsHelper {
         return try credentialsForRemoteURL(url: url)
     }
 
+    private func parseRemoteURL(url: URL) -> URL? {
+        if url.absoluteString.starts(with: "git@") {
+            return URL(string: "ssh://\(url.absoluteString)")
+        }
+        return url
+    }
+
     func credentialsForRemoteURL(url: URL) throws -> Credentials {
-        guard let _scheme = url.scheme,
+        guard let url = parseRemoteURL(url: url),
+            let hostname = url.host,
+            let _scheme = url.scheme,
             let scheme = SchemeType(rawValue: _scheme)
         else {
             throw HelperError.UnsupportedRemoteURL
         }
 
-        if let cred = queryDomainSpecificCredentialsEntry(url: url, schemeType: scheme) {
+        if let cred = queryDomainSpecificCredentialsEntry(hostname: hostname, schemeType: scheme) {
             return try accessLookupEntry(cred.credentials)
         }
 
         switch scheme {
         case .https:
-            guard let username = KeychainWrapper.standard.string(forKey: "git-username"),
-                let password = KeychainWrapper.standard.string(forKey: "git-password")
+            guard let username = KeychainAccessor.shared.getObjectString(for: "git-username"),
+                let password = KeychainAccessor.shared.getObjectString(for: "git-password")
             else {
                 throw HelperError.UnableToLocateSuitableCredentials
             }

@@ -24,11 +24,11 @@ extension UserDefaults {
             }
         }
     }
-    var gitCredentialsLookupEntries: [LocalGitDomainSpecificCredentials] {
+    var gitCredentialsLookupEntries: [GitCredentials] {
         get {
             if let data = self.data(forKey: "git.credentials.entries"),
                 let array = try? PropertyListDecoder().decode(
-                    [LocalGitDomainSpecificCredentials].self, from: data)
+                    [GitCredentials].self, from: data)
             {
                 return array
             } else {

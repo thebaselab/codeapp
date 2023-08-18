@@ -386,6 +386,8 @@
 "common.delete" = "Löschen";
 "common.reset" = "Zurücksetzen";
 "common.done" = "Fertig";
+"common.import" = "Importieren";
+"common.add" = "Hinzufügen";
 
 "notification.source" = "Quelle: %@";
 
@@ -474,6 +476,17 @@
 "source_control.pulling_from_remote" = "Vom Remote-Server abrufen";
 "source_control.pull_succeeded" = "Pull erfolgreich";
 "source_control.checkout.select_branch_or_tag" = "Wählen Sie einen Branch oder Tag aus";
+"source_control.public_key" = "Öffentlicher Schlüssel";
+"source_control.editing_public_key" = "Bearbeiten des öffentlichen Schlüssels";
+"source_control.key_content" = "Schlüsselinhalt";
+"source_control.private_key" = "Privater Schlüssel";
+"source_control.passphrase_optional" = "Passphrase (optional)";
+"source_control.hostname" = "Hostname";
+"source_control.credentials" = "Anmeldeinformationen";
+"source_control.new_credentials" = "Neue Anmeldeinformationen";
+"source_control.hostname_based_credentials" = "Hostname-basierte Anmeldeinformationen";
+"source_control.add_key_based_credentials" = "Schlüsselbasierte Anmeldeinformationen hinzufügen";
+"source_control.add_password_based_credentials" = "Passwortbasierte Anmeldeinformationen hinzufügen";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

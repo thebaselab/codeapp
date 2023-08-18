@@ -387,6 +387,8 @@
 "common.delete" = "削除";
 "common.reset" = "リセット";
 "common.done" = "完了";
+"common.import" = "インポート";
+"common.add" = "追加";
 
 "notification.source" = "Source: %@";
 
@@ -475,6 +477,17 @@
 "source_control.pulling_from_remote" = "リモートからプルしています";
 "source_control.pull_succeeded" = "プルに成功しました";
 "source_control.checkout.select_branch_or_tag" = "ブランチまたはタグを選択してください";
+"source_control.public_key" = "公開鍵";
+"source_control.editing_public_key" = "公開鍵の編集";
+"source_control.key_content" = "キーの内容";
+"source_control.private_key" = "秘密鍵";
+"source_control.passphrase_optional" = "パスフレーズ (オプション)";
+"source_control.hostname" = "ホスト名";
+"source_control.credentials" = "認証情報";
+"source_control.new_credentials" = "新しい認証情報";
+"source_control.hostname_based_credentials" = "ホスト名ベースの認証情報";
+"source_control.add_key_based_credentials" = "キーベースの認証情報を追加";
+"source_control.add_password_based_credentials" = "パスワードベースの認証情報を追加";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

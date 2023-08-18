@@ -386,6 +386,8 @@
 "common.delete" = "삭제";
 "common.reset" = "초기화";
 "common.done" = "완료";
+"common.import" = "가져오기";
+"common.add" = "추가";
 
 "notification.source" = "원천: %@";
 
@@ -474,6 +476,17 @@
 "source_control.pulling_from_remote" = "원격 서버에서 풀";
 "source_control.pull_succeeded" = "풀 성공";
 "source_control.checkout.select_branch_or_tag" = "브랜치 또는 태그 선택";
+"source_control.public_key" = "공개 키";
+"source_control.editing_public_key" = "공개 키 편집";
+"source_control.key_content" = "키 내용";
+"source_control.private_key" = "개인 키";
+"source_control.passphrase_optional" = "암호(선택 사항)";
+"source_control.hostname" = "호스트 이름";
+"source_control.credentials" = "자격 증명";
+"source_control.new_credentials" = "새 자격 증명";
+"source_control.hostname_based_credentials" = "호스트 이름 기반 자격 증명";
+"source_control.add_key_based_credentials" = "키 기반 자격 증명 추가";
+"source_control.add_password_based_credentials" = "암호 기반 자격 증명 추가";
 
 "panel.problems.no_problems_detected" = "작업 공간에서 감지된 문제 없음.";
 "panel.execution.press_play_to_execute_code" = "코드를 실행하려면 실행 버튼을 누르십시오. 실행하기 전에 프로그램 입력을 채워야 합니다.";
