@@ -132,7 +132,7 @@ private struct KeyBasedAuthenticationSections: View {
                 ) {
                     TextEditorWithPlaceholder(
                         placeholder:
-                            "source_contorl.key_content",
+                            "source_control.key_content",
                         text: $publicKey,
                         customFont: .custom("Menlo", size: 13, relativeTo: .footnote)
                     )
