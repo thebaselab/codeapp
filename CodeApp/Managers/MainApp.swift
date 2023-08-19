@@ -976,4 +976,21 @@ class MainApp: ObservableObject {
 
         editors.remove(at: index)
     }
+
+    func isUibiquitousItem(at url: URL) -> Bool {
+        return FileManager.default.isUbiquitousItem(at: url)
+    }
+
+    func downloadUibiquitousItem(at url: URL) throws {
+        if !url.isDirectory {
+            try FileManager.default.startDownloadingUbiquitousItem(at: url)
+        } else {
+            let enumerator = FileManager.default.enumerator(
+                at: url, includingPropertiesForKeys: nil)
+            while let fileURL = enumerator?.nextObject() as? URL {
+                try FileManager.default.startDownloadingUbiquitousItem(at: fileURL)
+            }
+        }
+
+    }
 }

@@ -172,6 +172,11 @@ private struct FolderCell: View {
     @FocusState var focusedField: Field?
     @State var isRenaming: Bool = false
 
+    var isiCloudItem: Bool {
+        guard let url = item._url else { return false }
+        return App.isUibiquitousItem(at: url)
+    }
+
     enum Field {
         case rename
     }
@@ -192,6 +197,15 @@ private struct FolderCell: View {
                 App.notificationManager.showErrorMessage(error.localizedDescription)
                 newname = item.name.removingPercentEncoding!
             }
+        }
+    }
+
+    func downloadDirectory() {
+        guard let url = item._url else { return }
+        do {
+            try App.downloadUibiquitousItem(at: url)
+        } catch {
+            App.notificationManager.showErrorMessage(error.localizedDescription)
         }
     }
 
@@ -268,6 +282,15 @@ private struct FolderCell: View {
             })
         }
         .contextMenu {
+            if isiCloudItem {
+                Section {
+                    Button(action: {
+                        downloadDirectory()
+                    }) {
+                        Label("file.download_now", systemImage: "icloud.and.arrow.down")
+                    }
+                }
+            }
             ContextMenu(
                 item: item,
                 onRename: {

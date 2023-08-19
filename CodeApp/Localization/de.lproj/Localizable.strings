@@ -434,6 +434,7 @@
 "file.confirm_save %@" = "Möchten Sie die Änderungen an %@ speichern?";
 "file.confirm_delete %@" = "Möchten Sie %@ wirklich löschen?";
 "file.reopen_with_encoding" = "Mit Zeichenkodierung erneut öffnen";
+"file.download_now" = "Jetzt herunterladen";
 
 "actions.new_window" = "Neues Fenster";
 
