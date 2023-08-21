@@ -268,42 +268,30 @@ public final class Repository {
             throw NSError(gitError: gitResult, pointOfFailure: "git_tag_delete")
         }
     }
-	
-    public func push(credentials: Credentials, branch: String, remoteName: String, progress: FetchProgressBlock? = nil) -> Result<(), NSError>{
+    
+    public func push(refSpecs: [String], credentials: Credentials, remote: Remote, progress: FetchProgressBlock? = nil) throws {
+        try remoteLookup(named: remote.name) { pointer in
+            var opts = pushOptions(credentials: credentials, progress: progress)
+            
+            let strings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = refSpecs.withUnsafeBufferPointer {
+                let buffer = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>.allocate(capacity: $0.count + 1)
+                let val = $0.map { $0.withCString(strdup) }
+                buffer.initialize(from: val, count: $0.count)
+                buffer[$0.count] = nil
+                return buffer
+            }
+            
+            var gitstr = git_strarray()
+            gitstr.strings = strings
+            gitstr.count = refSpecs.count
+            
+            let result = git_remote_push(pointer, &gitstr, &opts)
 
-		return remoteLookup(named: remoteName) { remote in
-			remote.flatMap { pointer in
-                var opts = pushOptions(credentials: credentials, progress: progress)
-				
-				switch reference(named: branch){
-				case .success:
-					break
-				case let .failure(err):
-					return .failure(err)
-				}
-				
-				let strings: UnsafeMutablePointer<UnsafeMutablePointer<CChar>?> = [branch].withUnsafeBufferPointer {
-					let buffer = UnsafeMutablePointer<UnsafeMutablePointer<CChar>?>.allocate(capacity: $0.count + 1)
-					let val = $0.map
-					{ $0.withCString(strdup) }
-					buffer.initialize(from: val, count: 1)
-					buffer[$0.count] = nil
-				return buffer
-				}
-				var gitstr = git_strarray()
-				gitstr.strings = strings
-				gitstr.count = 1
-				
-				let result = git_remote_push(pointer, &gitstr, &opts)
-				
-				guard result == GIT_OK.rawValue else{
-					return .failure(NSError(gitError: result, pointOfFailure: "git_remote_push"))
-				}
-				
-				return .success(())
-			}
-		}
-	}
+            guard result == GIT_OK.rawValue else{
+                throw NSError(gitError: result, pointOfFailure: "git_remote_push")
+            }
+        }
+    }
     
     // MARK: - Merging Repositories
     
@@ -843,6 +831,19 @@ public final class Repository {
 
 		return remotes.aggregateResult()
 	}
+    
+    private func remoteLookup<A>(named name: String, _ callback: (OpaquePointer) throws -> A) throws -> A {
+        var pointer: OpaquePointer? = nil
+        defer { git_remote_free(pointer) }
+
+        let result = git_remote_lookup(&pointer, self.pointer, name)
+
+        guard result == GIT_OK.rawValue else {
+            throw NSError(gitError: result, pointOfFailure: "git_remote_lookup")
+        }
+
+        return try callback(pointer!)
+    }
 
 	private func remoteLookup<A>(named name: String, _ callback: (Result<OpaquePointer, NSError>) -> A) -> A {
 		var pointer: OpaquePointer? = nil

@@ -411,6 +411,24 @@ struct SourceControlContainer: View {
         )
     }
 
+    func onPushTag(tag: TagReference, remote: Remote) async throws {
+        guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
+            throw SourceControlError.gitServiceProviderUnavailable
+        }
+
+        try await App.notificationManager.withAsyncNotification(
+            title: "source_control.pushing_tag_to_remote",
+            task: {
+                do {
+                    try await serviceProvider.push(tag: tag, remote: remote, progress: nil)
+                    App.notificationManager.showInformationMessage("source_control.push_succeeded")
+                    App.updateGitRepositoryStatus()
+                } catch {
+                    App.notificationManager.showErrorMessage(error.localizedDescription)
+                }
+            }, tag.name, remote.name)
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             //            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
@@ -433,7 +451,8 @@ struct SourceControlContainer: View {
                             onCreateBranch: onCreateBranch,
                             onDeleteBranch: onDeleteBranch,
                             onCreateTag: onCreateTag,
-                            onDeleteTag: onDeleteTag
+                            onDeleteTag: onDeleteTag,
+                            onPushTag: onPushTag
                         )
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)

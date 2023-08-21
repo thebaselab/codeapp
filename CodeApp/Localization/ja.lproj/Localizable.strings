@@ -502,6 +502,8 @@
 "source_control.tag_created" = "タグ %@ が作成されました";
 "source_control.confirm_delete_tag" = "タグ %@ を削除しますか?";
 "source_control.tag_deleted" = "タグ %@ が削除されました";
+"source_control.pushing_tag_to_remote" = "リモートにタグをプッシュしています";
+"source_control.push" = "プッシュ";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

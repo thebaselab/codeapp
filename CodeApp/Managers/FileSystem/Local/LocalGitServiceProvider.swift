@@ -265,13 +265,28 @@ class LocalGitServiceProvider: GitServiceProvider {
             let repository = try self.checkedRepository()
             let credentials = try self.credentialsHelper.credentialsForRemote(remote: to)
             try repository.push(
-                credentials: credentials, branch: branch.longName, remoteName: to.name
+                refSpecs: [branch.longName], credentials: credentials, remote: to
             ) { current, total in
                 DispatchQueue.main.async {
                     progress?.totalUnitCount = Int64(current)
                     progress?.completedUnitCount = Int64(total)
                 }
-            }.get()
+            }
+        }
+    }
+
+    func push(tag: TagReference, remote to: Remote, progress: Progress?) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            let credentials = try self.credentialsHelper.credentialsForRemote(remote: to)
+            try repository.push(
+                refSpecs: [tag.longName], credentials: credentials, remote: to
+            ) { current, total in
+                DispatchQueue.main.async {
+                    progress?.totalUnitCount = Int64(current)
+                    progress?.completedUnitCount = Int64(total)
+                }
+            }
         }
     }
 

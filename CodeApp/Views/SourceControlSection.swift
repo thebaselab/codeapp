@@ -25,6 +25,7 @@ struct SourceControlSection: View {
     let onDeleteBranch: (Branch) -> Void
     let onCreateTag: () -> Void
     let onDeleteTag: (TagReference) -> Void
+    let onPushTag: (TagReference, Remote) async throws -> Void
 
     var body: some View {
         Group {
@@ -37,7 +38,8 @@ struct SourceControlSection: View {
                 onCreateBranch: onCreateBranch,
                 onDeleteBranch: onDeleteBranch,
                 onCreateTag: onCreateTag,
-                onDeleteTag: onDeleteTag
+                onDeleteTag: onDeleteTag,
+                onPushTag: onPushTag
             )
             if !App.indexedResources.isEmpty {
                 StagedChangesSection(
@@ -77,6 +79,7 @@ private struct MainSection: View {
     let onDeleteBranch: (Branch) -> Void
     let onCreateTag: () -> Void
     let onDeleteTag: (TagReference) -> Void
+    let onPushTag: (TagReference, Remote) async throws -> Void
 
     func onPushButtonTapped(remote: Remote) {
         Task {
@@ -220,6 +223,25 @@ private struct MainSection: View {
                             } label: {
                                 Label("common.delete", systemImage: "minus")
                             }
+
+                            Menu {
+                                ForEach(tags, id: \.hashValue) { tag in
+                                    Menu {
+                                        ForEach(remotes, id: \.hashValue) { remote in
+                                            Button("\(remote.name) - \(remote.URL)") {
+                                                Task {
+                                                    try await onPushTag(tag, remote)
+                                                }
+                                            }
+                                        }
+                                    } label: {
+                                        Text(tag.name)
+                                    }
+                                }
+                            } label: {
+                                Label("source_control.push", systemImage: "square.and.arrow.up")
+                            }
+
                         } label: {
                             Label("source_control.tag", systemImage: "tag")
                         }

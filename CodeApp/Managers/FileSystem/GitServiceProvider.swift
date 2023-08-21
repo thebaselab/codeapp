@@ -22,6 +22,7 @@ protocol GitServiceProvider {
     func checkout(paths: [String]) async throws
     func head() async throws -> ReferenceType
     func push(branch: Branch, remote to: Remote, progress: Progress?) async throws
+    func push(tag: TagReference, remote to: Remote, progress: Progress?) async throws
     func tags() async throws -> [TagReference]
     func remotes() async throws -> [Remote]
     func pull(branch: Branch, remote from: Remote) async throws
