@@ -388,6 +388,7 @@
 "common.done" = "Fertig";
 "common.import" = "Importieren";
 "common.add" = "Hinzufügen";
+"common.create" = "Erstellen";
 
 "notification.source" = "Quelle: %@";
 
@@ -488,6 +489,9 @@
 "source_control.hostname_based_credentials" = "Hostname-basierte Anmeldeinformationen";
 "source_control.add_key_based_credentials" = "Schlüsselbasierte Anmeldeinformationen hinzufügen";
 "source_control.add_password_based_credentials" = "Passwortbasierte Anmeldeinformationen hinzufügen";
+"source_control.create_branch" = "Branch erstellen";
+"source_control.branch_name" = "Branch-Name";
+"source_control.branch" = "Branch";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

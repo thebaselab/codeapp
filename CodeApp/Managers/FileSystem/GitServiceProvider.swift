@@ -20,7 +20,7 @@ protocol GitServiceProvider {
     func unstage(paths: [String]) async throws
     func stage(paths: [String]) async throws
     func checkout(paths: [String]) async throws
-    func currentBranch() async throws -> Branch
+    func head() async throws -> ReferenceType
     func push(branch: Branch, remote to: Remote, progress: Progress?) async throws
     func tags() async throws -> [TagReference]
     func remotes() async throws -> [Remote]
@@ -29,7 +29,10 @@ protocol GitServiceProvider {
     func remoteBranches() async throws -> [Branch]
     func localBranches() async throws -> [Branch]
     func previous(path: String) async throws -> String
+    func checkout(reference: ReferenceType) async throws
     func checkout(oid: OID) async throws
     func aheadBehind(remote: Remote?) async throws -> (Int, Int)
     func status() async throws -> [StatusEntry]
+    func lookupCommit(oid: OID) async throws -> Commit
+    func createBranch(at: Commit, branchName: String) async throws -> Branch
 }

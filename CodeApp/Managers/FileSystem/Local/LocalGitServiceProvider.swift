@@ -253,15 +253,10 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
-    func currentBranch() async throws -> Branch {
-        try await WorkerQueueTask {
+    func head() async throws -> ReferenceType {
+        return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
-            let head = try repository.HEAD().get()
-            if let branch = head as? Branch {
-                return branch
-            } else {
-                throw NSError(descriptionKey: "Repository is in detached mode")
-            }
+            return try repository.HEAD().get()
         }
     }
 
@@ -280,10 +275,18 @@ class LocalGitServiceProvider: GitServiceProvider {
         }
     }
 
+    func checkout(reference: ReferenceType) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            try repository.checkout(reference, strategy: [.Safe]).get()
+            self.contentCache.removeAllObjects()
+        }
+    }
+
     func checkout(oid: OID) async throws {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
-            try repository.checkout(oid, strategy: .Force).get()
+            try repository.checkout(oid, strategy: .Safe).get()
             self.contentCache.removeAllObjects()
         }
     }
@@ -362,6 +365,20 @@ class LocalGitServiceProvider: GitServiceProvider {
             let repository = try self.checkedRepository()
             let credentials = try self.credentialsHelper.credentialsForRemote(remote: from)
             try repository.fetch(from, credentials: credentials).get()
+        }
+    }
+
+    func lookupCommit(oid: OID) async throws -> Commit {
+        return try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            return try repository.commit(oid).get()
+        }
+    }
+
+    func createBranch(at: Commit, branchName: String) async throws -> Branch {
+        return try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            return try repository.createBranch(at: at, branchName: branchName).get()
         }
     }
 }

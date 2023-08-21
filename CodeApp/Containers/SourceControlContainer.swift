@@ -72,7 +72,9 @@ struct SourceControlContainer: View {
             title: "source_control.pushing_to_remote", progress: progress)
 
         do {
-            let currentBranch = try await serviceProvider.currentBranch()
+            guard let currentBranch = try await serviceProvider.head() as? Branch else {
+                throw NSError(descriptionKey: "Repository is in detached mode")
+            }
             try await serviceProvider.push(
                 branch: currentBranch, remote: remote, progress: progress)
             App.notificationManager.showInformationMessage(
@@ -297,6 +299,31 @@ struct SourceControlContainer: View {
         }
     }
 
+    func onCreateBranch() {
+        guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
+            return
+        }
+
+        alertManager.showAlert(
+            title: "source_control.create_branch",
+            content: AnyView(
+                SourceControlCreateBranchAlert(onCreateBranch: { branchName in
+                    Task {
+                        do {
+                            let head = try await serviceProvider.head()
+                            let commit = try await serviceProvider.lookupCommit(oid: head.oid)
+                            let newBranch = try await serviceProvider.createBranch(
+                                at: commit, branchName: branchName)
+                            try await serviceProvider.checkout(reference: newBranch)
+                            App.updateGitRepositoryStatus()
+                        } catch {
+                            App.notificationManager.showErrorMessage(error.localizedDescription)
+                        }
+                    }
+                })
+            ))
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             //            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
@@ -315,7 +342,8 @@ struct SourceControlContainer: View {
                             onRevert: onRevert,
                             onStage: onStage,
                             onShowChangesInDiffEditor: onShowChangesInDiffEditor,
-                            onPull: onPull
+                            onPull: onPull,
+                            onCreateBranch: onCreateBranch
                         )
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)

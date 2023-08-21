@@ -682,12 +682,18 @@ class MainApp: ObservableObject {
                         })
                 }
 
-                let aheadBehind = try await gitServiceProvider.aheadBehind(remote: nil)
-                let currentBranch = try await gitServiceProvider.currentBranch()
+                let aheadBehind = try? await gitServiceProvider.aheadBehind(remote: nil)
+                let currentHead = try await gitServiceProvider.head()
 
                 await MainActor.run {
                     self.aheadBehind = aheadBehind
-                    var branchLabel = currentBranch.name
+
+                    var branchLabel: String
+                    if let currentBranch = currentHead as? Branch {
+                        branchLabel = currentBranch.name
+                    } else {
+                        branchLabel = String(currentHead.oid.description.prefix(7))
+                    }
 
                     if entries.first(where: { $0.status.contains(.workTreeModified) }) != nil {
                         branchLabel += "*"

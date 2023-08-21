@@ -11,13 +11,15 @@ import SwiftUI
 struct CheckoutMenu: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var stateManager: MainStateManager
 
     func checkout(destination: CheckoutDestination) async throws {
         guard let gitServiceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
         do {
-            try await gitServiceProvider.checkout(oid: destination.reference.oid)
+            try await gitServiceProvider.checkout(reference: destination.reference)
+            App.updateGitRepositoryStatus()
             App.notificationManager.showInformationMessage("Checkout succeeded")
         } catch {
             App.notificationManager.showErrorMessage(error.localizedDescription)

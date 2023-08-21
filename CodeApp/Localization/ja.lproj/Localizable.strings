@@ -389,6 +389,7 @@
 "common.done" = "完了";
 "common.import" = "インポート";
 "common.add" = "追加";
+"common.create" = "作成";
 
 "notification.source" = "Source: %@";
 
@@ -489,6 +490,9 @@
 "source_control.hostname_based_credentials" = "ホスト名ベースの認証情報";
 "source_control.add_key_based_credentials" = "キーベースの認証情報を追加";
 "source_control.add_password_based_credentials" = "パスワードベースの認証情報を追加";
+"source_control.create_branch" = "ブランチを作成";
+"source_control.branch_name" = "ブランチ名";
+"source_control.branch" = "ブランチ";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

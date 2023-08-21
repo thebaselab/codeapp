@@ -278,6 +278,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "common.done" = "Done";
 "common.import" = "Import";
 "common.add" = "Add";
+"common.create" = "Create";
 
 "notification.source" = "Source: %@";
 
@@ -378,6 +379,9 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.hostname_based_credentials" = "Hostname based credentials";
 "source_control.add_key_based_credentials" = "Add key based credentials";
 "source_control.add_password_based_credentials" = "Add password based credentials";
+"source_control.create_branch" = "Create Branch";
+"source_control.branch_name" = "Branch name";
+"source_control.branch" = "Branch";
 
 "panel.problems.no_problems_detected" = "No problems detected in the workspace.";
 "panel.execution.press_play_to_execute_code" = "Press the play button to execute code. Program input needs to be filled before execution.";

@@ -22,21 +22,11 @@ struct MenuButtonView<S>: UIViewRepresentable {
     let iconName: String?
     let menuTitle: String?
 
-    func makeUIView(context: Context) -> UIButton {
-        let button = UIButton(type: .system)
-        var config = UIButton.Configuration.plain()
-        config.imagePadding = 4
-        config.buttonSize = .mini
-        config.title = title
-        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
-            incoming in
-            var outgoing = incoming
-            outgoing.font = UIFont.systemFont(ofSize: 12)
-            return outgoing
-        }
+    private func updateButton(_ button: UIButton) {
+        button.configuration?.title = title
+        button.tintColor = UIColor(Color.init(id: "statusBar.foreground"))
+        button.setTitleColor(button.tintColor, for: .normal)
 
-        button.showsMenuAsPrimaryAction = true
-        button.configuration = config
         if let iconName = iconName {
             button.setImage(
                 UIImage(
@@ -44,9 +34,6 @@ struct MenuButtonView<S>: UIViewRepresentable {
                     withConfiguration: UIImage.SymbolConfiguration(
                         pointSize: 12, weight: .regular, scale: .default)), for: .normal)
         }
-        button.tintColor = UIColor(id: "statusBar.foreground")
-        button.setTitleColor(button.tintColor, for: .normal)
-
         let children = options.map { option in
             UIAction(
                 title: option.title,
@@ -64,12 +51,26 @@ struct MenuButtonView<S>: UIViewRepresentable {
         } else {
             button.menu = UIMenu(children: children)
         }
+    }
+
+    func makeUIView(context: Context) -> UIButton {
+        let button = UIButton(type: .system)
+        var config = UIButton.Configuration.plain()
+        config.imagePadding = 4
+        config.buttonSize = .mini
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer {
+            incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.systemFont(ofSize: 12)
+            return outgoing
+        }
+        button.showsMenuAsPrimaryAction = true
+        button.configuration = config
+        updateButton(button)
         return button
     }
 
     func updateUIView(_ button: UIButton, context: Context) {
-        button.configuration?.title = title
-        button.tintColor = UIColor(Color.init(id: "statusBar.foreground"))
-        button.setTitleColor(button.tintColor, for: .normal)
+        updateButton(button)
     }
 }

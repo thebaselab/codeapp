@@ -21,6 +21,7 @@ struct SourceControlSection: View {
     let onStage: ([String]) throws -> Void
     let onShowChangesInDiffEditor: (String) throws -> Void
     let onPull: (Branch, Remote) async throws -> Void
+    let onCreateBranch: () -> Void
 
     var body: some View {
         Group {
@@ -29,7 +30,8 @@ struct SourceControlSection: View {
                 onPush: onPush,
                 onFetch: onFetch,
                 onStageAllChanges: onStageAllChanges,
-                onPull: onPull
+                onPull: onPull,
+                onCreateBranch: onCreateBranch
             )
             if !App.indexedResources.isEmpty {
                 StagedChangesSection(
@@ -63,6 +65,7 @@ private struct MainSection: View {
     let onFetch: (Remote) async throws -> Void
     let onStageAllChanges: () throws -> Void
     let onPull: (Branch, Remote) async throws -> Void
+    let onCreateBranch: () -> Void
 
     func onPushButtonTapped(remote: Remote) {
         Task {
@@ -171,6 +174,16 @@ private struct MainSection: View {
                             }
                         } label: {
                             Label("Fetch", systemImage: "square.and.arrow.down")
+                        }
+                    }
+
+                    Section {
+                        Menu {
+                            Button(action: onCreateBranch) {
+                                Label("common.create", systemImage: "plus")
+                            }
+                        } label: {
+                            Label("source_control.branch", systemImage: "arrow.triangle.branch")
                         }
                     }
 
