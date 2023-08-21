@@ -381,4 +381,11 @@ class LocalGitServiceProvider: GitServiceProvider {
             return try repository.createBranch(at: at, branchName: branchName).get()
         }
     }
+
+    func deleteBranch(branch: Branch) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            return try repository.deleteBranch(branch: branch)
+        }
+    }
 }

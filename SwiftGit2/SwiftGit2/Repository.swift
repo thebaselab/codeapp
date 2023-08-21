@@ -226,6 +226,19 @@ public final class Repository {
 		
 		return Result.success(finalResult as! Branch)
 	}
+    
+    public func deleteBranch(branch: Branch) throws {
+        var refPointer: OpaquePointer? = nil
+        let lookupError = git_reference_lookup(&refPointer, self.pointer, branch.longName)
+        guard lookupError == GIT_OK.rawValue else {
+            throw NSError(gitError: lookupError, pointOfFailure: "git_reference_lookup")
+        }
+        
+        let deleteResult = git_branch_delete(refPointer)
+        guard deleteResult == GIT_OK.rawValue else {
+            throw NSError(gitError: deleteResult, pointOfFailure: "git_branch_delete")
+        }
+    }
 	
     public func push(credentials: Credentials, branch: String, remoteName: String, progress: FetchProgressBlock? = nil) -> Result<(), NSError>{
 

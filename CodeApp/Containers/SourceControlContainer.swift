@@ -324,6 +324,32 @@ struct SourceControlContainer: View {
             ))
     }
 
+    func onDeleteBranch(branch: Branch) {
+        guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
+            return
+        }
+        alertManager.showAlert(
+            title: "source_control.confirm_delete_branch \(branch.name)",
+            content: AnyView(
+                Group {
+                    Button("common.delete", role: .destructive) {
+                        Task {
+                            do {
+                                try await serviceProvider.deleteBranch(branch: branch)
+                                App.notificationManager.showInformationMessage(
+                                    "source_control.branch_deleted", branch.name)
+                                App.updateGitRepositoryStatus()
+                            } catch {
+                                App.notificationManager.showErrorMessage(error.localizedDescription)
+                            }
+                        }
+                    }
+                    Button("common.cancel", role: .cancel) {}
+                }
+            )
+        )
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             //            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
@@ -343,7 +369,8 @@ struct SourceControlContainer: View {
                             onStage: onStage,
                             onShowChangesInDiffEditor: onShowChangesInDiffEditor,
                             onPull: onPull,
-                            onCreateBranch: onCreateBranch
+                            onCreateBranch: onCreateBranch,
+                            onDeleteBranch: onDeleteBranch
                         )
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)

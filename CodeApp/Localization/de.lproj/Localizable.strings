@@ -492,6 +492,8 @@
 "source_control.create_branch" = "Branch erstellen";
 "source_control.branch_name" = "Branch-Name";
 "source_control.branch" = "Branch";
+"source_control.confirm_delete_branch %@" = "Möchten Sie den Branch %@ wirklich löschen?";
+"source_control.branch_deleted" = "Branch %@ gelöscht";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

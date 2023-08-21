@@ -493,6 +493,8 @@
 "source_control.create_branch" = "ブランチを作成";
 "source_control.branch_name" = "ブランチ名";
 "source_control.branch" = "ブランチ";
+"source_control.confirm_delete_branch %@" = "ブランチ %@ を削除しますか?";
+"source_control.branch_deleted" = "ブランチ %@ が削除されました";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

@@ -35,4 +35,5 @@ protocol GitServiceProvider {
     func status() async throws -> [StatusEntry]
     func lookupCommit(oid: OID) async throws -> Commit
     func createBranch(at: Commit, branchName: String) async throws -> Branch
+    func deleteBranch(branch: Branch) async throws
 }

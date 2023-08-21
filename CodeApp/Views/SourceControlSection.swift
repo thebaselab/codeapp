@@ -22,6 +22,7 @@ struct SourceControlSection: View {
     let onShowChangesInDiffEditor: (String) throws -> Void
     let onPull: (Branch, Remote) async throws -> Void
     let onCreateBranch: () -> Void
+    let onDeleteBranch: (Branch) -> Void
 
     var body: some View {
         Group {
@@ -31,7 +32,8 @@ struct SourceControlSection: View {
                 onFetch: onFetch,
                 onStageAllChanges: onStageAllChanges,
                 onPull: onPull,
-                onCreateBranch: onCreateBranch
+                onCreateBranch: onCreateBranch,
+                onDeleteBranch: onDeleteBranch
             )
             if !App.indexedResources.isEmpty {
                 StagedChangesSection(
@@ -58,7 +60,8 @@ private struct MainSection: View {
 
     @State var showsIdentitySheet: Bool = false
     @State var remotes: [Remote] = []
-    @State var branches: [Branch] = []
+    @State var remoteBranches: [Branch] = []
+    @State var localBranches: [Branch] = []
 
     let onCommit: () async throws -> Void
     let onPush: (Remote) async throws -> Void
@@ -66,6 +69,7 @@ private struct MainSection: View {
     let onStageAllChanges: () throws -> Void
     let onPull: (Branch, Remote) async throws -> Void
     let onCreateBranch: () -> Void
+    let onDeleteBranch: (Branch) -> Void
 
     func onPushButtonTapped(remote: Remote) {
         Task {
@@ -149,7 +153,7 @@ private struct MainSection: View {
                         Menu {
                             ForEach(remotes, id: \.hashValue) { remote in
                                 Menu {
-                                    ForEach(branches, id: \.hashValue) { branch in
+                                    ForEach(remoteBranches, id: \.hashValue) { branch in
                                         Button("\(branch.name)") {
                                             Task {
                                                 try await onPull(branch, remote)
@@ -182,6 +186,16 @@ private struct MainSection: View {
                             Button(action: onCreateBranch) {
                                 Label("common.create", systemImage: "plus")
                             }
+
+                            Menu {
+                                ForEach(localBranches, id: \.hashValue) { branch in
+                                    Button("\(branch.name)") {
+                                        onDeleteBranch(branch)
+                                    }
+                                }
+                            } label: {
+                                Label("common.delete", systemImage: "minus")
+                            }
                         } label: {
                             Label("source_control.branch", systemImage: "arrow.triangle.branch")
                         }
@@ -203,15 +217,17 @@ private struct MainSection: View {
                 }
                 .onAppear {
                     Task {
-                        let remotesResult =
-                            (try? await App.workSpaceStorage.gitServiceProvider?
-                                .remotes()) ?? []
-                        let remoteBranchesResult =
-                            (try? await App.workSpaceStorage.gitServiceProvider?.remoteBranches())
-                            ?? []
+                        guard let gitServiceProvider = App.workSpaceStorage.gitServiceProvider
+                        else {
+                            return
+                        }
+                        let remotes = try await gitServiceProvider.remotes()
+                        let remoteBranches = try await gitServiceProvider.remoteBranches()
+                        let localBranches = try await gitServiceProvider.localBranches()
                         await MainActor.run {
-                            self.remotes = remotesResult
-                            self.branches = remoteBranchesResult
+                            self.remotes = remotes
+                            self.remoteBranches = remoteBranches
+                            self.localBranches = localBranches
                         }
                     }
                 }

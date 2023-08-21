@@ -15,6 +15,8 @@ struct SourceControlCreateBranchAlert: View {
     var body: some View {
         Group {
             TextField("source_control.branch_name", text: $branchName)
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
             Button("common.create") {
                 onCreateBranch(branchName)
                 branchName = ""
