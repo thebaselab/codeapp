@@ -702,8 +702,8 @@
 		9FA1227A2A8B6C9700E7B417 /* ActivityBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */; };
 		9FA1227C2A8E03CC00E7B417 /* LocalGitCredentialsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1227B2A8E03CC00E7B417 /* LocalGitCredentialsHelper.swift */; };
 		9FA1227D2A8E03CC00E7B417 /* LocalGitCredentialsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1227B2A8E03CC00E7B417 /* LocalGitCredentialsHelper.swift */; };
-		9FA939DD2A9317F800C239BF /* SourceControlCreateBranchAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA939DC2A9317F800C239BF /* SourceControlCreateBranchAlert.swift */; };
-		9FA939DE2A9317F800C239BF /* SourceControlCreateBranchAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA939DC2A9317F800C239BF /* SourceControlCreateBranchAlert.swift */; };
+		9FA939DD2A9317F800C239BF /* SourceControlTextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA939DC2A9317F800C239BF /* SourceControlTextFieldAlert.swift */; };
+		9FA939DE2A9317F800C239BF /* SourceControlTextFieldAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA939DC2A9317F800C239BF /* SourceControlTextFieldAlert.swift */; };
 		9FAE498F292D062800B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FAE4990292D062D00B1B962 /* ImageViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */; };
 		9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */; };
@@ -1746,7 +1746,7 @@
 		9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConnectedLabel.swift; sourceTree = "<group>"; };
 		9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBarManager.swift; sourceTree = "<group>"; };
 		9FA1227B2A8E03CC00E7B417 /* LocalGitCredentialsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalGitCredentialsHelper.swift; sourceTree = "<group>"; };
-		9FA939DC2A9317F800C239BF /* SourceControlCreateBranchAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlCreateBranchAlert.swift; sourceTree = "<group>"; };
+		9FA939DC2A9317F800C239BF /* SourceControlTextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlTextFieldAlert.swift; sourceTree = "<group>"; };
 		9FAE498E292D062800B1B962 /* ImageViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4992292D153F00B1B962 /* VideoViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewerExtension.swift; sourceTree = "<group>"; };
 		9FAE4996292DD76A00B1B962 /* MarkdownViewerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownViewerExtension.swift; sourceTree = "<group>"; };
@@ -2581,7 +2581,7 @@
 				FFD081B72925F8FB001D9373 /* TextEditorWithPlaceholder.swift */,
 				9FD5BCF32927859600F20C4B /* DebugMenu.swift */,
 				9F170D032A89F88D00D6D7C1 /* RegularSidebar.swift */,
-				9FA939DC2A9317F800C239BF /* SourceControlCreateBranchAlert.swift */,
+				9FA939DC2A9317F800C239BF /* SourceControlTextFieldAlert.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3092,7 +3092,7 @@
 				94196948280316C7008AAEB2 /* SearchBar.swift in Sources */,
 				9FA122732A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift in Sources */,
 				94196949280316C7008AAEB2 /* Color+init.swift in Sources */,
-				9FA939DE2A9317F800C239BF /* SourceControlCreateBranchAlert.swift in Sources */,
+				9FA939DE2A9317F800C239BF /* SourceControlTextFieldAlert.swift in Sources */,
 				9FD5BD02292A08D600F20C4B /* AppError.swift in Sources */,
 				9419694A280316C7008AAEB2 /* PanelView.swift in Sources */,
 				9419694B280316C7008AAEB2 /* UIApplication+getSafeArea.swift in Sources */,
@@ -3261,7 +3261,7 @@
 				94A777D6257B8A88008FE7B2 /* SearchBar.swift in Sources */,
 				9FA122722A8B5A2500E7B417 /* RemoteAuxiliaryExtension.swift in Sources */,
 				94B3DDF1260344E800C4F2B1 /* Color+init.swift in Sources */,
-				9FA939DD2A9317F800C239BF /* SourceControlCreateBranchAlert.swift in Sources */,
+				9FA939DD2A9317F800C239BF /* SourceControlTextFieldAlert.swift in Sources */,
 				9FD5BD01292A08D600F20C4B /* AppError.swift in Sources */,
 				94A7780B257BBCAC008FE7B2 /* PanelView.swift in Sources */,
 				947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */,

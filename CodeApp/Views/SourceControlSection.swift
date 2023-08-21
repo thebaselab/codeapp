@@ -23,6 +23,7 @@ struct SourceControlSection: View {
     let onPull: (Branch, Remote) async throws -> Void
     let onCreateBranch: () -> Void
     let onDeleteBranch: (Branch) -> Void
+    let onCreateTag: () -> Void
 
     var body: some View {
         Group {
@@ -33,7 +34,8 @@ struct SourceControlSection: View {
                 onStageAllChanges: onStageAllChanges,
                 onPull: onPull,
                 onCreateBranch: onCreateBranch,
-                onDeleteBranch: onDeleteBranch
+                onDeleteBranch: onDeleteBranch,
+                onCreateTag: onCreateTag
             )
             if !App.indexedResources.isEmpty {
                 StagedChangesSection(
@@ -70,6 +72,7 @@ private struct MainSection: View {
     let onPull: (Branch, Remote) async throws -> Void
     let onCreateBranch: () -> Void
     let onDeleteBranch: (Branch) -> Void
+    let onCreateTag: () -> Void
 
     func onPushButtonTapped(remote: Remote) {
         Task {
@@ -198,6 +201,14 @@ private struct MainSection: View {
                             }
                         } label: {
                             Label("source_control.branch", systemImage: "arrow.triangle.branch")
+                        }
+
+                        Menu {
+                            Button(action: onCreateTag) {
+                                Label("common.create", systemImage: "plus")
+                            }
+                        } label: {
+                            Label("source_control.tag", systemImage: "tag")
                         }
                     }
 

@@ -494,6 +494,11 @@
 "source_control.branch" = "Branch";
 "source_control.confirm_delete_branch %@" = "Möchten Sie den Branch %@ wirklich löschen?";
 "source_control.branch_deleted" = "Branch %@ gelöscht";
+"source_control.tag" = "Tag";
+"source_control.create_tag" = "Tag erstellen";
+"source_control.tag_name" = "Tag-Name";
+"source_control.annotation_optional" = "Annotation (optional)";
+"source_control.tag_created" = "Tag %@ erstellt";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

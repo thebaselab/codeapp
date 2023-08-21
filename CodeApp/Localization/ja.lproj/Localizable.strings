@@ -495,6 +495,11 @@
 "source_control.branch" = "ブランチ";
 "source_control.confirm_delete_branch %@" = "ブランチ %@ を削除しますか?";
 "source_control.branch_deleted" = "ブランチ %@ が削除されました";
+"source_control.tag" = "タグ";
+"source_control.create_tag" = "タグを作成";
+"source_control.tag_name" = "タグ名";
+"source_control.annotation_optional" = "注釈 (オプション)";
+"source_control.tag_created" = "タグ %@ が作成されました";
 
 "panel.problems.no_problems_detected" = "ワークスペースで問題は検出されませんでした。";
 "panel.execution.press_play_to_execute_code" = "実行ボタンを押すとコードが実行されます。プログラムは実行前に入力する必要があります。";

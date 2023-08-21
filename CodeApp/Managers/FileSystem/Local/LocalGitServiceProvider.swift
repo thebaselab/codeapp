@@ -388,4 +388,17 @@ class LocalGitServiceProvider: GitServiceProvider {
             return try repository.deleteBranch(branch: branch)
         }
     }
+
+    func createTag(at: OID, tagName: String, annotation: String?) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            if let annotation {
+                let signature = try self.checkedSignature()
+                try repository.createAnnotatedTag(
+                    oid: at, tagName: tagName, annotation: annotation, signature: signature)
+            } else {
+                try repository.createLightweightTag(oid: at, tagName: tagName)
+            }
+        }
+    }
 }

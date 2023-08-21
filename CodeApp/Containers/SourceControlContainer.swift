@@ -307,20 +307,23 @@ struct SourceControlContainer: View {
         alertManager.showAlert(
             title: "source_control.create_branch",
             content: AnyView(
-                SourceControlCreateBranchAlert(onCreateBranch: { branchName in
-                    Task {
-                        do {
-                            let head = try await serviceProvider.head()
-                            let commit = try await serviceProvider.lookupCommit(oid: head.oid)
-                            let newBranch = try await serviceProvider.createBranch(
-                                at: commit, branchName: branchName)
-                            try await serviceProvider.checkout(reference: newBranch)
-                            App.updateGitRepositoryStatus()
-                        } catch {
-                            App.notificationManager.showErrorMessage(error.localizedDescription)
+                SourceControlTextFieldAlert(
+                    textFieldTitle: "source_control.branch_name",
+                    confirmTitle: "common.create",
+                    onConfirm: { branchName in
+                        Task {
+                            do {
+                                let head = try await serviceProvider.head()
+                                let commit = try await serviceProvider.lookupCommit(oid: head.oid)
+                                let newBranch = try await serviceProvider.createBranch(
+                                    at: commit, branchName: branchName)
+                                try await serviceProvider.checkout(reference: newBranch)
+                                App.updateGitRepositoryStatus()
+                            } catch {
+                                App.notificationManager.showErrorMessage(error.localizedDescription)
+                            }
                         }
-                    }
-                })
+                    })
             ))
     }
 
@@ -350,6 +353,38 @@ struct SourceControlContainer: View {
         )
     }
 
+    func onCreateTag() {
+        guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
+            return
+        }
+
+        alertManager.showAlert(
+            title: "source_control.create_tag",
+            content: AnyView(
+                SourceControlDualTextFieldAlert(
+                    textField1Title: "source_control.tag_name",
+                    textField2Title: "source_control.annotation_optional",
+                    confirmTitle: "common.create",
+                    onConfirm: { tagName, annotation in
+                        Task {
+                            do {
+                                let head = try await serviceProvider.head()
+                                try await serviceProvider.createTag(
+                                    at: head.oid, tagName: tagName,
+                                    annotation: annotation.isEmpty ? nil : annotation)
+                                App.notificationManager.showInformationMessage(
+                                    "source_control.tag_created", tagName)
+                                App.updateGitRepositoryStatus()
+                            } catch {
+                                App.notificationManager.showErrorMessage(
+                                    error.localizedDescription)
+                            }
+                        }
+                    }
+                )
+            ))
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             //            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
@@ -370,7 +405,8 @@ struct SourceControlContainer: View {
                             onShowChangesInDiffEditor: onShowChangesInDiffEditor,
                             onPull: onPull,
                             onCreateBranch: onCreateBranch,
-                            onDeleteBranch: onDeleteBranch
+                            onDeleteBranch: onDeleteBranch,
+                            onCreateTag: onCreateTag
                         )
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)
