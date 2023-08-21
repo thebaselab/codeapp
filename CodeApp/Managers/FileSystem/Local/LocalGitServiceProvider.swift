@@ -401,4 +401,11 @@ class LocalGitServiceProvider: GitServiceProvider {
             }
         }
     }
+
+    func deleteTag(tag: TagReference) async throws {
+        try await WorkerQueueTask {
+            let repository = try self.checkedRepository()
+            try repository.deleteTag(tag: tag)
+        }
+    }
 }

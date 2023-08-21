@@ -24,6 +24,7 @@ struct SourceControlSection: View {
     let onCreateBranch: () -> Void
     let onDeleteBranch: (Branch) -> Void
     let onCreateTag: () -> Void
+    let onDeleteTag: (TagReference) -> Void
 
     var body: some View {
         Group {
@@ -35,7 +36,8 @@ struct SourceControlSection: View {
                 onPull: onPull,
                 onCreateBranch: onCreateBranch,
                 onDeleteBranch: onDeleteBranch,
-                onCreateTag: onCreateTag
+                onCreateTag: onCreateTag,
+                onDeleteTag: onDeleteTag
             )
             if !App.indexedResources.isEmpty {
                 StagedChangesSection(
@@ -64,6 +66,7 @@ private struct MainSection: View {
     @State var remotes: [Remote] = []
     @State var remoteBranches: [Branch] = []
     @State var localBranches: [Branch] = []
+    @State var tags: [TagReference] = []
 
     let onCommit: () async throws -> Void
     let onPush: (Remote) async throws -> Void
@@ -73,6 +76,7 @@ private struct MainSection: View {
     let onCreateBranch: () -> Void
     let onDeleteBranch: (Branch) -> Void
     let onCreateTag: () -> Void
+    let onDeleteTag: (TagReference) -> Void
 
     func onPushButtonTapped(remote: Remote) {
         Task {
@@ -207,6 +211,15 @@ private struct MainSection: View {
                             Button(action: onCreateTag) {
                                 Label("common.create", systemImage: "plus")
                             }
+                            Menu {
+                                ForEach(tags, id: \.hashValue) { tag in
+                                    Button("\(tag.name)") {
+                                        onDeleteTag(tag)
+                                    }
+                                }
+                            } label: {
+                                Label("common.delete", systemImage: "minus")
+                            }
                         } label: {
                             Label("source_control.tag", systemImage: "tag")
                         }
@@ -235,10 +248,12 @@ private struct MainSection: View {
                         let remotes = try await gitServiceProvider.remotes()
                         let remoteBranches = try await gitServiceProvider.remoteBranches()
                         let localBranches = try await gitServiceProvider.localBranches()
+                        let tags = try await gitServiceProvider.tags()
                         await MainActor.run {
                             self.remotes = remotes
                             self.remoteBranches = remoteBranches
                             self.localBranches = localBranches
+                            self.tags = tags
                         }
                     }
                 }

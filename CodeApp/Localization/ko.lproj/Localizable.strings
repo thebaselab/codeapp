@@ -499,6 +499,8 @@
 "source_control.tag_name" = "태그 이름";
 "source_control.annotation_optional" = "주석(선택 사항)";
 "source_control.tag_created" = "%@ 태그가 생성되었습니다.";
+"source_control.confirm_delete_tag" = "%@ 태그를 삭제하시겠습니까?";
+"source_control.tag_deleted" = "%@ 태그가 삭제되었습니다.";
 
 "panel.problems.no_problems_detected" = "작업 공간에서 감지된 문제 없음.";
 "panel.execution.press_play_to_execute_code" = "코드를 실행하려면 실행 버튼을 누르십시오. 실행하기 전에 프로그램 입력을 채워야 합니다.";

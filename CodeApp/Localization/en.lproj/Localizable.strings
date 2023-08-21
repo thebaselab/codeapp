@@ -389,6 +389,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.tag_name" = "Tag name";
 "source_control.annotation_optional" = "Annotation (optional)";
 "source_control.tag_created" = "Tag %@ created";
+"source_control.confirm_delete_tag" = "Are you sure you want to delete tag %@?";
+"source_control.tag_deleted" = "Tag %@ deleted";
 
 "panel.problems.no_problems_detected" = "No problems detected in the workspace.";
 "panel.execution.press_play_to_execute_code" = "Press the play button to execute code. Program input needs to be filled before execution.";

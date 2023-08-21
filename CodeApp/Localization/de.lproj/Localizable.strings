@@ -499,6 +499,8 @@
 "source_control.tag_name" = "Tag-Name";
 "source_control.annotation_optional" = "Annotation (optional)";
 "source_control.tag_created" = "Tag %@ erstellt";
+"source_control.confirm_delete_tag" = "Möchten Sie den Tag %@ wirklich löschen?";
+"source_control.tag_deleted" = "Tag %@ gelöscht";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

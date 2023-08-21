@@ -385,6 +385,32 @@ struct SourceControlContainer: View {
             ))
     }
 
+    func onDeleteTag(tag: TagReference) {
+        guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
+            return
+        }
+        alertManager.showAlert(
+            title: "source_control.confirm_delete_tag \(tag.name)",
+            content: AnyView(
+                Group {
+                    Button("common.delete", role: .destructive) {
+                        Task {
+                            do {
+                                try await serviceProvider.deleteTag(tag: tag)
+                                App.notificationManager.showInformationMessage(
+                                    "source_control.tag_deleted", tag.name)
+                                App.updateGitRepositoryStatus()
+                            } catch {
+                                App.notificationManager.showErrorMessage(error.localizedDescription)
+                            }
+                        }
+                    }
+                    Button("common.cancel", role: .cancel) {}
+                }
+            )
+        )
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             //            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
@@ -406,7 +432,8 @@ struct SourceControlContainer: View {
                             onPull: onPull,
                             onCreateBranch: onCreateBranch,
                             onDeleteBranch: onDeleteBranch,
-                            onCreateTag: onCreateTag
+                            onCreateTag: onCreateTag,
+                            onDeleteTag: onDeleteTag
                         )
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)

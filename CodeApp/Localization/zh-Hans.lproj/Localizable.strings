@@ -474,6 +474,8 @@
 "source_control.branch" = "分支";
 "source_control.confirm_delete_branch %@" = "您确定要删除分支 %@ 吗？";
 "source_control.branch_deleted" = "分支 %@ 已删除";
+"source_control.confirm_delete_tag" = "您确定要删除标签 %@ 吗？";
+"source_control.tag_deleted" = "标签 %@ 已删除";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
 "panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";

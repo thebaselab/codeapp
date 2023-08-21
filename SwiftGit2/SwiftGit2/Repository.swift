@@ -252,13 +252,20 @@ public final class Repository {
     
     public func createAnnotatedTag(oid: OID, tagName: String, annotation: String, signature: Signature, force: Bool = false) throws {
         var gitOid = oid.oid
-        var signature = try signature.makeUnsafeSignature().get()
+        let signature = try signature.makeUnsafeSignature().get()
         defer { git_signature_free(signature) }
         try withGitObject(oid, type: GIT_OBJECT_ANY) { object in
             let gitResult = git_tag_create(&gitOid, self.pointer, tagName, object, signature, annotation, force ? 1 : 0)
             guard gitResult == GIT_OK.rawValue else {
                 throw NSError(gitError: gitResult, pointOfFailure: "git_tag_create")
             }
+        }
+    }
+    
+    public func deleteTag(tag: TagReference) throws {
+        let gitResult = git_tag_delete(self.pointer, tag.name)
+        guard gitResult == GIT_OK.rawValue else {
+            throw NSError(gitError: gitResult, pointOfFailure: "git_tag_delete")
         }
     }
 	
