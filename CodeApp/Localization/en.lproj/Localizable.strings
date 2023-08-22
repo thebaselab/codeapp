@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.6 (July 2023)**
+##### **v1.4.6 (August 2023)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,6 +23,25 @@
 
 "Changelog.message" =
 "
+### 1.4.6 (August 2023)
+- Version Control
+  - Authentication
+    - SSH key authentication
+    - Multiple credentials
+  - New features
+    - Pulling from remote
+    - Conflict resolution
+    - Create/delete branches and tags
+    - Pushing tags
+    - lg2 command
+- Other improvements
+  - Adjustable sidebar width
+  - Download iCloud directories
+  - bits/stdc++.h header in Clang
+  - Option to use remote C compiler instead of the local one
+  - Fixes a bug where key files cannot be imported
+  - iOS Lockdown mode support
+  
 ### v1.4.5 (July 2023)
 - Handle iCloud files gracefully
 - UI improvements

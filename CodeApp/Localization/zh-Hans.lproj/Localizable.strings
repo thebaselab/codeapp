@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.4.6 (2023 年 7 月)**
+##### **v1.4.6 (2023 年 8 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,25 @@
 
 "Changelog.message" =
 "
+### 1.4.6（2023 年 8 月）
+- 版本控制
+   - 验证
+     - SSH密钥认证
+     - 多个凭证
+   - 新功能
+     - 从远程拉取
+     - 解决冲突
+     - 创建/删除分支和标签
+     - 推送标签
+     - lg2命令
+- 其他改进
+   - 可调节侧边栏宽度
+   - 下载 iCloud 目录
+   - Clang 中的 bits/stdc++.h 标头
+   - 选择使用远程 C 编译器而不是本地编译器
+   - 修复了无法导入关键文件的问题
+   - iOS 锁定模式支持
+
 ### v1.4.5 (2023 年 7 月)
 - 改进 iCloud 文件处理
 - 用户界面改进
