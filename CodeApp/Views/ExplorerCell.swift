@@ -282,6 +282,7 @@ private struct FolderCell: View {
             })
         }
         .contextMenu {
+            /*
             if isiCloudItem {
                 Section {
                     Button(action: {
@@ -291,6 +292,7 @@ private struct FolderCell: View {
                     }
                 }
             }
+            */
             ContextMenu(
                 item: item,
                 onRename: {
