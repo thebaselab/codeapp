@@ -98,6 +98,21 @@ private struct MainSection: View {
         }
     }
 
+    func onCommitButtonTapped() {
+        Task {
+            do {
+                try await onCommit()
+            } catch SourceControlError.authorIdentityMissing {
+                await MainActor.run {
+                    showsIdentitySheet.toggle()
+                }
+            } catch {
+                App.notificationManager.showErrorMessage(
+                    error.localizedDescription)
+            }
+        }
+    }
+
     var body: some View {
         Section(
             header:
@@ -122,29 +137,26 @@ private struct MainSection: View {
                     Text("errors.source_control.no_staged_changes").foregroundColor(.gray).font(
                         .system(size: 12, weight: .light))
                 } else {
-                    Text("source_control.commit")
-                        .foregroundColor(.white)
-                        .font(.subheadline)
-                        .frame(maxWidth: .infinity)
-                        .padding(4)
-                        .background(
-                            Color.init(id: "button.background")
-                        )
-                        .cornerRadius(10.0)
-                        .onTapGesture {
-                            Task {
-                                do {
-                                    try await onCommit()
-                                } catch SourceControlError.authorIdentityMissing {
-                                    await MainActor.run {
-                                        showsIdentitySheet.toggle()
-                                    }
-                                } catch {
-                                    App.notificationManager.showErrorMessage(
-                                        error.localizedDescription)
-                                }
-                            }
+                    ZStack {
+                        Button("Commit") {
+                            onCommitButtonTapped()
                         }
+                        .keyboardShortcut(.return, modifiers: [.command])
+                        .foregroundColor(.clear).font(.system(size: 1))
+
+                        Text("source_control.commit")
+                            .foregroundColor(.white)
+                            .font(.subheadline)
+                            .frame(maxWidth: .infinity)
+                            .padding(4)
+                            .background(
+                                Color.init(id: "button.background")
+                            )
+                            .cornerRadius(10.0)
+                            .onTapGesture {
+                                onCommitButtonTapped()
+                            }
+                    }
                 }
 
                 Spacer()
