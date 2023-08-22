@@ -724,9 +724,9 @@ class MainApp: ObservableObject {
 
         Task {
             let references: [ReferenceType] =
-                (try await gitServiceProvider.remoteBranches())
+                (try await gitServiceProvider.tags())
+                + (try await gitServiceProvider.remoteBranches())
                 + (try await gitServiceProvider.localBranches())
-                + (try await gitServiceProvider.tags())
             await MainActor.run {
                 self.stateManager.availableCheckoutDestination = references.map {
                     CheckoutDestination(reference: $0)
