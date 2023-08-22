@@ -240,6 +240,10 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 }
                 executeScript("localEcho.printWide(\(commandList));")
                 self.readLine()
+            case let x where x.hasPrefix("git"):
+                let message = "git is unavailable in Code App. Use lg2 instead."
+                executeScript("localEcho.println(`\(message)`);")
+                self.readLine()
             case let x where x.hasPrefix("code"):
                 let args = x.components(separatedBy: " ")
                 guard args.count > 1 else {
