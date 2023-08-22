@@ -41,12 +41,12 @@ struct RegularSidebar: View {
     }
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
+        ZStack(alignment: .center) {
             Color.init(id: "sideBar.background")
             if let item = activityBarManager.itemForItemID(itemID: activeItemId) {
                 item.view
             } else {
-                DescriptionText("panels.no_panel_selected")
+                ProgressView()
             }
         }
         .gesture(
