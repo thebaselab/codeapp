@@ -68,7 +68,8 @@ struct ActivityBarIconView: View {
                     }
             }
 
-            if let bubbleText = activityBarItem.bubbleText() {
+            switch activityBarItem.bubble() {
+            case let .text(bubbleText):
                 if bubbleText.isEmpty {
                     Circle()
                         .fill(Color.init(id: "statusBar.background"))
@@ -89,6 +90,20 @@ struct ActivityBarIconView: View {
                     .cornerRadius(5)
                     .offset(x: 10, y: -10)
                 }
+            case let .systemImage(systemImage):
+                Image(systemName: systemImage)
+                    .font(.system(size: 12))
+                    .padding(.horizontal, 3)
+                    .foregroundColor(
+                        Color.init(id: "statusBar.foreground")
+                    )
+                    .background(
+                        Color.init(id: "statusBar.background")
+                    )
+                    .cornerRadius(5)
+                    .offset(x: 10, y: -10)
+            case nil:
+                EmptyView()
             }
         }
         .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))

@@ -234,7 +234,7 @@ class MainApp: ObservableObject {
                             )
                         ])
             },
-            bubbleText: { nil }
+            bubble: { nil }
         )
         let search = ActivityBarItem(
             itemID: "SEARCH",
@@ -244,7 +244,7 @@ class MainApp: ObservableObject {
             modifiers: [.command, .shift],
             view: AnyView(SearchContainer()),
             contextMenuItems: nil,
-            bubbleText: { nil }
+            bubble: { nil }
         )
         let sourceControl = ActivityBarItem(
             itemID: "SOURCE_CONTROL",
@@ -255,7 +255,13 @@ class MainApp: ObservableObject {
             modifiers: [.control, .shift],
             view: AnyView(SourceControlContainer()),
             contextMenuItems: nil,
-            bubbleText: { self.gitTracks.isEmpty ? nil : "\(self.gitTracks.count)" }
+            bubble: {
+                if self.stateManager.gitServiceIsBusy {
+                    return .systemImage("clock")
+                } else {
+                    return self.gitTracks.isEmpty ? nil : .text("\(self.gitTracks.count)")
+                }
+            }
         )
         let remote = ActivityBarItem(
             itemID: "REMOTE",
@@ -265,7 +271,7 @@ class MainApp: ObservableObject {
             modifiers: [.command, .shift],
             view: AnyView(RemoteContainer()),
             contextMenuItems: nil,
-            bubbleText: { self.workSpaceStorage.remoteConnected ? "" : nil }
+            bubble: { self.workSpaceStorage.remoteConnected ? .text("") : nil }
         )
 
         extensionManager.activityBarManager.registerItem(item: explorer)

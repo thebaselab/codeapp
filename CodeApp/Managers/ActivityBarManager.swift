@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum ActivityBarBubble {
+    case text(String)
+    case systemImage(String)
+}
+
 struct ActivityBarItem: Identifiable {
     let id = UUID()
     let itemID: String
@@ -17,7 +22,7 @@ struct ActivityBarItem: Identifiable {
     let view: AnyView
     let positionPrecedence: Int = 0
     let contextMenuItems: (() -> [ContextMenuItem])?
-    var bubbleText: () -> String?
+    var bubble: () -> ActivityBarBubble?
 }
 
 class ActivityBarManager: CodeAppContributionPointManager {
