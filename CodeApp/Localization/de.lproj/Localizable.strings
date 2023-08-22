@@ -503,6 +503,8 @@
 "source_control.tag_deleted" = "Tag %@ gelöscht";
 "source_control.pushing_tag_to_remote" = "Tag %@ zu %@ pushen";
 "source_control.push" = "Push";
+"source_control.commit" = "Commit";
+"source_control.message_command_enter_to_commit" = "Nachricht (⌘Enter zum committen)";
 
 "panel.problems.no_problems_detected" = "keine Probleme im Arbeitsbereich erkannt.";
 "panel.execution.press_play_to_execute_code" = "Drücken Sie die Wiedergabetaste, um den Code auszuführen. Die Programmeingabe muss vor der Ausführung ausgefüllt werden.";

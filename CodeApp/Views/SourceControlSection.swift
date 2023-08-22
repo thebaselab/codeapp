@@ -106,7 +106,8 @@ private struct MainSection: View {
         ) {
             ZStack(alignment: .leading) {
                 TextEditorWithPlaceholder(
-                    placeholder: "Message (⌘Enter to commit)", text: $App.commitMessage
+                    placeholder: "source_control.message_command_enter_to_commit",
+                    text: $App.commitMessage
                 )
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
@@ -116,37 +117,37 @@ private struct MainSection: View {
             .background(Color.init(id: "input.background"))
             .cornerRadius(15)
 
-            HStack {
+            HStack(spacing: 10) {
                 if App.indexedResources.isEmpty {
                     Text("errors.source_control.no_staged_changes").foregroundColor(.gray).font(
                         .system(size: 12, weight: .light))
                 } else {
-                    Text(
-                        "Commit \(App.indexedResources.count) file\(App.indexedResources.count > 1 ? "s" : "") on '\(App.branch)'..."
-                    ).foregroundColor(.gray).font(.system(size: 12, weight: .light))
+                    Text("source_control.commit")
+                        .foregroundColor(.white)
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity)
+                        .padding(4)
+                        .background(
+                            Color.init(id: "button.background")
+                        )
+                        .cornerRadius(10.0)
+                        .onTapGesture {
+                            Task {
+                                do {
+                                    try await onCommit()
+                                } catch SourceControlError.authorIdentityMissing {
+                                    await MainActor.run {
+                                        showsIdentitySheet.toggle()
+                                    }
+                                } catch {
+                                    App.notificationManager.showErrorMessage(
+                                        error.localizedDescription)
+                                }
+                            }
+                        }
                 }
 
                 Spacer()
-                Button(action: {
-                    Task {
-                        do {
-                            try await onCommit()
-                        } catch SourceControlError.authorIdentityMissing {
-                            await MainActor.run {
-                                showsIdentitySheet.toggle()
-                            }
-                        } catch {
-                            App.notificationManager.showErrorMessage(error.localizedDescription)
-                        }
-                    }
-                }) {
-                    Image(systemName: "checkmark.circle")
-                }
-                .keyboardShortcut(.return, modifiers: [.command])
-                .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                .hoverEffect(.highlight)
-                .font(.system(size: 16))
-                .foregroundColor(Color.init(id: "activityBar.foreground"))
 
                 Menu {
                     Section {
@@ -256,10 +257,12 @@ private struct MainSection: View {
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle")
+                        .font(.system(size: 17))
+                        .foregroundColor(Color.init(id: "activityBar.foreground"))
+                        .padding(5)
                         .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                         .hoverEffect(.highlight)
-                        .font(.system(size: 16))
-                        .foregroundColor(Color.init(id: "activityBar.foreground"))
+                        .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20)
                 }
                 .onAppear {
                     Task {

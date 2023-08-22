@@ -478,6 +478,8 @@
 "source_control.tag_deleted" = "标签 %@ 已删除";
 "source_control.pushing_tag_to_remote" = "推送标签到远程";
 "source_control.push" = "推送";
+"source_control.commit" = "提交";
+"source_control.message_command_enter_to_commit" = "提交备注 (⌘ + Enter 以提交)";
 
 "panel.problems.no_problems_detected" = "工作区中未检测到问题。";
 "panel.execution.press_play_to_execute_code" = "按下播放按钮执行代码。程序输入需要在执行前填写。";

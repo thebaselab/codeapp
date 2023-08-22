@@ -393,6 +393,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "source_control.tag_deleted" = "Tag %@ deleted";
 "source_control.pushing_tag_to_remote" = "Pushing tag %@ to %@";
 "source_control.push" = "Push";
+"source_control.commit" = "Commit";
+"source_control.message_command_enter_to_commit" = "Message (⌘Enter to commit)";
 
 "panel.problems.no_problems_detected" = "No problems detected in the workspace.";
 "panel.execution.press_play_to_execute_code" = "Press the play button to execute code. Program input needs to be filled before execution.";
