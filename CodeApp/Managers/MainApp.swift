@@ -667,10 +667,14 @@ class MainApp: ObservableObject {
 
         guard let gitServiceProvider = workSpaceStorage.gitServiceProvider else {
             clearUIState()
+            onFinish()
             return
         }
 
         Task {
+            defer {
+                onFinish()
+            }
             do {
                 let entries = try await gitServiceProvider.status()
                 let (indexed, worktree) = groupStatusEntries(entries: entries)
@@ -713,13 +717,9 @@ class MainApp: ObservableObject {
 
                     self.branch = branchLabel
                 }
-                onFinish()
-
             } catch {
                 clearUIState()
-                onFinish()
             }
-
         }
 
         Task {
