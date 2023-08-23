@@ -36,7 +36,6 @@
     - lg2 command
 - Other improvements
   - Adjustable sidebar width
-  - Download iCloud directories
   - bits/stdc++.h header in Clang
   - Option to use remote C compiler instead of the local one
   - Fixes a bug where key files cannot be imported

@@ -36,7 +36,6 @@
      - lg2-Befehl
 - Weitere Verbesserungen
    - Einstellbare Seitenleistenbreite
-   - Laden Sie iCloud-Verzeichnisse herunter
    - bits/stdc++.h-Header in Clang
    – Option zur Verwendung eines Remote-C-Compilers anstelle des lokalen
    – Behebt einen Fehler, bei dem Schlüsseldateien nicht importiert werden konnten
