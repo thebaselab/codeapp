@@ -8,10 +8,6 @@ description: Connect to a self-hosted server and get access to its files and ter
 
 Before using this feature, you'll need to set up a SSH (SFTP) or FTP server on your computer or server. On a Mac, you can do this by enabling Remote Login and full disk access in the `Sharing` section of System Preferences.
 
-{% hint style="info" %}
-If you are using macOS Ventura, additional configuration might be needed. Please refer to [https://github.com/thebaselab/codeapp/issues/715#issuecomment-1368351403](https://github.com/thebaselab/codeapp/issues/715#issuecomment-1368351403)
-{% endhint %}
-
 ![Enabling SSH server on a Mac](<../.gitbook/assets/image (6).png>)
 
 ### Set up a new remote in Code App
@@ -22,16 +18,20 @@ Open the remote section in the side bar and enter the server's information. Enab
 
 ### Key Authentication
 
-You might also want to use key authenctication instead of password. To do so, start by generate a SSH key by running `ssh-keygen` in the terminal.
+Besides password, SSH keys can also be used to authenticate your server. To do so, enable the `Use key authentication` option and enter your private key.&#x20;
 
-The remote section will now show a `Show public key` button. Tap it and copy the public key to your remote server at `~/.ssh/authorized_keys`. You can open this file by running `open ~/.ssh/authorized_keys` in your remote server's terminal.
+#### Generating key-pairs in Code App
+
+If you don't already have a key-pair, you can generate one with the `ssh-keygen` command in the terminal. You might need to specify the type of keys to generate depending on your server's configuration. For example on macOS Ventura, the default generated RSA key pair is not supported. You can generate a ed25519 key-pair instead by running `ssh-keygen -t ed25519`.
+
+Then, copy the public key to your server's `authorized_keys` file. On macOS, it is located at `~/.ssh/authorized_keys.`
 
 ### Finishing up
 
 Congratulations! You can now access the remote server's files and terminal.
 
 {% hint style="info" %}
-**Good to know:** Only SFTP server allows terminal access
+**Good to know:** Only SSH server allows terminal access
 {% endhint %}
 
 ![](../.gitbook/assets/image.png)
