@@ -4,6 +4,10 @@ description: Use the built-in support for Git to manage your code.
 
 # Version Control
 
+{% hint style="warning" %}
+Command line git is unavailble because of a licensing issue. Use lg2 or the GUI instead.
+{% endhint %}
+
 ### Set up your identities
 
 Git uses name and email address identify the author of each commit. Before making a commit, you'll need to set up your identity.
