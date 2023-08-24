@@ -6,15 +6,17 @@ description: Use the built-in support for Git to manage your code.
 
 ### Set up your identities
 
-Git uses your username and email address identify the author of every commit. Before making a commit, you'll need to set up your identity.
+Git uses name and email address identify the author of each commit. Before making a commit, you'll need to set up your identity.
 
 To proceed, go `Settings > Version Control > Identity`.&#x20;
 
 ### Set up your credentials
 
-If you are cloning a private repository or pushing changes to a repo, you need to set up credentials. To start, enter your credentials at `Settings > Version Control > Authentication`.
+If you are cloning a private repository or pushing changes to a remote, you'll need to set up credentials. To start, enter your credentials at `Settings > Version Control > Authentication`.
 
-In many cases, you'll need to use a personal access token instead of using the regular password. To know more about this:
+#### Password-based Authentication
+
+The easiest way to authenticate in Git is to use password-based authentication. To start, obtain a personal access token from your Git hosting provider. To learn more:
 
 {% embed url="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token" %}
 Creating a personal access token on GitHub
@@ -24,29 +26,59 @@ Creating a personal access token on GitHub
 Creating a personal access tokeno on GitLab
 {% endembed %}
 
+#### Key-based Authentication
+
+SSH keys can also be used to authenicate in Git. To start, generate a SSH key pair and configure them in your Git hosting provider. To learn more:
+
+{% embed url="https://docs.github.com/en/authentication/connecting-to-github-with-ssh" %}
+Connecting to GitHub with SSH keys
+{% endembed %}
+
+{% embed url="https://docs.gitlab.com/ee/user/ssh.html" %}
+Connecting to GitLab with SSH keys
+{% endembed %}
+
+#### Setting up multiple credentials
+
+Code App supports multiple credentials. You can configure a unique credential for each hosting provider by specifying their hostnames during the setup process.
+
+<figure><img src="../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 12.54.27.png" alt=""><figcaption><p>Hostname-based credentials</p></figcaption></figure>
+
 ### Cloning a repository
 
-To clone a repository, select version control on the side bar. Either enter the repository's url or search a repo on GitHub by typing the keywords into the search field.
+To clone a repository, tap the source control icon in the sidebar and enter its url in the clone repository section.
 
-Currently, only HTTPS urls are supported.
+<figure><img src="../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 12.56.17.png" alt=""><figcaption><p>Cloning a repository</p></figcaption></figure>
 
-### Commiting files
+### Committing files
 
-Newly added / modified files need to be added to the staging area before you can make a commit. To do it. press the plus icon next to the file name.
+Newly added / modified files must be added to the staging area before you can make a commit. To do this, press the plus icon next to the file name.
 
-![Adding a file to staging area](<../.gitbook/assets/image (1) (1) (1).png>)
+![Adding a file to staging area](<../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 13.00.09.png>)
 
-You can now enter a commit message in the textfield and press the check button. You can also use the `command`+`enter` shortcut.
+You can now enter a commit message in the textfield and press the commit button to commit. You can also use the `command`+`enter` shortcut.
 
 ### Pushing to remote
 
-You can now push you changes to your remote like GitHub.
+You can push your changes to your hosting provider like GitHub.
 
-![Pushing changes to remote](<../.gitbook/assets/image (3) (1) (1).png>)
+![Pushing changes to remote](<../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 13.00.47.png>)
 
-### Switching branches
+### Branches and tags
 
-To switch between branches, hold the branch icon located in the bottom left corner and select a branch.
+To checkout a branch or a tag, tap the branch icon located in the bottom left corner and select one.
 
-![Checkout to a branch](<../.gitbook/assets/image (1).png>)
+![Checkout to a branch](<../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 12.57.21.png>)
+
+### Pull and Fetch
+
+You can also pull or fetch changes from remote. Pull immediately applies the upstream changes to your files. It does so by fast-forwarding the upstream commits if possible or attempting to merge otherwise. On the other hand, fetch does not write changes to your files.
+
+<figure><img src="../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 12.53.29.png" alt=""><figcaption><p>Pull from a remote</p></figcaption></figure>
+
+To learn more about git pull and fetch:
+
+{% embed url="https://git-scm.com/docs/git-pull" %}
+
+{% embed url="https://git-scm.com/docs/git-fetch" %}
 

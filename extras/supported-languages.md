@@ -2,45 +2,4 @@
 
 Here are the languages that you can run on Code App.
 
-| Language / Runtime                 | Type        | Extension |
-| ---------------------------------- | ----------- | --------- |
-| Python (3.9.2)                     | Local       | .py       |
-| Node.js (16.13.2)                  | Local       | .js       |
-| PHP (8.0.8)                        | Local       | .php      |
-| C (Clang 13.0.0)                   | Local       | .c        |
-| C++ (Clang 13.0.0)                 | Local       | .cpp      |
-| Assembly (NASM 2.14.02)            | Server-side | .asm      |
-| Basic (FBC 1.07.1)                 | Server-side | .bas      |
-| C (Clang 7.0.1)                    | Server-side | .c        |
-| C++ (Clang 7.0.1)                  | Server-side | .cpp      |
-| C (GCC 7.4.0)                      | Server-side | .c        |
-| C++ (GCC 7.4.0)                    | Server-side | .cpp      |
-| C (GCC 8.3.0)                      | Server-side | .c        |
-| C++ (GCC 8.3.0)                    | Server-side | .cpp      |
-| C (GCC 9.2.0)                      | Server-side | .c        |
-| C++ (GCC 9.2.0)                    | Server-side | .cpp      |
-| C# (Mono 6.6.0.161)                | Server-side | .cs       |
-| COBOL (GnuCOBOL 2.2)               | Server-side | .cob      |
-| Common Lisp (SBCL 2.0.0)           | Server-side | .lsp      |
-| D (DMD 2.089.1)                    | Server-side | .di       |
-| Elixir (1.9.4)                     | Server-side | .ex       |
-| Erlang (OTP 22.2)                  | Server-side | .erl      |
-| Fortran (GFortran 9.2.0)           | Server-side | .f90      |
-| Go (1.13.5)                        | Server-side | .go       |
-| Haskell (GHC 8.8.1)                | Server-side | .hs       |
-| Java (OpenJDK 13.0.1)              | Server-side | .java     |
-| JavaScript (Node.js 12.14.0)       | Server-side | .js       |
-| Kotlin (1.3.70)                    | Server-side | .kt       |
-| Lua (5.3.5)                        | Server-side | .lua      |
-| Objective-C (Clang 7.0.1)          | Server-side | .m        |
-| OCaml (4.09.0)                     | Server-side | .ml       |
-| Octave (5.1.0)                     | Server-side | .oct      |
-| Pascal (FPC 3.0.4)                 | Server-side | .pas      |
-| Prolog (GNU Prolog 1.4.5)          | Server-side | .pl       |
-| R (4.0.0)                          | Server-side | .r        |
-| Ruby (2.7.0)                       | Server-side | .rb       |
-| Rust (1.40.0)                      | Server-side | .rs       |
-| Scala (2.13.2)                     | Server-side | .scala    |
-| SQL (SQLite 3.27.2)                | Server-side | .sql      |
-| Swift (5.2.3)                      | Server-side | .swift    |
-| Visual Basic.Net (vbnc 0.0.0.5943) | Server-side | .vb       |
+<table><thead><tr><th width="260.45648691938067">Language / Runtime</th><th width="150">Type</th><th>Extension</th></tr></thead><tbody><tr><td>Python (3.9.2)</td><td>Local</td><td>.py</td></tr><tr><td>Node.js (16.13.2)</td><td>Local</td><td>.js</td></tr><tr><td>PHP (8.0.8)</td><td>Local</td><td>.php</td></tr><tr><td>C (Clang 13.0.0)</td><td>Local</td><td>.c</td></tr><tr><td>C++ (Clang 13.0.0)</td><td>Local</td><td>.cpp</td></tr><tr><td>Assembly (NASM 2.14.02)</td><td>Server-side</td><td>.asm</td></tr><tr><td>Basic (FBC 1.07.1)</td><td>Server-side</td><td>.bas</td></tr><tr><td>C (Clang 7.0.1)</td><td>Server-side</td><td>.c</td></tr><tr><td>C++ (Clang 7.0.1)</td><td>Server-side</td><td>.cpp</td></tr><tr><td>C (GCC 7.4.0)</td><td>Server-side</td><td>.c</td></tr><tr><td>C++ (GCC 7.4.0)</td><td>Server-side</td><td>.cpp</td></tr><tr><td>C (GCC 8.3.0)</td><td>Server-side</td><td>.c</td></tr><tr><td>C++ (GCC 8.3.0)</td><td>Server-side</td><td>.cpp</td></tr><tr><td>C (GCC 9.2.0)</td><td>Server-side</td><td>.c</td></tr><tr><td>C++ (GCC 9.2.0)</td><td>Server-side</td><td>.cpp</td></tr><tr><td>C# (Mono 6.6.0.161)</td><td>Server-side</td><td>.cs</td></tr><tr><td>COBOL (GnuCOBOL 2.2)</td><td>Server-side</td><td>.cob</td></tr><tr><td>Common Lisp (SBCL 2.0.0)</td><td>Server-side</td><td>.lsp</td></tr><tr><td>D (DMD 2.089.1)</td><td>Server-side</td><td>.di</td></tr><tr><td>Elixir (1.9.4)</td><td>Server-side</td><td>.ex</td></tr><tr><td>Erlang (OTP 22.2)</td><td>Server-side</td><td>.erl</td></tr><tr><td>Fortran (GFortran 9.2.0)</td><td>Server-side</td><td>.f90</td></tr><tr><td>Go (1.13.5)</td><td>Server-side</td><td>.go</td></tr><tr><td>Haskell (GHC 8.8.1)</td><td>Server-side</td><td>.hs</td></tr><tr><td>Java (OpenJDK 13.0.1)</td><td>Server-side</td><td>.java</td></tr><tr><td>JavaScript (Node.js 12.14.0)</td><td>Server-side</td><td>.js</td></tr><tr><td>Kotlin (1.3.70)</td><td>Server-side</td><td>.kt</td></tr><tr><td>Lua (5.3.5)</td><td>Server-side</td><td>.lua</td></tr><tr><td>Objective-C (Clang 7.0.1)</td><td>Server-side</td><td>.m</td></tr><tr><td>OCaml (4.09.0)</td><td>Server-side</td><td>.ml</td></tr><tr><td>Octave (5.1.0)</td><td>Server-side</td><td>.oct</td></tr><tr><td>Pascal (FPC 3.0.4)</td><td>Server-side</td><td>.pas</td></tr><tr><td>Prolog (GNU Prolog 1.4.5)</td><td>Server-side</td><td>.pl</td></tr><tr><td>R (4.0.0)</td><td>Server-side</td><td>.r</td></tr><tr><td>Ruby (2.7.0)</td><td>Server-side</td><td>.rb</td></tr><tr><td>Rust (1.40.0)</td><td>Server-side</td><td>.rs</td></tr><tr><td>Scala (2.13.2)</td><td>Server-side</td><td>.scala</td></tr><tr><td>SQL (SQLite 3.27.2)</td><td>Server-side</td><td>.sql</td></tr><tr><td>Swift (5.2.3)</td><td>Server-side</td><td>.swift</td></tr><tr><td>Visual Basic.Net (vbnc 0.0.0.5943)</td><td>Server-side</td><td>.vb</td></tr></tbody></table>
