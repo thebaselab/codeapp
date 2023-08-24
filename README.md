@@ -15,8 +15,8 @@ We built it because there is nothing else on the App Store provides all these fe
 * Local Python Runtime
 * Local Clang compiler
 * Git Version Control
-* Package manager support (Pip and NPM)
-* Remote connection support (Files and terminal)
+* Package manager support (pip and npm)
+* SSH / FTP remote connection support (Files and terminal)
 
 {% hint style="info" %}
 **Good to know:** While we want to make the editing experience as close as a desktop offers, Code App is still bounded by iOS's limitations. For example, you cannot download arbitary commands or modules with native components. Spawning subprocesses is also not possible.
@@ -54,6 +54,10 @@ Follow these guides to get started on the basics:
 
 {% content-ref url="guides/your-first-program-in-python.md" %}
 [your-first-program-in-python.md](guides/your-first-program-in-python.md)
+{% endcontent-ref %}
+
+{% content-ref url="guides/creating-a-node.js-project.md" %}
+[creating-a-node.js-project.md](guides/creating-a-node.js-project.md)
 {% endcontent-ref %}
 
 {% content-ref url="guides/version-control.md" %}
