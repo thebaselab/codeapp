@@ -35,7 +35,7 @@ struct SourceControlCloneSection: View {
                     .font(.subheadline)
 
                 TextField(
-                    "URL (HTTPS)", text: $gitURL,
+                    "URL (HTTPS/SSH)", text: $gitURL,
                     onCommit: {
                         Task {
                             try await onClone(gitURL)
