@@ -210,7 +210,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             switch result["Input"] as! String {
             case "help":
                 let messages = [
-                    "Code App's emulated terminal is built on top of Nicolas Holzschuch (GitHub: holzchu)'s ios_system. It has many Unix commands: ls, pwd, tar, mkdir, grep... You can redirect command output to a file with \">\" and pipe commands with \"|\". In addition, there is support for Node.js and Python runtime.",
+                    "Code App's emulated terminal is built on top of Nicolas Holzschuch (GitHub: holzschu)'s ios_system. It has many Unix commands: ls, pwd, tar, mkdir, grep... You can redirect command output to a file with \">\" and pipe commands with \"|\". In addition, there is support for Node.js and Python runtime.",
                     "\n",
                     "- Install packages with pip and npm (not all modules work on iOS)",
                     "- Run scripts with python and node",
