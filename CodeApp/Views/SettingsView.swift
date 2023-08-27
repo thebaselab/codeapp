@@ -10,7 +10,6 @@ import SwiftUI
 struct SettingsView: View {
 
     @EnvironmentObject var App: MainApp
-    @EnvironmentObject var AppStore: Store
 
     @AppStorage("editorFontSize") var fontSize: Int = 14
     @AppStorage("editorFontFamily") var fontFamily: String = "Menlo"
@@ -283,12 +282,6 @@ struct SettingsView: View {
                         Text(NSLocalizedString("Release Notes", comment: ""))
                     }
 
-                    if AppStore.isSubscribed {
-                        Button("Request a refund") {
-                            AppStore.beginRefundProcess()
-                        }
-                    }
-
                     Button(action: {
                         showsEraseAlert.toggle()
                     }) {
@@ -340,22 +333,6 @@ struct SettingsView: View {
                                 ?? "0.0") + " Build "
                                 + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0")
                         )
-                    }
-
-                    if showReceiptInformation {
-                        HStack {
-                            Text("Receipt - Original app version")
-                            Spacer()
-                            Text("\(AppStore.purchaseReceipt?.originalAppVersion ?? "None")")
-                        }
-
-                        HStack {
-                            Text("Receipt - TestFlight")
-                            Spacer()
-                            Text(
-                                Bundle.main.appStoreReceiptURL?.lastPathComponent
-                                    == "sandboxReceipt" ? "True" : "False")
-                        }
                     }
 
                     Text("Code App by thebaselab").font(.footnote).foregroundColor(.gray)

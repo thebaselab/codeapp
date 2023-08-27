@@ -116,12 +116,6 @@
 		941CF5FB2641CBDA001199C0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 941CF5FA2641CBDA001199C0 /* Settings.bundle */; };
 		941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
 		941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
-		9420698828284027007DE671 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9420698728284027007DE671 /* Store.swift */; };
-		9420698928284027007DE671 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9420698728284027007DE671 /* Store.swift */; };
-		94206990282CDA64007DE671 /* AppReceiptValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 9420698F282CDA64007DE671 /* AppReceiptValidator */; };
-		94206992282CDA78007DE671 /* AppReceiptValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 94206991282CDA78007DE671 /* AppReceiptValidator */; };
-		94206993282CDA78007DE671 /* AppReceiptValidator in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 94206991282CDA78007DE671 /* AppReceiptValidator */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		94206994282CDA7D007DE671 /* AppReceiptValidator in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9420698F282CDA64007DE671 /* AppReceiptValidator */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		94251F09263E01CA0029427A /* python3_ios-_asyncio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D80263E019A0029427A /* python3_ios-_asyncio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0A263E01CA0029427A /* python3_ios-_bisect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251CF8263E018E0029427A /* python3_ios-_bisect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0B263E01CA0029427A /* python3_ios-_blake2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D0C263E018F0029427A /* python3_ios-_blake2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -745,8 +739,6 @@
 		9FDAD1B9296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDAD1B8296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift */; };
 		9FDAD1BA296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDAD1B8296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift */; };
 		9FE3E295298A14BC00F63DD0 /* CodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE3E294298A14BC00F63DD0 /* CodeUITests.swift */; };
-		9FE3E29C298A163200F63DD0 /* AppReceiptValidator in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E29B298A163200F63DD0 /* AppReceiptValidator */; };
-		9FE3E29E298A163200F63DD0 /* AppReceiptValidator in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E29B298A163200F63DD0 /* AppReceiptValidator */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9FE3E2A0298A166800F63DD0 /* FilesProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E29F298A166800F63DD0 /* FilesProvider */; };
 		9FE3E2A2298A167200F63DD0 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A1298A167200F63DD0 /* ZIPFoundation */; };
 		9FE3E2A3298A167800F63DD0 /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; };
@@ -794,7 +786,6 @@
 				94196B0C280316C7008AAEB2 /* ios_system.xcframework in Embed Frameworks */,
 				94196B0D280316C7008AAEB2 /* ssh_cmd.xcframework in Embed Frameworks */,
 				94196B0E280316C7008AAEB2 /* files.xcframework in Embed Frameworks */,
-				94206993282CDA78007DE671 /* AppReceiptValidator in Embed Frameworks */,
 				94196B0F280316C7008AAEB2 /* awk.xcframework in Embed Frameworks */,
 				94196B10280316C7008AAEB2 /* text.xcframework in Embed Frameworks */,
 				94196B11280316C7008AAEB2 /* shell.xcframework in Embed Frameworks */,
@@ -933,7 +924,6 @@
 				94251F5D263E01CB0029427A /* python3_ios-math.framework in Embed Frameworks */,
 				94251F5E263E01CB0029427A /* python3_ios-matplotlib._c_internal_utils.framework in Embed Frameworks */,
 				94251F5F263E01CB0029427A /* python3_ios-matplotlib._contour.framework in Embed Frameworks */,
-				94206994282CDA7D007DE671 /* AppReceiptValidator in Embed Frameworks */,
 				94251F60263E01CB0029427A /* python3_ios-matplotlib._image.framework in Embed Frameworks */,
 				94251F61263E01CB0029427A /* python3_ios-matplotlib._path.framework in Embed Frameworks */,
 				94251F62263E01CB0029427A /* python3_ios-matplotlib._qhull.framework in Embed Frameworks */,
@@ -1203,7 +1193,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9FE3E29E298A163200F63DD0 /* AppReceiptValidator in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1223,8 +1212,6 @@
 		94196B18280316C7008AAEB2 /* CodeUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CF5FA2641CBDA001199C0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		941E53B528787D3100561C7E /* MenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonView.swift; sourceTree = "<group>"; };
-		9420698728284027007DE671 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		9420698A2828476D007DE671 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Configuration.storekit; path = CodeApp/Configuration.storekit; sourceTree = SOURCE_ROOT; };
 		94251C6D263E01810029427A /* pythonA-pandas._libs.tslibs.period.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.tslibs.period.framework"; sourceTree = "<group>"; };
 		94251C6E263E01810029427A /* pythonA-numpy.random._bounded_integers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-numpy.random._bounded_integers.framework"; sourceTree = "<group>"; };
 		94251C6F263E01810029427A /* python3_ios-_codecs_tw.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "python3_ios-_codecs_tw.framework"; sourceTree = "<group>"; };
@@ -1778,7 +1765,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94206992282CDA78007DE671 /* AppReceiptValidator in Frameworks */,
 				9419698F280316C7008AAEB2 /* FilesProvider in Frameworks */,
 				94196990280316C7008AAEB2 /* ZIPFoundation in Frameworks */,
 				94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */,
@@ -1813,7 +1799,6 @@
 				94798713280330080055B838 /* GCDWebServers in Frameworks */,
 				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
 				94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */,
-				94206990282CDA64007DE671 /* AppReceiptValidator in Frameworks */,
 				945AEA3527ECCB3D00BA193E /* NodeMobile.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1825,7 +1810,6 @@
 				9FE3E2AD298A16A300F63DD0 /* NMSSH.xcframework in Frameworks */,
 				9FE3E2A3298A167800F63DD0 /* ios_system.xcframework in Frameworks */,
 				9FE3E2A7298A168400F63DD0 /* GCDWebServers in Frameworks */,
-				9FE3E29C298A163200F63DD0 /* AppReceiptValidator in Frameworks */,
 				9FE3E2AA298A169300F63DD0 /* Dynamic in Frameworks */,
 				9FE3E2A0298A166800F63DD0 /* FilesProvider in Frameworks */,
 				9FE3E2A2298A167200F63DD0 /* ZIPFoundation in Frameworks */,
@@ -1937,7 +1921,6 @@
 				944EEBF72563C386009D77FE /* Assets.xcassets */,
 				94A56834257CC60E008A6530 /* LaunchScreen.storyboard */,
 				944EEBFC2563C386009D77FE /* Info.plist */,
-				9420698A2828476D007DE671 /* Configuration.storekit */,
 				944EEBF92563C386009D77FE /* Preview Content */,
 				941CF5FA2641CBDA001199C0 /* Settings.bundle */,
 			);
@@ -2704,7 +2687,6 @@
 			children = (
 				94CB91AA2802A885002EAC51 /* FileSystem */,
 				94A7779E257ABD7A008FE7B2 /* MainApp.swift */,
-				9420698728284027007DE671 /* Store.swift */,
 				94A777EE257B9193008FE7B2 /* GitHubSearchManager.swift */,
 				947BF348262453040015DAEB /* SearchManager.swift */,
 				94A777BD257B74EE008FE7B2 /* NotificationManager.swift */,
@@ -2822,7 +2804,6 @@
 				94196937280316C7008AAEB2 /* FilesProvider */,
 				94196939280316C7008AAEB2 /* SwiftGit2 */,
 				94127C42280336B6008C7F82 /* GCDWebServers */,
-				94206991282CDA78007DE671 /* AppReceiptValidator */,
 			);
 			productName = testfield;
 			productReference = 94196B18280316C7008AAEB2 /* CodeUI.app */;
@@ -2869,7 +2850,6 @@
 				948F174D26B91C2600B277FC /* FilesProvider */,
 				94B99D9C27D4AA57005B5E3A /* SwiftGit2 */,
 				94798712280330080055B838 /* GCDWebServers */,
-				9420698F282CDA64007DE671 /* AppReceiptValidator */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -2891,7 +2871,6 @@
 			);
 			name = CodeUITests;
 			packageProductDependencies = (
-				9FE3E29B298A163200F63DD0 /* AppReceiptValidator */,
 				9FE3E29F298A166800F63DD0 /* FilesProvider */,
 				9FE3E2A1298A167200F63DD0 /* ZIPFoundation */,
 				9FE3E2A4298A167F00F63DD0 /* MarkdownView */,
@@ -2948,7 +2927,6 @@
 				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */,
 				94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */,
-				9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -3214,7 +3192,6 @@
 				9FA122682A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4C293259080057C12F /* Encoding.swift in Sources */,
 				94A046262804A67100182275 /* SourceControlSection.swift in Sources */,
-				9420698928284027007DE671 /* Store.swift in Sources */,
 				94A04608280493C600182275 /* SourceControlCloneSection.swift in Sources */,
 				FFD081BC29260B00001D9373 /* Libgit2Error.swift in Sources */,
 				9FDAD1BA296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift in Sources */,
@@ -3383,7 +3360,6 @@
 				9FA122672A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4B293259080057C12F /* Encoding.swift in Sources */,
 				94A046252804A67100182275 /* SourceControlSection.swift in Sources */,
-				9420698828284027007DE671 /* Store.swift in Sources */,
 				94A04607280493C600182275 /* SourceControlCloneSection.swift in Sources */,
 				FFD081BB29260B00001D9373 /* Libgit2Error.swift in Sources */,
 				9FDAD1B9296EAC3C00E8AEB2 /* SourceControlTemplateSection.swift in Sources */,
@@ -3941,14 +3917,6 @@
 				kind = branch;
 			};
 		};
-		9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/IdeasOnCanvas/AppReceiptValidator";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JacobHearst/GCDWebServer";
@@ -4021,16 +3989,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
 		};
-		9420698F282CDA64007DE671 /* AppReceiptValidator */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */;
-			productName = AppReceiptValidator;
-		};
-		94206991282CDA78007DE671 /* AppReceiptValidator */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */;
-			productName = AppReceiptValidator;
-		};
 		94798712280330080055B838 /* GCDWebServers */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */;
@@ -4059,11 +4017,6 @@
 		94B99D9C27D4AA57005B5E3A /* SwiftGit2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
-		};
-		9FE3E29B298A163200F63DD0 /* AppReceiptValidator */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9420698E282CDA64007DE671 /* XCRemoteSwiftPackageReference "AppReceiptValidator" */;
-			productName = AppReceiptValidator;
 		};
 		9FE3E29F298A166800F63DD0 /* FilesProvider */ = {
 			isa = XCSwiftPackageProductDependency;

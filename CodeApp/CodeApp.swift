@@ -13,7 +13,6 @@ import ios_system
 
 @main
 struct CodeApp: App {
-    @StateObject var AppStore: Store = Store()
     @StateObject var themeManager = ThemeManager()
 
     @AppStorage("preferredColorScheme") var colorScheme: Int = 0
@@ -329,7 +328,6 @@ struct CodeApp: App {
             MainScene()
                 .ignoresSafeArea(.container, edges: .bottom)
                 .preferredColorScheme(colorSchemePreference)
-                .environmentObject(AppStore)
                 .environmentObject(themeManager)
         }
     }
