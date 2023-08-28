@@ -50,7 +50,11 @@ Code App supports multiple credentials. You can configure a unique credential fo
 
 ### Cloning a repository
 
-To clone a repository, tap the source control icon in the sidebar and enter its url in the clone repository section.
+To clone a repository, tap the source control icon in the sidebar and enter its url in the clone repository section. Assign it as the workspace folder by tapping the open folder button.
+
+{% hint style="info" %}
+Workspace folder is the folder the editor currently loaded. To work with a git repository, it must be located at the root of the workspace folder. You can load a folder by holding a folder cell in explorer or by using the `code` command in the terminal.
+{% endhint %}
 
 <figure><img src="../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 12.56.17.png" alt=""><figcaption><p>Cloning a repository</p></figcaption></figure>
 
