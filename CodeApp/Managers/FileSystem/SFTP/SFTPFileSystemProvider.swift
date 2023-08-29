@@ -102,6 +102,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
 
             self.session.sftp.connect()
             self.fingerPrint = self.session.fingerprint(self.session.fingerprintHash)
+            self.homePath = self.session.sftp.resolveSymbolicLink(atPath: ".")
 
             completionHandler(nil)
         }
