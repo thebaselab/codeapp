@@ -12,11 +12,7 @@ import SwiftUI
 struct RemoteContainer: View {
 
     @EnvironmentObject var App: MainApp
-    @State var hosts: [RemoteHost]
-
-    init() {
-        hosts = UserDefaults.standard.remoteHosts
-    }
+    @State var hosts: [RemoteHost] = []
 
     func onSaveCredentialsForHost(for host: RemoteHost, cred: URLCredential) throws {
         guard let username = cred.user, let password = cred.password else {
@@ -161,6 +157,10 @@ struct RemoteContainer: View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
 
-        }.listStyle(SidebarListStyle())
+        }
+        .listStyle(SidebarListStyle())
+        .onAppear {
+            hosts = UserDefaults.standard.remoteHosts
+        }
     }
 }
