@@ -94,8 +94,10 @@ struct RemoteCreateSection: View {
         Task {
             do {
                 try await onConnectToHostWithCredentials(remoteHost, cred)
-                onSaveHost(remoteHost)
-                if saveCredentials {
+                if saveAddress {
+                    onSaveHost(remoteHost)
+                }
+                if saveAddress && saveCredentials {
                     try onSaveCredentialsForHost(remoteHost, cred)
                 }
                 resetAllFields()
