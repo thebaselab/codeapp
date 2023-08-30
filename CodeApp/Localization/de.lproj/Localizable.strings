@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.4.7 (September 2023)
+- Behebt einige Probleme in der SSH-Remote
+
 ### 1.4.6 (August 2023)
 - Versionskontrolle
    - Authentifizierung
