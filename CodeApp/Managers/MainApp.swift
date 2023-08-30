@@ -773,28 +773,22 @@ class MainApp: ObservableObject {
 
         loadRepository(url: url)
 
-        if let data = try? url.bookmarkData() {
-            if var datas = UserDefaults.standard.value(forKey: "recentFolder") as? [Data] {
-                var existingName: [String] = []
-                for data in datas {
+        if url.isFileURL,
+            let newBookmark = try? url.bookmarkData()
+        {
+            if var bookmarks = UserDefaults.standard.value(forKey: "recentFolder") as? [Data] {
+                bookmarks = bookmarks.filter {
                     var isStale = false
-                    if let newURL = try? URL(
-                        resolvingBookmarkData: data, bookmarkDataIsStale: &isStale)
-                    {
-                        existingName.append(newURL.lastPathComponent)
-                    }
+                    let newURL = try? URL(resolvingBookmarkData: $0, bookmarkDataIsStale: &isStale)
+                    return (newURL != url && !isStale)
                 }
-                if let index = existingName.firstIndex(of: url.lastPathComponent) {
-                    datas.remove(at: index)
+                bookmarks = [newBookmark] + bookmarks
+                if bookmarks.count > 5 {
+                    bookmarks.removeLast()
                 }
-                datas = [data] + datas
-                if datas.count > 5 {
-                    datas.removeLast()
-                }
-                UserDefaults.standard.setValue(datas, forKey: "recentFolder")
-
+                UserDefaults.standard.setValue(bookmarks, forKey: "recentFolder")
             } else {
-                UserDefaults.standard.setValue([data], forKey: "recentFolder")
+                UserDefaults.standard.setValue([newBookmark], forKey: "recentFolder")
             }
         }
         if resetEditors {
