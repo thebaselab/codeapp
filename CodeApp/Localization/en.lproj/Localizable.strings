@@ -300,6 +300,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "common.import" = "Import";
 "common.add" = "Add";
 "common.create" = "Create";
+"common.remove" = "Remove";
 
 "notification.source" = "Source: %@";
 
@@ -340,6 +341,9 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.failed_to_save_file.encoding.failed" = "Failed to save file. Encoding failed.";
 "errors.file_modified_by_another_process" = "File modified by another process";
 "errors.failed_to_import_key" = "Failed to import key";
+"errors.port_forward.service_unavailable" = "Service unavailable";
+"errors.port_forward.invalid_address" = "Invalid address";
+"errors.port_forward.address_already_in_use" = "Errno 48: Address already in use";
 
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";
@@ -431,3 +435,9 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.private_key_content" = "Private key content";
 "remote.setup_note" = "To generate key-pairs, run ssh-keygen in the terminal. Leave the passphrase empty if there isn't one.";
 "remote.import_from_file" = "Import from file";
+"remote.port_forward.new_port_forward" = "New Port Forward";
+"remote.port_forward.local_port_or_address" = "Local port or address";
+"remote.port_forward.remote_port_or_address" = "Remote port or address";
+"remote.port_forward.port_forwarding" = "Port Forwarding";
+"remote.port_forward.configure_description" = "Configure port forwarding to access a port on the remote machine.";
+"remote.port_forward.address_example" = "e.g. 6000 or 127.0.0.1:6000";

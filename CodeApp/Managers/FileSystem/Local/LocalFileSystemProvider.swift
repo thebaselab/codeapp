@@ -13,6 +13,7 @@ class LocalFileSystemProvider: FileSystemProvider {
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
     var terminalServiceProvider: TerminalServiceProvider? = nil
+    var portforwardServiceProvider: (any PortForwardServiceProvider)? = nil
 
     func write(
         at: URL, content: Data, atomically: Bool, overwrite: Bool,

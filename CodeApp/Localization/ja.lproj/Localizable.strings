@@ -411,6 +411,7 @@
 "common.import" = "インポート";
 "common.add" = "追加";
 "common.create" = "作成";
+"common.remove" = "削除";
 
 "notification.source" = "Source: %@";
 
@@ -451,6 +452,9 @@
 "errors.failed_to_save_file.encoding.failed" = "ファイルの保存に失敗しました。 エンコードに失敗しました。";
 "errors.file_modified_by_another_process" = "別のプロセスによって変更されたファイルです";
 "errors.failed_to_import_key" = "キーのインポートに失敗しました";
+"errors.port_forward.service_unavailable" = "サービスが利用できません";
+"errors.port_forward.invalid_address" = "無効なアドレスです";
+"errors.port_forward.address_already_in_use" = "Errno 48: アドレスはすでに使用されています";
 
 "file.copy" = "コピー..";
 "file.download" = "ダウンロード..";
@@ -542,3 +546,9 @@
 "remote.private_key_content" = "秘密鍵の内容";
 "remote.setup_note" = "キーペアを生成するには、ターミナルで ssh-keygen を実行します。 パスフレーズがない場合は空のままにします。";
 "remote.import_from_file" = "ファイルからインポート";
+"remote.port_forward.new_port_forward" = "新しいポートフォワード";
+"remote.port_forward.local_port_or_address" = "ローカル ポートまたはアドレス";
+"remote.port_forward.remote_port_or_address" = "リモート ポートまたはアドレス";
+"remote.port_forward.port_forwarding" = "ポートフォワーディング";
+"remote.port_forward.configure_description" = "ポートフォワーディングを使用すると、リモート ホストのポートをローカル ホストに転送できます。";
+"remote.port_forward.address_example" = "例えば 6000 または 127.0.0.1:6000";

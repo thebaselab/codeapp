@@ -53,7 +53,11 @@ struct ActivityBarIconView: View {
                         .padding(5)
                 }.frame(maxWidth: .infinity, minHeight: 60.0)
             }
-            .keyboardShortcut(activityBarItem.shortcutKey, modifiers: activityBarItem.modifiers)
+            .if(activityBarItem.shortcutKey != nil && activityBarItem.modifiers != nil) { view in
+                view
+                    .keyboardShortcut(
+                        activityBarItem.shortcutKey!, modifiers: activityBarItem.modifiers!)
+            }
             .if(activityBarItem.contextMenuItems != nil) { view in
                 view
                     .contextMenu {

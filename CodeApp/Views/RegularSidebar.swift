@@ -43,7 +43,7 @@ struct RegularSidebar: View {
     var body: some View {
         ZStack(alignment: .center) {
             Color.init(id: "sideBar.background")
-            if let item = activityBarManager.itemForItemID(itemID: activeItemId) {
+            if let item = activityBarManager.itemForItemID(itemID: activeItemId), item.isVisible() {
                 item.view
             } else {
                 ProgressView()

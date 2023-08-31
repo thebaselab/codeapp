@@ -410,6 +410,7 @@
 "common.import" = "가져오기";
 "common.add" = "추가";
 "common.create" = "생성";
+"common.rename" = "이름 바꾸기";
 
 "notification.source" = "원천: %@";
 
@@ -450,6 +451,9 @@
 "errors.failed_to_save_file.encoding.failed" = "파일을 저장하지 못했습니다. 인코딩에 실패했습니다.";
 "errors.file_modified_by_another_process" = "파일이 다른 프로세스에 의해 수정되었습니다.";
 "errors.failed_to_import_key" = "키를 가져 오지 못했습니다.";
+"errors.port_forward.service_unavailable" = "서비스를 사용할 수 없습니다.";
+"errors.port_forward.invalid_address" = "잘못된 주소입니다.";
+"errors.port_forward.address_already_in_use" = "Errno 48: 주소가 이미 사용 중입니다.";
 
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";
@@ -541,3 +545,9 @@
 "remote.private_key_content" = "개인 키 내용";
 "remote.setup_note" = "키 쌍을 생성하려면 터미널에서 ssh-keygen을 실행하십시오. 암호가 없는 경우 암호를 비워 둡니다.";
 "remote.import_from_file" = "파일에서 가져 오기";
+"remote.port_forward.new_port_forward" = "새 포트 포워드";
+"remote.port_forward.local_port_or_address" = "로컬 포트 또는 주소";
+"remote.port_forward.remote_port_or_address" = "원격 포트 또는 주소";
+"remote.port_forward.port_forwarding" = "포트 포워딩";
+"remote.port_forward.configure_description" = "원격 시스템의 포트에 액세스하도록 포트 전달을 구성합니다.";
+"remote.port_forward.address_example" = "예를 들어 6000 또는 127.0.0.1:6000";

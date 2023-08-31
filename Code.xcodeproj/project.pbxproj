@@ -716,6 +716,12 @@
 		9FC03E72291F6FE000DECD1B /* ExplorerFileTreeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E70291F6FE000DECD1B /* ExplorerFileTreeSection.swift */; };
 		9FC03E742920CF1700DECD1B /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E732920CF1700DECD1B /* Notification.swift */; };
 		9FC03E752920CF1700DECD1B /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC03E732920CF1700DECD1B /* Notification.swift */; };
+		9FC6737E2AA03A4800346FD7 /* RemotePortForwardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC6737D2AA03A4800346FD7 /* RemotePortForwardSection.swift */; };
+		9FC6737F2AA03A4800346FD7 /* RemotePortForwardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC6737D2AA03A4800346FD7 /* RemotePortForwardSection.swift */; };
+		9FC673812AA057F100346FD7 /* PortForwardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC673802AA057F100346FD7 /* PortForwardContainer.swift */; };
+		9FC673822AA057F100346FD7 /* PortForwardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC673802AA057F100346FD7 /* PortForwardContainer.swift */; };
+		9FC673842AA068EE00346FD7 /* PortForwardServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC673832AA068EE00346FD7 /* PortForwardServiceProvider.swift */; };
+		9FC673852AA068EE00346FD7 /* PortForwardServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC673832AA068EE00346FD7 /* PortForwardServiceProvider.swift */; };
 		9FD0FAF02938A14C007170F5 /* EncodingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */; };
 		9FD0FAF12938A14C007170F5 /* EncodingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */; };
 		9FD0FAF42939AD86007170F5 /* SimpleWebPreviewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD0FAF32939AD86007170F5 /* SimpleWebPreviewExtension.swift */; };
@@ -1743,6 +1749,9 @@
 		9FC03E6D291F6EE700DECD1B /* ExplorerEditorListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerEditorListSection.swift; sourceTree = "<group>"; };
 		9FC03E70291F6FE000DECD1B /* ExplorerFileTreeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerFileTreeSection.swift; sourceTree = "<group>"; };
 		9FC03E732920CF1700DECD1B /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		9FC6737D2AA03A4800346FD7 /* RemotePortForwardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePortForwardSection.swift; sourceTree = "<group>"; };
+		9FC673802AA057F100346FD7 /* PortForwardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardContainer.swift; sourceTree = "<group>"; };
+		9FC673832AA068EE00346FD7 /* PortForwardServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardServiceProvider.swift; sourceTree = "<group>"; };
 		9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingMenu.swift; sourceTree = "<group>"; };
 		9FD0FAF32939AD86007170F5 /* SimpleWebPreviewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleWebPreviewExtension.swift; sourceTree = "<group>"; };
 		9FD5BCE42923897200F20C4B /* PanelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelManager.swift; sourceTree = "<group>"; };
@@ -2421,6 +2430,7 @@
 				941969242802AB2C008AAEB2 /* FileSystemProvider.swift */,
 				94A0461228049A7A00182275 /* GitServiceProvider.swift */,
 				942E3200280877C900233441 /* SearchServiceProvider.swift */,
+				9FC673832AA068EE00346FD7 /* PortForwardServiceProvider.swift */,
 			);
 			path = FileSystem;
 			sourceTree = "<group>";
@@ -2644,7 +2654,9 @@
 		9FA122742A8B5A3B00E7B417 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9FC6737D2AA03A4800346FD7 /* RemotePortForwardSection.swift */,
 				9FA122752A8B5A4800E7B417 /* RemoteConnectedLabel.swift */,
+				9FC673802AA057F100346FD7 /* PortForwardContainer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3064,6 +3076,7 @@
 				94196944280316C7008AAEB2 /* getRootDirectory.swift in Sources */,
 				94A045F5280481A900182275 /* RemoteTypeLabel.swift in Sources */,
 				94A045FF2804853200182275 /* DescriptionText.swift in Sources */,
+				9FC673822AA057F100346FD7 /* PortForwardContainer.swift in Sources */,
 				94196945280316C7008AAEB2 /* SourceControlContainer.swift in Sources */,
 				94196946280316C7008AAEB2 /* shortcutsMapping.swift in Sources */,
 				94196947280316C7008AAEB2 /* BottomBar.swift in Sources */,
@@ -3099,6 +3112,7 @@
 				94196959280316C7008AAEB2 /* SearchManager.swift in Sources */,
 				9419695A280316C7008AAEB2 /* ArchiveDir.swift in Sources */,
 				9419695B280316C7008AAEB2 /* MarkdownView.swift in Sources */,
+				9FC6737F2AA03A4800346FD7 /* RemotePortForwardSection.swift in Sources */,
 				9F046C3629222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
 				9FD5BCFC2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
 				9419695C280316C7008AAEB2 /* MonacoEditor.swift in Sources */,
@@ -3126,6 +3140,7 @@
 				94196967280316C7008AAEB2 /* Executor.swift in Sources */,
 				94196968280316C7008AAEB2 /* RemoteAuthView.swift in Sources */,
 				94196969280316C7008AAEB2 /* CodeApp.swift in Sources */,
+				9FC673852AA068EE00346FD7 /* PortForwardServiceProvider.swift in Sources */,
 				9419696A280316C7008AAEB2 /* openFilesApp.swift in Sources */,
 				9419696B280316C7008AAEB2 /* View+If.swift in Sources */,
 				9419696C280316C7008AAEB2 /* WorkSpaceStorage.swift in Sources */,
@@ -3232,6 +3247,7 @@
 				94A7782D257BCEE2008FE7B2 /* getRootDirectory.swift in Sources */,
 				94A045F4280481A900182275 /* RemoteTypeLabel.swift in Sources */,
 				94A045FE2804853200182275 /* DescriptionText.swift in Sources */,
+				9FC673812AA057F100346FD7 /* PortForwardContainer.swift in Sources */,
 				94A777E0257B8D8E008FE7B2 /* SourceControlContainer.swift in Sources */,
 				94C893E6279D0C3000DFBF29 /* shortcutsMapping.swift in Sources */,
 				94A7FFB3268D085300369147 /* BottomBar.swift in Sources */,
@@ -3267,6 +3283,7 @@
 				947BF349262453040015DAEB /* SearchManager.swift in Sources */,
 				94A7781E257BC473008FE7B2 /* ArchiveDir.swift in Sources */,
 				94A5682B257CBDE4008A6530 /* MarkdownView.swift in Sources */,
+				9FC6737E2AA03A4800346FD7 /* RemotePortForwardSection.swift in Sources */,
 				9F046C3529222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
 				9FD5BCFB2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
 				94A777AC257B66CF008FE7B2 /* MonacoEditor.swift in Sources */,
@@ -3294,6 +3311,7 @@
 				948D12222583F2A5008F877A /* Executor.swift in Sources */,
 				9437155B26C3C745000376FB /* RemoteAuthView.swift in Sources */,
 				944EEBF42563C381009D77FE /* CodeApp.swift in Sources */,
+				9FC673842AA068EE00346FD7 /* PortForwardServiceProvider.swift in Sources */,
 				94A777DC257B8C99008FE7B2 /* openFilesApp.swift in Sources */,
 				94B3DDFA260526D200C4F2B1 /* View+If.swift in Sources */,
 				94A777A2257ABDC3008FE7B2 /* WorkSpaceStorage.swift in Sources */,

@@ -14,6 +14,7 @@ class FTPFileSystemProvider: FileSystemProvider {
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
     var terminalServiceProvider: TerminalServiceProvider? = nil
+    var portforwardServiceProvider: (any PortForwardServiceProvider)? = nil
 
     private var fs: FTPFileProvider
 

@@ -401,6 +401,7 @@
 "common.import" = "导入";
 "common.add" = "添加";
 "common.create" = "创建";
+"common.remove" = "移除";
 
 "notification.source" = "来源: %@";
 
@@ -441,6 +442,9 @@
 "errors.failed_to_save_file.encoding.failed" = "无法保存文件。 编码失败。";
 "errors.file_modified_by_another_process" = "文件已被另一个进程修改。";
 "errors.failed_to_import_key" = "无法导入密钥。";
+"errors.port_forward.service_unavailable" = "服务不可用";
+"errors.port_forward.invalid_address" = "无效的地址";
+"errors.port_forward.address_already_in_use" = "地址已在使用中";
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";
@@ -516,3 +520,9 @@
 "remote.private_key_content" = "私钥内容";
 "remote.setup_note" = "要生成密钥，请在终端中运行 ssh-keygen。如果没有密钥密码，请留空。";
 "remote.import_from_file" = "从文件导入";
+"remote.port_forward.new_port_forward" = "新建端口转发";
+"remote.port_forward.local_port_or_address" = "本地端口或地址";
+"remote.port_forward.remote_port_or_address" = "远程端口或地址";
+"remote.port_forward.port_forwarding" = "端口转发";
+"remote.port_forward.configure_description" = "您可以使用端口转发功能将本地端口转发到远程服务器。";
+"remote.port_forward.address_example" = "例如 6000 或 127.0.0.1:6000";

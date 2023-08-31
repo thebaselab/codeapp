@@ -410,6 +410,7 @@
 "common.import" = "Importieren";
 "common.add" = "Hinzufügen";
 "common.create" = "Erstellen";
+"common.remove" = "Entfernen";
 
 "notification.source" = "Quelle: %@";
 
@@ -450,6 +451,9 @@
 "errors.failed_to_save_file.encoding.failed" = "Fehler beim Speichern der Datei. Die Zeichenkodierung ist möglicherweise nicht unterstützt.";
 "errors.file_modified_by_another_process" = "Die Datei wurde von einem anderen Prozess geändert.";
 "errors.failed_to_import_key" = "Fehler beim Importieren des Schlüssels.";
+"errors.port_forward.service_unavailable" = "Dienst nicht verfügbar";
+"errors.port_forward.invalid_address" = "Ungültige Adresse";
+"errors.port_forward.address_already_in_use" = "Errno 48: Adresse wird bereits verwendet";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";
@@ -541,3 +545,9 @@
 "remote.private_key_content" = "Inhalt des privaten Schlüssels";
 "remote.setup_note" = "Um Schlüsselpaare zu generieren, führen Sie ssh-keygen im Terminal aus. Lassen Sie die Passphrase leer, falls keine vorhanden ist.";
 "remote.import_from_file" = "Importieren aus Datei";
+"remote.port_forward.new_port_forward" = "Neue Portweiterleitung";
+"remote.port_forward.local_port_or_address" = "Lokaler Port oder Adresse";
+"remote.port_forward.remote_port_or_address" = "Remote-Port oder Adresse";
+"remote.port_forward.port_forwarding" = "Portweiterleitung";
+"remote.port_forward.configure_description" = "Um eine Portweiterleitung zu konfigurieren, geben Sie die lokale und die Remote-Adresse ein. Wenn Sie eine Adresse eingeben, wird der Port 22 verwendet.";
+"remote.port_forward.address_example" = "z.B. 6000 oder 127.0.0.1:6000";

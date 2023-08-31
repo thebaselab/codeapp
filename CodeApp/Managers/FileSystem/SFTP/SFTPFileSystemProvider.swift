@@ -8,8 +8,16 @@
 import Foundation
 import NMSSH
 
-class SFTPFileSystemProvider: NSObject, FileSystemProvider {
+struct SFTPSocket: PortForwardSocket {
+    var socket: NMSSHSocket
+    var type: PortForwardType
 
+    func closeSocket() throws {
+        close(socket.sock)
+    }
+}
+
+class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServiceProvider {
     static var registeredScheme: String = "sftp"
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
@@ -17,11 +25,14 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
         _terminalServiceProvider
     }
     var _terminalServiceProvider: SFTPTerminalServiceProvider? = nil
+    var portforwardServiceProvider: (any PortForwardServiceProvider)? { self }
 
     var homePath: String? = ""
     var fingerPrint: String? = nil
+    var sockets: [SFTPSocket] = []
 
     private var didDisconnect: (Error) -> Void
+    private var onSocketClosed: ((SFTPSocket) -> Void)? = nil
     private var session: NMSSHSession!
     private let queue = DispatchQueue(label: "sftp.serial.queue")
 
@@ -43,6 +54,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
         queue.async {
             self.session = NMSSHSession(host: host, port: port, andUsername: username)
             self.session.delegate = self
+            self.session.channel.socketDelegate = self
         }
 
         self._terminalServiceProvider = SFTPTerminalServiceProvider(
@@ -55,9 +67,42 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
     }
 
     deinit {
+        sockets.forEach { try? $0.closeSocket() }
         self._terminalServiceProvider?.disconnect()
         self.session.sftp.disconnect()
         self.session.disconnect()
+    }
+
+    func bindLocalPortToRemote(localAddress: Address, remoteAddress: Address) async throws
+        -> SFTPSocket
+    {
+        return try await withUnsafeThrowingContinuation { continuation in
+            queue.async {
+                do {
+                    let socket = NMSSHChannel.createSocket()
+                    try self.session.channel.bindLocalPortToRemoteHost(
+                        with: socket,
+                        localListenIP: localAddress.address,
+                        localPort: localAddress.port,
+                        host: remoteAddress.address,
+                        port: remoteAddress.port,
+                        in: self.queue
+                    )
+                    let sftpSocket = SFTPSocket(
+                        socket: socket, type: .forward(localAddress, remoteAddress))
+                    DispatchQueue.main.async {
+                        self.sockets.append(sftpSocket)
+                    }
+                    continuation.resume(returning: sftpSocket)
+                } catch {
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+
+    func onSocketClosed(_ callback: @escaping (SFTPSocket) -> Void) {
+        self.onSocketClosed = callback
     }
 
     func connect(
@@ -249,5 +294,15 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider {
 extension SFTPFileSystemProvider: NMSSHSessionDelegate {
     func session(_ session: NMSSHSession, didDisconnectWithError error: Error) {
         didDisconnect(error)
+    }
+}
+
+extension SFTPFileSystemProvider: NMSSHSocketDelegate {
+    func socketDidClose(_ socket: NMSSHSocket) {
+        let sftpSocket = sockets.first { $0.socket.sock == socket.sock }
+        sockets = sockets.filter { $0.socket.sock != socket.sock }
+        if let sftpSocket {
+            self.onSocketClosed?(sftpSocket)
+        }
     }
 }
