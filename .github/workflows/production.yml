@@ -8,7 +8,7 @@ concurrency:
 jobs:
   deploy:
     name: Deploying to App Store
-    runs-on: macOS-12
+    runs-on: macOS-13
 
     steps:
       - name: Checkout repository
@@ -37,3 +37,4 @@ jobs:
           JUDGE0_KEY: "${{ secrets.JUDGE0_KEY }}"
           JUDGE0_ENDPOINT: "${{ secrets.JUDGE0_ENDPOINT }}"
           DISTRIBUTE_EXTERNAL: "false"
+          XCODE_PATH: "/Applications/Xcode_14.3.1.app"

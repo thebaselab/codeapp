@@ -13,6 +13,7 @@ GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 JUDGE0_KEY = ENV["JUDGE0_KEY"]
 JUDGE0_ENDPOINT = ENV["JUDGE0_ENDPOINT"]
 DISTRIBUTE_EXTERNAL = ENV["DISTRIBUTE_EXTERNAL"] == "true"
+XCODE_PATH = ENV["XCODE_PATH"]
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -36,6 +37,8 @@ end
 
 platform :ios do
   lane :beta do
+    xcode_select(XCODE_PATH)
+
     keychain_name = TEMP_KEYCHAIN_USER
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)

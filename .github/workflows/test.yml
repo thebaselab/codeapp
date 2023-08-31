@@ -7,7 +7,7 @@ on:
 
 jobs:
   Linting:
-    runs-on: macOS-12
+    runs-on: macOS-13
     steps:
       - uses: actions/checkout@v3
       - name: Install swift-format
@@ -16,3 +16,5 @@ jobs:
         run: swift-format lint -r -s ./CodeApp ./Extensions ./CodeUITests
       - name: Unit Tests
         run: fastlane tests
+        env:
+          XCODE_PATH: "/Applications/Xcode_14.3.1.app"
