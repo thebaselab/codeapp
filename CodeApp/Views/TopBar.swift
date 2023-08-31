@@ -12,6 +12,7 @@ struct TopBar: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var toolBarManager: ToolbarManager
     @EnvironmentObject var stateManager: MainStateManager
+    @EnvironmentObject var themeManager: ThemeManager
 
     @SceneStorage("sidebar.visible") var isSideBarExpanded: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
@@ -150,8 +151,18 @@ struct TopBar: View {
                     .padding()
             }
             .sheet(isPresented: $stateManager.showsSettingsSheet) {
-                SettingsView()
-                    .environmentObject(App)
+                if #available(iOS 16.4, *) {
+                    SettingsView()
+                        .presentationBackground {
+                            Color(id: "sideBar.background")
+                        }
+
+                        .scrollContentBackground(.hidden)
+                        .environmentObject(themeManager)
+                } else {
+                    SettingsView()
+                        .environmentObject(App)
+                }
             }
 
         }

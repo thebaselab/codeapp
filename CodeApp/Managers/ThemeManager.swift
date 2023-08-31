@@ -15,6 +15,11 @@ class ThemeManager: ObservableObject {
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
+    @AppStorage("preferredColorScheme") var preferredColorScheme: Int = 0
+
+    var colorSchemePreference: ColorScheme? {
+        preferredColorScheme == 1 ? .dark : preferredColorScheme == 2 ? .light : nil
+    }
 
     var themes: [Theme] = []
     @Published var currentTheme: Theme? = nil

@@ -15,8 +15,6 @@ import ios_system
 struct CodeApp: App {
     @StateObject var themeManager = ThemeManager()
 
-    @AppStorage("preferredColorScheme") var colorScheme: Int = 0
-
     func versionNumberIncreased() -> Bool {
         if let lastReadVersion = UserDefaults.standard.string(forKey: "changelog.lastread") {
             let currentVersion =
@@ -319,15 +317,11 @@ struct CodeApp: App {
         return window
     }
 
-    var colorSchemePreference: ColorScheme? {
-        colorScheme == 1 ? .dark : colorScheme == 2 ? .light : nil
-    }
-
     var body: some Scene {
         WindowGroup {
             MainScene()
                 .ignoresSafeArea(.container, edges: .bottom)
-                .preferredColorScheme(colorSchemePreference)
+                .preferredColorScheme(themeManager.colorSchemePreference)
                 .environmentObject(themeManager)
         }
     }

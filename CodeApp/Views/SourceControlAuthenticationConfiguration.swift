@@ -549,13 +549,13 @@ struct SourceControlAuthenticationConfiguration: View {
     var body: some View {
         VStack {
             Form {
-                PasswordBasedAuthenticationSection(username: $username, password: $password)
-
-                URLSpecificCredentialsSections()
+                Group {
+                    PasswordBasedAuthenticationSection(username: $username, password: $password)
+                    URLSpecificCredentialsSections()
+                }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
             }
 
         }.navigationBarTitle("source_control.git_authentication", displayMode: .inline)
-            .background(Color(.systemGroupedBackground))
             .navigationBarItems(
                 trailing:
                     HStack {
@@ -588,5 +588,6 @@ struct SourceControlAuthenticationConfiguration: View {
                     KeychainWrapper.standard.removeObject(forKey: "git-password")
                 }
             }
+            .background(Color(id: "sideBar.background"))
     }
 }

@@ -48,7 +48,9 @@ struct SettingsKeyboardShortcuts: View {
                                 shortcutID: shortcut.id, existingShortcuts: $storedShortcuts,
                                 onUpdate: {
                                     App.monacoInstance.applyCustomShortcuts()
-                                }),
+                                }
+                            )
+                            .background(Color(id: "sideBar.background")),
                             label: {
                                 HStack {
                                     Text(shortcut.label)
@@ -77,10 +79,12 @@ struct SettingsKeyboardShortcuts: View {
                                 }
                             })
                     }
-                }
+                }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
             }
-            .background(Color(.systemGroupedBackground))
-        }.onAppear {
+
+        }
+        .background(Color(id: "sideBar.background"))
+        .onAppear {
             if let result = UserDefaults.standard.value(
                 forKey: "thebaselab.custom.keyboard.shortcuts") as? [String: [GCKeyCode]]
             {

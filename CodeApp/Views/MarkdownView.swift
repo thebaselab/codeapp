@@ -52,6 +52,8 @@ struct ChangeLogView: View {
 }
 
 struct WelcomeView: UIViewRepresentable {
+    @EnvironmentObject var themeManager: ThemeManager
+
     let onCreateNewFile: () -> Void
     let onSelectFolderAsWorkspaceStorage: (URL) -> Void
     let onSelectFolder: () -> Void

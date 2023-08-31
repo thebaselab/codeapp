@@ -12,6 +12,7 @@ struct ExplorerContainer: View {
 
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var stateManager: MainStateManager
+    @EnvironmentObject var themeManager: ThemeManager
 
     @State var selectedURL: String = ""
     @State private var selectKeeper = Set<String>()

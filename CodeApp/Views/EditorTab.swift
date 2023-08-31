@@ -10,7 +10,7 @@ import SwiftUI
 struct EditorTab: View {
 
     @EnvironmentObject var App: MainApp
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @EnvironmentObject var themeManager: ThemeManager
 
     // TODO: Don't use ObservedObject because it leaks memory
     @ObservedObject var currentEditor: EditorInstance

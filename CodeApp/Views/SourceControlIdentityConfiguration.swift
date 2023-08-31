@@ -27,9 +27,8 @@ struct SourceControlIdentityConfiguration: View {
                     .keyboardType(.emailAddress)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
-            }
+            }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
         }.navigationBarTitle("Author Identity", displayMode: .inline)
-            .background(Color(.systemGroupedBackground))
             .navigationBarItems(
                 trailing:
                     Button(NSLocalizedString("Done", comment: "")) {
@@ -42,5 +41,6 @@ struct SourceControlIdentityConfiguration: View {
             .onChange(of: email) { value in
                 App.workSpaceStorage.gitServiceProvider?.sign(name: username, email: value)
             }
+            .background(Color(id: "sideBar.background"))
     }
 }

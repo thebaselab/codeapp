@@ -34,6 +34,7 @@ struct ExplorerCell: View {
 private struct FileCell: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var themeManager: ThemeManager
     @State var item: WorkSpaceStorage.FileItemRepresentable
     @State var newname = ""
     @State var showsDirectoryPicker = false
@@ -165,6 +166,7 @@ private struct FileCell: View {
 private struct FolderCell: View {
 
     @EnvironmentObject var App: MainApp
+    @EnvironmentObject var themeManager: ThemeManager
     @State var item: WorkSpaceStorage.FileItemRepresentable
     @State var showingNewFileSheet = false
     @State var showsDirectoryPicker = false

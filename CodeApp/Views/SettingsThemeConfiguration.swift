@@ -26,49 +26,50 @@ struct SettingsThemeConfiguration: View {
         ))
 
     var themeSection: some View {
-        VStack(alignment: .leading) {
-            Text("Dark Themes")
-                .font(.system(size: 20, weight: .bold))
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
+        List {
+            Section("Dark Themes") {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20) {
 
-                    ForEach(
-                        [SettingsThemeConfiguration.defaultDarkPlusTheme]
-                            + themeManager.themes.sorted { $0.name < $1.name }.filter { $0.isDark },
-                        id: \.id
-                    ) { item in
-                        ThemePreview(item: item)
-                            .environmentObject(App)
+                        ForEach(
+                            [SettingsThemeConfiguration.defaultDarkPlusTheme]
+                                + themeManager.themes.sorted { $0.name < $1.name }.filter {
+                                    $0.isDark
+                                },
+                            id: \.id
+                        ) { item in
+                            ThemePreview(item: item)
+                                .environmentObject(App)
+                        }
+
                     }
-
+                    .frame(height: 150)
                 }
-                .frame(height: 150)
-            }
+            }.listRowBackground(Color.clear)
 
-            Text("Light Themes")
-                .font(.system(size: 20, weight: .bold))
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    ForEach(
-                        [SettingsThemeConfiguration.defaultLightPlusTheme]
-                            + themeManager.themes.sorted { $0.name < $1.name }.filter { !$0.isDark },
-                        id: \.id
-                    ) { item in
-                        ThemePreview(item: item)
-                            .environmentObject(App)
+            Section("Light Themes") {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20) {
+                        ForEach(
+                            [SettingsThemeConfiguration.defaultLightPlusTheme]
+                                + themeManager.themes.sorted { $0.name < $1.name }.filter {
+                                    !$0.isDark
+                                },
+                            id: \.id
+                        ) { item in
+                            ThemePreview(item: item)
+                                .environmentObject(App)
+                        }
                     }
+                    .frame(height: 150)
                 }
-                .frame(height: 150)
-            }
-            Spacer()
+            }.listRowBackground(Color.clear)
         }
+        .navigationTitle("Themes")
     }
 
     var body: some View {
-        ZStack {
-            themeSection
-                .padding()
-        }
+        themeSection.background(Color(id: "sideBar.background"))
     }
 }
 
