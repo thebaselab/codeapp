@@ -101,6 +101,7 @@ platform :ios do
   end
 
   lane :tests do
+    xcode_select(XCODE_PATH)
     Dir.chdir("..") do
       sh("./downloadFrameworks.sh")
     end
