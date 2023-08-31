@@ -67,46 +67,43 @@ struct ActivityBarIconView: View {
                         }
                     }
             }
-
-            switch activityBarItem.bubble() {
-            case let .text(bubbleText):
-                if bubbleText.isEmpty {
-                    Circle()
-                        .fill(Color.init(id: "statusBar.background"))
-                        .frame(width: 10, height: 10)
+            if let bubble = activityBarItem.bubble() {
+                switch bubble {
+                case let .text(bubbleText):
+                    if bubbleText.isEmpty {
+                        Circle()
+                            .fill(Color.init(id: "statusBar.background"))
+                            .frame(width: 10, height: 10)
+                            .offset(x: 10, y: -10)
+                    } else {
+                        ZStack {
+                            Text(bubbleText)
+                                .font(.system(size: 12))
+                        }
+                        .padding(.horizontal, 3)
+                        .foregroundColor(
+                            Color.init(id: "statusBar.foreground")
+                        )
+                        .background(
+                            Color.init(id: "statusBar.background")
+                        )
+                        .cornerRadius(5)
                         .offset(x: 10, y: -10)
-                } else {
-                    ZStack {
-                        Text(bubbleText)
-                            .font(.system(size: 12))
                     }
-                    .padding(.horizontal, 3)
-                    .foregroundColor(
-                        Color.init(id: "statusBar.foreground")
-                    )
-                    .background(
-                        Color.init(id: "statusBar.background")
-                    )
-                    .cornerRadius(5)
-                    .offset(x: 10, y: -10)
+                case let .systemImage(systemImage):
+                    Image(systemName: systemImage)
+                        .font(.system(size: 12))
+                        .padding(.horizontal, 3)
+                        .foregroundColor(
+                            Color.init(id: "statusBar.foreground")
+                        )
+                        .background(
+                            Color.init(id: "statusBar.background")
+                        )
+                        .cornerRadius(5)
+                        .offset(x: 10, y: -10)
                 }
-            case let .systemImage(systemImage):
-                Image(systemName: systemImage)
-                    .font(.system(size: 12))
-                    .padding(.horizontal, 3)
-                    .foregroundColor(
-                        Color.init(id: "statusBar.foreground")
-                    )
-                    .background(
-                        Color.init(id: "statusBar.background")
-                    )
-                    .cornerRadius(5)
-                    .offset(x: 10, y: -10)
-            case nil:
-                EmptyView()
             }
         }
-        .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-        .frame(minWidth: 0, maxWidth: 50.0, minHeight: 0, maxHeight: 60.0)
     }
 }
