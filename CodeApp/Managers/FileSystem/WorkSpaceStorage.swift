@@ -399,7 +399,6 @@ extension WorkSpaceStorage {
 }
 
 extension WorkSpaceStorage: FileSystemProvider {
-
     static var registeredScheme: String {
         "nil"
     }
@@ -414,6 +413,10 @@ extension WorkSpaceStorage: FileSystemProvider {
 
     var terminalServiceProvider: TerminalServiceProvider? {
         fs?.terminalServiceProvider
+    }
+
+    var portforwardServiceProvider: (any PortForwardServiceProvider)? {
+        fs?.portforwardServiceProvider
     }
 
     func write(

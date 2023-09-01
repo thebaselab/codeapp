@@ -12,6 +12,7 @@ protocol FileSystemProvider {
     var gitServiceProvider: GitServiceProvider? { get }
     var searchServiceProvider: SearchServiceProvider? { get }
     var terminalServiceProvider: TerminalServiceProvider? { get }
+    var portforwardServiceProvider: (any PortForwardServiceProvider)? { get }
 
     func contentsOfDirectory(at url: URL, completionHandler: @escaping ([URL]?, Error?) -> Void)
     func fileExists(at url: URL, completionHandler: @escaping (Bool) -> Void)

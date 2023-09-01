@@ -15,14 +15,15 @@ enum ActivityBarBubble {
 struct ActivityBarItem: Identifiable {
     let id = UUID()
     let itemID: String
-    let iconSystemName: String
-    let title: LocalizedStringKey
-    let shortcutKey: KeyEquivalent
-    let modifiers: EventModifiers
-    let view: AnyView
-    let positionPrecedence: Int = 0
-    let contextMenuItems: (() -> [ContextMenuItem])?
+    var iconSystemName: String
+    var title: LocalizedStringKey
+    var shortcutKey: KeyEquivalent?
+    var modifiers: EventModifiers?
+    var view: AnyView
+    var contextMenuItems: (() -> [ContextMenuItem])?
+    var positionPrecedence: Int = 0
     var bubble: () -> ActivityBarBubble?
+    var isVisible: (() -> Bool)
 }
 
 class ActivityBarManager: CodeAppContributionPointManager {

@@ -75,6 +75,7 @@ struct ActivityBar: View {
     var items: [ActivityBarItem] {
         activityBarManager.items
             .sorted { $0.positionPrecedence > $1.positionPrecedence }
+            .filter { $0.isVisible() }
     }
 
     func removeFocus() {
