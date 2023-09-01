@@ -12,6 +12,7 @@ private var REGULAR_SIDEBAR_MIN_WIDTH: CGFloat = DefaultUIState.SIDEBAR_WIDTH
 
 struct RegularSidebar: View {
     @EnvironmentObject var activityBarManager: ActivityBarManager
+    @EnvironmentObject var stateManager: MainStateManager
 
     @SceneStorage("sidebar.width") var sideBarWidth: Double = DefaultUIState.SIDEBAR_WIDTH
     @SceneStorage("activitybar.selected.item") var activeItemId: String = DefaultUIState
@@ -43,10 +44,14 @@ struct RegularSidebar: View {
     var body: some View {
         ZStack(alignment: .center) {
             Color.init(id: "sideBar.background")
-            if let item = activityBarManager.itemForItemID(itemID: activeItemId), item.isVisible() {
+            if !stateManager.isSystemExtensionsInitialized {
+                ProgressView()
+            } else if let item = activityBarManager.itemForItemID(itemID: activeItemId),
+                item.isVisible()
+            {
                 item.view
             } else {
-                ProgressView()
+                DescriptionText("sidebar.no_section_selected")
             }
         }
         .gesture(

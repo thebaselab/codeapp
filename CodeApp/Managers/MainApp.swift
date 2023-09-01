@@ -61,6 +61,7 @@ class MainStateManager: ObservableObject {
     @Published var availableCheckoutDestination: [CheckoutDestination] = []
     @Published var gitServiceIsBusy = false
     @Published var isMonacoEditorInitialized = false
+    @Published var isSystemExtensionsInitialized = false
 }
 
 class MainApp: ObservableObject {
@@ -191,6 +192,7 @@ class MainApp: ObservableObject {
         Task {
             await MainActor.run {
                 setUpActivityBarItems()
+                stateManager.isSystemExtensionsInitialized = true
             }
         }
     }

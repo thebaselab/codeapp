@@ -428,6 +428,7 @@
 "settings.editor.font.ligatures" = "Schrift Ligaturen";
 "settings.editor.font.show_all_fonts" = "Alle Schriftarten anzeigen";
 "panels.no_panel_selected" = "Kein Panel ausgewählt";
+"sidebar.no_section_selected" = "Kein Abschnitt ausgewählt";
 
 "errors.script_already_running" = "Ein Skript wird bereits ausgeführt. Beenden Sie es, bevor Sie ein anderes ausführen.";
 "errors.fs.not_implemented" = "Diese Funktion ist noch nicht implementiert.";
