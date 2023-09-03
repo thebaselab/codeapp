@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Clibgit2",
-        "repositoryURL": "https://github.com/thebaselab/Clibgit2",
-        "state": {
-          "branch": "master",
-          "revision": "5490f24936be286eff9ce726abd978698e0e4159",
-          "version": null
-        }
-      },
-      {
         "package": "CwlCatchException",
         "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
         "state": {
@@ -53,6 +44,15 @@
           "branch": null,
           "revision": "14f9eedb296c5b71fec971d8256ef3bfc20a2245",
           "version": "3.5.5"
+        }
+      },
+      {
+        "package": "Clibgit2",
+        "repositoryURL": "https://github.com/thebaselab/LibGit2-On-iOS",
+        "state": {
+          "branch": "master",
+          "revision": "b368487aae224817eab09f52629d15aaf98c419e",
+          "version": null
         }
       },
       {
