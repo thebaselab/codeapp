@@ -25,7 +25,8 @@
 "
 ### 1.5.0 (2023 年 10 月)
 - SSHリモートでのポートフォワーディング
-- 特定のSSHリモートが接続できない問題を修正
+- 特定の SSH リモートが認証できない問題を修正
+- リモート接続時にホームパスを解決するオプション
 
 ### 1.4.7 (2023 年 9月)
 - SSHリモートのいくつかの問題を修正
@@ -557,3 +558,5 @@
 "remote.port_forward.port_forwarding" = "ポートフォワーディング";
 "remote.port_forward.configure_description" = "ポートフォワーディングを使用すると、リモート ホストのポートをローカル ホストに転送できます。";
 "remote.port_forward.address_example" = "例えば 6000 または 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "SSH リモート";
+"remote.settings.resolve_home_path" = "ホーム パスを解決する";

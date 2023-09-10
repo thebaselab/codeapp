@@ -25,7 +25,8 @@
 "
 ### 1.5.0 (October 2023)
 - Port forwarding in SSH remote
-- Fixes a problem where certain SSH remotes cannot be connected
+- Fixes a problem where certain SSH remotes cannot be authenticated
+- Option to resolve home path when connecting to a remote
 
 ### 1.4.7 (September 2023)
 - Fixes a few problems in SSH remote
@@ -446,3 +447,5 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.port_forward.port_forwarding" = "Port Forwarding";
 "remote.port_forward.configure_description" = "Configure port forwarding to access a port on the remote machine.";
 "remote.port_forward.address_example" = "e.g. 6000 or 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "SSH Remote";
+"remote.settings.resolve_home_path" = "Resolve home path";

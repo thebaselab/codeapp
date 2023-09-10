@@ -23,9 +23,10 @@
 
 "Changelog.message" =
 "
-### 1.5.0 (Oktober 2023)
+### 1.5.0 (October 2023)
 - Portweiterleitung in SSH Remote
-– Behebt ein Problem, bei dem bestimmte SSH-Remotes nicht verbunden werden können
+– Behebt ein Problem, bei dem bestimmte SSH-Remotes nicht authentifiziert werden können
+– Option zum Auflösen des Home-Pfads beim Herstellen einer Verbindung zu einer Fernbedienung
 
 ### 1.4.7 (September 2023)
 - Behebt einige Probleme in der SSH-Remote
@@ -556,3 +557,5 @@
 "remote.port_forward.port_forwarding" = "Portweiterleitung";
 "remote.port_forward.configure_description" = "Um eine Portweiterleitung zu konfigurieren, geben Sie die lokale und die Remote-Adresse ein. Wenn Sie eine Adresse eingeben, wird der Port 22 verwendet.";
 "remote.port_forward.address_example" = "z.B. 6000 oder 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "SSH Remote";
+"remote.settings.resolve_home_path" = "Pfad auflösen";

@@ -10,6 +10,8 @@ import Foundation
 import SwiftUI
 
 class WorkSpaceStorage: ObservableObject {
+    @AppStorage("remoteShouldResolveHomePath") var remoteShouldResolveHomePath = false
+
     @Published var currentDirectory: FileItemRepresentable
     @Published var expansionStates: [AnyHashable: Bool] = [:]
     @Published var explorerIsBusy = false
@@ -152,7 +154,10 @@ class WorkSpaceStorage: ObservableObject {
                 return
             }
 
-            fs.connect(authentication: authenticationMode) { error in
+            fs.connect(
+                authentication: authenticationMode,
+                shouldResolveHomePath: remoteShouldResolveHomePath
+            ) { error in
                 if let error = error {
                     completionHandler(error)
                     return

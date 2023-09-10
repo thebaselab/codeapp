@@ -36,6 +36,7 @@ struct SettingsView: View {
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
     @AppStorage("communityTemplatesEnabled") var communityTemplatesEnabled = true
     @AppStorage("showAllFonts") var showAllFonts = false
+    @AppStorage("remoteShouldResolveHomePath") var remoteShouldResolveHomePath = false
 
     @State var showsEraseAlert: Bool = false
     @State var showReceiptInformation: Bool = false
@@ -117,6 +118,11 @@ struct SettingsView: View {
                         }
                         Toggle(
                             "source_control.community_templates", isOn: $communityTemplatesEnabled)
+                    }
+
+                    Section("remote.settings.ssh_remote") {
+                        Toggle(
+                            "remote.settings.resolve_home_path", isOn: $remoteShouldResolveHomePath)
                     }
 
                     Section(header: Text(NSLocalizedString("EXPLORER", comment: ""))) {

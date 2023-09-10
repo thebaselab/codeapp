@@ -25,7 +25,8 @@
 "
 ### 1.5.0（2023 年 10 月）
 - SSH 远程端口转发
-- 修复了某些 SSH 远程无法连接的问题
+- 修复了某些 SSH 远程无法验证的问题
+- 连接到远程时解析主路径的选项
 
 ### 1.4.7（2023 年 9 月）
 - 修复 SSH 远程的一些问题
@@ -531,3 +532,5 @@
 "remote.port_forward.port_forwarding" = "端口转发";
 "remote.port_forward.configure_description" = "您可以使用端口转发功能将本地端口转发到远程服务器。";
 "remote.port_forward.address_example" = "例如 6000 或 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "SSH 远程";
+"remote.settings.resolve_home_path" = "解析主目录路径";

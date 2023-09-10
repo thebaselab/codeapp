@@ -23,9 +23,10 @@
 
 "Changelog.message" =
 "
-### 1.5.0(2023년 10월)
-- SSH 원격에서 포트 전달
-- 특정 SSH 원격 연결이 불가능한 문제 수정
+### 1.5.0 (2023 年 10 月)
+- SSHリモートでのポートフォワーディング
+- 特定の SSH リモートが認証できない問題を修正
+- リモート接続時にホームパスを解決するオプション
 
 ### 1.4.7(2023년 9월)
 - SSH 원격의 몇 가지 문제를 수정했습니다.
@@ -556,3 +557,5 @@
 "remote.port_forward.port_forwarding" = "포트 포워딩";
 "remote.port_forward.configure_description" = "원격 시스템의 포트에 액세스하도록 포트 전달을 구성합니다.";
 "remote.port_forward.address_example" = "예를 들어 6000 또는 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "SSH 원격 서버";
+"remote.settings.resolve_home_path" = "홈 경로 해결";
