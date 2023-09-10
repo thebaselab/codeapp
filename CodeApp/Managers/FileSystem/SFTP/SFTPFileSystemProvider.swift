@@ -147,7 +147,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
 
             self.session.sftp.connect()
             self.fingerPrint = self.session.fingerprint(self.session.fingerprintHash)
-            self.homePath = self.session.sftp.resolveSymbolicLink(atPath: ".")
+            //            self.homePath = self.session.sftp.resolveSymbolicLink(atPath: ".")
 
             completionHandler(nil)
         }
