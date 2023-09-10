@@ -785,8 +785,14 @@ class MainApp: ObservableObject {
             if var bookmarks = UserDefaults.standard.value(forKey: "recentFolder") as? [Data] {
                 bookmarks = bookmarks.filter {
                     var isStale = false
-                    let newURL = try? URL(resolvingBookmarkData: $0, bookmarkDataIsStale: &isStale)
-                    return (newURL != url && !isStale)
+                    guard
+                        let newURL = try? URL(
+                            resolvingBookmarkData: $0, bookmarkDataIsStale: &isStale)
+                    else {
+                        return false
+                    }
+                    // We do not have a stable identity of a url due to sandboxing, compare lastPathComponent instead
+                    return (newURL.lastPathComponent != url.lastPathComponent && !isStale)
                 }
                 bookmarks = [newBookmark] + bookmarks
                 if bookmarks.count > 5 {
