@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### 1.5.0 (Oktober 2023)
+- Portweiterleitung in SSH Remote
+– Behebt ein Problem, bei dem bestimmte SSH-Remotes nicht verbunden werden können
+
 ### 1.4.7 (September 2023)
 - Behebt einige Probleme in der SSH-Remote
 
