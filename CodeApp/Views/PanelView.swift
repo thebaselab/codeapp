@@ -128,17 +128,16 @@ struct PanelView: View {
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
 
     @State var showSheet = false
-    @State var keyboardHeight: CGFloat = 0.0
 
     var maxHeight: CGFloat {
-        UIScreen.main.bounds.height
+        windowHeight
             - UIApplication.shared.getSafeArea(edge: .top)
             - UIApplication.shared.getSafeArea(edge: .bottom)
-            - keyboardHeight
             - TOP_BAR_HEIGHT
             - EDITOR_MINIMUM_HEIGHT
             - BOTTOM_BAR_HEIGHT
     }
+    var windowHeight: CGFloat
 
     func evaluateProposedHeight(proposal: CGFloat) {
         if proposal < PANEL_MINIMUM_HEIGHT {
@@ -153,7 +152,7 @@ struct PanelView: View {
 
     var body: some View {
         Implementation()
-            .frame(height: CGFloat(panelHeight))
+            .frame(height: min(CGFloat(panelHeight), maxHeight))
             .background(Color.init(id: "editor.background"))
             .gesture(
                 DragGesture()
@@ -161,32 +160,6 @@ struct PanelView: View {
                         let proposedNewHeight = panelHeight - value.translation.height
                         evaluateProposedHeight(proposal: proposedNewHeight)
                     }
-            )
-            .onReceive(
-                NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
-            ) { notification in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                    evaluateProposedHeight(proposal: panelHeight)
-                }
-            }
-            .onReceive(
-                NotificationCenter.default.publisher(
-                    for: UIResponder.keyboardDidChangeFrameNotification),
-                perform: { notification in
-                    if let keyboardSize =
-                        (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
-                        .cgRectValue
-                    {
-                        keyboardHeight = keyboardSize.height
-                        evaluateProposedHeight(proposal: panelHeight)
-                    }
-                }
-            )
-            .onReceive(
-                NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification),
-                perform: { _ in
-                    keyboardHeight = 0.0
-                }
             )
     }
 }

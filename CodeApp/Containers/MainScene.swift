@@ -200,8 +200,10 @@ private struct MainView: View {
                                     .environmentObject(extensionManager.editorProviderManager)
 
                                 if isPanelVisible {
-                                    PanelView()
-                                        .environmentObject(extensionManager.panelManager)
+                                    PanelView(
+                                        windowHeight: geometry.size.height
+                                    )
+                                    .environmentObject(extensionManager.panelManager)
                                 }
                             }
                             .blur(
