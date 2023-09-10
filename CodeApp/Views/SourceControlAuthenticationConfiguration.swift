@@ -186,7 +186,6 @@ private struct KeyBasedAuthenticationSections: View {
                     self.privateKey = privateKey
                 }
             }
-
         }
 
     }
@@ -260,16 +259,17 @@ private struct UpdateKeyBasedCredentialsView: View {
 
     var body: some View {
         Form {
-            Section("source_control.hostname") {
-                Text(hostname)
-                    .foregroundColor(.secondary)
-            }
-
-            KeyBasedAuthenticationSections(
-                username: $username, publicKey: $publicKey, privateKey: $privateKey,
-                passphrase: $passphrase, deviceOwnerProtected: true)
-
+            Group {
+                Section("source_control.hostname") {
+                    Text(hostname)
+                        .foregroundColor(.secondary)
+                }
+                KeyBasedAuthenticationSections(
+                    username: $username, publicKey: $publicKey, privateKey: $privateKey,
+                    passphrase: $passphrase, deviceOwnerProtected: true)
+            }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
         }
+        .background(Color(id: "sideBar.background"))
         .navigationBarTitle("source_control.credentials", displayMode: .inline)
         .onDisappear {
             if hash != originalHash {
@@ -322,13 +322,15 @@ private struct UpdatePasswordCredentialsView: View {
 
     var body: some View {
         Form {
-            Section("source_control.hostname") {
-                Text(hostname)
-                    .foregroundColor(.secondary)
-            }
-
-            PasswordBasedAuthenticationSection(username: $username, password: $password)
+            Group {
+                Section("source_control.hostname") {
+                    Text(hostname)
+                        .foregroundColor(.secondary)
+                }
+                PasswordBasedAuthenticationSection(username: $username, password: $password)
+            }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
         }
+        .background(Color(id: "sideBar.background"))
         .navigationBarTitle("source_control.credentials", displayMode: .inline)
         .onDisappear {
             if hash != originalHash {
@@ -351,11 +353,14 @@ private struct CreateKeyBasedCredentialsView: View {
 
     var body: some View {
         Form {
-            HostnameSection(hostname: $hostname)
-            KeyBasedAuthenticationSections(
-                username: $username, publicKey: $publicKey, privateKey: $privateKey,
-                passphrase: $passphrase, deviceOwnerProtected: false)
+            Group {
+                HostnameSection(hostname: $hostname)
+                KeyBasedAuthenticationSections(
+                    username: $username, publicKey: $publicKey, privateKey: $privateKey,
+                    passphrase: $passphrase, deviceOwnerProtected: false)
+            }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
         }
+        .background(Color(id: "sideBar.background"))
         .navigationBarTitle("source_control.new_credentials", displayMode: .inline)
         .navigationBarItems(
             trailing:
@@ -382,10 +387,12 @@ private struct CreatePasswordCredentialsView: View {
 
     var body: some View {
         Form {
-            HostnameSection(hostname: $hostname)
-
-            PasswordBasedAuthenticationSection(username: $username, password: $password)
+            Group {
+                HostnameSection(hostname: $hostname)
+                PasswordBasedAuthenticationSection(username: $username, password: $password)
+            }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
         }
+        .background(Color(id: "sideBar.background"))
         .navigationBarTitle("source_control.new_credentials", displayMode: .inline)
         .navigationBarItems(
             trailing:

@@ -39,7 +39,7 @@ struct RemoteAuthView: View {
                 Button("Connect") {
                     credCB(username, password)
                 }
-            }
-        }
+            }.listRowBackground(Color.init(id: "list.inactiveSelectionBackground"))
+        }.background(Color(id: "sideBar.background"))
     }
 }
