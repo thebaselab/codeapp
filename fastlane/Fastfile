@@ -87,12 +87,12 @@ platform :ios do
       apple_id: "#{DEVELOPER_APP_ID}",
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
       distribute_external: DISTRIBUTE_EXTERNAL,
-      notify_external_testers: true,
+      notify_external_testers: DISTRIBUTE_EXTERNAL,
       ipa: "./Code.ipa",
       changelog: "GitHub Action automatic build. For detailed changes, " + 
       "visit https://github.com/thebaselab/codeapp.\n" + 
       "\nGenerated Changelog:\n" + changelog,
-      groups: ["Public"],
+      groups: (DISTRIBUTE_EXTERNAL ? ["Public"] : []),
       wait_processing_interval: 300
     )
     
