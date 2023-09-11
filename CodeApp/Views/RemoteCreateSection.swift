@@ -31,7 +31,7 @@ struct RemoteCreateSection: View {
     @State var usesPrivateKey: Bool = false
     @State var showFileImporter: Bool = false
     @State var port: String = "22"
-    @State var saveCredentials: Bool = false
+    @State var saveCredentials: Bool = true
     @State var username: String = ""
     @State var hasSSHKey = true
 
