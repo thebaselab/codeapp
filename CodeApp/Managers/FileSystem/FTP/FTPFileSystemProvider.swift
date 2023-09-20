@@ -23,7 +23,6 @@ class FTPFileSystemProvider: FileSystemProvider {
             return nil
         }
         if let fs = FTPFileProvider(baseURL: baseURL, credential: cred) {
-            //            fs.serverTrustPolicy = .disableEvaluation
             self.fs = fs
         } else {
             return nil
@@ -53,7 +52,9 @@ class FTPFileSystemProvider: FileSystemProvider {
     }
 
     func fileExists(at url: URL, completionHandler: @escaping (Bool) -> Void) {
-        completionHandler(true)
+        fs.attributesOfItem(path: url.path) { file, error in
+            completionHandler(file != nil)
+        }
     }
 
     func createDirectory(
@@ -75,12 +76,8 @@ class FTPFileSystemProvider: FileSystemProvider {
     }
 
     func contents(at: URL, completionHandler: @escaping (Data?, Error?) -> Void) {
-        print("FTP: Loading contents of \(at.path)")
         fs.contents(path: at.path) { data, error in
-            print("FTP: Finished loading contents of \(at.absoluteString)")
-            DispatchQueue.main.async {
-                completionHandler(data, error)
-            }
+            completionHandler(data, error)
         }
     }
 

@@ -146,13 +146,13 @@ struct NewFileView: View {
             break
         }
 
-        guard let targetURL = URL(string: targetUrl)?.appendingPathComponent(name) else {
-            throw WorkSpaceStorage.FSError.UnableToFindASuitableName
-        }
-        let destinationURL = try await App.workSpaceStorage.urlWithSuffixIfExistingFileExist(
-            url: targetURL)
-
         do {
+            guard let targetURL = URL(string: targetUrl)?.appendingPathComponent(name) else {
+                throw WorkSpaceStorage.FSError.UnableToFindASuitableName
+            }
+            let destinationURL = try await App.workSpaceStorage.urlWithSuffixIfExistingFileExist(
+                url: targetURL)
+
             try await App.workSpaceStorage.write(
                 at: destinationURL, content: content.data(using: .utf8)!, atomically: true,
                 overwrite: true
