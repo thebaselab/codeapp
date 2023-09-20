@@ -60,7 +60,9 @@ class FTPFileSystemProvider: FileSystemProvider {
     func createDirectory(
         at: URL, withIntermediateDirectories: Bool, completionHandler: @escaping (Error?) -> Void
     ) {
-        fs.create(folder: at.lastPathComponent, at: at.path, completionHandler: completionHandler)
+        fs.create(
+            folder: at.lastPathComponent, at: at.deletingLastPathComponent().path,
+            completionHandler: completionHandler)
     }
 
     func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
