@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.0 (October 2023)**
+##### **v1.5.1 (October 2023)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### 1.5.1 (October 2023)
+- Fixes issues with FTP remote
+- Fixes a bug where Port Forwarding tab is always showing in compact screen
+
 ### 1.5.0 (October 2023)
 - Port forwarding in SSH remote
 - Fixes a problem where certain SSH remotes cannot be authenticated

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.0 (2023 年 10 月)**
+##### **v1.5.1 (2023 年 10 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### 1.5.1（2023 年 10 月）
+- 修复了 FTP 远程的问题
+- 修复了“端口转发”选项卡始终显示在紧凑屏幕中的错误
+
 ### 1.5.0（2023 年 10 月）
 - SSH 远程端口转发
 - 修复了某些 SSH 远程无法验证的问题
