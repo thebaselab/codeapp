@@ -16,6 +16,12 @@ struct CompactSidebar: View {
         .ACTIVITYBAR_SELECTED_ITEM
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
 
+    var items: [ActivityBarItem] {
+        activityBarManager.items
+            .sorted { $0.positionPrecedence > $1.positionPrecedence }
+            .filter { $0.isVisible() }
+    }
+
     var body: some View {
         HStack(spacing: 0) {
             VStack {
@@ -55,7 +61,7 @@ struct CompactSidebar: View {
                             selection: $activeItemId,
                             label: Text("Section")
                         ) {
-                            ForEach(activityBarManager.items) {
+                            ForEach(items) {
                                 Label($0.title, systemImage: $0.iconSystemName)
                                     .tag($0.itemID)
                             }
@@ -80,10 +86,15 @@ struct CompactSidebar: View {
                 )
                 .frame(height: 40)
 
-                if let item = activityBarManager.itemForItemID(itemID: activeItemId) {
-                    item.view
-                        .background(Color.init(id: "sideBar.background"))
-                }
+                Group {
+                    if !stateManager.isSystemExtensionsInitialized {
+                        ProgressView()
+                    } else if let item = activityBarManager.itemForItemID(itemID: activeItemId) {
+                        item.view
+                    } else {
+                        DescriptionText("sidebar.no_section_selected")
+                    }
+                }.background(Color.init(id: "sideBar.background"))
             }
             .frame(width: 280.0)
             .background(Color.init(id: "sideBar.background"))
