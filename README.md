@@ -10,7 +10,7 @@ This repository contains the source code of the app. We also work on issues, lis
 
 ## Documentation
 
-See [Wiki](https://github.com/thebaselab/codeapp/wiki)
+See [code.thebaselab.com](code.thebaselab.com)
 
 ## The Plan
 
