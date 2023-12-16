@@ -56,11 +56,9 @@ done
 # Node.js
 mkdir -p NodeJS
 cd NodeJS
-curl -OL https://github.com/nodejs-mobile/nodejs-mobile/releases/download/v18.17.2/nodejs-mobile-v18.17.2-ios.zip
-unzip -q nodejs-mobile-v18.17.2-ios.zip
-mv nodejs-mobile-v18.17.2-ios/NodeMobile.xcframework NodeMobile.xcframework
-rm -f nodejs-mobile-v18.17.2-ios.zip
-rm -rf nodejs-mobile-v18.17.2-ios
+curl -OL https://github.com/1Conan/nodejs-mobile/releases/download/v16.17.0-ios/NodeMobile.xcframework.zip
+unzip -q NodeMobile.xcframework.zip
+rm -f NodeMobile.xcframework.zip
 cd ..
 
 # PHP
