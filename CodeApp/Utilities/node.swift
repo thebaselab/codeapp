@@ -107,7 +107,7 @@ public func node(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<In
     let args = convertCArguments(argc: argc, argv: argv)
 
     if args?.count == 1 {
-        fputs("Welcome to Node.js v16.17.0. \nREPL is unavailable in Code App.\n", thread_stderr)
+        fputs("Welcome to Node.js v18.17.2. \nREPL is unavailable in Code App.\n", thread_stderr)
         return 1
     }
 
