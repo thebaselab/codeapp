@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.1 (2023年 10月)**
+##### **v1.5.2 (2023年 12月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.5.2 (2023 年 12 月)
+- SSH リモートがシンボリック リンクを解決するようになりました
+
 ### 1.5.1 (2023 年 10 月)
 - FTPリモートの問題を修正
 - コンパクト画面で [ポート転送] タブが常に表示されるバグを修正

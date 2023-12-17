@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.1 (October 2023)**
+##### **v1.5.2 (December 2023)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,7 +23,10 @@
 
 "Changelog.message" =
 "
-### 1.5.1 (Oktober 2023)
+### 1.5.2 (December 2023)
+- SSH Remote löst jetzt symbolische Links auf
+
+### 1.5.1 (October 2023)
 - Behebt Probleme mit der FTP-Remote
 – Behebt einen Fehler, bei dem die Registerkarte „Portweiterleitung“ immer im kompakten Bildschirm angezeigt wird
 
