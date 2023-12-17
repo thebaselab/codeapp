@@ -164,7 +164,20 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
                 completionHandler(nil, WorkSpaceStorage.FSError.Unknown)
                 return
             }
-            completionHandler(files.map { url.appendingPathComponent($0.filename) }, nil)
+            completionHandler(
+                files.map {
+                    // Resolve symbolic link to determine if it points to a directory
+                    // TODO: Evaluate the performance penalty
+                    if $0.isSymbolicLink,
+                        let realPath = self.session.sftp.resolveSymbolicLink(
+                            atPath: url.appendingPathComponent($0.filename).path),
+                        let info = self.session.sftp.infoForFile(atPath: realPath),
+                        info.isDirectory
+                    {
+                        return url.appendingPathComponent($0.filename + "/")
+                    }
+                    return url.appendingPathComponent($0.filename)
+                }, nil)
         }
     }
 
