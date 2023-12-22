@@ -196,11 +196,11 @@ class Executor {
                 self.state = .running
             }
 
-            ios_setDirectoryURL(self.currentWorkingDirectory)
             self.lastCommand = command
             Thread.current.name = command
 
             ios_switchSession(self.persistentIdentifier.toCString())
+            ios_setDirectoryURL(self.currentWorkingDirectory)
             ios_setContext(UnsafeMutableRawPointer(mutating: self.persistentIdentifier.toCString()))
             ios_setStreams(self.stdin_file, self.stdout_file, self.stdout_file)
 
