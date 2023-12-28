@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.2 (2023 年 12 月)**
+##### **v1.5.3 (2023 年 12 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.5.2（2023 年 12 月）
+- 修复了终端默认为 ~ 的错误
+
 ### 1.5.2（2023 年 12 月）
 - SSH 远程现在解析符号链接
 

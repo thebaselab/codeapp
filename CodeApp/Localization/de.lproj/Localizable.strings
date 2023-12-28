@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.2 (December 2023)**
+##### **v1.5.3 (December 2023)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.5.3 (December 2023)
+- Behebt einen Fehler, bei dem das Terminal standardmäßig ~ verwendet
+
 ### 1.5.2 (December 2023)
 - SSH Remote löst jetzt symbolische Links auf
 
