@@ -37,5 +37,5 @@ The source code of the built-in languages are hosted on these repositories.
 |-----------------|-------------------|
 | Python 3.9.2 | [cpython](https://github.com/holzschu/cpython/tree/3.9)|
 | Clang 14.0.0 | [llvm-project](https://github.com/holzschu/llvm-project)|
-| PHP 8.0.8 | [php-src](https://github.com/bummoblizard/php-src/tree/PHP-8.0.8)|
+| PHP 8.3.2 | [php-src](https://github.com/bummoblizard/php-src/tree/PHP-8.3.2)|
 | Node.js 16.14.2 | [nodejs-mobile](https://github.com/1Conan/nodejs-mobile/tree/upstream-node-v16.14.x-ios)|

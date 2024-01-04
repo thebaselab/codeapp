@@ -62,7 +62,7 @@ rm -f NodeMobile.xcframework.zip
 cd ..
 
 # PHP
-curl -OL https://github.com/bummoblizard/php-src/releases/download/v0.2/php.xcframework.zip
+curl -OL https://github.com/bummoblizard/php-src/releases/download/v0.3/php.xcframework.zip
 unzip -q php.xcframework.zip -d PHP
 rm -f php.xcframework.zip
 
