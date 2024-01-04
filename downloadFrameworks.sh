@@ -56,7 +56,7 @@ done
 # Node.js
 mkdir -p NodeJS
 cd NodeJS
-curl -OL https://github.com/1Conan/nodejs-mobile/releases/download/v16.17.0-ios/NodeMobile.xcframework.zip
+curl -OL https://github.com/1Conan/nodejs-mobile/releases/download/v18.19.0-ios/NodeMobile.xcframework.zip
 unzip -q NodeMobile.xcframework.zip
 rm -f NodeMobile.xcframework.zip
 cd ..
