@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		94127C40280335C8008C7F82 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 94127C3F280335C8008C7F82 /* Themes */; };
 		94127C41280335C8008C7F82 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 94127C3F280335C8008C7F82 /* Themes */; };
-		94127C43280336B6008C7F82 /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 94127C42280336B6008C7F82 /* GCDWebServers */; };
 		941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941969242802AB2C008AAEB2 /* FileSystemProvider.swift */; };
 		941969292802AB64008AAEB2 /* FTPFileSystemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941969282802AB64008AAEB2 /* FTPFileSystemProvider.swift */; };
 		9419692B2802AB88008AAEB2 /* LocalFileSystemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419692A2802AB88008AAEB2 /* LocalFileSystemProvider.swift */; };
@@ -498,7 +497,6 @@
 		94795C4929314A0A0057C12F /* CompactSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4729314A0A0057C12F /* CompactSidebar.swift */; };
 		94795C4B293259080057C12F /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4A293259080057C12F /* Encoding.swift */; };
 		94795C4C293259080057C12F /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4A293259080057C12F /* Encoding.swift */; };
-		94798713280330080055B838 /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 94798712280330080055B838 /* GCDWebServers */; };
 		947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */; };
 		947BF349262453040015DAEB /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* SearchManager.swift */; };
 		94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F92266FB5E400B29D80 /* TerminalInstance.swift */; };
@@ -674,6 +672,8 @@
 		9F3C2DF7291CCE9A00BFF14C /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF6291CCE9A00BFF14C /* Remote.swift */; };
 		9F3C2DF8291CCE9A00BFF14C /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C2DF6291CCE9A00BFF14C /* Remote.swift */; };
 		9F58738E2A78FE950001F374 /* lg2.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9F58738A2A78FE6D0001F374 /* lg2.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F6BD9502B46900400E2F8BC /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 9F6BD94F2B46900400E2F8BC /* GCDWebServers */; };
+		9F6BD9522B46902B00E2F8BC /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 9F6BD9512B46902B00E2F8BC /* GCDWebServers */; };
 		9FA122592A8B17E400E7B417 /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122582A8B17E400E7B417 /* StatusBarManager.swift */; };
 		9FA1225A2A8B17E400E7B417 /* StatusBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122582A8B17E400E7B417 /* StatusBarManager.swift */; };
 		9FA1225C2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* CodeAppContributionPointManager.swift */; };
@@ -749,7 +749,6 @@
 		9FE3E2A2298A167200F63DD0 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A1298A167200F63DD0 /* ZIPFoundation */; };
 		9FE3E2A3298A167800F63DD0 /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; };
 		9FE3E2A5298A167F00F63DD0 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A4298A167F00F63DD0 /* MarkdownView */; };
-		9FE3E2A7298A168400F63DD0 /* GCDWebServers in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A6298A168400F63DD0 /* GCDWebServers */; };
 		9FE3E2AA298A169300F63DD0 /* Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2A9298A169300F63DD0 /* Dynamic */; };
 		9FE3E2AC298A169B00F63DD0 /* SwiftGit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE3E2AB298A169A00F63DD0 /* SwiftGit2 */; };
 		9FE3E2AD298A16A300F63DD0 /* NMSSH.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 942E321128093CA600233441 /* NMSSH.xcframework */; };
@@ -1777,8 +1776,8 @@
 				9419698F280316C7008AAEB2 /* FilesProvider in Frameworks */,
 				94196990280316C7008AAEB2 /* ZIPFoundation in Frameworks */,
 				94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */,
+				9F6BD9522B46902B00E2F8BC /* GCDWebServers in Frameworks */,
 				94196993280316C7008AAEB2 /* MarkdownView in Frameworks */,
-				94127C43280336B6008C7F82 /* GCDWebServers in Frameworks */,
 				94196995280316C7008AAEB2 /* Dynamic in Frameworks */,
 				94196998280316C7008AAEB2 /* SwiftGit2 in Frameworks */,
 				94465DDC28094920001DACDF /* NMSSH.xcframework in Frameworks */,
@@ -1804,8 +1803,8 @@
 				948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */,
 				94465DDA2809491B001DACDF /* NMSSH.xcframework in Frameworks */,
 				94C893BF2793D2FB00DFBF29 /* openssl.xcframework in Frameworks */,
+				9F6BD9502B46900400E2F8BC /* GCDWebServers in Frameworks */,
 				94A7418C25F74A85007A9728 /* Dynamic in Frameworks */,
-				94798713280330080055B838 /* GCDWebServers in Frameworks */,
 				94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */,
 				94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */,
 				945AEA3527ECCB3D00BA193E /* NodeMobile.xcframework in Frameworks */,
@@ -1818,7 +1817,6 @@
 			files = (
 				9FE3E2AD298A16A300F63DD0 /* NMSSH.xcframework in Frameworks */,
 				9FE3E2A3298A167800F63DD0 /* ios_system.xcframework in Frameworks */,
-				9FE3E2A7298A168400F63DD0 /* GCDWebServers in Frameworks */,
 				9FE3E2AA298A169300F63DD0 /* Dynamic in Frameworks */,
 				9FE3E2A0298A166800F63DD0 /* FilesProvider in Frameworks */,
 				9FE3E2A2298A167200F63DD0 /* ZIPFoundation in Frameworks */,
@@ -2815,7 +2813,7 @@
 				94196935280316C7008AAEB2 /* MarkdownView */,
 				94196937280316C7008AAEB2 /* FilesProvider */,
 				94196939280316C7008AAEB2 /* SwiftGit2 */,
-				94127C42280336B6008C7F82 /* GCDWebServers */,
+				9F6BD9512B46902B00E2F8BC /* GCDWebServers */,
 			);
 			productName = testfield;
 			productReference = 94196B18280316C7008AAEB2 /* CodeUI.app */;
@@ -2861,7 +2859,7 @@
 				948F174726B6A5AB00B277FC /* MarkdownView */,
 				948F174D26B91C2600B277FC /* FilesProvider */,
 				94B99D9C27D4AA57005B5E3A /* SwiftGit2 */,
-				94798712280330080055B838 /* GCDWebServers */,
+				9F6BD94F2B46900400E2F8BC /* GCDWebServers */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -2886,7 +2884,6 @@
 				9FE3E29F298A166800F63DD0 /* FilesProvider */,
 				9FE3E2A1298A167200F63DD0 /* ZIPFoundation */,
 				9FE3E2A4298A167F00F63DD0 /* MarkdownView */,
-				9FE3E2A6298A168400F63DD0 /* GCDWebServers */,
 				9FE3E2A9298A169300F63DD0 /* Dynamic */,
 				9FE3E2AB298A169A00F63DD0 /* SwiftGit2 */,
 			);
@@ -2938,7 +2935,7 @@
 				94A7418A25F74A85007A9728 /* XCRemoteSwiftPackageReference "Dynamic" */,
 				948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */,
 				948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */,
-				94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */,
+				9F6BD94E2B46900400E2F8BC /* XCRemoteSwiftPackageReference "GCDWebServer" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -3935,14 +3932,6 @@
 				kind = branch;
 			};
 		};
-		94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/JacobHearst/GCDWebServer";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/thebaselab/MarkdownView";
@@ -3975,14 +3964,17 @@
 				minimumVersion = 0.9.15;
 			};
 		};
+		9F6BD94E2B46900400E2F8BC /* XCRemoteSwiftPackageReference "GCDWebServer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/thebaselab/GCDWebServer";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		94127C42280336B6008C7F82 /* GCDWebServers */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */;
-			productName = GCDWebServers;
-		};
 		94196931280316C7008AAEB2 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
@@ -4006,11 +3998,6 @@
 		94196939280316C7008AAEB2 /* SwiftGit2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
-		};
-		94798712280330080055B838 /* GCDWebServers */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */;
-			productName = GCDWebServers;
 		};
 		948F174726B6A5AB00B277FC /* MarkdownView */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4036,6 +4023,16 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
 		};
+		9F6BD94F2B46900400E2F8BC /* GCDWebServers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F6BD94E2B46900400E2F8BC /* XCRemoteSwiftPackageReference "GCDWebServer" */;
+			productName = GCDWebServers;
+		};
+		9F6BD9512B46902B00E2F8BC /* GCDWebServers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9F6BD94E2B46900400E2F8BC /* XCRemoteSwiftPackageReference "GCDWebServer" */;
+			productName = GCDWebServers;
+		};
 		9FE3E29F298A166800F63DD0 /* FilesProvider */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 948F174C26B91C2600B277FC /* XCRemoteSwiftPackageReference "FileProvider" */;
@@ -4050,11 +4047,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 948F174626B6A5AB00B277FC /* XCRemoteSwiftPackageReference "MarkdownView" */;
 			productName = MarkdownView;
-		};
-		9FE3E2A6298A168400F63DD0 /* GCDWebServers */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 94798711280330080055B838 /* XCRemoteSwiftPackageReference "GCDWebServer" */;
-			productName = GCDWebServers;
 		};
 		9FE3E2A9298A169300F63DD0 /* Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -39,11 +39,11 @@
       },
       {
         "package": "GCDWebServer",
-        "repositoryURL": "https://github.com/JacobHearst/GCDWebServer",
+        "repositoryURL": "https://github.com/thebaselab/GCDWebServer",
         "state": {
-          "branch": null,
+          "branch": "master",
           "revision": "14f9eedb296c5b71fec971d8256ef3bfc20a2245",
-          "version": "3.5.5"
+          "version": null
         }
       },
       {
