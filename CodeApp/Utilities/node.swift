@@ -21,6 +21,11 @@ typealias RequestCompletionBlock = @convention(block) (_ uuid: UUID?, _ extensio
 typealias RequestBeginBlock = @convention(block) (_ uuid: UUID?) -> Void
 
 func nodeCmd(args: [String]?) -> Int32 {
+
+    guard let args = args, args.first == "node" else {
+        return 1
+    }
+
     var ended = false
 
     // We use a private API here to launch an extension programatically
@@ -81,7 +86,7 @@ func nodeCmd(args: [String]?) -> Int32 {
 
     let item = NSExtensionItem()
 
-    item.userInfo = ["workingDirectoryBookmark": bookmark, "args": args!]
+    item.userInfo = ["workingDirectoryBookmark": bookmark, "args": args]
 
     ext.beginExtensionRequestWithInputItems(
         [item],
@@ -244,7 +249,7 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
     }
 
     let npmURL = Resources.npm.appendingPathComponent("node_modules/.bin/npm")
-    args = ["node", "--max-old-space-size=180", "--optimize-for-size", npmURL.path] + args
+    args = ["node", "--optimize-for-size", npmURL.path] + args
 
     return nodeCmd(args: args)
 }

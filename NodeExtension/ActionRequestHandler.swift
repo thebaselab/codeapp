@@ -100,7 +100,9 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         setenv("YARN_CACHE_FOLDER", FileManager.default.temporaryDirectory.path, 1)
         setenv("HOME", sharedURL.path, 1)
         setenv("FORCE_COLOR", "3", 1)
-        setenv("NODE_OPTIONS", "--max-old-space-size=250", 1)
+
+        let injectionJSPath = Bundle.main.path(forResource: "injection", ofType: "js")!
+        setenv("NODE_OPTIONS", "--jitless --max-old-space-size=180 --require \"\(injectionJSPath)\"", 1)
         // Do not call super in an Action extension with no user interface
         self.extensionContext = context
         
