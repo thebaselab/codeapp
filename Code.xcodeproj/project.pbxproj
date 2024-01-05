@@ -590,7 +590,6 @@
 		94B3DDF62604D3ED00C4F2B1 /* tar.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B3DDF42604D3C400C4F2B1 /* tar.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B3DDF82604F90800C4F2B1 /* SettingsThemeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF72604F90800C4F2B1 /* SettingsThemeConfiguration.swift */; };
 		94B3DDFA260526D200C4F2B1 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF9260526D200C4F2B1 /* View+If.swift */; };
-		94B5EFDD2B47BA64008550F4 /* extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		94B7C4C825F551F800F1EF4E /* ios_system.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; };
 		94B7C4C925F551F800F1EF4E /* ios_system.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4B025F5518700F1EF4E /* ios_system.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4CA25F5522500F1EF4E /* ssh_cmd.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A525F5518700F1EF4E /* ssh_cmd.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -769,13 +768,6 @@
 			remoteGlobalIDString = 94369AFB25E3B933008419A0;
 			remoteInfo = extension;
 		};
-		94B5EFDE2B47BA64008550F4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 944EEBE82563C381009D77FE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 94369AFB25E3B933008419A0;
-			remoteInfo = extension;
-		};
 		9FE3E296298A14BC00F63DD0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 944EEBE82563C381009D77FE /* Project object */;
@@ -815,7 +807,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				94B5EFDD2B47BA64008550F4 /* extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2819,7 +2810,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				94B5EFDF2B47BA64008550F4 /* PBXTargetDependency */,
 			);
 			name = CodeUI;
 			packageProductDependencies = (
@@ -3418,11 +3408,6 @@
 			isa = PBXTargetDependency;
 			target = 94369AFB25E3B933008419A0 /* extension */;
 			targetProxy = 94369B0525E3B933008419A0 /* PBXContainerItemProxy */;
-		};
-		94B5EFDF2B47BA64008550F4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 94369AFB25E3B933008419A0 /* extension */;
-			targetProxy = 94B5EFDE2B47BA64008550F4 /* PBXContainerItemProxy */;
 		};
 		9FE3E297298A14BC00F63DD0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
