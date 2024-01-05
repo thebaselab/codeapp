@@ -102,7 +102,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         setenv("FORCE_COLOR", "3", 1)
 
         let injectionJSPath = Bundle.main.path(forResource: "injection", ofType: "js")!
-        setenv("NODE_OPTIONS", "--jitless --max-old-space-size=180 --require \"\(injectionJSPath)\"", 1)
+        setenv("NODE_OPTIONS", "--jitless --require \"\(injectionJSPath)\"", 1)
         // Do not call super in an Action extension with no user interface
         self.extensionContext = context
         
