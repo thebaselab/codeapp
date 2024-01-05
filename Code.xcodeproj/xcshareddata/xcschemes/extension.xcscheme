@@ -29,9 +29,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "944EEBEF2563C381009D77FE"
-               BuildableName = "Code.app"
-               BlueprintName = "Code"
+               BlueprintIdentifier = "9419692E280316C7008AAEB2"
+               BuildableName = "CodeUI.app"
+               BlueprintName = "CodeUI"
                ReferencedContainer = "container:Code.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,16 +57,11 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "944EEBEF2563C381009D77FE"
-            BuildableName = "Code.app"
-            BlueprintName = "Code"
-            ReferencedContainer = "container:Code.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "thebaselab.VS-Code"
+         RemotePath = "/Users/kenchung/Library/Developer/CoreSimulator/Devices/47AA641E-E138-4535-B4F6-EB65734C0AFB/data/Containers/Bundle/Application/AF5C1623-1ABE-44D1-ACF1-1C463925AFD5/CodeUI.app">
+      </RemoteRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -76,16 +71,6 @@
       debugDocumentVersioning = "YES"
       askForAppToLaunch = "Yes"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "944EEBEF2563C381009D77FE"
-            BuildableName = "Code.app"
-            BlueprintName = "Code"
-            ReferencedContainer = "container:Code.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

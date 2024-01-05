@@ -47,10 +47,9 @@
         current_args_position+=strlen(current_args_position)+1;
     }
     
-    #if !TARGET_IPHONE_SIMULATOR
     //Start node, with argc and argv.
     node_start(argument_count,argv);
-    #endif
+
     free(args_buffer);
 }
 @end
