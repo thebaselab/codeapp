@@ -271,7 +271,6 @@
 "You don't have any open editor." = "열린 편집기가 없습니다.";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "이는 원격 서버의 변경 사항을 로컬 저장소로 풀(Pull)한 다음에 로컬 커밋(Commit)을 원격 서버로 푸시(Push)합니다. 충돌 사항이 있으면 로컬의 복사본으로 병합(Merge) 및 덮어쓰기를 합니다.";
 "User Name" = "사용자 이름";
-"Show hidden files" = "숨김 파일 표시";
 "Erase" = "지우기";
 "This will erase all user settings, including author identity and credentials." = "이는 작성자 ID 및 로그인 정보를 포함한 모든 사용자 설정을 지웁니다.";
 "Erase all settings" = "모든 설정 지우기";
@@ -407,7 +406,7 @@
 "Key passphrase" = "SSH 비밀키";
 "Show public key" = "공개 키 보기";
 
-"Expermimental Features" = "실험 기능(실험실)";
+"Experimental Features" = "실험 기능(실험실)";
 "Enable spell check in text files" = "텍스트 파일에서 맞춤법 검사 활성화";
 "Spell checking on content changed" = "변경한 내용에 대해 맞춤법 검사";
 
@@ -443,6 +442,7 @@
 "settings.editor.font.ligatures" = "글꼴 합자";
 "settings.editor.font.show_all_fonts" = "모든 글꼴 표시";
 "settings.explorer.confirm_before_delete" = "삭제하기 전에 확인";
+"settings.explorer.show_hidden_files" = "숨김 파일 표시";
 "panels.no_panel_selected" = "패널이 선택되지 않았습니다.";
 "sidebar.no_section_selected" = "섹션이 선택되지 않았습니다.";
 

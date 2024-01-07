@@ -271,7 +271,6 @@
 "You don't have any open editor." = "Sie haben keinen offenen Editor.";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "Dadurch werden Remote-Änderungen in Ihr lokales Repository übertragen und lokale Commits an den Upstream-Zweig weitergeleitet. Konflikte werden von der lokalen Kopie zusammengeführt und überschrieben.";
 "User Name" = "Benutzername";
-"Show hidden files" = "Versteckte Dateien anzeigen";
 "Erase" = "Löschen";
 "This will erase all user settings, including author identity and credentials." = "Dadurch werden alle Benutzereinstellungen gelöscht, einschließlich der Autorenidentität und der Anmeldeinformationen.";
 "Erase all settings" = "Alle Einstellungen löschen";
@@ -407,7 +406,7 @@
 "Key passphrase" = "Schlüssel-Passphrase";
 "Show public key" = "öffentlichen Schlüssel anzeigen";
 
-"Expermimental Features" = "Experimentelle Funktionen";
+"Experimental Features" = "Experimentelle Funktionen";
 "Enable spell check in text files" = "Rechtschreibprüfung in Textdateien aktivieren";
 "Spell checking on content changed" = "Rechtschreibprüfung bei Inhaltänderung";
 
@@ -443,6 +442,7 @@
 "settings.editor.font.ligatures" = "Schrift Ligaturen";
 "settings.editor.font.show_all_fonts" = "Alle Schriftarten anzeigen";
 "settings.explorer.confirm_before_delete" = "Bestätigen Sie vor dem Löschen";
+"settings.explorer.show_hidden_files" = "Versteckte Dateien anzeigen";
 "panels.no_panel_selected" = "Kein Panel ausgewählt";
 "sidebar.no_section_selected" = "Kein Abschnitt ausgewählt";
 

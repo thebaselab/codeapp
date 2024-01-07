@@ -127,7 +127,7 @@ struct SettingsView: View {
                     }
 
                     Section(header: Text(NSLocalizedString("EXPLORER", comment: ""))) {
-                        Toggle("Show hidden files", isOn: $showHiddenFiles)
+                        Toggle("settings.explorer.show_hidden_files", isOn: $showHiddenFiles)
                         Toggle(
                             "settings.explorer.confirm_before_delete", isOn: $confirmBeforeDelete)
                     }

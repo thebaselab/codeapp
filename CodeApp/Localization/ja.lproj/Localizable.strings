@@ -272,7 +272,6 @@
 "You don't have any open editor." = "開いているエディタがありません。";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "これは、リモートの変更がローカルリポジトリにプルされ、ローカルでのコミットを上流ブランチにプッシュします。競合はローカルコピーにマージされ、上書きされます。";
 "User Name" = "ユーザー名";
-"Show hidden files" = "隠しファイルを表示";
 "Erase" = "消去";
 "This will erase all user settings, including author identity and credentials." = "これにより、作成者の ID と資格情報を含むすべてのユーザー設定が消去されます。";
 "Erase all settings" = "すべての設定を消去";
@@ -408,7 +407,7 @@
 "Key passphrase" = "キーパスフレーズ";
 "Show public key" = "公開鍵を表示";
 
-"Expermimental Features" = "実験的機能";
+"Experimental Features" = "実験的機能";
 "Enable spell check in text files" = "テキストファイルでスペルチェックを有効にする";
 "Spell checking on content changed" = "コンテンツのスペルチェックが変更されました";
 
@@ -444,6 +443,7 @@
 "settings.editor.font.ligatures" = "フォント合字";
 "settings.editor.font.show_all_fonts" = "すべてのフォントを表示";
 "settings.explorer.confirm_before_delete" = "削除する前に確認する";
+"settings.explorer.show_hidden_files" = "隠しファイルを表示";
 "panels.no_panel_selected" = "パネルが選択されていません";
 "sidebar.no_section_selected" = "セクションが選択されていません";
 

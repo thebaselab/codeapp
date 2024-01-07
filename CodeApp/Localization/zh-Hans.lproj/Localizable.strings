@@ -265,7 +265,6 @@
 "You don't have any open editor." = "当前没有打开的编辑器。";
 "This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "这会将远程更改拉取到本地存储库，然后将本地提交推送到远程分支。冲突将被本地副本合并和覆盖。";
 "User Name" = "用户名";
-"Show hidden files" = "显示隐藏文件";
 "Erase" = "清除";
 "This will erase all user settings, including author identity and credentials." = "这将清除所有用户设置，包括作者身份和凭据。";
 "Erase all settings" = "清除所有设置";
@@ -398,7 +397,7 @@
 "Key passphrase" = "SSH 密钥密码";
 "Show public key" = "显示公钥";
 
-"Expermimental Features" = "实验性功能";
+"Experimental Features" = "实验性功能";
 "Enable spell check in text files" = "在文本文件中启用拼写检查";
 "Spell checking on content changed" = "在内容改变时检查拼写";
 
@@ -434,6 +433,7 @@
 "settings.editor.font.ligatures" = "合字";
 "settings.editor.font.show_all_fonts" = "显示所有字体";
 "settings.explorer.confirm_before_delete" = "删除前确认";
+"settings.explorer.show_hidden_files" = "显示隐藏文件";
 "panels.no_panel_selected" = "没有选中的面板";
 "sidebar.no_section_selected" = "没有选中的版面";
 
