@@ -71,4 +71,12 @@ curl -OL https://github.com/thebaselab/NMSSH/releases/download/2.3.1-p5/NMSSH.xc
 unzip -q NMSSH.xcframework.zip
 rm -f NMSSH.xcframework.zip
 
+# Java
+mkdir -p Java
+cd Java
+curl -OL https://github.com/thebaselab/android-openjdk-build-multiarch/releases/download/v0.1/java-8-openjdk-tools-jar.zip
+unzip -q java-8-openjdk-tools-jar.zip
+rm -f java-8-openjdk-tools-jar.zip
+cd ..
+
 echo "Done!"

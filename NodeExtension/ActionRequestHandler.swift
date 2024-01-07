@@ -87,11 +87,131 @@ class OutputListener {
     
 }
 
+// Java attempts to re-run main() on first run:
+// https://github.com/PojavLauncherTeam/openjdk-multiarch-jdk8u/blob/99f3f8bf37150677058ab00b76f9b17a1ab23a70/jdk/src/macosx/bin/java_md_macosx.c#L311
+@_cdecl("main")
+public func JavaEntrance(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
+    JavaLauncher.shared.launchJava(args: JavaLauncher.shared.lastArgs)
+    return 0
+}
+
+class JavaLauncher {
+    static let shared = JavaLauncher()
+    
+    var lastArgs: [String] = []
+    var javaString: NSString = "java"
+    var openJDKString: NSString = "openjdk"
+    var versionStringFull: NSString = "1.8.0-internal"
+    var versionString: NSString = "1.8.0"
+    static let javaHome = "\(Bundle.main.resourcePath!)/Java/java-8-openjdk"
+    let defaultArgs = [
+        "\(javaHome)/bin/java",
+        "-XstartOnFirstThread",
+        "-Xmx128M",
+        "-Djava.library.path=\(Bundle.main.bundlePath)/Frameworks",
+        "-Djna.boot.library.path=\(Bundle.main.bundlePath)/Frameworks",
+        "-Dorg.lwjgl.glfw.checkThread0=false",
+        "-Dorg.lwjgl.system.allocator=system",
+        "-Dlog4j2.formatMsgNoLookups=true",
+        "-XX:+UnlockExperimentalVMOptions",
+        "-XX:+DisablePrimordialThreadGuardPages",
+        "-Djava.awt.headless=false",
+        "-XX:-UseCompressedClassPointers",
+        "-jre-restrict-search"
+    ]
+    
+    typealias JLI_Launch = @convention(c) (
+        Int32,
+        UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?,
+        Int32,
+        UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?,
+        Int32,
+        UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?,
+        UnsafeMutablePointer<CChar>?,
+        UnsafeMutablePointer<CChar>?,
+        UnsafeMutablePointer<CChar>?,
+        UnsafeMutablePointer<CChar>?,
+        Int32,
+        Int32,
+        Int32,
+        Int32
+    ) -> CInt
+    
+    func launchJava(args: [String]){
+        lastArgs = args
+        
+        let libjlipath = "\(JavaLauncher.javaHome)/lib/jli/libjli.dylib"
+        setenv("JAVA_HOME", JavaLauncher.javaHome, 1)
+        setenv("INTERNAL_JLI_PATH", libjlipath, 1)
+        setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1)
+//        For debug:
+//        setenv("_JAVA_LAUNCHER_DEBUG", "1", 1)
+        
+        let libjli = dlopen(libjlipath, RTLD_GLOBAL)
+        if (libjli == nil){
+            if let error = dlerror(),
+                let str = String(validatingUTF8: error) {
+                print(str)
+            }
+            return
+        }
+        
+        let pJLI_Launch = dlsym(libjli, "JLI_Launch")
+        let f = unsafeBitCast(pJLI_Launch, to: JLI_Launch.self)
+        
+        let realArgs = {
+            if args.first == "java" {
+                return (defaultArgs + args.dropFirst())
+            }else if args.first == "javac" {
+                return (
+                    defaultArgs +
+                    ["-cp",
+                     "\(Bundle.main.resourcePath!)/Java/tools.jar",
+                     "com.sun.tools.javac.Main"
+                    ]
+                    + args.dropFirst()
+                )
+            }else {
+                return defaultArgs
+            }
+        }()
+        var cargs = realArgs.map{strdup($0) }
+        
+        let javaStringPtr = UnsafeMutablePointer<CChar>(mutating: javaString.utf8String)
+        let openJDKStringPtr = UnsafeMutablePointer<CChar>(mutating: openJDKString.utf8String)
+        let versionStringFullPtr = UnsafeMutablePointer<CChar>(mutating: versionStringFull.utf8String)
+        let versionStringPtr = UnsafeMutablePointer<CChar>(mutating: versionString.utf8String)
+        
+        let result = f(
+            Int32(cargs.count), &cargs,
+            0, nil,
+            0, nil,
+            versionStringFullPtr,
+            versionStringPtr,
+            javaStringPtr,
+            openJDKStringPtr,
+            0,
+            1,
+            0,
+            1
+        )
+        dlclose(libjli)
+    }
+    
+}
+
 class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
     
     var extensionContext: NSExtensionContext?
     
     func beginRequest(with context: NSExtensionContext) {
+        
+        atexit {
+            // Allow stdout to properly print before exit
+            fflush(stdout)
+            usleep(200000) // 0.2 seconds
+        }
+        
         setenv("npm_config_prefix", sharedURL.appendingPathComponent("lib").path, 1)
         setenv("npm_config_cache", FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.path, 1)
         setenv("npm_config_userconfig", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(".npmrc").path, 1)
@@ -141,12 +261,22 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         _ = url.startAccessingSecurityScopedResource()
         FileManager.default.changeCurrentDirectoryPath(url.path)
         
-        guard let args = item.userInfo?["args"] as? [String] else {
+        guard let args = item.userInfo?["args"] as? [String],
+              let executable = args.first
+        else {
             return
         }
         
         DispatchQueue.global(qos: .default).async {
-            NodeRunner.startEngine(withArguments: args)
+            
+            switch executable {
+            case "java", "javac":
+                JavaLauncher.shared.launchJava(args: args)
+            case "node":
+                NodeRunner.startEngine(withArguments: args)
+            default:
+                break
+            }
             
             self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
             

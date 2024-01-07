@@ -213,6 +213,8 @@ struct CodeApp: App {
         replaceCommand("npm", "npm", true)
         replaceCommand("npx", "npx", true)
         replaceCommand("wasm", "wasm", true)
+        replaceCommand("java", "java", true)
+        replaceCommand("javac", "javac", true)
 
         refreshNodeCommands()
 

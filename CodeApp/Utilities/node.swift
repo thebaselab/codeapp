@@ -20,9 +20,9 @@ typealias RequestCompletionBlock = @convention(block) (_ uuid: UUID?, _ extensio
     Void
 typealias RequestBeginBlock = @convention(block) (_ uuid: UUID?) -> Void
 
-func nodeCmd(args: [String]?) -> Int32 {
+func launchCommandInExtension(args: [String]?) -> Int32 {
 
-    guard let args = args, args.first == "node" else {
+    guard let args else {
         return 1
     }
 
@@ -44,13 +44,6 @@ func nodeCmd(args: [String]?) -> Int32 {
         { uuid in
             if let uuid = uuid {
                 print("Request \(uuid) interrupted.")
-                let nc = NotificationCenter.default
-                nc.post(
-                    name: Notification.Name("node.stdout"), object: nil,
-                    userInfo: [
-                        "content":
-                            "Program interrupted. This could be caused by a memory limit or an error in your code.\n"
-                    ])
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     ended = true
                 }
@@ -107,6 +100,16 @@ func nodeCmd(args: [String]?) -> Int32 {
     return 0
 }
 
+@_cdecl("java")
+public func java(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
+    return launchCommandInExtension(args: convertCArguments(argc: argc, argv: argv))
+}
+
+@_cdecl("javac")
+public func javac(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
+    return launchCommandInExtension(args: convertCArguments(argc: argc, argv: argv))
+}
+
 @_cdecl("node")
 public func node(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
     let args = convertCArguments(argc: argc, argv: argv)
@@ -116,7 +119,7 @@ public func node(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<In
         return 1
     }
 
-    return nodeCmd(args: args)
+    return launchCommandInExtension(args: args)
 }
 
 @_cdecl("npm")
@@ -172,7 +175,7 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
                         return 1
                     }
                     if cmd == "node" {
-                        return nodeCmd(args: script.components(separatedBy: " "))
+                        return launchCommandInExtension(args: script.components(separatedBy: " "))
                     }
 
                     script.removeFirst(cmd.count)
@@ -210,7 +213,9 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
                                 }
 
                                 print(["node", prettierPath, script])
-                                return nodeCmd(args: ["node", prettierPath, script])
+                                return launchCommandInExtension(args: [
+                                    "node", prettierPath, script,
+                                ])
                             }
                         }
                     }
@@ -236,7 +241,7 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
                         }
                     }
 
-                    return nodeCmd(args: ["node", bin.path] + cmdArgs)
+                    return launchCommandInExtension(args: ["node", bin.path] + cmdArgs)
                 } else {
                     fputs("npm ERR! missing script: \(args[1])\n", thread_stderr)
                 }
@@ -251,7 +256,7 @@ public func npm(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
     let npmURL = Resources.npm.appendingPathComponent("node_modules/.bin/npm")
     args = ["node", "--optimize-for-size", npmURL.path] + args
 
-    return nodeCmd(args: args)
+    return launchCommandInExtension(args: args)
 }
 
 @_cdecl("npx")
@@ -289,7 +294,7 @@ public func npx(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int
 
     args.removeFirst()
 
-    return nodeCmd(args: ["node", bin.path] + args)
+    return launchCommandInExtension(args: ["node", bin.path] + args)
 }
 
 @_cdecl("nodeg")
@@ -317,5 +322,5 @@ public func nodeg(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<I
 
     args = ["node", prettierPath] + args  // + ["--prefix", workingPath]
 
-    return nodeCmd(args: args)
+    return launchCommandInExtension(args: args)
 }
