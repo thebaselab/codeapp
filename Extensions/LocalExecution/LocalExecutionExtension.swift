@@ -15,6 +15,10 @@ private let LOCAL_EXECUTION_COMMANDS = [
     "c": ["clang {url}", "wasm a.out"],
     "cpp": ["clang++ {url}", "wasm a.out"],
     "php": ["php {url}"],
+    "java": [
+        "javac {url}",
+        "java -classpath \"{url_parent}\" \"{last_path_component_without_extension}\"",
+    ],
 ]
 
 class LocalExecutionExtension: CodeAppExtension {
@@ -53,8 +57,17 @@ class LocalExecutionExtension: CodeAppExtension {
         await app.saveCurrentFile()
 
         let sanitizedUrl = activeTextEditor.url.path.replacingOccurrences(of: " ", with: #"\ "#)
+        let urlParent = activeTextEditor.url.deletingLastPathComponent().path
+        let lastPathComponentWithoutExtension = activeTextEditor.url.deletingPathExtension()
+            .lastPathComponent
+            .replacingOccurrences(of: " ", with: #"\ "#)
         let parsedCommands = commands.map {
-            $0.replacingOccurrences(of: "{url}", with: sanitizedUrl)
+            $0
+                .replacingOccurrences(of: "{url}", with: sanitizedUrl)
+                .replacingOccurrences(of: "{url_parent}", with: urlParent)
+                .replacingOccurrences(
+                    of: "{last_path_component_without_extension}",
+                    with: lastPathComponentWithoutExtension)
         }
 
         let compilerShowPath = UserDefaults.standard.bool(forKey: "compilerShowPath")
