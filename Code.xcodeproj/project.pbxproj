@@ -490,6 +490,40 @@
 		945AEA3827ECCB5F00BA193E /* NodeMobile.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */; };
 		945C75E6281587DB00D22B35 /* ExplorerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945C75E5281587DB00D22B35 /* ExplorerCell.swift */; };
 		945C75E7281587DB00D22B35 /* ExplorerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945C75E5281587DB00D22B35 /* ExplorerCell.swift */; };
+		945D4E222B4B174400DE0DBA /* tools.jar in Resources */ = {isa = PBXBuildFile; fileRef = 945D4DFF2B4B172700DE0DBA /* tools.jar */; };
+		945D4E232B4B174B00DE0DBA /* java-8-openjdk in Resources */ = {isa = PBXBuildFile; fileRef = 945D4E212B4B173700DE0DBA /* java-8-openjdk */; };
+		945D4E6C2B4B1A0900DE0DBA /* libj2pcsc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E012B4B173100DE0DBA /* libj2pcsc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E6E2B4B1A0900DE0DBA /* libjava_crw_demo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E022B4B173100DE0DBA /* libjava_crw_demo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E702B4B1A0900DE0DBA /* libattach.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E032B4B173100DE0DBA /* libattach.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E722B4B1A0900DE0DBA /* libsunec.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E042B4B173100DE0DBA /* libsunec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E742B4B1A0900DE0DBA /* libffi.8.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E052B4B173100DE0DBA /* libffi.8.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E762B4B1A0900DE0DBA /* libjaas_unix.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E062B4B173100DE0DBA /* libjaas_unix.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E782B4B1A0900DE0DBA /* libmlib_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E072B4B173100DE0DBA /* libmlib_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E7A2B4B1A0900DE0DBA /* libawt_headless.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E082B4B173100DE0DBA /* libawt_headless.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E7C2B4B1A0900DE0DBA /* libmanagement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E092B4B173100DE0DBA /* libmanagement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E7E2B4B1A0900DE0DBA /* libjli.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0A2B4B173100DE0DBA /* libjli.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E802B4B1A0900DE0DBA /* libjava.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0B2B4B173100DE0DBA /* libjava.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E822B4B1A0900DE0DBA /* libhprof.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0C2B4B173100DE0DBA /* libhprof.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E842B4B1A0900DE0DBA /* libjsig.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0D2B4B173100DE0DBA /* libjsig.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E862B4B1A0A00DE0DBA /* libfontmanager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0E2B4B173100DE0DBA /* libfontmanager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E882B4B1A0A00DE0DBA /* libawt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0F2B4B173100DE0DBA /* libawt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E8A2B4B1A0A00DE0DBA /* libunpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E102B4B173100DE0DBA /* libunpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E8C2B4B1A0A00DE0DBA /* libdt_socket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E112B4B173100DE0DBA /* libdt_socket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E8E2B4B1A0A00DE0DBA /* libjsdt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E122B4B173100DE0DBA /* libjsdt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E902B4B1A0A00DE0DBA /* libjvm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E132B4B173100DE0DBA /* libjvm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E922B4B1A0A00DE0DBA /* libjdwp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E142B4B173100DE0DBA /* libjdwp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E942B4B1A0A00DE0DBA /* libfreetype.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E152B4B173100DE0DBA /* libfreetype.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E962B4B1A0A00DE0DBA /* libzip.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E162B4B173100DE0DBA /* libzip.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E982B4B1A0A00DE0DBA /* libnpt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E172B4B173100DE0DBA /* libnpt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E9A2B4B1A0A00DE0DBA /* libjpeg.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E182B4B173100DE0DBA /* libjpeg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E9C2B4B1A0A00DE0DBA /* libverify.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E192B4B173100DE0DBA /* libverify.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4E9E2B4B1A0B00DE0DBA /* libj2pkcs11.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1A2B4B173100DE0DBA /* libj2pkcs11.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4EA02B4B1A0B00DE0DBA /* libj2gss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1B2B4B173100DE0DBA /* libj2gss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4EA22B4B1A0B00DE0DBA /* libnet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1C2B4B173100DE0DBA /* libnet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4EA42B4B1A0B00DE0DBA /* libnio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1D2B4B173100DE0DBA /* libnio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4EA62B4B1A0B00DE0DBA /* libinstrument.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1E2B4B173100DE0DBA /* libinstrument.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4EA82B4B1A0B00DE0DBA /* libjawt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1F2B4B173100DE0DBA /* libjawt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4EAA2B4B1A0B00DE0DBA /* liblcms.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E202B4B173100DE0DBA /* liblcms.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94795C452931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C462931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
@@ -627,7 +661,6 @@
 		94E6CC862807502A00939E4F /* ActivityBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC842807502A00939E4F /* ActivityBarItemView.swift */; };
 		94E6CC882807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
 		94E6CC892807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
-		94EF72522B4A5AF200BEDAF2 /* Java in Resources */ = {isa = PBXBuildFile; fileRef = 94EF72512B4A5AED00BEDAF2 /* Java */; };
 		94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94F2FEA326A2D44D007EBC6D /* freetype.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AB25F5518700F1EF4E /* network_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */; };
@@ -811,6 +844,48 @@
 				94369B0725E3B933008419A0 /* extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		945D4EAB2B4B1A0B00DE0DBA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				945D4E7A2B4B1A0900DE0DBA /* libawt_headless.framework in Embed Frameworks */,
+				945D4E702B4B1A0900DE0DBA /* libattach.framework in Embed Frameworks */,
+				945D4EA42B4B1A0B00DE0DBA /* libnio.framework in Embed Frameworks */,
+				945D4E902B4B1A0A00DE0DBA /* libjvm.framework in Embed Frameworks */,
+				945D4E6E2B4B1A0900DE0DBA /* libjava_crw_demo.framework in Embed Frameworks */,
+				945D4E882B4B1A0A00DE0DBA /* libawt.framework in Embed Frameworks */,
+				945D4E9E2B4B1A0B00DE0DBA /* libj2pkcs11.framework in Embed Frameworks */,
+				945D4E802B4B1A0900DE0DBA /* libjava.framework in Embed Frameworks */,
+				945D4E842B4B1A0900DE0DBA /* libjsig.framework in Embed Frameworks */,
+				945D4E982B4B1A0A00DE0DBA /* libnpt.framework in Embed Frameworks */,
+				945D4E782B4B1A0900DE0DBA /* libmlib_image.framework in Embed Frameworks */,
+				945D4EA22B4B1A0B00DE0DBA /* libnet.framework in Embed Frameworks */,
+				945D4E6C2B4B1A0900DE0DBA /* libj2pcsc.framework in Embed Frameworks */,
+				945D4E9A2B4B1A0A00DE0DBA /* libjpeg.framework in Embed Frameworks */,
+				945D4E8A2B4B1A0A00DE0DBA /* libunpack.framework in Embed Frameworks */,
+				945D4E762B4B1A0900DE0DBA /* libjaas_unix.framework in Embed Frameworks */,
+				945D4E722B4B1A0900DE0DBA /* libsunec.framework in Embed Frameworks */,
+				945D4E862B4B1A0A00DE0DBA /* libfontmanager.framework in Embed Frameworks */,
+				945D4E822B4B1A0900DE0DBA /* libhprof.framework in Embed Frameworks */,
+				945D4EAA2B4B1A0B00DE0DBA /* liblcms.framework in Embed Frameworks */,
+				945D4E7C2B4B1A0900DE0DBA /* libmanagement.framework in Embed Frameworks */,
+				945D4E8C2B4B1A0A00DE0DBA /* libdt_socket.framework in Embed Frameworks */,
+				945D4E962B4B1A0A00DE0DBA /* libzip.framework in Embed Frameworks */,
+				945D4E9C2B4B1A0A00DE0DBA /* libverify.framework in Embed Frameworks */,
+				945D4EA02B4B1A0B00DE0DBA /* libj2gss.framework in Embed Frameworks */,
+				945D4E7E2B4B1A0900DE0DBA /* libjli.framework in Embed Frameworks */,
+				945D4E922B4B1A0A00DE0DBA /* libjdwp.framework in Embed Frameworks */,
+				945D4EA82B4B1A0B00DE0DBA /* libjawt.framework in Embed Frameworks */,
+				945D4E742B4B1A0900DE0DBA /* libffi.8.framework in Embed Frameworks */,
+				945D4EA62B4B1A0B00DE0DBA /* libinstrument.framework in Embed Frameworks */,
+				945D4E942B4B1A0A00DE0DBA /* libfreetype.framework in Embed Frameworks */,
+				945D4E8E2B4B1A0A00DE0DBA /* libjsdt.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		94A77817257BC13F008FE7B2 /* Embed Frameworks */ = {
@@ -1577,6 +1652,40 @@
 		944FC40A25C5F69D00C7C43C /* HierarchyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchyList.swift; sourceTree = "<group>"; };
 		945AEA3427ECCB3D00BA193E /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = NodeMobile.xcframework; sourceTree = "<group>"; };
 		945C75E5281587DB00D22B35 /* ExplorerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerCell.swift; sourceTree = "<group>"; };
+		945D4DFF2B4B172700DE0DBA /* tools.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; name = tools.jar; path = Java/tools.jar; sourceTree = "<group>"; };
+		945D4E012B4B173100DE0DBA /* libj2pcsc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libj2pcsc.framework; sourceTree = "<group>"; };
+		945D4E022B4B173100DE0DBA /* libjava_crw_demo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjava_crw_demo.framework; sourceTree = "<group>"; };
+		945D4E032B4B173100DE0DBA /* libattach.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libattach.framework; sourceTree = "<group>"; };
+		945D4E042B4B173100DE0DBA /* libsunec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libsunec.framework; sourceTree = "<group>"; };
+		945D4E052B4B173100DE0DBA /* libffi.8.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libffi.8.framework; sourceTree = "<group>"; };
+		945D4E062B4B173100DE0DBA /* libjaas_unix.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjaas_unix.framework; sourceTree = "<group>"; };
+		945D4E072B4B173100DE0DBA /* libmlib_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libmlib_image.framework; sourceTree = "<group>"; };
+		945D4E082B4B173100DE0DBA /* libawt_headless.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libawt_headless.framework; sourceTree = "<group>"; };
+		945D4E092B4B173100DE0DBA /* libmanagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libmanagement.framework; sourceTree = "<group>"; };
+		945D4E0A2B4B173100DE0DBA /* libjli.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjli.framework; sourceTree = "<group>"; };
+		945D4E0B2B4B173100DE0DBA /* libjava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjava.framework; sourceTree = "<group>"; };
+		945D4E0C2B4B173100DE0DBA /* libhprof.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libhprof.framework; sourceTree = "<group>"; };
+		945D4E0D2B4B173100DE0DBA /* libjsig.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjsig.framework; sourceTree = "<group>"; };
+		945D4E0E2B4B173100DE0DBA /* libfontmanager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libfontmanager.framework; sourceTree = "<group>"; };
+		945D4E0F2B4B173100DE0DBA /* libawt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libawt.framework; sourceTree = "<group>"; };
+		945D4E102B4B173100DE0DBA /* libunpack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libunpack.framework; sourceTree = "<group>"; };
+		945D4E112B4B173100DE0DBA /* libdt_socket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libdt_socket.framework; sourceTree = "<group>"; };
+		945D4E122B4B173100DE0DBA /* libjsdt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjsdt.framework; sourceTree = "<group>"; };
+		945D4E132B4B173100DE0DBA /* libjvm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjvm.framework; sourceTree = "<group>"; };
+		945D4E142B4B173100DE0DBA /* libjdwp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjdwp.framework; sourceTree = "<group>"; };
+		945D4E152B4B173100DE0DBA /* libfreetype.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libfreetype.framework; sourceTree = "<group>"; };
+		945D4E162B4B173100DE0DBA /* libzip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libzip.framework; sourceTree = "<group>"; };
+		945D4E172B4B173100DE0DBA /* libnpt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libnpt.framework; sourceTree = "<group>"; };
+		945D4E182B4B173100DE0DBA /* libjpeg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjpeg.framework; sourceTree = "<group>"; };
+		945D4E192B4B173100DE0DBA /* libverify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libverify.framework; sourceTree = "<group>"; };
+		945D4E1A2B4B173100DE0DBA /* libj2pkcs11.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libj2pkcs11.framework; sourceTree = "<group>"; };
+		945D4E1B2B4B173100DE0DBA /* libj2gss.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libj2gss.framework; sourceTree = "<group>"; };
+		945D4E1C2B4B173100DE0DBA /* libnet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libnet.framework; sourceTree = "<group>"; };
+		945D4E1D2B4B173100DE0DBA /* libnio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libnio.framework; sourceTree = "<group>"; };
+		945D4E1E2B4B173100DE0DBA /* libinstrument.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libinstrument.framework; sourceTree = "<group>"; };
+		945D4E1F2B4B173100DE0DBA /* libjawt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjawt.framework; sourceTree = "<group>"; };
+		945D4E202B4B173100DE0DBA /* liblcms.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = liblcms.framework; sourceTree = "<group>"; };
+		945D4E212B4B173700DE0DBA /* java-8-openjdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "java-8-openjdk"; path = "Java/java-8-openjdk"; sourceTree = "<group>"; };
 		945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NodeMobile.xcframework; path = Resources/NodeJS/NodeMobile.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
 		94795C442931489C0057C12F /* ActivityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBar.swift; sourceTree = "<group>"; };
@@ -1691,7 +1800,6 @@
 		94E6CC7A2806FBAF00939E4F /* SFTPFileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPFileSystemProvider.swift; sourceTree = "<group>"; };
 		94E6CC842807502A00939E4F /* ActivityBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBarItemView.swift; sourceTree = "<group>"; };
 		94E6CC872807632B00939E4F /* biometricType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = biometricType.swift; sourceTree = "<group>"; };
-		94EF72512B4A5AED00BEDAF2 /* Java */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Java; sourceTree = "<group>"; };
 		94F2FEA326A2D44D007EBC6D /* freetype.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = freetype.xcframework; sourceTree = "<group>"; };
 		94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = convertCArguments.swift; sourceTree = "<group>"; };
 		94F52704259F997200337306 /* SourceControlAuthenticationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlAuthenticationConfiguration.swift; sourceTree = "<group>"; };
@@ -1939,6 +2047,56 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		945D4DFE2B4B171200DE0DBA /* Java */ = {
+			isa = PBXGroup;
+			children = (
+				945D4E212B4B173700DE0DBA /* java-8-openjdk */,
+				945D4E002B4B173100DE0DBA /* java-frameworks */,
+				945D4DFF2B4B172700DE0DBA /* tools.jar */,
+			);
+			name = Java;
+			sourceTree = "<group>";
+		};
+		945D4E002B4B173100DE0DBA /* java-frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				945D4E012B4B173100DE0DBA /* libj2pcsc.framework */,
+				945D4E022B4B173100DE0DBA /* libjava_crw_demo.framework */,
+				945D4E032B4B173100DE0DBA /* libattach.framework */,
+				945D4E042B4B173100DE0DBA /* libsunec.framework */,
+				945D4E052B4B173100DE0DBA /* libffi.8.framework */,
+				945D4E062B4B173100DE0DBA /* libjaas_unix.framework */,
+				945D4E072B4B173100DE0DBA /* libmlib_image.framework */,
+				945D4E082B4B173100DE0DBA /* libawt_headless.framework */,
+				945D4E092B4B173100DE0DBA /* libmanagement.framework */,
+				945D4E0A2B4B173100DE0DBA /* libjli.framework */,
+				945D4E0B2B4B173100DE0DBA /* libjava.framework */,
+				945D4E0C2B4B173100DE0DBA /* libhprof.framework */,
+				945D4E0D2B4B173100DE0DBA /* libjsig.framework */,
+				945D4E0E2B4B173100DE0DBA /* libfontmanager.framework */,
+				945D4E0F2B4B173100DE0DBA /* libawt.framework */,
+				945D4E102B4B173100DE0DBA /* libunpack.framework */,
+				945D4E112B4B173100DE0DBA /* libdt_socket.framework */,
+				945D4E122B4B173100DE0DBA /* libjsdt.framework */,
+				945D4E132B4B173100DE0DBA /* libjvm.framework */,
+				945D4E142B4B173100DE0DBA /* libjdwp.framework */,
+				945D4E152B4B173100DE0DBA /* libfreetype.framework */,
+				945D4E162B4B173100DE0DBA /* libzip.framework */,
+				945D4E172B4B173100DE0DBA /* libnpt.framework */,
+				945D4E182B4B173100DE0DBA /* libjpeg.framework */,
+				945D4E192B4B173100DE0DBA /* libverify.framework */,
+				945D4E1A2B4B173100DE0DBA /* libj2pkcs11.framework */,
+				945D4E1B2B4B173100DE0DBA /* libj2gss.framework */,
+				945D4E1C2B4B173100DE0DBA /* libnet.framework */,
+				945D4E1D2B4B173100DE0DBA /* libnio.framework */,
+				945D4E1E2B4B173100DE0DBA /* libinstrument.framework */,
+				945D4E1F2B4B173100DE0DBA /* libjawt.framework */,
+				945D4E202B4B173100DE0DBA /* liblcms.framework */,
+			);
+			name = "java-frameworks";
+			path = "Java/java-frameworks";
+			sourceTree = "<group>";
+		};
 		9469A8F426A33B1D003F569F /* NodeJS */ = {
 			isa = PBXGroup;
 			children = (
@@ -2036,7 +2194,7 @@
 		94B3D55125F776A900C4F2B1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				94EF72512B4A5AED00BEDAF2 /* Java */,
+				945D4DFE2B4B171200DE0DBA /* Java */,
 				9469AC9926A33D19003F569F /* PHP */,
 				9469A8F426A33B1D003F569F /* NodeJS */,
 				94B3D55225F776A900C4F2B1 /* cpython */,
@@ -2823,6 +2981,7 @@
 				94369AF825E3B933008419A0 /* Sources */,
 				94369AF925E3B933008419A0 /* Frameworks */,
 				94369AFA25E3B933008419A0 /* Resources */,
+				945D4EAB2B4B1A0B00DE0DBA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2974,9 +3133,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94EF72522B4A5AF200BEDAF2 /* Java in Resources */,
 				9484BDD12B46FAEE003BCB8A /* injection.js in Resources */,
 				94369AFF25E3B933008419A0 /* Media.xcassets in Resources */,
+				945D4E222B4B174400DE0DBA /* tools.jar in Resources */,
+				945D4E232B4B174B00DE0DBA /* java-8-openjdk in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3543,6 +3703,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/NodeJS",
+					"$(PROJECT_DIR)/Resources/Java/java-frameworks",
 				);
 				INFOPLIST_FILE = NodeExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -3578,6 +3739,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/NodeJS",
+					"$(PROJECT_DIR)/Resources/Java/java-frameworks",
 				);
 				INFOPLIST_FILE = NodeExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;

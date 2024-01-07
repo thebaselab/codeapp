@@ -74,9 +74,9 @@ rm -f NMSSH.xcframework.zip
 # Java
 mkdir -p Java
 cd Java
-curl -OL https://github.com/thebaselab/android-openjdk-build-multiarch/releases/download/v0.1/java-8-openjdk-tools-jar.zip
-unzip -q java-8-openjdk-tools-jar.zip
-rm -f java-8-openjdk-tools-jar.zip
+curl -OL https://github.com/thebaselab/android-openjdk-build-multiarch/releases/download/v0.2/java-8-zero-frameworks-tools.zip
+unzip -q java-8-zero-frameworks-tools.zip
+rm -f java-8-zero-frameworks-tools.zip
 cd ..
 
 echo "Done!"

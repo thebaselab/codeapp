@@ -103,7 +103,7 @@ class JavaLauncher {
     var openJDKString: NSString = "openjdk"
     var versionStringFull: NSString = "1.8.0-internal"
     var versionString: NSString = "1.8.0"
-    static let javaHome = "\(Bundle.main.resourcePath!)/Java/java-8-openjdk"
+    static let javaHome = "\(Bundle.main.resourcePath!)/java-8-openjdk"
     let defaultArgs = [
         "\(javaHome)/bin/java",
         "-XstartOnFirstThread",
@@ -140,12 +140,24 @@ class JavaLauncher {
     func launchJava(args: [String]){
         lastArgs = args
         
-        let libjlipath = "\(JavaLauncher.javaHome)/lib/jli/libjli.dylib"
+        let libjlipath = "\(Bundle.main.privateFrameworksPath!)/libjli.framework/libjli"
         setenv("JAVA_HOME", JavaLauncher.javaHome, 1)
         setenv("INTERNAL_JLI_PATH", libjlipath, 1)
         setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1)
+        
 //        For debug:
 //        setenv("_JAVA_LAUNCHER_DEBUG", "1", 1)
+        
+        for lib in ["libffi.8", "libjvm", "libverify", "libjava", "libnet"]{
+            let handle = dlopen("\(Bundle.main.privateFrameworksPath!)/\(lib).framework/\(lib)", RTLD_GLOBAL)
+            if (handle == nil) {
+                if let error = dlerror(),
+                    let str = String(validatingUTF8: error) {
+                    print(str)
+                }
+                fatalError()
+            }
+        }
         
         let libjli = dlopen(libjlipath, RTLD_GLOBAL)
         if (libjli == nil){
@@ -166,7 +178,7 @@ class JavaLauncher {
                 return (
                     defaultArgs +
                     ["-cp",
-                     "\(Bundle.main.resourcePath!)/Java/tools.jar",
+                     "\(Bundle.main.resourcePath!)/tools.jar",
                      "com.sun.tools.javac.Main"
                     ]
                     + args.dropFirst()
