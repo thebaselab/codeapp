@@ -91,13 +91,17 @@ class OutputListener {
 // https://github.com/PojavLauncherTeam/openjdk-multiarch-jdk8u/blob/99f3f8bf37150677058ab00b76f9b17a1ab23a70/jdk/src/macosx/bin/java_md_macosx.c#L311
 @_cdecl("main")
 public func JavaEntrance(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
-    JavaLauncher.shared.launchJava(args: JavaLauncher.shared.lastArgs)
+    JavaLauncher.shared.launchJava(
+        args: JavaLauncher.shared.lastArgs,
+        frameworkDirectory: JavaLauncher.shared.lastFrameworkDir
+    )
     return 0
 }
 
 class JavaLauncher {
     static let shared = JavaLauncher()
     
+    var lastFrameworkDir: URL!
     var lastArgs: [String] = []
     var javaString: NSString = "java"
     var openJDKString: NSString = "openjdk"
@@ -137,10 +141,11 @@ class JavaLauncher {
         Int32
     ) -> CInt
     
-    func launchJava(args: [String]){
+    func launchJava(args: [String], frameworkDirectory: URL){
+        lastFrameworkDir = frameworkDirectory
         lastArgs = args
         
-        let libjlipath = "\(Bundle.main.privateFrameworksPath!)/libjli.framework/libjli"
+        let libjlipath = "\(frameworkDirectory.path)/libjli.framework/libjli"
         setenv("JAVA_HOME", JavaLauncher.javaHome, 1)
         setenv("INTERNAL_JLI_PATH", libjlipath, 1)
         setenv("HACK_IGNORE_START_ON_FIRST_THREAD", "1", 1)
@@ -149,7 +154,7 @@ class JavaLauncher {
 //        setenv("_JAVA_LAUNCHER_DEBUG", "1", 1)
         
         for lib in ["libffi.8", "libjvm", "libverify", "libjava", "libnet"]{
-            let handle = dlopen("\(Bundle.main.privateFrameworksPath!)/\(lib).framework/\(lib)", RTLD_GLOBAL)
+            let handle = dlopen("\(frameworkDirectory.path)/\(lib).framework/\(lib)", RTLD_GLOBAL)
             if (handle == nil) {
                 if let error = dlerror(),
                     let str = String(validatingUTF8: error) {
@@ -268,10 +273,15 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         guard let data = item.userInfo?["workingDirectoryBookmark"] as? Data else {
             return
         }
-        
         let url = try! URL(resolvingBookmarkData: data, bookmarkDataIsStale: &isStale)
         _ = url.startAccessingSecurityScopedResource()
         FileManager.default.changeCurrentDirectoryPath(url.path)
+        
+        guard let frameworkDirdata = item.userInfo?["frameworksDirectoryBookmark"] as? Data else {
+            return
+        }
+        let frameworkDirURL = try! URL(resolvingBookmarkData: frameworkDirdata, bookmarkDataIsStale: &isStale)
+        _ = frameworkDirURL.startAccessingSecurityScopedResource()
         
         guard let args = item.userInfo?["args"] as? [String],
               let executable = args.first
@@ -283,7 +293,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
             
             switch executable {
             case "java", "javac":
-                JavaLauncher.shared.launchJava(args: args)
+                JavaLauncher.shared.launchJava(args: args, frameworkDirectory: frameworkDirURL)
             case "node":
                 NodeRunner.startEngine(withArguments: args)
             default:

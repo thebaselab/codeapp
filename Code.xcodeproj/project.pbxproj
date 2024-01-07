@@ -492,38 +492,38 @@
 		945C75E7281587DB00D22B35 /* ExplorerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945C75E5281587DB00D22B35 /* ExplorerCell.swift */; };
 		945D4E222B4B174400DE0DBA /* tools.jar in Resources */ = {isa = PBXBuildFile; fileRef = 945D4DFF2B4B172700DE0DBA /* tools.jar */; };
 		945D4E232B4B174B00DE0DBA /* java-8-openjdk in Resources */ = {isa = PBXBuildFile; fileRef = 945D4E212B4B173700DE0DBA /* java-8-openjdk */; };
-		945D4E6C2B4B1A0900DE0DBA /* libj2pcsc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E012B4B173100DE0DBA /* libj2pcsc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E6E2B4B1A0900DE0DBA /* libjava_crw_demo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E022B4B173100DE0DBA /* libjava_crw_demo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E702B4B1A0900DE0DBA /* libattach.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E032B4B173100DE0DBA /* libattach.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E722B4B1A0900DE0DBA /* libsunec.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E042B4B173100DE0DBA /* libsunec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E742B4B1A0900DE0DBA /* libffi.8.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E052B4B173100DE0DBA /* libffi.8.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E762B4B1A0900DE0DBA /* libjaas_unix.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E062B4B173100DE0DBA /* libjaas_unix.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E782B4B1A0900DE0DBA /* libmlib_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E072B4B173100DE0DBA /* libmlib_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E7A2B4B1A0900DE0DBA /* libawt_headless.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E082B4B173100DE0DBA /* libawt_headless.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E7C2B4B1A0900DE0DBA /* libmanagement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E092B4B173100DE0DBA /* libmanagement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E7E2B4B1A0900DE0DBA /* libjli.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0A2B4B173100DE0DBA /* libjli.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E802B4B1A0900DE0DBA /* libjava.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0B2B4B173100DE0DBA /* libjava.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E822B4B1A0900DE0DBA /* libhprof.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0C2B4B173100DE0DBA /* libhprof.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E842B4B1A0900DE0DBA /* libjsig.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0D2B4B173100DE0DBA /* libjsig.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E862B4B1A0A00DE0DBA /* libfontmanager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0E2B4B173100DE0DBA /* libfontmanager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E882B4B1A0A00DE0DBA /* libawt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0F2B4B173100DE0DBA /* libawt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E8A2B4B1A0A00DE0DBA /* libunpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E102B4B173100DE0DBA /* libunpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E8C2B4B1A0A00DE0DBA /* libdt_socket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E112B4B173100DE0DBA /* libdt_socket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E8E2B4B1A0A00DE0DBA /* libjsdt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E122B4B173100DE0DBA /* libjsdt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E902B4B1A0A00DE0DBA /* libjvm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E132B4B173100DE0DBA /* libjvm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E922B4B1A0A00DE0DBA /* libjdwp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E142B4B173100DE0DBA /* libjdwp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E942B4B1A0A00DE0DBA /* libfreetype.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E152B4B173100DE0DBA /* libfreetype.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E962B4B1A0A00DE0DBA /* libzip.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E162B4B173100DE0DBA /* libzip.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E982B4B1A0A00DE0DBA /* libnpt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E172B4B173100DE0DBA /* libnpt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E9A2B4B1A0A00DE0DBA /* libjpeg.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E182B4B173100DE0DBA /* libjpeg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E9C2B4B1A0A00DE0DBA /* libverify.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E192B4B173100DE0DBA /* libverify.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4E9E2B4B1A0B00DE0DBA /* libj2pkcs11.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1A2B4B173100DE0DBA /* libj2pkcs11.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4EA02B4B1A0B00DE0DBA /* libj2gss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1B2B4B173100DE0DBA /* libj2gss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4EA22B4B1A0B00DE0DBA /* libnet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1C2B4B173100DE0DBA /* libnet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4EA42B4B1A0B00DE0DBA /* libnio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1D2B4B173100DE0DBA /* libnio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4EA62B4B1A0B00DE0DBA /* libinstrument.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1E2B4B173100DE0DBA /* libinstrument.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4EA82B4B1A0B00DE0DBA /* libjawt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1F2B4B173100DE0DBA /* libjawt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		945D4EAA2B4B1A0B00DE0DBA /* liblcms.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E202B4B173100DE0DBA /* liblcms.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F102B4B3FEC00DE0DBA /* libj2pcsc.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E012B4B173100DE0DBA /* libj2pcsc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F112B4B3FEC00DE0DBA /* libjava_crw_demo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E022B4B173100DE0DBA /* libjava_crw_demo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F122B4B3FEC00DE0DBA /* libattach.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E032B4B173100DE0DBA /* libattach.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F132B4B3FEC00DE0DBA /* libsunec.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E042B4B173100DE0DBA /* libsunec.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F142B4B3FEC00DE0DBA /* libffi.8.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E052B4B173100DE0DBA /* libffi.8.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F152B4B3FEC00DE0DBA /* libjaas_unix.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E062B4B173100DE0DBA /* libjaas_unix.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F162B4B3FEC00DE0DBA /* libmlib_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E072B4B173100DE0DBA /* libmlib_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F172B4B3FEC00DE0DBA /* libawt_headless.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E082B4B173100DE0DBA /* libawt_headless.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F182B4B3FEC00DE0DBA /* libmanagement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E092B4B173100DE0DBA /* libmanagement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F192B4B3FEC00DE0DBA /* libjli.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0A2B4B173100DE0DBA /* libjli.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F1A2B4B3FEC00DE0DBA /* libjava.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0B2B4B173100DE0DBA /* libjava.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F1B2B4B3FEC00DE0DBA /* libhprof.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0C2B4B173100DE0DBA /* libhprof.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F1C2B4B3FEC00DE0DBA /* libjsig.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0D2B4B173100DE0DBA /* libjsig.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F1D2B4B3FEC00DE0DBA /* libfontmanager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0E2B4B173100DE0DBA /* libfontmanager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F1E2B4B3FEC00DE0DBA /* libawt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E0F2B4B173100DE0DBA /* libawt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F1F2B4B3FEC00DE0DBA /* libunpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E102B4B173100DE0DBA /* libunpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F202B4B3FEC00DE0DBA /* libdt_socket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E112B4B173100DE0DBA /* libdt_socket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F212B4B3FEC00DE0DBA /* libjsdt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E122B4B173100DE0DBA /* libjsdt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F222B4B3FEC00DE0DBA /* libjvm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E132B4B173100DE0DBA /* libjvm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F232B4B3FEC00DE0DBA /* libjdwp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E142B4B173100DE0DBA /* libjdwp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F242B4B3FEC00DE0DBA /* libfreetype.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E152B4B173100DE0DBA /* libfreetype.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F252B4B3FEC00DE0DBA /* libzip.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E162B4B173100DE0DBA /* libzip.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F262B4B3FEC00DE0DBA /* libnpt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E172B4B173100DE0DBA /* libnpt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F272B4B3FEC00DE0DBA /* libjpeg.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E182B4B173100DE0DBA /* libjpeg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F282B4B3FEC00DE0DBA /* libverify.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E192B4B173100DE0DBA /* libverify.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F292B4B3FEC00DE0DBA /* libj2pkcs11.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1A2B4B173100DE0DBA /* libj2pkcs11.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F2A2B4B3FEC00DE0DBA /* libj2gss.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1B2B4B173100DE0DBA /* libj2gss.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F2B2B4B3FEC00DE0DBA /* libnet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1C2B4B173100DE0DBA /* libnet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F2C2B4B3FED00DE0DBA /* libnio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1D2B4B173100DE0DBA /* libnio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F2D2B4B3FED00DE0DBA /* libinstrument.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1E2B4B173100DE0DBA /* libinstrument.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F2E2B4B3FED00DE0DBA /* libjawt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1F2B4B173100DE0DBA /* libjawt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F2F2B4B3FED00DE0DBA /* liblcms.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E202B4B173100DE0DBA /* liblcms.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94795C452931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C462931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
@@ -846,54 +846,44 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		945D4EAB2B4B1A0B00DE0DBA /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				945D4E7A2B4B1A0900DE0DBA /* libawt_headless.framework in Embed Frameworks */,
-				945D4E702B4B1A0900DE0DBA /* libattach.framework in Embed Frameworks */,
-				945D4EA42B4B1A0B00DE0DBA /* libnio.framework in Embed Frameworks */,
-				945D4E902B4B1A0A00DE0DBA /* libjvm.framework in Embed Frameworks */,
-				945D4E6E2B4B1A0900DE0DBA /* libjava_crw_demo.framework in Embed Frameworks */,
-				945D4E882B4B1A0A00DE0DBA /* libawt.framework in Embed Frameworks */,
-				945D4E9E2B4B1A0B00DE0DBA /* libj2pkcs11.framework in Embed Frameworks */,
-				945D4E802B4B1A0900DE0DBA /* libjava.framework in Embed Frameworks */,
-				945D4E842B4B1A0900DE0DBA /* libjsig.framework in Embed Frameworks */,
-				945D4E982B4B1A0A00DE0DBA /* libnpt.framework in Embed Frameworks */,
-				945D4E782B4B1A0900DE0DBA /* libmlib_image.framework in Embed Frameworks */,
-				945D4EA22B4B1A0B00DE0DBA /* libnet.framework in Embed Frameworks */,
-				945D4E6C2B4B1A0900DE0DBA /* libj2pcsc.framework in Embed Frameworks */,
-				945D4E9A2B4B1A0A00DE0DBA /* libjpeg.framework in Embed Frameworks */,
-				945D4E8A2B4B1A0A00DE0DBA /* libunpack.framework in Embed Frameworks */,
-				945D4E762B4B1A0900DE0DBA /* libjaas_unix.framework in Embed Frameworks */,
-				945D4E722B4B1A0900DE0DBA /* libsunec.framework in Embed Frameworks */,
-				945D4E862B4B1A0A00DE0DBA /* libfontmanager.framework in Embed Frameworks */,
-				945D4E822B4B1A0900DE0DBA /* libhprof.framework in Embed Frameworks */,
-				945D4EAA2B4B1A0B00DE0DBA /* liblcms.framework in Embed Frameworks */,
-				945D4E7C2B4B1A0900DE0DBA /* libmanagement.framework in Embed Frameworks */,
-				945D4E8C2B4B1A0A00DE0DBA /* libdt_socket.framework in Embed Frameworks */,
-				945D4E962B4B1A0A00DE0DBA /* libzip.framework in Embed Frameworks */,
-				945D4E9C2B4B1A0A00DE0DBA /* libverify.framework in Embed Frameworks */,
-				945D4EA02B4B1A0B00DE0DBA /* libj2gss.framework in Embed Frameworks */,
-				945D4E7E2B4B1A0900DE0DBA /* libjli.framework in Embed Frameworks */,
-				945D4E922B4B1A0A00DE0DBA /* libjdwp.framework in Embed Frameworks */,
-				945D4EA82B4B1A0B00DE0DBA /* libjawt.framework in Embed Frameworks */,
-				945D4E742B4B1A0900DE0DBA /* libffi.8.framework in Embed Frameworks */,
-				945D4EA62B4B1A0B00DE0DBA /* libinstrument.framework in Embed Frameworks */,
-				945D4E942B4B1A0A00DE0DBA /* libfreetype.framework in Embed Frameworks */,
-				945D4E8E2B4B1A0A00DE0DBA /* libjsdt.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		94A77817257BC13F008FE7B2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				945D4F102B4B3FEC00DE0DBA /* libj2pcsc.framework in Embed Frameworks */,
+				945D4F112B4B3FEC00DE0DBA /* libjava_crw_demo.framework in Embed Frameworks */,
+				945D4F122B4B3FEC00DE0DBA /* libattach.framework in Embed Frameworks */,
+				945D4F132B4B3FEC00DE0DBA /* libsunec.framework in Embed Frameworks */,
+				945D4F142B4B3FEC00DE0DBA /* libffi.8.framework in Embed Frameworks */,
+				945D4F152B4B3FEC00DE0DBA /* libjaas_unix.framework in Embed Frameworks */,
+				945D4F162B4B3FEC00DE0DBA /* libmlib_image.framework in Embed Frameworks */,
+				945D4F172B4B3FEC00DE0DBA /* libawt_headless.framework in Embed Frameworks */,
+				945D4F182B4B3FEC00DE0DBA /* libmanagement.framework in Embed Frameworks */,
+				945D4F192B4B3FEC00DE0DBA /* libjli.framework in Embed Frameworks */,
+				945D4F1A2B4B3FEC00DE0DBA /* libjava.framework in Embed Frameworks */,
+				945D4F1B2B4B3FEC00DE0DBA /* libhprof.framework in Embed Frameworks */,
+				945D4F1C2B4B3FEC00DE0DBA /* libjsig.framework in Embed Frameworks */,
+				945D4F1D2B4B3FEC00DE0DBA /* libfontmanager.framework in Embed Frameworks */,
+				945D4F1E2B4B3FEC00DE0DBA /* libawt.framework in Embed Frameworks */,
+				945D4F1F2B4B3FEC00DE0DBA /* libunpack.framework in Embed Frameworks */,
+				945D4F202B4B3FEC00DE0DBA /* libdt_socket.framework in Embed Frameworks */,
+				945D4F212B4B3FEC00DE0DBA /* libjsdt.framework in Embed Frameworks */,
+				945D4F222B4B3FEC00DE0DBA /* libjvm.framework in Embed Frameworks */,
+				945D4F232B4B3FEC00DE0DBA /* libjdwp.framework in Embed Frameworks */,
+				945D4F242B4B3FEC00DE0DBA /* libfreetype.framework in Embed Frameworks */,
+				945D4F252B4B3FEC00DE0DBA /* libzip.framework in Embed Frameworks */,
+				945D4F262B4B3FEC00DE0DBA /* libnpt.framework in Embed Frameworks */,
+				945D4F272B4B3FEC00DE0DBA /* libjpeg.framework in Embed Frameworks */,
+				945D4F282B4B3FEC00DE0DBA /* libverify.framework in Embed Frameworks */,
+				945D4F292B4B3FEC00DE0DBA /* libj2pkcs11.framework in Embed Frameworks */,
+				945D4F2A2B4B3FEC00DE0DBA /* libj2gss.framework in Embed Frameworks */,
+				945D4F2B2B4B3FEC00DE0DBA /* libnet.framework in Embed Frameworks */,
+				945D4F2C2B4B3FED00DE0DBA /* libnio.framework in Embed Frameworks */,
+				945D4F2D2B4B3FED00DE0DBA /* libinstrument.framework in Embed Frameworks */,
+				945D4F2E2B4B3FED00DE0DBA /* libjawt.framework in Embed Frameworks */,
+				945D4F2F2B4B3FED00DE0DBA /* liblcms.framework in Embed Frameworks */,
 				94465DDE28094A6F001DACDF /* NMSSH.xcframework in Embed Frameworks */,
 				9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */,
 				94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */,
@@ -2981,7 +2971,6 @@
 				94369AF825E3B933008419A0 /* Sources */,
 				94369AF925E3B933008419A0 /* Frameworks */,
 				94369AFA25E3B933008419A0 /* Resources */,
-				945D4EAB2B4B1A0B00DE0DBA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3618,6 +3607,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/cpython",
 					"$(PROJECT_DIR)/Resources/NodeJS",
+					"$(PROJECT_DIR)/Resources/Java/java-frameworks",
 				);
 				INFOPLIST_FILE = CodeUI.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -3664,6 +3654,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Resources/cpython",
 					"$(PROJECT_DIR)/Resources/NodeJS",
+					"$(PROJECT_DIR)/Resources/Java/java-frameworks",
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = CodeUI.plist;

@@ -73,13 +73,21 @@ func launchCommandInExtension(args: [String]?) -> Int32 {
         } as RequestCompletionBlock)
 
     let workingDir = FileManager.default.currentDirectoryPath
-    guard let bookmark = try? URL(fileURLWithPath: workingDir).bookmarkData() else {
+    guard let workingDirBookmark = try? URL(fileURLWithPath: workingDir).bookmarkData() else {
+        return 0
+    }
+    let frameworkDir = Bundle.main.privateFrameworksPath!
+    guard let frameworkDirBookmark = try? URL(fileURLWithPath: frameworkDir).bookmarkData() else {
         return 0
     }
 
     let item = NSExtensionItem()
 
-    item.userInfo = ["workingDirectoryBookmark": bookmark, "args": args]
+    item.userInfo = [
+        "workingDirectoryBookmark": workingDirBookmark,
+        "frameworksDirectoryBookmark": frameworkDirBookmark,
+        "args": args,
+    ]
 
     ext.beginExtensionRequestWithInputItems(
         [item],
