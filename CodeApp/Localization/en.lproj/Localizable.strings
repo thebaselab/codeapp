@@ -332,6 +332,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "settings.editor.font.reset" = "Reset to default";
 "settings.editor.font.ligatures" = "Font Ligatures";
 "settings.editor.font.show_all_fonts" = "Show all fonts";
+"settings.explorer.confirm_before_delete" = "Confirm Before Deleting";
 "panels.no_panel_selected" = "No panel selected";
 "sidebar.no_section_selected" = "No section selected.";
 

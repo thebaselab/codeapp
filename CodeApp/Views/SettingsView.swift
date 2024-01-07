@@ -26,6 +26,7 @@ struct SettingsView: View {
     @AppStorage("editorRenderWhitespace") var renderWhitespace: Int = 2
     @AppStorage("editorWordWrap") var editorWordWrap: String = "off"
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
+    @AppStorage("explorer.confirmBeforeDelete") var confirmBeforeDelete = false
     @AppStorage("toolBarEnabled") var toolBarEnabled: Bool = true
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
     @AppStorage("editorSmoothScrolling") var editorSmoothScrolling: Bool = false
@@ -126,9 +127,9 @@ struct SettingsView: View {
                     }
 
                     Section(header: Text(NSLocalizedString("EXPLORER", comment: ""))) {
+                        Toggle("Show hidden files", isOn: $showHiddenFiles)
                         Toggle(
-                            NSLocalizedString("Show hidden files", comment: ""),
-                            isOn: $showHiddenFiles)
+                            "settings.explorer.confirm_before_delete", isOn: $confirmBeforeDelete)
                     }
 
                     Section(header: Text(NSLocalizedString("Editor", comment: ""))) {

@@ -443,6 +443,7 @@
 "settings.editor.font.reset" = "デフォルトにリセット";
 "settings.editor.font.ligatures" = "フォント合字";
 "settings.editor.font.show_all_fonts" = "すべてのフォントを表示";
+"settings.explorer.confirm_before_delete" = "削除する前に確認する";
 "panels.no_panel_selected" = "パネルが選択されていません";
 "sidebar.no_section_selected" = "セクションが選択されていません";
 

@@ -121,6 +121,7 @@ class MainApp: ObservableObject {
     @AppStorage("compilerShowPath") var compilerShowPath = false
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
+    @AppStorage("explorer.confirmBeforeDelete") var confirmBeforeDelete = false
 
     init() {
 
@@ -412,24 +413,32 @@ class MainApp: ObservableObject {
     }
 
     func trashItem(url: URL) {
+        func removeItem() {
+            self.workSpaceStorage.removeItem(at: url) { error in
+                if let error = error {
+                    self.notificationManager.showErrorMessage(
+                        error.localizedDescription)
+                    return
+                }
+                if let editorToTrash = self.textEditors.first(where: { $0.url == url }) {
+                    Task { @MainActor in
+                        self.closeEditor(editor: editorToTrash)
+                    }
+                }
+            }
+        }
+
+        if !confirmBeforeDelete {
+            removeItem()
+            return
+        }
+
         alertManager.showAlert(
             title: "file.confirm_delete \(url.lastPathComponent)",
             content: AnyView(
                 Group {
                     Button("common.delete", role: .destructive) {
-                        self.workSpaceStorage.removeItem(at: url) { error in
-                            if let error = error {
-                                self.notificationManager.showErrorMessage(
-                                    error.localizedDescription)
-                                return
-                            }
-                            if let editorToTrash = self.textEditors.first(where: { $0.url == url })
-                            {
-                                Task { @MainActor in
-                                    self.closeEditor(editor: editorToTrash)
-                                }
-                            }
-                        }
+                        removeItem()
                     }
                     Button("common.cancel", role: .cancel) {}
                 }

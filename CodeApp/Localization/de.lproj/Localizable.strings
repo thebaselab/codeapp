@@ -442,6 +442,7 @@
 "settings.editor.font.reset" = "Standard";
 "settings.editor.font.ligatures" = "Schrift Ligaturen";
 "settings.editor.font.show_all_fonts" = "Alle Schriftarten anzeigen";
+"settings.explorer.confirm_before_delete" = "Bestätigen Sie vor dem Löschen";
 "panels.no_panel_selected" = "Kein Panel ausgewählt";
 "sidebar.no_section_selected" = "Kein Abschnitt ausgewählt";
 
