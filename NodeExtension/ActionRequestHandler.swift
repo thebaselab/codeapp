@@ -111,7 +111,6 @@ class JavaLauncher {
     let defaultArgs = [
         "\(javaHome)/bin/java",
         "-XstartOnFirstThread",
-        "-Xmx128M",
         "-Djava.library.path=\(Bundle.main.bundlePath)/Frameworks",
         "-Djna.boot.library.path=\(Bundle.main.bundlePath)/Frameworks",
         "-Dorg.lwjgl.glfw.checkThread0=false",
