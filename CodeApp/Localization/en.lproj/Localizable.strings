@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.3 (December 2023)**
+##### **v1.6.0 (January 2024)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,6 +23,14 @@
 
 "Changelog.message" =
 "
+### 1.6.0 (January 2024)
+- Local Language Enhancements
+  - Local Java (OpenJDK 8)
+    - You can now compile and run Java programs offline with `javac` and `java` commands
+  - Node.js 18.19.0
+  - PHP 8.3.2 (with Zlib)
+- Confirm prompt when deleting files is now optional and disabled by default
+
 ### 1.5.3 (December 2023)
 - Fixes a bug where terminal defaults to ~
 

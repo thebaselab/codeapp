@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.3 (December 2023)**
+##### **v1.6.0 (January 2024)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,14 @@
 
 "Changelog.message" =
 "
+### 1.6.0 (January 2024)
+- Verbesserungen der lokalen Sprache
+   - Lokales Java (OpenJDK 8)
+     - Sie können Java-Programme jetzt offline mit den Befehlen „javac“ und „java“ kompilieren und ausführen
+   - Node.js 18.19.0
+   - PHP 8.3.2 (mit Zlib)
+– Die Bestätigungsaufforderung beim Löschen von Dateien ist jetzt optional und standardmäßig deaktiviert
+
 ### 1.5.3 (December 2023)
 - Behebt einen Fehler, bei dem das Terminal standardmäßig ~ verwendet
 

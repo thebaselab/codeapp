@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.3 (2023년 12월)**
+##### **v1.6.0 (2024년 1월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,14 @@
 
 "Changelog.message" =
 "
+### 1.6.0(2024년 1월)
+- 로컬 프로그래밍 언어 향상
+   - 로컬 자바(OpenJDK 8)
+     - 이제 'javac' 및 'java' 명령을 사용하여 오프라인으로 Java 프로그램을 컴파일하고 실행할 수 있습니다.
+   - Node.js 18.19.0
+   - PHP 8.3.2(Zlib 포함)
+- 파일 삭제 시 확인 메시지는 이제 선택 사항이며 기본적으로 비활성화됩니다.
+
 ### 1.5.3(2023년 12월)
 - 터미널이 ~로 기본 설정되는 버그를 수정했습니다.
 

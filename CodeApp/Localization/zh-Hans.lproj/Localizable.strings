@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.5.3 (2023 年 12 月)**
+##### **v1.6.0 (2024 年 1 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,7 +23,15 @@
 
 "Changelog.message" =
 "
-### 1.5.2（2023 年 12 月）
+### 1.6.0（2024 年 1 月）
+- 本地编程语言增强
+   - 本地 Java (OpenJDK 8)
+     - 您现在可以使用“javac”和“java”命令离线编译和运行Java程序
+   - Node.js 18.19.0
+   - PHP 8.3.2（带 Zlib）
+- 删除文件时的确认提示现在是可选的，默认情况下禁用
+
+### 1.5.3（2023 年 12 月）
 - 修复了终端默认为 ~ 的错误
 
 ### 1.5.2（2023 年 12 月）
