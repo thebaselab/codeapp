@@ -20,7 +20,8 @@ Use [VS Code](https://github.com/microsoft/vscode) as a design template while pr
 - Embeded terminal (70+ commands avaliable) ✅
 - Local web development environment (Node + PHP) ✅
 - Built in Python runtime ✅
-- C/C++ Runtime with WebAssembly (with clang support) ✅
+- C/C++ Runtime with WebAssembly (with clang) ✅
+- Local Java (OpenJDK) ✅
 - SSH Support ✅
 - [LSP](https://microsoft.github.io/language-server-protocol) support 🏃
 
@@ -39,3 +40,4 @@ The source code of the built-in languages are hosted on these repositories.
 | Clang 14.0.0 | [llvm-project](https://github.com/holzschu/llvm-project)|
 | PHP 8.3.2 | [php-src](https://github.com/bummoblizard/php-src/tree/PHP-8.3.2)|
 | Node.js 18.19.0 | [nodejs-mobile](https://github.com/1Conan/nodejs-mobile)|
+| OpenJDK 8 | [android-openjdk-build-multiarch](https://github.com/thebaselab/android-openjdk-build-multiarch)|
