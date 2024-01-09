@@ -6,6 +6,17 @@ description: >-
 
 # Code App Documentation
 
+We built it because there is nothing else on the App Store provides all these features in one app:
+
+* A robust, high-performance text editor (Monaco Editor from Visual Studio Code)
+* First class local file system support
+* Extensive local language support
+* SSH / FTP remote connection support (Files and terminal)
+* Embedded emulated terminal
+* Git Version Control
+* Package manager support (pip and npm)
+* Markdown, themes, server-side snippet execution and more
+
 {% hint style="info" %}
 While we want to make the editing experience as close as a desktop offers, Code App is still bounded by iOS's limitations. For example, you cannot download arbitary commands or modules with native components. Spawning subprocesses is also not possible.
 {% endhint %}
