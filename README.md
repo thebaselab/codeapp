@@ -1,25 +1,13 @@
 ---
 description: >-
   Code App is a MIT-licensed desktop-class code editor for iPadOS with built-in
-  Node.js, Python, C, C++, PHP runtime.
+  Node.js, Python, C, C++, PHP and Java runtime.
 ---
 
 # Code App Documentation
 
-We built it because there is nothing else on the App Store provides all these features in one app:
-
-* A robust, high-performance text editor (Monaco Editor from Visual Studio Code)
-* First class local file system support
-* Embedded emulated terminal
-* Local backend development environment (Node and PHP)
-* Local Python Runtime
-* Local Clang compiler
-* Git Version Control
-* Package manager support (pip and npm)
-* SSH / FTP remote connection support (Files and terminal)
-
 {% hint style="info" %}
-**Good to know:** While we want to make the editing experience as close as a desktop offers, Code App is still bounded by iOS's limitations. For example, you cannot download arbitary commands or modules with native components. Spawning subprocesses is also not possible.
+While we want to make the editing experience as close as a desktop offers, Code App is still bounded by iOS's limitations. For example, you cannot download arbitary commands or modules with native components. Spawning subprocesses is also not possible.
 {% endhint %}
 
 ![Compiling a C++ file with Clang](<.gitbook/assets/image (1) (1) (1) (1).png>)
