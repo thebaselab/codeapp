@@ -66,3 +66,13 @@ Follow these guides to get started on the basics:
 {% content-ref url="guides/connecting-to-a-remote-server-ssh-ftp.md" %}
 [connecting-to-a-remote-server-ssh-ftp.md](guides/connecting-to-a-remote-server-ssh-ftp.md)
 {% endcontent-ref %}
+
+### Other Resources
+
+{% content-ref url="extras/frequently-asked-questions.md" %}
+[frequently-asked-questions.md](extras/frequently-asked-questions.md)
+{% endcontent-ref %}
+
+{% content-ref url="extras/supported-languages.md" %}
+[supported-languages.md](extras/supported-languages.md)
+{% endcontent-ref %}
