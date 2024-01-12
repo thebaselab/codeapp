@@ -449,6 +449,7 @@
 "settings.editor.font.reset" = "기본값";
 "settings.editor.font.ligatures" = "글꼴 합자";
 "settings.editor.font.show_all_fonts" = "모든 글꼴 표시";
+"settings.editor.vim.enabled" = "Vim 편집기 활성화";
 "settings.explorer.confirm_before_delete" = "삭제하기 전에 확인";
 "settings.explorer.show_hidden_files" = "숨김 파일 표시";
 "panels.no_panel_selected" = "패널이 선택되지 않았습니다.";

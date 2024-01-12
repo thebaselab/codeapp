@@ -449,6 +449,7 @@
 "settings.editor.font.reset" = "Standard";
 "settings.editor.font.ligatures" = "Schrift Ligaturen";
 "settings.editor.font.show_all_fonts" = "Alle Schriftarten anzeigen";
+"settings.editor.vim.enabled" = "Vim aktiviert";
 "settings.explorer.confirm_before_delete" = "Bestätigen Sie vor dem Löschen";
 "settings.explorer.show_hidden_files" = "Versteckte Dateien anzeigen";
 "panels.no_panel_selected" = "Kein Panel ausgewählt";

@@ -440,6 +440,7 @@
 "settings.editor.font.reset" = "重置";
 "settings.editor.font.ligatures" = "合字";
 "settings.editor.font.show_all_fonts" = "显示所有字体";
+"settings.editor.vim.enabled" = "启用 Vim";
 "settings.explorer.confirm_before_delete" = "删除前确认";
 "settings.explorer.show_hidden_files" = "显示隐藏文件";
 "panels.no_panel_selected" = "没有选中的面板";

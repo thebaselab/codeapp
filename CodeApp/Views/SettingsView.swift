@@ -38,6 +38,7 @@ struct SettingsView: View {
     @AppStorage("communityTemplatesEnabled") var communityTemplatesEnabled = true
     @AppStorage("showAllFonts") var showAllFonts = false
     @AppStorage("remoteShouldResolveHomePath") var remoteShouldResolveHomePath = false
+    @AppStorage("editor.vim.enabled") var editorVimEnabled: Bool = false
 
     @State var showsEraseAlert: Bool = false
     @State var showReceiptInformation: Bool = false
@@ -133,6 +134,11 @@ struct SettingsView: View {
                     }
 
                     Section(header: Text(NSLocalizedString("Editor", comment: ""))) {
+
+                        Toggle("settings.editor.vim.enabled", isOn: $editorVimEnabled)
+                            .onChange(of: editorVimEnabled) { _ in
+                                App.monacoInstance.applyUserOptions()
+                            }
 
                         NavigationLink(
                             destination: SettingsFontPicker(

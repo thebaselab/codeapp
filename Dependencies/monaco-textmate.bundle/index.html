@@ -80,6 +80,64 @@
       var previousDecoration = [];
 
       let devicehasCursor = false;
+      let vimMode = null;
+
+      class VimStatusBarAdpator {
+        constructor(node, editor, sanitizer) {
+          console.log("Constuctor called");
+          window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+            Event: "vim.mode.change",
+            newMode: "--NORMAL--",
+          });
+        }
+
+        setMode(ev){
+          let mode = `--${ev.mode.toUpperCase()}--`;
+          if (ev.mode === "visual") {
+            if (ev.subMode === "linewise") {
+              mode = "--VISUAL LINE--";
+            } else if (ev.subMode === "blockwise") {
+              mode = "--VISUAL BLOCK--";
+            } else {
+              mode = "--VISUAL--";
+            }
+          }
+          window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+            Event: "vim.mode.change",
+            newMode: mode,
+          });
+        }
+
+        setKeyBuffer(key) {
+          window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+            Event: "vim.keybuffer.set",
+            buffer: key,
+          });
+        }
+
+        toggleVisibility(isVisible) {
+          window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+            Event: "vim.visible.set",
+            isVisible: isVisible,
+          });
+        }
+
+        closeInput() {
+          window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+            Event: "vim.close.input"
+          });
+        }
+
+        clear(){
+          window.webkit.messageHandlers.toggleMessageHandler.postMessage({
+            Event: "vim.clear",
+          });
+        }
+
+        setSec(text, callback, options) {
+          // TODO: Handle prompt to enable ex commands and search
+        }
+      }
 
       setTimeout(() => {
         if (typeof editor === "undefined") {
@@ -627,6 +685,16 @@
         const model = monaco.editor.getModel(monaco.Uri.parse(base64ToString(base64Url)));
         if (!model) return;
         editor.setModel(model);
+      }
+
+      function toggleVimMode(enabled){
+        if (enabled) {
+          if (vimMode) {return};
+          vimMode = initVimMode(editor, true, VimStatusBarAdpator);
+        }else {
+          vimMode?.dispose();
+          vimMode = null;
+        }
       }
     </script>
   </body>

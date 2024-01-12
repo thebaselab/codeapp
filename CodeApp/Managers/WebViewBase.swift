@@ -18,6 +18,9 @@ class WebViewBase: KBWebViewBase {
         config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         config.preferences.setValue(true, forKey: "shouldAllowUserInstalledFonts")
         super.init(frame: .zero, configuration: config)
+        if #available(iOS 16.4, *) {
+            self.isInspectable = true
+        }
     }
 
     required init?(coder: NSCoder) {

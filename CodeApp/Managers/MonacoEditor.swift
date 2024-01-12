@@ -35,6 +35,7 @@ struct MonacoEditor: UIViewRepresentable {
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
+    @AppStorage("editor.vim.enabled") var editorVimEnabled: Bool = false
     @SceneStorage("activeEditor.monaco.state") var activeEditorMonacoState: String?
 
     let monacoWebView = WebViewBase()
@@ -116,6 +117,8 @@ struct MonacoEditor: UIViewRepresentable {
                 "editor.updateOptions({renderWhitespace: '\(String(renderWhitespaceOptions[renderWhitespace]).lowercased())'})"
         )
         executeJavascript(command: "editor.updateOptions({wordWrap: '\(editorWordWrap)'})")
+
+        executeJavascript(command: "toggleVimMode(\(editorVimEnabled))")
     }
 
     func removeAllModel() {
@@ -394,6 +397,14 @@ struct MonacoEditor: UIViewRepresentable {
             }
         }
 
+        private func dispatchNotificationEvent(event: String, userInfo: [AnyHashable: Any]?) {
+            var userInfo = userInfo ?? [:]
+            userInfo["sceneIdentifier"] = control.App.sceneIdentifier
+            NotificationCenter.default.post(
+                name: Notification.Name(event), object: nil,
+                userInfo: userInfo)
+        }
+
         func userContentController(
             _ userContentController: WKUserContentController, didReceive message: WKScriptMessage
         ) {
@@ -513,6 +524,10 @@ struct MonacoEditor: UIViewRepresentable {
 
                     }
                 }
+            // Vim related events
+            case "vim.mode.change", "vim.keybuffer.set", "vim.visible.set", "vim.close.input",
+                "vim.claer":
+                dispatchNotificationEvent(event: event, userInfo: result)
 
             default:
                 print("[Error] \(event) not handled")

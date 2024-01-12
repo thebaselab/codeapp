@@ -524,6 +524,10 @@
 		945D4F2D2B4B3FED00DE0DBA /* libinstrument.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1E2B4B173100DE0DBA /* libinstrument.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		945D4F2E2B4B3FED00DE0DBA /* libjawt.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E1F2B4B173100DE0DBA /* libjawt.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		945D4F2F2B4B3FED00DE0DBA /* liblcms.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 945D4E202B4B173100DE0DBA /* liblcms.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		945D4F552B50F54600DE0DBA /* VimModeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F542B50F54600DE0DBA /* VimModeLabel.swift */; };
+		945D4F562B50F54600DE0DBA /* VimModeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F542B50F54600DE0DBA /* VimModeLabel.swift */; };
+		945D4F582B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
+		945D4F592B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94795C452931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C462931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
@@ -1676,6 +1680,8 @@
 		945D4E1F2B4B173100DE0DBA /* libjawt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjawt.framework; sourceTree = "<group>"; };
 		945D4E202B4B173100DE0DBA /* liblcms.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = liblcms.framework; sourceTree = "<group>"; };
 		945D4E212B4B173700DE0DBA /* java-8-openjdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "java-8-openjdk"; path = "Java/java-8-openjdk"; sourceTree = "<group>"; };
+		945D4F542B50F54600DE0DBA /* VimModeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimModeLabel.swift; sourceTree = "<group>"; };
+		945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimKeyBufferLabel.swift; sourceTree = "<group>"; };
 		945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NodeMobile.xcframework; path = Resources/NodeJS/NodeMobile.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
 		94795C442931489C0057C12F /* ActivityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBar.swift; sourceTree = "<group>"; };
@@ -2773,6 +2779,8 @@
 				9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */,
 				9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */,
 				9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */,
+				945D4F542B50F54600DE0DBA /* VimModeLabel.swift */,
+				945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3267,6 +3275,7 @@
 				942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				94A347BE293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */,
 				9F3C2DC92918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
+				945D4F592B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */,
 				9FC03E6A291F303900DECD1B /* Utilities.swift in Sources */,
 				9419695D280316C7008AAEB2 /* TopBar.swift in Sources */,
 				9419695E280316C7008AAEB2 /* EditorKeyboardToolBar.swift in Sources */,
@@ -3320,6 +3329,7 @@
 				9419697B280316C7008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
 				9F170D022A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */,
 				94FA8978292FB86700163800 /* PDFViewerExtension.swift in Sources */,
+				945D4F562B50F54600DE0DBA /* VimModeLabel.swift in Sources */,
 				9FAE499C292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				9419697C280316C7008AAEB2 /* View+cornerRadius.swift in Sources */,
 				9419697E280316C7008AAEB2 /* MonacoIntellisenseExtension.swift in Sources */,
@@ -3438,6 +3448,7 @@
 				942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				94A347BD293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */,
 				9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
+				945D4F582B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */,
 				9FC03E69291F303900DECD1B /* Utilities.swift in Sources */,
 				94D721DF268DA2B8007A63BD /* TopBar.swift in Sources */,
 				9438C9A225CBD25F00335E82 /* EditorKeyboardToolBar.swift in Sources */,
@@ -3491,6 +3502,7 @@
 				941969292802AB64008AAEB2 /* FTPFileSystemProvider.swift in Sources */,
 				9F170D012A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */,
 				94FA8977292FB86700163800 /* PDFViewerExtension.swift in Sources */,
+				945D4F552B50F54600DE0DBA /* VimModeLabel.swift in Sources */,
 				9FAE499B292F530B00B1B962 /* SourceControlAuxiliaryExtension.swift in Sources */,
 				94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */,
 				949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */,

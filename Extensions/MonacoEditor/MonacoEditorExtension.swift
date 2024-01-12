@@ -32,8 +32,23 @@ class MonacoEditorAuxiliaryExtension: CodeAppExtension {
             positionPreference: .right,
             positionPrecedence: Int.max - 2
         )
+        let vimKeyBufferStatusBarItem = StatusBarItem(
+            extensionID: MONACO_EDITOR_EXTENSION_ID,
+            view: AnyView(VimKeyBufferLabel()),
+            shouldDisplay: { app.activeEditor is TextEditorInstance },
+            positionPreference: .right,
+            positionPrecedence: Int.min
+        )
+        let vimModeStatusBarItem = StatusBarItem(
+            extensionID: MONACO_EDITOR_EXTENSION_ID,
+            view: AnyView(VimModeLabel()),
+            shouldDisplay: { app.activeEditor is TextEditorInstance },
+            positionPreference: .left,
+            positionPrecedence: Int.min
+        )
         for item in [
             encodingStatusBarItem, lineColumnIndicatorStatusBarItem, readOnlyStatusBarItem,
+            vimKeyBufferStatusBarItem, vimModeStatusBarItem,
         ] {
             contribution.statusBar.registerItem(item: item)
         }
