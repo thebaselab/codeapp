@@ -86,7 +86,21 @@ struct ExplorerContainer: View {
 
     func scrollToActiveEditor(proxy: ScrollViewProxy) {
         if let url = (App.activeEditor as? EditorInstanceWithURL)?.url {
-            proxy.scrollTo(url.absoluteString, anchor: .top)
+            proxy.scrollTo(url.absoluteString, anchor: .center)
+        }
+    }
+
+    func explorerNotificationHandler(
+        notification: NotificationCenter.Publisher.Output, proxy: ScrollViewProxy
+    ) {
+        guard
+            let sceneIdentifier =
+                notification.userInfo?["sceneIdentifier"] as? UUID,
+            sceneIdentifier == App.sceneIdentifier
+        else { return }
+
+        if let target = notification.userInfo?["target"] as? URL {
+            proxy.scrollTo(target.absoluteString, anchor: .center)
         }
     }
 
@@ -111,6 +125,13 @@ struct ExplorerContainer: View {
                 .onAppear {
                     scrollToActiveEditor(proxy: proxy)
                 }
+                .onReceive(
+                    NotificationCenter.default.publisher(
+                        for: Notification.Name("explorer.scrollto"),
+                        object: nil),
+                    perform: { notification in
+                        explorerNotificationHandler(notification: notification, proxy: proxy)
+                    })
             }
 
             Spacer()

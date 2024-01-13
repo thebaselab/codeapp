@@ -951,14 +951,22 @@ class MainApp: ObservableObject {
     @MainActor
     func setActiveEditor(editor: EditorInstance) {
         activeEditor = editor
-
-        if var url = (editor as? EditorInstanceWithURL)?.url {
+        guard let editor = editor as? EditorInstanceWithURL else {
+            return
+        }
+        var url = editor.url
+        url.deleteLastPathComponent()
+        while workSpaceStorage.expansionStates[url.absoluteString] != nil {
+            workSpaceStorage.expansionStates[url.absoluteString] = true
+            var originalLength = url.absoluteString.count
             url.deleteLastPathComponent()
-            while workSpaceStorage.expansionStates[url.absoluteString] != nil {
-                workSpaceStorage.expansionStates[url.absoluteString] = true
-                url.deleteLastPathComponent()
+            if url.absoluteString.count == originalLength {
+                break
             }
         }
+        NotificationCenter.default.post(
+            name: Notification.Name("explorer.scrollto"), object: nil,
+            userInfo: ["sceneIdentifier": sceneIdentifier, "target": editor.url])
     }
 
     @MainActor
