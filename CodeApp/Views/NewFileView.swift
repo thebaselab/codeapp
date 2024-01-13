@@ -13,9 +13,14 @@ struct NewFileView: View {
 
     @State var targetUrl: String
     @State private var name = ""
+    @State private var directoryPickerIsPresented: Bool = false
     @FocusState private var filenameFieldIsFocused: Bool
 
     @Environment(\.presentationMode) var presentationMode
+
+    var isTargetLocalUrl: Bool {
+        targetUrl.hasPrefix("file://")
+    }
 
     func checkNameValidity() -> Bool {
         if name.contains(":") || name.contains("/") {
@@ -237,10 +242,19 @@ struct NewFileView: View {
                         Text("File name '\(name)' contains invalid character.")
                     }
 
-                    Section(header: Text(NSLocalizedString("Where", comment: ""))) {
-                        Text(
+                    Section(header: Text("Where")) {
+                        Button(
                             "\(targetUrl.last == "/" ? targetUrl.dropLast().components(separatedBy: "/").last!.removingPercentEncoding! : targetUrl.components(separatedBy: "/").last!.removingPercentEncoding!)"
-                        )
+                        ) {
+                            if isTargetLocalUrl {
+                                directoryPickerIsPresented.toggle()
+                            }
+                        }
+                        .sheet(isPresented: $directoryPickerIsPresented) {
+                            DirectoryPickerView(onOpen: { url in
+                                targetUrl = url.absoluteString
+                            })
+                        }
                     }
 
                 }.navigationBarTitle(NSLocalizedString("New File", comment: ""))
