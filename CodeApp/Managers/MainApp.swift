@@ -951,6 +951,14 @@ class MainApp: ObservableObject {
     @MainActor
     func setActiveEditor(editor: EditorInstance) {
         activeEditor = editor
+
+        if var url = (editor as? EditorInstanceWithURL)?.url {
+            url.deleteLastPathComponent()
+            while workSpaceStorage.expansionStates[url.absoluteString] != nil {
+                workSpaceStorage.expansionStates[url.absoluteString] = true
+                url.deleteLastPathComponent()
+            }
+        }
     }
 
     @MainActor
