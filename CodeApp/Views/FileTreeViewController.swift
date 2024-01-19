@@ -45,6 +45,8 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
     var onContract: ((DataElement) -> Void)? = nil
     var itemProvider: ((DataElement) -> NSItemProvider?)? = nil
 
+    private var idToScrollToOnAppear: DataElement.ID? = nil
+
     public func setData(data: DataElement) {
         self.data = data
         self.uuidMapping = FileTreeViewController.buildUUIDMapping(
@@ -67,6 +69,17 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
 
     public func reloadCells(cells: [DataElement.ID]) {
         fileTreeView.reloadCells(cells: cells.compactMap { uuidMapping.DataElementIDToUUID[$0] })
+    }
+
+    public func scrollToCell(
+        cell: DataElement.ID, scrollPosition: UITableView.ScrollPosition, animated: Bool
+    ) {
+        if self.viewIfLoaded?.window == nil {
+            idToScrollToOnAppear = cell
+            return
+        }
+        guard let id = uuidMapping.DataElementIDToUUID[cell] else { return }
+        fileTreeView.scrollToCell(cell: id, scrollPosition: scrollPosition, animated: animated)
     }
 
     private static func buildUUIDMapping(
@@ -168,9 +181,19 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
 
     override func loadView() {
         self.view = fileTreeView
+    }
+
+    override func viewIsAppearing(_ animated: Bool) {
         fileTreeView.delegate = self
         fileTreeView.dataSource = self
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        if let idToScrollToOnAppear {
+            self.scrollToCell(cell: idToScrollToOnAppear, scrollPosition: .middle, animated: false)
+        }
+    }
+
 }
 
 extension FileTreeViewController: FileTreeViewDelegate {

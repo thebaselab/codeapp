@@ -13,7 +13,6 @@ class WorkSpaceStorage: ObservableObject {
     @AppStorage("remoteShouldResolveHomePath") var remoteShouldResolveHomePath = false
 
     @Published var currentDirectory: FileItemRepresentable
-    @Published var expansionStates: [AnyHashable: Bool] = [:]
     @Published var explorerIsBusy = false
     @Published var editorIsBusy = false
     @Published var remoteFingerprint: String? = nil
@@ -197,7 +196,7 @@ class WorkSpaceStorage: ObservableObject {
     }
 
     func disconnect() {
-        expansionStates.removeAll()
+        expandedCells.removeAll()
         directoryStorage.removeAll()
 
         fss[currentScheme!] = nil
@@ -222,7 +221,7 @@ class WorkSpaceStorage: ObservableObject {
             // Directory is updated
             directoryMonitor.removeAll()
             directoryStorage.removeAll()
-            expansionStates.removeAll()
+            expandedCells.removeAll()
             currentDirectory = FileItemRepresentable(name: name, url: url, isDirectory: true)
             requestDirectoryUpdateAt(id: url)
         } else {

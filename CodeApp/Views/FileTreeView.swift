@@ -47,6 +47,14 @@ class TableViewDelegate: NSObject, UITableViewDataSource {
         tableView.reloadRows(at: indexPaths, with: .none)
     }
 
+    public func scrollToCell(
+        _ tableView: UITableView, at: UUID, scrollPosition: UITableView.ScrollPosition,
+        animated: Bool
+    ) {
+        guard let indexPath = indexPathForItem(item: at) else { return }
+        tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
+    }
+
     weak var fileTreeDataSource: FileTreeViewDataSource? {
         didSet {
             guard let fileTreeDataSource, let treeView else { return }
@@ -98,6 +106,13 @@ class TableViewDelegate: NSObject, UITableViewDataSource {
             }
         }
         return result
+    }
+
+    private func indexPathForItem(item: UUID) -> IndexPath? {
+        guard let index = (cachedTable.firstIndex { $0.id == item }) else {
+            return nil
+        }
+        return IndexPath(item: index, section: 0)
     }
 
     private func convertIndexPathToItem(indexPath: IndexPath) -> CellCache {
@@ -429,6 +444,12 @@ class FileTreeView: UIView {
 
     public func reloadCells(cells: [UUID]) {
         tableViewDelegate.reloadCells(tableView, at: cells)
+    }
+
+    public func scrollToCell(cell: UUID, scrollPosition: UITableView.ScrollPosition, animated: Bool)
+    {
+        tableViewDelegate.scrollToCell(
+            tableView, at: cell, scrollPosition: scrollPosition, animated: animated)
     }
 
     init() {

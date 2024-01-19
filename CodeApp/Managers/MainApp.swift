@@ -986,19 +986,25 @@ class MainApp: ObservableObject {
         guard let editor = editor as? EditorInstanceWithURL else {
             return
         }
+
         var url = editor.url
         url.deleteLastPathComponent()
-        while workSpaceStorage.expansionStates[url.absoluteString] != nil {
-            workSpaceStorage.expansionStates[url.absoluteString] = true
-            var originalLength = url.absoluteString.count
+        while url != workSpaceStorage.currentDirectory._url {
+            workSpaceStorage.expandedCells.insert(url.absoluteString)
+            let originalLength = url.absoluteString.count
             url.deleteLastPathComponent()
             if url.absoluteString.count == originalLength {
                 break
             }
         }
-        NotificationCenter.default.post(
-            name: Notification.Name("explorer.scrollto"), object: nil,
-            userInfo: ["sceneIdentifier": sceneIdentifier, "target": editor.url])
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(
+                name: Notification.Name("explorer.scrollto"), object: nil,
+                userInfo: [
+                    "sceneIdentifier": self.sceneIdentifier, "target": editor.url.absoluteString,
+                ])
+        }
+
     }
 
     @MainActor

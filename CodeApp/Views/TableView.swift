@@ -19,6 +19,8 @@ where
     Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element: Equatable,
     Data.Element == DataElement, RowContent: UIContentConfiguration
 {
+    @EnvironmentObject var App: MainApp  // Remove this if possible
+
     var root: DataElement
     var children: KeyPath<DataElement, Data?>
     var onSelect: ((DataElement) -> Void)? = nil
@@ -30,6 +32,7 @@ where
     @ViewBuilder var content: (DataElement) -> RowContent
     @Binding var expandedCells: Set<DataElement.ID>
     var cellState: TableViewCellState<DataElement>
+    @State var cellToScrollTo: DataElement.ID? = nil
 
     private func updateExpandedCells(
         in controller: FileTreeViewController<DataElement, Data>, with context: Context
@@ -75,14 +78,41 @@ where
         var cellState: TableViewCellState<DataElement>
         var lastCellState = TableViewCellState<DataElement>(
             highlightedCells: Set<DataElement.ID>(), cellDecorations: [:])
+        weak var controller: FileTreeViewController<DataElement, Data>?
+        private var sceneIdentifier: UUID
+        @Binding var cellToScrollTo: DataElement.ID?
 
-        init(cellState: TableViewCellState<DataElement>) {
+        @objc func notificationHandler(notification: Notification) {
+            guard
+                let controller,
+                let target = notification.userInfo?["target"] as? DataElement.ID,
+                let notificationSceneIdentifier = notification.userInfo?["sceneIdentifier"]
+                    as? UUID,
+                sceneIdentifier == notificationSceneIdentifier
+            else {
+                return
+            }
+            cellToScrollTo = target
+        }
+
+        init(
+            cellState: TableViewCellState<DataElement>, sceneIdentifier: UUID,
+            cellToScrollTo: Binding<DataElement.ID?>
+        ) {
             self.cellState = cellState
+            self.sceneIdentifier = sceneIdentifier
+            self._cellToScrollTo = cellToScrollTo
+        }
+
+        deinit {
+            NotificationCenter.default.removeObserver(self)
         }
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(cellState: cellState)
+        return Coordinator(
+            cellState: cellState, sceneIdentifier: App.sceneIdentifier,
+            cellToScrollTo: $cellToScrollTo)
     }
 
     func makeUIViewController(context: Context) -> FileTreeViewController<DataElement, Data> {
@@ -118,6 +148,12 @@ where
         DispatchQueue.main.async {
             updateExpandedCells(in: controller, with: context)
         }
+        context.coordinator.controller = controller
+        // This is ugly. How do we implement something like ScrollViewReader?
+        NotificationCenter.default.addObserver(
+            context.coordinator,
+            selector: #selector(context.coordinator.notificationHandler(notification:)),
+            name: Notification.Name("explorer.scrollto"), object: nil)
         return controller
     }
 
@@ -131,6 +167,12 @@ where
         }
         updateExpandedCells(in: uiViewController, with: context)
         updateCellStates(in: uiViewController, with: context)
+
+        if let cellToScrollTo {
+            DispatchQueue.main.async { self.cellToScrollTo = nil }
+            uiViewController.scrollToCell(
+                cell: cellToScrollTo, scrollPosition: .middle, animated: false)
+        }
     }
 }
 

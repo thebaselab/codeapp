@@ -348,6 +348,13 @@ struct ExplorerFileTreeSection: View {
             buildContextMenu(item: $0)
         }
         .onTabelViewCellDrag(onDrag)
+        .onAppear {
+            if let activeItem = App.workSpaceStorage.cellState.highlightedCells.first {
+                NotificationCenter.default.post(
+                    name: Notification.Name("explorer.scrollto"), object: nil,
+                    userInfo: ["target": activeItem, "sceneIdentifier": App.sceneIdentifier])
+            }
+        }
         .padding(.horizontal, 10)
     }
 }
