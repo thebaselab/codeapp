@@ -95,6 +95,8 @@ struct MainScene: View {
             .environmentObject(App.stateManager)
             .environmentObject(App.alertManager)
             .environmentObject(App.safariManager)
+            .environmentObject(App.directoryPickerManager)
+            .environmentObject(App.createFileSheetManager)
             .onAppear {
                 restoreSceneState()
                 App.extensionManager.initializeExtensions(app: App)
@@ -147,6 +149,8 @@ private struct MainView: View {
     @EnvironmentObject var stateManager: MainStateManager
     @EnvironmentObject var alertManager: AlertManager
     @EnvironmentObject var safariManager: SafariManager
+    @EnvironmentObject var directoryPickerManager: DirectoryPickerManager
+    @EnvironmentObject var createFileSheetManager: CreateFileSheetManager
     @EnvironmentObject var themeManager: ThemeManager
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -268,6 +272,18 @@ private struct MainView: View {
         .fullScreenCover(isPresented: $safariManager.showsSafari) {
             if let url = safariManager.urlToVisit {
                 SafariView(url: url)
+            } else {
+                EmptyView()
+            }
+        }
+        .sheet(isPresented: $directoryPickerManager.showsPicker) {
+            DirectoryPickerView(onOpen: { url in
+                directoryPickerManager.callback?(url)
+            })
+        }
+        .sheet(isPresented: $createFileSheetManager.showsSheet) {
+            if let targetURL = createFileSheetManager.targetURL {
+                NewFileView(targetUrl: targetURL.absoluteString)
             } else {
                 EmptyView()
             }

@@ -16,6 +16,16 @@ struct ExplorerFileTreeSection: View {
     let onDrag: (WorkSpaceStorage.FileItemRepresentable) -> NSItemProvider
     let onDropToFolder: (WorkSpaceStorage.FileItemRepresentable, [NSItemProvider]) -> Bool
 
+    @State var showsDirectoryPicker = false
+
+    func filteredFileItemRepresentable(_ item: WorkSpaceStorage.FileItemRepresentable)
+        -> WorkSpaceStorage.FileItemRepresentable
+    {
+        var item = item
+        item.subFolderItems = foldersWithFilter(folder: item.subFolderItems)
+        return item
+    }
+
     func foldersWithFilter(folder: [WorkSpaceStorage.FileItemRepresentable]?) -> [WorkSpaceStorage
         .FileItemRepresentable]
     {
@@ -64,49 +74,87 @@ struct ExplorerFileTreeSection: View {
         return result
     }
 
+    func onCopyItemToFolder(item: WorkSpaceStorage.FileItemRepresentable, url: URL) {
+        guard let itemURL = URL(string: item.url) else {
+            return
+        }
+        App.workSpaceStorage.copyItem(
+            at: itemURL, to: url.appendingPathComponent(itemURL.lastPathComponent),
+            completionHandler: { error in
+                if let error = error {
+                    App.notificationManager.showErrorMessage(error.localizedDescription)
+                }
+            })
+    }
+
     func buildContextMenu(item: WorkSpaceStorage.FileItemRepresentable)
         -> UIContextMenuConfiguration
     {
 
         let ACTION_OPEN_IN_TAB = UIAction(
-            title: "Open in Tab", image: UIImage(systemName: "doc.plaintext")!
+            title: NSLocalizedString("Open in Tab", comment: ""),
+            image: UIImage(systemName: "doc.plaintext")!
         ) { _ in
             if let url = item._url {
                 App.openFile(url: url, alwaysInNewTab: true)
             }
         }
         let ACTION_SHOW_IN_FILEAPP = UIAction(
-            title: "Show in Files App", image: UIImage(systemName: "folder")!
+            title: NSLocalizedString("Show in Files App", comment: ""),
+            image: UIImage(systemName: "folder")!
         ) { _ in
             openSharedFilesApp(
                 urlString: URL(string: item.url)!.deletingLastPathComponent()
                     .absoluteString
             )
         }
-        let ACTION_RENAME = UIAction(title: "Rename", image: UIImage(systemName: "pencil")!) { _ in
+        let ACTION_RENAME = UIAction(
+            title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")!
+        ) { _ in
             // TODO
+            NotificationCenter.default.post(
+                name: Notification.Name("explorer.cell.rename"), object: nil,
+                userInfo: ["target": item.id])
         }
         let ACTION_DUPLICATE = UIAction(
-            title: "Duplicate", image: UIImage(systemName: "plus.square.on.square")!
+            title: NSLocalizedString("Duplicate", comment: ""),
+            image: UIImage(systemName: "plus.square.on.square")!
         ) { _ in
             Task {
                 guard let url = item._url else { return }
                 try await App.duplicateItem(at: url)
             }
         }
-        let ACTION_DELETE = UIAction(title: "Delete", image: UIImage(systemName: "trash")!) { _ in
+        let ACTION_DELETE = UIAction(
+            title: NSLocalizedString("Delete", comment: ""), image: UIImage(systemName: "trash")!
+        ) { _ in
             guard let url = item._url else { return }
             App.trashItem(url: url)
         }
+        ACTION_DELETE.attributes = .destructive
+
         let ACTION_COPY_DOWNLOAD = UIAction(
-            title: item.url.hasPrefix("file") ? "file.copy" : "file.download",
+            title: NSLocalizedString(
+                item.url.hasPrefix("file") ? "file.copy" : "file.download", comment: ""),
             image: UIImage(systemName: "folder")!
         ) { _ in
-            // TODO
+            App.directoryPickerManager.showPicker { url in
+                guard let itemURL = item._url else {
+                    return
+                }
+                App.workSpaceStorage.copyItem(
+                    at: itemURL, to: url.appendingPathComponent(itemURL.lastPathComponent),
+                    completionHandler: { error in
+                        if let error = error {
+                            App.notificationManager.showErrorMessage(error.localizedDescription)
+                        }
+                    })
+            }
         }
 
         let ACTION_COPY_RELATIVE_PATH = UIAction(
-            title: "Copy Relative Path", image: UIImage(systemName: "link")!
+            title: NSLocalizedString("Copy Relative Path", comment: ""),
+            image: UIImage(systemName: "link")!
         ) { _ in
             let pasteboard = UIPasteboard.general
             guard let targetURL = URL(string: item.url),
@@ -118,13 +166,16 @@ struct ExplorerFileTreeSection: View {
         }
 
         let ACTION_NEW_FILE = UIAction(
-            title: "New File", image: UIImage(systemName: "doc.badge.plus")!
+            title: NSLocalizedString("New File", comment: ""),
+            image: UIImage(systemName: "doc.badge.plus")!
         ) { _ in
-            // TODO
+            guard let url = item._url else { return }
+            App.createFileSheetManager.showSheet(targetURL: url)
         }
 
         let ACTION_NEW_FOLDER = UIAction(
-            title: "New Folder", image: UIImage(systemName: "folder.badge.plus")!
+            title: NSLocalizedString("New Folder", comment: ""),
+            image: UIImage(systemName: "folder.badge.plus")!
         ) { _ in
             Task {
                 guard let url = item._url else { return }
@@ -133,19 +184,22 @@ struct ExplorerFileTreeSection: View {
         }
 
         let ACTION_ASSIGN_AS_WORKSPACE_FOLDER = UIAction(
-            title: "Assign as workspace folder", image: UIImage(systemName: "folder.badge.gear")!
+            title: NSLocalizedString("Assign as workspace folder", comment: ""),
+            image: UIImage(systemName: "folder.badge.gear")!
         ) { _ in
             App.loadFolder(url: URL(string: item.url)!)
         }
 
         let ACTION_SELECT_FOR_COMPARE = UIAction(
-            title: "Select for compare", image: UIImage(systemName: "square.split.2x1")!
+            title: NSLocalizedString("Select for compare", comment: ""),
+            image: UIImage(systemName: "square.split.2x1")!
         ) { _ in
             App.selectedURLForCompare = item._url
         }
 
         let ACTION_COMPARE_WITH_SELECTED = UIAction(
-            title: "Compare with selected", image: UIImage(systemName: "square.split.2x1")!
+            title: NSLocalizedString("Compare with selected", comment: ""),
+            image: UIImage(systemName: "square.split.2x1")!
         ) { _ in
             guard let url = item._url else { return }
             Task {
@@ -160,7 +214,8 @@ struct ExplorerFileTreeSection: View {
 
         let actionProvider: UIContextMenuActionProvider = { _ in
             if item.subFolderItems == nil {
-                return UIMenu(
+                let topActions = UIMenu(
+                    title: "", options: .displayInline,
                     children: [
                         ACTION_OPEN_IN_TAB,
                         ACTION_SHOW_IN_FILEAPP,
@@ -168,18 +223,27 @@ struct ExplorerFileTreeSection: View {
                         ACTION_DUPLICATE,
                         ACTION_DELETE,
                         ACTION_COPY_DOWNLOAD,
+                    ])
+                return UIMenu(
+                    children: [
+                        topActions,
                         ACTION_COPY_RELATIVE_PATH,
                         ACTION_SELECT_FOR_COMPARE,
                         ACTION_COMPARE_WITH_SELECTED,
                     ])
             } else {
-                return UIMenu(
+                let topActions = UIMenu(
+                    title: "", options: .displayInline,
                     children: [
                         ACTION_SHOW_IN_FILEAPP,
                         ACTION_RENAME,
                         ACTION_DUPLICATE,
                         ACTION_DELETE,
                         ACTION_COPY_DOWNLOAD,
+                    ])
+                return UIMenu(
+                    children: [
+                        topActions,
                         ACTION_COPY_RELATIVE_PATH,
                         ACTION_NEW_FILE,
                         ACTION_NEW_FOLDER,
@@ -237,7 +301,7 @@ struct ExplorerFileTreeSection: View {
          */
 
         TableView(
-            App.workSpaceStorage.currentDirectory,
+            filteredFileItemRepresentable(App.workSpaceStorage.currentDirectory),
             children: \WorkSpaceStorage.FileItemRepresentable.subFolderItems,
             cellState: App.workSpaceStorage.cellState,
             expandedCells: $App.workSpaceStorage.expandedCells
@@ -255,7 +319,12 @@ struct ExplorerFileTreeSection: View {
                     )
                 }
             }.background(Color.init(id: "sideBar.background"))
-        }.onExpand { item in
+        }.onSelect { item in
+            if let url = item._url {
+                App.openFile(url: url)
+            }
+        }
+        .onExpand { item in
             App.workSpaceStorage.requestDirectoryUpdateAt(id: item.id)
         }.headerText(
             App.workSpaceStorage.currentDirectory.name.replacingOccurrences(

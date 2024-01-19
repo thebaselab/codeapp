@@ -24,6 +24,28 @@ struct CheckoutDestination: Identifiable {
     }
 }
 
+class CreateFileSheetManager: ObservableObject {
+    @Published var showsSheet: Bool = false
+
+    var targetURL: URL?
+
+    func showSheet(targetURL: URL) {
+        self.targetURL = targetURL
+        showsSheet = true
+    }
+}
+
+class DirectoryPickerManager: ObservableObject {
+    @Published var showsPicker: Bool = false
+
+    var callback: ((URL) -> Void)?
+
+    func showPicker(callback: @escaping ((URL) -> Void)) {
+        self.callback = callback
+        showsPicker = true
+    }
+}
+
 class SafariManager: ObservableObject {
     @Published var showsSafari: Bool = false
 
@@ -69,6 +91,8 @@ class MainApp: ObservableObject {
     let stateManager = MainStateManager()
     let alertManager = AlertManager()
     let safariManager = SafariManager()
+    let directoryPickerManager = DirectoryPickerManager()
+    let createFileSheetManager = CreateFileSheetManager()
 
     @Published var editors: [EditorInstance] = []
     var textEditors: [TextEditorInstance] {
