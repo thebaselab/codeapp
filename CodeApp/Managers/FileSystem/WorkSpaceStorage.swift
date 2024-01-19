@@ -18,6 +18,10 @@ class WorkSpaceStorage: ObservableObject {
     @Published var editorIsBusy = false
     @Published var remoteFingerprint: String? = nil
 
+    @Published var cellState = TableViewCellState<WorkSpaceStorage.FileItemRepresentable>(
+        highlightedCells: Set<String>(), cellDecorations: [:])
+    @Published var expandedCells = Set<String>()
+
     private var directoryMonitor = DirectoryMonitor()
     private var onDirectoryChangeAction: ((String) -> Void)? = nil
     private var onTerminalDataAction: ((Data) -> Void)? = nil
@@ -365,7 +369,7 @@ class WorkSpaceStorage: ObservableObject {
 }
 
 extension WorkSpaceStorage {
-    struct FileItemRepresentable: Identifiable {
+    struct FileItemRepresentable: Identifiable, Hashable {
         var id: String {
             self.url
         }

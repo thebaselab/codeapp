@@ -79,7 +79,15 @@ class MainApp: ObservableObject {
     }
 
     @Published var isShowingCompilerLanguage = false
-    @Published var activeEditor: EditorInstance? = nil
+    @Published var activeEditor: EditorInstance? = nil {
+        didSet {
+            if let activeEditor = activeEditor as? EditorInstanceWithURL {
+                workSpaceStorage.cellState.highlightedCells = Set([activeEditor.url.absoluteString])
+            } else {
+                workSpaceStorage.cellState.highlightedCells.removeAll()
+            }
+        }
+    }
     var activeTextEditor: TextEditorInstance? {
         activeEditor as? TextEditorInstance
     }

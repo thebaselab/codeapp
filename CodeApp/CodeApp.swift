@@ -204,11 +204,6 @@ struct CodeApp: App {
     }
 
     init() {
-        UITableView.appearance().backgroundColor = UIColor.clear
-        UITableViewCell.appearance().backgroundColor = UIColor.clear
-        UITableView.appearance().separatorStyle = .none
-        UITextView.appearance().backgroundColor = .clear
-
         replaceCommand("node", "node", true)
         replaceCommand("npm", "npm", true)
         replaceCommand("npx", "npx", true)

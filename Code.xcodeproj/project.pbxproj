@@ -692,6 +692,12 @@
 		9F046C3B29223D1600BDE4E9 /* RemoteExecutionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */; };
 		9F046C3D29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
 		9F046C3E29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */; };
+		9F062FE32B58D3F4006210AA /* FileTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F062FE22B58D3F4006210AA /* FileTreeView.swift */; };
+		9F062FE42B58D3F4006210AA /* FileTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F062FE22B58D3F4006210AA /* FileTreeView.swift */; };
+		9F062FE62B58D40D006210AA /* FileTreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F062FE52B58D40D006210AA /* FileTreeViewController.swift */; };
+		9F062FE72B58D40D006210AA /* FileTreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F062FE52B58D40D006210AA /* FileTreeViewController.swift */; };
+		9F062FE92B58D416006210AA /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F062FE82B58D416006210AA /* TableView.swift */; };
+		9F062FEA2B58D416006210AA /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F062FE82B58D416006210AA /* TableView.swift */; };
 		9F170D012A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F170D002A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift */; };
 		9F170D022A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F170D002A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift */; };
 		9F170D042A89F88D00D6D7C1 /* RegularSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F170D032A89F88D00D6D7C1 /* RegularSidebar.swift */; };
@@ -1816,6 +1822,9 @@
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteExecutionExtension.swift; sourceTree = "<group>"; };
 		9F046C3C29223E1500BDE4E9 /* CodeAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAppExtension.swift; sourceTree = "<group>"; };
+		9F062FE22B58D3F4006210AA /* FileTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTreeView.swift; sourceTree = "<group>"; };
+		9F062FE52B58D40D006210AA /* FileTreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTreeViewController.swift; sourceTree = "<group>"; };
+		9F062FE82B58D416006210AA /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		9F170D002A89CEB800D6D7C1 /* String+throwingRemovingPercentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+throwingRemovingPercentEncoding.swift"; sourceTree = "<group>"; };
 		9F170D032A89F88D00D6D7C1 /* RegularSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSidebar.swift; sourceTree = "<group>"; };
 		9F29759B2A1F488E007FDB3D /* deferredRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deferredRendering.swift; sourceTree = "<group>"; };
@@ -2725,6 +2734,9 @@
 				9FD5BCF32927859600F20C4B /* DebugMenu.swift */,
 				9F170D032A89F88D00D6D7C1 /* RegularSidebar.swift */,
 				9FA939DC2A9317F800C239BF /* SourceControlTextFieldAlert.swift */,
+				9F062FE22B58D3F4006210AA /* FileTreeView.swift */,
+				9F062FE52B58D40D006210AA /* FileTreeViewController.swift */,
+				9F062FE82B58D416006210AA /* TableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3334,6 +3346,7 @@
 				9419697C280316C7008AAEB2 /* View+cornerRadius.swift in Sources */,
 				9419697E280316C7008AAEB2 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC862807502A00939E4F /* ActivityBarItemView.swift in Sources */,
+				9F062FE42B58D3F4006210AA /* FileTreeView.swift in Sources */,
 				94A045F22804816000182275 /* RemoteCreateSection.swift in Sources */,
 				9FAE4994292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,
 				944112A2282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
@@ -3354,6 +3367,7 @@
 				94196988280316C7008AAEB2 /* TerminalInstance.swift in Sources */,
 				94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */,
 				94FF337528435158003DE5DD /* SettingsFontPicker.swift in Sources */,
+				9F062FEA2B58D416006210AA /* TableView.swift in Sources */,
 				9419698A280316C7008AAEB2 /* NewFileView.swift in Sources */,
 				9FD5BCED292495DF00F20C4B /* DefaultUIState.swift in Sources */,
 				9419698B280316C7008AAEB2 /* EditorInstance.swift in Sources */,
@@ -3370,6 +3384,7 @@
 				94A045F82804822400182275 /* RemoteHostCell.swift in Sources */,
 				9FA122772A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */,
 				94FE0C95281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
+				9F062FE72B58D40D006210AA /* FileTreeViewController.swift in Sources */,
 				9F046C332922203E00BDE4E9 /* ToolbarManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3507,6 +3522,7 @@
 				94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */,
 				949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC852807502A00939E4F /* ActivityBarItemView.swift in Sources */,
+				9F062FE32B58D3F4006210AA /* FileTreeView.swift in Sources */,
 				94A045F12804816000182275 /* RemoteCreateSection.swift in Sources */,
 				9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,
 				944112A1282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
@@ -3527,6 +3543,7 @@
 				94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */,
 				94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */,
 				94FF337428435158003DE5DD /* SettingsFontPicker.swift in Sources */,
+				9F062FE92B58D416006210AA /* TableView.swift in Sources */,
 				94A77802257B960A008FE7B2 /* NewFileView.swift in Sources */,
 				9FD5BCEC292495DF00F20C4B /* DefaultUIState.swift in Sources */,
 				94A77796257ABB69008FE7B2 /* EditorInstance.swift in Sources */,
@@ -3543,6 +3560,7 @@
 				94A045F72804822400182275 /* RemoteHostCell.swift in Sources */,
 				9FA122762A8B5A4800E7B417 /* RemoteConnectedLabel.swift in Sources */,
 				94FE0C94281E50F200C05529 /* UserDefaults+Hosts.swift in Sources */,
+				9F062FE62B58D40D006210AA /* FileTreeViewController.swift in Sources */,
 				9F046C322922203E00BDE4E9 /* ToolbarManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3622,7 +3640,7 @@
 					"$(PROJECT_DIR)/Resources/Java/java-frameworks",
 				);
 				INFOPLIST_FILE = CodeUI.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3670,7 +3688,7 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = CodeUI.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

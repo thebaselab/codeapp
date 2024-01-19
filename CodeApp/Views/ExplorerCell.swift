@@ -19,14 +19,14 @@ struct ExplorerCell: View {
         if item.subFolderItems != nil {
             FolderCell(item: item)
                 .frame(height: 16)
-                .onDrag(onDrag)
-                .onDrop(
-                    of: [.folder, .item], isTargeted: nil,
-                    perform: onDropToFolder)
+            //                .onDrag(onDrag)
+            //                .onDrop(
+            //                    of: [.folder, .item], isTargeted: nil,
+            //                    perform: onDropToFolder)
         } else {
             FileCell(item: item)
                 .frame(height: 16)
-                .onDrag(onDrag)
+            //                .onDrag(onDrag)
         }
     }
 }
@@ -145,6 +145,7 @@ private struct FileCell: View {
             .sheet(isPresented: $showsDirectoryPicker) {
                 DirectoryPickerView(onOpen: onCopyItemToFolder)
             }
+            /*
             .contextMenu {
                 ContextMenu(
                     item: item,
@@ -158,6 +159,7 @@ private struct FileCell: View {
                     onCopyFile: { showsDirectoryPicker.toggle() }
                 )
             }
+             */
 
         }
     }

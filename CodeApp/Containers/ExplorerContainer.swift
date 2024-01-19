@@ -109,30 +109,37 @@ struct ExplorerContainer: View {
 
             InfinityProgressView(enabled: App.workSpaceStorage.explorerIsBusy)
 
-            ScrollViewReader { proxy in
-                List {
-                    ExplorerEditorListSection(
-                        onOpenNewFile: onOpenNewFile,
-                        onPickNewDirectory: onPickNewDirectory
-                    )
-                    ExplorerFileTreeSection(
-                        searchString: searchString, onDrag: onDragCell,
-                        onDropToFolder: onDropToFolder)
-                }
-                .listStyle(SidebarListStyle())
-                .environment(\.defaultMinListRowHeight, 10)
-                .environment(\.editMode, $editMode)
-                .onAppear {
-                    scrollToActiveEditor(proxy: proxy)
-                }
-                .onReceive(
-                    NotificationCenter.default.publisher(
-                        for: Notification.Name("explorer.scrollto"),
-                        object: nil),
-                    perform: { notification in
-                        explorerNotificationHandler(notification: notification, proxy: proxy)
-                    })
-            }
+            //            ScrollViewReader { proxy in
+
+            //            ScrollView {
+            //                List {
+            //                    ExplorerEditorListSection(
+            //                        onOpenNewFile: onOpenNewFile,
+            //                        onPickNewDirectory: onPickNewDirectory
+            //                    )
+            //                }.scrollDisabled(true)
+            //                    .listStyle(SidebarListStyle())
+            //            .environment(\.defaultMinListRowHeight, 10)
+            //                    .environment(\.editMode, $editMode)
+            //                .onAppear {
+            //                    scrollToActiveEditor(proxy: proxy)
+            //                }
+            //                .onReceive(
+            //                    NotificationCenter.default.publisher(
+            //                        for: Notification.Name("explorer.scrollto"),
+            //                        object: nil),
+            //                    perform: { notification in
+            //                        explorerNotificationHandler(notification: notification, proxy: proxy)
+            //                    })
+
+            //            }
+
+            ExplorerFileTreeSection(
+                searchString: searchString, onDrag: onDragCell,
+                onDropToFolder: onDropToFolder
+            )
+
+            //            }.frame(maxHeight: .infinity)
 
             Spacer()
 
