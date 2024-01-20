@@ -424,6 +424,7 @@
 "common.add" = "添加";
 "common.create" = "创建";
 "common.remove" = "移除";
+"common.move" = "移动";
 
 "notification.source" = "来源: %@";
 
@@ -476,6 +477,7 @@
 "file.download" = "下载到..";
 "file.confirm_save %@" = "是否要保存 %@？";
 "file.confirm_delete %@" = "你确定要删除 %@ 吗？";
+"file.confirm_move_into %@ %@" = "你确定要移动 %@ 到 %@ 吗？";
 "file.reopen_with_encoding" = "使用其他编码重新打开";
 "file.download_now" = "立即下载";
 

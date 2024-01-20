@@ -434,6 +434,7 @@
 "common.add" = "追加";
 "common.create" = "作成";
 "common.remove" = "削除";
+"common.move" = "移動";
 
 "notification.source" = "Source: %@";
 
@@ -486,6 +487,7 @@
 "file.download" = "ダウンロード..";
 "file.confirm_save %@" = "%@ に加えた変更を保存しますか?";
 "file.confirm_delete %@" = "%@ を削除しますか?";
+"file.confirm_move_into %@ %@" = "%@ を %@ から移動してもよろしいですか?";
 "file.reopen_with_encoding" = "エンコードで再オープン";
 "file.download_now" = "今すぐダウンロード";
 

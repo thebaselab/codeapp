@@ -444,6 +444,34 @@ class MainApp: ObservableObject {
         }
     }
 
+    func moveFile(fromUrl: URL, toUrl: URL) {
+        func move() {
+            Task {
+                do {
+                    try await workSpaceStorage.moveItem(at: fromUrl, to: toUrl)
+                } catch {
+                    notificationManager.showErrorMessage(error.localizedDescription)
+                }
+            }
+        }
+
+        if !fromUrl.isFileURL {
+            alertManager.showAlert(
+                title:
+                    "file.confirm_move_into \(fromUrl.lastPathComponent) \(toUrl.deletingLastPathComponent().lastPathComponent)",
+                content: AnyView(
+                    Group {
+                        Button("common.move") {
+                            move()
+                        }
+                        Button("common.cancel", role: .cancel) {}
+                    }
+                ))
+        } else {
+            move()
+        }
+    }
+
     func trashItem(url: URL) {
         func removeItem() {
             self.workSpaceStorage.removeItem(at: url) { error in

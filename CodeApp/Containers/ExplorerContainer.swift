@@ -112,13 +112,8 @@ struct ExplorerContainer: View {
         else {
             return
         }
-        Task {
-            do {
-                try await App.workSpaceStorage.moveItem(at: fromUrl, to: toUrl)
-            } catch {
-                App.notificationManager.showErrorMessage(error.localizedDescription)
-            }
-        }
+
+        App.moveFile(fromUrl: fromUrl, toUrl: toUrl)
     }
 
     var body: some View {
@@ -188,7 +183,6 @@ struct ExplorerContainer: View {
                     }
                 } else {
                     if selectKeeper.isEmpty {
-                        //                        Image(systemName: "square.and.arrow.up").contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous)).hoverEffect(.highlight).font(.subheadline).foregroundColor(.gray)
                         Image(systemName: "trash").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(.gray)
@@ -196,8 +190,6 @@ struct ExplorerContainer: View {
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(.gray)
                     } else {
-                        //                        Image(systemName: "square.and.arrow.up").contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous)).hoverEffect(.highlight).font(.subheadline).foregroundColor(Color.init(id: "activityBar.foreground"))
-                        //                            .onTapGesture{activityViewController.share(urls: Array(selectKeeper).map{URL.init(string: $0)!})}
                         Image(systemName: "trash").contentShape(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                         ).hoverEffect(.highlight).font(.subheadline).foregroundColor(

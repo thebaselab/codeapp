@@ -324,6 +324,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "common.add" = "Add";
 "common.create" = "Create";
 "common.remove" = "Remove";
+"common.move" = "Move";
 
 "notification.source" = "Source: %@";
 
@@ -376,6 +377,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "file.download" = "Download to..";
 "file.confirm_save %@" = "Do you want to save the changes made to %@?";
 "file.confirm_delete %@" = "Are you sure you want to delete %@?";
+"file.confirm_move_into %@ %@" = "Are you sure you want to move %@ into %@?";
 "file.reopen_with_encoding" = "Reopen with Encoding";
 "file.download_now" = "Download now";
 

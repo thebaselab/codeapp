@@ -433,6 +433,7 @@
 "common.add" = "Hinzufügen";
 "common.create" = "Erstellen";
 "common.remove" = "Entfernen";
+"common.move" = "Bewegen";
 
 "notification.source" = "Quelle: %@";
 
@@ -485,6 +486,7 @@
 "file.download" = "Herunterladen auf..";
 "file.confirm_save %@" = "Möchten Sie die Änderungen an %@ speichern?";
 "file.confirm_delete %@" = "Möchten Sie %@ wirklich löschen?";
+"file.confirm_move_into %@ %@" = "Möchten Sie %@ wirklich in %@ verschieben?";
 "file.reopen_with_encoding" = "Mit Zeichenkodierung erneut öffnen";
 "file.download_now" = "Jetzt herunterladen";
 
