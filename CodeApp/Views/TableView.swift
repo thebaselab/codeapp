@@ -20,6 +20,7 @@ where
     Data.Element == DataElement, RowContent: UIContentConfiguration
 {
     @EnvironmentObject var App: MainApp  // Remove this if possible
+    @EnvironmentObject var themeManager: ThemeManager
 
     var root: DataElement
     var children: KeyPath<DataElement, Data?>
@@ -75,6 +76,7 @@ where
 
     class Coordinator {
         var lastExpandedCells = Set<DataElement.ID>()
+        var lastTheme: Theme? = nil
         var cellState: TableViewCellState<DataElement>
         var lastCellState = TableViewCellState<DataElement>(
             highlightedCells: Set<DataElement.ID>(), cellDecorations: [:])
@@ -84,7 +86,6 @@ where
 
         @objc func notificationHandler(notification: Notification) {
             guard
-                let controller,
                 let target = notification.userInfo?["target"] as? DataElement.ID,
                 let notificationSceneIdentifier = notification.userInfo?["sceneIdentifier"]
                     as? UUID,
@@ -148,7 +149,7 @@ where
         DispatchQueue.main.async {
             updateExpandedCells(in: controller, with: context)
         }
-        context.coordinator.controller = controller
+        context.coordinator.lastTheme = themeManager.currentTheme
         // This is ugly. How do we implement something like ScrollViewReader?
         NotificationCenter.default.addObserver(
             context.coordinator,
@@ -161,7 +162,11 @@ where
         _ uiViewController: FileTreeViewController<DataElement, Data>, context: Context
     ) {
         // TODO: Diff the data
-        if root != uiViewController.data { uiViewController.setData(data: root) }
+        if root != uiViewController.data
+            || context.coordinator.lastTheme?.id != themeManager.currentTheme?.id
+        {
+            uiViewController.setData(data: root)
+        }
         if let header, header != uiViewController.headerText {
             uiViewController.setHeaderText(text: header)
         }
