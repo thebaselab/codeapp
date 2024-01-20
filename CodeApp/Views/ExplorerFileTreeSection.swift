@@ -89,7 +89,7 @@ struct ExplorerFileTree: View {
     }
 
     func buildContextMenu(item: WorkSpaceStorage.FileItemRepresentable)
-        -> UIContextMenuConfiguration
+        -> UIMenu
     {
 
         let ACTION_OPEN_IN_TAB = UIAction(
@@ -212,8 +212,12 @@ struct ExplorerFileTree: View {
             }
         }
 
-        let actionProvider: UIContextMenuActionProvider = { _ in
-            if item.subFolderItems == nil {
+        let uiMenu = {
+            if item == App.workSpaceStorage.currentDirectory {
+                return UIMenu(children: [
+                    ACTION_NEW_FILE, ACTION_NEW_FOLDER,
+                ])
+            } else if item.subFolderItems == nil {
                 let topActions = UIMenu(
                     title: "", options: .displayInline,
                     children: [
@@ -250,11 +254,8 @@ struct ExplorerFileTree: View {
                         ACTION_ASSIGN_AS_WORKSPACE_FOLDER,
                     ])
             }
-
-        }
-        return UIContextMenuConfiguration(
-            identifier: item.url as NSCopying, previewProvider: nil,
-            actionProvider: actionProvider)
+        }()
+        return uiMenu
     }
 
     var body: some View {

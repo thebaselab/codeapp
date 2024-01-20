@@ -39,7 +39,7 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
 
     var onSelect: ((DataElement) -> Void)? = nil
     var onMove: ((DataElement, DataElement) -> Void)? = nil
-    var onContextMenu: ((DataElement) -> UIContextMenuConfiguration?)? = nil
+    var onContextMenu: ((DataElement) -> UIMenu?)? = nil
     var content: ((DataElement) -> FileTreeViewCell)? = nil
     var onExpand: ((DataElement) -> Void)? = nil
     var onContract: ((DataElement) -> Void)? = nil
@@ -209,7 +209,7 @@ extension FileTreeViewController: FileTreeViewDelegate {
     }
 
     func fileTreeView(_ fileTreeView: FileTreeView, contextMenuForItem: UUID)
-        -> UIContextMenuConfiguration?
+        -> UIMenu?
     {
         guard let data = dataForUUID(uuid: contextMenuForItem, at: data) else { return nil }
         return onContextMenu?(data)

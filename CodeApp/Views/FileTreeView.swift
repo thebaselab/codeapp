@@ -253,7 +253,14 @@ extension TableViewDelegate: UITableViewDelegate {
     ) -> UIContextMenuConfiguration? {
         guard let fileTreeDelegate, let treeView else { return nil }
         let item = convertIndexPathToItem(indexPath: indexPath)
-        return fileTreeDelegate.fileTreeView(treeView, contextMenuForItem: item.id)
+
+        let actionProvider: UIContextMenuActionProvider = { _ in
+            return fileTreeDelegate.fileTreeView(treeView, contextMenuForItem: item.id)
+        }
+
+        return UIContextMenuConfiguration(
+            identifier: item.id as NSCopying, previewProvider: nil,
+            actionProvider: actionProvider)
     }
 }
 
@@ -439,6 +446,7 @@ class FileTreeView: UIView {
     }
 
     private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let buttonView = UIButton()
     private let tableViewDelegate: TableViewDelegate = TableViewDelegate()
 
     public func reloadData() {
@@ -471,6 +479,48 @@ class FileTreeView: UIView {
             tableView, at: cell, scrollPosition: scrollPosition, animated: animated)
     }
 
+    @objc func didLongPress(_ recognizer: UIGestureRecognizer) {
+        guard let delegate, let dataSource else { return }
+
+        let rootItem = dataSource.rootItem(self)
+        let menu = delegate.fileTreeView(self, contextMenuForItem: rootItem)
+
+        let location = recognizer.location(in: tableView)
+
+        buttonView.menu = menu
+        buttonView.frame = CGRect(x: location.x, y: location.y, width: 1, height: 1)
+        let r = buttonView.gestureRecognizers!.first(where: {
+            $0.description.contains("UITouchDownGestureRecognizer")
+        })!
+        r.touchesBegan([], with: UIEvent())
+
+    }
+
+    private func getMenu() -> UIMenu {
+        let inspectAction =
+            UIAction(
+                title: NSLocalizedString("New File", comment: ""),
+                image: UIImage(systemName: "doc.badge.plus")
+            ) { action in
+            }
+
+        let deleteAction =
+            UIAction(
+                title: NSLocalizedString("New Folder", comment: ""),
+                image: UIImage(systemName: "folder.badge.plus")
+            ) { action in
+            }
+
+        let pasteAction =
+            UIAction(
+                title: NSLocalizedString("Paste", comment: ""),
+                image: UIImage(systemName: "doc.on.clipboard")
+            ) { action in
+            }
+
+        return UIMenu(title: "", children: [inspectAction, deleteAction, pasteAction])
+    }
+
     init() {
         super.init(frame: CGRect.zero)
         tableViewDelegate.treeView = self
@@ -480,16 +530,27 @@ class FileTreeView: UIView {
         tableView.dropDelegate = tableViewDelegate
         tableView.dragInteractionEnabled = true
         tableView.backgroundColor = .clear
-
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+
+        buttonView.showsMenuAsPrimaryAction = true
+        buttonView.isHidden = true
+        addSubview(buttonView)
+        let singleClick = UITapGestureRecognizer(target: self, action: #selector(didLongPress(_:)))
+        singleClick.buttonMaskRequired = .secondary
+        singleClick.allowedTouchTypes = [UITouch.TouchType.indirectPointer.rawValue as NSNumber]
+        self.addGestureRecognizer(singleClick)
+        let longPress = UILongPressGestureRecognizer(
+            target: self, action: #selector(didLongPress(_:)))
+        longPress.allowedTouchTypes = [UITouch.TouchType.direct.rawValue as NSNumber]
+        self.addGestureRecognizer(longPress)
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(tableView)
         tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-
     }
 
     override func layoutIfNeeded() {
@@ -517,7 +578,7 @@ protocol FileTreeViewDelegate: AnyObject {
     func fileTreeView(_ fileTreeView: FileTreeView, selectCell at: UUID)
     func fileTreeView(_ fileTreeView: FileTreeView, moveCell from: UUID, to: UUID)
     func fileTreeView(_ fileTreeView: FileTreeView, contextMenuForItem: UUID)
-        -> UIContextMenuConfiguration?
+        -> UIMenu?
     func fileTreeView(_ fileTreeView: FileTreeView, didExpandCellAt item: UUID)
     func fileTreeView(_ fileTreeView: FileTreeView, didContractCellAt item: UUID)
 }

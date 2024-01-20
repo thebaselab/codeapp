@@ -25,7 +25,7 @@ where
     var children: KeyPath<DataElement, Data?>
     var onSelect: ((DataElement) -> Void)? = nil
     var onMove: ((DataElement, DataElement) -> Void)? = nil
-    var onContextMenu: ((DataElement) -> UIContextMenuConfiguration?)? = nil
+    var onContextMenu: ((DataElement) -> UIMenu?)? = nil
     var onExpand: ((DataElement) -> Void)? = nil
     var onDrag: ((DataElement) -> NSItemProvider?)? = nil
     var header: String? = nil
@@ -192,7 +192,7 @@ extension TableView {
         return updatedView
     }
 
-    public func onContextMenu(_ builder: @escaping (DataElement) -> UIContextMenuConfiguration?)
+    public func onContextMenu(_ builder: @escaping (DataElement) -> UIMenu?)
         -> TableView
     {
         var updatedView = self
