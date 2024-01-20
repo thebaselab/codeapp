@@ -993,7 +993,7 @@ class MainApp: ObservableObject {
             workSpaceStorage.expandedCells.insert(url.absoluteString)
             let originalLength = url.absoluteString.count
             url.deleteLastPathComponent()
-            if url.absoluteString.count == originalLength {
+            if url.absoluteString.count >= originalLength {
                 break
             }
         }
