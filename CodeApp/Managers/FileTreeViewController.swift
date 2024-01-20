@@ -198,7 +198,7 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
         fileTreeView.dataSource = self
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewIsAppearing(_ animated: Bool) {
         if let idToScrollToOnAppear {
             self.scrollToCell(cell: idToScrollToOnAppear, scrollPosition: .middle, animated: false)
         }
