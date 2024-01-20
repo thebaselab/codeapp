@@ -14,7 +14,8 @@ struct ExplorerFileTree: View {
 
     let searchString: String
     let onDrag: (WorkSpaceStorage.FileItemRepresentable) -> NSItemProvider
-    let onMoveFile: (WorkSpaceStorage.FileItemRepresentable, WorkSpaceStorage.FileItemRepresentable) -> Void
+    let onMoveFile:
+        (WorkSpaceStorage.FileItemRepresentable, WorkSpaceStorage.FileItemRepresentable) -> Void
 
     @State var showsDirectoryPicker = false
 

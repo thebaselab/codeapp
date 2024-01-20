@@ -182,7 +182,7 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
         self.view = fileTreeView
     }
 
-    override func viewIsAppearing(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         fileTreeView.delegate = self
         fileTreeView.dataSource = self
     }

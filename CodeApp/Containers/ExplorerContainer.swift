@@ -103,8 +103,10 @@ struct ExplorerContainer: View {
             proxy.scrollTo(target.absoluteString, anchor: .center)
         }
     }
-    
-    func onMoveFile(from: WorkSpaceStorage.FileItemRepresentable, to: WorkSpaceStorage.FileItemRepresentable){
+
+    func onMoveFile(
+        from: WorkSpaceStorage.FileItemRepresentable, to: WorkSpaceStorage.FileItemRepresentable
+    ) {
         guard let fromUrl = from._url,
             let toUrl = to._url?.appending(path: fromUrl.lastPathComponent)
         else {
