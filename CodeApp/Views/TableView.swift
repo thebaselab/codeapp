@@ -83,6 +83,8 @@ where
         private var sceneIdentifier: UUID
         @Binding var cellToScrollTo: DataElement.ID?
 
+        var isUpdatingView: Bool = false
+
         @objc func notificationHandler(notification: Notification) {
             guard
                 let target = notification.userInfo?["target"] as? DataElement.ID,
@@ -133,13 +135,15 @@ where
         controller.onContextMenu = {
             onContextMenu?($0)
         }
-        controller.onExpand = {
-            expandedCells.insert($0.id)
+        controller.onExpand = { item in
+            if context.coordinator.isUpdatingView { return }
+            expandedCells.insert(item.id)
             context.coordinator.lastExpandedCells = expandedCells
-            onExpand?($0)
+            onExpand?(item)
         }
-        controller.onContract = {
-            expandedCells.remove($0.id)
+        controller.onContract = { item in
+            if context.coordinator.isUpdatingView { return }
+            expandedCells.remove(item.id)
             context.coordinator.lastExpandedCells = expandedCells
         }
         controller.itemProvider = {
@@ -160,6 +164,7 @@ where
     func updateUIViewController(
         _ uiViewController: FileTreeViewController<DataElement, Data>, context: Context
     ) {
+        context.coordinator.isUpdatingView = true
         if root != uiViewController.data
             || context.coordinator.lastTheme?.id != themeManager.currentTheme?.id
         {
@@ -176,6 +181,7 @@ where
             uiViewController.scrollToCell(
                 cell: cellToScrollTo, scrollPosition: .middle, animated: false)
         }
+        context.coordinator.isUpdatingView = false
     }
 }
 
