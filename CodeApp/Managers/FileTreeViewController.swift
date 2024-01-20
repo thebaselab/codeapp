@@ -146,21 +146,7 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
 
     // This is too slow!
     private func dataForElementID(id: DataElement.ID, at: DataElement) -> DataElement? {
-
         return uuidMapping.DataElementIDToDataElement[id]
-
-        //        if at.id == id { return at }
-        //
-        //        guard let children = at[keyPath: childrenPath] else { return nil }
-        //        for child in children {
-        //            if child.id == id {
-        //                return child
-        //            } else {
-        //                let data = dataForElementID(id: id, at: child)
-        //                if data != nil { return data }
-        //            }
-        //        }
-        //        return nil
     }
 
     private func dataForUUID(uuid: UUID, at: DataElement) -> DataElement? {

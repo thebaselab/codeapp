@@ -361,7 +361,12 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
                 Date()
                     > lastHoverStartedDate.addingTimeInterval(DISCLOSE_ON_HOVER_THRESHOLD)
             {
+                let destinationItem = convertIndexPathToItem(indexPath: destinationIndexPath)
+                if let treeView {
+                    fileTreeDelegate?.fileTreeView(treeView, didExpandCellAt: destinationItem.id)
+                }
                 expandCell(tableView, at: destinationIndexPath)
+                highlightCellAndItsChildren(tableView, cell: destinationItem.id)
             }
             return lastHoveredResult
         }
@@ -406,9 +411,6 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
                 removeAllHighlightedCells(tableView)
                 lastHoveredResult = UITableViewDropProposal(operation: .forbidden)
                 return UITableViewDropProposal(operation: .forbidden)
-            }
-            if let treeView {
-                fileTreeDelegate?.fileTreeView(treeView, didExpandCellAt: destinationItem.id)
             }
             highlightCellAndItsChildren(tableView, cell: destinationItem.id)
             lastHoveredResult = UITableViewDropProposal(operation: .move)
