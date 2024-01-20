@@ -496,31 +496,6 @@ class FileTreeView: UIView {
 
     }
 
-    private func getMenu() -> UIMenu {
-        let inspectAction =
-            UIAction(
-                title: NSLocalizedString("New File", comment: ""),
-                image: UIImage(systemName: "doc.badge.plus")
-            ) { action in
-            }
-
-        let deleteAction =
-            UIAction(
-                title: NSLocalizedString("New Folder", comment: ""),
-                image: UIImage(systemName: "folder.badge.plus")
-            ) { action in
-            }
-
-        let pasteAction =
-            UIAction(
-                title: NSLocalizedString("Paste", comment: ""),
-                image: UIImage(systemName: "doc.on.clipboard")
-            ) { action in
-            }
-
-        return UIMenu(title: "", children: [inspectAction, deleteAction, pasteAction])
-    }
-
     init() {
         super.init(frame: CGRect.zero)
         tableViewDelegate.treeView = self
