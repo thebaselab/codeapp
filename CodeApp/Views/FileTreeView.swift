@@ -8,6 +8,8 @@
 import SwiftUI
 import UIKit
 
+private var DISCLOSE_ON_HOVER_THRESHOLD = TimeInterval(1)  // 1 second
+
 extension UIView {
     func clip(with view: UIView) {
         self.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -80,6 +82,7 @@ class TableViewDelegate: NSObject, UITableViewDataSource {
     private var cachedTable: [CellCache] = []
 
     private var dropDestinationHighlightedCells = Set<UUID>()
+    private var lastHoverStartedDate: Date = Date.distantPast
     private var lastHoveredIndexPath: IndexPath? = nil
     private var lastHoveredResult = UITableViewDropProposal(operation: .cancel)
     private var draggedCells = Set<UUID>()
@@ -357,11 +360,16 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
         _ tableView: UITableView, dropSessionDidUpdate session: UIDropSession,
         withDestinationIndexPath destinationIndexPath: IndexPath?
     ) -> UITableViewDropProposal {
-
         guard destinationIndexPath != lastHoveredIndexPath else {
+            if lastHoveredResult.operation == .move, let destinationIndexPath,
+                Date()
+                    > lastHoverStartedDate.addingTimeInterval(DISCLOSE_ON_HOVER_THRESHOLD)
+            {
+                expandCell(tableView, at: destinationIndexPath)
+            }
             return lastHoveredResult
         }
-
+        lastHoverStartedDate = Date()
         lastHoveredIndexPath = destinationIndexPath
 
         guard let destinationIndexPath else {
@@ -395,7 +403,6 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
 
             let parentsOfItem = getParentsOfItem(destinationItem.id)
             let directParentsOfSourceItem = draggedCells.compactMap { getParentsOfItem($0).first }
-            print("parents of \(destinationItem.id) are \(parentsOfItem)")
             if draggedCells.contains(destinationItem.id)
                 || directParentsOfSourceItem.contains(destinationItem.id)
                 || draggedCells.contains(where: { parentsOfItem.contains($0) })
@@ -404,7 +411,6 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
                 lastHoveredResult = UITableViewDropProposal(operation: .forbidden)
                 return UITableViewDropProposal(operation: .forbidden)
             }
-            expandCell(tableView, at: destinationIndexPath)
             if let treeView {
                 fileTreeDelegate?.fileTreeView(treeView, didExpandCellAt: destinationItem.id)
             }
