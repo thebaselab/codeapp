@@ -104,35 +104,32 @@ struct ExplorerContainer: View {
         }
     }
 
+    func onMoveFile(
+        from: WorkSpaceStorage.FileItemRepresentable, to: WorkSpaceStorage.FileItemRepresentable
+    ) {
+        guard let fromUrl = from._url,
+            let toUrl = to._url?.appending(path: fromUrl.lastPathComponent)
+        else {
+            return
+        }
+        Task {
+            do {
+                try await App.workSpaceStorage.moveItem(at: fromUrl, to: toUrl)
+            } catch {
+                App.notificationManager.showErrorMessage(error.localizedDescription)
+            }
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
 
             InfinityProgressView(enabled: App.workSpaceStorage.explorerIsBusy)
 
-            ScrollViewReader { proxy in
-                List {
-                    ExplorerEditorListSection(
-                        onOpenNewFile: onOpenNewFile,
-                        onPickNewDirectory: onPickNewDirectory
-                    )
-                    ExplorerFileTreeSection(
-                        searchString: searchString, onDrag: onDragCell,
-                        onDropToFolder: onDropToFolder)
-                }
-                .listStyle(SidebarListStyle())
-                .environment(\.defaultMinListRowHeight, 10)
-                .environment(\.editMode, $editMode)
-                .onAppear {
-                    scrollToActiveEditor(proxy: proxy)
-                }
-                .onReceive(
-                    NotificationCenter.default.publisher(
-                        for: Notification.Name("explorer.scrollto"),
-                        object: nil),
-                    perform: { notification in
-                        explorerNotificationHandler(notification: notification, proxy: proxy)
-                    })
-            }
+            ExplorerFileTree(
+                searchString: searchString, onDrag: onDragCell,
+                onMoveFile: onMoveFile
+            )
 
             Spacer()
 

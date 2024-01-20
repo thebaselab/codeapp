@@ -24,6 +24,28 @@ struct CheckoutDestination: Identifiable {
     }
 }
 
+class CreateFileSheetManager: ObservableObject {
+    @Published var showsSheet: Bool = false
+
+    var targetURL: URL?
+
+    func showSheet(targetURL: URL) {
+        self.targetURL = targetURL
+        showsSheet = true
+    }
+}
+
+class DirectoryPickerManager: ObservableObject {
+    @Published var showsPicker: Bool = false
+
+    var callback: ((URL) -> Void)?
+
+    func showPicker(callback: @escaping ((URL) -> Void)) {
+        self.callback = callback
+        showsPicker = true
+    }
+}
+
 class SafariManager: ObservableObject {
     @Published var showsSafari: Bool = false
 
@@ -69,6 +91,8 @@ class MainApp: ObservableObject {
     let stateManager = MainStateManager()
     let alertManager = AlertManager()
     let safariManager = SafariManager()
+    let directoryPickerManager = DirectoryPickerManager()
+    let createFileSheetManager = CreateFileSheetManager()
 
     @Published var editors: [EditorInstance] = []
     var textEditors: [TextEditorInstance] {
@@ -79,7 +103,15 @@ class MainApp: ObservableObject {
     }
 
     @Published var isShowingCompilerLanguage = false
-    @Published var activeEditor: EditorInstance? = nil
+    @Published var activeEditor: EditorInstance? = nil {
+        didSet {
+            if let activeEditor = activeEditor as? EditorInstanceWithURL {
+                workSpaceStorage.cellState.highlightedCells = Set([activeEditor.url.absoluteString])
+            } else {
+                workSpaceStorage.cellState.highlightedCells.removeAll()
+            }
+        }
+    }
     var activeTextEditor: TextEditorInstance? {
         activeEditor as? TextEditorInstance
     }
@@ -954,19 +986,25 @@ class MainApp: ObservableObject {
         guard let editor = editor as? EditorInstanceWithURL else {
             return
         }
+
         var url = editor.url
         url.deleteLastPathComponent()
-        while workSpaceStorage.expansionStates[url.absoluteString] != nil {
-            workSpaceStorage.expansionStates[url.absoluteString] = true
-            var originalLength = url.absoluteString.count
+        while url != workSpaceStorage.currentDirectory._url {
+            workSpaceStorage.expandedCells.insert(url.absoluteString)
+            let originalLength = url.absoluteString.count
             url.deleteLastPathComponent()
-            if url.absoluteString.count == originalLength {
+            if url.absoluteString.count >= originalLength {
                 break
             }
         }
-        NotificationCenter.default.post(
-            name: Notification.Name("explorer.scrollto"), object: nil,
-            userInfo: ["sceneIdentifier": sceneIdentifier, "target": editor.url])
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(
+                name: Notification.Name("explorer.scrollto"), object: nil,
+                userInfo: [
+                    "sceneIdentifier": self.sceneIdentifier, "target": editor.url.absoluteString,
+                ])
+        }
+
     }
 
     @MainActor
