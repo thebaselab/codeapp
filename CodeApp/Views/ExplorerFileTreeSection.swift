@@ -331,7 +331,6 @@ struct ExplorerFileTreeSection: View {
                 of: "{default}", with: " "
             ).removingPercentEncoding!
         ).onMove { from, to in
-            print("Moving \(from.id) -> \(to.id)")
             guard let fromUrl = from._url,
                 let toUrl = to._url?.appending(path: fromUrl.lastPathComponent)
             else {

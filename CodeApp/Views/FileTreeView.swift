@@ -81,7 +81,7 @@ class TableViewDelegate: NSObject, UITableViewDataSource {
 
     private var dropDestinationHighlightedCells = Set<UUID>()
     private var lastHoveredIndexPath: IndexPath? = nil
-    private var lastHoveredResult: Bool = false
+    private var lastHoveredResult = UITableViewDropProposal(operation: .cancel)
     private var draggedCells = Set<UUID>()
 
     private func buildCachedTable(at item: UUID, depth: Int = 0) -> [CellCache] {
@@ -266,6 +266,13 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
         tableView.reloadRows(at: indexPaths, with: .none)
     }
 
+    private func highlightAllCells(_ tableView: UITableView) {
+        for cell in cachedTable {
+            dropDestinationHighlightedCells.insert(cell.id)
+        }
+        tableView.reloadSections(IndexSet(integer: 0), with: .none)
+    }
+
     private func highlightCellAndItsChildren(_ tableView: UITableView, cell: UUID) {
         guard let range = indexRangeForCellAndItsChildren(cell: cell) else { return }
 
@@ -307,7 +314,9 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
 
         let destinationUUID: UUID
 
-        if let indexPath = coordinator.destinationIndexPath {
+        if let indexPath = coordinator.destinationIndexPath,
+            indexPath.row < cachedTable.count
+        {
             destinationUUID = convertIndexPathToItem(indexPath: indexPath).id
         } else {
             destinationUUID = fileTreeDataSource.rootItem(treeView)
@@ -349,23 +358,38 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
         withDestinationIndexPath destinationIndexPath: IndexPath?
     ) -> UITableViewDropProposal {
 
-        guard let destinationIndexPath else {
-            removeAllHighlightedCells(tableView)
-            return UITableViewDropProposal(operation: .cancel)
-        }
-
         guard destinationIndexPath != lastHoveredIndexPath else {
-            return UITableViewDropProposal(operation: lastHoveredResult ? .move : .forbidden)
+            return lastHoveredResult
         }
 
         lastHoveredIndexPath = destinationIndexPath
+
+        guard let destinationIndexPath else {
+            // Dropping on root
+            for draggedCell in draggedCells {
+                if getParentsOfItem(draggedCell).isEmpty {
+                    lastHoveredResult = UITableViewDropProposal(operation: .cancel)
+                    return UITableViewDropProposal(operation: .cancel)
+                }
+            }
+
+            tableView.backgroundColor = UIColor(
+                Color.init(id: "list.inactiveSelectionBackground"))
+            highlightAllCells(tableView)
+            lastHoveredResult = UITableViewDropProposal(operation: .move)
+            return UITableViewDropProposal(operation: .move)
+        }
+
+        defer {
+            tableView.backgroundColor = .clear
+        }
 
         if destinationIndexPath.row < cachedTable.count {
             let destinationItem = convertIndexPathToItem(indexPath: destinationIndexPath)
 
             if !destinationItem.hasChildren {
                 removeAllHighlightedCells(tableView)
-                lastHoveredResult = false
+                lastHoveredResult = UITableViewDropProposal(operation: .forbidden)
                 return UITableViewDropProposal(operation: .forbidden)
             }
 
@@ -377,7 +401,7 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
                 || draggedCells.contains(where: { parentsOfItem.contains($0) })
             {
                 removeAllHighlightedCells(tableView)
-                lastHoveredResult = false
+                lastHoveredResult = UITableViewDropProposal(operation: .forbidden)
                 return UITableViewDropProposal(operation: .forbidden)
             }
             expandCell(tableView, at: destinationIndexPath)
@@ -385,24 +409,24 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
                 fileTreeDelegate?.fileTreeView(treeView, didExpandCellAt: destinationItem.id)
             }
             highlightCellAndItsChildren(tableView, cell: destinationItem.id)
-            lastHoveredResult = true
+            lastHoveredResult = UITableViewDropProposal(operation: .move)
             return UITableViewDropProposal(operation: .move)
         } else {
-            // TODO: Past on root
-            lastHoveredResult = false
+            lastHoveredResult = UITableViewDropProposal(operation: .forbidden)
             return UITableViewDropProposal(operation: .forbidden)
         }
     }
 
     func tableView(_ tableView: UITableView, dropSessionDidEnd session: UIDropSession) {
         removeAllHighlightedCells(tableView)
+        tableView.backgroundColor = .clear
         draggedCells.removeAll()
         lastHoveredIndexPath = nil
     }
 
     func tableView(_ tableView: UITableView, dropSessionDidExit session: UIDropSession) {
-
         removeAllHighlightedCells(tableView)
+        tableView.backgroundColor = .clear
     }
 }
 
