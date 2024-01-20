@@ -2735,7 +2735,6 @@
 				9F170D032A89F88D00D6D7C1 /* RegularSidebar.swift */,
 				9FA939DC2A9317F800C239BF /* SourceControlTextFieldAlert.swift */,
 				9F062FE22B58D3F4006210AA /* FileTreeView.swift */,
-				9F062FE52B58D40D006210AA /* FileTreeViewController.swift */,
 				9F062FE82B58D416006210AA /* TableView.swift */,
 			);
 			path = Views;
@@ -2880,6 +2879,7 @@
 				9F37391D293F37F8006886C1 /* ThemeManager.swift */,
 				9FA122582A8B17E400E7B417 /* StatusBarManager.swift */,
 				9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */,
+				9F062FE52B58D40D006210AA /* FileTreeViewController.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";

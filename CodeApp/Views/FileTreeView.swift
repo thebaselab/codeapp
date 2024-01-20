@@ -137,7 +137,6 @@ class TableViewDelegate: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let cell = UITableViewCell()
         guard let fileTreeDataSource, let treeView else { return cell }
 
@@ -329,16 +328,6 @@ extension TableViewDelegate: UITableViewDragDelegate, UITableViewDropDelegate {
         for sourceUUID in sourceUUIDs {
             fileTreeDelegate.fileTreeView(treeView, moveCell: sourceUUID, to: destinationUUID)
         }
-
-        /*
-        coordinator.session.loadObjects(ofClass: NSString.self) { items in
-            // Consume drag items.
-            let uuids = (items as! [String]).compactMap { UUID(uuidString: $0) }
-            for uuid in uuids {
-                fileTreeDelegate.fileTreeView(treeView, moveCell: uuid, to: destinationItem)
-            }
-        }
-         */
     }
 
     private func getParentsOfItem(_ item: UUID) -> [UUID] {
@@ -524,13 +513,6 @@ struct FileTreeViewCell {
     var decoration: CellDecoration?
 }
 
-//typealias FileTreeViewCell = UIContentConfiguration
-//{
-//    var view: AnyView
-//    var backgroundColor: Color?
-//}
-
-// TODO: Provide default implementation for these
 protocol FileTreeViewDelegate: AnyObject {
     func fileTreeView(_ fileTreeView: FileTreeView, selectCell at: UUID)
     func fileTreeView(_ fileTreeView: FileTreeView, moveCell from: UUID, to: UUID)

@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct ExplorerFileTreeSection: View {
+struct ExplorerFileTree: View {
 
     @EnvironmentObject var App: MainApp
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
 
     let searchString: String
     let onDrag: (WorkSpaceStorage.FileItemRepresentable) -> NSItemProvider
-    let onDropToFolder: (WorkSpaceStorage.FileItemRepresentable, [NSItemProvider]) -> Bool
+    let onMoveFile: (WorkSpaceStorage.FileItemRepresentable, WorkSpaceStorage.FileItemRepresentable) -> Void
 
     @State var showsDirectoryPicker = false
 
@@ -111,7 +111,6 @@ struct ExplorerFileTreeSection: View {
         let ACTION_RENAME = UIAction(
             title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")!
         ) { _ in
-            // TODO
             NotificationCenter.default.post(
                 name: Notification.Name("explorer.cell.rename"), object: nil,
                 userInfo: ["target": item.id])
@@ -258,48 +257,6 @@ struct ExplorerFileTreeSection: View {
     }
 
     var body: some View {
-        /*
-        Section(
-            header:
-                Text(
-                    App.workSpaceStorage.currentDirectory.name.replacingOccurrences(
-                        of: "{default}", with: " "
-                    ).removingPercentEncoding!
-                ).foregroundColor(Color(id: "sideBarSectionHeader.foreground"))
-        ) {
-            HierarchyList(
-                data: foldersWithFilter(
-                    folder: App.workSpaceStorage.currentDirectory.subFolderItems),
-                children: \.subFolderItems,
-                expandStates: $App.workSpaceStorage.expansionStates,
-                rowContent: { item in
-                    ExplorerCell(
-                        item: item,
-                        onDrag: {
-                            onDrag(item)
-                        },
-                        onDropToFolder: { providers in
-                            onDropToFolder(item, providers)
-                        }
-                    )
-                    .frame(height: 16)
-                    .listRowBackground(
-                        item.url == (App.activeEditor as? EditorInstanceWithURL)?.url.absoluteString
-                            ? Color.init(id: "list.inactiveSelectionBackground")
-                                .cornerRadius(10.0)
-                            : Color.clear.cornerRadius(10.0)
-                    )
-                    .listRowSeparator(.hidden)
-                    .id(item.url)
-                },
-                onDisclose: { id in
-                    if let id = id as? String {
-                        App.workSpaceStorage.requestDirectoryUpdateAt(id: id)
-                    }
-                })
-        }
-         */
-
         TableView(
             filteredFileItemRepresentable(App.workSpaceStorage.currentDirectory),
             children: \WorkSpaceStorage.FileItemRepresentable.subFolderItems,
@@ -307,17 +264,7 @@ struct ExplorerFileTreeSection: View {
             expandedCells: $App.workSpaceStorage.expandedCells
         ) { item in
             UIHostingConfiguration {
-                HStack {
-                    ExplorerCell(
-                        item: item,
-                        onDrag: {
-                            onDrag(item)
-                        },
-                        onDropToFolder: { providers in
-                            onDropToFolder(item, providers)
-                        }
-                    )
-                }
+                ExplorerCell(item: item)
             }.background(Color.init(id: "sideBar.background"))
         }.onSelect { item in
             if let url = item._url {
@@ -331,18 +278,7 @@ struct ExplorerFileTreeSection: View {
                 of: "{default}", with: " "
             ).removingPercentEncoding!
         ).onMove { from, to in
-            guard let fromUrl = from._url,
-                let toUrl = to._url?.appending(path: fromUrl.lastPathComponent)
-            else {
-                return
-            }
-            Task {
-                do {
-                    try await App.workSpaceStorage.moveItem(at: fromUrl, to: toUrl)
-                } catch {
-                    App.notificationManager.showErrorMessage(error.localizedDescription)
-                }
-            }
+            onMoveFile(from, to)
         }.onContextMenu {
             buildContextMenu(item: $0)
         }

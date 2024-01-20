@@ -8,7 +8,6 @@
 import SwiftUI
 import UIKit
 
-// Option 1: Embed these UI states in one Binding variable
 struct TableViewCellState<DataElement: Identifiable>: Equatable {
     var highlightedCells: Set<DataElement.ID>
     var cellDecorations: [DataElement.ID: CellDecoration]
@@ -161,7 +160,6 @@ where
     func updateUIViewController(
         _ uiViewController: FileTreeViewController<DataElement, Data>, context: Context
     ) {
-        // TODO: Diff the data
         if root != uiViewController.data
             || context.coordinator.lastTheme?.id != themeManager.currentTheme?.id
         {

@@ -12,8 +12,6 @@ struct ExplorerCell: View {
     @EnvironmentObject var App: MainApp
 
     let item: WorkSpaceStorage.FileItemRepresentable
-    let onDrag: () -> NSItemProvider
-    let onDropToFolder: ([NSItemProvider]) -> Bool
 
     var body: some View {
         FileCell(item: item)

@@ -123,7 +123,6 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
         return result
     }
 
-    // TODO: Make this BFS
     private func dataForElementID(id: DataElement.ID, at: DataElement) -> DataElement? {
         if at.id == id { return at }
 
