@@ -19,6 +19,7 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
     struct UUIDMapping {
         var UUIDToDataElementID: [UUID: DataElement.ID]
         var DataElementIDToUUID: [DataElement.ID: UUID]
+        var DataElementIDToDataElement: [DataElement.ID: DataElement]
     }
 
     private var uuidMapping: UUIDMapping
@@ -89,8 +90,28 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
             data: data, childrenPath: childrenPath, existingMapping: existingMapping)
         let dataElementIDToUUID = FileTreeViewController.inverseUUIDToDataElementIDMapping(
             mapping: UUIDToDataElementID)
+        let dataElementIDToDataElement =
+            FileTreeViewController.buildDataElementIDToDataElementMapping(
+                data: data, childrenPath: childrenPath)
         return UUIDMapping(
-            UUIDToDataElementID: UUIDToDataElementID, DataElementIDToUUID: dataElementIDToUUID)
+            UUIDToDataElementID: UUIDToDataElementID, DataElementIDToUUID: dataElementIDToUUID,
+            DataElementIDToDataElement: dataElementIDToDataElement)
+    }
+
+    private static func buildDataElementIDToDataElementMapping(
+        data: DataElement, childrenPath: KeyPath<DataElement, Data?>
+    ) -> [DataElement.ID: DataElement] {
+        var result = [DataElement.ID: DataElement]()
+        result[data.id] = data
+
+        guard let children = data[keyPath: childrenPath] else { return result }
+        for child in children {
+            result.merge(
+                buildDataElementIDToDataElementMapping(
+                    data: child, childrenPath: childrenPath)
+            ) { first, _ in first }
+        }
+        return result
     }
 
     private static func inverseUUIDToDataElementIDMapping(mapping: [UUID: DataElement.ID])
@@ -123,19 +144,23 @@ where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element == 
         return result
     }
 
+    // This is too slow!
     private func dataForElementID(id: DataElement.ID, at: DataElement) -> DataElement? {
-        if at.id == id { return at }
 
-        guard let children = at[keyPath: childrenPath] else { return nil }
-        for child in children {
-            if child.id == id {
-                return child
-            } else {
-                let data = dataForElementID(id: id, at: child)
-                if data != nil { return data }
-            }
-        }
-        return nil
+        return uuidMapping.DataElementIDToDataElement[id]
+
+        //        if at.id == id { return at }
+        //
+        //        guard let children = at[keyPath: childrenPath] else { return nil }
+        //        for child in children {
+        //            if child.id == id {
+        //                return child
+        //            } else {
+        //                let data = dataForElementID(id: id, at: child)
+        //                if data != nil { return data }
+        //            }
+        //        }
+        //        return nil
     }
 
     private func dataForUUID(uuid: UUID, at: DataElement) -> DataElement? {
