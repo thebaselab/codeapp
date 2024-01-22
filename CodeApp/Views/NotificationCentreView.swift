@@ -105,7 +105,7 @@ private struct NotificationItemWtihProgress: View {
             }
         }
         .onReceive(timer) { _ in
-            if data.progress!.isFinished {
+            if data.progress!.isCancelled || data.progress!.isFinished {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                     withAnimation {
                         isRemoved = true

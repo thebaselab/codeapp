@@ -157,16 +157,20 @@ class LocalGitServiceProvider: GitServiceProvider {
             let checkoutProgressBlock: CheckoutProgressBlock = { (message, current, total) in
                 DispatchQueue.main.async {
                     progress?.localizedDescription = "Updating files"
-                    progress?.totalUnitCount = Int64(total)
+                    progress?.fileOperationKind = .copying
                     progress?.completedUnitCount = Int64(current)
+                    progress?.totalUnitCount = Int64(total)
                 }
             }
             let fetchProgressBlock: FetchProgressBlock = { current, total in
                 DispatchQueue.main.async {
                     progress?.localizedDescription = "Receiving objects"
-                    progress?.fileOperationKind = .downloading
-                    progress?.totalUnitCount = Int64(total)
-                    progress?.completedUnitCount = Int64(current)
+                    progress?.fileOperationKind = .receiving
+                    if current != total {
+                        // Avoid triggering isFinished
+                        progress?.completedUnitCount = Int64(current)
+                        progress?.totalUnitCount = Int64(total)
+                    }
                 }
             }
             if let credentials = try? self.credentialsHelper.credentialsForRemoteURL(url: from) {

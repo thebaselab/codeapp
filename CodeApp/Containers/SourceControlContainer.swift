@@ -178,6 +178,7 @@ struct SourceControlContainer: View {
                     App.loadFolder(url: dirURL)
                 }, primaryTitle: "common.open_folder", source: repo)
         } catch {
+            progress.cancel()
             let error = error as NSError
             if error.code == LibGit2ErrorClass._GIT_ERROR_HTTP {
                 App.notificationManager.postActionNotification(
