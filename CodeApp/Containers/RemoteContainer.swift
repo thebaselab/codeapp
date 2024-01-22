@@ -157,6 +157,7 @@ struct RemoteContainer: View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
             .padding(.horizontal, 10)
+            .scrollIndicators(.hidden)
         }
         .listStyle(.grouped)
         .onAppear {
