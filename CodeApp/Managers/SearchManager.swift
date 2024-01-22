@@ -74,7 +74,7 @@ class TextSearchManager: ObservableObject {
         resultCount = 0
         executor?.dispatch(
             command:
-                "grep -rin --exclude-dir=node_modules --exclude-dir='.git' -m 1000 \"\(str.replacingOccurrences(of: "\"", with: #"\""#))\" \"\(path)\""
+                "grep -rin --exclude-dir=node_modules --exclude-dir=.git -m 1000 \"\(str.replacingOccurrences(of: "\"", with: #"\""#))\" \"\(path)\""
         ) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.parseResult()
