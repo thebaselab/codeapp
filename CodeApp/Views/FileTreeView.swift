@@ -509,6 +509,8 @@ class FileTreeView: UIView {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.scrollIndicatorInsets = .init(top: 0, left: 0, bottom: 0, right: -7)
+        tableView.clipsToBounds = false
 
         buttonView.showsMenuAsPrimaryAction = true
         buttonView.isHidden = true
