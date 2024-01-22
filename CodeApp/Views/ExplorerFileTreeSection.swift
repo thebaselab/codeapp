@@ -213,7 +213,7 @@ struct ExplorerFileTree: View {
         }
 
         let uiMenu = {
-            if item == App.workSpaceStorage.currentDirectory {
+            if item.id == App.workSpaceStorage.currentDirectory.id {
                 return UIMenu(children: [
                     ACTION_NEW_FILE, ACTION_NEW_FOLDER,
                 ])
