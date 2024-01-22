@@ -109,6 +109,9 @@ struct ExplorerFileTree: View {
                     .absoluteString
             )
         }
+        if !(item._url?.isFileURL ?? false) {
+            ACTION_SHOW_IN_FILEAPP.attributes = .hidden
+        }
         let ACTION_RENAME = UIAction(
             title: NSLocalizedString("Rename", comment: ""), image: UIImage(systemName: "pencil")!
         ) { _ in
