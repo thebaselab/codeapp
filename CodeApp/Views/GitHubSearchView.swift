@@ -12,6 +12,7 @@ struct GitHubSearchView: View {
     @EnvironmentObject var App: MainApp
 
     let onClone: (String) async throws -> Void
+    let onTap: (String) -> Void
 
     var body: some View {
         SearchBar(
@@ -20,7 +21,7 @@ struct GitHubSearchView: View {
             cornerRadius: 10)
 
         ForEach(App.searchManager.searchResultItems, id: \.html_url) { item in
-            GitHubSearchResultCell(item: item, onClone: onClone)
+            GitHubSearchResultCell(item: item, onClone: onClone, onTap: onTap)
         }.listRowBackground(Color.init(id: "sideBar.background"))
     }
 }
@@ -30,6 +31,7 @@ struct GitHubSearchResultCell: View {
     @State var item: GitHubSearchManager.item
 
     let onClone: (String) async throws -> Void
+    let onTap: (String) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -85,6 +87,8 @@ struct GitHubSearchResultCell: View {
 
                 CloneButton(item: item, onClone: onClone)
             }
+        }.onTapGesture {
+            onTap(item.html_url)
         }
     }
 }

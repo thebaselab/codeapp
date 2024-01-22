@@ -11,6 +11,7 @@ struct SourceControlTemplateSection: View {
     @EnvironmentObject var App: MainApp
 
     let onClone: (String) async throws -> Void
+    let onTap: (String) -> Void
 
     var body: some View {
         Section(
@@ -20,7 +21,7 @@ struct SourceControlTemplateSection: View {
         ) {
             if let templates = App.searchManager.templates {
                 ForEach(templates, id: \.html_url) { item in
-                    GitHubSearchResultCell(item: item, onClone: onClone)
+                    GitHubSearchResultCell(item: item, onClone: onClone, onTap: onTap)
                 }.listRowBackground(Color.init(id: "sideBar.background"))
             } else {
                 ProgressView()

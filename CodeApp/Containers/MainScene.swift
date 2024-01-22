@@ -269,7 +269,7 @@ private struct MainView: View {
                 }
             }
         )
-        .fullScreenCover(isPresented: $safariManager.showsSafari) {
+        .sheet(isPresented: $safariManager.showsSafari) {
             if let url = safariManager.urlToVisit {
                 SafariView(url: url)
             } else {

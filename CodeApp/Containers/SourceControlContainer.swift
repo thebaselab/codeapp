@@ -429,6 +429,12 @@ struct SourceControlContainer: View {
             }, tag.name, remote.name)
     }
 
+    func onTapTemplate(url: String) {
+        if let url = URL(string: url) {
+            App.safariManager.showSafari(url: url)
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             //            InfinityProgressView(enabled: stateManager.gitServiceIsBusy)
@@ -456,9 +462,9 @@ struct SourceControlContainer: View {
                         )
                     } else {
                         SourceControlEmptySection(onInitializeRepository: onInitializeRepository)
-                        SourceControlCloneSection(onClone: onClone)
+                        SourceControlCloneSection(onClone: onClone, onTapResult: onTapTemplate)
                         if communityTemplatesEnabled {
-                            SourceControlTemplateSection(onClone: onClone)
+                            SourceControlTemplateSection(onClone: onClone, onTap: onTapTemplate)
                         }
                     }
                 }

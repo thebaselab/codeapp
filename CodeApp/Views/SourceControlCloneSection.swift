@@ -13,6 +13,7 @@ struct SourceControlCloneSection: View {
     @State var gitURL: String = ""
 
     let onClone: (String) async throws -> Void
+    let onTapResult: (String) -> Void
 
     var body: some View {
         Section(
@@ -58,7 +59,7 @@ struct SourceControlCloneSection: View {
 
             DescriptionText("Example: https://github.com/thebaselab/codeapp.git")
 
-            GitHubSearchView(onClone: onClone)
+            GitHubSearchView(onClone: onClone, onTap: onTapResult)
         }
     }
 }
