@@ -271,8 +271,8 @@
    - タイプミスを修正
 ";
 
-"Send us an email" = "メールで報告";
-"Open an issue on GitHub" = "GitHubで問題を報告";
+"Send us an Email" = "メールで報告";
+"Open an Issue on GitHub" = "GitHubで問題を報告";
 "Clear console" = "コンソールのクリア";
 "Kill Process" = "プロセスの中止";
 "Sync" = "同期";
@@ -343,8 +343,8 @@
 "Share" = "共有";
 "Rename" = "名前の変更";
 "Assign as workspace folder" = "ワークスペースのフォルダに割り当てる";
-"Select for compare" = "比較対象を選択";
-"Compare with selected" = "選択項目の比較";
+"Select For Compare" = "比較対象を選択";
+"Compare With Selected" = "選択項目の比較";
 "Version Control" = "バージョン管理";
 "Author Identity" = "著者のアイデンティティ";
 "Authentication" = "認証";
@@ -406,7 +406,7 @@
 "Port" = "サーバポート";
 "Username" = "ユーザー名";
 "Password" = "パスワード";
-"Use key authentication" = "SSHで鍵認証";
+"Use Key Authentication" = "SSHで鍵認証";
 "Remember address" = "IPアドレスを覚える";
 "Connect" = "接続";
 "Disconnect" = "切断";

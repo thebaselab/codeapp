@@ -87,7 +87,7 @@ struct SettingsView: View {
                             else { return }
                             UIApplication.shared.open(url)
                         }) {
-                            Text("Open an issue on GitHub")
+                            Text("Open an Issue on GitHub")
                         }
 
                         Button(action: {
@@ -95,7 +95,7 @@ struct SettingsView: View {
                             else { return }
                             UIApplication.shared.open(url)
                         }) {
-                            Text("Send us an email")
+                            Text("Send us an Email")
                         }
 
                         Button(action: {

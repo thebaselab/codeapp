@@ -270,8 +270,8 @@
   - Fixed a typo
 ";
 
-"Send us an email" = "Senden Sie uns eine E-Mail";
-"Open an issue on GitHub" = "Öffnen Sie einen Issue auf GitHub";
+"Send us an Email" = "Senden Sie uns eine E-Mail";
+"Open an Issue on GitHub" = "Öffnen Sie einen Issue auf GitHub";
 "Clear console" = "Konsole löschen";
 "Kill Process" = "Prozess beenden";
 "Sync" = "Sync";
@@ -342,8 +342,8 @@
 "Share" = "Teilen";
 "Rename" = "Umbenennen";
 "Assign as workspace folder" = "Als Arbeitsbereichsordner zuweisen";
-"Select for compare" = "Zum Vergleich auswählen";
-"Compare with selected" = "Vergleiche mit ausgewählten";
+"Select For Compare" = "Zum Vergleich auswählen";
+"Compare With Selected" = "Vergleiche mit ausgewählten";
 "Version Control" = "Versionskontrolle";
 "Author Identity" = "Author Identität";
 "Authentication" = "Authentifizierung";
@@ -405,7 +405,7 @@
 "Port" = "Port";
 "Username" = "Benutzername";
 "Password" = "Passwort";
-"Use key authentication" = "Verwendet Schlüsselauthentifizierung";
+"Use Key Authentication" = "Verwendet Schlüsselauthentifizierung";
 "Remember address" = "Adresse speichern";
 "Connect" = "Verbinden";
 "Disconnect" = "Trennen";

@@ -264,8 +264,8 @@
   - 可以在主屏幕上按住应用程序图标以打开最近文档
 ";
 
-"Send us an email" = "给我们发邮件";
-"Open an issue on GitHub" = "在 GitHub 上报告问题";
+"Send us an Email" = "给我们发邮件";
+"Open an Issue on GitHub" = "在 GitHub 上报告问题";
 "Clear console" = "清除终端";
 "Kill Process" = "中止进程";
 "Sync" = "同步";
@@ -336,8 +336,8 @@
 "Share" = "分享";
 "Rename" = "重命名";
 "Assign as workspace folder" = "设置为工作文件夹";
-"Select for compare" = "选择进行比较";
-"Compare with selected" = "与选定内容做比较";
+"Select For Compare" = "选择进行比较";
+"Compare With Selected" = "与选定内容做比较";
 "Version Control" = "版本控制";
 "Author Identity" = "作者身份";
 "Authentication" = "凭据";
@@ -396,7 +396,7 @@
 "Port" = "端口";
 "Username" = "用户名";
 "Password" = "密码";
-"Use key authentication" = "使用密钥认证";
+"Use Key Authentication" = "使用密钥认证";
 "Remember address" = "记住地址";
 "Connect" = "连接";
 "Disconnect" = "断开";

@@ -270,8 +270,8 @@
   - 오타 수정
 ";
 
-"Send us an email" = "개발자에게 이메일 보내기";
-"Open an issue on GitHub" = "깃헙(GitHub)에 이슈 생성하기";
+"Send us an Email" = "개발자에게 이메일 보내기";
+"Open an Issue on GitHub" = "깃헙(GitHub)에 이슈 생성하기";
 "Clear console" = "콘솔 비우기";
 "Kill Process" = "프로세스 종료";
 "Sync" = "동기화";
@@ -342,8 +342,8 @@
 "Share" = "공유";
 "Rename" = "이름 바꾸기";
 "Assign as workspace folder" = "작업 공간(Workspace) 폴더로 지정하기";
-"Select for compare" = "비교를 위해 선택하기";
-"Compare with selected" = "선택 항목과 비교하기";
+"Select For Compare" = "비교를 위해 선택하기";
+"Compare With Selected" = "선택 항목과 비교하기";
 "Version Control" = "형상 관리";
 "Author Identity" = "작성자 정보";
 "Authentication" = "자격 증명";
@@ -405,7 +405,7 @@
 "Port" = "포트(Port)";
 "Username" = "사용자 이름";
 "Password" = "암호";
-"Use key authentication" = "키 인증 사용";
+"Use Key Authentication" = "키 인증 사용";
 "Remember address" = "주소 기억하기";
 "Connect" = "연결하기";
 "Disconnect" = "연결 끊기";

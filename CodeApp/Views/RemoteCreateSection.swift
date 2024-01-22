@@ -245,7 +245,7 @@ struct RemoteCreateSection: View {
             }
 
             if serverType == .sftp {
-                Toggle("Use key authentication", isOn: $usesPrivateKey)
+                Toggle("Use Key Authentication", isOn: $usesPrivateKey)
             }
 
             Toggle("Remember address", isOn: $saveAddress)

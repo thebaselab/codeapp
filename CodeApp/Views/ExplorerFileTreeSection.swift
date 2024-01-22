@@ -194,14 +194,14 @@ struct ExplorerFileTree: View {
         }
 
         let ACTION_SELECT_FOR_COMPARE = UIAction(
-            title: NSLocalizedString("Select for compare", comment: ""),
+            title: NSLocalizedString("Select For Compare", comment: ""),
             image: UIImage(systemName: "square.split.2x1")!
         ) { _ in
             App.selectedURLForCompare = item._url
         }
 
         let ACTION_COMPARE_WITH_SELECTED = UIAction(
-            title: NSLocalizedString("Compare with selected", comment: ""),
+            title: NSLocalizedString("Compare With Selected", comment: ""),
             image: UIImage(systemName: "square.split.2x1")!
         ) { _ in
             guard let url = item._url else { return }
