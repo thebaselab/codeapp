@@ -50,6 +50,6 @@ struct SearchBar: View {
 
         }.padding(7)
             .background(Color.init(id: "input.background"))
-            .cornerRadius(cornerRadius ?? 15)
+            .cornerRadius(cornerRadius ?? 10)
     }
 }

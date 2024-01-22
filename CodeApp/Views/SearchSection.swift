@@ -24,7 +24,7 @@ struct SearchSection: View {
                 text: $App.textSearchManager.searchTerm,
                 searchAction: onSearch,
                 clearAction: onClearSearchResults,
-                placeholder: NSLocalizedString("Search", comment: ""), cornerRadius: 15
+                placeholder: NSLocalizedString("Search", comment: ""), cornerRadius: 10
             )
             .focused($searchBarFocused)
         }.onAppear {

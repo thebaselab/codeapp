@@ -36,7 +36,7 @@ struct RemotePortForwardCreateSection: View {
             .disableAutocorrection(true)
             .padding(7)
             .background(Color.init(id: "input.background"))
-            .cornerRadius(15)
+            .cornerRadius(10)
 
             DescriptionText("remote.port_forward.address_example")
 

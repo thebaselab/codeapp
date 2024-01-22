@@ -130,7 +130,7 @@ private struct MainSection: View {
             .frame(minHeight: 25)
             .padding(.horizontal, 4)
             .background(Color.init(id: "input.background"))
-            .cornerRadius(15)
+            .cornerRadius(10)
 
             HStack(spacing: 10) {
                 if App.indexedResources.isEmpty {

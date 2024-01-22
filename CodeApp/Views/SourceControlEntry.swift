@@ -30,10 +30,6 @@ struct SourceControlEntry: View {
         }) {
             ZStack {
 
-                if itemUrl == (App.activeEditor as? EditorInstanceWithURL)?.url {
-                    Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0)
-                }
-
                 HStack {
                     FileIcon(
                         url: itemUrl.absoluteString, iconSize: 14
@@ -58,7 +54,12 @@ struct SourceControlEntry: View {
 
                 }.padding(5)
             }
-        }.buttonStyle(NoAnim())
+        }
+        .buttonStyle(NoAnim())
+        .if(itemUrl == (App.activeEditor as? EditorInstanceWithURL)?.url) {
+            $0.listRowBackground(
+                Color.init(id: "list.inactiveSelectionBackground").cornerRadius(10.0))
+        }
     }
 }
 

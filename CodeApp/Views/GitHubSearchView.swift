@@ -17,7 +17,7 @@ struct GitHubSearchView: View {
         SearchBar(
             text: $App.searchManager.searchTerm,
             searchAction: { App.searchManager.search() }, placeholder: "GitHub",
-            cornerRadius: 15)
+            cornerRadius: 10)
 
         ForEach(App.searchManager.searchResultItems, id: \.html_url) { item in
             GitHubSearchResultCell(item: item, onClone: onClone)

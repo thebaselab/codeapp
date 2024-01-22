@@ -42,7 +42,8 @@ struct SearchResultsSection: View {
                                             res.line.trimmingCharacters(
                                                 in: .whitespacesAndNewlines),
                                             matching: App.textSearchManager.searchTerm,
-                                            accentColor: Color.init(id: "statusBar.background")
+                                            accentColor: Color.init(
+                                                id: "list.highlightForeground")
                                         )
                                         .foregroundColor(Color.init("T1"))
                                         .font(.custom("Menlo Regular", size: 14))

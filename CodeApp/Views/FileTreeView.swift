@@ -189,6 +189,14 @@ class TableViewDelegate: NSObject, UITableViewDataSource {
         return cell
     }
 
+    func tableView(
+        _ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int
+    ) {
+        if let header = view as? UITableViewHeaderFooterView {
+            header.textLabel?.textColor = UIColor(Color(id: "sideBarSectionHeader.foreground"))
+        }
+    }
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let fileTreeDataSource, let treeView else { return nil }
         return fileTreeDataSource.headerTitle(treeView)
@@ -509,7 +517,8 @@ class FileTreeView: UIView {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        tableView.scrollIndicatorInsets = .init(top: 0, left: 0, bottom: 0, right: -7)
+        tableView.contentInset = .init(top: -20, left: 0, bottom: 0, right: 0)
+        tableView.scrollIndicatorInsets = .init(top: 0, left: 0, bottom: 0, right: -10)
         tableView.clipsToBounds = false
 
         buttonView.showsMenuAsPrimaryAction = true

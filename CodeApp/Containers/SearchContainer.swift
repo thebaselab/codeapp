@@ -49,8 +49,9 @@ struct SearchContainer: View {
                 }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
+                .padding(.horizontal, 10)
             }
-            .listStyle(SidebarListStyle())
+            .listStyle(.grouped)
         }
     }
 }

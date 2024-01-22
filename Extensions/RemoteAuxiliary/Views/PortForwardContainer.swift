@@ -87,6 +87,7 @@ struct PortForwardContainer: View {
             .onAppear {
                 loadPortForwardSetups()
             }
-        }.listStyle(SidebarListStyle())
+            .padding(.horizontal, 10)
+        }.listStyle(.grouped)
     }
 }

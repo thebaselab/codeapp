@@ -54,7 +54,7 @@ struct SourceControlCloneSection: View {
 
             }.padding(7)
                 .background(Color.init(id: "input.background"))
-                .cornerRadius(15)
+                .cornerRadius(10)
 
             DescriptionText("Example: https://github.com/thebaselab/codeapp.git")
 

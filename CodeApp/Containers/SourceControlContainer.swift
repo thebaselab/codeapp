@@ -464,10 +464,9 @@ struct SourceControlContainer: View {
                 }
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
-            }
+            }.padding(.horizontal, 10)
         }
-        .environment(\.defaultMinListRowHeight, 10)
-        .listStyle(SidebarListStyle())
+        .listStyle(.grouped)
         .sheet(
             isPresented: $showsPrompt,
             content: {

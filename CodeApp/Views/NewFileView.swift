@@ -202,7 +202,7 @@ struct NewFileView: View {
                                         }
                                         .padding()
                                         .background(Color.init("B3_A"))
-                                        .cornerRadius(12)
+                                        .cornerRadius(10)
                                 }
                             }
                         }

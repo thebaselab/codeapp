@@ -223,7 +223,7 @@ struct ExplorerContainer: View {
 
             }.padding(.horizontal, 15).padding(.vertical, 8).background(
                 Color.init(id: "activityBar.background")
-            ).cornerRadius(12).padding(.bottom, 15).padding(.horizontal, 8)
+            ).cornerRadius(10).padding(.bottom, 15).padding(.horizontal, 8)
 
         }
     }
