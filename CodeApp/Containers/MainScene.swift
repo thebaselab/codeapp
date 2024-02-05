@@ -222,7 +222,7 @@ private struct MainView: View {
                     }
                     StatusBar()
                         .environmentObject(extensionManager.statusBarManager)
-                        .frame(width: geometry.size.width, height: 24.5)
+                        .frame(width: geometry.size.width, height: 20)
                 }
 
                 HStack {
