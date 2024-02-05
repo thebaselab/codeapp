@@ -43,6 +43,5 @@ struct StatusBar: View {
         .font(.system(size: 12))
         .foregroundColor(Color.init(id: "statusBar.foreground"))
         .background(Color.init(id: "statusBar.background"))
-        .frame(height: 20)
     }
 }

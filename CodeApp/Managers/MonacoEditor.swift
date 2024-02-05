@@ -592,7 +592,6 @@ struct MonacoEditor: UIViewRepresentable {
 
     func makeUIView(context: Context) -> WKWebView {
         monacoWebView.isOpaque = false
-        monacoWebView.scrollView.bounces = false
         monacoWebView.customUserAgent =
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
