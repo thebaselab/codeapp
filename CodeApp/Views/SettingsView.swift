@@ -144,7 +144,9 @@ struct SettingsView: View {
                             destination: SettingsFontPicker(
                                 showAllFonts: showAllFonts,
                                 onFontPick: { descriptor in
-                                    fontFamily = descriptor.object(forKey: .family) as! String
+                                    CTFontManagerRequestFonts([descriptor] as CFArray) { _ in
+                                        fontFamily = descriptor.object(forKey: .family) as! String
+                                    }
                                 }
                             ).toolbar {
                                 Button("settings.editor.font.reset") {

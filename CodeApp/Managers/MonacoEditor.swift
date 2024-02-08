@@ -86,12 +86,30 @@ struct MonacoEditor: UIViewRepresentable {
         self.executeJavascript(command: "editor.updateOptions({\(options)})")
     }
 
+    private func applyFont(fontFamily: String) {
+        let js = """
+            var styles = `
+                @font-face {
+                font-family: "\(fontFamily)";
+                src: local("\(fontFamily)"),
+                  url("fonts://\(fontFamily).ttf") format("truetype");
+              }
+            `
+            var styleSheet = document.createElement("style")
+            styleSheet.innerHTML = styles
+            document.head.appendChild(styleSheet)
+            """
+        self.executeJavascript(command: js)
+        executeJavascript(
+            command: "editor.updateOptions({fontFamily: \"\(fontFamily)\"})")
+
+    }
+
     func applyUserOptions() {
         applyOptions(options: "automaticLayout: true, lineNumbersMinChars: 5")
 
         executeJavascript(command: "editor.updateOptions({fontSize: \(String(fontSize))})")
-        executeJavascript(
-            command: "editor.updateOptions({fontFamily: \"\(fontFamily)\"})")
+        applyFont(fontFamily: fontFamily)
         executeJavascript(
             command: "editor.updateOptions({fontLigatures: \(String(fontLigatures))})")
 

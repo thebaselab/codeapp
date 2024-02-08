@@ -9,14 +9,41 @@ import WebKit
 
 private var ToolbarHandle: UInt8 = 0
 
-class WebViewBase: KBWebViewBase {
+class SchemeHandler: NSObject, WKURLSchemeHandler {
+    func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
+        let url = urlSchemeTask.request.url!
+        let mimeType = "text/\(url.pathExtension)"
+        let response = URLResponse(
+            url: url, mimeType: mimeType, expectedContentLength: -1, textEncodingName: nil)
+        urlSchemeTask.didReceive(response)
 
+        let fontName = url.absoluteString.components(separatedBy: "://").last?.components(
+            separatedBy: "."
+        ).first
+
+        if let fontName,
+            let font = UIFont(name: fontName, size: 12),
+            let ttfData = UIFont.data(from: font)
+        {
+            urlSchemeTask.didReceive(ttfData)
+        }
+        urlSchemeTask.didFinish()
+    }
+
+    func webView(_ webView: WKWebView, stop urlSchemeTask: WKURLSchemeTask) {
+
+    }
+}
+
+class WebViewBase: KBWebViewBase {
     var isMessageHandlerAdded = false
+    private var schemeHandler = SchemeHandler()
 
     init() {
         let config = WKWebViewConfiguration()
         config.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         config.preferences.setValue(true, forKey: "shouldAllowUserInstalledFonts")
+        config.setURLSchemeHandler(schemeHandler, forURLScheme: "fonts")
         super.init(frame: .zero, configuration: config)
         if #available(iOS 16.4, *) {
             self.isInspectable = true

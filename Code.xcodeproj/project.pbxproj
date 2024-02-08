@@ -636,6 +636,8 @@
 		94B7C4D125F5522500F1EF4E /* text.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AC25F5518700F1EF4E /* text.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B7C4D225F5522500F1EF4E /* shell.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AD25F5518700F1EF4E /* shell.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94B99D9D27D4AA57005B5E3A /* SwiftGit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 94B99D9C27D4AA57005B5E3A /* SwiftGit2 */; };
+		94BEF1312B74AEBD003BBF5D /* UIFont+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BEF1302B74AEBD003BBF5D /* UIFont+YYAdd.m */; };
+		94BEF1322B74AEBD003BBF5D /* UIFont+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BEF1302B74AEBD003BBF5D /* UIFont+YYAdd.m */; };
 		94C893B92793D01500DFBF29 /* curl_ios.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; };
 		94C893BA2793D01500DFBF29 /* curl_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4A725F5518700F1EF4E /* curl_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94C893BC2793D17C00DFBF29 /* libssh2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94C893BB2793D17C00DFBF29 /* libssh2.xcframework */; };
@@ -1777,6 +1779,8 @@
 		94B7C4AD25F5518700F1EF4E /* shell.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = shell.xcframework; sourceTree = "<group>"; };
 		94B7C4B025F5518700F1EF4E /* ios_system.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ios_system.xcframework; sourceTree = "<group>"; };
 		94B99D9B27D4AA3E005B5E3A /* SwiftGit2 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftGit2; sourceTree = "<group>"; };
+		94BEF1302B74AEBD003BBF5D /* UIFont+YYAdd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIFont+YYAdd.m"; sourceTree = "<group>"; };
+		94BEF1332B74AF96003BBF5D /* UIFont+YYAdd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIFont+YYAdd.h"; sourceTree = "<group>"; };
 		94C893BB2793D17C00DFBF29 /* libssh2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libssh2.xcframework; sourceTree = "<group>"; };
 		94C893E1279D09D400DFBF29 /* SettingsKeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKeyboardShortcuts.swift; sourceTree = "<group>"; };
 		94C893E5279D0C3000DFBF29 /* shortcutsMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = shortcutsMapping.swift; sourceTree = "<group>"; };
@@ -2170,6 +2174,8 @@
 				942E31F728086FE800233441 /* KeyChainAccessor.swift */,
 				94FF336D284348D0003DE5DD /* KBWebViewBase.h */,
 				94FF3370284348F1003DE5DD /* KBWebViewBase.m */,
+				94BEF1332B74AF96003BBF5D /* UIFont+YYAdd.h */,
+				94BEF1302B74AEBD003BBF5D /* UIFont+YYAdd.m */,
 				94FF336E284348F1003DE5DD /* Code-Bridging-Header.h */,
 				94FF336F284348F1003DE5DD /* CodeUI-Bridging-Header.h */,
 				9FC03E68291F303900DECD1B /* Utilities.swift */,
@@ -3304,6 +3310,7 @@
 				94196965280316C7008AAEB2 /* String+toCString.swift in Sources */,
 				9F3C2DF8291CCE9A00BFF14C /* Remote.swift in Sources */,
 				94795C4929314A0A0057C12F /* CompactSidebar.swift in Sources */,
+				94BEF1322B74AEBD003BBF5D /* UIFont+YYAdd.m in Sources */,
 				94196967280316C7008AAEB2 /* Executor.swift in Sources */,
 				94196968280316C7008AAEB2 /* RemoteAuthView.swift in Sources */,
 				94196969280316C7008AAEB2 /* CodeApp.swift in Sources */,
@@ -3480,6 +3487,7 @@
 				949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */,
 				9F3C2DF7291CCE9A00BFF14C /* Remote.swift in Sources */,
 				94795C4829314A0A0057C12F /* CompactSidebar.swift in Sources */,
+				94BEF1312B74AEBD003BBF5D /* UIFont+YYAdd.m in Sources */,
 				948D12222583F2A5008F877A /* Executor.swift in Sources */,
 				9437155B26C3C745000376FB /* RemoteAuthView.swift in Sources */,
 				944EEBF42563C381009D77FE /* CodeApp.swift in Sources */,
