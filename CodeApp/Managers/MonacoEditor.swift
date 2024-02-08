@@ -86,13 +86,19 @@ struct MonacoEditor: UIViewRepresentable {
         self.executeJavascript(command: "editor.updateOptions({\(options)})")
     }
 
-    private func applyFont(fontFamily: String) {
+    func applyFont(fontFamily: String) {
+        guard
+            let percentEncoded = fontFamily.addingPercentEncoding(
+                withAllowedCharacters: .urlPathAllowed)
+        else {
+            return
+        }
         let js = """
             var styles = `
                 @font-face {
                 font-family: "\(fontFamily)";
                 src: local("\(fontFamily)"),
-                  url("fonts://\(fontFamily).ttf") format("truetype");
+                  url("fonts://\(percentEncoded).ttf") format("truetype");
               }
             `
             var styleSheet = document.createElement("style")

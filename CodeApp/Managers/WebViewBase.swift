@@ -19,7 +19,7 @@ class SchemeHandler: NSObject, WKURLSchemeHandler {
 
         let fontName = url.absoluteString.components(separatedBy: "://").last?.components(
             separatedBy: "."
-        ).first
+        ).first?.removingPercentEncoding
 
         if let fontName,
             let font = UIFont(name: fontName, size: 12),
