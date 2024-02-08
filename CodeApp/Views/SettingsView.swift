@@ -164,8 +164,7 @@ struct SettingsView: View {
                             }
                         )
                         .onChange(of: fontFamily) { value in
-                            App.monacoInstance.executeJavascript(
-                                command: "editor.updateOptions({fontFamily: \"\(value)\"})")
+                            App.monacoInstance.applyUserOptions()
                         }
 
                         Toggle("settings.editor.font.show_all_fonts", isOn: $showAllFonts)
