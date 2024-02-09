@@ -55,7 +55,7 @@ platform :ios do
     
     increment_build_number(
       xcodeproj: "Code.xcodeproj",
-      build_number: latest_testflight_build_number + 2
+      build_number: latest_testflight_build_number + 1
     )
 
     Dir.chdir("..") do
