@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.6.0 (2024 年 1 月)**
+##### **v1.7.0 (2024 年 2 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,13 @@
 
 "Changelog.message" =
 "
+### 1.7.0（2024 年 2 月）
+- Vim模式
+- 在资源管理器中拖放文件和文件夹
+- 能够使用用户安装的字体
+- 删除 stdc++.h 中不支持的标头
+- 改进了编辑器滚动
+
 ### 1.6.0（2024 年 1 月）
 - 本地编程语言增强
    - 本地 Java (OpenJDK 8)

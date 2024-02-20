@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.6.0 (2024년 1월)**
+##### **v1.7.0 (2024년 2월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,13 @@
 
 "Changelog.message" =
 "
+### 1.7.0(2024년 2월)
+- 빔 모드
+- 탐색기에서 파일 및 폴더 끌어서 놓기
+- 사용자가 설치한 글꼴을 사용하는 기능
+- stdc++.h에서 지원되지 않는 헤더를 제거합니다.
+- 편집기 스크롤 개선
+
 ### 1.6.0(2024년 1월)
 - 로컬 프로그래밍 언어 향상
    - 로컬 자바(OpenJDK 8)
