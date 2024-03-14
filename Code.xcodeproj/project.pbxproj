@@ -464,6 +464,8 @@
 		942E320528087FA400233441 /* SearchResultsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E320328087FA400233441 /* SearchResultsSection.swift */; };
 		942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E32062808805F00233441 /* SearchUnsupportedSection.swift */; };
 		942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E32062808805F00233441 /* SearchUnsupportedSection.swift */; };
+		9434C3EF2BA2CCBB00EB1CF6 /* WASMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */; };
+		9434C3F02BA2CCBB00EB1CF6 /* WASMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */; };
 		94369AFF25E3B933008419A0 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94369AFE25E3B933008419A0 /* Media.xcassets */; };
 		94369B0125E3B933008419A0 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94369B0025E3B933008419A0 /* ActionRequestHandler.swift */; };
 		94369B0725E3B933008419A0 /* extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1631,6 +1633,7 @@
 		942E320328087FA400233441 /* SearchResultsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsSection.swift; sourceTree = "<group>"; };
 		942E32062808805F00233441 /* SearchUnsupportedSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUnsupportedSection.swift; sourceTree = "<group>"; };
 		942E321128093CA600233441 /* NMSSH.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NMSSH.xcframework; path = Resources/NMSSH.xcframework; sourceTree = "<group>"; };
+		9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WASMService.swift; sourceTree = "<group>"; };
 		94369AFC25E3B933008419A0 /* extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = extension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		94369AFE25E3B933008419A0 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		94369B0025E3B933008419A0 /* ActionRequestHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionRequestHandler.swift; sourceTree = "<group>"; };
@@ -2886,6 +2889,7 @@
 				9FA122582A8B17E400E7B417 /* StatusBarManager.swift */,
 				9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */,
 				9F062FE52B58D40D006210AA /* FileTreeViewController.swift */,
+				9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -3293,6 +3297,7 @@
 				942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				94A347BE293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */,
 				9F3C2DC92918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
+				9434C3F02BA2CCBB00EB1CF6 /* WASMService.swift in Sources */,
 				945D4F592B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */,
 				9FC03E6A291F303900DECD1B /* Utilities.swift in Sources */,
 				9419695D280316C7008AAEB2 /* TopBar.swift in Sources */,
@@ -3470,6 +3475,7 @@
 				942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
 				94A347BD293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */,
 				9F3C2DC82918A31000BFF14C /* hiddenScrollableContentBackground.swift in Sources */,
+				9434C3EF2BA2CCBB00EB1CF6 /* WASMService.swift in Sources */,
 				945D4F582B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */,
 				9FC03E69291F303900DECD1B /* Utilities.swift in Sources */,
 				94D721DF268DA2B8007A63BD /* TopBar.swift in Sources */,

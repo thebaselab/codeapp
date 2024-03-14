@@ -85,7 +85,10 @@ class Executor {
             CFNotificationCenterPostNotification(
                 notificationCenter, notificationName, nil, nil, false)
         }
-
+        if javascriptRunning {
+            javascriptRunning = false
+            return
+        }
         ios_switchSession(persistentIdentifier.toCString())
         ios_kill()
     }

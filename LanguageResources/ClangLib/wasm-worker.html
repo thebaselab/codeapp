@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code - WebAssembly Execution</title>
+</head>
+<body>
+    <script>
+        var messageHandler = (e) => {
+            const action = e.data[0];
+
+            switch (action) {
+                case "prompt":
+                    const int32 = new Int32Array(e.data[2]);;
+                    const str = prompt(e.data[1]);
+                    for (var i=0, strLen=str.length; i<strLen; i++) {
+                        Atomics.store(int32, i, str.charCodeAt(i));
+                    }
+                    Atomics.notify(int32, 0, 1);
+                    break;
+                case "print":
+                    window.webkit.messageHandlers.aShell.postMessage('print:' + e.data[1]);
+                    break;
+                case "println":
+                    window.webkit.messageHandlers.aShell.postMessage('print:' + e.data[1] + "\n");
+                    break;
+                case "print_error":
+                    window.webkit.messageHandlers.aShell.postMessage('print_error:' + e.data[1]);
+                    break;
+                default:
+                    console.error(`${action} not hanlded`);
+            }
+        };
+
+        async function executeWebAssembly(bufferString, args, cwd, tty, env) {
+            const worker = new Worker("worker.js");
+            worker.onmessage = messageHandler;
+            const sab = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 8192);
+            const int32 = new Int32Array(sab);
+            worker.postMessage([bufferString, args, cwd, tty, env, sab]);
+            await Atomics.waitAsync(int32, 0, 0, 120000).value;
+            worker.terminate();
+            return int32[0];
+        }
+    </script>
+</body>
+</html>

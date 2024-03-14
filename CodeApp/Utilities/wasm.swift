@@ -518,6 +518,9 @@ class WasmWebView: WKWebView {
         self.navigationDelegate = delegate
         self.uiDelegate = delegate
         self.isAccessibilityElement = false
+        if #available(iOS 16.4, *) {
+            self.isInspectable = true
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -582,7 +585,8 @@ private func executeWebAssembly(arguments: [String]?) -> Int32 {
     environmentAsJSDictionary += "}"
     let base64string = buffer.base64EncodedString()
     let javascript =
-        "executeWebAssembly(\"\(base64string)\", " + argumentString + ", \"" + currentDirectory
+        "return await executeWebAssembly(\"\(base64string)\", " + argumentString + ", \""
+        + currentDirectory
         + "\", \(ios_isatty(STDIN_FILENO)), " + environmentAsJSDictionary + ")"
     if javascriptRunning {
         fputs(
@@ -596,7 +600,10 @@ private func executeWebAssembly(arguments: [String]?) -> Int32 {
     thread_stdout_copy = thread_stdout
     thread_stderr_copy = thread_stderr
     DispatchQueue.main.async {
-        wasmWebView.evaluateJavaScript(javascript) { (result, error) in
+        wasmWebView.callAsyncJavaScript(javascript, arguments: [:], in: nil, in: .page) {
+            result in
+            let result = try? result.get()
+
             if result != nil {
                 // executeWebAssembly sends back stdout and stderr as two Strings:
                 if let array = result! as? NSMutableArray {

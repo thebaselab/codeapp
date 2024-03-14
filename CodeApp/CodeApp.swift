@@ -14,6 +14,7 @@ import ios_system
 @main
 struct CodeApp: App {
     @StateObject var themeManager = ThemeManager()
+    let wasmService = WASMService()
 
     func versionNumberIncreased() -> Bool {
         if let lastReadVersion = UserDefaults.standard.string(forKey: "changelog.lastread") {
@@ -296,9 +297,9 @@ struct CodeApp: App {
         }
 
         DispatchQueue.main.async {
-            wasmWebView.loadFileURL(
-                Resources.wasmHTML,
-                allowingReadAccessTo: Resources.wasmHTML)
+            let request = URLRequest(
+                url: URL(string: "http://localhost:\(String(WASMService.PORT))/wasm-worker.html")!)
+            wasmWebView.load(request)
         }
         initializeEnvironment()
         Repository.initialize_libgit2()
