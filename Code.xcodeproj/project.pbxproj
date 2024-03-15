@@ -466,6 +466,8 @@
 		942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942E32062808805F00233441 /* SearchUnsupportedSection.swift */; };
 		9434C3EF2BA2CCBB00EB1CF6 /* WASMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */; };
 		9434C3F02BA2CCBB00EB1CF6 /* WASMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */; };
+		9434C3F22BA4BC4800EB1CF6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9434C3F12BA345A700EB1CF6 /* PrivacyInfo.xcprivacy */; };
+		9434C3F32BA4BC4800EB1CF6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9434C3F12BA345A700EB1CF6 /* PrivacyInfo.xcprivacy */; };
 		94369AFF25E3B933008419A0 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94369AFE25E3B933008419A0 /* Media.xcassets */; };
 		94369B0125E3B933008419A0 /* ActionRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94369B0025E3B933008419A0 /* ActionRequestHandler.swift */; };
 		94369B0725E3B933008419A0 /* extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -3138,6 +3140,7 @@
 				9419699D280316C7008AAEB2 /* monaco-textmate.bundle in Resources */,
 				9419699E280316C7008AAEB2 /* InfoPlist.strings in Resources */,
 				9419699F280316C7008AAEB2 /* cacert.pem in Resources */,
+				9434C3F32BA4BC4800EB1CF6 /* PrivacyInfo.xcprivacy in Resources */,
 				941969A0280316C7008AAEB2 /* commandDictionary.plist in Resources */,
 				94FF338A2843744C003DE5DD /* FiraCode-Regular.ttf in Resources */,
 				941969A1280316C7008AAEB2 /* ClangLib in Resources */,
@@ -3173,6 +3176,7 @@
 				94B3D65925F776AA00C4F2B1 /* cacert.pem in Resources */,
 				948D12012583F20D008F877A /* commandDictionary.plist in Resources */,
 				94CF58DF265E51B100CB6A4B /* ClangLib in Resources */,
+				9434C3F22BA4BC4800EB1CF6 /* PrivacyInfo.xcprivacy in Resources */,
 				941CF5FB2641CBDA001199C0 /* Settings.bundle in Resources */,
 				948D12002583F20D008F877A /* extraCommandsDictionary.plist in Resources */,
 				94369B4A25EAB262008419A0 /* npm.bundle in Resources */,
