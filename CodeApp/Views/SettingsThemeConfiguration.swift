@@ -12,19 +12,6 @@ struct SettingsThemeConfiguration: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var themeManager: ThemeManager
 
-    static let defaultLightPlusTheme = Theme(
-        name: "Light+", url: URL(string: "https://thebaselab.com")!, isDark: false,
-        preview: (
-            .init(hexString: "#FFFFFF"), .init(hexString: "#2C2C2C"), .init(hexString: "#0D7ACC"),
-            .init(hexString: "#F3F3F3")
-        ))
-    static let defaultDarkPlusTheme = Theme(
-        name: "Dark+", url: URL(string: "https://thebaselab.com")!, isDark: true,
-        preview: (
-            .init(hexString: "#1E1E1E"), .init(hexString: "#333333"), .init(hexString: "#0D7ACC"),
-            .init(hexString: "#252526")
-        ))
-
     var themeSection: some View {
         List {
             Section("Dark Themes") {
@@ -32,10 +19,12 @@ struct SettingsThemeConfiguration: View {
                     HStack(spacing: 20) {
 
                         ForEach(
-                            [SettingsThemeConfiguration.defaultDarkPlusTheme]
-                                + themeManager.themes.sorted { $0.name < $1.name }.filter {
-                                    $0.isDark
-                                },
+                            themeManager.themes
+                                .filter { $0.name == "Dark+" }
+                                + themeManager.themes
+                                .filter { $0.isDark }
+                                .filter { $0.name != "Dark+" }
+                                .sorted { $0.name < $1.name },
                             id: \.id
                         ) { item in
                             ThemePreview(item: item)
@@ -51,10 +40,12 @@ struct SettingsThemeConfiguration: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
                         ForEach(
-                            [SettingsThemeConfiguration.defaultLightPlusTheme]
-                                + themeManager.themes.sorted { $0.name < $1.name }.filter {
-                                    !$0.isDark
-                                },
+                            themeManager.themes
+                                .filter { $0.name == "Light+" }
+                                + themeManager.themes
+                                .filter { !$0.isDark }
+                                .filter { $0.name != "Light+" }
+                                .sorted { $0.name < $1.name },
                             id: \.id
                         ) { item in
                             ThemePreview(item: item)
