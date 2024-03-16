@@ -24,6 +24,9 @@ class ThemeManager: ObservableObject {
     var themes: [Theme] = []
     @Published var currentTheme: Theme? = nil
 
+    static var lightTheme: Theme? = nil
+    static var darkTheme: Theme? = nil
+
     init() {
         loadBuiltInThemes()
     }
@@ -53,10 +56,12 @@ class ThemeManager: ObservableObject {
                 themes.append(theme)
 
                 if selectedTheme == name && type == "dark" {
+                    ThemeManager.darkTheme = theme
                     globalDarkTheme = jsonArray
                     currentTheme = theme
                 }
                 if selectedLightTheme == name && type != "dark" {
+                    ThemeManager.lightTheme = theme
                     globalLightTheme = jsonArray
                     currentTheme = theme
                 }

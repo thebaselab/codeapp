@@ -110,6 +110,9 @@ class MainApp: ObservableObject {
             } else {
                 workSpaceStorage.cellState.highlightedCells.removeAll()
             }
+            Task {
+                await updateActiveEditor()
+            }
         }
     }
     var activeTextEditor: TextEditorInstance? {
@@ -123,7 +126,7 @@ class MainApp: ObservableObject {
     @Published var workSpaceStorage: WorkSpaceStorage
 
     // Editor States
-    @Published var problems: [URL: [MonacoEditor.Coordinator.marker]] = [:]
+    @Published var problems: [URL: [MonacoEditorMarker]] = [:]
 
     // Git UI states
     @Published var gitTracks: [URL: Diff.Status] = [:]
@@ -135,10 +138,11 @@ class MainApp: ObservableObject {
     @Published var aheadBehind: (Int, Int)? = nil
 
     var urlQueue: [URL] = []
-    var editorShortcuts: [MonacoEditor.Coordinator.action] = []
+    var editorShortcuts: [MonacoEditorAction] = []
+    var monacoStateToRestore: String? = nil
 
     let terminalInstance: TerminalInstance
-    let monacoInstance = MonacoEditor()
+    var monacoInstance: EditorImplementation! = nil
     var editorTypesMonitor: FolderMonitor? = nil
     let deviceSupportsBiometricAuth: Bool = biometricAuthSupported()
     let sceneIdentifier = UUID()
@@ -154,6 +158,11 @@ class MainApp: ObservableObject {
     @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
     @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
     @AppStorage("explorer.confirmBeforeDelete") var confirmBeforeDelete = false
+    @AppStorage("editorOptions") var editorOptions: CodableWrapper<EditorOptions> = .init(
+        value: EditorOptions())
+    @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
+    @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
+    @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
 
     init() {
 
@@ -162,6 +171,10 @@ class MainApp: ObservableObject {
         self.workSpaceStorage = WorkSpaceStorage(url: rootDir)
 
         terminalInstance = TerminalInstance(root: rootDir)
+        monacoInstance = MonacoImplementation(
+            options: editorOptions.value,
+            theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
+        monacoInstance.delegate = self
 
         terminalInstance.openEditor = { [weak self] url in
             if url.isDirectory {
@@ -212,20 +225,35 @@ class MainApp: ObservableObject {
             }
         }
 
-        let monacoPath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")
-
-        DispatchQueue.main.async {
-            self.monacoInstance.monacoWebView.loadFileURL(
-                URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"),
-                allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
-        }
-
         updateGitRepositoryStatus()
 
         Task {
             await MainActor.run {
                 setUpActivityBarItems()
                 stateManager.isSystemExtensionsInitialized = true
+            }
+        }
+    }
+
+    private func updateActiveEditor() async {
+        guard let activeTextEditor else {
+            Task {
+                await monacoInstance.setModelToEmpty()
+            }
+            return
+        }
+        if let diffEditor = activeTextEditor as? DiffTextEditorInstnace {
+            let diffURL = URL(string: "git://" + diffEditor.url.path)!
+            await monacoInstance.switchToDiffMode(
+                originalContent: diffEditor.compareWith, modifiedContent: diffEditor.content,
+                originalUrl: diffURL.absoluteString, modifiedUrl: diffEditor.url.absoluteString)
+        } else {
+            Task {
+                if await monacoInstance.isEditorInDiffMode() {
+                    await monacoInstance.switchToNormalMode()
+                }
+                await monacoInstance.createNewModel(
+                    url: activeTextEditor.url.absoluteString, value: activeTextEditor.content)
             }
         }
     }
@@ -384,11 +412,9 @@ class MainApp: ObservableObject {
             return
         }
 
-        monacoInstance.monacoWebView.evaluateJavaScript("JSON.stringify(editor.saveViewState())") {
-            res, err in
-            if let res = res as? String {
-                UserDefaults.standard.setValue(res, forKey: "uistate.activeEditor.state")
-            }
+        Task {
+            let viewState = await monacoInstance.getViewState()
+            UserDefaults.standard.setValue(viewState, forKey: "uistate.activeEditor.state")
         }
     }
 
@@ -415,23 +441,19 @@ class MainApp: ObservableObject {
                 .contains($0.url.absoluteString)
         }
         for editor in editorsToRename {
-            await MainActor.run {
-                monacoInstance.renameModel(
-                    oldURL: editor.url.absoluteString, newURL: url.absoluteString)
-                editor.url = newURL
-                editor.isDeleted = false
-            }
+            await monacoInstance.renameModel(
+                oldURL: editor.url.absoluteString, updatedURL: url.absoluteString)
+            editor.url = newURL
+            editor.isDeleted = false
         }
     }
 
     @MainActor
-    func loadURLQueue() {
-        Task {
-            for url in urlQueue {
-                _ = try? await openFile(url: url, alwaysInNewTab: true)
-            }
-            urlQueue = []
+    func loadURLQueue() async {
+        for url in urlQueue {
+            _ = try? await openFile(url: url, alwaysInNewTab: true)
         }
+        urlQueue = []
     }
 
     func duplicateItem(at: URL) async throws {
@@ -573,8 +595,8 @@ class MainApp: ObservableObject {
                     activeTextEditor.encoding = encoding
                     activeTextEditor.content = string
                     Task {
-                        try await self.monacoInstance.setValueForModel(
-                            url: activeTextEditor.url, value: string)
+                        await self.monacoInstance.setValueForModel(
+                            url: activeTextEditor.url.absoluteString, value: string)
                     }
                 } else {
                     self.notificationManager.showErrorMessage(
@@ -624,10 +646,6 @@ class MainApp: ObservableObject {
         }
 
         self.updateGitRepositoryStatus()
-
-        if self.editorSpellCheckEnabled && !self.editorSpellCheckOnContentChanged {
-            await monacoInstance.checkSpelling(text: editor.content, uri: editor.url.absoluteString)
-        }
     }
 
     func saveCurrentFile() {
@@ -815,25 +833,6 @@ class MainApp: ObservableObject {
         updateGitRepositoryStatus()
     }
 
-    // Injecting JavaScript / TypeScript types
-    func scanForTypes() {
-        guard
-            let typesURL = URL(string: workSpaceStorage.currentDirectory.url)?
-                .appendingPathComponent("node_modules")
-        else {
-            return
-        }
-        self.monacoInstance.injectTypes(url: typesURL)
-        editorTypesMonitor = FolderMonitor(url: typesURL)
-
-        if FileManager.default.fileExists(atPath: typesURL.path) {
-            editorTypesMonitor?.startMonitoring()
-            editorTypesMonitor?.folderDidChange = { _ in
-                self.monacoInstance.injectTypes(url: typesURL)
-            }
-        }
-    }
-
     func loadFolder(url: URL, resetEditors: Bool = true) {
         let url = url.standardizedFileURL
         if workSpaceStorage.remoteConnected && url.isFileURL {
@@ -841,7 +840,6 @@ class MainApp: ObservableObject {
         }
 
         ios_setDirectoryURL(url)
-        scanForTypes()
 
         self.workSpaceStorage.updateDirectory(
             name: url.lastPathComponent, url: url.absoluteString)
@@ -921,7 +919,8 @@ class MainApp: ObservableObject {
             fileDidChange: { [weak self] state, content in
                 if state == .modified, let content, let self {
                     Task {
-                        try await self.monacoInstance.setValueForModel(url: url, value: content)
+                        await self.monacoInstance.setValueForModel(
+                            url: url.absoluteString, value: content)
                     }
                 }
             }
@@ -944,7 +943,9 @@ class MainApp: ObservableObject {
         if editors.isEmpty {
             return
         }
-        monacoInstance.removeAllModel()
+        Task {
+            await monacoInstance.removeAllModels()
+        }
         editors.removeAll(keepingCapacity: false)
         activeEditor = nil
     }
@@ -1059,8 +1060,8 @@ class MainApp: ObservableObject {
                                 else {
                                     return
                                 }
-                                try await self.monacoInstance.setValueForModel(
-                                    url: textEditor.url, value: contentToRevertTo)
+                                await self.monacoInstance.setValueForModel(
+                                    url: textEditor.url.absoluteString, value: contentToRevertTo)
                             }
                             self.closeEditor(editor: textEditor, force: true)
                         }
@@ -1102,4 +1103,104 @@ class MainApp: ObservableObject {
         }
 
     }
+}
+
+extension MainApp: EditorImplementationDelegate {
+    func didEnterFocus() {
+        let notification = Notification(
+            name: Notification.Name("editor.focus"),
+            userInfo: ["sceneIdentifier": sceneIdentifier]
+        )
+        NotificationCenter.default.post(notification)
+    }
+
+    func didFinishInitialising() {
+        Task { @MainActor in
+            for textEditor in self.textEditors {
+                await monacoInstance.createNewModel(
+                    url: textEditor.url.absoluteString, value: textEditor.content)
+            }
+            if let activeURL = activeTextEditor?.url {
+                await monacoInstance.setModel(url: activeURL.absoluteString)
+            }
+
+            if stateRestorationEnabled, let monacoStateToRestore {
+                await monacoInstance._restoreEditorState(state: monacoStateToRestore)
+            }
+
+            editorShortcuts = await monacoInstance._getMonacoActions()
+
+            self.stateManager.isMonacoEditorInitialized = true
+            await loadURLQueue()
+        }
+    }
+
+    func editorImplementation(requestTextForDiffForModelURL url: String, ignoreCache: Bool)
+        async -> String?
+    {
+        guard
+            let sanitizedUri = URL(string: url)?.absoluteString
+                .removingPercentEncoding,
+            let gitServiceProvider = workSpaceStorage.gitServiceProvider
+        else {
+            return nil
+        }
+
+        // If the cache hasn't been invalidated, it means the editor also have the up-to-date model.
+        if gitServiceProvider.isCached(url: sanitizedUri) && !ignoreCache {
+            return nil
+        }
+        guard gitServiceProvider.hasRepository else { return nil }
+
+        return try? await gitServiceProvider.previous(path: sanitizedUri)
+    }
+
+    func editorImplementation(
+        contentDidChangeForModelURL url: String, content: String, versionID: Int
+    ) {
+        // TODO: This can be made more robust
+        activeTextEditor?.currentVersionId = versionID
+        activeTextEditor?.content = content
+    }
+
+    func editorImplementation(cursorPositionDidChange line: Int, column: Int) {
+        NotificationCenter.default.post(
+            name: Notification.Name("monaco.cursor.position.changed"), object: nil,
+            userInfo: [
+                "lineNumber": line, "column": column,
+                "sceneIdentifier": sceneIdentifier,
+            ])
+    }
+
+    func editorImplementation(onOpenURL url: String) {
+        if let url = URL(string: url) {
+            if url.scheme == "http" || url.scheme == "https" {
+                safariManager.showSafari(url: url)
+            }
+        }
+    }
+
+    func editorImplementation(markersDidUpdate markers: [MonacoEditorMarker]) {
+        problems = [:]
+        for marker in markers {
+            if let sanitisedURL = marker.resource.path.dropFirst().removingPercentEncoding,
+                let url = URL(string: sanitisedURL)
+            {
+                if problems[url] != nil {
+                    problems[url]!.append(marker)
+                } else {
+                    problems[url] = [marker]
+                }
+            }
+        }
+    }
+
+    func editorImplementation(vimModeEvent id: String, userInfo: [String: Any]) {
+        var userInfo = userInfo
+        userInfo["sceneIdentifier"] = sceneIdentifier
+        NotificationCenter.default.post(
+            name: Notification.Name(id), object: nil,
+            userInfo: userInfo)
+    }
+
 }

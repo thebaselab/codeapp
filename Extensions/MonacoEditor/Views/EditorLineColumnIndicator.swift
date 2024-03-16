@@ -16,10 +16,9 @@ struct EditorLineColumnIndicator: View {
     var body: some View {
         Text("Ln \(String(currentLine)), Col \(String(currentColumn))")
             .onTapGesture {
-                App.monacoInstance.executeJavascript(
-                    command:
-                        "editor.focus();editor.trigger('', 'editor.action.gotoLine')"
-                )
+                Task {
+                    await App.monacoInstance._toggleGoToLineWidget()
+                }
             }
             .onReceive(
                 NotificationCenter.default.publisher(

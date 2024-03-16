@@ -47,7 +47,7 @@ struct SettingsKeyboardShortcuts: View {
                             destination: ShortcutPreview(
                                 shortcutID: shortcut.id, existingShortcuts: $storedShortcuts,
                                 onUpdate: {
-                                    App.monacoInstance.applyCustomShortcuts()
+                                    Task { await App.monacoInstance._applyCustomShortcuts() }
                                 }
                             )
                             .background(Color(id: "sideBar.background")),

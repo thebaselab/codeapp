@@ -79,8 +79,7 @@ struct ActivityBar: View {
     }
 
     func removeFocus() {
-        App.monacoInstance.executeJavascript(
-            command: "document.getElementById('overlay').focus()")
+        Task { await App.monacoInstance.blur() }
         App.terminalInstance.executeScript(
             "document.getElementById('overlay').focus()")
     }

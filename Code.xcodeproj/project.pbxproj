@@ -39,7 +39,6 @@
 		94196959280316C7008AAEB2 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* SearchManager.swift */; };
 		9419695A280316C7008AAEB2 /* ArchiveDir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A7781D257BC473008FE7B2 /* ArchiveDir.swift */; };
 		9419695B280316C7008AAEB2 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5682A257CBDE4008A6530 /* MarkdownView.swift */; };
-		9419695C280316C7008AAEB2 /* MonacoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777AB257B66CF008FE7B2 /* MonacoEditor.swift */; };
 		9419695D280316C7008AAEB2 /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D721DE268DA2B8007A63BD /* TopBar.swift */; };
 		9419695E280316C7008AAEB2 /* EditorKeyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438C9A125CBD25F00335E82 /* EditorKeyboardToolBar.swift */; };
 		9419695F280316C7008AAEB2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777BD257B74EE008FE7B2 /* NotificationManager.swift */; };
@@ -533,6 +532,12 @@
 		945D4F582B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
 		945D4F592B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9474D2912B6B454900CCC530 /* EditorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2902B6B454900CCC530 /* EditorImplementation.swift */; };
+		9474D2922B6B454900CCC530 /* EditorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2902B6B454900CCC530 /* EditorImplementation.swift */; };
+		9474D2942B6B461E00CCC530 /* MonacoImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */; };
+		9474D2952B6B461E00CCC530 /* MonacoImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */; };
+		9474D2972B6B4B1300CCC530 /* EditorImplemenationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */; };
+		9474D2982B6B4B1300CCC530 /* EditorImplemenationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */; };
 		94795C452931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C462931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C4829314A0A0057C12F /* CompactSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4729314A0A0057C12F /* CompactSidebar.swift */; };
@@ -598,7 +603,6 @@
 		94A7779F257ABD7A008FE7B2 /* MainApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A7779E257ABD7A008FE7B2 /* MainApp.swift */; };
 		94A777A2257ABDC3008FE7B2 /* WorkSpaceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777A1257ABDC3008FE7B2 /* WorkSpaceStorage.swift */; };
 		94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777A7257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift */; };
-		94A777AC257B66CF008FE7B2 /* MonacoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777AB257B66CF008FE7B2 /* MonacoEditor.swift */; };
 		94A777B0257B679C008FE7B2 /* String+base64EncodedDecoded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777AF257B679C008FE7B2 /* String+base64EncodedDecoded.swift */; };
 		94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777B6257B6A43008FE7B2 /* View+cornerRadius.swift */; };
 		94A777BE257B74EE008FE7B2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777BD257B74EE008FE7B2 /* NotificationManager.swift */; };
@@ -1698,6 +1702,9 @@
 		945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimKeyBufferLabel.swift; sourceTree = "<group>"; };
 		945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NodeMobile.xcframework; path = Resources/NodeJS/NodeMobile.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
+		9474D2902B6B454900CCC530 /* EditorImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorImplementation.swift; sourceTree = "<group>"; };
+		9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoImplementation.swift; sourceTree = "<group>"; };
+		9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorImplemenationView.swift; sourceTree = "<group>"; };
 		94795C442931489C0057C12F /* ActivityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBar.swift; sourceTree = "<group>"; };
 		94795C4729314A0A0057C12F /* CompactSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactSidebar.swift; sourceTree = "<group>"; };
 		94795C4A293259080057C12F /* Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
@@ -1743,7 +1750,6 @@
 		94A7779E257ABD7A008FE7B2 /* MainApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainApp.swift; sourceTree = "<group>"; };
 		94A777A1257ABDC3008FE7B2 /* WorkSpaceStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSpaceStorage.swift; sourceTree = "<group>"; };
 		94A777A7257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryFolderMonitor.swift; sourceTree = "<group>"; };
-		94A777AB257B66CF008FE7B2 /* MonacoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoEditor.swift; sourceTree = "<group>"; };
 		94A777AF257B679C008FE7B2 /* String+base64EncodedDecoded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+base64EncodedDecoded.swift"; sourceTree = "<group>"; };
 		94A777B6257B6A43008FE7B2 /* View+cornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+cornerRadius.swift"; sourceTree = "<group>"; };
 		94A777BD257B74EE008FE7B2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -2127,6 +2133,16 @@
 				9469AC9A26A33D19003F569F /* php.xcframework */,
 			);
 			path = PHP;
+			sourceTree = "<group>";
+		};
+		9474D28F2B6B453100CCC530 /* EditorImplementation */ = {
+			isa = PBXGroup;
+			children = (
+				9474D2902B6B454900CCC530 /* EditorImplementation.swift */,
+				9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */,
+				9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */,
+			);
+			path = EditorImplementation;
 			sourceTree = "<group>";
 		};
 		9491410E284B0626006E32AD /* Local */ = {
@@ -2873,6 +2889,7 @@
 		9FC03E64291CFD0200DECD1B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				9474D28F2B6B453100CCC530 /* EditorImplementation */,
 				94CB91AA2802A885002EAC51 /* FileSystem */,
 				94A7779E257ABD7A008FE7B2 /* MainApp.swift */,
 				94A777EE257B9193008FE7B2 /* GitHubSearchManager.swift */,
@@ -2886,7 +2903,6 @@
 				9FD5BCE42923897200F20C4B /* PanelManager.swift */,
 				948D12212583F2A5008F877A /* Executor.swift */,
 				9FD5BCEE29249F0200F20C4B /* WebViewBase.swift */,
-				94A777AB257B66CF008FE7B2 /* MonacoEditor.swift */,
 				94A7FFB2268D085300369147 /* BottomBar.swift */,
 				9FD5BCFD2929F0F300F20C4B /* EditorProviderManager.swift */,
 				9F37391D293F37F8006886C1 /* ThemeManager.swift */,
@@ -3297,7 +3313,6 @@
 				9FC6737F2AA03A4800346FD7 /* RemotePortForwardSection.swift in Sources */,
 				9F046C3629222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
 				9FD5BCFC2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
-				9419695C280316C7008AAEB2 /* MonacoEditor.swift in Sources */,
 				9F37391F293F37F8006886C1 /* ThemeManager.swift in Sources */,
 				9FD5BCFF2929F0F300F20C4B /* EditorProviderManager.swift in Sources */,
 				942E32082808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
@@ -3336,6 +3351,7 @@
 				9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
 				9FA122652A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */,
+				9474D2952B6B461E00CCC530 /* MonacoImplementation.swift in Sources */,
 				941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94196970280316C7008AAEB2 /* SettingsKeyboardShortcuts.swift in Sources */,
 				942E3202280877C900233441 /* SearchServiceProvider.swift in Sources */,
@@ -3346,6 +3362,7 @@
 				94E6CC7C2806FBAF00939E4F /* SFTPFileSystemProvider.swift in Sources */,
 				94196973280316C7008AAEB2 /* EditorTabs.swift in Sources */,
 				94196974280316C7008AAEB2 /* LocalGitServiceProvider.swift in Sources */,
+				9474D2982B6B4B1300CCC530 /* EditorImplemenationView.swift in Sources */,
 				94196975280316C7008AAEB2 /* SourceControlIdentityConfiguration.swift in Sources */,
 				94196976280316C7008AAEB2 /* SearchContainer.swift in Sources */,
 				94196977280316C7008AAEB2 /* String+base64EncodedDecoded.swift in Sources */,
@@ -3364,6 +3381,7 @@
 				9419697C280316C7008AAEB2 /* View+cornerRadius.swift in Sources */,
 				9419697E280316C7008AAEB2 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC862807502A00939E4F /* ActivityBarItemView.swift in Sources */,
+				9474D2922B6B454900CCC530 /* EditorImplementation.swift in Sources */,
 				9F062FE42B58D3F4006210AA /* FileTreeView.swift in Sources */,
 				94A045F22804816000182275 /* RemoteCreateSection.swift in Sources */,
 				9FAE4994292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,
@@ -3475,7 +3493,6 @@
 				9FC6737E2AA03A4800346FD7 /* RemotePortForwardSection.swift in Sources */,
 				9F046C3529222D8E00BDE4E9 /* ExtensionManager.swift in Sources */,
 				9FD5BCFB2928E02300F20C4B /* LocalExecutionExtension.swift in Sources */,
-				94A777AC257B66CF008FE7B2 /* MonacoEditor.swift in Sources */,
 				9F37391E293F37F8006886C1 /* ThemeManager.swift in Sources */,
 				9FD5BCFE2929F0F300F20C4B /* EditorProviderManager.swift in Sources */,
 				942E32072808805F00233441 /* SearchUnsupportedSection.swift in Sources */,
@@ -3514,6 +3531,7 @@
 				9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,
 				9FA122642A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */,
+				9474D2942B6B461E00CCC530 /* MonacoImplementation.swift in Sources */,
 				941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94C893E2279D09D400DFBF29 /* SettingsKeyboardShortcuts.swift in Sources */,
 				942E3201280877C900233441 /* SearchServiceProvider.swift in Sources */,
@@ -3524,6 +3542,7 @@
 				94E6CC7B2806FBAF00939E4F /* SFTPFileSystemProvider.swift in Sources */,
 				94A77830257BD680008FE7B2 /* EditorTabs.swift in Sources */,
 				944FC3FF25C543CD00C7C43C /* LocalGitServiceProvider.swift in Sources */,
+				9474D2972B6B4B1300CCC530 /* EditorImplemenationView.swift in Sources */,
 				9494A3A52587479F004A103E /* SourceControlIdentityConfiguration.swift in Sources */,
 				94A777D2257B8A32008FE7B2 /* SearchContainer.swift in Sources */,
 				94A777B0257B679C008FE7B2 /* String+base64EncodedDecoded.swift in Sources */,
@@ -3542,6 +3561,7 @@
 				94A777B7257B6A43008FE7B2 /* View+cornerRadius.swift in Sources */,
 				949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */,
 				94E6CC852807502A00939E4F /* ActivityBarItemView.swift in Sources */,
+				9474D2912B6B454900CCC530 /* EditorImplementation.swift in Sources */,
 				9F062FE32B58D3F4006210AA /* FileTreeView.swift in Sources */,
 				94A045F12804816000182275 /* RemoteCreateSection.swift in Sources */,
 				9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,

@@ -75,7 +75,7 @@ struct EditorView: View {
                 Color.init(id: "editor.background")
 
                 if !App.stateManager.isMonacoEditorInitialized {
-                    App.monacoInstance
+                    EditorImplementationView(implementation: App.monacoInstance)
                         .overlay {
                             ProgressView()
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -86,28 +86,23 @@ struct EditorView: View {
 
                         VStack {
                             Button("Command Palatte") {
-                                App.monacoInstance.executeJavascript(
-                                    command: "editor.trigger('', 'editor.action.quickCommand')")
+                                Task {
+                                    await App.monacoInstance._toggleCommandPalatte()
+                                }
                             }
                             .keyboardShortcut("p", modifiers: [.command, .shift])
 
                             Button("Zoom in") {
                                 if self.editorTextSize < 30 {
                                     self.editorTextSize += 1
-                                    App.monacoInstance.executeJavascript(
-                                        command:
-                                            "editor.updateOptions({fontSize: \(String(self.editorTextSize))})"
-                                    )
+                                    App.monacoInstance.options.fontSize += 1
                                 }
                             }.keyboardShortcut("+", modifiers: [.command])
 
                             Button("Zoom out") {
                                 if self.editorTextSize > 10 {
                                     self.editorTextSize -= 1
-                                    App.monacoInstance.executeJavascript(
-                                        command:
-                                            "editor.updateOptions({fontSize: \(String(self.editorTextSize))})"
-                                    )
+                                    App.monacoInstance.options.fontSize -= 1
                                 }
                             }.keyboardShortcut("-", modifiers: [.command])
                         }.foregroundColor(.clear).font(.system(size: 1))
@@ -133,7 +128,7 @@ struct EditorView: View {
                         sceneIdentifier != App.sceneIdentifier
                     else { return }
                     Task {
-                        try await App.monacoInstance.blur()
+                        await App.monacoInstance.blur()
                     }
                 }
             )
@@ -143,7 +138,7 @@ struct EditorView: View {
                     object: nil),
                 perform: { notification in
                     Task {
-                        try await App.monacoInstance.blur()
+                        await App.monacoInstance.blur()
                     }
                 }
             )
@@ -161,9 +156,9 @@ struct EditorView: View {
                     }
 
                     Task {
-                        if await App.monacoInstance.isEditorInFocus() {
+                        if await App.monacoInstance.editorInFocus() {
                             await App.saveCurrentFile()
-                            try await App.monacoInstance.blur()
+                            await App.monacoInstance.blur()
                         }
                     }
                 }

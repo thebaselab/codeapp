@@ -13,12 +13,11 @@ struct SearchContainer: View {
 
     func onTapSearchResult(result: SearchResult, fileURL: URL) {
         App.openFile(url: fileURL)
-        App.monacoInstance.executeJavascript(
-            command: "editor.focus()")
-        App.monacoInstance.searchByTerm(
-            term: App.textSearchManager.searchTerm)
-        App.monacoInstance.scrollToLine(
-            line: result.line_num)
+        Task {
+            await App.monacoInstance.focus()
+            await App.monacoInstance.searchTermInEditor(term: App.textSearchManager.searchTerm)
+            await App.monacoInstance.scrollToLine(line: result.line_num)
+        }
     }
 
     func onSearch() {

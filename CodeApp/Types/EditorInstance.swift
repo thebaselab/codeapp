@@ -92,7 +92,7 @@ class TextEditorInstance: EditorInstanceWithURL {
     var isSaving: Bool = false
 
     init(
-        editor: MonacoEditor,
+        editor: EditorImplementation,
         url: URL,
         content: String,
         encoding: String.Encoding = .utf8,
@@ -102,7 +102,10 @@ class TextEditorInstance: EditorInstanceWithURL {
         self.content = content
         self.encoding = encoding
         self.lastSavedDate = lastSavedDate
-        super.init(view: AnyView(editor), title: url.lastPathComponent, url: url)
+        super.init(
+            view: AnyView(EditorImplementationView(implementation: editor)),
+            title: url.lastPathComponent, url: url
+        )
 
         // Disable this until #722 is fixed.
 
@@ -131,7 +134,7 @@ class DiffTextEditorInstnace: TextEditorInstance {
     var compareWith: String
 
     init(
-        editor: MonacoEditor,
+        editor: EditorImplementation,
         url: URL,
         content: String,
         encoding: String.Encoding = .utf8,

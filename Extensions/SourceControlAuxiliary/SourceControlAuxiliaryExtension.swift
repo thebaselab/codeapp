@@ -25,7 +25,9 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
             extenionID: EXTENSION_ID,
             icon: "arrow.up",
             onClick: {
-                app.monacoInstance.executeJavascript(command: "navi.previous()")
+                Task {
+                    await app.monacoInstance.moveToPreviousDiff()
+                }
             },
             shouldDisplay: {
                 app.activeEditor is DiffTextEditorInstnace
@@ -35,7 +37,9 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
             extenionID: EXTENSION_ID,
             icon: "arrow.down",
             onClick: {
-                app.monacoInstance.executeJavascript(command: "navi.next()")
+                Task {
+                    await app.monacoInstance.moveToNextDiff()
+                }
             },
             shouldDisplay: {
                 app.activeEditor is DiffTextEditorInstnace

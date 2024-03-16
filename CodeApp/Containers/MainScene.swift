@@ -45,13 +45,8 @@ struct MainScene: View {
             let activeEditorBookmarkData = try? activeEditor.url.bookmarkData()
         {
             activeEditorBookmark = activeEditorBookmarkData
-            App.monacoInstance.monacoWebView.evaluateJavaScript(
-                "JSON.stringify(editor.saveViewState())"
-            ) {
-                res, err in
-                if let res = res as? String {
-                    activeEditorMonacoState = res
-                }
+            Task {
+                activeEditorMonacoState = await App.monacoInstance.getViewState()
             }
         } else {
             activeEditorBookmark = nil
@@ -86,6 +81,7 @@ struct MainScene: View {
             App.openFile(url: activeEditor)
         }
 
+        App.monacoStateToRestore = activeEditorMonacoState
     }
 
     var body: some View {
@@ -117,17 +113,15 @@ struct MainScene: View {
                     object: nil
                 ),
                 perform: { notification in
+                    // TODO: What does this code do?
                     guard var theme = themeManager.currentTheme else {
-                        if let isDark = notification.userInfo?["isDark"] as? Bool {
-                            App.monacoInstance.executeJavascript(command: "resetTheme(\(isDark))")
-                            App.terminalInstance.executeScript("applyTheme(null, \(isDark))")
-                        }
+                        //                        if let isDark = notification.userInfo?["isDark"] as? Bool {
+                        //                            App.monacoInstance.executeJavascript(command: "resetTheme(\(isDark))")
+                        //                            App.terminalInstance.executeScript("applyTheme(null, \(isDark))")
+                        //                        }
                         return
                     }
-                    App.monacoInstance.setTheme(
-                        themeName: theme.name.replacingOccurrences(of: " ", with: ""),
-                        data: theme.jsonString,
-                        isDark: theme.isDark)
+                    Task { await App.monacoInstance.setVSTheme(theme: theme) }
                     App.terminalInstance.applyTheme(rawTheme: theme.dictionary)
                 }
             )

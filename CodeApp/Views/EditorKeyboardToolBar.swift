@@ -42,27 +42,24 @@ struct EditorKeyboardToolBar: View {
             Group {
                 Button(
                     action: {
-                        App.monacoInstance.executeJavascript(command: "editor.getModel().undo()")
+                        Task { await App.monacoInstance.undo() }
                     },
                     label: {
                         Image(systemName: "arrow.uturn.left")
                     })
                 Button(
                     action: {
-                        App.monacoInstance.executeJavascript(command: "editor.getModel().redo()")
+                        Task { await App.monacoInstance.redo() }
                     },
                     label: {
                         Image(systemName: "arrow.uturn.right")
                     })
                 Button(
                     action: {
-                        App.monacoInstance.monacoWebView.evaluateJavaScript(
-                            "editor.getModel().getValueInRange(editor.getSelection())",
-                            completionHandler: { result, error in
-                                if let result = result as? String, !result.isEmpty {
-                                    UIPasteboard.general.string = result
-                                }
-                            })
+                        Task {
+                            let selected = await App.monacoInstance.getSelectedValue()
+                            UIPasteboard.general.string = selected
+                        }
                     },
                     label: {
                         Image(systemName: "doc.on.doc")
@@ -70,11 +67,10 @@ struct EditorKeyboardToolBar: View {
                 if UIPasteboard.general.hasStrings || pasteBoardHasContent {
                     Button(
                         action: {
-                            if let string = UIPasteboard.general.string?.base64Encoded() {
-                                App.monacoInstance.executeJavascript(
-                                    command:
-                                        "editor.executeEdits('source',[{identifier: {major: 1, minor: 1}, range: editor.getSelection(), text: decodeURIComponent(escape(window.atob('\(string)'))), forceMoveMarkers: true}])"
-                                )
+                            if let string = UIPasteboard.general.string {
+                                Task {
+                                    await App.monacoInstance.pasteText(text: string)
+                                }
                             }
                         },
                         label: {
@@ -84,8 +80,9 @@ struct EditorKeyboardToolBar: View {
                 if needTabKey {
                     Button(
                         action: {
-                            App.monacoInstance.executeJavascript(
-                                command: "editor.trigger('keyboard', 'type', {text: '\t'})")
+                            Task {
+                                await App.monacoInstance.pasteText(text: "\t")
+                            }
                         },
                         label: {
                             Text("↹")
@@ -100,8 +97,9 @@ struct EditorKeyboardToolBar: View {
                 ForEach(["{", "}", "[", "]", "(", ")"], id: \.self) { char in
                     Button(
                         action: {
-                            App.monacoInstance.executeJavascript(
-                                command: "editor.trigger('keyboard', 'type', {text: '\(char)'})")
+                            Task {
+                                await App.monacoInstance.pasteText(text: char)
+                            }
                         },
                         label: {
                             Text(char).padding(.horizontal, 2)
@@ -110,22 +108,18 @@ struct EditorKeyboardToolBar: View {
                 if horizontalSizeClass != .compact {
                     Button(
                         action: {
-                            App.monacoInstance.executeJavascript(
-                                command:
-                                    "editor.setPosition({lineNumber: editor.getPosition().lineNumber - 1, column: editor.getPosition().column})"
-                            )
+                            Task {
+                                await App.monacoInstance.moveCursor(direction: .up)
+                            }
                         },
                         label: {
                             Image(systemName: "arrow.up")
                         })
                     Button(
                         action: {
-                            App.monacoInstance.executeJavascript(
-                                command:
-                                    "editor.setPosition({lineNumber: editor.getPosition().lineNumber + 1, column: editor.getPosition().column})"
-                            )
-                            App.monacoInstance.executeJavascript(
-                                command: "editor.trigger('', 'selectNextSuggestion')")
+                            Task {
+                                await App.monacoInstance.moveCursor(direction: .down)
+                            }
                         },
                         label: {
                             Image(systemName: "arrow.down")
@@ -134,29 +128,28 @@ struct EditorKeyboardToolBar: View {
 
                 Button(
                     action: {
-                        App.monacoInstance.executeJavascript(
-                            command:
-                                "editor.setPosition({lineNumber: editor.getPosition().lineNumber, column: editor.getPosition().column - 1})"
-                        )
+                        Task {
+                            await App.monacoInstance.moveCursor(direction: .left)
+                        }
                     },
                     label: {
                         Image(systemName: "arrow.left")
                     })
                 Button(
                     action: {
-                        App.monacoInstance.executeJavascript(
-                            command:
-                                "editor.setPosition({lineNumber: editor.getPosition().lineNumber, column: editor.getPosition().column + 1})"
-                        )
+                        Task {
+                            await App.monacoInstance.moveCursor(direction: .right)
+                        }
                     },
                     label: {
                         Image(systemName: "arrow.right")
                     })
                 Button(
                     action: {
-                        App.monacoInstance.executeJavascript(
-                            command: "document.getElementById('overlay').focus()")
-                        App.saveCurrentFile()
+                        Task {
+                            await App.monacoInstance.blur()
+                            await App.saveCurrentFile()
+                        }
                     },
                     label: {
                         Image(systemName: "keyboard.chevron.compact.down")

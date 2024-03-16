@@ -55,7 +55,7 @@ struct SourceControlContainer: View {
             }
             App.updateGitRepositoryStatus()
             App.commitMessage = ""
-            App.monacoInstance.invalidateDecorations()
+            await App.monacoInstance.invalidateDecorations()
         }
     }
 

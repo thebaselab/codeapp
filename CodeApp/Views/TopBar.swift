@@ -73,9 +73,10 @@ struct TopBar: View {
                     .hoverEffect(.highlight)
                     .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20).padding()
                     .onTapGesture {
-                        App.monacoInstance.executeJavascript(command: "editor.focus()")
-                        App.monacoInstance.executeJavascript(
-                            command: "editor.getAction('actions.find').run()")
+                        Task {
+                            await App.monacoInstance.focus()
+                            await App.monacoInstance.openSearchWidget()
+                        }
                     }
             }
 
@@ -83,7 +84,9 @@ struct TopBar: View {
                 if App.activeTextEditor is DiffTextEditorInstnace {
                     Section {
                         Button(action: {
-                            App.monacoInstance.applyOptions(options: "renderSideBySide: false")
+                            Task {
+                                await App.monacoInstance.switchToInlineDiffView()
+                            }
                         }) {
                             Label(
                                 NSLocalizedString("Toogle Inline View", comment: ""),

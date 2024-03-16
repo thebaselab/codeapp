@@ -42,7 +42,7 @@ private struct PanelCodeMarkersSection: View {
 
 private struct MarkersView: View {
 
-    let markers: [MonacoEditor.Coordinator.marker]
+    let markers: [MonacoEditorMarker]
     let url: URL
 
     @State var expanded: Bool = true
