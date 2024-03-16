@@ -22,8 +22,6 @@ struct SettingsView: View {
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
     @AppStorage("compilerShowPath") var compilerShowPath = false
-    @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
-    @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
     @AppStorage("communityTemplatesEnabled") var communityTemplatesEnabled = true
     @AppStorage("showAllFonts") var showAllFonts = false
     @AppStorage("remoteShouldResolveHomePath") var remoteShouldResolveHomePath = false
@@ -233,15 +231,6 @@ struct SettingsView: View {
 
                     Section(header: Text("local.execution.title")) {
                         Toggle("Show Command in Terminal", isOn: $compilerShowPath)
-                    }
-
-                    Section("Experimental Features") {
-                        Toggle("Enable spell check in text files", isOn: $editorSpellCheckEnabled)
-                        if editorSpellCheckEnabled {
-                            Toggle(
-                                "Spell checking on content changed",
-                                isOn: $editorSpellCheckOnContentChanged)
-                        }
                     }
 
                     Section(header: Text(NSLocalizedString("About", comment: ""))) {
