@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.7.0 (February 2024)**
+##### **v1.7.1 (March 2024)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.7.1 (March 2024)
+- Möglichkeit, laufende C-Programme zu beenden
+
 ### 1.7.0 (February 2024)
 - Vim-Modus
 - Ziehen Sie Dateien und Ordner per Drag & Drop in den Explorer
