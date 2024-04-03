@@ -20,7 +20,7 @@ class EditorInstance: ObservableObject, Identifiable, Equatable, Hashable {
 
     @Published var title: String
     let id = UUID()
-    let view: AnyView
+    var view: AnyView
 
     init(view: AnyView, title: String) {
         self.view = view

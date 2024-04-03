@@ -235,7 +235,7 @@ extension MonacoImplementation: WKScriptMessageHandler {
 }
 
 extension MonacoImplementation: EditorImplementation {
-    var webView: WebViewBase {
+    var view: UIView {
         monacoWebView
     }
 
