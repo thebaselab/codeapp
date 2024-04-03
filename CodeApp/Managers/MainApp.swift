@@ -163,6 +163,7 @@ class MainApp: ObservableObject {
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
+    @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
 
     init() {
 
@@ -171,9 +172,8 @@ class MainApp: ObservableObject {
         self.workSpaceStorage = WorkSpaceStorage(url: rootDir)
 
         terminalInstance = TerminalInstance(root: rootDir)
-        monacoInstance = MonacoImplementation(
-            options: editorOptions.value,
-            theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
+        setUpEditorInstance()
+
         monacoInstance.delegate = self
 
         terminalInstance.openEditor = { [weak self] url in
@@ -232,6 +232,23 @@ class MainApp: ObservableObject {
                 setUpActivityBarItems()
                 stateManager.isSystemExtensionsInitialized = true
             }
+        }
+    }
+
+    func setUpEditorInstance() {
+        stateManager.isMonacoEditorInitialized = false
+        if runeStoneEditorEnabled {
+            monacoInstance = RunestoneImplementation(
+                options: editorOptions.value,
+                theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
+        } else {
+            monacoInstance = MonacoImplementation(
+                options: editorOptions.value,
+                theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
+        }
+        monacoInstance.delegate = self
+        for textEditor in textEditors {
+            textEditor.view = AnyView(EditorImplementationView(implementation: monacoInstance))
         }
     }
 

@@ -27,6 +27,7 @@ struct SettingsView: View {
     @AppStorage("remoteShouldResolveHomePath") var remoteShouldResolveHomePath = false
     @AppStorage("editorOptions") var editorOptions: CodableWrapper<EditorOptions> = .init(
         value: EditorOptions())
+    @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
 
     @State var showsEraseAlert: Bool = false
     @State var showReceiptInformation: Bool = false
@@ -231,6 +232,12 @@ struct SettingsView: View {
 
                     Section(header: Text("local.execution.title")) {
                         Toggle("Show Command in Terminal", isOn: $compilerShowPath)
+                    }
+
+                    Section(header: Text("Experimental Features")) {
+                        Toggle("Runestone Editor", isOn: $runeStoneEditorEnabled)
+                    }.onChange(of: runeStoneEditorEnabled) { newValue in
+                        App.setUpEditorInstance()
                     }
 
                     Section(header: Text(NSLocalizedString("About", comment: ""))) {

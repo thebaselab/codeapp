@@ -34,16 +34,18 @@ private struct _EditorImplementationView: UIViewRepresentable {
         webView.addInputAccessoryView(toolbar: toolbar.view)
     }
 
-    func makeUIView(context: Context) -> WebViewBase {
-        if implementation.options.toolBarEnabled {
-            injectBarButtons(webView: implementation.webView)
-        } else {
-            implementation.webView.addInputAccessoryView(toolbar: UIView.init())
+    func makeUIView(context: Context) -> UIView {
+        if let webView = implementation.view as? WebViewBase {
+            if implementation.options.toolBarEnabled {
+                injectBarButtons(webView: webView)
+            } else {
+                webView.addInputAccessoryView(toolbar: UIView.init())
+            }
         }
-        return implementation.webView
+        return implementation.view
     }
 
-    func updateUIView(_ uiView: WebViewBase, context: Context) {
+    func updateUIView(_ uiView: UIView, context: Context) {
         return
     }
 }

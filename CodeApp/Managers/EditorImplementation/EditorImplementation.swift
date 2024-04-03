@@ -94,7 +94,7 @@ struct EditorTheme {
 
 // A web-based editor implemenation
 protocol EditorImplementation: AnyObject {
-    var webView: WebViewBase { get }
+    var view: UIView { get }
     var options: EditorOptions { get set }
     var theme: EditorTheme { get set }
     var delegate: EditorImplementationDelegate? { get set }

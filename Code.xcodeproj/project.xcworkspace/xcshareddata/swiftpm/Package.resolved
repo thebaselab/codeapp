@@ -83,6 +83,33 @@
         }
       },
       {
+        "package": "Runestone",
+        "repositoryURL": "https://github.com/simonbs/Runestone",
+        "state": {
+          "branch": null,
+          "revision": "ed2f83f59bcbf248bcd573f583bf2b239ce0f4cd",
+          "version": "0.4.4"
+        }
+      },
+      {
+        "package": "TreeSitter",
+        "repositoryURL": "https://github.com/tree-sitter/tree-sitter",
+        "state": {
+          "branch": null,
+          "revision": "98be227227af10cc7a269cb3ffb23686c0610b17",
+          "version": "0.20.9"
+        }
+      },
+      {
+        "package": "TreeSitterLanguages",
+        "repositoryURL": "https://github.com/simonbs/treesitterlanguages",
+        "state": {
+          "branch": null,
+          "revision": "15cf3a9ec3ab95e0d058b7df9f35619123c9e02d",
+          "version": "0.1.10"
+        }
+      },
+      {
         "package": "ZipArchive",
         "repositoryURL": "https://github.com/ZipArchive/ZipArchive.git",
         "state": {
