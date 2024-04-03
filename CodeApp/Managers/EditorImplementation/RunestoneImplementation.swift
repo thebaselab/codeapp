@@ -314,6 +314,7 @@ class RunestoneImplementation: NSObject {
         let textView = TextView()
         textView.showLineNumbers = true
         textView.autocorrectionType = .no
+        textView.autocapitalizationType = .none
         textView.backgroundColor = runeStoneTheme.backgroundColor
         self.textView = textView
 
