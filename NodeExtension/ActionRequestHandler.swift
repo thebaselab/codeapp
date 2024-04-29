@@ -23,8 +23,11 @@ class OutputListener {
     /// outputs messages back to STDOUT
     let outputErrorPipe = Pipe()
     
+    let stdinPipe = Pipe()
+    
     let stdoutFileDescriptor = FileHandle.standardOutput.fileDescriptor
     let stderrFileDescriptor = FileHandle.standardError.fileDescriptor
+    let stdinFileDescriptor = FileHandle.standardInput.fileDescriptor
     
     let coordinator = NSFileCoordinator(filePresenter: nil)
     
@@ -32,14 +35,7 @@ class OutputListener {
         
         guard let string = String(data: data, encoding: String.Encoding.utf8) else { return }
         
-        var error: NSError?
-        coordinator.coordinate(writingItemAt: sharedURL.appendingPathComponent("stdout"), options: .forReplacing, error: &error, byAccessor: { url in
-            try? string.write(to: url, atomically: true, encoding: .utf8)
-            
-            let notificationName = CFNotificationName("com.thebaselab.code.node.stdout" as CFString)
-            let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
-            CFNotificationCenterPostNotification(notificationCenter, notificationName, nil, nil, false)
-        })
+        ExtensionCommunicationHelper.writeToStdout(data: string)
     }
     
     init(context: NSExtensionContext) {
@@ -61,6 +57,54 @@ class OutputListener {
             // Write input back to stdout
             strongSelf.outputErrorPipe.fileHandleForWriting.write(data)
         }
+        
+        setupStdinNotificationObserver()
+    }
+    
+    @objc private func onAppGroupStdinWrite(_ notification: Notification) {
+        guard let content = notification.userInfo?["content"] as? String else {
+            return
+        }
+        if let data = content.data(using: .utf8) {
+            stdinPipe.fileHandleForWriting.write(data)
+        }
+    }
+    
+    private func setupStdinNotificationObserver() {
+        let notificationName = "com.thebaselab.code.node.stdin" as CFString
+        let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
+        
+        CFNotificationCenterAddObserver(
+            notificationCenter, nil,
+            {
+                (
+                    center: CFNotificationCenter?,
+                    observer: UnsafeMutableRawPointer?,
+                    name: CFNotificationName?,
+                    object: UnsafeRawPointer?,
+                    userInfo: CFDictionary?
+                ) in
+
+                let sharedURL = FileManager.default.containerURL(
+                    forSecurityApplicationGroupIdentifier: "group.com.thebaselab.code")!
+                let stdoutURL = sharedURL.appendingPathComponent("stdin")
+
+                guard let data = try? Data(contentsOf: stdoutURL),
+                    let str = String(data: data, encoding: .utf8)
+                else {
+                    return
+                }
+
+                NotificationCenter.default.post(
+                    name: Notification.Name("appgroup.stdin"), object: nil, userInfo: ["content": str])
+            },
+            notificationName,
+            nil,
+            CFNotificationSuspensionBehavior.deliverImmediately)
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(onAppGroupStdinWrite), name: Notification.Name("appgroup.stdin"),
+            object: nil)
     }
     
     /// Sets up the "tee" of piped output, intercepting stdout then passing it through.
@@ -72,6 +116,8 @@ class OutputListener {
         // Intercept STDOUT with inputPipe
         dup2(inputPipe.fileHandleForWriting.fileDescriptor, stdoutFileDescriptor)
         dup2(inputErrorPipe.fileHandleForWriting.fileDescriptor, stderrFileDescriptor)
+        
+        dup2(stdinPipe.fileHandleForReading.fileDescriptor, stdinFileDescriptor)
     }
     
     /// Tears down the "tee" of piped output.
@@ -261,6 +307,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         
         let output = OutputListener(context: context)
         output.openConsolePipe()
+        open("/dev/tty", 0);
         
         guard let item = context.inputItems.first as? NSExtensionItem else {
             self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)

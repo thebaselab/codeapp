@@ -540,6 +540,9 @@
 		946DABAC2BBDADFD00E73257 /* TreeSitterCRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABAB2BBDADFD00E73257 /* TreeSitterCRunestone */; };
 		946DABAE2BBDADFE00E73257 /* TreeSitterJavaScriptRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABAD2BBDADFE00E73257 /* TreeSitterJavaScriptRunestone */; };
 		946DABB02BBDADFF00E73257 /* TreeSitterPythonRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABAF2BBDADFF00E73257 /* TreeSitterPythonRunestone */; };
+		947313122BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947313112BDFB80D004A9960 /* ExtensionCommunicationHelper.swift */; };
+		947313132BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947313112BDFB80D004A9960 /* ExtensionCommunicationHelper.swift */; };
+		947313142BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947313112BDFB80D004A9960 /* ExtensionCommunicationHelper.swift */; };
 		9474D2912B6B454900CCC530 /* EditorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2902B6B454900CCC530 /* EditorImplementation.swift */; };
 		9474D2922B6B454900CCC530 /* EditorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2902B6B454900CCC530 /* EditorImplementation.swift */; };
 		9474D2942B6B461E00CCC530 /* MonacoImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */; };
@@ -1714,6 +1717,7 @@
 		945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimKeyBufferLabel.swift; sourceTree = "<group>"; };
 		945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NodeMobile.xcframework; path = Resources/NodeJS/NodeMobile.xcframework; sourceTree = "<group>"; };
 		9469AC9A26A33D19003F569F /* php.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = php.xcframework; sourceTree = "<group>"; };
+		947313112BDFB80D004A9960 /* ExtensionCommunicationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCommunicationHelper.swift; sourceTree = "<group>"; };
 		9474D2902B6B454900CCC530 /* EditorImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorImplementation.swift; sourceTree = "<group>"; };
 		9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoImplementation.swift; sourceTree = "<group>"; };
 		9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorImplemenationView.swift; sourceTree = "<group>"; };
@@ -2158,6 +2162,14 @@
 			path = PHP;
 			sourceTree = "<group>";
 		};
+		947313102BDFB7F9004A9960 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				947313112BDFB80D004A9960 /* ExtensionCommunicationHelper.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		9474D28F2B6B453100CCC530 /* EditorImplementation */ = {
 			isa = PBXGroup;
 			children = (
@@ -2211,6 +2223,7 @@
 		94A77799257ABC16008FE7B2 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				947313102BDFB7F9004A9960 /* Shared */,
 				949B3CC625DEAAA600BC83B5 /* node.swift */,
 				94CF58E0265E8A4B00CB6A4B /* wasm.swift */,
 				94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */,
@@ -3436,6 +3449,7 @@
 				9FA122612A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */,
 				9FC03E752920CF1700DECD1B /* Notification.swift in Sources */,
 				9FA1225D2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */,
+				947313132BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */,
 				94196986280316C7008AAEB2 /* node.swift in Sources */,
 				94196988280316C7008AAEB2 /* TerminalInstance.swift in Sources */,
 				94196989280316C7008AAEB2 /* convertCArguments.swift in Sources */,
@@ -3467,6 +3481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94369B0125E3B933008419A0 /* ActionRequestHandler.swift in Sources */,
+				947313142BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */,
 				94369B1325E3DE02008419A0 /* NodeRunner.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3617,6 +3632,7 @@
 				9FA122602A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */,
 				9FC03E742920CF1700DECD1B /* Notification.swift in Sources */,
 				9FA1225C2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */,
+				947313122BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */,
 				949B3CC725DEAAA700BC83B5 /* node.swift in Sources */,
 				94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */,
 				94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */,

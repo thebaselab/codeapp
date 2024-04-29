@@ -49,6 +49,14 @@ class Executor {
         receivedStdout = onStdout
         receivedStderr = onStderr
         requestInput = onRequestInput
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(onNodeStdout), name: Notification.Name("node.stdout"),
+            object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     func evaluateCommands(_ cmds: [String]) {
@@ -109,6 +117,10 @@ class Executor {
 
         ios_switchSession(persistentIdentifier.toCString())
 
+        if nodeUUID != nil {
+            ExtensionCommunicationHelper.writeToStdin(data: input + "\n")
+        }
+
         stdin_file_input?.write(data)
 
         if state == .running {
@@ -119,10 +131,7 @@ class Executor {
 
     }
 
-    private func onStdout(_ stdout: FileHandle) {
-        if !stdout_active { return }
-
-        let data = stdout.availableData
+    private func _onStdout(data: Data) {
         let str = String(decoding: data, as: UTF8.self)
 
         if str.contains(END_OF_TRANSMISSION) {
@@ -131,7 +140,6 @@ class Executor {
         }
 
         DispatchQueue.main.async {
-
             if self.state == .running {
                 // Interactive Commands /with control characters
                 if str.contains("\u{8}") || str.contains("\u{13}") || str.contains("\r") {
@@ -146,6 +154,12 @@ class Executor {
                 self.receivedStdout(data)
             }
         }
+    }
+
+    private func onStdout(_ stdout: FileHandle) {
+        if !stdout_active { return }
+        let data = stdout.availableData
+        _onStdout(data: data)
     }
 
     // Called when the stderr file handle is written to
@@ -269,5 +283,14 @@ class Executor {
         fflush(thread_stderr)
 
         return returnCode
+    }
+
+    @objc private func onNodeStdout(_ notification: Notification) {
+        guard let content = notification.userInfo?["content"] as? String else {
+            return
+        }
+        if let data = content.data(using: .utf8) {
+            _onStdout(data: data)
+        }
     }
 }

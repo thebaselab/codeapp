@@ -333,15 +333,6 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         }
     }
 
-    @objc private func onNodeStdout(_ notification: Notification) {
-        guard let content = notification.userInfo?["content"] as? String else {
-            return
-        }
-        if let data = content.data(using: .utf8) {
-            writeToLocalTerminal(data: data)
-        }
-    }
-
     func write(data: Data) {
         self.executeScript(
             "term.write(base64ToString('\(data.base64EncodedString())'));")
@@ -401,12 +392,6 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             terminalMessageHandlerAdded = true
             contentManager?.add(self, name: "toggleMessageHandler2")
         }
-
-        let nc = NotificationCenter.default
-        nc.addObserver(
-            self, selector: #selector(onNodeStdout), name: Notification.Name("node.stdout"),
-            object: nil)
-
     }
 
 }
