@@ -307,7 +307,6 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         
         let output = OutputListener(context: context)
         output.openConsolePipe()
-        open("/dev/tty", 0);
         
         guard let item = context.inputItems.first as? NSExtensionItem else {
             self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
