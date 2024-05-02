@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.7.1 (2024年 3月)**
+##### **v1.7.2 (2024年 5月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.7.2 (2024 年 5 月)
+- ローカル Java / Node.js での対話型入力
+
 ### 1.7.1 (2024 年 3 月)
 - 実行中のCプログラムを終了する機能
 

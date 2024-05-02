@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.7.1 (2024년 3월)**
+##### **v1.7.2 (2024년 5월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.7.2(2024년 5월)
+- 로컬 Java/Node.js의 대화형 입력
+
 ### 1.7.1(2024년 3월)
 - 실행 중인 C 프로그램을 종료할 수 있는 기능
 

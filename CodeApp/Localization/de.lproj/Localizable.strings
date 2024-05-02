@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.7.1 (March 2024)**
+##### **v1.7.2 (May 2024)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.7.2 (May 2024)
+- Interaktive Eingaben in lokalem Java / Node.js
+
 ### 1.7.1 (March 2024)
 - Möglichkeit, laufende C-Programme zu beenden
 
