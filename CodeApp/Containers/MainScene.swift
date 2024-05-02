@@ -129,13 +129,6 @@ struct MainScene: View {
     }
 }
 
-enum SideBarSection: Int {
-    case explorer
-    case search
-    case sourceControl
-    case remote
-}
-
 private struct MainView: View {
 
     @EnvironmentObject var App: MainApp
