@@ -336,7 +336,7 @@ extension View {
         if #available(iOS 16.4, *) {
             self
                 .toolbarBackground(
-                    Color.init(id: "activityBar.background"), for: .navigationBar
+                    Color.init(id: "editor.background"), for: .navigationBar
                 )
         } else {
             self
