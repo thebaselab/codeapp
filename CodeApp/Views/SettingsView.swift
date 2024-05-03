@@ -234,11 +234,11 @@ struct SettingsView: View {
                         Toggle("Show Command in Terminal", isOn: $compilerShowPath)
                     }
 
-                    Section(header: Text("Experimental Features")) {
-                        Toggle("Runestone Editor", isOn: $runeStoneEditorEnabled)
-                    }.onChange(of: runeStoneEditorEnabled) { newValue in
-                        App.setUpEditorInstance()
-                    }
+                    //                    Section(header: Text("Experimental Features")) {
+                    //                        Toggle("Runestone Editor", isOn: $runeStoneEditorEnabled)
+                    //                    }.onChange(of: runeStoneEditorEnabled) { newValue in
+                    //                        App.setUpEditorInstance()
+                    //                    }
 
                     Section(header: Text(NSLocalizedString("About", comment: ""))) {
 
