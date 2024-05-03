@@ -139,7 +139,8 @@ class OutputListener {
 public func JavaEntrance(argc: Int32, argv: UnsafeMutablePointer<UnsafeMutablePointer<Int8>?>?) -> Int32 {
     JavaLauncher.shared.launchJava(
         args: JavaLauncher.shared.lastArgs,
-        frameworkDirectory: JavaLauncher.shared.lastFrameworkDir
+        frameworkDirectory: JavaLauncher.shared.lastFrameworkDir,
+        currentDirectory: JavaLauncher.shared.lastCurrentDirectory
     )
     return 0
 }
@@ -148,6 +149,7 @@ class JavaLauncher {
     static let shared = JavaLauncher()
     
     var lastFrameworkDir: URL!
+    var lastCurrentDirectory: URL!
     var lastArgs: [String] = []
     var javaString: NSString = "java"
     var openJDKString: NSString = "openjdk"
@@ -186,8 +188,9 @@ class JavaLauncher {
         Int32
     ) -> CInt
     
-    func launchJava(args: [String], frameworkDirectory: URL){
+    func launchJava(args: [String], frameworkDirectory: URL, currentDirectory: URL){
         lastFrameworkDir = frameworkDirectory
+        lastCurrentDirectory = currentDirectory
         lastArgs = args
         
         let libjlipath = "\(frameworkDirectory.path)/libjli.framework/libjli"
@@ -228,7 +231,7 @@ class JavaLauncher {
                 return (
                     defaultArgs +
                     ["-cp",
-                     "\(Bundle.main.resourcePath!)/tools.jar",
+                     "\(Bundle.main.resourcePath!)/tools.jar:\(currentDirectory.path)",
                      "com.sun.tools.javac.Main"
                     ]
                     + args.dropFirst()
@@ -338,7 +341,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
             
             switch executable {
             case "java", "javac":
-                JavaLauncher.shared.launchJava(args: args, frameworkDirectory: frameworkDirURL)
+                JavaLauncher.shared.launchJava(args: args, frameworkDirectory: frameworkDirURL, currentDirectory: url)
             case "node":
                 NodeRunner.startEngine(withArguments: args)
             default:
