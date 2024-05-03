@@ -237,15 +237,15 @@ class MainApp: ObservableObject {
 
     func setUpEditorInstance() {
         stateManager.isMonacoEditorInitialized = false
-        //        if runeStoneEditorEnabled {
-        monacoInstance = RunestoneImplementation(
-            options: editorOptions.value,
-            theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
-        //        } else {
-        //            monacoInstance = MonacoImplementation(
-        //                options: editorOptions.value,
-        //                theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
-        //        }
+        if runeStoneEditorEnabled {
+            monacoInstance = RunestoneImplementation(
+                options: editorOptions.value,
+                theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
+        } else {
+            monacoInstance = MonacoImplementation(
+                options: editorOptions.value,
+                theme: EditorTheme(dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme))
+        }
         monacoInstance.delegate = self
         for textEditor in textEditors {
             textEditor.view = AnyView(EditorImplementationView(implementation: monacoInstance))
