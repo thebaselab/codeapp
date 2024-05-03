@@ -40,7 +40,7 @@ struct CompactEditorTabs: View {
                 Text(App.activeEditor?.title ?? "")
                     .bold()
                     .lineLimit(1)
-                    .foregroundColor(Color(id: "activityBar.foreground"))
+                    .foregroundColor(Color.init("T1"))
 
                 if App.editors.count > 0 {
                     Image(systemName: "chevron.down.circle.fill")
