@@ -25,6 +25,7 @@
 "
 ### 1.7.2 (May 2024)
 - Interactive inputs in local Java / Node.js
+- Fixes a problem with multi-file Java programs
 
 ### 1.7.1 (March 2024)
 - Ability to terminate running C programs

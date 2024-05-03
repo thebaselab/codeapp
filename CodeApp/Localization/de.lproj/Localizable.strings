@@ -25,6 +25,7 @@
 "
 ### 1.7.2 (May 2024)
 - Interaktive Eingaben in lokalem Java / Node.js
+– Behebt ein Problem mit Java-Programmen mit mehreren Dateien
 
 ### 1.7.1 (March 2024)
 - Möglichkeit, laufende C-Programme zu beenden
