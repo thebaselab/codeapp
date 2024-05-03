@@ -350,7 +350,7 @@
   ],
   "colors": {
     "editor.background": "#FFFFFF",
-    "activityBar.background": "#2C2C2C",
+    "activityBar.background": "F8F8F8",
     "statusBar.background": "#0D7ACC",
     "sideBar.background": "#F3F3F3"
   },
