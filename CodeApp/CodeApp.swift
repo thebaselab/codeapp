@@ -59,7 +59,7 @@ struct CodeApp: App {
     }
 
     func createCSDK() {
-        let installQueue = DispatchQueue(label: "installFiles", qos: .userInteractive)
+        let installQueue = DispatchQueue(label: "installFiles", qos: .utility)
 
         // This operation copies the C SDK from $APPDIR to $HOME/Library and creates the *.a libraries
         // (we can't ship with .a libraries because of the AppStore rules, but we can ship with *.o
