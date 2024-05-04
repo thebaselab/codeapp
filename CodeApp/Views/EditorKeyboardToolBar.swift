@@ -5,7 +5,6 @@
 //  Created by Ken Chung on 4/2/2021.
 //
 
-import GameController
 import SwiftUI
 
 struct EditorKeyboardToolBar: View {
@@ -13,29 +12,6 @@ struct EditorKeyboardToolBar: View {
     @EnvironmentObject var App: MainApp
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var pasteBoardHasContent = false
-
-    var needTabKey: Bool {
-        let deviceModel = UIDevice.current.model
-        if !deviceModel.hasPrefix("iPad") { return true }  // iPhone, iPod: minimalist keyboard.
-        if deviceModel.hasPrefix("iPad6") {
-            if (deviceModel == "iPad6,7") || (deviceModel == "iPad6,8") {
-                return false  // iPad Pro 12.9" 1st gen
-            } else {
-                return true
-            }
-        }
-        if deviceModel.hasPrefix("iPad7") {
-            if (deviceModel == "iPad7,1") || (deviceModel == "iPad7,2") {
-                return false  // iPad Pro 12.9" 2nd gen
-            } else {
-                return true
-            }
-        }
-        if deviceModel.hasPrefix("iPad8") {
-            return false  // iPad Pro 11" or iPad Pro 12.9" 3rd gen
-        }
-        return true  // All other iPad models.
-    }
 
     var body: some View {
         HStack(spacing: horizontalSizeClass == .compact ? 8 : 14) {
@@ -77,18 +53,15 @@ struct EditorKeyboardToolBar: View {
                             Image(systemName: "doc.on.clipboard")
                         })
                 }
-                if needTabKey {
-                    Button(
-                        action: {
-                            Task {
-                                await App.monacoInstance.pasteText(text: "\t")
-                            }
-                        },
-                        label: {
-                            Text("↹")
-                        })
-                }
-
+                Button(
+                    action: {
+                        Task {
+                            await App.monacoInstance.pasteText(text: "\t")
+                        }
+                    },
+                    label: {
+                        Text("↹")
+                    })
             }
 
             Spacer()

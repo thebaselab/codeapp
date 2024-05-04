@@ -157,7 +157,7 @@ private struct MainView: View {
             panelHeight = 200
         }
         isPanelVisible.toggle()
-        App.terminalInstance.webView?.becomeFirstResponder()
+        App.terminalInstance.webView.becomeFirstResponder()
     }
 
     var body: some View {

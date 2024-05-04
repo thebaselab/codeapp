@@ -44,54 +44,86 @@ private struct ToolbarView: View {
     }
 }
 
+private struct _TerminalView: UIViewRepresentable {
+    var implementation: TerminalInstance
+
+    @EnvironmentObject var App: MainApp
+    @AppStorage("terminalToolBarEnabled") var terminalToolBarEnabled: Bool = true
+
+    private func injectBarButtons(webView: WebViewBase) {
+        let toolbar = UIHostingController(
+            rootView: TerminalKeyboardToolBar().environmentObject(App))
+        toolbar.view.frame = CGRect(
+            x: 0, y: 0, width: (webView.bounds.width), height: 40)
+
+        webView.addInputAccessoryView(toolbar: toolbar.view)
+    }
+
+    private func removeBarButtons(webView: WebViewBase) {
+        webView.addInputAccessoryView(toolbar: UIView.init())
+    }
+
+    func makeUIView(context: Context) -> UIView {
+        if terminalToolBarEnabled {
+            injectBarButtons(webView: implementation.webView)
+        }
+        return implementation.webView
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {
+        if terminalToolBarEnabled {
+            injectBarButtons(webView: implementation.webView)
+        } else {
+            removeBarButtons(webView: implementation.webView)
+        }
+    }
+
+}
+
 private struct TerminalView: View {
     @EnvironmentObject var App: MainApp
     @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
 
     var body: some View {
-        if let wv = App.terminalInstance.webView {
-            ZStack {
-                ViewRepresentable(wv)
-                    .onTapGesture {
-                        let notification = Notification(
-                            name: Notification.Name("terminal.focus"),
-                            userInfo: ["sceneIdentifier": App.sceneIdentifier]
-                        )
-                        NotificationCenter.default.post(notification)
+        ZStack {
+            _TerminalView(implementation: App.terminalInstance)
+                .onTapGesture {
+                    let notification = Notification(
+                        name: Notification.Name("terminal.focus"),
+                        userInfo: ["sceneIdentifier": App.sceneIdentifier]
+                    )
+                    NotificationCenter.default.post(notification)
+                }
+                .onReceive(
+                    NotificationCenter.default.publisher(
+                        for: Notification.Name("editor.focus"),
+                        object: nil),
+                    perform: { notification in
+                        App.terminalInstance.blur()
                     }
-                    .onReceive(
-                        NotificationCenter.default.publisher(
-                            for: Notification.Name("editor.focus"),
-                            object: nil),
-                        perform: { notification in
-                            App.terminalInstance.blur()
-                        }
-                    )
-                    .onReceive(
-                        NotificationCenter.default.publisher(
-                            for: Notification.Name("terminal.focus"),
-                            object: nil),
-                        perform: { notification in
-                            guard
-                                let sceneIdentifier = notification.userInfo?["sceneIdentifier"]
-                                    as? UUID,
-                                sceneIdentifier != App.sceneIdentifier
-                            else { return }
-                            App.terminalInstance.blur()
-                        }
-                    )
-                    .onAppear(perform: {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            App.terminalInstance.executeScript("fitAddon.fit()")
-                        }
-                    })
-            }
-            .foregroundColor(.clear)
-            .onChange(of: consoleFontSize) { value in
-                App.terminalInstance.setFontSize(size: value)
-            }
-        } else {
-            ProgressView()
+                )
+                .onReceive(
+                    NotificationCenter.default.publisher(
+                        for: Notification.Name("terminal.focus"),
+                        object: nil),
+                    perform: { notification in
+                        guard
+                            let sceneIdentifier = notification.userInfo?["sceneIdentifier"]
+                                as? UUID,
+                            sceneIdentifier != App.sceneIdentifier
+                        else { return }
+                        App.terminalInstance.blur()
+                    }
+                )
+                .onAppear(perform: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        App.terminalInstance.executeScript("fitAddon.fit()")
+                    }
+                })
+        }
+        .foregroundColor(.clear)
+        .onChange(of: consoleFontSize) { value in
+            App.terminalInstance.setFontSize(size: value)
         }
     }
 }

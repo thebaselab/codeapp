@@ -15,10 +15,10 @@ struct SettingsView: View {
     @AppStorage("suggestionEnabled") var suggestionEnabled: Bool = true
     @AppStorage("editorShowKeyboardButtonEnabled") var editorShowKeyboardButtonEnabled: Bool = true
     @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
+    @AppStorage("terminalToolBarEnabled") var terminalToolBarEnabled: Bool = true
     @AppStorage("preferredColorScheme") var preferredColorScheme: Int = 0
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
     @AppStorage("explorer.confirmBeforeDelete") var confirmBeforeDelete = false
-    @AppStorage("toolBarEnabled") var toolBarEnabled: Bool = true
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
     @AppStorage("compilerShowPath") var compilerShowPath = false
@@ -192,9 +192,9 @@ struct SettingsView: View {
 
                             Toggle(
                                 "Keyboard Toolbar (Effective in next launch)",
-                                isOn: self.$toolBarEnabled
+                                isOn: $editorOptions.value.toolBarEnabled
                             ).onChange(
-                                of: toolBarEnabled
+                                of: editorOptions.value.toolBarEnabled
                             ) { value in
                                 NotificationCenter.default.post(
                                     name: Notification.Name("toolbarSettingChanged"), object: nil,
@@ -230,7 +230,10 @@ struct SettingsView: View {
                         }
                     }
 
-                    Section(header: Text("local.execution.title")) {
+                    Section(header: Text("TERMINAL")) {
+                        Toggle(
+                            "Keyboard Toolbar (Effective in next launch)",
+                            isOn: $terminalToolBarEnabled)
                         Toggle("Show Command in Terminal", isOn: $compilerShowPath)
                     }
 

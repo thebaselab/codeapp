@@ -5,6 +5,7 @@
 //  Created by Ken Chung on 8/6/2021.
 //
 
+import SwiftUI
 import WebKit
 import ios_system
 
@@ -25,7 +26,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             })
         }
     }
-    public var webView: WebViewBase? = nil
+    public var webView: WebViewBase = WebViewBase()
     public var executor: Executor? = nil
     private var terminalMessageHandlerAdded = false
     public var openEditor: ((URL) -> Void)? = nil
@@ -135,7 +136,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 
     func executeScript(_ script: String) {
         DispatchQueue.main.async {
-            self.webView?.evaluateJavaScript(script) { (result, error) in
+            self.webView.evaluateJavaScript(script) { (result, error) in
                 if result != nil { print(result as Any) }
                 if error != nil { print(error as Any) }
             }
@@ -370,27 +371,25 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 }
             })
 
-        webView = WebViewBase()
-        webView?.addInputAccessoryView(toolbar: UIView.init())
-        webView?.scrollView.bounces = false
-        webView?.uiDelegate = self
-        webView?.isOpaque = false
-        webView?.navigationDelegate = self
-        webView?.customUserAgent =
+        webView.scrollView.bounces = false
+        webView.uiDelegate = self
+        webView.isOpaque = false
+        webView.navigationDelegate = self
+        webView.customUserAgent =
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15"
-        webView?.contentMode = .scaleToFill
+        webView.contentMode = .scaleToFill
         if !terminalMessageHandlerAdded {
             if let bundlePath = Bundle.main.path(forResource: "terminal", ofType: "bundle"),
                 let bundle = Bundle(path: bundlePath),
                 let url = bundle.url(forResource: "index", withExtension: "html")
             {
-                webView?.loadFileURL(url, allowingReadAccessTo: url)
+                webView.loadFileURL(url, allowingReadAccessTo: url)
                 let request = URLRequest(url: url)
-                webView?.load(request)
+                webView.load(request)
             }
-            let contentManager = webView?.configuration.userContentController
+            let contentManager = webView.configuration.userContentController
             terminalMessageHandlerAdded = true
-            contentManager?.add(self, name: "toggleMessageHandler2")
+            contentManager.add(self, name: "toggleMessageHandler2")
         }
     }
 
@@ -448,5 +447,18 @@ extension TerminalInstance: WKUIDelegate {
         default:
             print("\(prompt) not handled")
         }
+    }
+}
+
+// Keyboard toolbar methods
+
+extension TerminalInstance {
+    func type(text: String) {
+        guard let base64 = text.base64Encoded() else { return }
+        executeScript("term.paste(base64ToString(`\(base64)`))")
+    }
+
+    func moveCursor(codeSequence: String) {
+        executeScript("term.paste(String.fromCharCode(0x1b)+'\(codeSequence)')")
     }
 }

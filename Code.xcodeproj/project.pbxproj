@@ -559,6 +559,8 @@
 		947BF349262453040015DAEB /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* SearchManager.swift */; };
 		94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F92266FB5E400B29D80 /* TerminalInstance.swift */; };
 		94801F95266FBC3500B29D80 /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F94266FBC3500B29D80 /* ViewRepresentable.swift */; };
+		948488F92BE61684004D4A70 /* TerminalKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948488F82BE61684004D4A70 /* TerminalKeyboardToolbar.swift */; };
+		948488FA2BE61684004D4A70 /* TerminalKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948488F82BE61684004D4A70 /* TerminalKeyboardToolbar.swift */; };
 		9484BDD12B46FAEE003BCB8A /* injection.js in Resources */ = {isa = PBXBuildFile; fileRef = 9484BDD02B46FAEE003BCB8A /* injection.js */; };
 		948A5FE92A87B09500303C12 /* NSError+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948A5FE82A87B09500303C12 /* NSError+init.swift */; };
 		948A5FEA2A87B09500303C12 /* NSError+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948A5FE82A87B09500303C12 /* NSError+init.swift */; };
@@ -1728,6 +1730,7 @@
 		947BF348262453040015DAEB /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		94801F92266FB5E400B29D80 /* TerminalInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalInstance.swift; sourceTree = "<group>"; };
 		94801F94266FBC3500B29D80 /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
+		948488F82BE61684004D4A70 /* TerminalKeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalKeyboardToolbar.swift; sourceTree = "<group>"; };
 		9484BDD02B46FAEE003BCB8A /* injection.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = injection.js; sourceTree = "<group>"; };
 		948A5FE82A87B09500303C12 /* NSError+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+init.swift"; sourceTree = "<group>"; };
 		948D11FE2583F20C008F877A /* extraCommandsDictionary.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = extraCommandsDictionary.plist; sourceTree = "<group>"; };
@@ -2802,6 +2805,7 @@
 				9FA939DC2A9317F800C239BF /* SourceControlTextFieldAlert.swift */,
 				9F062FE22B58D3F4006210AA /* FileTreeView.swift */,
 				9F062FE82B58D416006210AA /* TableView.swift */,
+				948488F82BE61684004D4A70 /* TerminalKeyboardToolbar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3460,6 +3464,7 @@
 				9419698B280316C7008AAEB2 /* EditorInstance.swift in Sources */,
 				9F3C2DEE2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC892807632B00939E4F /* biometricType.swift in Sources */,
+				948488FA2BE61684004D4A70 /* TerminalKeyboardToolbar.swift in Sources */,
 				942E31FC280876AA00233441 /* SearchSection.swift in Sources */,
 				9FA122682A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4C293259080057C12F /* Encoding.swift in Sources */,
@@ -3643,6 +3648,7 @@
 				94A77796257ABB69008FE7B2 /* EditorInstance.swift in Sources */,
 				9F3C2DED2918EDC400BFF14C /* Resources.swift in Sources */,
 				94E6CC882807632B00939E4F /* biometricType.swift in Sources */,
+				948488F92BE61684004D4A70 /* TerminalKeyboardToolbar.swift in Sources */,
 				942E31FB280876AA00233441 /* SearchSection.swift in Sources */,
 				9FA122672A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4B293259080057C12F /* Encoding.swift in Sources */,
