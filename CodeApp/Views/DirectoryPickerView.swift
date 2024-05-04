@@ -9,8 +9,13 @@ import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
 
+enum DirectoryPickerViewType {
+    case directory, file
+}
+
 struct DirectoryPickerView: UIViewControllerRepresentable {
 
+    let type: DirectoryPickerViewType
     let onOpen: ((URL) -> Void)
 
     func makeCoordinator() -> Coordinator {
@@ -18,7 +23,8 @@ struct DirectoryPickerView: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.folder])
+        let documentPicker = UIDocumentPickerViewController(
+            forOpeningContentTypes: type == .directory ? [UTType.folder] : [UTType.data])
         documentPicker.allowsMultipleSelection = false
         documentPicker.delegate = context.coordinator
         return documentPicker

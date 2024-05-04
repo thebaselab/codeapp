@@ -504,6 +504,7 @@
 "file.confirm_move_into %@ %@" = "%@ を %@ から移動してもよろしいですか?";
 "file.reopen_with_encoding" = "エンコードで再オープン";
 "file.download_now" = "今すぐダウンロード";
+"file.upload" = "アップロード";
 
 "actions.new_window" = "新しいウィンドウ";
 

@@ -503,6 +503,7 @@
 "file.confirm_move_into %@ %@" = "Möchten Sie %@ wirklich in %@ verschieben?";
 "file.reopen_with_encoding" = "Mit Zeichenkodierung erneut öffnen";
 "file.download_now" = "Jetzt herunterladen";
+"file.upload" = "Hochladen";
 
 "actions.new_window" = "Neues Fenster";
 

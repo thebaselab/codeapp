@@ -251,9 +251,11 @@ struct NewFileView: View {
                             }
                         }
                         .sheet(isPresented: $directoryPickerIsPresented) {
-                            DirectoryPickerView(onOpen: { url in
-                                targetUrl = url.absoluteString
-                            })
+                            DirectoryPickerView(
+                                type: .directory,
+                                onOpen: { url in
+                                    targetUrl = url.absoluteString
+                                })
                         }
                     }
 

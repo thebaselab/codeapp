@@ -39,8 +39,10 @@ class DirectoryPickerManager: ObservableObject {
     @Published var showsPicker: Bool = false
 
     var callback: ((URL) -> Void)?
+    var type: DirectoryPickerViewType = .directory
 
-    func showPicker(callback: @escaping ((URL) -> Void)) {
+    func showPicker(type: DirectoryPickerViewType, callback: @escaping ((URL) -> Void)) {
+        self.type = type
         self.callback = callback
         showsPicker = true
     }

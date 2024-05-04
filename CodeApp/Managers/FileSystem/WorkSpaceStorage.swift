@@ -499,7 +499,16 @@ extension WorkSpaceStorage: FileSystemProvider {
     }
 
     func copyItem(at: URL, to: URL, completionHandler: @escaping (Error?) -> Void) {
-        guard let scheme = at.scheme, let fs = fss[scheme] else {
+
+        var scheme: String?
+        let isNonLocalOperation = at.scheme != "file" || to.scheme != "file"
+        if isNonLocalOperation {
+            scheme = at.scheme != "file" ? at.scheme : to.scheme
+        } else {
+            scheme = at.scheme
+        }
+
+        guard let scheme, let fs = fss[scheme] else {
             completionHandler(FSError.SchemeNotRegistered)
             return
         }
@@ -514,7 +523,7 @@ extension WorkSpaceStorage: FileSystemProvider {
             return
         }
 
-        if scheme != "file" {
+        if to.scheme != "file" {
             let fileToInsert = FileItemRepresentable(
                 url: to.absoluteString, isDirectory: to.isDirectory)
             insertToTree(file: fileToInsert)

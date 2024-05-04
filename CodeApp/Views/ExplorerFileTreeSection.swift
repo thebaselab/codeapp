@@ -141,12 +141,30 @@ struct ExplorerFileTree: View {
                 item.url.hasPrefix("file") ? "file.copy" : "file.download", comment: ""),
             image: UIImage(systemName: "folder")!
         ) { _ in
-            App.directoryPickerManager.showPicker { url in
+            App.directoryPickerManager.showPicker(type: .directory) { url in
                 guard let itemURL = item._url else {
                     return
                 }
                 App.workSpaceStorage.copyItem(
                     at: itemURL, to: url.appendingPathComponent(itemURL.lastPathComponent),
+                    completionHandler: { error in
+                        if let error = error {
+                            App.notificationManager.showErrorMessage(error.localizedDescription)
+                        }
+                    })
+            }
+        }
+
+        let ACTION_UPLOAD = UIAction(
+            title: NSLocalizedString("file.upload", comment: ""),
+            image: UIImage(systemName: "arrow.up.doc")!
+        ) { _ in
+            App.directoryPickerManager.showPicker(type: .file) { url in
+                guard let itemURL = item._url else {
+                    return
+                }
+                App.workSpaceStorage.copyItem(
+                    at: url, to: itemURL.appendingPathComponent(url.lastPathComponent),
                     completionHandler: { error in
                         if let error = error {
                             App.notificationManager.showErrorMessage(error.localizedDescription)
@@ -217,9 +235,10 @@ struct ExplorerFileTree: View {
 
         let uiMenu = {
             if item.id == App.workSpaceStorage.currentDirectory.id {
-                return UIMenu(children: [
-                    ACTION_NEW_FILE, ACTION_NEW_FOLDER,
-                ])
+                return UIMenu(
+                    children: [
+                        ACTION_NEW_FILE, ACTION_NEW_FOLDER,
+                    ] + (App.workSpaceStorage.remoteConnected ? [ACTION_UPLOAD] : []))
             } else if item.subFolderItems == nil {
                 let topActions = UIMenu(
                     title: "", options: .displayInline,
@@ -247,7 +266,7 @@ struct ExplorerFileTree: View {
                         ACTION_DUPLICATE,
                         ACTION_DELETE,
                         ACTION_COPY_DOWNLOAD,
-                    ])
+                    ] + (App.workSpaceStorage.remoteConnected ? [ACTION_UPLOAD] : []))
                 return UIMenu(
                     children: [
                         topActions,

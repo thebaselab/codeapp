@@ -65,10 +65,12 @@ struct EditorView: View {
                     }
                     .keyboardShortcut("w", modifiers: [.command])
                     .sheet(isPresented: $stateManager.showsDirectoryPicker) {
-                        DirectoryPickerView(onOpen: { url in
-                            App.loadFolder(url: url)
-                            isSideBarVisible = true
-                        })
+                        DirectoryPickerView(
+                            type: .directory,
+                            onOpen: { url in
+                                App.loadFolder(url: url)
+                                isSideBarVisible = true
+                            })
                     }
                 }.foregroundColor(.clear).font(.system(size: 1))
 

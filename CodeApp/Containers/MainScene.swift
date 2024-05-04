@@ -264,9 +264,11 @@ private struct MainView: View {
             }
         }
         .sheet(isPresented: $directoryPickerManager.showsPicker) {
-            DirectoryPickerView(onOpen: { url in
-                directoryPickerManager.callback?(url)
-            })
+            DirectoryPickerView(
+                type: directoryPickerManager.type,
+                onOpen: { url in
+                    directoryPickerManager.callback?(url)
+                })
         }
         .sheet(isPresented: $createFileSheetManager.showsSheet) {
             if let targetURL = createFileSheetManager.targetURL {
