@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.7.2 (May 2024)**
+##### **v1.7.3 (May 2024)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.7.3 (May 2024)
+- Fixes a problem where keyboard toolbar cannot be disabled
+
 ### 1.7.2 (May 2024)
 - Interactive inputs in local Java / Node.js
 - Fixes a problem with multi-file Java programs
