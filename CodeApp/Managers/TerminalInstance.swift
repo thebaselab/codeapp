@@ -455,10 +455,10 @@ extension TerminalInstance: WKUIDelegate {
 extension TerminalInstance {
     func type(text: String) {
         guard let base64 = text.base64Encoded() else { return }
-        executeScript("term.paste(base64ToString(`\(base64)`))")
+        executeScript("term.input(base64ToString(`\(base64)`))")
     }
 
     func moveCursor(codeSequence: String) {
-        executeScript("term.paste(String.fromCharCode(0x1b)+'\(codeSequence)')")
+        executeScript("term.input(String.fromCharCode(0x1b)+'\(codeSequence)')")
     }
 }
