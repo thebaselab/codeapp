@@ -348,8 +348,9 @@ extension MonacoImplementation: EditorImplementation {
     }
 
     func pasteText(text: String) async {
+        guard let encoded = text.base64Encoded() else { return }
         _ = try? await monacoWebView.evaluateJavaScriptAsync(
-            "editor.executeEdits('source',[{identifier: {major: 1, minor: 1}, range: editor.getSelection(), text: decodeURIComponent(escape(window.atob('\(text)'))), forceMoveMarkers: true}])"
+            "editor.executeEdits('source',[{identifier: {major: 1, minor: 1}, range: editor.getSelection(), text: decodeURIComponent(escape(window.atob('\(encoded)'))), forceMoveMarkers: true}])"
         )
     }
 
