@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.7.3 (May 2024)**
+##### **v1.7.4 (May 2024)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.7.4 (May 2024)
+- Behebt ein Problem beim Einfügen von Text mit der Tastatursymbolleiste
+
 ### 1.7.3 (May 2024)
 - Behebt ein Problem, bei dem die Tastatursymbolleiste nicht deaktiviert werden kann
 
