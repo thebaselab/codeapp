@@ -176,8 +176,6 @@ class MainApp: ObservableObject {
         terminalInstance = TerminalInstance(root: rootDir)
         setUpEditorInstance()
 
-        monacoInstance.delegate = self
-
         terminalInstance.openEditor = { [weak self] url in
             if url.isDirectory {
                 DispatchQueue.main.async {
