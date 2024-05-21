@@ -398,45 +398,6 @@ class MainApp: ObservableObject {
         self.objectWillChange.send()
     }
 
-    func saveUserStates() {
-
-        // Saving root folder
-        if let currentDir = URL(string: workSpaceStorage.currentDirectory.url),
-            currentDir.scheme == "file",
-            let data = try? currentDir.bookmarkData()
-        {
-            UserDefaults.standard.setValue(data, forKey: "uistate.root.bookmark")
-        } else {
-            // If the current directory is a remote directory, or cannot be saved as a bookmark,
-            // we don't save the state.
-            return
-        }
-
-        // TODO: Also save non text files
-        // Saving opened editors
-        let editorsBookmarks = textEditors.compactMap { try? $0.url.bookmarkData() }
-        UserDefaults.standard.setValue(editorsBookmarks, forKey: "uistate.openedURLs.bookmarks")
-
-        // Save active editor
-        if editors.isEmpty {
-            UserDefaults.standard.setValue(nil, forKey: "uistate.activeEditor.bookmark")
-        } else if let activeEditor = activeEditor as? TextEditorInstance,
-            let data = try? activeEditor.url.bookmarkData()
-        {
-            UserDefaults.standard.setValue(data, forKey: "uistate.activeEditor.bookmark")
-        }
-
-        guard !editors.isEmpty else {
-            UserDefaults.standard.setValue(nil, forKey: "uistate.activeEditor.state")
-            return
-        }
-
-        Task {
-            let viewState = await monacoInstance.getViewState()
-            UserDefaults.standard.setValue(viewState, forKey: "uistate.activeEditor.state")
-        }
-    }
-
     func createFolder(at: URL, named: String = "New Folder") async throws {
         let folderURL = at.appendingPathComponent(named)
         let url = try await workSpaceStorage.urlWithSuffixIfExistingFileExist(url: folderURL)
