@@ -960,6 +960,9 @@ class MainApp: ObservableObject {
     @discardableResult
     func openFile(url: URL, alwaysInNewTab: Bool = false) async throws -> EditorInstance {
         guard stateManager.isMonacoEditorInitialized else {
+            if urlQueue.contains(url) {
+                urlQueue.removeAll { $0 == url }
+            }
             urlQueue.append(url)
             throw AppError.editorIsNotReady
         }
