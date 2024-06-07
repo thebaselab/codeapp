@@ -513,6 +513,8 @@
 "file.upload" = "アップロード";
 
 "actions.new_window" = "新しいウィンドウ";
+"actions.switch_to_monaco_editor" = "Monaco エディターに切り替える";
+"actions.switch_to_runestone_editor" = "Runestone エディターに切り替える";
 
 "remote.connecting" = "ホストに接続中";
 "remote.connected" = "正常に接続されました";

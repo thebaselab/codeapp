@@ -16,6 +16,7 @@ struct TopBar: View {
 
     @SceneStorage("sidebar.visible") var isSideBarExpanded: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("panel.visible") var isPanelVisible: Bool = DefaultUIState.PANEL_IS_VISIBLE
+    @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     let openConsolePanel: () -> Void
@@ -110,6 +111,17 @@ struct TopBar: View {
                     }
                 }
                 Divider()
+                Section {
+                    Button(action: {
+                        runeStoneEditorEnabled.toggle()
+                        App.setUpEditorInstance()
+                    }) {
+                        Label(
+                            runeStoneEditorEnabled
+                                ? "actions.switch_to_monaco_editor" : "actions.switch_to_runestone_editor",
+                            systemImage: "arrow.left.arrow.right")
+                    }
+                }
                 Section {
                     Button(action: {
                         App.showWelcomeMessage()

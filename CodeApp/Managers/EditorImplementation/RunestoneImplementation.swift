@@ -376,8 +376,10 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func setModel(url: String) async {
-        if let state = states[url] {
-            await setState(state: state)
+        await MainActor.run {
+            if let state = states[url] {
+                setState(state: state)
+            }
         }
     }
 

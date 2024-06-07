@@ -405,6 +405,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "file.upload" = "Upload";
 
 "actions.new_window" = "New Window";
+"actions.switch_to_monaco_editor" = "Switch to Monaco Editor";
+"actions.switch_to_runestone_editor" = "Switch to Runestone Editor";
 
 "remote.connecting" = "Connecting to Host";
 "remote.connected" = "Connected successfully";

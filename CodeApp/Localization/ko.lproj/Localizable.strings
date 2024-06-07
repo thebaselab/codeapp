@@ -512,6 +512,8 @@
 "file.upload" = "업로드";
 
 "actions.new_window" = "새창";
+"actions.switch_to_monaco_editor" = "Monaco 편집기로 전환";
+"actions.switch_to_runestone_editor" = "Runestone 편집기로 전환";
 
 "remote.connecting" = "호스트에 연결";
 "remote.connected" = "성공적으로 연결됨";

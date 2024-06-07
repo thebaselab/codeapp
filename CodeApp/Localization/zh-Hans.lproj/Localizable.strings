@@ -503,6 +503,8 @@
 "file.upload" = "上传";
 
 "actions.new_window" = "新窗口";
+"actions.switch_to_monaco_editor" = "切换到 Monaco 编辑器";
+"actions.switch_to_runestone_editor" = "切换到 Runestone 编辑器";
 
 "remote.connecting" = "正在连接到主机";
 "remote.connected" = "连接成功";

@@ -512,6 +512,8 @@
 "file.upload" = "Hochladen";
 
 "actions.new_window" = "Neues Fenster";
+"actions.switch_to_monaco_editor" = "Zu Monaco-Editor wechseln";
+"actions.switch_to_runestone_editor" = "Zu Runestone-Editor wechseln";
 
 "remote.connecting" = "Verbindung zum Host herstellen";
 "remote.connected" = "Erfolgreich verbunden";
