@@ -433,11 +433,11 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func focus() async {
-
+        await textView.becomeFirstResponder()
     }
 
     func blur() async {
-
+        await textView.resignFirstResponder()
     }
 
     func searchTermInEditor(term: String) async {
@@ -452,11 +452,15 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func undo() async {
-
+        await MainActor.run {
+            self.textView.undoManager?.undo()
+        }
     }
 
     func redo() async {
-
+        await MainActor.run {
+            self.textView.undoManager?.redo()
+        }
     }
 
     func getSelectedValue() async -> String {
@@ -481,9 +485,7 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func editorInFocus() async -> Bool {
-        return await MainActor.run {
-            return textView.isFirstResponder
-        }
+        return true
     }
 
     func invalidateDecorations() async {
@@ -493,7 +495,10 @@ extension RunestoneImplementation: EditorImplementation {
     func switchToDiffMode(
         originalContent: String, modifiedContent: String, originalUrl: String, modifiedUrl: String
     ) async {
-
+        await MainActor.run {
+            textView.text = "Diff editor is only supported in Monaco Editor"
+            textView.isEditable = false
+        }
     }
 
     func switchToInlineDiffView() async {
@@ -501,7 +506,9 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func switchToNormalMode() async {
-
+        await MainActor.run {
+            textView.isEditable = !options.readOnly
+        }
     }
 
     func moveToNextDiff() async {
