@@ -6,10 +6,44 @@
 //
 
 import Runestone
+import TreeSitterAstroRunestone
+import TreeSitterBashRunestone
 import TreeSitterCPPRunestone
 import TreeSitterCRunestone
+import TreeSitterCSSRunestone
+import TreeSitterCSharpRunestone
+import TreeSitterCommentRunestone
+import TreeSitterElixirRunestone
+import TreeSitterElmRunestone
+import TreeSitterGoRunestone
+import TreeSitterHTMLRunestone
+import TreeSitterHaskellRunestone
+import TreeSitterJSDocRunestone
+import TreeSitterJSON5Runestone
+import TreeSitterJSONRunestone
+import TreeSitterJavaRunestone
 import TreeSitterJavaScriptRunestone
+import TreeSitterJuliaRunestone
+import TreeSitterLaTeXRunestone
+import TreeSitterLuaRunestone
+import TreeSitterMarkdownInlineRunestone
+import TreeSitterMarkdownRunestone
+import TreeSitterOCamlRunestone
+import TreeSitterPHPRunestone
+import TreeSitterPerlRunestone
 import TreeSitterPythonRunestone
+import TreeSitterRRunestone
+import TreeSitterRegexRunestone
+import TreeSitterRubyRunestone
+import TreeSitterRustRunestone
+import TreeSitterSCSSRunestone
+import TreeSitterSQLRunestone
+import TreeSitterSvelteRunestone
+import TreeSitterSwiftRunestone
+import TreeSitterTOMLRunestone
+import TreeSitterTSXRunestone
+import TreeSitterTypeScriptRunestone
+import TreeSitterYAMLRunestone
 
 class DynamicTheme: Runestone.Theme {
 
@@ -354,16 +388,77 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     private func detectLangauge(url: String) -> TreeSitterLanguage? {
-        if url.hasSuffix(".js") {
-            return .javaScript
-        } else if url.hasSuffix(".py") {
-            return .python
+        if url.hasSuffix(".astro") {
+            return .astro
+        } else if url.hasSuffix(".bash") {
+            return .bash
         } else if url.hasSuffix(".c") || url.hasSuffix(".h") {
             return .c
-        } else if url.hasSuffix(".cpp") {
+        } else if url.hasSuffix(".cpp") || url.hasSuffix(".hpp") {
             return .cpp
+        } else if url.hasSuffix(".cs") {
+            return .cSharp
+        } else if url.hasSuffix(".css") {
+            return .css
+        } else if url.hasSuffix(".ex") {
+            return .elixir
+        } else if url.hasSuffix(".elm") {
+            return .elm
+        } else if url.hasSuffix(".go") {
+            return .go
+        } else if url.hasSuffix(".hs") {
+            return .haskell
+        } else if url.hasSuffix(".html") {
+            return .html
+        } else if url.hasSuffix(".java") {
+            return .java
+        } else if url.hasSuffix(".js") {
+            return .javaScript
+        } else if url.hasSuffix(".json5") {
+            return .json5
+        } else if url.hasSuffix(".json") {
+            return .json
+        } else if url.hasSuffix(".jl") {
+            return .julia
+        } else if url.hasSuffix(".tex") {
+            return .latex
+        } else if url.hasSuffix(".lua") {
+            return .lua
+        } else if url.hasSuffix(".md") {
+            return .markdown
+        } else if url.hasSuffix(".ml") {
+            return .ocaml
+        } else if url.hasSuffix(".pl") {
+            return .perl
+        } else if url.hasSuffix(".php") {
+            return .php
+        } else if url.hasSuffix(".py") {
+            return .python
+        } else if url.hasSuffix(".regex") {
+            return .regex
+        } else if url.hasSuffix(".r") {
+            return .r
+        } else if url.hasSuffix(".rb") {
+            return .ruby
+        } else if url.hasSuffix(".rs") {
+            return .rust
+        } else if url.hasSuffix(".scss") {
+            return .scss
+        } else if url.hasSuffix(".sql") {
+            return .sql
+        } else if url.hasSuffix(".svelte") {
+            return .svelte
+        } else if url.hasSuffix(".swift") {
+            return .swift
+        } else if url.hasSuffix(".toml") {
+            return .toml
+        } else if url.hasSuffix(".tsx") {
+            return .tsx
+        } else if url.hasSuffix(".ts") {
+            return .typeScript
+        } else if url.hasSuffix(".yaml") {
+            return .yaml
         }
-
         return nil
     }
 

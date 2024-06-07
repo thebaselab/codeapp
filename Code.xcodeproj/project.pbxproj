@@ -534,7 +534,6 @@
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		946DAB9E2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DAB9D2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone */; };
 		946DABA42BBD98BB00E73257 /* TreeSitterPythonRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABA32BBD98BB00E73257 /* TreeSitterPythonRunestone */; };
-		946DABA62BBD997800E73257 /* TreeSitterCPPRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABA52BBD997800E73257 /* TreeSitterCPPRunestone */; };
 		946DABA82BBD997800E73257 /* TreeSitterCRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABA72BBD997800E73257 /* TreeSitterCRunestone */; };
 		946DABAA2BBDADFC00E73257 /* TreeSitterCPPRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABA92BBDADFC00E73257 /* TreeSitterCPPRunestone */; };
 		946DABAC2BBDADFD00E73257 /* TreeSitterCRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABAB2BBDADFD00E73257 /* TreeSitterCRunestone */; };
@@ -556,6 +555,41 @@
 		94795C4B293259080057C12F /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4A293259080057C12F /* Encoding.swift */; };
 		94795C4C293259080057C12F /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4A293259080057C12F /* Encoding.swift */; };
 		947A9D8927D3C562007680C3 /* UIApplication+getSafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A9D8827D3C562007680C3 /* UIApplication+getSafeArea.swift */; };
+		947BBC682C12ED7D00FFD0C5 /* TreeSitterAstroRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC672C12ED7D00FFD0C5 /* TreeSitterAstroRunestone */; };
+		947BBC6A2C12ED7D00FFD0C5 /* TreeSitterBashRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC692C12ED7D00FFD0C5 /* TreeSitterBashRunestone */; };
+		947BBC6E2C12ED7D00FFD0C5 /* TreeSitterCSharpRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC6D2C12ED7D00FFD0C5 /* TreeSitterCSharpRunestone */; };
+		947BBC702C12ED7D00FFD0C5 /* TreeSitterCSSRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC6F2C12ED7D00FFD0C5 /* TreeSitterCSSRunestone */; };
+		947BBC722C12ED7D00FFD0C5 /* TreeSitterElixirRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC712C12ED7D00FFD0C5 /* TreeSitterElixirRunestone */; };
+		947BBC762C12ED7D00FFD0C5 /* TreeSitterGoRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC752C12ED7D00FFD0C5 /* TreeSitterGoRunestone */; };
+		947BBC782C12ED7D00FFD0C5 /* TreeSitterHaskellRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC772C12ED7D00FFD0C5 /* TreeSitterHaskellRunestone */; };
+		947BBC7A2C12ED7D00FFD0C5 /* TreeSitterHTMLRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC792C12ED7D00FFD0C5 /* TreeSitterHTMLRunestone */; };
+		947BBC7C2C12ED7E00FFD0C5 /* TreeSitterJavaRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC7B2C12ED7E00FFD0C5 /* TreeSitterJavaRunestone */; };
+		947BBC822C12ED7E00FFD0C5 /* TreeSitterJSONRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC812C12ED7E00FFD0C5 /* TreeSitterJSONRunestone */; };
+		947BBC842C12ED7E00FFD0C5 /* TreeSitterJuliaRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC832C12ED7E00FFD0C5 /* TreeSitterJuliaRunestone */; };
+		947BBC862C12ED7E00FFD0C5 /* TreeSitterLaTeXRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC852C12ED7E00FFD0C5 /* TreeSitterLaTeXRunestone */; };
+		947BBC882C12ED7E00FFD0C5 /* TreeSitterLuaRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC872C12ED7E00FFD0C5 /* TreeSitterLuaRunestone */; };
+		947BBC8A2C12ED7E00FFD0C5 /* TreeSitterMarkdownInlineRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC892C12ED7E00FFD0C5 /* TreeSitterMarkdownInlineRunestone */; };
+		947BBC8C2C12ED7E00FFD0C5 /* TreeSitterMarkdownRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC8B2C12ED7E00FFD0C5 /* TreeSitterMarkdownRunestone */; };
+		947BBC8E2C12ED7E00FFD0C5 /* TreeSitterOCamlRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC8D2C12ED7E00FFD0C5 /* TreeSitterOCamlRunestone */; };
+		947BBC902C12ED7E00FFD0C5 /* TreeSitterPerlRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC8F2C12ED7E00FFD0C5 /* TreeSitterPerlRunestone */; };
+		947BBC922C12ED7E00FFD0C5 /* TreeSitterPHPRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC912C12ED7E00FFD0C5 /* TreeSitterPHPRunestone */; };
+		947BBC942C12ED7E00FFD0C5 /* TreeSitterRegexRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC932C12ED7E00FFD0C5 /* TreeSitterRegexRunestone */; };
+		947BBC962C12ED7E00FFD0C5 /* TreeSitterRRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC952C12ED7E00FFD0C5 /* TreeSitterRRunestone */; };
+		947BBC982C12ED7E00FFD0C5 /* TreeSitterRubyRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC972C12ED7E00FFD0C5 /* TreeSitterRubyRunestone */; };
+		947BBC9A2C12ED7E00FFD0C5 /* TreeSitterRustRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC992C12ED7E00FFD0C5 /* TreeSitterRustRunestone */; };
+		947BBC9C2C12ED7E00FFD0C5 /* TreeSitterSCSSRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC9B2C12ED7E00FFD0C5 /* TreeSitterSCSSRunestone */; };
+		947BBC9E2C12ED7E00FFD0C5 /* TreeSitterSQLRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC9D2C12ED7E00FFD0C5 /* TreeSitterSQLRunestone */; };
+		947BBCA02C12ED7E00FFD0C5 /* TreeSitterSvelteRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBC9F2C12ED7E00FFD0C5 /* TreeSitterSvelteRunestone */; };
+		947BBCA22C12ED7E00FFD0C5 /* TreeSitterSwiftRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCA12C12ED7E00FFD0C5 /* TreeSitterSwiftRunestone */; };
+		947BBCA42C12ED7E00FFD0C5 /* TreeSitterTOMLRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCA32C12ED7E00FFD0C5 /* TreeSitterTOMLRunestone */; };
+		947BBCA62C12ED7E00FFD0C5 /* TreeSitterTSXRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCA52C12ED7E00FFD0C5 /* TreeSitterTSXRunestone */; };
+		947BBCA82C12ED7E00FFD0C5 /* TreeSitterTypeScriptRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCA72C12ED7E00FFD0C5 /* TreeSitterTypeScriptRunestone */; };
+		947BBCAA2C12ED7E00FFD0C5 /* TreeSitterYAMLRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCA92C12ED7E00FFD0C5 /* TreeSitterYAMLRunestone */; };
+		947BBCAC2C12EE0100FFD0C5 /* TreeSitterCPPRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCAB2C12EE0100FFD0C5 /* TreeSitterCPPRunestone */; };
+		947BBCAE2C12EE4700FFD0C5 /* TreeSitterCommentRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCAD2C12EE4700FFD0C5 /* TreeSitterCommentRunestone */; };
+		947BBCB02C12EE4700FFD0C5 /* TreeSitterElmRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCAF2C12EE4700FFD0C5 /* TreeSitterElmRunestone */; };
+		947BBCB22C12EE4700FFD0C5 /* TreeSitterJSDocRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCB12C12EE4700FFD0C5 /* TreeSitterJSDocRunestone */; };
+		947BBCB42C12EE4700FFD0C5 /* TreeSitterJSON5Runestone in Frameworks */ = {isa = PBXBuildFile; productRef = 947BBCB32C12EE4700FFD0C5 /* TreeSitterJSON5Runestone */; };
 		947BF349262453040015DAEB /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947BF348262453040015DAEB /* SearchManager.swift */; };
 		94801F93266FB5E400B29D80 /* TerminalInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F92266FB5E400B29D80 /* TerminalInstance.swift */; };
 		94801F95266FBC3500B29D80 /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94801F94266FBC3500B29D80 /* ViewRepresentable.swift */; };
@@ -1919,16 +1953,50 @@
 			files = (
 				9419698F280316C7008AAEB2 /* FilesProvider in Frameworks */,
 				94FD17022BAED26A003E1545 /* Runestone in Frameworks */,
+				947BBC862C12ED7E00FFD0C5 /* TreeSitterLaTeXRunestone in Frameworks */,
 				94196990280316C7008AAEB2 /* ZIPFoundation in Frameworks */,
+				947BBC902C12ED7E00FFD0C5 /* TreeSitterPerlRunestone in Frameworks */,
+				947BBC682C12ED7D00FFD0C5 /* TreeSitterAstroRunestone in Frameworks */,
+				947BBCA62C12ED7E00FFD0C5 /* TreeSitterTSXRunestone in Frameworks */,
+				947BBCAE2C12EE4700FFD0C5 /* TreeSitterCommentRunestone in Frameworks */,
+				947BBC8E2C12ED7E00FFD0C5 /* TreeSitterOCamlRunestone in Frameworks */,
 				94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */,
 				946DABA82BBD997800E73257 /* TreeSitterCRunestone in Frameworks */,
+				947BBC782C12ED7D00FFD0C5 /* TreeSitterHaskellRunestone in Frameworks */,
+				947BBC7C2C12ED7E00FFD0C5 /* TreeSitterJavaRunestone in Frameworks */,
+				947BBC762C12ED7D00FFD0C5 /* TreeSitterGoRunestone in Frameworks */,
+				947BBCA42C12ED7E00FFD0C5 /* TreeSitterTOMLRunestone in Frameworks */,
+				947BBC8A2C12ED7E00FFD0C5 /* TreeSitterMarkdownInlineRunestone in Frameworks */,
+				947BBC8C2C12ED7E00FFD0C5 /* TreeSitterMarkdownRunestone in Frameworks */,
 				9F6BD9522B46902B00E2F8BC /* GCDWebServers in Frameworks */,
+				947BBCA22C12ED7E00FFD0C5 /* TreeSitterSwiftRunestone in Frameworks */,
+				947BBCA02C12ED7E00FFD0C5 /* TreeSitterSvelteRunestone in Frameworks */,
+				947BBCA82C12ED7E00FFD0C5 /* TreeSitterTypeScriptRunestone in Frameworks */,
+				947BBC962C12ED7E00FFD0C5 /* TreeSitterRRunestone in Frameworks */,
 				94196993280316C7008AAEB2 /* MarkdownView in Frameworks */,
-				946DABA62BBD997800E73257 /* TreeSitterCPPRunestone in Frameworks */,
+				947BBCAC2C12EE0100FFD0C5 /* TreeSitterCPPRunestone in Frameworks */,
+				947BBCB02C12EE4700FFD0C5 /* TreeSitterElmRunestone in Frameworks */,
+				947BBCB22C12EE4700FFD0C5 /* TreeSitterJSDocRunestone in Frameworks */,
+				947BBC942C12ED7E00FFD0C5 /* TreeSitterRegexRunestone in Frameworks */,
+				947BBC702C12ED7D00FFD0C5 /* TreeSitterCSSRunestone in Frameworks */,
+				947BBC6A2C12ED7D00FFD0C5 /* TreeSitterBashRunestone in Frameworks */,
+				947BBC882C12ED7E00FFD0C5 /* TreeSitterLuaRunestone in Frameworks */,
+				947BBC9A2C12ED7E00FFD0C5 /* TreeSitterRustRunestone in Frameworks */,
 				946DAB9E2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone in Frameworks */,
+				947BBC722C12ED7D00FFD0C5 /* TreeSitterElixirRunestone in Frameworks */,
+				947BBC982C12ED7E00FFD0C5 /* TreeSitterRubyRunestone in Frameworks */,
+				947BBCB42C12EE4700FFD0C5 /* TreeSitterJSON5Runestone in Frameworks */,
+				947BBC822C12ED7E00FFD0C5 /* TreeSitterJSONRunestone in Frameworks */,
 				946DABA42BBD98BB00E73257 /* TreeSitterPythonRunestone in Frameworks */,
+				947BBC6E2C12ED7D00FFD0C5 /* TreeSitterCSharpRunestone in Frameworks */,
+				947BBC9C2C12ED7E00FFD0C5 /* TreeSitterSCSSRunestone in Frameworks */,
+				947BBC922C12ED7E00FFD0C5 /* TreeSitterPHPRunestone in Frameworks */,
+				947BBC842C12ED7E00FFD0C5 /* TreeSitterJuliaRunestone in Frameworks */,
 				94196995280316C7008AAEB2 /* Dynamic in Frameworks */,
 				94196998280316C7008AAEB2 /* SwiftGit2 in Frameworks */,
+				947BBC7A2C12ED7D00FFD0C5 /* TreeSitterHTMLRunestone in Frameworks */,
+				947BBC9E2C12ED7E00FFD0C5 /* TreeSitterSQLRunestone in Frameworks */,
+				947BBCAA2C12ED7E00FFD0C5 /* TreeSitterYAMLRunestone in Frameworks */,
 				94465DDC28094920001DACDF /* NMSSH.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3053,8 +3121,42 @@
 				94FD17012BAED26A003E1545 /* Runestone */,
 				946DAB9D2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone */,
 				946DABA32BBD98BB00E73257 /* TreeSitterPythonRunestone */,
-				946DABA52BBD997800E73257 /* TreeSitterCPPRunestone */,
 				946DABA72BBD997800E73257 /* TreeSitterCRunestone */,
+				947BBC672C12ED7D00FFD0C5 /* TreeSitterAstroRunestone */,
+				947BBC692C12ED7D00FFD0C5 /* TreeSitterBashRunestone */,
+				947BBC6D2C12ED7D00FFD0C5 /* TreeSitterCSharpRunestone */,
+				947BBC6F2C12ED7D00FFD0C5 /* TreeSitterCSSRunestone */,
+				947BBC712C12ED7D00FFD0C5 /* TreeSitterElixirRunestone */,
+				947BBC752C12ED7D00FFD0C5 /* TreeSitterGoRunestone */,
+				947BBC772C12ED7D00FFD0C5 /* TreeSitterHaskellRunestone */,
+				947BBC792C12ED7D00FFD0C5 /* TreeSitterHTMLRunestone */,
+				947BBC7B2C12ED7E00FFD0C5 /* TreeSitterJavaRunestone */,
+				947BBC812C12ED7E00FFD0C5 /* TreeSitterJSONRunestone */,
+				947BBC832C12ED7E00FFD0C5 /* TreeSitterJuliaRunestone */,
+				947BBC852C12ED7E00FFD0C5 /* TreeSitterLaTeXRunestone */,
+				947BBC872C12ED7E00FFD0C5 /* TreeSitterLuaRunestone */,
+				947BBC892C12ED7E00FFD0C5 /* TreeSitterMarkdownInlineRunestone */,
+				947BBC8B2C12ED7E00FFD0C5 /* TreeSitterMarkdownRunestone */,
+				947BBC8D2C12ED7E00FFD0C5 /* TreeSitterOCamlRunestone */,
+				947BBC8F2C12ED7E00FFD0C5 /* TreeSitterPerlRunestone */,
+				947BBC912C12ED7E00FFD0C5 /* TreeSitterPHPRunestone */,
+				947BBC932C12ED7E00FFD0C5 /* TreeSitterRegexRunestone */,
+				947BBC952C12ED7E00FFD0C5 /* TreeSitterRRunestone */,
+				947BBC972C12ED7E00FFD0C5 /* TreeSitterRubyRunestone */,
+				947BBC992C12ED7E00FFD0C5 /* TreeSitterRustRunestone */,
+				947BBC9B2C12ED7E00FFD0C5 /* TreeSitterSCSSRunestone */,
+				947BBC9D2C12ED7E00FFD0C5 /* TreeSitterSQLRunestone */,
+				947BBC9F2C12ED7E00FFD0C5 /* TreeSitterSvelteRunestone */,
+				947BBCA12C12ED7E00FFD0C5 /* TreeSitterSwiftRunestone */,
+				947BBCA32C12ED7E00FFD0C5 /* TreeSitterTOMLRunestone */,
+				947BBCA52C12ED7E00FFD0C5 /* TreeSitterTSXRunestone */,
+				947BBCA72C12ED7E00FFD0C5 /* TreeSitterTypeScriptRunestone */,
+				947BBCA92C12ED7E00FFD0C5 /* TreeSitterYAMLRunestone */,
+				947BBCAB2C12EE0100FFD0C5 /* TreeSitterCPPRunestone */,
+				947BBCAD2C12EE4700FFD0C5 /* TreeSitterCommentRunestone */,
+				947BBCAF2C12EE4700FFD0C5 /* TreeSitterElmRunestone */,
+				947BBCB12C12EE4700FFD0C5 /* TreeSitterJSDocRunestone */,
+				947BBCB32C12EE4700FFD0C5 /* TreeSitterJSON5Runestone */,
 			);
 			productName = testfield;
 			productReference = 94196B18280316C7008AAEB2 /* CodeUI.app */;
@@ -4308,11 +4410,6 @@
 			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
 			productName = TreeSitterPythonRunestone;
 		};
-		946DABA52BBD997800E73257 /* TreeSitterCPPRunestone */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
-			productName = TreeSitterCPPRunestone;
-		};
 		946DABA72BBD997800E73257 /* TreeSitterCRunestone */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
@@ -4337,6 +4434,181 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
 			productName = TreeSitterPythonRunestone;
+		};
+		947BBC672C12ED7D00FFD0C5 /* TreeSitterAstroRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterAstroRunestone;
+		};
+		947BBC692C12ED7D00FFD0C5 /* TreeSitterBashRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterBashRunestone;
+		};
+		947BBC6D2C12ED7D00FFD0C5 /* TreeSitterCSharpRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterCSharpRunestone;
+		};
+		947BBC6F2C12ED7D00FFD0C5 /* TreeSitterCSSRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterCSSRunestone;
+		};
+		947BBC712C12ED7D00FFD0C5 /* TreeSitterElixirRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterElixirRunestone;
+		};
+		947BBC752C12ED7D00FFD0C5 /* TreeSitterGoRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterGoRunestone;
+		};
+		947BBC772C12ED7D00FFD0C5 /* TreeSitterHaskellRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterHaskellRunestone;
+		};
+		947BBC792C12ED7D00FFD0C5 /* TreeSitterHTMLRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterHTMLRunestone;
+		};
+		947BBC7B2C12ED7E00FFD0C5 /* TreeSitterJavaRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterJavaRunestone;
+		};
+		947BBC812C12ED7E00FFD0C5 /* TreeSitterJSONRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterJSONRunestone;
+		};
+		947BBC832C12ED7E00FFD0C5 /* TreeSitterJuliaRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterJuliaRunestone;
+		};
+		947BBC852C12ED7E00FFD0C5 /* TreeSitterLaTeXRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterLaTeXRunestone;
+		};
+		947BBC872C12ED7E00FFD0C5 /* TreeSitterLuaRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterLuaRunestone;
+		};
+		947BBC892C12ED7E00FFD0C5 /* TreeSitterMarkdownInlineRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterMarkdownInlineRunestone;
+		};
+		947BBC8B2C12ED7E00FFD0C5 /* TreeSitterMarkdownRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterMarkdownRunestone;
+		};
+		947BBC8D2C12ED7E00FFD0C5 /* TreeSitterOCamlRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterOCamlRunestone;
+		};
+		947BBC8F2C12ED7E00FFD0C5 /* TreeSitterPerlRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterPerlRunestone;
+		};
+		947BBC912C12ED7E00FFD0C5 /* TreeSitterPHPRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterPHPRunestone;
+		};
+		947BBC932C12ED7E00FFD0C5 /* TreeSitterRegexRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterRegexRunestone;
+		};
+		947BBC952C12ED7E00FFD0C5 /* TreeSitterRRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterRRunestone;
+		};
+		947BBC972C12ED7E00FFD0C5 /* TreeSitterRubyRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterRubyRunestone;
+		};
+		947BBC992C12ED7E00FFD0C5 /* TreeSitterRustRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterRustRunestone;
+		};
+		947BBC9B2C12ED7E00FFD0C5 /* TreeSitterSCSSRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterSCSSRunestone;
+		};
+		947BBC9D2C12ED7E00FFD0C5 /* TreeSitterSQLRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterSQLRunestone;
+		};
+		947BBC9F2C12ED7E00FFD0C5 /* TreeSitterSvelteRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterSvelteRunestone;
+		};
+		947BBCA12C12ED7E00FFD0C5 /* TreeSitterSwiftRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterSwiftRunestone;
+		};
+		947BBCA32C12ED7E00FFD0C5 /* TreeSitterTOMLRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterTOMLRunestone;
+		};
+		947BBCA52C12ED7E00FFD0C5 /* TreeSitterTSXRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterTSXRunestone;
+		};
+		947BBCA72C12ED7E00FFD0C5 /* TreeSitterTypeScriptRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterTypeScriptRunestone;
+		};
+		947BBCA92C12ED7E00FFD0C5 /* TreeSitterYAMLRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterYAMLRunestone;
+		};
+		947BBCAB2C12EE0100FFD0C5 /* TreeSitterCPPRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterCPPRunestone;
+		};
+		947BBCAD2C12EE4700FFD0C5 /* TreeSitterCommentRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterCommentRunestone;
+		};
+		947BBCAF2C12EE4700FFD0C5 /* TreeSitterElmRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterElmRunestone;
+		};
+		947BBCB12C12EE4700FFD0C5 /* TreeSitterJSDocRunestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterJSDocRunestone;
+		};
+		947BBCB32C12EE4700FFD0C5 /* TreeSitterJSON5Runestone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */;
+			productName = TreeSitterJSON5Runestone;
 		};
 		948F174726B6A5AB00B277FC /* MarkdownView */ = {
 			isa = XCSwiftPackageProductDependency;
