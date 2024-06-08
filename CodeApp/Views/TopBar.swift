@@ -118,7 +118,8 @@ struct TopBar: View {
                     }) {
                         Label(
                             runeStoneEditorEnabled
-                                ? "actions.switch_to_monaco_editor" : "actions.switch_to_runestone_editor",
+                                ? "actions.switch_to_monaco_editor"
+                                : "actions.switch_to_runestone_editor",
                             systemImage: "arrow.left.arrow.right")
                     }
                 }
