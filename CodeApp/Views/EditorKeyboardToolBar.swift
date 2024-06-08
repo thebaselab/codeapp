@@ -12,6 +12,7 @@ struct EditorKeyboardToolBar: View {
     @EnvironmentObject var App: MainApp
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var pasteBoardHasContent = false
+    var isMonaco: Bool
 
     var body: some View {
         HStack(spacing: horizontalSizeClass == .compact ? 8 : 14) {
@@ -30,29 +31,32 @@ struct EditorKeyboardToolBar: View {
                     label: {
                         Image(systemName: "arrow.uturn.right")
                     })
-                Button(
-                    action: {
-                        Task {
-                            let selected = await App.monacoInstance.getSelectedValue()
-                            UIPasteboard.general.string = selected
-                        }
-                    },
-                    label: {
-                        Image(systemName: "doc.on.doc")
-                    })
-                if UIPasteboard.general.hasStrings || pasteBoardHasContent {
+                if isMonaco {
                     Button(
                         action: {
-                            if let string = UIPasteboard.general.string {
-                                Task {
-                                    await App.monacoInstance.pasteText(text: string)
-                                }
+                            Task {
+                                let selected = await App.monacoInstance.getSelectedValue()
+                                UIPasteboard.general.string = selected
                             }
                         },
                         label: {
-                            Image(systemName: "doc.on.clipboard")
+                            Image(systemName: "doc.on.doc")
                         })
+                    if UIPasteboard.general.hasStrings || pasteBoardHasContent {
+                        Button(
+                            action: {
+                                if let string = UIPasteboard.general.string {
+                                    Task {
+                                        await App.monacoInstance.pasteText(text: string)
+                                    }
+                                }
+                            },
+                            label: {
+                                Image(systemName: "doc.on.clipboard")
+                            })
+                    }
                 }
+
                 Button(
                     action: {
                         Task {
@@ -78,50 +82,53 @@ struct EditorKeyboardToolBar: View {
                             Text(char).padding(.horizontal, 2)
                         })
                 }
-                if horizontalSizeClass != .compact {
+                if isMonaco {
+                    if horizontalSizeClass != .compact {
+                        Button(
+                            action: {
+                                Task {
+                                    await App.monacoInstance.moveCursor(direction: .up)
+                                }
+                            },
+                            label: {
+                                Image(systemName: "arrow.up")
+                            })
+                        Button(
+                            action: {
+                                Task {
+                                    await App.monacoInstance.moveCursor(direction: .down)
+                                }
+                            },
+                            label: {
+                                Image(systemName: "arrow.down")
+                            })
+                    }
+
                     Button(
                         action: {
                             Task {
-                                await App.monacoInstance.moveCursor(direction: .up)
+                                await App.monacoInstance.moveCursor(direction: .left)
                             }
                         },
                         label: {
-                            Image(systemName: "arrow.up")
+                            Image(systemName: "arrow.left")
                         })
                     Button(
                         action: {
                             Task {
-                                await App.monacoInstance.moveCursor(direction: .down)
+                                await App.monacoInstance.moveCursor(direction: .right)
                             }
                         },
                         label: {
-                            Image(systemName: "arrow.down")
+                            Image(systemName: "arrow.right")
                         })
                 }
 
                 Button(
                     action: {
                         Task {
-                            await App.monacoInstance.moveCursor(direction: .left)
-                        }
-                    },
-                    label: {
-                        Image(systemName: "arrow.left")
-                    })
-                Button(
-                    action: {
-                        Task {
-                            await App.monacoInstance.moveCursor(direction: .right)
-                        }
-                    },
-                    label: {
-                        Image(systemName: "arrow.right")
-                    })
-                Button(
-                    action: {
-                        Task {
                             await App.monacoInstance.blur()
-                            await App.saveCurrentFile()
+                            //                            await App.saveCurrentFile()
                         }
                     },
                     label: {

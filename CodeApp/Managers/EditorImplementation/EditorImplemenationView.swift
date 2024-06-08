@@ -5,6 +5,7 @@
 //  Created by Ken Chung on 01/02/2024.
 //
 
+import Runestone
 import SwiftUI
 
 struct EditorImplementationView: View {
@@ -25,12 +26,19 @@ private struct _EditorImplementationView: UIViewRepresentable {
 
     @EnvironmentObject var App: MainApp
 
+    private func injectBarButtons(textView: TextView) {
+        let toolbar = UIHostingController(
+            rootView: EditorKeyboardToolBar(isMonaco: false).environmentObject(App))
+        toolbar.view.frame = CGRect(
+            x: 0, y: 0, width: (textView.bounds.width), height: 40)
+        textView.inputAccessoryView = toolbar.view
+    }
+
     private func injectBarButtons(webView: WebViewBase) {
         let toolbar = UIHostingController(
-            rootView: EditorKeyboardToolBar().environmentObject(App))
+            rootView: EditorKeyboardToolBar(isMonaco: true).environmentObject(App))
         toolbar.view.frame = CGRect(
             x: 0, y: 0, width: (webView.bounds.width), height: 40)
-
         webView.addInputAccessoryView(toolbar: toolbar.view)
     }
 
@@ -40,6 +48,10 @@ private struct _EditorImplementationView: UIViewRepresentable {
                 injectBarButtons(webView: webView)
             } else {
                 webView.addInputAccessoryView(toolbar: UIView.init())
+            }
+        } else if let textView = implementation.view as? TextView {
+            if implementation.options.toolBarEnabled {
+                injectBarButtons(textView: textView)
             }
         }
         return implementation.view

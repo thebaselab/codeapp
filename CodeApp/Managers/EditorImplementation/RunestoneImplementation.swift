@@ -347,8 +347,9 @@ class RunestoneImplementation: NSObject {
 
         let textView = TextView()
         textView.showLineNumbers = true
-        textView.autocorrectionType = .no
         textView.autocapitalizationType = .none
+        textView.autocorrectionType = .no
+        textView.spellCheckingType = .no
         textView.backgroundColor = runeStoneTheme.backgroundColor
         self.textView = textView
 
@@ -570,11 +571,15 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func pasteText(text: String) async {
-
+        await MainActor.run {
+            self.textView.insertText(text)
+        }
     }
 
     func insertTextAtCurrentCursor(text: String) async {
-
+        await MainActor.run {
+            self.textView.insertText(text)
+        }
     }
 
     func moveCursor(direction: CursorDirection) async {
