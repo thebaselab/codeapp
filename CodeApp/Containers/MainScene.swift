@@ -143,9 +143,6 @@ private struct MainView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
-    @AppStorage("editorFontSize") var editorTextSize: Int = 14
-    @AppStorage("editorReadOnly") var editorReadOnly = false
-    @AppStorage("compilerShowPath") var compilerShowPath = false
     @AppStorage("changelog.lastread") var changeLogLastReadVersion = "0.0"
 
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
