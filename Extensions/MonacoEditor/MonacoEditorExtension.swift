@@ -27,10 +27,10 @@ class MonacoEditorAuxiliaryExtension: CodeAppExtension {
         )
         let readOnlyStatusBarItem = StatusBarItem(
             extensionID: MONACO_EDITOR_EXTENSION_ID,
-            view: AnyView(EditorReadOnlyLabel()),
-            shouldDisplay: { true },
-            positionPreference: .right,
-            positionPrecedence: Int.max - 2
+            view: AnyView(Text("READ-ONLY")),
+            shouldDisplay: { app.editorOptions.value.readOnly },
+            positionPreference: .left,
+            positionPrecedence: Int.max
         )
         let vimKeyBufferStatusBarItem = StatusBarItem(
             extensionID: MONACO_EDITOR_EXTENSION_ID,

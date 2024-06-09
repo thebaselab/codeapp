@@ -821,8 +821,6 @@
 		9FA1225D2A8B209500E7B417 /* CodeAppContributionPointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225B2A8B209500E7B417 /* CodeAppContributionPointManager.swift */; };
 		9FA122602A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */; };
 		9FA122612A8B29FB00E7B417 /* MonacoEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */; };
-		9FA122642A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */; };
-		9FA122652A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */; };
 		9FA122672A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */; };
 		9FA122682A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */; };
 		9FA1226B2A8B519A00E7B417 /* CheckoutMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA1226A2A8B519A00E7B417 /* CheckoutMenu.swift */; };
@@ -1942,7 +1940,6 @@
 		9FA122582A8B17E400E7B417 /* StatusBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarManager.swift; sourceTree = "<group>"; };
 		9FA1225B2A8B209500E7B417 /* CodeAppContributionPointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAppContributionPointManager.swift; sourceTree = "<group>"; };
 		9FA1225F2A8B29FB00E7B417 /* MonacoEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoEditorExtension.swift; sourceTree = "<group>"; };
-		9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorReadOnlyLabel.swift; sourceTree = "<group>"; };
 		9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorLineColumnIndicator.swift; sourceTree = "<group>"; };
 		9FA1226A2A8B519A00E7B417 /* CheckoutMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutMenu.swift; sourceTree = "<group>"; };
 		9FA1226D2A8B522100E7B417 /* AheadBehindIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AheadBehindIndicator.swift; sourceTree = "<group>"; };
@@ -2994,7 +2991,6 @@
 			isa = PBXGroup;
 			children = (
 				9FD0FAEF2938A14C007170F5 /* EncodingMenu.swift */,
-				9FA122632A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift */,
 				9FA122662A8B2AC300E7B417 /* EditorLineColumnIndicator.swift */,
 				945D4F542B50F54600DE0DBA /* VimModeLabel.swift */,
 				945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */,
@@ -3607,7 +3603,6 @@
 				948A5FEA2A87B09500303C12 /* NSError+init.swift in Sources */,
 				9FD5BCEA29238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				9419696F280316C7008AAEB2 /* FileSystemProvider.swift in Sources */,
-				9FA122652A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */,
 				9474D2952B6B461E00CCC530 /* MonacoImplementation.swift in Sources */,
 				941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94196970280316C7008AAEB2 /* SettingsKeyboardShortcuts.swift in Sources */,
@@ -3791,7 +3786,6 @@
 				948A5FE92A87B09500303C12 /* NSError+init.swift in Sources */,
 				9FD5BCE929238B6C00F20C4B /* TerminalExtension.swift in Sources */,
 				941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */,
-				9FA122642A8B2A8C00E7B417 /* EditorReadOnlyLabel.swift in Sources */,
 				9474D2942B6B461E00CCC530 /* MonacoImplementation.swift in Sources */,
 				941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */,
 				94C893E2279D09D400DFBF29 /* SettingsKeyboardShortcuts.swift in Sources */,
