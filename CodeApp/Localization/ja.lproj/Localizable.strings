@@ -388,7 +388,7 @@
 "Initialize Repository" = "リポジトリを初期化する";
 "Clone Repository" = "リポジトリのクローン";
 "TERMINAL" = "ターミナル";
-"Keyboard Toolbar (Effective in next launch)" = "キーボードツールバー (次回起動時より有効)";
+"Keyboard Toolbar" = "キーボードツールバー";
 "Always Open In New Tab" = "常に新しいタブで開く";
 "Changes" = "変更";
 "Message (⌘Enter to commit)" = "メッセージ (⌘Enterでコミット)";

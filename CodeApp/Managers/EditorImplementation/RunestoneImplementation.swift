@@ -6,6 +6,7 @@
 //
 
 import Runestone
+import SwiftUI
 import TreeSitterAstroRunestone
 import TreeSitterBashRunestone
 import TreeSitterCPPRunestone
@@ -367,6 +368,15 @@ class RunestoneImplementation: NSObject {
         textView.isLineWrappingEnabled = !(options.wordWrap == .off)
         if let currentState = states[currentURL ?? ""] {
             textView.setState(currentState.state)
+        }
+        if options.toolBarEnabled {
+            let toolbar = UIHostingController(
+                rootView: EditorKeyboardToolBar(editorImplementation: self))
+            toolbar.view.frame = CGRect(
+                x: 0, y: 0, width: (textView.bounds.width), height: 40)
+            textView.inputAccessoryView = toolbar.view
+        } else {
+            textView.inputAccessoryView = nil
         }
     }
 }

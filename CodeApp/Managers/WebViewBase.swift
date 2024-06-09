@@ -57,11 +57,19 @@ class WebViewBase: KBWebViewBase {
     var candidateView: UIView? {
         var candidateView: UIView? = nil
         for view in self.scrollView.subviews {
-            if String(describing: type(of: view)).hasPrefix("WKContent") {
+            let description = String(describing: type(of: view))
+            if description.hasPrefix("WKContent")
+                || description.hasSuffix("_CustomInputAccessoryView")
+            {
                 candidateView = view
             }
         }
         return candidateView
+    }
+
+    func removeInputAccessoryView() {
+        objc_setAssociatedObject(
+            self, &ToolbarHandle, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     func addInputAccessoryView(toolbar: UIView?) {

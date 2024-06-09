@@ -7,6 +7,7 @@
 
 import Foundation
 import GameController
+import SwiftUI
 
 extension WKWebView {
     @MainActor
@@ -97,7 +98,17 @@ class MonacoImplementation: NSObject {
         await applyOptions(options: "renderWhitespace: '\(options.renderWhiteSpaces)'")
         await applyOptions(options: "wordWrap: '\(options.wordWrap)'")
         _ = try? await monacoWebView.evaluateJavaScriptAsync("toggleVimMode(\(options.vimEnabled))")
-
+        await MainActor.run {
+            if options.toolBarEnabled {
+                let toolbar = UIHostingController(
+                    rootView: EditorKeyboardToolBar(editorImplementation: self))
+                toolbar.view.frame = CGRect(
+                    x: 0, y: 0, width: (monacoWebView.bounds.width), height: 40)
+                monacoWebView.addInputAccessoryView(toolbar: toolbar.view)
+            } else {
+                monacoWebView.removeInputAccessoryView()
+            }
+        }
     }
 
     private func applyOptions(options: String) async {

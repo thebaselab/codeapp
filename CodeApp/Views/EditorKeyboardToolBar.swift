@@ -9,24 +9,24 @@ import SwiftUI
 
 struct EditorKeyboardToolBar: View {
 
-    @EnvironmentObject var App: MainApp
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var pasteBoardHasContent = false
-    var isMonaco: Bool
+    var editorImplementation: EditorImplementation
+    var isMonaco: Bool { editorImplementation is MonacoImplementation }
 
     var body: some View {
         HStack(spacing: horizontalSizeClass == .compact ? 8 : 14) {
             Group {
                 Button(
                     action: {
-                        Task { await App.monacoInstance.undo() }
+                        Task { await editorImplementation.undo() }
                     },
                     label: {
                         Image(systemName: "arrow.uturn.left")
                     })
                 Button(
                     action: {
-                        Task { await App.monacoInstance.redo() }
+                        Task { await editorImplementation.redo() }
                     },
                     label: {
                         Image(systemName: "arrow.uturn.right")
@@ -35,7 +35,7 @@ struct EditorKeyboardToolBar: View {
                     Button(
                         action: {
                             Task {
-                                let selected = await App.monacoInstance.getSelectedValue()
+                                let selected = await editorImplementation.getSelectedValue()
                                 UIPasteboard.general.string = selected
                             }
                         },
@@ -47,7 +47,7 @@ struct EditorKeyboardToolBar: View {
                             action: {
                                 if let string = UIPasteboard.general.string {
                                     Task {
-                                        await App.monacoInstance.pasteText(text: string)
+                                        await editorImplementation.pasteText(text: string)
                                     }
                                 }
                             },
@@ -60,7 +60,7 @@ struct EditorKeyboardToolBar: View {
                 Button(
                     action: {
                         Task {
-                            await App.monacoInstance.pasteText(text: "\t")
+                            await editorImplementation.pasteText(text: "\t")
                         }
                     },
                     label: {
@@ -75,7 +75,7 @@ struct EditorKeyboardToolBar: View {
                     Button(
                         action: {
                             Task {
-                                await App.monacoInstance.pasteText(text: char)
+                                await editorImplementation.pasteText(text: char)
                             }
                         },
                         label: {
@@ -87,7 +87,7 @@ struct EditorKeyboardToolBar: View {
                         Button(
                             action: {
                                 Task {
-                                    await App.monacoInstance.moveCursor(direction: .up)
+                                    await editorImplementation.moveCursor(direction: .up)
                                 }
                             },
                             label: {
@@ -96,7 +96,7 @@ struct EditorKeyboardToolBar: View {
                         Button(
                             action: {
                                 Task {
-                                    await App.monacoInstance.moveCursor(direction: .down)
+                                    await editorImplementation.moveCursor(direction: .down)
                                 }
                             },
                             label: {
@@ -107,7 +107,7 @@ struct EditorKeyboardToolBar: View {
                     Button(
                         action: {
                             Task {
-                                await App.monacoInstance.moveCursor(direction: .left)
+                                await editorImplementation.moveCursor(direction: .left)
                             }
                         },
                         label: {
@@ -116,7 +116,7 @@ struct EditorKeyboardToolBar: View {
                     Button(
                         action: {
                             Task {
-                                await App.monacoInstance.moveCursor(direction: .right)
+                                await editorImplementation.moveCursor(direction: .right)
                             }
                         },
                         label: {
@@ -127,8 +127,7 @@ struct EditorKeyboardToolBar: View {
                 Button(
                     action: {
                         Task {
-                            await App.monacoInstance.blur()
-                            //                            await App.saveCurrentFile()
+                            await editorImplementation.blur()
                         }
                     },
                     label: {

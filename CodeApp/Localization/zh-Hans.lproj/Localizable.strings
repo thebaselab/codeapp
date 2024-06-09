@@ -381,7 +381,7 @@
 "Initialize Repository" = "初始化存储库";
 "Clone Repository" = "克隆存储库";
 "TERMINAL" = "终端";
-"Keyboard Toolbar (Effective in next launch)" = "键盘工具栏 (下次启动后生效)";
+"Keyboard Toolbar" = "键盘工具栏";
 "Always Open In New Tab" = "总是在新标签页中打开";
 "Changes" = "变更";
 "Message (⌘Enter to commit)" = "提交备注 (⌘ + Enter 以提交)";

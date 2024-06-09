@@ -191,7 +191,7 @@ struct SettingsView: View {
                             )
 
                             Toggle(
-                                "Keyboard Toolbar (Effective in next launch)",
+                                "Keyboard Toolbar",
                                 isOn: $editorOptions.value.toolBarEnabled
                             ).onChange(
                                 of: editorOptions.value.toolBarEnabled
@@ -232,7 +232,7 @@ struct SettingsView: View {
 
                     Section(header: Text("TERMINAL")) {
                         Toggle(
-                            "Keyboard Toolbar (Effective in next launch)",
+                            "Keyboard Toolbar",
                             isOn: $terminalToolBarEnabled)
                         Toggle("Show Command in Terminal", isOn: $compilerShowPath)
                     }
