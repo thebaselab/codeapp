@@ -67,7 +67,7 @@ struct TopBar: View {
                 }
             }
 
-            if App.activeTextEditor != nil {
+            if App.activeTextEditor != nil && !App.runeStoneEditorEnabled {
                 Image(systemName: "doc.text.magnifyingglass").font(.system(size: 17))
                     .foregroundColor(Color.init("T1")).padding(5)
                     .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
