@@ -114,7 +114,6 @@ struct TopBar: View {
                 Section {
                     Button(action: {
                         runeStoneEditorEnabled.toggle()
-                        App.setUpEditorInstance()
                     }) {
                         Label(
                             runeStoneEditorEnabled

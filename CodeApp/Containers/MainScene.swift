@@ -144,6 +144,7 @@ private struct MainView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     @AppStorage("changelog.lastread") var changeLogLastReadVersion = "0.0"
+    @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
 
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
@@ -227,6 +228,9 @@ private struct MainView: View {
         )
         .onChange(of: colorScheme) { newValue in
             App.updateView()
+        }
+        .onChange(of: runeStoneEditorEnabled) { _ in
+            App.setUpEditorInstance()
         }
         .hiddenScrollableContentBackground()
         .onAppear {
