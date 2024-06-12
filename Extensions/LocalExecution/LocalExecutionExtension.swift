@@ -70,8 +70,7 @@ class LocalExecutionExtension: CodeAppExtension {
                     with: lastPathComponentWithoutExtension)
         }
 
-        let compilerShowPath = UserDefaults.standard.bool(forKey: "compilerShowPath")
-        if compilerShowPath {
+        if app.terminalOptions.value.shouldShowCompilerPath {
             app.terminalInstance.executeScript(
                 "localEcho.println(`\(parsedCommands.joined(separator: " && "))`);readLine('');")
         } else {

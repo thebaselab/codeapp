@@ -48,7 +48,6 @@ private struct _TerminalView: UIViewRepresentable {
     var implementation: TerminalInstance
 
     @EnvironmentObject var App: MainApp
-    @AppStorage("terminalToolBarEnabled") var terminalToolBarEnabled: Bool = true
 
     private func injectBarButtons(webView: WebViewBase) {
         let toolbar = UIHostingController(
@@ -64,14 +63,14 @@ private struct _TerminalView: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> UIView {
-        if terminalToolBarEnabled {
+        if implementation.options.toolbarEnabled {
             injectBarButtons(webView: implementation.webView)
         }
         return implementation.webView
     }
 
     func updateUIView(_ uiView: UIView, context: Context) {
-        if terminalToolBarEnabled {
+        if implementation.options.toolbarEnabled {
             injectBarButtons(webView: implementation.webView)
         } else {
             removeBarButtons(webView: implementation.webView)
@@ -122,8 +121,5 @@ private struct TerminalView: View {
                 })
         }
         .foregroundColor(.clear)
-        .onChange(of: consoleFontSize) { value in
-            App.terminalInstance.setFontSize(size: value)
-        }
     }
 }

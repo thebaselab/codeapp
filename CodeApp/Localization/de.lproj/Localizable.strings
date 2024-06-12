@@ -475,6 +475,8 @@
 "settings.explorer.show_hidden_files" = "Versteckte Dateien anzeigen";
 "settings.runestone.editor" = "Runestone Editor";
 "settings.runestone.editor.notes" = "Runestone ist ein Editor mit nativer Textauswahlunterstützung. Einige Funktionen sind in diesem Modus nicht verfügbar.";
+"settings.terminal.font" = "Schriftart";
+
 "panels.no_panel_selected" = "Kein Panel ausgewählt";
 "sidebar.no_section_selected" = "Kein Abschnitt ausgewählt";
 

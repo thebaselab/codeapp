@@ -22,6 +22,8 @@ struct EditorOptions: Codable {
     var toolBarEnabled: Bool
     var vimEnabled: Bool
 
+    // subsequent options must be made optional
+
     init() {
         self.fontSize = 14
         self.fontFamily = "Menlo"

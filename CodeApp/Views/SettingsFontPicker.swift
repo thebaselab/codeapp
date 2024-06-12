@@ -6,7 +6,7 @@ import UIKit
 public struct SettingsFontPicker: UIViewControllerRepresentable {
 
     @Environment(\.presentationMode) var presentationMode
-    @State var showAllFonts: Bool
+    @Binding var showAllFonts: Bool
     var onFontPick: (UIFontDescriptor) -> Void
 
     public func makeUIViewController(

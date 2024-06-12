@@ -281,17 +281,6 @@ struct CodeApp: App {
             nil,
             CFNotificationSuspensionBehavior.deliverImmediately)
 
-        // Disable mini map and line number for iPhones
-        if UIScreen.main.traitCollection.horizontalSizeClass == .compact {
-            if UserDefaults.standard.object(forKey: "editorLineNumberEnabled") == nil {
-                UserDefaults.standard.setValue(false, forKey: "editorLineNumberEnabled")
-                UserDefaults.standard.setValue(false, forKey: "editorMiniMapEnabled")
-            }
-            if UserDefaults.standard.object(forKey: "compilerShowPath") == nil {
-                UserDefaults.standard.setValue(false, forKey: "compilerShowPath")
-            }
-        }
-
         if versionNumberIncreased() || needToUpdateCFiles() {
             createCSDK()
         }

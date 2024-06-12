@@ -143,7 +143,7 @@ class MainApp: ObservableObject {
     var editorShortcuts: [MonacoEditorAction] = []
     var monacoStateToRestore: String? = nil
 
-    let terminalInstance: TerminalInstance
+    var terminalInstance: TerminalInstance! = nil
     var monacoInstance: EditorImplementation! = nil
     var editorTypesMonitor: FolderMonitor? = nil
     let deviceSupportsBiometricAuth: Bool = biometricAuthSupported()
@@ -156,12 +156,11 @@ class MainApp: ObservableObject {
     private var workSpaceCancellable: AnyCancellable? = nil
 
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
-    @AppStorage("compilerShowPath") var compilerShowPath = false
-    @AppStorage("editorSpellCheckEnabled") var editorSpellCheckEnabled = false
-    @AppStorage("editorSpellCheckOnContentChanged") var editorSpellCheckOnContentChanged = true
     @AppStorage("explorer.confirmBeforeDelete") var confirmBeforeDelete = false
     @AppStorage("editorOptions") var editorOptions: CodableWrapper<EditorOptions> = .init(
         value: EditorOptions())
+    @AppStorage("terminalOptions") var terminalOptions: CodableWrapper<TerminalOptions> = .init(
+        value: TerminalOptions())
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
@@ -173,7 +172,7 @@ class MainApp: ObservableObject {
 
         self.workSpaceStorage = WorkSpaceStorage(url: rootDir)
 
-        terminalInstance = TerminalInstance(root: rootDir)
+        terminalInstance = TerminalInstance(root: rootDir, options: terminalOptions.value)
         setUpEditorInstance()
 
         terminalInstance.openEditor = { [weak self] url in

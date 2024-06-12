@@ -9,7 +9,22 @@ import SwiftUI
 import WebKit
 import ios_system
 
+struct TerminalOptions: Codable {
+    var fontSize: Int = 14
+    var fontFamily: String = "Menlo"
+    var toolbarEnabled: Bool = true
+    var shouldShowCompilerPath: Bool = false
+
+    // subsequent options must be made optional
+}
+
 class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
+
+    var options: TerminalOptions {
+        didSet {
+            configureCustomOptions()
+        }
+    }
 
     let INTERRUPT = "\u{03}"
     let END_OF_TRANSMISSION = "\u{04}"
@@ -57,6 +72,34 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
 
     func setFontSize(size: Int) {
         executeScript("term.options.fontSize = \(size)")
+    }
+
+    private func applyFont(fontFamily: String) {
+        guard
+            let percentEncoded = fontFamily.addingPercentEncoding(
+                withAllowedCharacters: .urlPathAllowed)
+        else {
+            return
+        }
+        let js = """
+            var styles = `
+                @font-face {
+                font-family: "\(fontFamily)";
+                src: local("\(fontFamily)"),
+                  url("fonts://\(percentEncoded).ttf") format("truetype");
+              }
+            `
+            var styleSheet = document.createElement("style")
+            styleSheet.innerHTML = styles
+            document.head.appendChild(styleSheet)
+            """
+        executeScript(js)
+        executeScript("term.options.fontFamily = '\(fontFamily)'")
+    }
+
+    private func configureCustomOptions() {
+        executeScript("term.options.fontSize = \(String(options.fontSize))")
+        applyFont(fontFamily: options.fontFamily)
     }
 
     func resetAndSetNewRootDirectory(url: URL) {
@@ -306,11 +349,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             if globalDarkTheme != nil {
                 self.applyTheme(rawTheme: globalDarkTheme!)
             }
-
-            let fontSize = UserDefaults.standard.integer(forKey: "consoleFontSize")
-            if fontSize != 0 {
-                self.setFontSize(size: fontSize)
-            }
+            configureCustomOptions()
         case "window.size.change":
             let cols = result["Cols"] as! Int
             let rows = result["Rows"] as! Int
@@ -354,7 +393,8 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         }
     }
 
-    init(root: URL) {
+    init(root: URL, options: TerminalOptions) {
+        self.options = options
         super.init()
         self.executor = Executor(
             root: root,

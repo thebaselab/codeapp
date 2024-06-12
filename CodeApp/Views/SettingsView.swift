@@ -14,21 +14,20 @@ struct SettingsView: View {
 
     @AppStorage("suggestionEnabled") var suggestionEnabled: Bool = true
     @AppStorage("editorShowKeyboardButtonEnabled") var editorShowKeyboardButtonEnabled: Bool = true
-    @AppStorage("consoleFontSize") var consoleFontSize: Int = 14
-    @AppStorage("terminalToolBarEnabled") var terminalToolBarEnabled: Bool = true
     @AppStorage("preferredColorScheme") var preferredColorScheme: Int = 0
     @AppStorage("explorer.showHiddenFiles") var showHiddenFiles: Bool = false
     @AppStorage("explorer.confirmBeforeDelete") var confirmBeforeDelete = false
     @AppStorage("alwaysOpenInNewTab") var alwaysOpenInNewTab: Bool = false
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
-    @AppStorage("compilerShowPath") var compilerShowPath = false
     @AppStorage("communityTemplatesEnabled") var communityTemplatesEnabled = true
-    @AppStorage("showAllFonts") var showAllFonts = false
     @AppStorage("remoteShouldResolveHomePath") var remoteShouldResolveHomePath = false
     @AppStorage("editorOptions") var editorOptions: CodableWrapper<EditorOptions> = .init(
         value: EditorOptions())
+    @AppStorage("terminalOptions") var terminalOptions: CodableWrapper<TerminalOptions> = .init(
+        value: TerminalOptions())
     @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
 
+    @State var showAllFonts = false
     @State var showsEraseAlert: Bool = false
     @State var showReceiptInformation: Bool = false
 
@@ -65,8 +64,8 @@ struct SettingsView: View {
                         )
 
                         Stepper(
-                            "\(NSLocalizedString("Console Font Size", comment: "")) (\(consoleFontSize))",
-                            value: $consoleFontSize, in: 8...24)
+                            "\(NSLocalizedString("Console Font Size", comment: "")) (\(terminalOptions.value.fontSize))",
+                            value: $terminalOptions.value.fontSize, in: 8...24)
 
                         Button(action: {
                             guard let url = URL(string: "https://github.com/thebaselab/codeapp")
@@ -125,7 +124,7 @@ struct SettingsView: View {
 
                         NavigationLink(
                             destination: SettingsFontPicker(
-                                showAllFonts: showAllFonts,
+                                showAllFonts: $showAllFonts,
                                 onFontPick: { descriptor in
                                     CTFontManagerRequestFonts([descriptor] as CFArray) { _ in
                                         editorOptions.value.fontFamily =
@@ -133,6 +132,10 @@ struct SettingsView: View {
                                     }
                                 }
                             ).toolbar {
+                                Button("Show all fonts") {
+                                    showAllFonts.toggle()
+                                }
+
                                 Button("settings.editor.font.reset") {
                                     editorOptions.value.fontFamily = "Menlo"
                                 }
@@ -237,10 +240,41 @@ struct SettingsView: View {
                         footer: { Text("settings.runestone.editor.notes") })
 
                     Section(header: Text("TERMINAL")) {
+                        NavigationLink(
+                            destination: SettingsFontPicker(
+                                showAllFonts: $showAllFonts,
+                                onFontPick: { descriptor in
+                                    CTFontManagerRequestFonts([descriptor] as CFArray) { _ in
+                                        terminalOptions.value.fontFamily =
+                                            descriptor.object(forKey: .family) as! String
+                                    }
+                                }
+                            ).toolbar {
+                                Button("Show all fonts") {
+                                    showAllFonts.toggle()
+                                }
+
+                                Button("settings.editor.font.reset") {
+                                    terminalOptions.value.fontFamily = TerminalOptions().fontFamily
+                                }
+                                .disabled(
+                                    terminalOptions.value.fontFamily == TerminalOptions().fontFamily
+                                )
+                            },
+                            label: {
+                                HStack {
+                                    Text("settings.terminal.font")
+                                    Spacer()
+                                    Text(terminalOptions.value.fontFamily)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        )
+
+                        Toggle("Keyboard Toolbar", isOn: $terminalOptions.value.toolbarEnabled)
                         Toggle(
-                            "Keyboard Toolbar",
-                            isOn: $terminalToolBarEnabled)
-                        Toggle("Show Command in Terminal", isOn: $compilerShowPath)
+                            "Show Command in Terminal",
+                            isOn: $terminalOptions.value.shouldShowCompilerPath)
                     }
 
                     Section(header: Text(NSLocalizedString("About", comment: ""))) {

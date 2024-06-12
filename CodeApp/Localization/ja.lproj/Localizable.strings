@@ -476,6 +476,8 @@
 "settings.explorer.show_hidden_files" = "隠しファイルを表示";
 "settings.runestone.editor" = "Runestoneエディタ";
 "settings.runestone.editor.notes" = "Runestone はネイティブのテキスト選択をサポートするエディターです。このモードでは一部の機能は使用できません。";
+"settings.terminal.font" = "フォント";
+
 "panels.no_panel_selected" = "パネルが選択されていません";
 "sidebar.no_section_selected" = "セクションが選択されていません";
 

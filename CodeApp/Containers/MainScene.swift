@@ -145,6 +145,8 @@ private struct MainView: View {
 
     @AppStorage("changelog.lastread") var changeLogLastReadVersion = "0.0"
     @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
+    @AppStorage("terminalOptions") var terminalOptions: CodableWrapper<TerminalOptions> = .init(
+        value: TerminalOptions())
 
     @SceneStorage("sidebar.visible") var isSideBarVisible: Bool = DefaultUIState.SIDEBAR_VISIBLE
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
@@ -231,6 +233,9 @@ private struct MainView: View {
         }
         .onChange(of: runeStoneEditorEnabled) { _ in
             App.setUpEditorInstance()
+        }
+        .onChange(of: terminalOptions) { newValue in
+            App.terminalInstance.options = newValue.value
         }
         .hiddenScrollableContentBackground()
         .onAppear {
