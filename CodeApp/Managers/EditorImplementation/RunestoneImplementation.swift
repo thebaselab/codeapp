@@ -293,11 +293,15 @@ struct URLTextState {
     var url: String
     var version: Int
     var state: TextViewState
+    var contentOffset: CGPoint
+    var selectedTextRange: UITextRange?
 
     init(url: String, state: TextViewState) {
         self.url = url
         self.version = 0
         self.state = state
+        self.contentOffset = .zero
+        self.selectedTextRange = nil
     }
 }
 
@@ -333,6 +337,8 @@ class RunestoneImplementation: NSObject {
         states[state.url] = state
         currentURL = state.url
         self.textView.setState(state.state)
+        self.textView.contentOffset = state.contentOffset
+        self.textView.selectedTextRange = state.selectedTextRange
     }
 
     init(options: EditorOptions, theme: EditorTheme) {
@@ -356,6 +362,7 @@ class RunestoneImplementation: NSObject {
         super.init()
 
         textView.editorDelegate = self
+        textView.delegate = self
         configureTextViewForOptions(options: options)
     }
 
@@ -475,6 +482,19 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func createNewModel(url: String, value: String) async {
+        if await Task(operation: { @MainActor in
+            if let currentState = states[url] {
+                self.setState(state: currentState)
+                if value != self.textView.text {
+                    self.textView.text = value
+                }
+                return true
+            } else {
+                return false
+            }
+        }).value {
+            return
+        }
         await Task.detached(priority: .userInitiated) {
             if let language = self.detectLangauge(url: url) {
                 let state = URLTextState(
@@ -671,5 +691,24 @@ extension RunestoneImplementation: TextViewDelegate {
                 cursorPositionDidChange: textLocation.lineNumber + 1,
                 column: textLocation.column + 1)
         }
+        guard let currentURL, var modifiedState = states[currentURL] else { return }
+        modifiedState.selectedTextRange = textView.selectedTextRange
+        states[currentURL] = modifiedState
+    }
+}
+
+extension RunestoneImplementation: UIScrollViewDelegate {
+    func didEndScrolling() {
+        guard let currentURL, var modifiedState = states[currentURL] else { return }
+        modifiedState.contentOffset = textView.contentOffset
+        states[currentURL] = modifiedState
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        didEndScrolling()
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate { didEndScrolling() }
     }
 }
