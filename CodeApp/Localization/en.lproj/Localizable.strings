@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.7.4 (May 2024)**
+##### **v1.8.0 (June 2024)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,6 +23,15 @@
 
 "Changelog.message" =
 "
+### 1.8.0 (June 2024)
+- Editor
+  - Runestone editor mode (an editor with native text selection controls)
+  - Syntax highlighting for Kotlin
+  - Keyboard toolbar can now be enabled/disabled without re-launching the app
+- Terminal Enhancements
+  - Custom font
+  - Keyboard toolbar
+
 ### 1.7.4 (May 2024)
 - Fixes an issue with pasting text using keyboard toolbar
 
