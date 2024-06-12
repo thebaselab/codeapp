@@ -303,7 +303,6 @@ struct URLTextState {
 
 class RunestoneImplementation: NSObject {
     private var textView: TextView
-    private let workerQueue = DispatchQueue.global(qos: .userInitiated)
 
     var options: EditorOptions {
         didSet {
@@ -476,7 +475,7 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func createNewModel(url: String, value: String) async {
-        workerQueue.async {
+        await Task.detached(priority: .userInitiated) {
             if let language = self.detectLangauge(url: url) {
                 let state = URLTextState(
                     url: url,
@@ -485,9 +484,7 @@ extension RunestoneImplementation: EditorImplementation {
                         theme: self.runeStoneTheme,
                         language: language
                     ))
-                DispatchQueue.main.async {
-                    self.setState(state: state)
-                }
+                await self.setState(state: state)
             } else {
                 let state = URLTextState(
                     url: url,
@@ -495,11 +492,9 @@ extension RunestoneImplementation: EditorImplementation {
                         text: value,
                         theme: self.runeStoneTheme
                     ))
-                DispatchQueue.main.async {
-                    self.setState(state: state)
-                }
+                await self.setState(state: state)
             }
-        }
+        }.value
     }
 
     func renameModel(oldURL: String, updatedURL: String) async {
