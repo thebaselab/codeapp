@@ -230,17 +230,17 @@ struct SettingsView: View {
                         }
                     }
 
+                    Section(
+                        content: {
+                            Toggle("settings.runestone.editor", isOn: $runeStoneEditorEnabled)
+                        }, header: { Text("settings.runestone.editor") },
+                        footer: { Text("settings.runestone.editor.notes") })
+
                     Section(header: Text("TERMINAL")) {
                         Toggle(
                             "Keyboard Toolbar",
                             isOn: $terminalToolBarEnabled)
                         Toggle("Show Command in Terminal", isOn: $compilerShowPath)
-                    }
-
-                    Section(header: Text("Experimental Features")) {
-                        Toggle("Runestone Editor", isOn: $runeStoneEditorEnabled)
-                    }.onChange(of: runeStoneEditorEnabled) { newValue in
-                        App.setUpEditorInstance()
                     }
 
                     Section(header: Text(NSLocalizedString("About", comment: ""))) {

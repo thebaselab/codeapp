@@ -474,6 +474,8 @@
 "settings.editor.vim.enabled" = "Vim キーバインディングを有効にする";
 "settings.explorer.confirm_before_delete" = "削除する前に確認する";
 "settings.explorer.show_hidden_files" = "隠しファイルを表示";
+"settings.runestone.editor" = "Runestoneエディタ";
+"settings.runestone.editor.notes" = "Runestone はネイティブのテキスト選択をサポートするエディターです。このモードでは一部の機能は使用できません。";
 "panels.no_panel_selected" = "パネルが選択されていません";
 "sidebar.no_section_selected" = "セクションが選択されていません";
 

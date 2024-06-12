@@ -473,6 +473,8 @@
 "settings.editor.vim.enabled" = "Vim 편집기 활성화";
 "settings.explorer.confirm_before_delete" = "삭제하기 전에 확인";
 "settings.explorer.show_hidden_files" = "숨김 파일 표시";
+"settings.runestone.editor" = "Runestone 편집기";
+"settings.runestone.editor.notes" = "Runestone은 기본 텍스트 선택을 지원하는 편집기입니다. 이 모드에서는 일부 기능을 사용할 수 없습니다.";
 "panels.no_panel_selected" = "패널이 선택되지 않았습니다.";
 "sidebar.no_section_selected" = "섹션이 선택되지 않았습니다.";
 

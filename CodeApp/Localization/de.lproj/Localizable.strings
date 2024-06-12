@@ -473,6 +473,8 @@
 "settings.editor.vim.enabled" = "Vim aktiviert";
 "settings.explorer.confirm_before_delete" = "Bestätigen Sie vor dem Löschen";
 "settings.explorer.show_hidden_files" = "Versteckte Dateien anzeigen";
+"settings.runestone.editor" = "Runestone Editor";
+"settings.runestone.editor.notes" = "Runestone ist ein Editor mit nativer Textauswahlunterstützung. Einige Funktionen sind in diesem Modus nicht verfügbar.";
 "panels.no_panel_selected" = "Kein Panel ausgewählt";
 "sidebar.no_section_selected" = "Kein Abschnitt ausgewählt";
 
