@@ -572,7 +572,7 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func scrollToLine(line: Int) async {
-
+        await textView.goToLine(line)
     }
 
     func openSearchWidget() async {
