@@ -48,8 +48,8 @@ import TreeSitterYAMLRunestone
 
 class DynamicTheme: Runestone.Theme {
 
-    private var lightTheme: Runestone.Theme
-    private var darkTheme: Runestone.Theme
+    var lightTheme: Runestone.Theme
+    var darkTheme: Runestone.Theme
     var editorFont: UIFont
 
     init(light: Runestone.Theme, dark: Runestone.Theme, font: UIFont) {
@@ -315,12 +315,7 @@ class RunestoneImplementation: NSObject {
     }
     var theme: EditorTheme {
         didSet {
-            self.runeStoneTheme = DynamicTheme(
-                light: theme.light != nil ? RunestoneTheme(vsTheme: theme.light!) : DefaultTheme(),
-                dark: theme.dark != nil ? RunestoneTheme(vsTheme: theme.dark!) : DefaultTheme(),
-                font: UIFont(name: options.fontFamily, size: CGFloat(options.fontSize))
-                    ?? DefaultTheme().font
-            )
+            updateEditorTheme()
         }
     }
     private var runeStoneTheme: DynamicTheme
@@ -364,6 +359,14 @@ class RunestoneImplementation: NSObject {
         textView.editorDelegate = self
         textView.delegate = self
         configureTextViewForOptions(options: options)
+    }
+
+    private func updateEditorTheme() {
+        runeStoneTheme.lightTheme =
+            theme.light != nil ? RunestoneTheme(vsTheme: theme.light!) : DefaultTheme()
+        runeStoneTheme.darkTheme =
+            theme.dark != nil ? RunestoneTheme(vsTheme: theme.dark!) : DefaultTheme()
+        textView.redisplayVisibleLines()
     }
 
     func configureTextViewForOptions(options: EditorOptions) {
@@ -545,12 +548,13 @@ extension RunestoneImplementation: EditorImplementation {
     }
 
     func setVSTheme(theme: Theme) async {
-        if theme.isDark {
-            self.theme.dark = theme
-        } else {
-            self.theme.light = theme
-        }
         await MainActor.run {
+            if theme.isDark {
+                self.theme.dark = theme
+            } else {
+                self.theme.light = theme
+            }
+            updateEditorTheme()
             self.textView.backgroundColor = self.runeStoneTheme.backgroundColor
         }
     }
