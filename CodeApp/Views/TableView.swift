@@ -169,6 +169,7 @@ where
             || context.coordinator.lastTheme?.id != themeManager.currentTheme?.id
         {
             uiViewController.setData(data: root)
+            context.coordinator.lastTheme = themeManager.currentTheme
         }
         if let header, header != uiViewController.headerText {
             uiViewController.setHeaderText(text: header)
