@@ -113,12 +113,7 @@ struct MainScene: View {
                     object: nil
                 ),
                 perform: { notification in
-                    // TODO: What does this code do?
                     guard var theme = themeManager.currentTheme else {
-                        //                        if let isDark = notification.userInfo?["isDark"] as? Bool {
-                        //                            App.monacoInstance.executeJavascript(command: "resetTheme(\(isDark))")
-                        //                            App.terminalInstance.executeScript("applyTheme(null, \(isDark))")
-                        //                        }
                         return
                     }
                     Task { await App.monacoInstance.setVSTheme(theme: theme) }
