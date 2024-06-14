@@ -343,11 +343,11 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             }
             self.readLine()
 
-            if globalLightTheme != nil {
-                self.applyTheme(rawTheme: globalLightTheme!)
+            if var lightTheme = ThemeManager.lightTheme {
+                self.applyTheme(rawTheme: lightTheme.dictionary)
             }
-            if globalDarkTheme != nil {
-                self.applyTheme(rawTheme: globalDarkTheme!)
+            if var darkTheme = ThemeManager.darkTheme {
+                self.applyTheme(rawTheme: darkTheme.dictionary)
             }
             configureCustomOptions()
         case "window.size.change":

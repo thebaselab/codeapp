@@ -39,15 +39,15 @@ extension Color {
         var lightColor = UIColor(named: id) ?? .gray
         var darkColor = UIColor(named: id) ?? .gray
 
-        if let globalDarkTheme {
-            let darkColorDict = globalDarkTheme["colors"] as! [String: String]
+        if let darkThemeDictionary = ThemeManager.darkTheme?.dictionary {
+            let darkColorDict = darkThemeDictionary["colors"] as! [String: String]
             if let hexString = darkColorDict[id] {
                 darkColor = UIColor(Color(hexString: hexString))
             }
         }
 
-        if let globalLightTheme {
-            let lightColorDict = globalLightTheme["colors"] as! [String: String]
+        if let lightThemeDictionary = ThemeManager.lightTheme?.dictionary {
+            let lightColorDict = lightThemeDictionary["colors"] as! [String: String]
             if let hexString = lightColorDict[id] {
                 lightColor = UIColor(Color(hexString: hexString))
             }

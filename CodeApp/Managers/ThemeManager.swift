@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-// TODO: Move these into ThemeManager
-var globalDarkTheme: [String: Any]? = nil
-var globalLightTheme: [String: Any]? = nil
-
 class ThemeManager: ObservableObject {
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
@@ -29,6 +25,22 @@ class ThemeManager: ObservableObject {
 
     init() {
         loadBuiltInThemes()
+    }
+
+    func setTheme(theme: Theme) {
+        if theme.isDark {
+            ThemeManager.darkTheme = theme
+            selectedTheme = theme.name
+        } else {
+            ThemeManager.lightTheme = theme
+            selectedLightTheme = theme.name
+        }
+        currentTheme = theme
+
+        let notification = Notification(
+            name: Notification.Name("theme.updated")
+        )
+        NotificationCenter.default.post(notification)
     }
 
     private func loadBuiltInThemes() {
@@ -57,12 +69,10 @@ class ThemeManager: ObservableObject {
 
                 if selectedTheme == name && type == "dark" {
                     ThemeManager.darkTheme = theme
-                    globalDarkTheme = jsonArray
                     currentTheme = theme
                 }
                 if selectedLightTheme == name && type != "dark" {
                     ThemeManager.lightTheme = theme
-                    globalLightTheme = jsonArray
                     currentTheme = theme
                 }
             } else {

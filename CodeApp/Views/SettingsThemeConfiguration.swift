@@ -69,46 +69,10 @@ struct ThemePreview: View {
     @EnvironmentObject var App: MainApp
     @EnvironmentObject var themeManager: ThemeManager
 
-    @State var item: Theme
+    var item: Theme
 
     @AppStorage("editorLightTheme") var selectedLightTheme: String = "Light+"
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
-
-    func setTheme() {
-        // Built-in themes
-        if item.url.scheme == "https" {
-            themeManager.currentTheme = nil
-
-            if item.isDark {
-                globalDarkTheme = nil
-                selectedTheme = item.name
-            } else {
-                globalLightTheme = nil
-                selectedLightTheme = item.name
-            }
-            let notification = Notification(
-                name: Notification.Name("theme.updated"),
-                userInfo: ["isDark": item.isDark]
-            )
-            NotificationCenter.default.post(notification)
-            return
-        }
-
-        if item.isDark {
-            globalDarkTheme = item.dictionary
-            selectedTheme = item.name
-        } else {
-            globalLightTheme = item.dictionary
-            selectedLightTheme = item.name
-        }
-
-        themeManager.currentTheme = item
-
-        let notification = Notification(
-            name: Notification.Name("theme.updated")
-        )
-        NotificationCenter.default.post(notification)
-    }
 
     var body: some View {
         VStack {
@@ -144,7 +108,7 @@ struct ThemePreview: View {
             Text(item.name)
                 .font(.system(size: 16, weight: .regular))
         }.onTapGesture {
-            setTheme()
+            themeManager.setTheme(theme: item)
         }
     }
 }
