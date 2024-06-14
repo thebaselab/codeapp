@@ -36,3 +36,7 @@ Tap the run button on type `node index.js` in the terminal to run the server. La
 ![An express server running on Code App](<../.gitbook/assets/image (3) (2).png>)
 
 To stop the server, press the stop (square) button located at the top right corner of the terminal tab.
+
+### React projects
+
+A list of community-maintainted template projects including a React starter project can be found in the source control tab,.&#x20;

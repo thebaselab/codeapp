@@ -58,6 +58,10 @@ Workspace folder is the folder the editor currently loaded. To work with a git r
 
 <figure><img src="../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2023-08-24 at 12.56.17.png" alt=""><figcaption><p>Cloning a repository</p></figcaption></figure>
 
+#### Community Templates
+
+A list of community-maintained projects for Code App can be found and cloned under the community templates section.
+
 ### Committing files
 
 Newly added / modified files must be added to the staging area before you can make a commit. To do this, press the plus icon next to the file name.

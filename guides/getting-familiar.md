@@ -26,7 +26,7 @@ To create files and folder at the root folder, tap on the corresponding icon in 
 
 ### Importing a external project
 
-Use the source control feature to clone your projects. To learn more:
+Use the source control feature to clone your projects or explore community-maintained template projects for Code App. To learn more:
 
 {% content-ref url="version-control.md" %}
 [version-control.md](version-control.md)
