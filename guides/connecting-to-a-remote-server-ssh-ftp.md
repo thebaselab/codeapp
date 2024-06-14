@@ -1,5 +1,7 @@
 ---
-description: Connect to a self-hosted server and get access to its files and terminal.
+description: >-
+  Connect to a self-hosted server and get access to its files, terminal and
+  network resources.
 ---
 
 # Connecting to a remote server (SSH/FTP)
@@ -35,4 +37,10 @@ Congratulations! You can now access the remote server's files and terminal.
 {% endhint %}
 
 ![](../.gitbook/assets/image.png)
+
+### Port forwarding (SSH Tunneling)
+
+After successfully connecting to your remote server, you can set up port forwarding to access the server's application ports. A common usage is to access a web server hosted on the remote.
+
+<figure><img src="../.gitbook/assets/Simulator Screenshot - iPad (10th generation) - 2024-06-14 at 14.44.40.png" alt=""><figcaption><p>Accessing port 8100 on the remote server</p></figcaption></figure>
 
