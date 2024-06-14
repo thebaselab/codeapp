@@ -352,6 +352,9 @@ class RunestoneImplementation: NSObject {
         textView.autocorrectionType = .no
         textView.spellCheckingType = .no
         textView.backgroundColor = runeStoneTheme.backgroundColor
+        textView.smartDashesType = .no
+        textView.smartQuotesType = .no
+        textView.smartInsertDeleteType = .no
         self.textView = textView
 
         super.init()
