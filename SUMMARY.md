@@ -4,6 +4,7 @@
 
 ## Guides
 
+* [Getting familiar](guides/getting-familiar.md)
 * [Your first program in Python](guides/your-first-program-in-python.md)
 * [Creating a Node.js project](guides/creating-a-node.js-project.md)
 * [Version Control](guides/version-control.md)

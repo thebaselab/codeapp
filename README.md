@@ -39,10 +39,6 @@ Link to TestFlight (Free)
 
 Or if you'd like to get your hands dirty (Requires a Mac with Xcode installed) :&#x20;
 
-{% content-ref url="extras/building-code-from-source.md" %}
-[building-code-from-source.md](extras/building-code-from-source.md)
-{% endcontent-ref %}
-
 {% embed url="https://github.com/thebaselab/codeapp" %}
 Link to our repo
 {% endembed %}
@@ -50,6 +46,10 @@ Link to our repo
 ### Jump right in
 
 Follow these guides to get started on the basics:
+
+{% content-ref url="guides/getting-familiar.md" %}
+[getting-familiar.md](guides/getting-familiar.md)
+{% endcontent-ref %}
 
 {% content-ref url="guides/your-first-program-in-python.md" %}
 [your-first-program-in-python.md](guides/your-first-program-in-python.md)
@@ -68,6 +68,10 @@ Follow these guides to get started on the basics:
 {% endcontent-ref %}
 
 ### Other Resources
+
+{% content-ref url="extras/building-code-from-source.md" %}
+[building-code-from-source.md](extras/building-code-from-source.md)
+{% endcontent-ref %}
 
 {% content-ref url="extras/frequently-asked-questions.md" %}
 [frequently-asked-questions.md](extras/frequently-asked-questions.md)

@@ -36,7 +36,7 @@ Congratulations! You can now access the remote server's files and terminal.
 **Good to know:** Only SSH server allows terminal access
 {% endhint %}
 
-![](../.gitbook/assets/image.png)
+![](<../.gitbook/assets/image (3).png>)
 
 ### Port forwarding (SSH Tunneling)
 

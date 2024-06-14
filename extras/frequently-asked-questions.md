@@ -39,3 +39,7 @@ Currently, there is a compatibility issue with macOS Ventura and additional conf
 #### How to change display language?
 
 Go to iOS Settings App > Code and select a new language. Currently English, German, Korean and Chinese (_简化字)_ are supported.
+
+**I cannot access folders in OneDrive, Dropbox or other cloud providers**
+
+Due to a limitation of Files App's API, it is only possible to access individual files (instead of the entire folder) in cloud providers. To access these files, use the `open file` function instead of `open folder`.
