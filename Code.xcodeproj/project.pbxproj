@@ -4458,7 +4458,7 @@
 			repositoryURL = "https://github.com/simonbs/Runestone";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.4;
+				minimumVersion = 0.5.1;
 			};
 		};
 		9F6BD94E2B46900400E2F8BC /* XCRemoteSwiftPackageReference "GCDWebServer" */ = {
