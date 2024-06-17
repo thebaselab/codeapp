@@ -60,4 +60,24 @@ final class CodeUITests: XCTestCase {
 
         UserDefaults.standard.removeObject(forKey: "alwaysOpenInNewTab")
     }
+
+    func testParseRemoteURL_userExtension() throws {
+        let url = URL(string: "git@github.com:thebaselab/codeapp.git")!
+        let parsed = LocalGitCredentialsHelper.parseRemoteURL(url: url)
+
+        XCTAssertNotNil(parsed)
+        XCTAssertEqual(parsed!.host, "github.com")
+        XCTAssertEqual(parsed!.scheme, "ssh")
+        XCTAssertEqual(parsed!.path, "/thebaselab/codeapp.git")
+    }
+
+    func testParseRemoteURL_noUserExtension() throws {
+        let url = URL(string: "git@github.com:/codeapp.git")!
+        let parsed = LocalGitCredentialsHelper.parseRemoteURL(url: url)
+
+        XCTAssertNotNil(parsed)
+        XCTAssertEqual(parsed!.host, "github.com")
+        XCTAssertEqual(parsed!.scheme, "ssh")
+        XCTAssertEqual(parsed!.path, "/codeapp.git")
+    }
 }

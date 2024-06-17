@@ -210,15 +210,33 @@ final class LocalGitCredentialsHelper {
         return try credentialsForRemoteURL(url: url)
     }
 
-    private func parseRemoteURL(url: URL) -> URL? {
-        if url.absoluteString.starts(with: "git@") {
-            return URL(string: "ssh://\(url.absoluteString)")
+    static func parseRemoteURL(url: URL) -> URL? {
+        if url.scheme == nil {
+            // Handle scp-like syntax urls.
+            // Reference: https://gitirc.eu/git-clone.html#URLS
+
+            // From: [<user>@]<host>:/<path-to-git-repo> [<user>@]<host>:~<user>/<path-to-git-repo>
+            // To: git://<host>[:<port>]/~<user>/<path-to-git-repo>
+            guard
+                let userAtHost = url.absoluteString.split(separator: ":").first,
+                let pathToGitRepo = url.absoluteString.split(separator: "/", maxSplits: 1).last
+            else {
+                return nil
+            }
+            let user = url.absoluteString.dropFirst(userAtHost.count + 1).dropLast(
+                pathToGitRepo.count + 1)
+
+            if user.count > 0 {
+                return URL(string: "ssh://\(userAtHost)/\(user)/\(pathToGitRepo)")
+            } else {
+                return URL(string: "ssh://\(userAtHost)/\(pathToGitRepo)")
+            }
         }
         return url
     }
 
     func credentialsForRemoteURL(url: URL) throws -> Credentials {
-        guard let url = parseRemoteURL(url: url),
+        guard let url = LocalGitCredentialsHelper.parseRemoteURL(url: url),
             let hostname = url.host,
             let _scheme = url.scheme,
             let scheme = SchemeType(rawValue: _scheme)
