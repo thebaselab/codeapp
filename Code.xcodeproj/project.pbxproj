@@ -49,7 +49,6 @@
 		94196964280316C7008AAEB2 /* CloudCodeExecutionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A77818257BC332008FE7B2 /* CloudCodeExecutionManager.swift */; };
 		94196965280316C7008AAEB2 /* String+toCString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC425DEA89A00BC83B5 /* String+toCString.swift */; };
 		94196967280316C7008AAEB2 /* Executor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948D12212583F2A5008F877A /* Executor.swift */; };
-		94196968280316C7008AAEB2 /* RemoteAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437155A26C3C745000376FB /* RemoteAuthView.swift */; };
 		94196969280316C7008AAEB2 /* CodeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EEBF32563C381009D77FE /* CodeApp.swift */; };
 		9419696A280316C7008AAEB2 /* openFilesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A777DB257B8C99008FE7B2 /* openFilesApp.swift */; };
 		9419696B280316C7008AAEB2 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3DDF9260526D200C4F2B1 /* View+If.swift */; };
@@ -473,7 +472,6 @@
 		94369B1325E3DE02008419A0 /* NodeRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94369B1225E3DE02008419A0 /* NodeRunner.mm */; };
 		94369B4A25EAB262008419A0 /* npm.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94369B4925EAB175008419A0 /* npm.bundle */; };
 		9437153F26BF9FC3000376FB /* RemoteContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437153E26BF9FC3000376FB /* RemoteContainer.swift */; };
-		9437155B26C3C745000376FB /* RemoteAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9437155A26C3C745000376FB /* RemoteAuthView.swift */; };
 		9438C9A225CBD25F00335E82 /* EditorKeyboardToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9438C9A125CBD25F00335E82 /* EditorKeyboardToolBar.swift */; };
 		9441129D28217D6A00A8F1D7 /* TerminalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */; };
 		9441129E2821816700A8F1D7 /* TerminalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */; };
@@ -1734,7 +1732,6 @@
 		94369B1B25E3EDFC008419A0 /* extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = extension.entitlements; sourceTree = "<group>"; };
 		94369B4925EAB175008419A0 /* npm.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = npm.bundle; sourceTree = "<group>"; };
 		9437153E26BF9FC3000376FB /* RemoteContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteContainer.swift; sourceTree = "<group>"; };
-		9437155A26C3C745000376FB /* RemoteAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAuthView.swift; sourceTree = "<group>"; };
 		9438C9A125CBD25F00335E82 /* EditorKeyboardToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorKeyboardToolBar.swift; sourceTree = "<group>"; };
 		9441129C28217D6A00A8F1D7 /* TerminalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalProvider.swift; sourceTree = "<group>"; };
 		944112A0282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPTerminalServiceProvider.swift; sourceTree = "<group>"; };
@@ -2902,7 +2899,6 @@
 				94A777F2257B91CA008FE7B2 /* RemoteImage.swift */,
 				94A045F92804842500182275 /* RemoteConnectedSection.swift */,
 				94A045F3280481A900182275 /* RemoteTypeLabel.swift */,
-				9437155A26C3C745000376FB /* RemoteAuthView.swift */,
 				94A045ED280480E800182275 /* RemoteListSection.swift */,
 				94A045F62804822400182275 /* RemoteHostCell.swift */,
 				94A045F02804816000182275 /* RemoteCreateSection.swift */,
@@ -3591,7 +3587,6 @@
 				94795C4929314A0A0057C12F /* CompactSidebar.swift in Sources */,
 				94BEF1322B74AEBD003BBF5D /* UIFont+YYAdd.m in Sources */,
 				94196967280316C7008AAEB2 /* Executor.swift in Sources */,
-				94196968280316C7008AAEB2 /* RemoteAuthView.swift in Sources */,
 				94196969280316C7008AAEB2 /* CodeApp.swift in Sources */,
 				9FC673852AA068EE00346FD7 /* PortForwardServiceProvider.swift in Sources */,
 				9419696A280316C7008AAEB2 /* openFilesApp.swift in Sources */,
@@ -3774,7 +3769,6 @@
 				94795C4829314A0A0057C12F /* CompactSidebar.swift in Sources */,
 				94BEF1312B74AEBD003BBF5D /* UIFont+YYAdd.m in Sources */,
 				948D12222583F2A5008F877A /* Executor.swift in Sources */,
-				9437155B26C3C745000376FB /* RemoteAuthView.swift in Sources */,
 				944EEBF42563C381009D77FE /* CodeApp.swift in Sources */,
 				9FC673842AA068EE00346FD7 /* PortForwardServiceProvider.swift in Sources */,
 				94A777DC257B8C99008FE7B2 /* openFilesApp.swift in Sources */,

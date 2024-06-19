@@ -356,6 +356,9 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "common.create" = "Create";
 "common.remove" = "Remove";
 "common.move" = "Move";
+"common.username" = "Username";
+"common.password" = "Password";
+"common.continue" = "Continue";
 
 "notification.source" = "Source: %@";
 
@@ -393,6 +396,8 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.fs.attempting_to_copy_parent_to_child" = "Source is a parent of the target.";
 "errors.fs.attempting_to_copy_oneself" = "Source has the same path as the parent.";
 "errors.fs.already_connecting_to_a_host" = "Already connecting to a host.";
+"errors.fs.jumping_not_supported_for_host" = "Jumping is not supported for this host.";
+"errors.fs.missing_jumping_server" = "Missing jumping server";
 "errors.source_control.authentication_failed" = "Authentication failed: You might need to configure your git credentials.";
 "errors.source_control.clone_authentication_failed" = "Authentication failed: Check your credentials configuration.";
 "errors.source_control.no_staged_changes" = "There are no staged changes.";
@@ -407,6 +412,13 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "errors.port_forward.service_unavailable" = "Service unavailable";
 "errors.port_forward.invalid_address" = "Invalid address";
 "errors.port_forward.address_already_in_use" = "Errno 48: Address already in use";
+"errors.operation_cancelled_by_user" = "Operation cancelled by user";
+"errors.sftp.invalid_host_url" = "Invalid host URL";
+"errors.sftp.invalid_jump_host_url" = "Invalid jump host URL";
+"errors.sftp.unable_to_start_portforward_service" = "Unable to start portforward service";
+"errors.sftp.auth_failure" = "Authentication failure";
+"errors.sftp.failed_to_perform_operation" = "Failed to perform operation";
+"errors.sftp.unable_to_start_shell" = "Unable to start shell";
 
 "file.copy" = "Copy to..";
 "file.download" = "Download to..";
@@ -425,6 +437,16 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.connected" = "Connected successfully";
 "remote.ssh_key_not_found" = "SSH key not found in Documents/.ssh/id_rsa. Generate one by running ssh-keygen in the terminal.";
 "remote.reload_key" = "Reload key";
+"remote.passphrase_for_private_key" = "Passphrase for private key";
+"remote.credentials_for %@" = "Credentials for %@";
+"remote.enter_credentials" = "Enter credentials";
+"remote.authenticate_to %@" = "Authenticate to %@";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "One or more hosts use this host as a jump proxy.";
+"remote.confirm_delete_are_you_sure_to_delete" = "Are you sure you want to delete this host?";
+"remote.use_jump_server" = "Use Jump Server";
+"remote.jump_using" = "Jump using";
+
+
 
 "source_control.title" = "Source Control";
 "source_control.username" = "Username";

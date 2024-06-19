@@ -8,6 +8,22 @@
 import Foundation
 import NMSSH
 
+enum SFTPError: String {
+    case InvalidHostURL = "errors.sftp.invalid_host_url"
+    case InvalidJumpHostURL = "errors.sftp.invalid_jump_host_url"
+    case UnableToStartPortforwardService = "errors.sftp.unable_to_start_portforward_service"
+    case AuthFailure = "errors.sftp.auth_failure"
+    // TODO: Expose libssh2_sftp_last_error
+    case FailedToPerformOperation = "errors.sftp.failed_to_perform_operation"
+    case UnableToStartShell = "errors.sftp.unable_to_start_shell"
+}
+
+extension SFTPError: LocalizedError {
+    var errorDescription: String? {
+        NSLocalizedString(self.rawValue, comment: "")
+    }
+}
+
 struct SFTPSocket: PortForwardSocket {
     var socket: NMSSHSocket
     var type: PortForwardType
@@ -17,7 +33,13 @@ struct SFTPSocket: PortForwardSocket {
     }
 }
 
-class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServiceProvider {
+struct SFTPJumpHost {
+    var url: URL
+    var username: String
+    var authentication: RemoteAuthenticationMode
+}
+
+class SFTPFileSystemProvider: NSObject {
     static var registeredScheme: String = "sftp"
     var gitServiceProvider: GitServiceProvider? = nil
     var searchServiceProvider: SearchServiceProvider? = nil
@@ -27,43 +49,30 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
     var _terminalServiceProvider: SFTPTerminalServiceProvider? = nil
     var portforwardServiceProvider: (any PortForwardServiceProvider)? { self }
 
-    var homePath: String? = ""
     var fingerPrint: String? = nil
     var sockets: [SFTPSocket] = []
 
     private var didDisconnect: (Error) -> Void
     private var onSocketClosed: ((SFTPSocket) -> Void)? = nil
+    private var onTerminalData: ((Data) -> Void)? = nil
     private var session: NMSSHSession!
     private let queue = DispatchQueue(label: "sftp.serial.queue")
+    private var jumpHostFSS: [SFTPFileSystemProvider] = []
 
     init?(
-        baseURL: URL, cred: URLCredential, didDisconnect: @escaping (Error) -> Void,
+        baseURL: URL, username: String, didDisconnect: @escaping (Error) -> Void,
         onTerminalData: ((Data) -> Void)?
     ) {
-        guard baseURL.scheme == "sftp",
-            let host = baseURL.host,
-            let port = baseURL.port,
-            let username = cred.user
-        else {
-            return nil
-        }
         self.didDisconnect = didDisconnect
-
+        self.onTerminalData = onTerminalData
         super.init()
 
-        queue.async {
-            self.session = NMSSHSession(host: host, port: port, andUsername: username)
-            self.session.delegate = self
-            self.session.channel.socketDelegate = self
+        do {
+            try configureSession(baseURL: baseURL, username: username)
+            try configureTerminalSession(baseURL: baseURL, username: username)
+        } catch {
+            return nil
         }
-
-        self._terminalServiceProvider = SFTPTerminalServiceProvider(
-            baseURL: baseURL, cred: cred)
-        if let onTerminalData = onTerminalData {
-            self._terminalServiceProvider?.onStderr(callback: onTerminalData)
-            self._terminalServiceProvider?.onStdout(callback: onTerminalData)
-        }
-
     }
 
     deinit {
@@ -73,95 +82,165 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
         self.session.disconnect()
     }
 
-    func bindLocalPortToRemote(localAddress: Address, remoteAddress: Address) async throws
-        -> SFTPSocket
-    {
-        return try await withUnsafeThrowingContinuation { continuation in
-            queue.async {
-                do {
-                    let socket = NMSSHChannel.createSocket()
-                    try self.session.channel.bindLocalPortToRemoteHost(
-                        with: socket,
-                        localListenIP: localAddress.address,
-                        localPort: localAddress.port,
-                        host: remoteAddress.address,
-                        port: remoteAddress.port,
-                        in: self.queue
-                    )
-                    let sftpSocket = SFTPSocket(
-                        socket: socket, type: .forward(localAddress, remoteAddress))
-                    DispatchQueue.main.async {
-                        self.sockets.append(sftpSocket)
-                    }
-                    continuation.resume(returning: sftpSocket)
-                } catch {
-                    continuation.resume(throwing: error)
-                }
-            }
+    private func configureTerminalSession(baseURL: URL, username: String) throws {
+        self._terminalServiceProvider = SFTPTerminalServiceProvider(
+            baseURL: baseURL, username: username)
+        guard self._terminalServiceProvider != nil else {
+            throw SFTPError.InvalidHostURL
+        }
+        if let onTerminalData = self.onTerminalData {
+            self._terminalServiceProvider?.onStderr(callback: onTerminalData)
+            self._terminalServiceProvider?.onStdout(callback: onTerminalData)
         }
     }
 
-    func onSocketClosed(_ callback: @escaping (SFTPSocket) -> Void) {
-        self.onSocketClosed = callback
+    private func configureSession(baseURL: URL, username: String) throws {
+        guard baseURL.scheme == "sftp",
+            let host = baseURL.host,
+            let port = baseURL.port
+        else {
+            throw SFTPError.InvalidHostURL
+        }
+        queue.sync {
+            self.session = NMSSHSession(host: host, port: port, andUsername: username)
+            self.session.delegate = self
+            self.session.channel.socketDelegate = self
+        }
     }
 
     func connect(
         authentication: RemoteAuthenticationMode,
-        shouldResolveHomePath: Bool,
-        completionHandler: @escaping (Error?) -> Void
-    ) {
+        jumpHost: SFTPJumpHost?
+    ) async throws {
+        if let jumpHost {
+            let (sftpURL, terminalURL) = try await configureJumpHost(jumpHost: jumpHost)
+            try configureSession(baseURL: sftpURL, username: session.username)
+            try configureTerminalSession(baseURL: terminalURL, username: session.username)
+        }
 
-        self._terminalServiceProvider?.connect(
-            authentication: authentication,
-            completionHandler: { _ in
-                return
-            })
+        async let r1: ()? = self._terminalServiceProvider?.connect(authentication: authentication)
+        async let r2: Void = withCheckedThrowingContinuation {
+            (continuation: CheckedContinuation<Void, Error>) in
+            queue.async {
+                self.session.connect()
+                self.session.timeout = 10
 
-        queue.async {
-            self.session.connect()
+                if self.session.isConnected {
+                    switch authentication {
+                    case .plainUsernamePassword(let credentials):
+                        self.session.authenticate(byPassword: credentials.password ?? "")
 
-            if self.session.isConnected {
-                switch authentication {
-                case .plainUsernamePassword(let credentials):
-                    self.session.authenticate(byPassword: credentials.password ?? "")
-
-                case .inMemorySSHKey(let credentials, let privateKeyContent):
-                    self.session.authenticateBy(
-                        inMemoryPublicKey: nil, privateKey: privateKeyContent,
-                        andPassword: credentials.password)
-
-                case .inFileSSHKey(let credentials, let _privateKeyURL):
-                    let privateKeyURL =
-                        _privateKeyURL ?? getRootDirectory().appendingPathComponent(".ssh/id_rsa")
-                    if let privateKeyContent = try? String(contentsOf: privateKeyURL) {
+                    case .inMemorySSHKey(let credentials, let privateKeyContent):
                         self.session.authenticateBy(
                             inMemoryPublicKey: nil, privateKey: privateKeyContent,
                             andPassword: credentials.password)
+
+                    case .inFileSSHKey(let credentials, let _privateKeyURL):
+                        let privateKeyURL =
+                            _privateKeyURL
+                            ?? getRootDirectory().appendingPathComponent(".ssh/id_rsa")
+                        if let privateKeyContent = try? String(contentsOf: privateKeyURL) {
+                            self.session.authenticateBy(
+                                inMemoryPublicKey: nil, privateKey: privateKeyContent,
+                                andPassword: credentials.password)
+                        }
                     }
                 }
-            }
 
-            guard self.session.isConnected && self.session.isAuthorized else {
-                completionHandler(WorkSpaceStorage.FSError.AuthFailure)
-                return
-            }
+                guard self.session.isConnected && self.session.isAuthorized else {
+                    continuation.resume(throwing: SFTPError.AuthFailure)
+                    return
+                }
 
-            self.session.sftp.connect()
-            self.fingerPrint = self.session.fingerprint(self.session.fingerprintHash)
-            if shouldResolveHomePath {
-                self.homePath = self.session.sftp.resolveSymbolicLink(atPath: ".")
-            }
+                self.fingerPrint = self.session.fingerprint(self.session.fingerprintHash)
+                continuation.resume()
 
-            completionHandler(nil)
+                // This might blocks for 10 seconds on servers without SFTP support
+                // early resume to prevent prolonged connection
+                self.session.sftp.connect()
+            }
         }
-
+        _ = try await (r1, r2)
     }
 
+    private func configureJumpHost(jumpHost: SFTPJumpHost) async throws -> (URL, URL) {
+        guard
+            let primaryJumpServerFS = SFTPFileSystemProvider(
+                baseURL: jumpHost.url,
+                username: jumpHost.username,
+                didDisconnect: didDisconnect,
+                onTerminalData: nil
+            ),
+            let secondaryJumpServerFS = SFTPFileSystemProvider(
+                baseURL: jumpHost.url,
+                username: jumpHost.username,
+                didDisconnect: didDisconnect,
+                onTerminalData: nil
+            )
+        else {
+            throw SFTPError.InvalidJumpHostURL
+        }
+
+        async let r1: Void = primaryJumpServerFS.connect(
+            authentication: jumpHost.authentication,
+            jumpHost: nil)
+        async let r2: Void = secondaryJumpServerFS.connect(
+            authentication: jumpHost.authentication,
+            jumpHost: nil)
+        _ = try await (r1, r2)
+
+        guard
+            let primaryPortForwardServiceProvider = primaryJumpServerFS
+                .portforwardServiceProvider,
+            let secondaryPortForwardServiceProvider = secondaryJumpServerFS
+                .portforwardServiceProvider
+        else {
+            throw SFTPError.UnableToStartPortforwardService
+        }
+        let port1 = Int.random(in: 49152...65535)
+        let port2 = Int.random(in: 49152...65535)
+        async let r3 = primaryPortForwardServiceProvider.bindLocalPortToRemote(
+            localAddress: Address(address: "127.0.0.1", port: port1),
+            remoteAddress: Address(address: session.host, port: Int(truncating: session.port))
+        )
+        async let r4 = secondaryPortForwardServiceProvider.bindLocalPortToRemote(
+            localAddress: Address(address: "127.0.0.1", port: port2),
+            remoteAddress: Address(address: session.host, port: Int(truncating: session.port))
+        )
+        _ = try await (r3, r4)
+
+        // Add reference jumpServerFS before its scope ends so it does not get deallocated
+        self.jumpHostFSS = [primaryJumpServerFS, secondaryJumpServerFS]
+
+        return (
+            URL(string: "sftp://127.0.0.1:\(String(port1))")!,
+            URL(string: "sftp://127.0.0.1:\(String(port2))")!
+        )
+    }
+}
+
+extension SFTPFileSystemProvider: NMSSHSessionDelegate {
+    func session(_ session: NMSSHSession, didDisconnectWithError error: Error) {
+        didDisconnect(error)
+    }
+}
+
+extension SFTPFileSystemProvider: NMSSHSocketDelegate {
+    func socketDidClose(_ socket: NMSSHSocket) {
+        let sftpSocket = sockets.first { $0.socket.sock == socket.sock }
+        sockets = sockets.filter { $0.socket.sock != socket.sock }
+        if let sftpSocket {
+            self.onSocketClosed?(sftpSocket)
+        }
+    }
+}
+
+extension SFTPFileSystemProvider: FileSystemProvider {
     func contentsOfDirectory(at url: URL, completionHandler: @escaping ([URL]?, Error?) -> Void) {
         queue.async {
             let files = self.session.sftp.contentsOfDirectory(atPath: url.path)
             guard let files = files else {
-                completionHandler(nil, WorkSpaceStorage.FSError.Unknown)
+                completionHandler(nil, SFTPError.FailedToPerformOperation)
                 return
             }
             completionHandler(
@@ -195,7 +274,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
             if success {
                 completionHandler(nil)
             } else {
-                completionHandler(WorkSpaceStorage.FSError.Unknown)
+                completionHandler(SFTPError.FailedToPerformOperation)
             }
         }
     }
@@ -212,7 +291,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
             if success {
                 completionHandler(nil)
             } else {
-                completionHandler(WorkSpaceStorage.FSError.Unknown)
+                completionHandler(SFTPError.FailedToPerformOperation)
             }
         }
     }
@@ -224,7 +303,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
             let data = self.session.sftp.contents(atPath: at.path)
 
             guard let data = data else {
-                completionHandler(WorkSpaceStorage.FSError.Unknown)
+                completionHandler(SFTPError.FailedToPerformOperation)
                 return
             }
 
@@ -243,7 +322,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
             if success {
                 completionHandler(nil)
             } else {
-                completionHandler(WorkSpaceStorage.FSError.Unknown)
+                completionHandler(SFTPError.FailedToPerformOperation)
             }
         }
     }
@@ -254,7 +333,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
             if success {
                 completionHandler(nil)
             } else {
-                completionHandler(WorkSpaceStorage.FSError.Unknown)
+                completionHandler(SFTPError.FailedToPerformOperation)
             }
         }
     }
@@ -266,7 +345,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
             if data != nil {
                 completionHandler(data, nil)
             } else {
-                completionHandler(data, WorkSpaceStorage.FSError.Unknown)
+                completionHandler(data, SFTPError.FailedToPerformOperation)
             }
         }
     }
@@ -284,7 +363,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
             if success {
                 completionHandler(nil)
             } else {
-                completionHandler(WorkSpaceStorage.FSError.Unknown)
+                completionHandler(SFTPError.FailedToPerformOperation)
             }
         }
     }
@@ -294,7 +373,7 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
     ) {
         queue.async {
             guard let attributes = self.session.sftp.infoForFile(atPath: at.path) else {
-                completionHandler(nil, WorkSpaceStorage.FSError.Unknown)
+                completionHandler(nil, SFTPError.FailedToPerformOperation)
                 return
             }
 
@@ -305,20 +384,51 @@ class SFTPFileSystemProvider: NSObject, FileSystemProvider, PortForwardServicePr
                 ], nil)
         }
     }
-}
 
-extension SFTPFileSystemProvider: NMSSHSessionDelegate {
-    func session(_ session: NMSSHSession, didDisconnectWithError error: Error) {
-        didDisconnect(error)
+    func resolveSymbolicLink(atPath: String) async -> String? {
+        return await withCheckedContinuation { continuation in
+            queue.async {
+                continuation.resume(
+                    returning:
+                        self.session.sftp.resolveSymbolicLink(atPath: atPath)
+                )
+
+            }
+        }
+
     }
 }
 
-extension SFTPFileSystemProvider: NMSSHSocketDelegate {
-    func socketDidClose(_ socket: NMSSHSocket) {
-        let sftpSocket = sockets.first { $0.socket.sock == socket.sock }
-        sockets = sockets.filter { $0.socket.sock != socket.sock }
-        if let sftpSocket {
-            self.onSocketClosed?(sftpSocket)
+extension SFTPFileSystemProvider: PortForwardServiceProvider {
+    func bindLocalPortToRemote(localAddress: Address, remoteAddress: Address) async throws
+        -> SFTPSocket
+    {
+        return try await withUnsafeThrowingContinuation { continuation in
+            queue.async {
+                do {
+                    let socket = NMSSHChannel.createSocket()
+                    try self.session.channel.bindLocalPortToRemoteHost(
+                        with: socket,
+                        localListenIP: localAddress.address,
+                        localPort: localAddress.port,
+                        host: remoteAddress.address,
+                        port: remoteAddress.port,
+                        in: self.queue
+                    )
+                    let sftpSocket = SFTPSocket(
+                        socket: socket, type: .forward(localAddress, remoteAddress))
+                    DispatchQueue.main.async {
+                        self.sockets.append(sftpSocket)
+                    }
+                    continuation.resume(returning: sftpSocket)
+                } catch {
+                    continuation.resume(throwing: error)
+                }
+            }
         }
+    }
+
+    func onSocketClosed(_ callback: @escaping (SFTPSocket) -> Void) {
+        self.onSocketClosed = callback
     }
 }

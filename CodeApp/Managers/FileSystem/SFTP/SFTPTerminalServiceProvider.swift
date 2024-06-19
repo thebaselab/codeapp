@@ -16,11 +16,10 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
     private var onStderr: ((Data) -> Void)? = nil
     private let queue = DispatchQueue(label: "terminal.serial.queue")
 
-    init?(baseURL: URL, cred: URLCredential) {
+    init?(baseURL: URL, username: String) {
         guard baseURL.scheme == "sftp",
             let host = baseURL.host,
-            let port = baseURL.port,
-            let username = cred.user
+            let port = baseURL.port
         else {
             return nil
         }
@@ -34,49 +33,52 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
     }
 
     func connect(
-        authentication: RemoteAuthenticationMode,
-        completionHandler: @escaping (Error?) -> Void
-    ) {
-        queue.async {
-            self.session.connect()
+        authentication: RemoteAuthenticationMode
+    ) async throws {
+        try await withCheckedThrowingContinuation {
+            (continuation: CheckedContinuation<Void, Error>) in
+            queue.async {
+                self.session.connect()
 
-            if self.session.isConnected {
-                switch authentication {
-                case .plainUsernamePassword(let credentials):
-                    self.session.authenticate(byPassword: credentials.password ?? "")
+                if self.session.isConnected {
+                    switch authentication {
+                    case .plainUsernamePassword(let credentials):
+                        self.session.authenticate(byPassword: credentials.password ?? "")
 
-                case .inMemorySSHKey(let credentials, let privateKeyContent):
-                    self.session.authenticateBy(
-                        inMemoryPublicKey: nil, privateKey: privateKeyContent,
-                        andPassword: credentials.password)
-
-                case .inFileSSHKey(let credentials, let _privateKeyURL):
-                    let privateKeyURL =
-                        _privateKeyURL ?? getRootDirectory().appendingPathComponent(".ssh/id_rsa")
-                    if let privateKeyContent = try? String(contentsOf: privateKeyURL) {
+                    case .inMemorySSHKey(let credentials, let privateKeyContent):
                         self.session.authenticateBy(
                             inMemoryPublicKey: nil, privateKey: privateKeyContent,
                             andPassword: credentials.password)
+
+                    case .inFileSSHKey(let credentials, let _privateKeyURL):
+                        let privateKeyURL =
+                            _privateKeyURL
+                            ?? getRootDirectory().appendingPathComponent(".ssh/id_rsa")
+                        if let privateKeyContent = try? String(contentsOf: privateKeyURL) {
+                            self.session.authenticateBy(
+                                inMemoryPublicKey: nil, privateKey: privateKeyContent,
+                                andPassword: credentials.password)
+                        }
                     }
                 }
-            }
 
-            guard self.session.isConnected && self.session.isAuthorized else {
-                completionHandler(WorkSpaceStorage.FSError.AuthFailure)
-                return
-            }
+                guard self.session.isConnected && self.session.isAuthorized else {
+                    continuation.resume(throwing: SFTPError.AuthFailure)
+                    return
+                }
 
-            do {
-                self.session.channel.requestPty = true
-                self.session.channel.ptyTerminalType = .xterm
-                try self.session.channel.startShell()
-            } catch {
-                print("Unable to start shell,", error)
-            }
+                do {
+                    self.session.channel.requestPty = true
+                    self.session.channel.ptyTerminalType = .xterm
+                    try self.session.channel.startShell()
+                } catch {
+                    print("Unable to start shell,", error)
+                    continuation.resume(throwing: SFTPError.UnableToStartShell)
+                }
 
-            completionHandler(nil)
+                continuation.resume()
+            }
         }
-
     }
 
     func disconnect() {

@@ -93,6 +93,7 @@ struct MainScene: View {
             .environmentObject(App.safariManager)
             .environmentObject(App.directoryPickerManager)
             .environmentObject(App.createFileSheetManager)
+            .environmentObject(App.authenticationRequestManager)
             .onAppear {
                 restoreSceneState()
                 App.extensionManager.initializeExtensions(app: App)
@@ -134,6 +135,7 @@ private struct MainView: View {
     @EnvironmentObject var directoryPickerManager: DirectoryPickerManager
     @EnvironmentObject var createFileSheetManager: CreateFileSheetManager
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var authenticationRequestManager: AuthenticationRequestManager
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -243,7 +245,6 @@ private struct MainView: View {
 
             changeLogLastReadVersion = appVersion
         }
-
         .alert(
             alertManager.title, isPresented: $alertManager.isShowingAlert,
             actions: {
@@ -255,6 +256,32 @@ private struct MainView: View {
                 } else {
                     EmptyView()
                 }
+            }
+        )
+        .alert(
+            authenticationRequestManager.title,
+            isPresented: $authenticationRequestManager.isShowingAlert,
+            actions: {
+                TextField(
+                    authenticationRequestManager.usernameTitleKey ?? "common.username",
+                    text: $authenticationRequestManager.username
+                )
+                .textContentType(.username)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+
+                SecureField(
+                    authenticationRequestManager.passwordTitleKey ?? "common.password",
+                    text: $authenticationRequestManager.password
+                )
+                .textContentType(.password)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+
+                Button(
+                    "common.cancel", role: .cancel,
+                    action: authenticationRequestManager.callbackOnCancel)
+                Button("common.continue", action: authenticationRequestManager.callback)
             }
         )
         .sheet(isPresented: $safariManager.showsSafari) {

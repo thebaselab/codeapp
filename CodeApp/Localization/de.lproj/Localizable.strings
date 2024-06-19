@@ -463,6 +463,9 @@
 "common.create" = "Erstellen";
 "common.remove" = "Entfernen";
 "common.move" = "Bewegen";
+"common.username" = "Benutzername";
+"common.password" = "Passwort";
+"common.continue" = "Fortfahren";
 
 "notification.source" = "Quelle: %@";
 
@@ -500,6 +503,8 @@
 "errors.fs.attempting_to_copy_parent_to_child" = "Versuch, ein Verzeichnis in sich selbst zu kopieren.";
 "errors.fs.attempting_to_copy_oneself" = "Sie versuchen, sich selbst zu kopieren.";
 "errors.fs.already_connecting_to_a_host" = "Es wird bereits eine Verbindung zu einem Host hergestellt.";
+"errors.fs.jumping_not_supported_for_host" = "Jumping wird für diesen Host nicht unterstützt.";
+"errors.fs.missing_jumping_server" = "Fehlender Jumping-Server.";
 "errors.source_control.authentication_failed" = "Authentifizierung fehlgeschlagen: Möglicherweise müssen Sie Ihre Git-Anmeldeinformationen konfigurieren.";
 "errors.source_control.clone_authentication_failed" = "Authentifizierung fehlgeschlagen: Entweder ist die Repository-URL falsch oder Sie müssen Ihre Git-Anmeldeinformationen konfigurieren.";
 "errors.source_control.no_staged_changes" = "Es gibt keine inszenierten Änderungen.";
@@ -514,6 +519,13 @@
 "errors.port_forward.service_unavailable" = "Dienst nicht verfügbar";
 "errors.port_forward.invalid_address" = "Ungültige Adresse";
 "errors.port_forward.address_already_in_use" = "Errno 48: Adresse wird bereits verwendet";
+"errors.operation_cancelled_by_user" = "Operation abgebrochen";
+"errors.sftp.invalid_host_url" = "Ungültige Host-URL";
+"errors.sftp.invalid_jump_host_url" = "Ungültige Jump-Host-URL";
+"errors.sftp.unable_to_start_portforward_service" = "Portweiterleitungsdienst kann nicht gestartet werden";
+"errors.sftp.auth_failure" = "Authentifizierungsfehler";
+"errors.sftp.failed_to_perform_operation" = "Fehler beim Ausführen der Operation";
+"errors.sftp.unable_to_start_shell" = "Shell kann nicht gestartet werden";
 
 "file.copy" = "Kopieren nach..";
 "file.download" = "Herunterladen auf..";
@@ -532,6 +544,15 @@
 "remote.connected" = "Erfolgreich verbunden";
 "remote.ssh_key_not_found" = "SSH-Schlüssel nicht in Documents/.ssh/id_rsa gefunden. Generieren Sie eine, indem Sie ssh-keygen im Terminal ausführen.";
 "remote.reload_key" = "Schlüssel neu laden";
+"remote.passphrase_for_private_key" = "Passphrase für privaten Schlüssel";
+"remote.credentials_for %@" = "Anmeldeinformationen für %@";
+"remote.enter_credentials" = "Geben Sie Ihre Anmeldeinformationen ein";
+"remote.authenticate_to %@" = "Authentifizieren bei %@";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "Einer oder mehrere Hosts verwenden diesen Host als Jump-Proxy";
+"remote.confirm_delete_are_you_sure_to_delete" = "Möchten Sie %@ wirklich löschen?";
+"remote.use_jump_server" = "Jump-Server verwenden";
+"remote.jump_using" = "Verwenden von %@";
+
 
 "source_control.title" = "Quellcodeverwaltung";
 "source_control.username" = "Benutzername";

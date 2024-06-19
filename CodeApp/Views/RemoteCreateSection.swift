@@ -34,8 +34,14 @@ struct RemoteCreateSection: View {
     @State var saveCredentials: Bool = true
     @State var username: String = ""
     @State var hasSSHKey = true
+    @State var usesJumpServer = false
+    @State var jumpServerUrl: String? = nil
 
     @FocusState var focusedField: Field?
+
+    var hostsSuitableForJumphost: [RemoteHost] {
+        hosts.filter { $0.url.hasPrefix("sftp") && $0.jumpServerUrl == nil }
+    }
 
     func resetAllFields() {
         saveAddress = true
@@ -83,8 +89,11 @@ struct RemoteCreateSection: View {
         let cred = URLCredential(
             user: username, password: password, persistence: .none)
         let remoteHost = RemoteHost(
-            url: url.absoluteString, useKeyAuth: false,
-            privateKeyContentKeychainID: usesPrivateKey ? privateKeyContentKeyChainId : nil)
+            url: url.absoluteString,
+            useKeyAuth: false,
+            privateKeyContentKeychainID: usesPrivateKey ? privateKeyContentKeyChainId : nil,
+            jumpServerUrl: usesJumpServer ? jumpServerUrl : nil
+        )
 
         if usesPrivateKey {
             KeychainAccessor.shared.storeObject(
@@ -246,6 +255,25 @@ struct RemoteCreateSection: View {
 
             if serverType == .sftp {
                 Toggle("Use Key Authentication", isOn: $usesPrivateKey)
+                Toggle("remote.use_jump_server", isOn: $usesJumpServer)
+                    .disabled(jumpServerUrl == nil)
+            }
+
+            if usesJumpServer {
+                HStack {
+                    Image(systemName: "rectangle.connected.to.line.below")
+                        .foregroundColor(.gray)
+                        .font(.subheadline)
+
+                    Picker("remote.jump_using", selection: $jumpServerUrl) {
+                        ForEach(hostsSuitableForJumphost, id: \.url) { host in
+                            Text(host.rowDisplayName)
+                                .tag(host.url as String?)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    Spacer()
+                }.frame(maxHeight: 20)
             }
 
             Toggle("Remember address", isOn: $saveAddress)
@@ -280,6 +308,9 @@ struct RemoteCreateSection: View {
             if !value {
                 saveCredentials = false
             }
+        }
+        .onAppear {
+            jumpServerUrl = hostsSuitableForJumphost.first?.url
         }
     }
 }

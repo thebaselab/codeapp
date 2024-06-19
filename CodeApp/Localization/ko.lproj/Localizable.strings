@@ -463,6 +463,9 @@
 "common.create" = "생성";
 "common.rename" = "이름 바꾸기";
 "common.move" = "이동";
+"common.username" = "사용자 이름";
+"common.password" = "암호";
+"common.continue" = "계속";
 
 "notification.source" = "원천: %@";
 
@@ -500,6 +503,8 @@
 "errors.fs.attempting_to_copy_parent_to_child" = "부모를 자식으로 복사하려고 시도했습니다.";
 "errors.fs.attempting_to_copy_oneself" = "자기 자신을 복사하려고합니다.";
 "errors.fs.already_connecting_to_a_host" = "호스트에 이미 연결 중.";
+"errors.fs.jumping_not_supported_for_host" = "호스트에 대한 점프가 지원되지 않습니다.";
+"errors.fs.missing_jumping_server" = "점프 서버가 없습니다.";
 "errors.source_control.authentication_failed" = "인증 실패: git 자격 증명을 구성해야 할 수 있습니다.";
 "errors.source_control.clone_authentication_failed" = "인증 실패: 리포지토리 URL이 잘못되었거나 git 자격 증명을 구성해야 합니다.";
 "errors.source_control.no_staged_changes" = "변경 사항이 없습니다.";
@@ -514,6 +519,13 @@
 "errors.port_forward.service_unavailable" = "서비스를 사용할 수 없습니다.";
 "errors.port_forward.invalid_address" = "잘못된 주소입니다.";
 "errors.port_forward.address_already_in_use" = "Errno 48: 주소가 이미 사용 중입니다.";
+"errors.operation_cancelled_by_user" = "사용자에 의해 작업이 취소되었습니다.";
+"errors.sftp.invalid_host_url" = "잘못된 호스트 URL";
+"errors.sftp.invalid_jump_host_url" = "잘못된 점프 호스트 URL";
+"errors.sftp.unable_to_start_portforward_service" = "포트포워드 서비스를 시작할 수 없습니다.";
+"errors.sftp.auth_failure" = "인증 실패";
+"errors.sftp.failed_to_perform_operation" = "작업을 수행하지 못했습니다.";
+"errors.sftp.unable_to_start_shell" = "쉘을 시작할 수 없습니다.";
 
 "file.copy" = "에게 복사..";
 "file.download" = "다운로드..";
@@ -532,6 +544,14 @@
 "remote.connected" = "성공적으로 연결됨";
 "remote.ssh_key_not_found" = "Documents/.ssh/id_rsa에서 SSH 키를 찾을 수 없습니다. 터미널에서 ssh-keygen을 실행하여 하나를 생성합니다.";
 "remote.reload_key" = "키 다시로드";
+"remote.passphrase_for_private_key" = "개인 키의 암호";
+"remote.credentials_for %@" = "%@의 자격 증명";
+"remote.enter_credentials" = "자격 증명 입력";
+"remote.authenticate_to %@" = "%@에 인증";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "하나 이상의 호스트가 이 호스트를 점프 프록시로 사용합니다.";
+"remote.confirm_delete_are_you_sure_to_delete" = "삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
+"remote.use_jump_server" = "점프 서버 사용";
+"remote.jump_using" = "사용 중인 점프";
 
 "source_control.title" = "소스 제어";
 "source_control.username" = "사용자 이름";

@@ -454,6 +454,9 @@
 "common.create" = "创建";
 "common.remove" = "移除";
 "common.move" = "移动";
+"common.username" = "用户名";
+"common.password" = "密码";
+"common.continue" = "继续";
 
 "notification.source" = "来源: %@";
 
@@ -491,6 +494,8 @@
 "errors.fs.attempting_to_copy_parent_to_child" = "尝试将父文件夹复制到子文件夹。";
 "errors.fs.attempting_to_copy_oneself" = "尝试复制自己。";
 "errors.fs.already_connecting_to_a_host" = "已经正在连接到主机。";
+"errors.fs.jumping_not_supported_for_host" = "不支持此主机的跳转。";
+"errors.fs.missing_jumping_server" = "缺少跳转服务器。";
 "errors.source_control.authentication_failed" = "身份验证失败：您可能需要配置您的 git 凭据。";
 "errors.source_control.clone_authentication_failed" = "身份验证失败：存储库 url 错误或您需要配置 git 凭据。";
 "errors.source_control.no_staged_changes" = "没有任何缓存变更。";
@@ -505,6 +510,13 @@
 "errors.port_forward.service_unavailable" = "服务不可用";
 "errors.port_forward.invalid_address" = "无效的地址";
 "errors.port_forward.address_already_in_use" = "地址已在使用中";
+"errors.operation_cancelled_by_user" = "操作被用户取消";
+"errors.sftp.invalid_host_url" = "无效的主机 URL";
+"errors.sftp.invalid_jump_host_url" = "无效的跳转主机 URL";
+"errors.sftp.unable_to_start_portforward_service" = "无法启动端口转发服务";
+"errors.sftp.auth_failure" = "身份验证失败";
+"errors.sftp.failed_to_perform_operation" = "无法执行操作";
+"errors.sftp.unable_to_start_shell" = "无法启动 shell";
 
 "file.copy" = "复制到..";
 "file.download" = "下载到..";
@@ -523,6 +535,14 @@
 "remote.connected" = "连接成功";
 "remote.ssh_key_not_found" = "在 Documents/.ssh/id_rsa 中找不到 SSH 密钥。 通过在终端中运行 ssh-keygen 生成一个。";
 "remote.reload_key" = "重新加载密钥";
+"remote.passphrase_for_private_key" = "私钥密码";
+"remote.credentials_for %@" = "%@ 的凭据";
+"remote.enter_credentials" = "输入凭据";
+"remote.authenticate_to %@" = "验证到 %@";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "一个或多个主机将此主机用作跳转代理";
+"remote.confirm_delete_are_you_sure_to_delete" = "您确定要删除主机吗？";
+"remote.use_jump_server" = "使用跳转服务器";
+"remote.jump_using" = "使用跳转服务器";
 
 "source_control.title" = "源码管理";
 "source_control.username" = "用户名";

@@ -11,7 +11,6 @@ import SwiftUI
 struct RemoteHostCell: View {
 
     @EnvironmentObject var App: MainApp
-    @State var showsPrompt = false
     @State var isRenaming = false
     @State var newName = ""
     @FocusState var focusedField: Field?
@@ -22,8 +21,7 @@ struct RemoteHostCell: View {
 
     let host: RemoteHost
     let onRemove: () -> Void
-    let onConnect: (@escaping () -> Void) async throws -> Void
-    let onConnectWithCredentials: (URLCredential) async throws -> Void
+    let onConnect: () async throws -> Void
     let onRenameHost: (String) -> Void
 
     var body: some View {
@@ -56,21 +54,7 @@ struct RemoteHostCell: View {
         }.onTapGesture {
             guard !isRenaming else { return }
             Task {
-                try? await onConnect {
-                    DispatchQueue.main.async {
-                        showsPrompt = true
-                    }
-                }
-            }
-        }.sheet(isPresented: $showsPrompt) {
-            RemoteAuthView(host: host) { username, password in
-                showsPrompt = false
-
-                let cred = URLCredential(
-                    user: username, password: password, persistence: .forSession)
-                Task {
-                    try? await onConnectWithCredentials(cred)
-                }
+                try? await onConnect()
             }
         }.contextMenu {
 

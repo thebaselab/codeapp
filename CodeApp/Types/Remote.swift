@@ -20,6 +20,7 @@ struct RemoteHost: Codable {
     var displayName: String?
     var privateKeyContentKeychainID: String?
     var privateKeyPath: String?
+    var jumpServerUrl: String?
 
     var rowDisplayName: String {
         displayName ?? URL(string: self.url)?.host ?? ""
@@ -31,4 +32,12 @@ enum RemoteAuthenticationMode {
     // File path of the ssh keys, default to Documents/.ssh
     case inFileSSHKey(URLCredential, URL?)
     case inMemorySSHKey(URLCredential, String)
+
+    var credentials: URLCredential {
+        switch self {
+        case .inFileSSHKey(let credentials, _), .inMemorySSHKey(let credentials, _),
+            .plainUsernamePassword(let credentials):
+            return credentials
+        }
+    }
 }

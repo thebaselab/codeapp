@@ -464,6 +464,9 @@
 "common.create" = "作成";
 "common.remove" = "削除";
 "common.move" = "移動";
+"common.username" = "ユーザー名";
+"common.password" = "パスワード";
+"common.continue" = "続行";
 
 "notification.source" = "Source: %@";
 
@@ -501,6 +504,8 @@
 "errors.fs.attempting_to_copy_parent_to_child" = "ソースはターゲットの親です。";
 "errors.fs.attempting_to_copy_oneself" = "ソースは親と同じパスを持っています。";
 "errors.fs.already_connecting_to_a_host" = "すでにホストに接続しています。";
+"errors.fs.jumping_not_supported_for_host" = "このホストではジャンプはサポートされていません。";
+"errors.fs.missing_jumping_server" = "ジャンプサーバーが見つかりません。";
 "errors.source_control.authentication_failed" = "認証に失敗しました。Git の認証情報を設定する必要があるかもしれません。";
 "errors.source_control.clone_authentication_failed" = "認証に失敗しました。リポジトリの URL が間違っているか、Git の認証情報を設定する必要があります。";
 "errors.source_control.no_staged_changes" = "コミットする必要のあるステージされている変更はありません。";
@@ -515,6 +520,13 @@
 "errors.port_forward.service_unavailable" = "サービスが利用できません";
 "errors.port_forward.invalid_address" = "無効なアドレスです";
 "errors.port_forward.address_already_in_use" = "Errno 48: アドレスはすでに使用されています";
+"errors.operation_cancelled_by_user" = "ユーザーによって操作がキャンセルされました";
+"errors.sftp.invalid_host_url" = "無効なホスト URL";
+"errors.sftp.invalid_jump_host_url" = "無効なジャンプホスト URL";
+"errors.sftp.unable_to_start_portforward_service" = "ポートフォワードサービスを開始できません";
+"errors.sftp.auth_failure" = "認証に失敗しました";
+"errors.sftp.failed_to_perform_operation" = "操作に失敗しました";
+"errors.sftp.unable_to_start_shell" = "シェルを開始できません";
 
 "file.copy" = "コピー..";
 "file.download" = "ダウンロード..";
@@ -533,6 +545,14 @@
 "remote.connected" = "正常に接続されました";
 "remote.ssh_key_not_found" = "SSH キーが Documents/.ssh/id_rsaに見つかりませんでした。ターミナルで ssh-keygen を実行して生成してください。";
 "remote.reload_key" = "キーをリロードします";
+"remote.passphrase_for_private_key" = "秘密鍵のパスフレーズ";
+"remote.credentials_for %@" = "%@ の認証情報";
+"remote.enter_credentials" = "認証情報を入力してください";
+"remote.authenticate_to %@" = "%@ に認証してください";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "1つ以上のホストがこのホストをジャンププロキシとして使用しています";
+"remote.confirm_delete_are_you_sure_to_delete" = "本当に削除しますか?";
+"remote.use_jump_server" = "ジャンプサーバーを使用する";
+"remote.jump_using" = "ジャンプサーバーを使用して接続";
 
 "source_control.title" = "ソース管理";
 "source_control.username" = "ユーザー名";

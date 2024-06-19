@@ -14,6 +14,7 @@ enum AppError: String {
     case editorIsNotReady = "errors.editor_is_not_ready"
     case encodingFailed = "errors.failed_to_save_file.encoding.failed"
     case fileModifiedByAnotherProcess = "errors.file_modified_by_another_process"
+    case operationCancelledByUser = "errors.operation_cancelled_by_user"
 }
 
 extension AppError: LocalizedError {

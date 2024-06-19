@@ -42,6 +42,8 @@ class WorkSpaceStorage: ObservableObject {
         case UnsupportedAuthenticationMethod = "errors.fs.unsupported_auth"
         case UnableToFindASuitableName = "errors.fs.unable_to_find_suitable_name"
         case TargetIsiCloudFile = "errors.fs.icloud.file"
+        case JumpingNotSupportedForHost = "errors.fs.jumping_not_supported_for_host"
+        case MissingJumpingServer = "errors.fs.missing_jumping_server"
 
         var errorDescription: String? {
             NSLocalizedString(self.rawValue, comment: "")
@@ -93,6 +95,32 @@ class WorkSpaceStorage: ObservableObject {
     }
 
     func connectToServer(
+        host: URL, authenticationModeForHost: RemoteAuthenticationMode,
+        jumpServer: URL, authenticationModeForJumpServer: RemoteAuthenticationMode,
+        completionHandler: @escaping (Error?) -> Void
+    ) {
+        guard host.scheme == "sftp" && jumpServer.scheme == "sftp" else {
+            completionHandler(FSError.JumpingNotSupportedForHost)
+            return
+        }
+        if isConnecting {
+            completionHandler(FSError.AlreadyConnectingToAHost)
+            return
+        }
+        isConnecting = true
+        _connectToServer(
+            host: host,
+            authenticationMode: authenticationModeForHost,
+            sftpJumpHost: SFTPJumpHost(
+                url: jumpServer, username: authenticationModeForJumpServer.credentials.user!,
+                authentication: authenticationModeForJumpServer),
+            completionHandler: { error in
+                completionHandler(error)
+                self.isConnecting = false
+            })
+    }
+
+    func connectToServer(
         host: URL, authenticationMode: RemoteAuthenticationMode,
         completionHandler: @escaping (Error?) -> Void
     ) {
@@ -102,7 +130,7 @@ class WorkSpaceStorage: ObservableObject {
         }
         isConnecting = true
         _connectToServer(
-            host: host, authenticationMode: authenticationMode,
+            host: host, authenticationMode: authenticationMode, sftpJumpHost: nil,
             completionHandler: { error in
                 completionHandler(error)
                 self.isConnecting = false
@@ -111,6 +139,7 @@ class WorkSpaceStorage: ObservableObject {
 
     private func _connectToServer(
         host: URL, authenticationMode: RemoteAuthenticationMode,
+        sftpJumpHost: SFTPJumpHost?,
         completionHandler: @escaping (Error?) -> Void
     ) {
         switch host.scheme {
@@ -134,61 +163,53 @@ class WorkSpaceStorage: ObservableObject {
             }
         case "sftp":
             guard
-                let credentials: URLCredential = {
-                    switch authenticationMode {
-                    case .inFileSSHKey(let credentials, _), .inMemorySSHKey(let credentials, _),
-                        .plainUsernamePassword(let credentials):
-                        return credentials
-                    }
-                }()
-            else {
-                completionHandler(FSError.UnsupportedAuthenticationMethod)
-                return
-            }
-
-            guard
                 let fs = SFTPFileSystemProvider(
-                    baseURL: host, cred: credentials,
+                    baseURL: host,
+                    username: authenticationMode.credentials.user!,
                     didDisconnect: { error in
                         self.disconnect()
-                    }, onTerminalData: self.onTerminalDataAction)
+                    },
+                    onTerminalData: self.onTerminalDataAction)
             else {
                 completionHandler(FSError.Unknown)
                 return
             }
 
-            fs.connect(
-                authentication: authenticationMode,
-                shouldResolveHomePath: remoteShouldResolveHomePath
-            ) { error in
-                if let error = error {
+            Task {
+                do {
+                    try await fs.connect(
+                        authentication: authenticationMode,
+                        jumpHost: sftpJumpHost
+                    )
+                } catch {
                     completionHandler(error)
                     return
                 }
-                guard let homePath = fs.homePath,
+
+                self.fss[host.scheme!] = fs
+                self.updateDirectory(name: "SFTP", url: host.absoluteString)
+
+                if let fingerPrint = fs.fingerPrint {
+                    DispatchQueue.main.async {
+                        self.remoteFingerprint = fingerPrint
+                    }
+                }
+
+                completionHandler(nil)
+
+                var homePath: String? = ""
+                if remoteShouldResolveHomePath {
+                    homePath = await fs.resolveSymbolicLink(atPath: ".")
+                }
+
+                guard let homePath,
                     let hostName = host.host,
                     let baseURL = URL(string: "sftp://\(hostName)/\(homePath)")
                 else {
-                    completionHandler(FSError.Unknown)
                     return
                 }
-                fs.contentsOfDirectory(at: baseURL) { urls, error in
-                    if error != nil {
-                        completionHandler(error)
-                        return
-                    }
-                    self.fss[host.scheme!] = fs
-                    self.updateDirectory(name: "SFTP", url: baseURL.absoluteString)
-
-                    if let fingerPrint = fs.fingerPrint {
-                        DispatchQueue.main.async {
-                            self.remoteFingerprint = fingerPrint
-                        }
-                    }
-                    completionHandler(nil)
-                }
+                self.updateDirectory(name: "SFTP", url: baseURL.absoluteString)
             }
-
         default:
             completionHandler(FSError.SchemeNotRegistered)
             return

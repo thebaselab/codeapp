@@ -12,9 +12,8 @@ struct RemoteListSection: View {
     @EnvironmentObject var App: MainApp
 
     let hosts: [RemoteHost]
-    let onRemoveHost: (RemoteHost) -> Void
-    let onConnectToHost: (RemoteHost, () -> Void) async throws -> Void
-    let onConnectToHostWithCredentials: (RemoteHost, URLCredential) async throws -> Void
+    let onRemoveHost: (RemoteHost, Bool) -> Void
+    let onConnectToHost: (RemoteHost) async throws -> Void
     let onRenameHost: (RemoteHost, String) -> Void
 
     var body: some View {
@@ -31,13 +30,10 @@ struct RemoteListSection: View {
                 RemoteHostCell(
                     host: host,
                     onRemove: {
-                        onRemoveHost(host)
+                        onRemoveHost(host, false)
                     },
-                    onConnect: { onRequestCredentials in
-                        try await onConnectToHost(host, onRequestCredentials)
-                    },
-                    onConnectWithCredentials: { cred in
-                        try await onConnectToHostWithCredentials(host, cred)
+                    onConnect: {
+                        try await onConnectToHost(host)
                     },
                     onRenameHost: { name in
                         onRenameHost(host, name)
