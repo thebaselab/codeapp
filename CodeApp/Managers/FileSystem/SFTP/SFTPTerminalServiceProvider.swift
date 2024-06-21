@@ -14,15 +14,20 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
 
     private var onStdout: ((Data) -> Void)? = nil
     private var onStderr: ((Data) -> Void)? = nil
+    private var onRequestInteractiveKeyboard: ((String) async -> String)
     private let queue = DispatchQueue(label: "terminal.serial.queue")
 
-    init?(baseURL: URL, username: String) {
+    init?(
+        baseURL: URL, username: String,
+        onRequestInteractiveKeyboard: @escaping ((String) async -> String)
+    ) {
         guard baseURL.scheme == "sftp",
             let host = baseURL.host,
             let port = baseURL.port
         else {
             return nil
         }
+        self.onRequestInteractiveKeyboard = onRequestInteractiveKeyboard
         super.init()
 
         queue.async {
@@ -39,6 +44,7 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
             (continuation: CheckedContinuation<Void, Error>) in
             queue.async {
                 self.session.connect()
+                self.session.timeout = 10
 
                 if self.session.isConnected {
                     switch authentication {
@@ -60,6 +66,10 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
                                 andPassword: credentials.password)
                         }
                     }
+                }
+
+                if !self.session.isAuthorized {
+                    self.session.authenticateByKeyboardInteractive()
                 }
 
                 guard self.session.isConnected && self.session.isAuthorized else {
@@ -118,6 +128,15 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
 }
 
 extension SFTPTerminalServiceProvider: NMSSHSessionDelegate {
+    func session(_ session: NMSSHSession, didDisconnectWithError error: Error) {
+        didDisconnect?()
+    }
+
+    func session(_ session: NMSSHSession, keyboardInteractiveRequest request: String) -> String {
+        return UnsafeTask {
+            await self.onRequestInteractiveKeyboard(request)
+        }.get()
+    }
 }
 
 extension SFTPTerminalServiceProvider: NMSSHChannelDelegate {

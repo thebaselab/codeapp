@@ -97,6 +97,7 @@ class WorkSpaceStorage: ObservableObject {
     func connectToServer(
         host: URL, authenticationModeForHost: RemoteAuthenticationMode,
         jumpServer: URL, authenticationModeForJumpServer: RemoteAuthenticationMode,
+        onRequestInteractiveKeyboard: @escaping ((String) async -> String),
         completionHandler: @escaping (Error?) -> Void
     ) {
         guard host.scheme == "sftp" && jumpServer.scheme == "sftp" else {
@@ -111,6 +112,7 @@ class WorkSpaceStorage: ObservableObject {
         _connectToServer(
             host: host,
             authenticationMode: authenticationModeForHost,
+            onRequestInteractiveKeyboard: onRequestInteractiveKeyboard,
             sftpJumpHost: SFTPJumpHost(
                 url: jumpServer, username: authenticationModeForJumpServer.credentials.user!,
                 authentication: authenticationModeForJumpServer),
@@ -122,6 +124,7 @@ class WorkSpaceStorage: ObservableObject {
 
     func connectToServer(
         host: URL, authenticationMode: RemoteAuthenticationMode,
+        onRequestInteractiveKeyboard: @escaping ((String) async -> String),
         completionHandler: @escaping (Error?) -> Void
     ) {
         if isConnecting {
@@ -130,7 +133,8 @@ class WorkSpaceStorage: ObservableObject {
         }
         isConnecting = true
         _connectToServer(
-            host: host, authenticationMode: authenticationMode, sftpJumpHost: nil,
+            host: host, authenticationMode: authenticationMode,
+            onRequestInteractiveKeyboard: onRequestInteractiveKeyboard, sftpJumpHost: nil,
             completionHandler: { error in
                 completionHandler(error)
                 self.isConnecting = false
@@ -139,6 +143,7 @@ class WorkSpaceStorage: ObservableObject {
 
     private func _connectToServer(
         host: URL, authenticationMode: RemoteAuthenticationMode,
+        onRequestInteractiveKeyboard: @escaping ((String) async -> String),
         sftpJumpHost: SFTPJumpHost?,
         completionHandler: @escaping (Error?) -> Void
     ) {
@@ -169,6 +174,7 @@ class WorkSpaceStorage: ObservableObject {
                     didDisconnect: { error in
                         self.disconnect()
                     },
+                    onRequestInteractiveKeyboard: onRequestInteractiveKeyboard,
                     onTerminalData: self.onTerminalDataAction)
             else {
                 completionHandler(FSError.Unknown)

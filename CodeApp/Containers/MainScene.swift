@@ -262,21 +262,25 @@ private struct MainView: View {
             authenticationRequestManager.title,
             isPresented: $authenticationRequestManager.isShowingAlert,
             actions: {
-                TextField(
-                    authenticationRequestManager.usernameTitleKey ?? "common.username",
-                    text: $authenticationRequestManager.username
-                )
-                .textContentType(.username)
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
+                if let usernameTitleKey = authenticationRequestManager.usernameTitleKey {
+                    TextField(
+                        usernameTitleKey,
+                        text: $authenticationRequestManager.username
+                    )
+                    .textContentType(.username)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                }
 
-                SecureField(
-                    authenticationRequestManager.passwordTitleKey ?? "common.password",
-                    text: $authenticationRequestManager.password
-                )
-                .textContentType(.password)
-                .disableAutocorrection(true)
-                .autocapitalization(.none)
+                if let passwordTitleKey = authenticationRequestManager.passwordTitleKey {
+                    SecureField(
+                        passwordTitleKey,
+                        text: $authenticationRequestManager.password
+                    )
+                    .textContentType(.password)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                }
 
                 Button(
                     "common.cancel", role: .cancel,

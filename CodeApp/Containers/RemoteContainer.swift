@@ -103,8 +103,9 @@ struct RemoteContainer: View {
         guard
             try await context.evaluatePolicy(
                 .deviceOwnerAuthenticationWithBiometrics,
-                localizedReason: NSLocalizedString(
-                    "remote.authenticate_to \(hostUrl.host ?? "host")", comment: ""))
+                localizedReason: String(
+                    format: NSLocalizedString(
+                        "remote.authenticate_to %@", comment: ""), hostUrl.host ?? "host"))
         else {
             throw WorkSpaceStorage.FSError.AuthFailure
         }
@@ -185,6 +186,13 @@ struct RemoteContainer: View {
         }
     }
 
+    private func onRequestInteractiveKeyboard(prompt: String) async -> String {
+        return
+            (try? await authenticationRequestManager.requestPasswordAuthentication(
+                title: "\(prompt)", usernameTitleKey: ""
+            ).0) ?? ""
+    }
+
     private func connectToHostWithCredentialsUsingJumpHost(
         host: RemoteHost,
         jumpHost: RemoteHost,
@@ -210,7 +218,8 @@ struct RemoteContainer: View {
                     App.workSpaceStorage.connectToServer(
                         host: hostUrl, authenticationModeForHost: hostAuthenticationMode,
                         jumpServer: jumpHostUrl,
-                        authenticationModeForJumpServer: jumpHostAuthenticationMode
+                        authenticationModeForJumpServer: jumpHostAuthenticationMode,
+                        onRequestInteractiveKeyboard: onRequestInteractiveKeyboard
                     ) {
                         error in
                         connectionResultHandler(
@@ -250,7 +259,8 @@ struct RemoteContainer: View {
                 try await withCheckedThrowingContinuation {
                     (continuation: CheckedContinuation<Void, Error>) in
                     App.workSpaceStorage.connectToServer(
-                        host: hostUrl, authenticationMode: authenticationMode
+                        host: hostUrl, authenticationMode: authenticationMode,
+                        onRequestInteractiveKeyboard: onRequestInteractiveKeyboard
                     ) {
                         error in
                         connectionResultHandler(

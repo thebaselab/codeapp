@@ -439,7 +439,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.reload_key" = "Reload key";
 "remote.passphrase_for_private_key" = "Passphrase for private key";
 "remote.credentials_for %@" = "Credentials for %@";
-"remote.enter_credentials" = "Enter credentials";
+"remote.enter_credentials" = "Enter Credentials";
 "remote.authenticate_to %@" = "Authenticate to %@";
 "remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "One or more hosts use this host as a jump proxy.";
 "remote.confirm_delete_are_you_sure_to_delete" = "Are you sure you want to delete this host?";

@@ -55,16 +55,19 @@ class SFTPFileSystemProvider: NSObject {
     private var didDisconnect: (Error) -> Void
     private var onSocketClosed: ((SFTPSocket) -> Void)? = nil
     private var onTerminalData: ((Data) -> Void)? = nil
+    private var onRequestInteractiveKeyboard: ((String) async -> String)
     private var session: NMSSHSession!
     private let queue = DispatchQueue(label: "sftp.serial.queue")
     private var jumpHostFSS: [SFTPFileSystemProvider] = []
 
     init?(
         baseURL: URL, username: String, didDisconnect: @escaping (Error) -> Void,
+        onRequestInteractiveKeyboard: @escaping ((String) async -> String),
         onTerminalData: ((Data) -> Void)?
     ) {
         self.didDisconnect = didDisconnect
         self.onTerminalData = onTerminalData
+        self.onRequestInteractiveKeyboard = onRequestInteractiveKeyboard
         super.init()
 
         do {
@@ -84,7 +87,8 @@ class SFTPFileSystemProvider: NSObject {
 
     private func configureTerminalSession(baseURL: URL, username: String) throws {
         self._terminalServiceProvider = SFTPTerminalServiceProvider(
-            baseURL: baseURL, username: username)
+            baseURL: baseURL, username: username,
+            onRequestInteractiveKeyboard: onRequestInteractiveKeyboard)
         guard self._terminalServiceProvider != nil else {
             throw SFTPError.InvalidHostURL
         }
@@ -118,8 +122,8 @@ class SFTPFileSystemProvider: NSObject {
             try configureTerminalSession(baseURL: terminalURL, username: session.username)
         }
 
-        async let r1: ()? = self._terminalServiceProvider?.connect(authentication: authentication)
-        async let r2: Void = withCheckedThrowingContinuation {
+        try await self._terminalServiceProvider?.connect(authentication: authentication)
+        try await withCheckedThrowingContinuation {
             (continuation: CheckedContinuation<Void, Error>) in
             queue.async {
                 self.session.connect()
@@ -147,6 +151,10 @@ class SFTPFileSystemProvider: NSObject {
                     }
                 }
 
+                if !self.session.isAuthorized {
+                    self.session.authenticateByKeyboardInteractive()
+                }
+
                 guard self.session.isConnected && self.session.isAuthorized else {
                     continuation.resume(throwing: SFTPError.AuthFailure)
                     return
@@ -160,7 +168,6 @@ class SFTPFileSystemProvider: NSObject {
                 self.session.sftp.connect()
             }
         }
-        _ = try await (r1, r2)
     }
 
     private func configureJumpHost(jumpHost: SFTPJumpHost) async throws -> (URL, URL) {
@@ -169,12 +176,14 @@ class SFTPFileSystemProvider: NSObject {
                 baseURL: jumpHost.url,
                 username: jumpHost.username,
                 didDisconnect: didDisconnect,
+                onRequestInteractiveKeyboard: self.onRequestInteractiveKeyboard,
                 onTerminalData: nil
             ),
             let secondaryJumpServerFS = SFTPFileSystemProvider(
                 baseURL: jumpHost.url,
                 username: jumpHost.username,
                 didDisconnect: didDisconnect,
+                onRequestInteractiveKeyboard: self.onRequestInteractiveKeyboard,
                 onTerminalData: nil
             )
         else {
@@ -222,6 +231,12 @@ class SFTPFileSystemProvider: NSObject {
 extension SFTPFileSystemProvider: NMSSHSessionDelegate {
     func session(_ session: NMSSHSession, didDisconnectWithError error: Error) {
         didDisconnect(error)
+    }
+
+    func session(_ session: NMSSHSession, keyboardInteractiveRequest request: String) -> String {
+        return UnsafeTask {
+            await self.onRequestInteractiveKeyboard(request)
+        }.get()
     }
 }
 
