@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.8.0 (2024 年 6 月)**
+##### **v1.9.0 (2024 年 7 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,12 @@
 
 "Changelog.message" =
 "
+### 1.9.0（2024 年 7 月）
+- SSH
+  - 代理跳转
+  - 2FA / 键盘交互式认证
+- 修复了某些 SSH git 存储库无法克隆的问题
+
 ### 1.8.0（2024 年 6 月）
 - 编辑器
   - Runestone 编辑器模式（具有本地文本选择控件的编辑器）

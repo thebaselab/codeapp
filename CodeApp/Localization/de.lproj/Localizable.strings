@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.8.0 (June 2024)**
+##### **v1.9.0 (July 2024)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,12 @@
 
 "Changelog.message" =
 "
+### 1.9.0 (July 2024)
+- SSH
+  - Proxy-Sprung
+  - 2FA / Keyboard-Interaktive Authentifizierung
+- Behebt ein Problem, bei dem bestimmte SSH-Git-Repositories nicht geklont werden können
+
 ### 1.8.0 (June 2024)
 - Editor
   - Runestone-Editor-Modus (ein Editor mit nativen Textauswahlsteuerelementen)

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.8.0 (2024年 6月)**
+##### **v1.9.0 (2024年 7月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -23,6 +23,12 @@
 
 "Changelog.message" =
 "
+### 1.9.0 (2024 年 7 月)
+- SSH
+   - プロキシジャンプ
+   - 2FA / キーボードインタラクティブ認証
+- 特定のSSH Gitリポジトリがクローンできない問題を修正
+
 ### 1.8.0 (2024 年 6 月)
 - エディター
   - Runestoneエディターモード（ネイティブのテキスト選択コントロールを備えたエディター）

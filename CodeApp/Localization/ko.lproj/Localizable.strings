@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.8.0 (2024년 6월)**
+##### **v1.9.0 (2024년 7월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,12 @@
 
 "Changelog.message" =
 "
+### 1.9.0 (2024년 7월)
+- SSH
+  - 프록시 점프
+  - 2FA / 키보드 대화형 인증
+- 특정 SSH git 저장소를 복제할 수 없는 문제를 수정했습니다.
+
 ### 1.8.0 (2024년 6월)
 - 편집기
   - Runestone 편집기 모드 (기본 텍스트 선택 컨트롤이 있는 편집기)
