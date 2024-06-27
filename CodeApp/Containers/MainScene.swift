@@ -121,7 +121,6 @@ struct MainScene: View {
                     App.terminalInstance.applyTheme(rawTheme: theme.dictionary)
                 }
             )
-            .hiddenSystemOverlays()
     }
 }
 
@@ -309,5 +308,7 @@ private struct MainView: View {
                 EmptyView()
             }
         }
+        .hiddenSystemOverlays()
+        .ignoresSafeArea(.container, edges: .bottom)
     }
 }

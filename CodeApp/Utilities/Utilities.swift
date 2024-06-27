@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ios_system
 
 func humanReadableByteCount(bytes: Int) -> String {
     if bytes < 1000 { return "\(bytes) B" }
@@ -69,5 +70,18 @@ class UnsafeTask<T> {
         if let result = result { return result }
         semaphore.wait()
         return result!
+    }
+}
+
+func refreshNodeCommands() {
+    let nodeBinPath = Resources.appGroupSharedLibrary?.appendingPathComponent("lib/bin").path
+
+    if let nodeBinPath = nodeBinPath,
+        let paths = try? FileManager.default.contentsOfDirectory(atPath: nodeBinPath)
+    {
+        paths.forEach { path in
+            let cmd = path.replacingOccurrences(of: nodeBinPath, with: "")
+            replaceCommand(cmd, "nodeg", true)
+        }
     }
 }
