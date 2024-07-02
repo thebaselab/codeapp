@@ -267,8 +267,6 @@ class JavaLauncher {
 
 class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
     
-    var extensionContext: NSExtensionContext?
-    
     func beginRequest(with context: NSExtensionContext) {
         
         atexit {
@@ -288,8 +286,6 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
 
         let injectionJSPath = Bundle.main.path(forResource: "injection", ofType: "js")!
         setenv("NODE_OPTIONS", "--jitless --require \"\(injectionJSPath)\"", 1)
-        // Do not call super in an Action extension with no user interface
-        self.extensionContext = context
         
         let notificationName = "com.thebaselab.code.node.stop" as CFString
         let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
@@ -312,7 +308,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         output.openConsolePipe()
         
         guard let item = context.inputItems.first as? NSExtensionItem else {
-            self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+            context.completeRequest(returningItems: [], completionHandler: nil)
             return
         }
         
@@ -348,11 +344,10 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
                 break
             }
             
-            self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+            context.completeRequest(returningItems: [], completionHandler: nil)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 output.closeConsolePipe()
-                self.extensionContext = nil
                 exit(0)
             }
             
