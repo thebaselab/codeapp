@@ -22,16 +22,30 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "944EEBEF2563C381009D77FE"
                BuildableName = "Code.app"
                BlueprintName = "Code"
+               ReferencedContainer = "container:Code.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9419692E280316C7008AAEB2"
+               BuildableName = "CodeUI.app"
+               BlueprintName = "CodeUI"
                ReferencedContainer = "container:Code.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,15 +79,6 @@
             ReferencedContainer = "container:Code.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "944EEBEF2563C381009D77FE"
-            BuildableName = "Code.app"
-            BlueprintName = "Code"
-            ReferencedContainer = "container:Code.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -83,16 +88,15 @@
       debugDocumentVersioning = "YES"
       askForAppToLaunch = "Yes"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "944EEBEF2563C381009D77FE"
-            BuildableName = "Code.app"
-            BlueprintName = "Code"
+            BlueprintIdentifier = "94369AFB25E3B933008419A0"
+            BuildableName = "extension.appex"
+            BlueprintName = "extension"
             ReferencedContainer = "container:Code.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

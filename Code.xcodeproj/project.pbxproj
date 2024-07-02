@@ -754,6 +754,7 @@
 		94E6CC862807502A00939E4F /* ActivityBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC842807502A00939E4F /* ActivityBarItemView.swift */; };
 		94E6CC882807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
 		94E6CC892807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
+		94EDC7B42C2DCBF600C86F56 /* extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94F2FEA326A2D44D007EBC6D /* freetype.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AB25F5518700F1EF4E /* network_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */; };
@@ -897,6 +898,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		94369B0525E3B933008419A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 944EEBE82563C381009D77FE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 94369AFB25E3B933008419A0;
+			remoteInfo = extension;
+		};
+		94EDC7B52C2DCBF600C86F56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 944EEBE82563C381009D77FE /* Project object */;
 			proxyType = 1;
@@ -1349,6 +1357,17 @@
 				94B3DDF62604D3ED00C4F2B1 /* tar.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94EDC7B72C2DCBF600C86F56 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				94EDC7B42C2DCBF600C86F56 /* extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9FE3E29D298A163200F63DD0 /* Embed Frameworks */ = {
@@ -3165,10 +3184,12 @@
 				9419698E280316C7008AAEB2 /* Frameworks */,
 				9419699A280316C7008AAEB2 /* Resources */,
 				941969AA280316C7008AAEB2 /* Embed Frameworks */,
+				94EDC7B72C2DCBF600C86F56 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				94EDC7B62C2DCBF600C86F56 /* PBXTargetDependency */,
 			);
 			name = CodeUI;
 			packageProductDependencies = (
@@ -3872,6 +3893,11 @@
 			isa = PBXTargetDependency;
 			target = 94369AFB25E3B933008419A0 /* extension */;
 			targetProxy = 94369B0525E3B933008419A0 /* PBXContainerItemProxy */;
+		};
+		94EDC7B62C2DCBF600C86F56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 94369AFB25E3B933008419A0 /* extension */;
+			targetProxy = 94EDC7B52C2DCBF600C86F56 /* PBXContainerItemProxy */;
 		};
 		9FE3E297298A14BC00F63DD0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
