@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -530,6 +530,8 @@
 		945D4F582B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
 		945D4F592B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		946C677D2C33BEE200100F3F /* SwiftWS in Frameworks */ = {isa = PBXBuildFile; productRef = 946C677C2C33BEE200100F3F /* SwiftWS */; };
+		946C67832C33C03400100F3F /* SwiftWS in Frameworks */ = {isa = PBXBuildFile; productRef = 946C67822C33C03400100F3F /* SwiftWS */; };
 		946DAB9E2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DAB9D2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone */; };
 		946DABA42BBD98BB00E73257 /* TreeSitterPythonRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABA32BBD98BB00E73257 /* TreeSitterPythonRunestone */; };
 		946DABA82BBD997800E73257 /* TreeSitterCRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABA72BBD997800E73257 /* TreeSitterCRunestone */; };
@@ -642,6 +644,14 @@
 		949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CBA25DBCCDB00BC83B5 /* MonacoIntellisenseExtension.swift */; };
 		949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC425DEA89A00BC83B5 /* String+toCString.swift */; };
 		949B3CC725DEAAA700BC83B5 /* node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC625DEAAA600BC83B5 /* node.swift */; };
+		949D787F2C33C4EB006D7480 /* Java.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D787E2C33C4EB006D7480 /* Java.swift */; };
+		949D78812C33C51E006D7480 /* OutputListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78802C33C51E006D7480 /* OutputListener.swift */; };
+		949D78832C33C563006D7480 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78822C33C563006D7480 /* Node.swift */; };
+		949D78862C33DA72006D7480 /* AppExtensionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78842C33DA48006D7480 /* AppExtensionService.swift */; };
+		949D78872C33DA72006D7480 /* AppExtensionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78842C33DA48006D7480 /* AppExtensionService.swift */; };
+		949D788A2C33DC3F006D7480 /* AppExtensionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78892C33DC3F006D7480 /* AppExtensionError.swift */; };
+		949D788B2C33DC3F006D7480 /* AppExtensionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78892C33DC3F006D7480 /* AppExtensionError.swift */; };
+		949D788C2C33DC3F006D7480 /* AppExtensionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78892C33DC3F006D7480 /* AppExtensionError.swift */; };
 		949E4025263563AC002C1997 /* harfbuzz.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D7DED42631D16C00FA0760 /* harfbuzz.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		949E402E263563AF002C1997 /* libpng.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94D7DEC02631D0CA00FA0760 /* libpng.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94A045EE280480E800182275 /* RemoteListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A045ED280480E800182275 /* RemoteListSection.swift */; };
@@ -763,6 +773,7 @@
 		94F52709259F9B7800337306 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F52708259F9B7800337306 /* KeychainItemAccessibility.swift */; };
 		94F6B510280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
 		94F6B511280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
+		94F88FD92C5B4F3400326AD0 /* SwiftWS in Frameworks */ = {isa = PBXBuildFile; productRef = 94F88FD82C5B4F3400326AD0 /* SwiftWS */; };
 		94FA8977292FB86700163800 /* PDFViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8975292FB86700163800 /* PDFViewerExtension.swift */; };
 		94FA8978292FB86700163800 /* PDFViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8975292FB86700163800 /* PDFViewerExtension.swift */; };
 		94FC220B257F7D2A00B85D1B /* SourceControlEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC220A257F7D2900B85D1B /* SourceControlEntry.swift */; };
@@ -1825,6 +1836,11 @@
 		949B3CBA25DBCCDB00BC83B5 /* MonacoIntellisenseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoIntellisenseExtension.swift; sourceTree = "<group>"; };
 		949B3CC425DEA89A00BC83B5 /* String+toCString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toCString.swift"; sourceTree = "<group>"; };
 		949B3CC625DEAAA600BC83B5 /* node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = node.swift; sourceTree = "<group>"; };
+		949D787E2C33C4EB006D7480 /* Java.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Java.swift; sourceTree = "<group>"; };
+		949D78802C33C51E006D7480 /* OutputListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputListener.swift; sourceTree = "<group>"; };
+		949D78822C33C563006D7480 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		949D78842C33DA48006D7480 /* AppExtensionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtensionService.swift; sourceTree = "<group>"; };
+		949D78892C33DC3F006D7480 /* AppExtensionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtensionError.swift; sourceTree = "<group>"; };
 		94A045ED280480E800182275 /* RemoteListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteListSection.swift; sourceTree = "<group>"; };
 		94A045F02804816000182275 /* RemoteCreateSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCreateSection.swift; sourceTree = "<group>"; };
 		94A045F3280481A900182275 /* RemoteTypeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTypeLabel.swift; sourceTree = "<group>"; };
@@ -2052,6 +2068,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				946C67832C33C03400100F3F /* SwiftWS in Frameworks */,
+				946C677D2C33BEE200100F3F /* SwiftWS in Frameworks */,
+				94F88FD92C5B4F3400326AD0 /* SwiftWS in Frameworks */,
 				945AEA3827ECCB5F00BA193E /* NodeMobile.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2149,6 +2168,9 @@
 				94369B1025E3DDDA008419A0 /* NodeRunner */,
 				94369AFE25E3B933008419A0 /* Media.xcassets */,
 				94369B0025E3B933008419A0 /* ActionRequestHandler.swift */,
+				949D787E2C33C4EB006D7480 /* Java.swift */,
+				949D78822C33C563006D7480 /* Node.swift */,
+				949D78802C33C51E006D7480 /* OutputListener.swift */,
 				94369B0425E3B933008419A0 /* Info.plist */,
 			);
 			path = NodeExtension;
@@ -2341,6 +2363,14 @@
 				9FA1227B2A8E03CC00E7B417 /* LocalGitCredentialsHelper.swift */,
 			);
 			path = Local;
+			sourceTree = "<group>";
+		};
+		949D78882C33DC29006D7480 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				949D78892C33DC3F006D7480 /* AppExtensionError.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		94A4438725A390C3006643FF /* KeychainWrapper */ = {
@@ -2984,6 +3014,7 @@
 		9F3C2DF5291CCE6900BFF14C /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				949D78882C33DC29006D7480 /* Shared */,
 				9F3C2DF6291CCE9A00BFF14C /* Remote.swift */,
 				9FC03E732920CF1700DECD1B /* Notification.swift */,
 				9F3C2DE92918E19B00BFF14C /* Theme.swift */,
@@ -3098,6 +3129,7 @@
 				9FA122782A8B6C9700E7B417 /* ActivityBarManager.swift */,
 				9F062FE52B58D40D006210AA /* FileTreeViewController.swift */,
 				9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */,
+				949D78842C33DA48006D7480 /* AppExtensionService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -3256,6 +3288,11 @@
 			dependencies = (
 			);
 			name = extension;
+			packageProductDependencies = (
+				946C677C2C33BEE200100F3F /* SwiftWS */,
+				946C67822C33C03400100F3F /* SwiftWS */,
+				94F88FD82C5B4F3400326AD0 /* SwiftWS */,
+			);
 			productName = extension;
 			productReference = 94369AFC25E3B933008419A0 /* extension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -3402,6 +3439,7 @@
 				9F6BD94E2B46900400E2F8BC /* XCRemoteSwiftPackageReference "GCDWebServer" */,
 				94FD17002BAED26A003E1545 /* XCRemoteSwiftPackageReference "Runestone" */,
 				946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */,
+				94F88FD72C5B4F3400326AD0 /* XCLocalSwiftPackageReference "SwiftWS" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -3613,6 +3651,7 @@
 				9419696A280316C7008AAEB2 /* openFilesApp.swift in Sources */,
 				9419696B280316C7008AAEB2 /* View+If.swift in Sources */,
 				9419696C280316C7008AAEB2 /* WorkSpaceStorage.swift in Sources */,
+				949D788B2C33DC3F006D7480 /* AppExtensionError.swift in Sources */,
 				94A045EF280480E800182275 /* RemoteListSection.swift in Sources */,
 				9419696D280316C7008AAEB2 /* DirectoryFolderMonitor.swift in Sources */,
 				94795C462931489C0057C12F /* ActivityBar.swift in Sources */,
@@ -3653,6 +3692,7 @@
 				9474D2922B6B454900CCC530 /* EditorImplementation.swift in Sources */,
 				9F062FE42B58D3F4006210AA /* FileTreeView.swift in Sources */,
 				94A045F22804816000182275 /* RemoteCreateSection.swift in Sources */,
+				949D78862C33DA72006D7480 /* AppExtensionService.swift in Sources */,
 				9FAE4994292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,
 				944112A2282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
 				94196980280316C7008AAEB2 /* URL+relativePath.swift in Sources */,
@@ -3700,9 +3740,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				949D788C2C33DC3F006D7480 /* AppExtensionError.swift in Sources */,
 				94369B0125E3B933008419A0 /* ActionRequestHandler.swift in Sources */,
 				947313142BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */,
 				94369B1325E3DE02008419A0 /* NodeRunner.mm in Sources */,
+				949D78832C33C563006D7480 /* Node.swift in Sources */,
+				949D787F2C33C4EB006D7480 /* Java.swift in Sources */,
+				949D78812C33C51E006D7480 /* OutputListener.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3795,6 +3839,7 @@
 				94A777DC257B8C99008FE7B2 /* openFilesApp.swift in Sources */,
 				94B3DDFA260526D200C4F2B1 /* View+If.swift in Sources */,
 				94A777A2257ABDC3008FE7B2 /* WorkSpaceStorage.swift in Sources */,
+				949D788A2C33DC3F006D7480 /* AppExtensionError.swift in Sources */,
 				94A045EE280480E800182275 /* RemoteListSection.swift in Sources */,
 				94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */,
 				94795C452931489C0057C12F /* ActivityBar.swift in Sources */,
@@ -3835,6 +3880,7 @@
 				9474D2912B6B454900CCC530 /* EditorImplementation.swift in Sources */,
 				9F062FE32B58D3F4006210AA /* FileTreeView.swift in Sources */,
 				94A045F12804816000182275 /* RemoteCreateSection.swift in Sources */,
+				949D78872C33DA72006D7480 /* AppExtensionService.swift in Sources */,
 				9FAE4993292D153F00B1B962 /* VideoViewerExtension.swift in Sources */,
 				944112A1282181E500A8F1D7 /* SFTPTerminalServiceProvider.swift in Sources */,
 				949B3CB925DADCB900BC83B5 /* URL+relativePath.swift in Sources */,
@@ -4400,6 +4446,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		94F88FD72C5B4F3400326AD0 /* XCLocalSwiftPackageReference "SwiftWS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = SwiftWS;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -4515,6 +4568,14 @@
 		94196939280316C7008AAEB2 /* SwiftGit2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
+		};
+		946C677C2C33BEE200100F3F /* SwiftWS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftWS;
+		};
+		946C67822C33C03400100F3F /* SwiftWS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftWS;
 		};
 		946DAB9D2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4919,6 +4980,10 @@
 		94B99D9C27D4AA57005B5E3A /* SwiftGit2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
+		};
+		94F88FD82C5B4F3400326AD0 /* SwiftWS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftWS;
 		};
 		94FD17012BAED26A003E1545 /* Runestone */ = {
 			isa = XCSwiftPackageProductDependency;

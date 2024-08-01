@@ -37,6 +37,7 @@ private func setup() {
     wasmWebView.loadWorker()
     initializeEnvironment()
     Repository.initialize_libgit2()
+    AppExtensionService.shared.startServer()
 }
 
 private func versionNumberIncreased() -> Bool {

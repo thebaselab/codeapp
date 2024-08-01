@@ -11,97 +11,38 @@ import JavaScriptCore
 import MobileCoreServices
 import ios_system
 
-var nodeUUID: UUID? = nil
-var nodeStdoutWatcher: FolderMonitor?
-
 typealias RequestCancellationBlock = @convention(block) (_ uuid: UUID?, _ error: Error?) -> Void
 typealias RequestInterruptionBlock = @convention(block) (_ uuid: UUID?) -> Void
 typealias RequestCompletionBlock = @convention(block) (_ uuid: UUID?, _ extensionItems: [Any]?) ->
     Void
 typealias RequestBeginBlock = @convention(block) (_ uuid: UUID?) -> Void
 
-func launchCommandInExtension(args: [String]?) -> Int32 {
+private var thread_stdin_copy: UnsafeMutablePointer<FILE>? = nil
+private var thread_stdout_copy: UnsafeMutablePointer<FILE>? = nil
+private var thread_stderr_copy: UnsafeMutablePointer<FILE>? = nil
 
+func launchCommandInExtension(args: [String]?) -> Int32 {
     guard let args else {
         return 1
     }
 
-    var ended = false
+    thread_stdin_copy = thread_stdin
+    thread_stdout_copy = thread_stdout
 
-    // We use a private API here to launch an extension programatically
-    let BLE: AnyClass = (NSClassFromString("TlNFeHRlbnNpb24=".base64Decoded()!)!)
-    let ext = Dynamic(BLE).extensionWithIdentifier("thebaselab.VS-Code.extension", error: nil)
+    setvbuf(thread_stdout_copy, nil, _IONBF, 0)
+    setvbuf(thread_stdin_copy, nil, _IONBF, 0)
 
-    ext.setRequestCancellationBlock(
-        { uuid, error in
-            if let uuid = uuid, let error = error {
-                print("Request \(uuid) cancelled. \(error)")
-                ended = true
-            }
-        } as RequestCancellationBlock)
-
-    ext.setRequestInterruptionBlock(
-        { uuid in
-            if let uuid = uuid {
-                print("Request \(uuid) interrupted.")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    ended = true
-                }
-            }
-        } as RequestInterruptionBlock)
-
-    ext.setRequestCompletionBlock(
-        { uuid, extensionItems in
-            if let uuid = uuid {
-                print(
-                    "Request \(uuid) completed. Extension items: \(String(describing: extensionItems))"
-                )
-            }
-
-            if let item = extensionItems?.first as? NSExtensionItem {
-                if let data = item.userInfo?["result"] as? String {
-                    let nc = NotificationCenter.default
-                    nc.post(
-                        name: Notification.Name("node.stdout"), object: nil,
-                        userInfo: ["content": data])
-                }
-            }
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                ended = true
-            }
-        } as RequestCompletionBlock)
-
-    let workingDir = FileManager.default.currentDirectoryPath
-    guard let workingDirBookmark = try? URL(fileURLWithPath: workingDir).bookmarkData() else {
-        return 0
+    let sema = DispatchSemaphore(value: 0)
+    Task {
+        do {
+            try await AppExtensionService.shared.call(
+                args: args, t_stdin: thread_stdin_copy!, t_stdout: thread_stdout_copy!)
+        } catch {
+            print("WSError", error)
+        }
+        sema.signal()
     }
-    let frameworkDir = Bundle.main.privateFrameworksPath!
-    guard let frameworkDirBookmark = try? URL(fileURLWithPath: frameworkDir).bookmarkData() else {
-        return 0
-    }
-
-    let item = NSExtensionItem()
-
-    item.userInfo = [
-        "workingDirectoryBookmark": workingDirBookmark,
-        "frameworksDirectoryBookmark": frameworkDirBookmark,
-        "args": args,
-    ]
-
-    ext.beginExtensionRequestWithInputItems(
-        [item],
-        completion: { uuid in
-            let pid = ext.pid(forRequestIdentifier: uuid)
-            if let uuid = uuid {
-                nodeUUID = uuid
-                print("Started extension request: \(uuid). Extension PID is \(pid)")
-            }
-        } as RequestBeginBlock)
-
-    while ended != true {
-        sleep(UInt32(1))
-    }
+    sema.wait()
 
     refreshNodeCommands()
 
