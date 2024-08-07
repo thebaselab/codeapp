@@ -10,10 +10,11 @@ import SwiftUI
 struct VimModeLabel: View {
     @EnvironmentObject var App: MainApp
     @State var mode = "--NORMAL--"
-    @AppStorage("editor.vim.enabled") var editorVimEnabled: Bool = false
+    @AppStorage("editorOptions") var editorOptions: CodableWrapper<EditorOptions> = .init(
+        value: EditorOptions())
 
     var body: some View {
-        Text(editorVimEnabled ? mode : "")
+        Text(editorOptions.value.vimEnabled ? mode : "")
             .onReceive(
                 NotificationCenter.default.publisher(
                     for: Notification.Name("vim.mode.change"),
