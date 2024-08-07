@@ -13,6 +13,7 @@ import ios_system
 struct CodeApp: App {
     @StateObject var themeManager = ThemeManager()
     let wasmService = WASMService()
+    let editorService = EditorService()
 
     init() {
         setup()

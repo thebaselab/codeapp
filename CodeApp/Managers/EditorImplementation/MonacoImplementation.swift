@@ -6,8 +6,27 @@
 //
 
 import Foundation
+import GCDWebServers
 import GameController
 import SwiftUI
+
+class EditorService {
+    static let PORT = 20234
+    private let webServer = GCDWebServer()
+
+    init() {
+        let basePath = "/"
+        let directoryPath =
+            Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")! + "/"
+        webServer.addGETHandler(
+            forBasePath: "/", directoryPath: directoryPath, indexFilename: "index.html",
+            cacheAge: 10, allowRangeRequests: true)
+        try? webServer.start(options: [
+            GCDWebServerOption_AutomaticallySuspendInBackground: true,
+            GCDWebServerOption_Port: EditorService.PORT,
+        ])
+    }
+}
 
 extension WKWebView {
     @MainActor
@@ -50,7 +69,7 @@ class MonacoImplementation: NSObject {
         monacoWebView.isOpaque = false
         monacoWebView.scrollView.bounces = false
         monacoWebView.customUserAgent =
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
+            "Mozilla/5.0 (Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
 
         if !monacoWebView.isMessageHandlerAdded {
@@ -59,10 +78,9 @@ class MonacoImplementation: NSObject {
             monacoWebView.isMessageHandlerAdded = true
         }
 
-        let monacoPath = Bundle.main.path(forResource: "monaco-textmate", ofType: "bundle")
-        monacoWebView.loadFileURL(
-            URL(fileURLWithPath: monacoPath!).appendingPathComponent("index.html"),
-            allowingReadAccessTo: URL(fileURLWithPath: monacoPath!))
+        let request = URLRequest(
+            url: URL(string: "http://localhost:\(String(EditorService.PORT))/index.html")!)
+        monacoWebView.load(request)
     }
 
     private func setupEditor() async {
@@ -304,11 +322,9 @@ extension MonacoImplementation: EditorImplementation {
 
     func setVSTheme(theme: Theme) async {
         var theme = theme
-        let themeName = theme.name.replacingOccurrences(of: " ", with: "").replacingOccurrences(
-            of: "[^A-Za-z0-9]+", with: "", options: [.regularExpression])
         if let base64 = theme.jsonString.base64Encoded() {
             _ = try? await monacoWebView.evaluateJavaScriptAsync(
-                "applyBase64AsTheme('\(base64)', '\(themeName)', \(theme.isDark))")
+                "applyBase64AsTheme('\(base64)')")
         }
     }
 
