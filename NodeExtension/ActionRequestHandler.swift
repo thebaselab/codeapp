@@ -10,15 +10,35 @@ import SwiftWS
 
 class BinaryExecutor {
     let listener = OutputListener()
+    let frameAdaptor = LSPFrameAdaptor()
+    var needFrameAdaptor: Bool = false
+    
+    func writeToStdin(data: String){
+        if needFrameAdaptor {
+            frameAdaptor.receiveWebSocket(data: data)
+        }else {
+            listener.write(text: data)
+        }
+    }
     
     func executeBinary(
         args: [String],
         workingDirectory: URL,
         sharedFrameworksDirectory: URL,
+        redirectStderr: Bool,
         ws: SwiftWS.WebSocket
     ){
         guard let executable = args.first else {
             return
+        }
+        
+        frameAdaptor.onSendToWebSocket = { data in
+            DispatchQueue.global(qos: .utility).async {
+                ws.send(data)
+            }
+        }
+        frameAdaptor.onWriteToStdin = { [weak self] data in
+            self?.listener.write(text: data)
         }
         
         DispatchQueue.main.sync {
@@ -26,6 +46,16 @@ class BinaryExecutor {
             
             self.listener.openConsolePipe()
             self.listener.onStdout = { text in
+                if self.needFrameAdaptor {
+                    self.frameAdaptor.receiveStdout(data: text)
+                }else {
+                    DispatchQueue.global(qos: .utility).async {
+                        ws.send(text)
+                    }
+                }
+            }
+            if !redirectStderr { return }
+            self.listener.onStderr = { text in
                 DispatchQueue.global(qos: .utility).async {
                     ws.send(text)
                 }
@@ -39,14 +69,15 @@ class BinaryExecutor {
             case "node":
                 NodeLauncher.shared.launchNode(args: args)
             default:
-                break
+                self.needFrameAdaptor = true
+                SystemCommandLauncher.shared.launchSystemCommand(args: args)
             }
             
-            self.listener.onStdout = nil
-            self.listener.closeConsolePipe()
-            
-            usleep(200000)
-            ws.close(code: 1000, reason: "finished")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.listener.onStdout = nil
+                self.listener.closeConsolePipe()
+                ws.close(code: 1000, reason: "finished")
+            }
         }
     }
 }
@@ -67,12 +98,12 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         guard let item = context.inputItems.first as? NSExtensionItem,
               let serverPort = item.userInfo?["port"] as? Int,
               let frameworkDirectoryBookmarkData = item.userInfo?["frameworksDirectoryBookmark"] as? Data,
-              let frameworkDirectoryURL = try? URL(resolvingBookmarkData: frameworkDirectoryBookmarkData, bookmarkDataIsStale: &isStale),
-              frameworkDirectoryURL.startAccessingSecurityScopedResource()
+              let frameworkDirectoryURL = try? URL(resolvingBookmarkData: frameworkDirectoryBookmarkData, bookmarkDataIsStale: &isStale)
         else {
             context.cancelRequest(withError: AppExtensionError.missingServerConfiguration)
             return
         }
+        _ = frameworkDirectoryURL.startAccessingSecurityScopedResource()
         
         let wss = SwiftWS(port: serverPort, queue: queue)
         self.wss = wss
@@ -82,12 +113,13 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         wss.onConnection { ws, head in
             
             if self.executing {
-                ws.close(code: 5000, reason: "server busy")
+                ws.send("extension service busy")
+                ws.close(code: 4000, reason: "server busy")
             }
             
             ws.onMessage { message in
                 if self.executing {
-                   binaryExecutor.listener.write(text: message.data)
+                   binaryExecutor.writeToStdin(data: message.data)
                 }else {
                     let jsonData = message.data.data(using: .utf8)!
                     guard let request: ExecutionRequestFrame = try? JSONDecoder().decode(ExecutionRequestFrame.self, from: jsonData) else {
@@ -100,12 +132,12 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
                     var workingDirectoryUrl: URL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
                     
                     if let workingDirectoryBookmark = request.workingDirectoryBookmark,
-                       let workingDirectoryURL = try? URL(resolvingBookmarkData: workingDirectoryBookmark, bookmarkDataIsStale: &isStale),
-                       workingDirectoryUrl.startAccessingSecurityScopedResource() {
+                       let workingDirectoryURL = try? URL(resolvingBookmarkData: workingDirectoryBookmark, bookmarkDataIsStale: &isStale){
+                        _ = workingDirectoryURL.startAccessingSecurityScopedResource()
                         workingDirectoryUrl = workingDirectoryURL
                     }
                     
-                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL, ws: message.target)
+                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL, redirectStderr: request.redirectStderr, ws: message.target)
                 }
             }
             

@@ -320,6 +320,29 @@ class MainApp: ObservableObject {
                     url: activeTextEditor.url.absoluteString, value: activeTextEditor.content)
             }
         }
+        if let languageServiceConfiguration = LanguageService.configurationFor(
+            url: activeTextEditor.url)
+        {
+            Task {
+                let isLanguageServiceConnected = await monacoInstance.isLanguageServiceConnected
+                if isLanguageServiceConnected
+                    && LanguageService.shared.candidateLanguageIdentifier
+                        == languageServiceConfiguration.languageIdentifier
+                {
+                    return
+                }
+                if isLanguageServiceConnected { monacoInstance.disconnectLanguageService() }
+                LanguageService.shared.candidateLanguageIdentifier =
+                    languageServiceConfiguration.languageIdentifier
+                monacoInstance.connectLanguageService(
+                    serverURL: URL(
+                        string: "ws://127.0.0.1:\(String(AppExtensionService.PORT))/websocket")!,
+                    serverArgs: languageServiceConfiguration.args,
+                    pwd: URL(filePath: FileManager.default.currentDirectoryPath),
+                    languageIdentifier: languageServiceConfiguration.languageIdentifier
+                )
+            }
+        }
     }
 
     @MainActor
@@ -1206,6 +1229,17 @@ extension MainApp: EditorImplementationDelegate {
                 safariManager.showSafari(url: url)
             }
         }
+    }
+
+    func editorImplementation(languageServerDidDisconnect languageIdentifier: String) {
+        // Recovery logic
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0){
+        //            Task {
+        //                if (!(await monacoInstance.isLanguageServiceConnected) && languageIdentifier == LanguageService.shared.candidateLanguageIdentifier) {
+        //
+        //                }
+        //            }
+        //        }
     }
 
     func editorImplementation(markersDidUpdate markers: [MonacoEditorMarker]) {

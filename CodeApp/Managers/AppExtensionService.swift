@@ -13,10 +13,14 @@ class AppExtensionService: NSObject {
     static let PORT = 50002
     static let shared = AppExtensionService()
     private var task: URLSessionWebSocketTask? = nil
+    private var requestUUID: UUID? = nil
+    private var dynamicExt: Dynamic? = nil
 
     func startServer() {
         let BLE: AnyClass = (NSClassFromString("TlNFeHRlbnNpb24=".base64Decoded()!)!)
-        let ext = Dynamic(BLE).extensionWithIdentifier("thebaselab.VS-Code.extension", error: nil)
+        let ext = Dynamic(BLE).extensionWithIdentifier(
+            "thebaselab.VS-Code.extension", error: nil)
+        dynamicExt = ext
         let frameworkDir = Bundle.main.privateFrameworksPath!
         let frameworkDirBookmark = try! URL(fileURLWithPath: frameworkDir).bookmarkData()
         let item = NSExtensionItem()
@@ -34,12 +38,22 @@ class AppExtensionService: NSObject {
             [item],
             completion: { uuid in
                 let pid = ext.pid(forRequestIdentifier: uuid)
+                self.requestUUID = uuid
                 if let uuid = uuid {
                     print("Started extension request: \(uuid). Extension PID is \(pid)")
                 }
                 print("Extension server listening on 127.0.0.1:\(AppExtensionService.PORT)")
             } as RequestBeginBlock)
+
     }
+
+    func stopServer() {
+        if let requestUUID, let dynamicExt {
+            print("Cancelling extension request: \(requestUUID)")
+            dynamicExt.cancelExtensionRequestWithIdentifier(requestUUID)
+        }
+    }
+
     func terminate() {
         self.task?.cancel()
     }
@@ -55,6 +69,7 @@ class AppExtensionService: NSObject {
         }
 
         let signalCallback: sig_t = { signal in
+            // TODO: send real signal instead
             AppExtensionService.shared.terminate()
         }
         signal(SIGINT, signalCallback)
@@ -76,11 +91,46 @@ class AppExtensionService: NSObject {
 
         let frame = ExecutionRequestFrame(
             args: args,
+            redirectStderr: true,
             workingDirectoryBookmark: try? URL(
                 fileURLWithPath: FileManager.default.currentDirectoryPath
             ).bookmarkData()
         )
+
+        /*
+        func retry() async throws {
+            var retryCount = 0
+            let MAX_RETRY = 5
+            while retryCount <= MAX_RETRY {
+                do {
+                    try await task.send(.string(frame.stringRepresentation))
+                    break
+                } catch {
+                    retryCount += 1
+                    if retryCount == MAX_RETRY {
+                        fputs("extension service busy", t_stdout)
+                        throw error
+                    }
+                    try await Task.sleep(nanoseconds: 1 * 1_000_000_000)
+                }
+            }
+        }
+
+        do {
+            try await task.send(.string(frame.stringRepresentation))
+        } catch {
+            if task.closeCode.rawValue == 4000 {
+                stopServer()
+                //                startServer()
+                try await retry()
+            } else {
+                throw error
+            }
+        }
+        */
+
         try await task.send(.string(frame.stringRepresentation))
+
         print("Sending -> \(frame.stringRepresentation)")
 
         while let message = try? await task.receive() {

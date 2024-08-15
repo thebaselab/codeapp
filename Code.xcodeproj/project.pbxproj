@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		940C68252C646E0400089EA3 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940C68242C646E0400089EA3 /* System.swift */; };
+		940C68262C64704C00089EA3 /* String+toCString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC425DEA89A00BC83B5 /* String+toCString.swift */; };
+		940C68272C65D36700089EA3 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 948D11FF2583F20C008F877A /* commandDictionary.plist */; };
 		94127C40280335C8008C7F82 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 94127C3F280335C8008C7F82 /* Themes */; };
 		94127C41280335C8008C7F82 /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = 94127C3F280335C8008C7F82 /* Themes */; };
 		941969252802AB2C008AAEB2 /* FileSystemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941969242802AB2C008AAEB2 /* FileSystemProvider.swift */; };
@@ -530,7 +533,6 @@
 		945D4F582B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
 		945D4F592B50F55800DE0DBA /* VimKeyBufferLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945D4F572B50F55800DE0DBA /* VimKeyBufferLabel.swift */; };
 		9469AC9C26A33D52003F569F /* php.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9469AC9A26A33D19003F569F /* php.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		946C677D2C33BEE200100F3F /* SwiftWS in Frameworks */ = {isa = PBXBuildFile; productRef = 946C677C2C33BEE200100F3F /* SwiftWS */; };
 		946C67832C33C03400100F3F /* SwiftWS in Frameworks */ = {isa = PBXBuildFile; productRef = 946C67822C33C03400100F3F /* SwiftWS */; };
 		946DAB9E2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DAB9D2BBD2F9600E73257 /* TreeSitterJavaScriptRunestone */; };
 		946DABA42BBD98BB00E73257 /* TreeSitterPythonRunestone in Frameworks */ = {isa = PBXBuildFile; productRef = 946DABA32BBD98BB00E73257 /* TreeSitterPythonRunestone */; };
@@ -644,6 +646,10 @@
 		949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CBA25DBCCDB00BC83B5 /* MonacoIntellisenseExtension.swift */; };
 		949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC425DEA89A00BC83B5 /* String+toCString.swift */; };
 		949B3CC725DEAAA700BC83B5 /* node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC625DEAAA600BC83B5 /* node.swift */; };
+		949CDF482C65E06C00FFC5B1 /* python-lsp in Resources */ = {isa = PBXBuildFile; fileRef = 949CDF472C65E06C00FFC5B1 /* python-lsp */; };
+		949CDF4A2C6658DC00FFC5B1 /* LanguageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CDF492C6658DC00FFC5B1 /* LanguageService.swift */; };
+		949CDF4B2C6658DC00FFC5B1 /* LanguageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CDF492C6658DC00FFC5B1 /* LanguageService.swift */; };
+		949CDF4D2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CDF4C2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift */; };
 		949D787F2C33C4EB006D7480 /* Java.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D787E2C33C4EB006D7480 /* Java.swift */; };
 		949D78812C33C51E006D7480 /* OutputListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78802C33C51E006D7480 /* OutputListener.swift */; };
 		949D78832C33C563006D7480 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949D78822C33C563006D7480 /* Node.swift */; };
@@ -773,7 +779,6 @@
 		94F52709259F9B7800337306 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F52708259F9B7800337306 /* KeychainItemAccessibility.swift */; };
 		94F6B510280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
 		94F6B511280EFD07000DBAE2 /* FileDisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F6B50F280EFD07000DBAE2 /* FileDisplayName.swift */; };
-		94F88FD92C5B4F3400326AD0 /* SwiftWS in Frameworks */ = {isa = PBXBuildFile; productRef = 94F88FD82C5B4F3400326AD0 /* SwiftWS */; };
 		94F88FDB2C628AA800326AD0 /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94F88FDA2C628AA800326AD0 /* FiraCode-Regular.ttf */; };
 		94F88FDD2C628AB200326AD0 /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94F88FDC2C628AB200326AD0 /* FiraCode-Regular.ttf */; };
 		94FA8977292FB86700163800 /* PDFViewerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FA8975292FB86700163800 /* PDFViewerExtension.swift */; };
@@ -1398,6 +1403,7 @@
 		4F30816929662D58002708FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		73F80B0F2850F7E5000EF3FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		73F80B102850F7EE000EF3FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		940C68242C646E0400089EA3 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		94127C3F280335C8008C7F82 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
 		941969242802AB2C008AAEB2 /* FileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemProvider.swift; sourceTree = "<group>"; };
 		941969282802AB64008AAEB2 /* FTPFileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPFileSystemProvider.swift; sourceTree = "<group>"; };
@@ -1836,6 +1842,9 @@
 		949B3CBA25DBCCDB00BC83B5 /* MonacoIntellisenseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoIntellisenseExtension.swift; sourceTree = "<group>"; };
 		949B3CC425DEA89A00BC83B5 /* String+toCString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toCString.swift"; sourceTree = "<group>"; };
 		949B3CC625DEAAA600BC83B5 /* node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = node.swift; sourceTree = "<group>"; };
+		949CDF472C65E06C00FFC5B1 /* python-lsp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "python-lsp"; sourceTree = "<group>"; };
+		949CDF492C6658DC00FFC5B1 /* LanguageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageService.swift; sourceTree = "<group>"; };
+		949CDF4C2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSPFrameAdaptor.swift; sourceTree = "<group>"; };
 		949D787E2C33C4EB006D7480 /* Java.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Java.swift; sourceTree = "<group>"; };
 		949D78802C33C51E006D7480 /* OutputListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputListener.swift; sourceTree = "<group>"; };
 		949D78822C33C563006D7480 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
@@ -2071,8 +2080,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				946C67832C33C03400100F3F /* SwiftWS in Frameworks */,
-				946C677D2C33BEE200100F3F /* SwiftWS in Frameworks */,
-				94F88FD92C5B4F3400326AD0 /* SwiftWS in Frameworks */,
 				945AEA3827ECCB5F00BA193E /* NodeMobile.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2170,8 +2177,10 @@
 				94369B1025E3DDDA008419A0 /* NodeRunner */,
 				94369AFE25E3B933008419A0 /* Media.xcassets */,
 				94369B0025E3B933008419A0 /* ActionRequestHandler.swift */,
+				940C68242C646E0400089EA3 /* System.swift */,
 				949D787E2C33C4EB006D7480 /* Java.swift */,
 				949D78822C33C563006D7480 /* Node.swift */,
+				949CDF4C2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift */,
 				949D78802C33C51E006D7480 /* OutputListener.swift */,
 				94369B0425E3B933008419A0 /* Info.plist */,
 			);
@@ -3145,6 +3154,7 @@
 				9F3C2DEC2918EDC400BFF14C /* Resources.swift */,
 				9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */,
 				94795C4A293259080057C12F /* Encoding.swift */,
+				949CDF492C6658DC00FFC5B1 /* LanguageService.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -3178,6 +3188,7 @@
 			children = (
 				94CF58DE265E51B100CB6A4B /* ClangLib */,
 				94B3D6DD25F77AFE00C4F2B1 /* Library */,
+				949CDF472C65E06C00FFC5B1 /* python-lsp */,
 			);
 			path = LanguageResources;
 			sourceTree = "<group>";
@@ -3293,9 +3304,7 @@
 			);
 			name = extension;
 			packageProductDependencies = (
-				946C677C2C33BEE200100F3F /* SwiftWS */,
 				946C67822C33C03400100F3F /* SwiftWS */,
-				94F88FD82C5B4F3400326AD0 /* SwiftWS */,
 			);
 			productName = extension;
 			productReference = 94369AFC25E3B933008419A0 /* extension.appex */;
@@ -3487,8 +3496,10 @@
 			files = (
 				9484BDD12B46FAEE003BCB8A /* injection.js in Resources */,
 				94369AFF25E3B933008419A0 /* Media.xcassets in Resources */,
+				949CDF482C65E06C00FFC5B1 /* python-lsp in Resources */,
 				945D4E222B4B174400DE0DBA /* tools.jar in Resources */,
 				945D4E232B4B174B00DE0DBA /* java-8-openjdk in Resources */,
+				940C68272C65D36700089EA3 /* commandDictionary.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3727,6 +3738,7 @@
 				942E31FC280876AA00233441 /* SearchSection.swift in Sources */,
 				9FA122682A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4C293259080057C12F /* Encoding.swift in Sources */,
+				949CDF4B2C6658DC00FFC5B1 /* LanguageService.swift in Sources */,
 				94A046262804A67100182275 /* SourceControlSection.swift in Sources */,
 				94A04608280493C600182275 /* SourceControlCloneSection.swift in Sources */,
 				FFD081BC29260B00001D9373 /* Libgit2Error.swift in Sources */,
@@ -3746,9 +3758,12 @@
 			files = (
 				949D788C2C33DC3F006D7480 /* AppExtensionError.swift in Sources */,
 				94369B0125E3B933008419A0 /* ActionRequestHandler.swift in Sources */,
+				940C68262C64704C00089EA3 /* String+toCString.swift in Sources */,
 				947313142BDFB80D004A9960 /* ExtensionCommunicationHelper.swift in Sources */,
 				94369B1325E3DE02008419A0 /* NodeRunner.mm in Sources */,
+				940C68252C646E0400089EA3 /* System.swift in Sources */,
 				949D78832C33C563006D7480 /* Node.swift in Sources */,
+				949CDF4D2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift in Sources */,
 				949D787F2C33C4EB006D7480 /* Java.swift in Sources */,
 				949D78812C33C51E006D7480 /* OutputListener.swift in Sources */,
 			);
@@ -3915,6 +3930,7 @@
 				942E31FB280876AA00233441 /* SearchSection.swift in Sources */,
 				9FA122672A8B2AC300E7B417 /* EditorLineColumnIndicator.swift in Sources */,
 				94795C4B293259080057C12F /* Encoding.swift in Sources */,
+				949CDF4A2C6658DC00FFC5B1 /* LanguageService.swift in Sources */,
 				94A046252804A67100182275 /* SourceControlSection.swift in Sources */,
 				94A04607280493C600182275 /* SourceControlCloneSection.swift in Sources */,
 				FFD081BB29260B00001D9373 /* Libgit2Error.swift in Sources */,
@@ -4573,10 +4589,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
 		};
-		946C677C2C33BEE200100F3F /* SwiftWS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftWS;
-		};
 		946C67822C33C03400100F3F /* SwiftWS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftWS;
@@ -4984,10 +4996,6 @@
 		94B99D9C27D4AA57005B5E3A /* SwiftGit2 */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftGit2;
-		};
-		94F88FD82C5B4F3400326AD0 /* SwiftWS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftWS;
 		};
 		94FD17012BAED26A003E1545 /* Runestone */ = {
 			isa = XCSwiftPackageProductDependency;

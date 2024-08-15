@@ -12,25 +12,32 @@ struct DebugMenu: View {
     @EnvironmentObject var App: MainApp
 
     var body: some View {
-        Section("UI Debug Menu") {
-            Button("Regular Notification") {
-                App.notificationManager.showErrorMessage("Error")
+        Group {
+            Section("UI Debug Menu") {
+                Button("Regular Notification") {
+                    App.notificationManager.showErrorMessage("Error")
+                }
+                Button("Progress Notification") {
+                    App.notificationManager.postProgressNotification(
+                        title: "Progress", progress: Progress())
+                }
+                Button("Action Notification") {
+                    App.notificationManager.postActionNotification(
+                        title: "Error", level: .error, primary: {},
+                        primaryTitle: "primaryTitle", source: "source")
+                }
+                Button("Async Notification") {
+                    App.notificationManager.showAsyncNotification(
+                        title: "Task Name",
+                        task: {
+                            try? await Task.sleep(nanoseconds: 10 * 1_000_000_000)
+                        })
+                }
             }
-            Button("Progress Notification") {
-                App.notificationManager.postProgressNotification(
-                    title: "Progress", progress: Progress())
-            }
-            Button("Action Notification") {
-                App.notificationManager.postActionNotification(
-                    title: "Error", level: .error, primary: {},
-                    primaryTitle: "primaryTitle", source: "source")
-            }
-            Button("Async Notification") {
-                App.notificationManager.showAsyncNotification(
-                    title: "Task Name",
-                    task: {
-                        try? await Task.sleep(nanoseconds: 10 * 1_000_000_000)
-                    })
+
+            Section("Extension Service") {
+                Button("Start") { AppExtensionService.shared.startServer() }
+                Button("Stop") { AppExtensionService.shared.stopServer() }
             }
         }
     }

@@ -19,6 +19,7 @@ class OutputListener {
     private let coordinator = NSFileCoordinator(filePresenter: nil)
     
     public var onStdout: ((String) -> Void)? = nil
+    public var onStderr: ((String) -> Void)? = nil
     
     init() {
         // Set up a read handler which fires when data is written to our inputPipe
@@ -36,7 +37,7 @@ class OutputListener {
             guard let strongSelf = self else { return }
             let availableData = fileHandle.availableData
             if let str = String(data: availableData, encoding: String.Encoding.utf8) {
-                strongSelf.onStdout?(str)
+                strongSelf.onStderr?(str)
             }
             // Write input back to stdout
             strongSelf.outputErrorPipe.fileHandleForWriting.write(availableData)

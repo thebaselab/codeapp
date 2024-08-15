@@ -69,7 +69,7 @@ class MonacoImplementation: NSObject {
         monacoWebView.isOpaque = false
         monacoWebView.scrollView.bounces = false
         monacoWebView.customUserAgent =
-            "Mozilla/5.0 (Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) CodeApp"
         monacoWebView.contentMode = .scaleToFill
 
         if !monacoWebView.isMessageHandlerAdded {
@@ -257,6 +257,9 @@ extension MonacoImplementation: WKScriptMessageHandler {
         case "vim.mode.change", "vim.keybuffer.set", "vim.visible.set", "vim.close.input",
             "vim.claer":
             delegate?.editorImplementation(vimModeEvent: event, userInfo: result)
+        case "Language Server Connection Dropped":
+            let languageIdentifier = result["languageIdentifier"] as! String
+            delegate?.editorImplementation(languageServerDidDisconnect: languageIdentifier)
         default:
             print("[MonacoImplementation]: Event '\(event)' not handled.")
         }
@@ -450,6 +453,37 @@ extension MonacoImplementation: EditorImplementation {
         let result = try? await monacoWebView.evaluateJavaScriptAsync(
             "editor.getEditorType() !== 'vs.editor.ICodeEditor'")
         return (result as? Bool) ?? false
+    }
+
+    func connectLanguageService(
+        serverURL: URL, serverArgs: [String], pwd: URL, languageIdentifier: String
+    ) {
+        let bookmark = try! serverURL.bookmarkData()
+        Task {
+            try? await monacoWebView.evaluateJavaScriptAsync(
+                """
+                connectMonacoToLanguageServer(
+                    "\(serverURL.absoluteString)",
+                    \(serverArgs),
+                    "\(bookmark.base64EncodedString())",
+                    "\(languageIdentifier)"
+                )
+                """)
+        }
+    }
+
+    func disconnectLanguageService() {
+        Task {
+            try? await monacoWebView.evaluateJavaScriptAsync("disconnectLanguageServer()")
+        }
+    }
+
+    var isLanguageServiceConnected: Bool {
+        get async {
+            let result = try? await monacoWebView.evaluateJavaScriptAsync(
+                "isLanguageServiceConnected()")
+            return (result as? Bool) ?? false
+        }
     }
 
     func _applyCustomShortcuts() async {
