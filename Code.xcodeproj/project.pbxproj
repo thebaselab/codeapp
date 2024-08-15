@@ -90,7 +90,6 @@
 		94196998280316C7008AAEB2 /* SwiftGit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 94196939280316C7008AAEB2 /* SwiftGit2 */; };
 		9419699B280316C7008AAEB2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944EEBFA2563C386009D77FE /* Preview Assets.xcassets */; };
 		9419699C280316C7008AAEB2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94A56832257CC3A1008A6530 /* Localizable.strings */; };
-		9419699D280316C7008AAEB2 /* monaco-textmate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94A4438F25A44CDB006643FF /* monaco-textmate.bundle */; };
 		9419699E280316C7008AAEB2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9425205B263E103E0029427A /* InfoPlist.strings */; };
 		9419699F280316C7008AAEB2 /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 94B3D5D525F776A900C4F2B1 /* cacert.pem */; };
 		941969A0280316C7008AAEB2 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 948D11FF2583F20C008F877A /* commandDictionary.plist */; };
@@ -646,7 +645,6 @@
 		949B3CBB25DBCCDC00BC83B5 /* MonacoIntellisenseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CBA25DBCCDB00BC83B5 /* MonacoIntellisenseExtension.swift */; };
 		949B3CC525DEA89B00BC83B5 /* String+toCString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC425DEA89A00BC83B5 /* String+toCString.swift */; };
 		949B3CC725DEAAA700BC83B5 /* node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC625DEAAA600BC83B5 /* node.swift */; };
-		949CDF482C65E06C00FFC5B1 /* python-lsp in Resources */ = {isa = PBXBuildFile; fileRef = 949CDF472C65E06C00FFC5B1 /* python-lsp */; };
 		949CDF4A2C6658DC00FFC5B1 /* LanguageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CDF492C6658DC00FFC5B1 /* LanguageService.swift */; };
 		949CDF4B2C6658DC00FFC5B1 /* LanguageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CDF492C6658DC00FFC5B1 /* LanguageService.swift */; };
 		949CDF4D2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949CDF4C2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift */; };
@@ -688,7 +686,6 @@
 		94A0462C2804A70C00182275 /* SourceControlUnsupportedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A0462A2804A70C00182275 /* SourceControlUnsupportedSection.swift */; };
 		94A347BD293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A347BC293DE24B00A59658 /* hiddenSystemOverlays.swift */; };
 		94A347BE293DE24B00A59658 /* hiddenSystemOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A347BC293DE24B00A59658 /* hiddenSystemOverlays.swift */; };
-		94A4439025A44CDC006643FF /* monaco-textmate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94A4438F25A44CDB006643FF /* monaco-textmate.bundle */; };
 		94A5682B257CBDE4008A6530 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5682A257CBDE4008A6530 /* MarkdownView.swift */; };
 		94A56830257CC3A1008A6530 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94A56832257CC3A1008A6530 /* Localizable.strings */; };
 		94A56835257CC60E008A6530 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94A56834257CC60E008A6530 /* LaunchScreen.storyboard */; };
@@ -771,6 +768,9 @@
 		94E6CC882807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
 		94E6CC892807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
 		94EDC7B42C2DCBF600C86F56 /* extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		94EF4FDA2C6DF6A900994D9C /* python-lsp in Resources */ = {isa = PBXBuildFile; fileRef = 94EF4FD92C6DF6A900994D9C /* python-lsp */; };
+		94EF4FDC2C6DF80700994D9C /* monaco-textmate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */; };
+		94EF4FDD2C6DF80700994D9C /* monaco-textmate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */; };
 		94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94F2FEA326A2D44D007EBC6D /* freetype.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94F2FEA726A2D89A007EBC6D /* network_ios.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94B7C4AB25F5518700F1EF4E /* network_ios.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94F2FEA926A2EB0E007EBC6D /* convertCArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */; };
@@ -1842,7 +1842,6 @@
 		949B3CBA25DBCCDB00BC83B5 /* MonacoIntellisenseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoIntellisenseExtension.swift; sourceTree = "<group>"; };
 		949B3CC425DEA89A00BC83B5 /* String+toCString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toCString.swift"; sourceTree = "<group>"; };
 		949B3CC625DEAAA600BC83B5 /* node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = node.swift; sourceTree = "<group>"; };
-		949CDF472C65E06C00FFC5B1 /* python-lsp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "python-lsp"; sourceTree = "<group>"; };
 		949CDF492C6658DC00FFC5B1 /* LanguageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageService.swift; sourceTree = "<group>"; };
 		949CDF4C2C6C47AD00FFC5B1 /* LSPFrameAdaptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSPFrameAdaptor.swift; sourceTree = "<group>"; };
 		949D787E2C33C4EB006D7480 /* Java.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Java.swift; sourceTree = "<group>"; };
@@ -1944,6 +1943,8 @@
 		94E6CC7A2806FBAF00939E4F /* SFTPFileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPFileSystemProvider.swift; sourceTree = "<group>"; };
 		94E6CC842807502A00939E4F /* ActivityBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBarItemView.swift; sourceTree = "<group>"; };
 		94E6CC872807632B00939E4F /* biometricType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = biometricType.swift; sourceTree = "<group>"; };
+		94EF4FD92C6DF6A900994D9C /* python-lsp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "python-lsp"; sourceTree = "<group>"; };
+		94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "monaco-textmate.bundle"; sourceTree = "<group>"; };
 		94F2FEA326A2D44D007EBC6D /* freetype.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = freetype.xcframework; sourceTree = "<group>"; };
 		94F2FEA826A2EB0E007EBC6D /* convertCArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = convertCArguments.swift; sourceTree = "<group>"; };
 		94F52704259F997200337306 /* SourceControlAuthenticationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlAuthenticationConfiguration.swift; sourceTree = "<group>"; };
@@ -2460,6 +2461,8 @@
 		94B3D55125F776A900C4F2B1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */,
+				94EF4FD92C6DF6A900994D9C /* python-lsp */,
 				945D4DFE2B4B171200DE0DBA /* Java */,
 				9469AC9926A33D19003F569F /* PHP */,
 				9469A8F426A33B1D003F569F /* NodeJS */,
@@ -3188,7 +3191,6 @@
 			children = (
 				94CF58DE265E51B100CB6A4B /* ClangLib */,
 				94B3D6DD25F77AFE00C4F2B1 /* Library */,
-				949CDF472C65E06C00FFC5B1 /* python-lsp */,
 			);
 			path = LanguageResources;
 			sourceTree = "<group>";
@@ -3472,9 +3474,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				94127C41280335C8008C7F82 /* Themes in Resources */,
+				94EF4FDD2C6DF80700994D9C /* monaco-textmate.bundle in Resources */,
 				9419699B280316C7008AAEB2 /* Preview Assets.xcassets in Resources */,
 				9419699C280316C7008AAEB2 /* Localizable.strings in Resources */,
-				9419699D280316C7008AAEB2 /* monaco-textmate.bundle in Resources */,
 				9419699E280316C7008AAEB2 /* InfoPlist.strings in Resources */,
 				9419699F280316C7008AAEB2 /* cacert.pem in Resources */,
 				9434C3F32BA4BC4800EB1CF6 /* PrivacyInfo.xcprivacy in Resources */,
@@ -3494,9 +3496,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94EF4FDA2C6DF6A900994D9C /* python-lsp in Resources */,
 				9484BDD12B46FAEE003BCB8A /* injection.js in Resources */,
 				94369AFF25E3B933008419A0 /* Media.xcassets in Resources */,
-				949CDF482C65E06C00FFC5B1 /* python-lsp in Resources */,
 				945D4E222B4B174400DE0DBA /* tools.jar in Resources */,
 				945D4E232B4B174B00DE0DBA /* java-8-openjdk in Resources */,
 				940C68272C65D36700089EA3 /* commandDictionary.plist in Resources */,
@@ -3510,9 +3512,9 @@
 				94127C40280335C8008C7F82 /* Themes in Resources */,
 				944EEBFB2563C386009D77FE /* Preview Assets.xcassets in Resources */,
 				94A56830257CC3A1008A6530 /* Localizable.strings in Resources */,
-				94A4439025A44CDC006643FF /* monaco-textmate.bundle in Resources */,
 				94252059263E103E0029427A /* InfoPlist.strings in Resources */,
 				94B3D65925F776AA00C4F2B1 /* cacert.pem in Resources */,
+				94EF4FDC2C6DF80700994D9C /* monaco-textmate.bundle in Resources */,
 				948D12012583F20D008F877A /* commandDictionary.plist in Resources */,
 				94CF58DF265E51B100CB6A4B /* ClangLib in Resources */,
 				9434C3F22BA4BC4800EB1CF6 /* PrivacyInfo.xcprivacy in Resources */,

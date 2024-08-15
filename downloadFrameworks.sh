@@ -79,4 +79,14 @@ unzip -q java-8-zero-frameworks-tools.zip
 rm -f java-8-zero-frameworks-tools.zip
 cd ..
 
+# Python LSP
+curl -OL https://github.com/thebaselab/codeapp-python/releases/download/2024.8.15/python-lsp.zip
+unzip -q python-lsp.zip
+rm -f python-lsp.zip
+
+# monaco editor
+curl -OL https://github.com/thebaselab/codeapp-monaco/releases/download/2024.8.15/monaco-textmate.bundle.zip
+unzip -q monaco-textmate.bundle.zip
+rm -f monaco-textmate.bundle.zip
+
 echo "Done!"
