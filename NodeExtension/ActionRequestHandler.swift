@@ -28,6 +28,12 @@ class BinaryExecutor {
         redirectStderr: Bool,
         ws: SwiftWS.WebSocket
     ){
+        atexit {
+            // Allow stdout to properly print before exit
+            fflush(stdout)
+            usleep(200000) // 0.2 seconds
+        }
+        
         guard let executable = args.first else {
             return
         }
@@ -72,7 +78,6 @@ class BinaryExecutor {
                 self.needFrameAdaptor = true
                 SystemCommandLauncher.shared.launchSystemCommand(args: args)
             }
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.listener.onStdout = nil
                 self.listener.closeConsolePipe()
