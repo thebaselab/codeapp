@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct ExecutionRequestFrame: Codable {
-    var args: [String]
-    var redirectStderr: Bool
-    var workingDirectoryBookmark: Data?
-
+extension Encodable {
     var stringRepresentation: String {
         do {
             let data = try JSONEncoder().encode(self)
@@ -20,6 +16,12 @@ struct ExecutionRequestFrame: Codable {
             return "{}"
         }
     }
+}
+
+struct ExecutionRequestFrame: Codable {
+    var args: [String]
+    var redirectStderr: Bool
+    var workingDirectoryBookmark: Data?
 }
 
 enum AppExtensionError: String {

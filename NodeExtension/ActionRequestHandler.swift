@@ -8,6 +8,26 @@
 import CoreServices
 import SwiftWS
 
+func installNotificationObserver(){
+    let notificationName = "com.thebaselab.code.node.stop" as CFString
+    let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
+    
+    CFNotificationCenterAddObserver(notificationCenter, nil,
+                                    { (
+                                        center: CFNotificationCenter?,
+                                        observer: UnsafeMutableRawPointer?,
+                                        name: CFNotificationName?,
+                                        object: UnsafeRawPointer?,
+                                        userInfo: CFDictionary?
+                                    ) in
+                                        exit(0)
+                                    },
+                                    notificationName,
+                                    nil,
+                                    CFNotificationSuspensionBehavior.deliverImmediately)
+}
+
+
 class BinaryExecutor {
     let listener = OutputListener()
     let frameAdaptor = LSPFrameAdaptor()
@@ -94,6 +114,8 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
     var executing: Bool = false
     
     func beginRequest(with context: NSExtensionContext) {
+        installNotificationObserver()
+        
         guard wss == nil else {
             context.cancelRequest(withError: AppExtensionError.serverAlreadyStarted)
             return

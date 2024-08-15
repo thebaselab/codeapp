@@ -1232,14 +1232,16 @@ extension MainApp: EditorImplementationDelegate {
     }
 
     func editorImplementation(languageServerDidDisconnect languageIdentifier: String) {
-        // Recovery logic
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0){
-        //            Task {
-        //                if (!(await monacoInstance.isLanguageServiceConnected) && languageIdentifier == LanguageService.shared.candidateLanguageIdentifier) {
-        //
-        //                }
-        //            }
-        //        }
+        // Recovery strategy
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            Task {
+                if !(await self.monacoInstance.isLanguageServiceConnected)
+                    && languageIdentifier == LanguageService.shared.candidateLanguageIdentifier
+                {
+                    await self.updateActiveEditor()
+                }
+            }
+        }
     }
 
     func editorImplementation(markersDidUpdate markers: [MonacoEditorMarker]) {

@@ -13,14 +13,11 @@ class AppExtensionService: NSObject {
     static let PORT = 50002
     static let shared = AppExtensionService()
     private var task: URLSessionWebSocketTask? = nil
-    private var requestUUID: UUID? = nil
-    private var dynamicExt: Dynamic? = nil
 
     func startServer() {
         let BLE: AnyClass = (NSClassFromString("TlNFeHRlbnNpb24=".base64Decoded()!)!)
         let ext = Dynamic(BLE).extensionWithIdentifier(
             "thebaselab.VS-Code.extension", error: nil)
-        dynamicExt = ext
         let frameworkDir = Bundle.main.privateFrameworksPath!
         let frameworkDirBookmark = try! URL(fileURLWithPath: frameworkDir).bookmarkData()
         let item = NSExtensionItem()
@@ -38,7 +35,6 @@ class AppExtensionService: NSObject {
             [item],
             completion: { uuid in
                 let pid = ext.pid(forRequestIdentifier: uuid)
-                self.requestUUID = uuid
                 if let uuid = uuid {
                     print("Started extension request: \(uuid). Extension PID is \(pid)")
                 }
@@ -48,14 +44,22 @@ class AppExtensionService: NSObject {
     }
 
     func stopServer() {
-        if let requestUUID, let dynamicExt {
-            print("Cancelling extension request: \(requestUUID)")
-            dynamicExt.cancelExtensionRequestWithIdentifier(requestUUID)
-        }
+        let notificationName = CFNotificationName(
+            "com.thebaselab.code.node.stop" as CFString)
+        let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
+        CFNotificationCenterPostNotification(
+            notificationCenter, notificationName, nil, nil, false)
     }
 
     func terminate() {
         self.task?.cancel()
+    }
+
+    func prepareServer() async {
+        if LanguageService.shared.candidateLanguageIdentifier == nil { return }
+        stopServer()
+
+        try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
     }
 
     func call(
@@ -63,6 +67,8 @@ class AppExtensionService: NSObject {
         t_stdin: UnsafeMutablePointer<FILE>,
         t_stdout: UnsafeMutablePointer<FILE>
     ) async throws {
+        await prepareServer()
+
         defer {
             self.task = nil
             signal(SIGINT, SIG_DFL)
@@ -96,38 +102,6 @@ class AppExtensionService: NSObject {
                 fileURLWithPath: FileManager.default.currentDirectoryPath
             ).bookmarkData()
         )
-
-        /*
-        func retry() async throws {
-            var retryCount = 0
-            let MAX_RETRY = 5
-            while retryCount <= MAX_RETRY {
-                do {
-                    try await task.send(.string(frame.stringRepresentation))
-                    break
-                } catch {
-                    retryCount += 1
-                    if retryCount == MAX_RETRY {
-                        fputs("extension service busy", t_stdout)
-                        throw error
-                    }
-                    try await Task.sleep(nanoseconds: 1 * 1_000_000_000)
-                }
-            }
-        }
-
-        do {
-            try await task.send(.string(frame.stringRepresentation))
-        } catch {
-            if task.closeCode.rawValue == 4000 {
-                stopServer()
-                //                startServer()
-                try await retry()
-            } else {
-                throw error
-            }
-        }
-        */
 
         try await task.send(.string(frame.stringRepresentation))
 
