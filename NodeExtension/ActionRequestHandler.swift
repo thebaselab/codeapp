@@ -46,7 +46,8 @@ class BinaryExecutor {
         workingDirectory: URL,
         sharedFrameworksDirectory: URL,
         redirectStderr: Bool,
-        ws: SwiftWS.WebSocket
+        ws: SwiftWS.WebSocket,
+        useUtilityQos: Bool
     ){
         atexit {
             // Allow stdout to properly print before exit
@@ -88,7 +89,7 @@ class BinaryExecutor {
             }
         }
         
-        DispatchQueue.global(qos: .default).async {
+        DispatchQueue.global(qos: useUtilityQos ? .utility : .default).async {
             switch executable {
             case "java", "javac":
                 JavaLauncher.shared.launchJava(args: args, frameworkDirectory: sharedFrameworksDirectory, currentDirectory: workingDirectory)
@@ -164,7 +165,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
                         workingDirectoryUrl = workingDirectoryURL
                     }
                     
-                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL, redirectStderr: request.redirectStderr, ws: message.target)
+                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL, redirectStderr: request.redirectStderr, ws: message.target, useUtilityQos: request.isLanguageService)
                 }
             }
             

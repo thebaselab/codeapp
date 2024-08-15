@@ -100,7 +100,8 @@ class AppExtensionService: NSObject {
             redirectStderr: true,
             workingDirectoryBookmark: try? URL(
                 fileURLWithPath: FileManager.default.currentDirectoryPath
-            ).bookmarkData()
+            ).bookmarkData(),
+            isLanguageService: false
         )
 
         try await task.send(.string(frame.stringRepresentation))
