@@ -112,6 +112,7 @@ open class SwiftWS {
         }
 
         let upgrader = NIOWebSocketServerUpgrader(
+            maxFrameSize: Int(UInt32.max),
             shouldUpgrade: { (channel: Channel, head: HTTPRequestHead) in
                 if self.shouldUpgrade(head) {
                     channel.eventLoop.makeSucceededFuture(HTTPHeaders())
@@ -140,17 +141,18 @@ open class SwiftWS {
                 return try bootstrap.bind(host: "127.0.0.1", port: launchOptions.port).wait()
             }()
         }catch {
-            print(error)
+            fputs(error.localizedDescription, stderr)
         }
 
         guard let localAddress = channel?.localAddress else {
             fatalError("Address was unable to bind. Please check that the socket was not closed or that the address family was understood.")
         }
-        print("Server started and listening on \(localAddress)")
+        fputs("Server started and listening on \(localAddress)", stderr)
 
         // This will never unblock as we don't close the ServerChannel
         try? channel?.closeFuture.wait()
 
-        print("Server closed")
+        fputs("Server closed", stderr)
+        fflush(stderr)
     }
 }
