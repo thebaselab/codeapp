@@ -81,6 +81,7 @@ final class WebSocketTimeHandler: ChannelInboundHandler {
         }
         // We can't really check for error here, but it's also not the purpose of the
         // example so let's not worry about it.
+        ws.messageStackLock.lock()
         if !ws.messageStack.isEmpty{
             for message in ws.messageStack {
                 let buffer = context.channel.allocator.buffer(string: message)
@@ -93,6 +94,7 @@ final class WebSocketTimeHandler: ChannelInboundHandler {
             ws.messageStack.removeAll()
             context.flush()
         }
+        ws.messageStackLock.unlock()
 
         context.eventLoop.scheduleTask(in: .milliseconds(100), { self.checkForMessage(context: context) })
     }

@@ -45,6 +45,7 @@ extension SwiftWS {
         internal var isClosing: Bool = false
         internal var closeCode: Int = 0
         internal var closeReason: String = ""
+        internal let messageStackLock = NSLock()
         
         public func onMessage(_ action: @escaping ((WebSocket.MessageEvent) -> Void)){
             self.onMessageAction = action
@@ -55,7 +56,9 @@ extension SwiftWS {
         }
         
         public func send(_ data: String, _ cb: ((NSError?) -> Void)? = nil){
-            messageStack.append(data)
+            messageStackLock.lock()
+            self.messageStack.append(data)
+            messageStackLock.unlock()
         }
         
         public func close(code: Int, reason: String){
