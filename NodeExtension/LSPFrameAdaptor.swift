@@ -25,7 +25,7 @@ class LSPFrameAdaptor {
     }
 
     private func removeHeader(data: String) -> String {
-        return String(data.split(separator: "\r\n\r\n", maxSplits: 1).last ?? "")
+        return String(data.trimmingPrefix(while: {$0 != "{"}))
     }
     
     func receiveStdout(data: String){
