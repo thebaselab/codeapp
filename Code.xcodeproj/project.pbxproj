@@ -1866,7 +1866,6 @@
 		94A0462A2804A70C00182275 /* SourceControlUnsupportedSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceControlUnsupportedSection.swift; sourceTree = "<group>"; };
 		94A347BC293DE24B00A59658 /* hiddenSystemOverlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hiddenSystemOverlays.swift; sourceTree = "<group>"; };
 		94A4438225A389FF006643FF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		94A4438F25A44CDB006643FF /* monaco-textmate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = "monaco-textmate.bundle"; sourceTree = "<group>"; };
 		94A5682A257CBDE4008A6530 /* MarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
 		94A56831257CC3A1008A6530 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		94A56833257CC3AF008A6530 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3203,7 +3202,6 @@
 			children = (
 				948D12202583F24E008F877A /* terminal.bundle */,
 				94369B4925EAB175008419A0 /* npm.bundle */,
-				94A4438F25A44CDB006643FF /* monaco-textmate.bundle */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
