@@ -85,8 +85,13 @@ unzip -q python-lsp.zip
 rm -f python-lsp.zip
 
 # monaco editor
-curl -OL https://github.com/thebaselab/codeapp-monaco/releases/download/2024.8.15/monaco-textmate.bundle.zip
+curl -OL https://github.com/thebaselab/codeapp-monaco/releases/download/2024.8.16/monaco-textmate.bundle.zip
 unzip -q monaco-textmate.bundle.zip
 rm -f monaco-textmate.bundle.zip
+
+# Java LSP
+curl -OL https://github.com/thebaselab/codeapp-java/releases/download/2024.8.16/java-lsp.zip
+unzip -q java-lsp.zip
+rm -f java-lsp.zip
 
 echo "Done!"

@@ -33,6 +33,10 @@ class BinaryExecutor {
     let frameAdaptor = LSPFrameAdaptor()
     var needFrameAdaptor: Bool = false
     
+    let constants = [
+        "${JAVA_LSP_FAT_JAR_PATH}": Resources.javaLSP
+    ]
+    
     func writeToStdin(data: String){
         if needFrameAdaptor {
             frameAdaptor.receiveWebSocket(data: data)
@@ -47,7 +51,7 @@ class BinaryExecutor {
         sharedFrameworksDirectory: URL,
         redirectStderr: Bool,
         ws: SwiftWS.WebSocket,
-        useUtilityQos: Bool
+        isLanguageService: Bool
     ){
         atexit {
             // Allow stdout to properly print before exit
@@ -55,9 +59,20 @@ class BinaryExecutor {
             usleep(200000) // 0.2 seconds
         }
         
+        var args = args
+        args = args.map {
+            if let replacement = constants[$0] {
+                return replacement
+            }else {
+                return $0
+            }
+        }
+        
         guard let executable = args.first else {
             return
         }
+        
+        self.needFrameAdaptor = isLanguageService
         
         frameAdaptor.onSendToWebSocket = { data in
             DispatchQueue.global(qos: .utility).async {
@@ -89,14 +104,13 @@ class BinaryExecutor {
             }
         }
         
-        DispatchQueue.global(qos: useUtilityQos ? .utility : .default).async {
+        DispatchQueue.global(qos: isLanguageService ? .utility : .default).async {
             switch executable {
             case "java", "javac":
                 JavaLauncher.shared.launchJava(args: args, frameworkDirectory: sharedFrameworksDirectory, currentDirectory: workingDirectory)
             case "node":
                 NodeLauncher.shared.launchNode(args: args)
             default:
-                self.needFrameAdaptor = true
                 SystemCommandLauncher.shared.launchSystemCommand(args: args)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -165,7 +179,7 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
                         workingDirectoryUrl = workingDirectoryURL
                     }
                     
-                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL, redirectStderr: request.redirectStderr, ws: message.target, useUtilityQos: request.isLanguageService)
+                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL, redirectStderr: request.redirectStderr, ws: message.target, isLanguageService: request.isLanguageService)
                 }
             }
             

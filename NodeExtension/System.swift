@@ -7,7 +7,7 @@
 
 import ios_system
 
-private class Resources {
+class Resources {
     // https://stackoverflow.com/questions/26189060/get-the-main-app-bundle-from-within-extension
     static func getMainAppBundle() -> Bundle {
         var bundle = Bundle.main
@@ -28,6 +28,8 @@ private class Resources {
     static let carcert = Resources.getMainAppBundle().url(forResource: "cacert", withExtension: "pem")!
     
     static let pythonLSP = "\(Bundle.main.resourcePath!)/python-lsp"
+    
+    static let javaLSP = "\(Bundle.main.resourcePath!)/java-lsp/fat-jar.jar"
 }
 
 

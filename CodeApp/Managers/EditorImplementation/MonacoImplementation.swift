@@ -458,14 +458,19 @@ extension MonacoImplementation: EditorImplementation {
     func connectLanguageService(
         serverURL: URL, serverArgs: [String], pwd: URL, languageIdentifier: String
     ) {
-        let bookmark = try! serverURL.bookmarkData()
+        guard let pwdBookmark = try? pwd.bookmarkData(),
+            let encodedPwd = pwd.absoluteString.base64Encoded()
+        else {
+            return
+        }
         Task {
             try? await monacoWebView.evaluateJavaScriptAsync(
                 """
                 connectMonacoToLanguageServer(
                     "\(serverURL.absoluteString)",
                     \(serverArgs),
-                    "\(bookmark.base64EncodedString())",
+                    "\(encodedPwd)",
+                    "\(pwdBookmark.base64EncodedString())",
                     "\(languageIdentifier)"
                 )
                 """)

@@ -115,6 +115,7 @@
 		941CF5FB2641CBDA001199C0 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 941CF5FA2641CBDA001199C0 /* Settings.bundle */; };
 		941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
 		941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
+		9424437E2C6E337B00BC862F /* java-lsp in Resources */ = {isa = PBXBuildFile; fileRef = 9424437D2C6E337B00BC862F /* java-lsp */; };
 		94251F09263E01CA0029427A /* python3_ios-_asyncio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D80263E019A0029427A /* python3_ios-_asyncio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0A263E01CA0029427A /* python3_ios-_bisect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251CF8263E018E0029427A /* python3_ios-_bisect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0B263E01CA0029427A /* python3_ios-_blake2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D0C263E018F0029427A /* python3_ios-_blake2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1412,6 +1413,7 @@
 		94196B18280316C7008AAEB2 /* CodeUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		941CF5FA2641CBDA001199C0 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		941E53B528787D3100561C7E /* MenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonView.swift; sourceTree = "<group>"; };
+		9424437D2C6E337B00BC862F /* java-lsp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "java-lsp"; sourceTree = "<group>"; };
 		94251C6D263E01810029427A /* pythonA-pandas._libs.tslibs.period.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.tslibs.period.framework"; sourceTree = "<group>"; };
 		94251C6E263E01810029427A /* pythonA-numpy.random._bounded_integers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-numpy.random._bounded_integers.framework"; sourceTree = "<group>"; };
 		94251C6F263E01810029427A /* python3_ios-_codecs_tw.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "python3_ios-_codecs_tw.framework"; sourceTree = "<group>"; };
@@ -2463,6 +2465,7 @@
 			children = (
 				94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */,
 				94EF4FD92C6DF6A900994D9C /* python-lsp */,
+				9424437D2C6E337B00BC862F /* java-lsp */,
 				945D4DFE2B4B171200DE0DBA /* Java */,
 				9469AC9926A33D19003F569F /* PHP */,
 				9469A8F426A33B1D003F569F /* NodeJS */,
@@ -3497,6 +3500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94EF4FDA2C6DF6A900994D9C /* python-lsp in Resources */,
+				9424437E2C6E337B00BC862F /* java-lsp in Resources */,
 				9484BDD12B46FAEE003BCB8A /* injection.js in Resources */,
 				94369AFF25E3B933008419A0 /* Media.xcassets in Resources */,
 				945D4E222B4B174400DE0DBA /* tools.jar in Resources */,
