@@ -83,6 +83,7 @@ protocol EditorImplementationDelegate: AnyObject {
         contentDidChangeForModelURL url: String, content: String, versionID: Int)
     func editorImplementation(cursorPositionDidChange line: Int, column: Int)
     func editorImplementation(onOpenURL url: String)
+    func editorImplementation(languageServerDidDisconnect languageIdentifier: String)
 
     // Monaco specfic methods
     func editorImplementation(markersDidUpdate markers: [MonacoEditorMarker])
@@ -137,6 +138,12 @@ protocol EditorImplementation: AnyObject {
     func moveToNextDiff() async
     func moveToPreviousDiff() async
     func isEditorInDiffMode() async -> Bool
+
+    // Intellisense operations
+    func connectLanguageService(
+        serverURL: URL, serverArgs: [String], pwd: URL, languageIdentifier: String)
+    func disconnectLanguageService()
+    var isLanguageServiceConnected: Bool { get async }
 
     // Monaco Editor operations
     func _applyCustomShortcuts() async

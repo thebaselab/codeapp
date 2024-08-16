@@ -86,13 +86,6 @@ class Executor {
     }
 
     func kill() {
-        if nodeUUID != nil {
-            let notificationName = CFNotificationName(
-                "com.thebaselab.code.node.stop" as CFString)
-            let notificationCenter = CFNotificationCenterGetDarwinNotifyCenter()
-            CFNotificationCenterPostNotification(
-                notificationCenter, notificationName, nil, nil, false)
-        }
         if javascriptRunning {
             javascriptRunning = false
             return
@@ -116,10 +109,6 @@ class Executor {
         }
 
         ios_switchSession(persistentIdentifier.toCString())
-
-        if nodeUUID != nil {
-            ExtensionCommunicationHelper.writeToStdin(data: input + "\n")
-        }
 
         stdin_file_input?.write(data)
 

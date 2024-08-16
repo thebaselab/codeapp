@@ -657,6 +657,18 @@ extension RunestoneImplementation: EditorImplementation {
         return false
     }
 
+    func connectLanguageService(
+        serverURL: URL, serverArgs: [String], pwd: URL, languageIdentifier: String
+    ) {
+
+    }
+
+    func disconnectLanguageService() {
+
+    }
+
+    var isLanguageServiceConnected: Bool { false }
+
     func _applyCustomShortcuts() async {
 
     }

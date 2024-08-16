@@ -13,6 +13,7 @@ import ios_system
 struct CodeApp: App {
     @StateObject var themeManager = ThemeManager()
     let wasmService = WASMService()
+    let editorService = EditorService()
 
     init() {
         setup()
@@ -37,6 +38,7 @@ private func setup() {
     wasmWebView.loadWorker()
     initializeEnvironment()
     Repository.initialize_libgit2()
+    AppExtensionService.shared.startServer()
 }
 
 private func versionNumberIncreased() -> Bool {

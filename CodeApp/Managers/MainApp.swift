@@ -320,6 +320,33 @@ class MainApp: ObservableObject {
                     url: activeTextEditor.url.absoluteString, value: activeTextEditor.content)
             }
         }
+
+        guard let currentDirectoryURL = workSpaceStorage.currentDirectory._url else {
+            return
+        }
+        if let languageServiceConfiguration = LanguageService.configurationFor(
+            url: activeTextEditor.url)
+        {
+            Task {
+                let isLanguageServiceConnected = await monacoInstance.isLanguageServiceConnected
+                if isLanguageServiceConnected
+                    && LanguageService.shared.candidateLanguageIdentifier
+                        == languageServiceConfiguration.languageIdentifier
+                {
+                    return
+                }
+                if isLanguageServiceConnected { monacoInstance.disconnectLanguageService() }
+                LanguageService.shared.candidateLanguageIdentifier =
+                    languageServiceConfiguration.languageIdentifier
+                monacoInstance.connectLanguageService(
+                    serverURL: URL(
+                        string: "ws://127.0.0.1:\(String(AppExtensionService.PORT))/websocket")!,
+                    serverArgs: languageServiceConfiguration.args,
+                    pwd: currentDirectoryURL,
+                    languageIdentifier: languageServiceConfiguration.languageIdentifier
+                )
+            }
+        }
     }
 
     @MainActor
@@ -1204,6 +1231,19 @@ extension MainApp: EditorImplementationDelegate {
         if let url = URL(string: url) {
             if url.scheme == "http" || url.scheme == "https" {
                 safariManager.showSafari(url: url)
+            }
+        }
+    }
+
+    func editorImplementation(languageServerDidDisconnect languageIdentifier: String) {
+        // Recovery strategy
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            Task {
+                if !(await self.monacoInstance.isLanguageServiceConnected)
+                    && languageIdentifier == LanguageService.shared.candidateLanguageIdentifier
+                {
+                    await self.updateActiveEditor()
+                }
             }
         }
     }
