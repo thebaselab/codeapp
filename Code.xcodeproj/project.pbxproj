@@ -116,6 +116,7 @@
 		941E53B628787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
 		941E53B728787D3100561C7E /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941E53B528787D3100561C7E /* MenuButtonView.swift */; };
 		9424437E2C6E337B00BC862F /* java-lsp in Resources */ = {isa = PBXBuildFile; fileRef = 9424437D2C6E337B00BC862F /* java-lsp */; };
+		9424437F2C6F2DF100BC862F /* python-lsp in Resources */ = {isa = PBXBuildFile; fileRef = 94EF4FD92C6DF6A900994D9C /* python-lsp */; };
 		94251F09263E01CA0029427A /* python3_ios-_asyncio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D80263E019A0029427A /* python3_ios-_asyncio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0A263E01CA0029427A /* python3_ios-_bisect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251CF8263E018E0029427A /* python3_ios-_bisect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		94251F0B263E01CA0029427A /* python3_ios-_blake2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94251D0C263E018F0029427A /* python3_ios-_blake2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -769,7 +770,6 @@
 		94E6CC882807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
 		94E6CC892807632B00939E4F /* biometricType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E6CC872807632B00939E4F /* biometricType.swift */; };
 		94EDC7B42C2DCBF600C86F56 /* extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 94369AFC25E3B933008419A0 /* extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		94EF4FDA2C6DF6A900994D9C /* python-lsp in Resources */ = {isa = PBXBuildFile; fileRef = 94EF4FD92C6DF6A900994D9C /* python-lsp */; };
 		94EF4FDC2C6DF80700994D9C /* monaco-textmate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */; };
 		94EF4FDD2C6DF80700994D9C /* monaco-textmate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */; };
 		94F2FEA526A2D45C007EBC6D /* freetype.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 94F2FEA326A2D44D007EBC6D /* freetype.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -3499,7 +3499,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94EF4FDA2C6DF6A900994D9C /* python-lsp in Resources */,
 				9424437E2C6E337B00BC862F /* java-lsp in Resources */,
 				9484BDD12B46FAEE003BCB8A /* injection.js in Resources */,
 				94369AFF25E3B933008419A0 /* Media.xcassets in Resources */,
@@ -3513,6 +3512,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9424437F2C6F2DF100BC862F /* python-lsp in Resources */,
 				94127C40280335C8008C7F82 /* Themes in Resources */,
 				944EEBFB2563C386009D77FE /* Preview Assets.xcassets in Resources */,
 				94A56830257CC3A1008A6530 /* Localizable.strings in Resources */,

@@ -27,7 +27,7 @@ class Resources {
     
     static let carcert = Resources.getMainAppBundle().url(forResource: "cacert", withExtension: "pem")!
     
-    static let pythonLSP = "\(Bundle.main.resourcePath!)/python-lsp"
+    static let pythonLSP = "\(Resources.getMainAppBundle().resourcePath!)/python-lsp"
     
     static let javaLSP = "\(Bundle.main.resourcePath!)/java-lsp/fat-jar.jar"
 }
