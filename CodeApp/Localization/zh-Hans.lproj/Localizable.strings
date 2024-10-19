@@ -485,6 +485,9 @@
 "settings.runestone.editor" = "Runestone编辑器";
 "settings.runestone.editor.notes" = "Runestone是一款具有本地文本选择支持的编辑器。在此模式下，某些功能无法使用。";
 "settings.terminal.font" = "字体";
+"settings.language_service" = "语言服务";
+"settings.language_service.enable" = "启用语言服务";
+"settings.language_service.notes" = "语言服务提供自动完成、静态代码分析等语言功能。此功能目前适用于 Python 和 Java。";
 
 "panels.no_panel_selected" = "没有选中的面板";
 "sidebar.no_section_selected" = "没有选中的版面";

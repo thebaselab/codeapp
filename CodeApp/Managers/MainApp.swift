@@ -213,6 +213,7 @@ class MainApp: ObservableObject {
     @AppStorage("editorDarkTheme") var selectedTheme: String = "Dark+"
     @AppStorage("stateRestorationEnabled") var stateRestorationEnabled = true
     @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
+    @AppStorage("languageServiceEnabled") var languageServiceEnabled: Bool = true
 
     init() {
 
@@ -322,6 +323,10 @@ class MainApp: ObservableObject {
         }
 
         guard let currentDirectoryURL = workSpaceStorage.currentDirectory._url else {
+            return
+        }
+        guard !runeStoneEditorEnabled && currentDirectoryURL.isFileURL && languageServiceEnabled else {
+            monacoInstance.disconnectLanguageService()
             return
         }
         if let languageServiceConfiguration = LanguageService.configurationFor(

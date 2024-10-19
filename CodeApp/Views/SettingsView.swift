@@ -26,6 +26,7 @@ struct SettingsView: View {
     @AppStorage("terminalOptions") var terminalOptions: CodableWrapper<TerminalOptions> = .init(
         value: TerminalOptions())
     @AppStorage("runeStoneEditorEnabled") var runeStoneEditorEnabled: Bool = false
+    @AppStorage("languageServiceEnabled") var languageServiceEnabled: Bool = true
 
     @State var showAllFonts = false
     @State var showsEraseAlert: Bool = false
@@ -117,6 +118,13 @@ struct SettingsView: View {
                         Toggle(
                             "settings.explorer.confirm_before_delete", isOn: $confirmBeforeDelete)
                     }
+
+                    Section(
+                        content: {
+                            Toggle(
+                                "settings.language_service.enable", isOn: $languageServiceEnabled)
+                        }, header: { Text("settings.language_service") },
+                        footer: { Text("settings.language_service.notes") })
 
                     Section(header: Text(NSLocalizedString("Editor", comment: ""))) {
 

@@ -387,6 +387,9 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "settings.runestone.editor" = "Runestone Editor";
 "settings.runestone.editor.notes" = "Runestone is an editor with native text selection support. Some features are unavailable in this mode.";
 "settings.terminal.font" = "Font";
+"settings.language_service" = "Language Service";
+"settings.language_service.enable" = "Enable Language Service";
+"settings.language_service.notes" = "Language service provides autocomplete, static code analysis and other language features. This feature is currently available for Python and Java.";
 
 "panels.no_panel_selected" = "No panel selected";
 "sidebar.no_section_selected" = "No section selected.";

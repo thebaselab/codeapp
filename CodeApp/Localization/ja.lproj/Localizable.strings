@@ -495,6 +495,9 @@
 "settings.runestone.editor" = "Runestoneエディタ";
 "settings.runestone.editor.notes" = "Runestone はネイティブのテキスト選択をサポートするエディターです。このモードでは一部の機能は使用できません。";
 "settings.terminal.font" = "フォント";
+"settings.language_service" = "言語サービス";
+"settings.language_service.enable" = "言語サービスを有効にする";
+"settings.language_service.notes" = "言語サービスは、オートコンプリート、静的コード分析、その他の言語機能を提供します。この機能は現在、Python と Java で利用できます。";
 
 "panels.no_panel_selected" = "パネルが選択されていません";
 "sidebar.no_section_selected" = "セクションが選択されていません";
