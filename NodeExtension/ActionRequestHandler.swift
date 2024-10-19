@@ -49,7 +49,7 @@ class BinaryExecutor {
         args: [String],
         workingDirectory: URL,
         sharedFrameworksDirectory: URL,
-        pythonLibraryDirectory: URL,
+        pythonLibraryDirectory: URL?,
         redirectStderr: Bool,
         ws: SwiftWS.WebSocket,
         isLanguageService: Bool
@@ -141,15 +141,19 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         guard let item = context.inputItems.first as? NSExtensionItem,
               let serverPort = item.userInfo?["port"] as? Int,
               let frameworkDirectoryBookmarkData = item.userInfo?["frameworksDirectoryBookmark"] as? Data,
-              let frameworkDirectoryURL = try? URL(resolvingBookmarkData: frameworkDirectoryBookmarkData, bookmarkDataIsStale: &isStale),
-              let pythonLibraryDirectoryBookmarkData = item.userInfo?["pythonLibraryDirectoryBookmark"] as? Data,
-              let pythonLibraryDirectoryURL = try? URL(resolvingBookmarkData: pythonLibraryDirectoryBookmarkData, bookmarkDataIsStale: &isStale)
+              let frameworkDirectoryURL = try? URL(resolvingBookmarkData: frameworkDirectoryBookmarkData, bookmarkDataIsStale: &isStale)
         else {
             context.cancelRequest(withError: AppExtensionError.missingServerConfiguration)
             return
         }
+        let pythonLibraryDirectoryBookmarkData = item.userInfo?["pythonLibraryDirectoryBookmark"] as? Data
+        var pythonLibraryDirectoryURL: URL? = nil
+        if let pythonLibraryDirectoryBookmarkData {
+            pythonLibraryDirectoryURL = try? URL(resolvingBookmarkData: pythonLibraryDirectoryBookmarkData, bookmarkDataIsStale: &isStale)
+        }
+        
         _ = frameworkDirectoryURL.startAccessingSecurityScopedResource()
-        _ = pythonLibraryDirectoryURL.startAccessingSecurityScopedResource()
+        _ = pythonLibraryDirectoryURL?.startAccessingSecurityScopedResource()
         
         let wss = SwiftWS(port: serverPort, queue: queue)
         self.wss = wss

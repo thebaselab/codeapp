@@ -3148,6 +3148,7 @@
 				9F062FE52B58D40D006210AA /* FileTreeViewController.swift */,
 				9434C3EE2BA2CCBB00EB1CF6 /* WASMService.swift */,
 				949D78842C33DA48006D7480 /* AppExtensionService.swift */,
+				949CDF492C6658DC00FFC5B1 /* LanguageService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -3159,7 +3160,6 @@
 				9F3C2DEC2918EDC400BFF14C /* Resources.swift */,
 				9FD5BCEB292495DF00F20C4B /* DefaultUIState.swift */,
 				94795C4A293259080057C12F /* Encoding.swift */,
-				949CDF492C6658DC00FFC5B1 /* LanguageService.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";

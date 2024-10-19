@@ -37,7 +37,7 @@ class Resources {
 class SystemCommandLauncher {
     static let shared = SystemCommandLauncher()
     
-    func launchSystemCommand(args: [String], pythonLibraryDirectoryURL: URL){
+    func launchSystemCommand(args: [String], pythonLibraryDirectoryURL: URL?){
         ios_setStreams(stdin, stdout, stderr)
         
         ios_setDirectoryURL(URL(filePath: FileManager.default.currentDirectoryPath))
@@ -57,7 +57,11 @@ class SystemCommandLauncher {
         setenv("YARL_NO_EXTENSIONS", "1", 1)
         setenv("MULTIDICT_NO_EXTENSIONS", "1", 1)
         setenv("SYSROOT", libraryURL.path + "/usr", 1)
-        setenv("PYTHONPATH", "\(Resources.pythonLSP)/site-packages:\(pythonLibraryDirectoryURL.path)".toCString(), 1)
+        var pythonPath = "\(Resources.pythonLSP)/site-packages"
+        if let pythonLibraryDirectoryURL {
+            pythonPath += ":\(pythonLibraryDirectoryURL.path)"
+        }
+        setenv("PYTHONPATH", pythonPath.toCString(), 1)
         if let home = getenv("PATH") {
             setenv("PATH", String(utf8String: home)! + ":\(Resources.pythonLSP)/bin", 1)
         }
