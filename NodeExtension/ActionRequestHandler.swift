@@ -49,6 +49,7 @@ class BinaryExecutor {
         args: [String],
         workingDirectory: URL,
         sharedFrameworksDirectory: URL,
+        pythonLibraryDirectory: URL,
         redirectStderr: Bool,
         ws: SwiftWS.WebSocket,
         isLanguageService: Bool
@@ -96,7 +97,7 @@ class BinaryExecutor {
                     }
                 }
             }
-            if !redirectStderr { return }
+//            if !redirectStderr { return }
             self.listener.onStderr = { text in
                 DispatchQueue.global(qos: .utility).async {
                     ws.send(text)
@@ -111,7 +112,7 @@ class BinaryExecutor {
             case "node":
                 NodeLauncher.shared.launchNode(args: args)
             default:
-                SystemCommandLauncher.shared.launchSystemCommand(args: args)
+                SystemCommandLauncher.shared.launchSystemCommand(args: args, pythonLibraryDirectoryURL: pythonLibraryDirectory)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.listener.onStdout = nil
@@ -140,12 +141,15 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
         guard let item = context.inputItems.first as? NSExtensionItem,
               let serverPort = item.userInfo?["port"] as? Int,
               let frameworkDirectoryBookmarkData = item.userInfo?["frameworksDirectoryBookmark"] as? Data,
-              let frameworkDirectoryURL = try? URL(resolvingBookmarkData: frameworkDirectoryBookmarkData, bookmarkDataIsStale: &isStale)
+              let frameworkDirectoryURL = try? URL(resolvingBookmarkData: frameworkDirectoryBookmarkData, bookmarkDataIsStale: &isStale),
+              let pythonLibraryDirectoryBookmarkData = item.userInfo?["pythonLibraryDirectoryBookmark"] as? Data,
+              let pythonLibraryDirectoryURL = try? URL(resolvingBookmarkData: pythonLibraryDirectoryBookmarkData, bookmarkDataIsStale: &isStale)
         else {
             context.cancelRequest(withError: AppExtensionError.missingServerConfiguration)
             return
         }
         _ = frameworkDirectoryURL.startAccessingSecurityScopedResource()
+        _ = pythonLibraryDirectoryURL.startAccessingSecurityScopedResource()
         
         let wss = SwiftWS(port: serverPort, queue: queue)
         self.wss = wss
@@ -179,7 +183,8 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
                         workingDirectoryUrl = workingDirectoryURL
                     }
                     
-                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL, redirectStderr: request.redirectStderr, ws: message.target, isLanguageService: request.isLanguageService)
+                    binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL,
+                                                 pythonLibraryDirectory: pythonLibraryDirectoryURL ,redirectStderr: request.redirectStderr, ws: message.target, isLanguageService: request.isLanguageService)
                 }
             }
             

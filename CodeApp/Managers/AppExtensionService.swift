@@ -20,9 +20,13 @@ class AppExtensionService: NSObject {
             "thebaselab.VS-Code.extension", error: nil)
         let frameworkDir = Bundle.main.privateFrameworksPath!
         let frameworkDirBookmark = try! URL(fileURLWithPath: frameworkDir).bookmarkData()
+        let pythonLibraryDirBookmark = try! FileManager().url(
+            for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true
+        ).appendingPathComponent("lib/python3.9/site-packages").bookmarkData()
         let item = NSExtensionItem()
         item.userInfo = [
             "frameworksDirectoryBookmark": frameworkDirBookmark,
+            "pythonLibraryDirectoryBookmark": pythonLibraryDirBookmark,
             "port": AppExtensionService.PORT,
         ]
         ext.setRequestInterruptionBlock(
