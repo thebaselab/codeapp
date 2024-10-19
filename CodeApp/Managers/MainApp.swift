@@ -325,7 +325,8 @@ class MainApp: ObservableObject {
         guard let currentDirectoryURL = workSpaceStorage.currentDirectory._url else {
             return
         }
-        guard !runeStoneEditorEnabled && currentDirectoryURL.isFileURL && languageServiceEnabled else {
+        guard !runeStoneEditorEnabled && currentDirectoryURL.isFileURL && languageServiceEnabled
+        else {
             monacoInstance.disconnectLanguageService()
             return
         }
