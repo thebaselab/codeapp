@@ -97,7 +97,7 @@ class BinaryExecutor {
                     }
                 }
             }
-//            if !redirectStderr { return }
+            if !redirectStderr { return }
             self.listener.onStderr = { text in
                 DispatchQueue.global(qos: .utility).async {
                     ws.send(text)
