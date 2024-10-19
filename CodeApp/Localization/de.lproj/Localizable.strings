@@ -497,6 +497,7 @@
 "settings.language_service" = "Sprachdienst";
 "settings.language_service.enable" = "Sprachdienst aktivieren";
 "settings.language_service.notes" = "Der Sprachdienst bietet Autovervollständigung, statische Codeanalyse und andere Sprachfunktionen. Diese Funktion ist derzeit für Python und Java verfügbar.";
+"settings.about.change_app_language" = "App-Sprache ändern";
 
 "panels.no_panel_selected" = "Kein Panel ausgewählt";
 "sidebar.no_section_selected" = "Kein Abschnitt ausgewählt";

@@ -497,6 +497,7 @@
 "settings.language_service" = "언어 서비스";
 "settings.language_service.enable" = "언어 서비스 활성화";
 "settings.language_service.notes" = "언어 서비스는 자동완성, 정적 코드 분석 및 기타 언어 기능을 제공합니다. 이 기능은 현재 Python 및 Java에서 사용할 수 있습니다.";
+"settings.about.change_app_language" = "앱 언어 변경";
 
 "panels.no_panel_selected" = "패널이 선택되지 않았습니다.";
 "sidebar.no_section_selected" = "섹션이 선택되지 않았습니다.";

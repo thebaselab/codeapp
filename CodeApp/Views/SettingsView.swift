@@ -294,34 +294,9 @@ struct SettingsView: View {
                             Text(NSLocalizedString("Release Notes", comment: ""))
                         }
 
-                        Button(action: {
-                            showsEraseAlert.toggle()
-                        }) {
-                            Text(NSLocalizedString("Erase all settings", comment: ""))
-                                .foregroundColor(
-                                    .red)
-                        }
-                        .alert(isPresented: $showsEraseAlert) {
-                            Alert(
-                                title: Text(NSLocalizedString("Erase all settings", comment: "")),
-                                message: Text(
-                                    NSLocalizedString(
-                                        "This will erase all user settings, including author identity and credentials.",
-                                        comment: "")),
-                                primaryButton: .destructive(
-                                    Text(NSLocalizedString("Erase", comment: ""))
-                                ) {
-                                    UserDefaults.standard.dictionaryRepresentation().keys.forEach {
-                                        key in
-                                        UserDefaults.standard.removeObject(forKey: key)
-                                    }
-                                    KeychainWrapper.standard.set("", forKey: "git-username")
-                                    KeychainWrapper.standard.set("", forKey: "git-password")
-                                    NSUserActivity.deleteAllSavedUserActivities {}
-                                    App.notificationManager.showInformationMessage(
-                                        "All settings erased")
-                                }, secondaryButton: .cancel())
-                        }
+                        Link(
+                            "settings.about.change_app_language",
+                            destination: URL(string: UIApplication.openSettingsURLString)!)
                         Link(
                             "terms_of_use",
                             destination: URL(
@@ -349,6 +324,35 @@ struct SettingsView: View {
                                     + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String
                                         ?? "0")
                             )
+                        }
+
+                        Button(action: {
+                            showsEraseAlert.toggle()
+                        }) {
+                            Text(NSLocalizedString("Erase all settings", comment: ""))
+                                .foregroundColor(
+                                    .red)
+                        }
+                        .alert(isPresented: $showsEraseAlert) {
+                            Alert(
+                                title: Text(NSLocalizedString("Erase all settings", comment: "")),
+                                message: Text(
+                                    NSLocalizedString(
+                                        "This will erase all user settings, including author identity and credentials.",
+                                        comment: "")),
+                                primaryButton: .destructive(
+                                    Text(NSLocalizedString("Erase", comment: ""))
+                                ) {
+                                    UserDefaults.standard.dictionaryRepresentation().keys.forEach {
+                                        key in
+                                        UserDefaults.standard.removeObject(forKey: key)
+                                    }
+                                    KeychainWrapper.standard.set("", forKey: "git-username")
+                                    KeychainWrapper.standard.set("", forKey: "git-password")
+                                    NSUserActivity.deleteAllSavedUserActivities {}
+                                    App.notificationManager.showInformationMessage(
+                                        "All settings erased")
+                                }, secondaryButton: .cancel())
                         }
 
                         Text("Code App by thebaselab").font(.footnote).foregroundColor(.gray)
