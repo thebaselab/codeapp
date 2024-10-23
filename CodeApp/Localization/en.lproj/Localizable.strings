@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.9.0 (July 2024)**
+##### **v1.10.0 (October 2024)**
 #### Start
 [New file](https://thebaselab.com/code/newfile)
 [Open file](https://thebaselab.com/code/openfile)
@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### 1.10.0 (October 2024)
+- Language Servers for Python and Java
+- Support for more languages in Monaco Editor
+
 ### 1.9.0 (July 2024)
 - SSH
   - Proxy jump

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.9.0 (2024 年 7 月)**
+##### **v1.10.0 (2024 年 10 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### 1.10.0 (2024 年 10 月)
+- Python 和 Java 的语言服务器
+- Monaco 编辑器支持更多语言
+
 ### 1.9.0（2024 年 7 月）
 - SSH
   - 代理跳转

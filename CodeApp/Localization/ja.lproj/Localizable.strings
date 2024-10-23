@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.9.0 (2024年 7月)**
+##### **v1.10.0 (2024年 10月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -23,6 +23,10 @@
 
 "Changelog.message" =
 "
+### 1.10.0 (2024 年 10 月)
+- Python および Java の言語サーバー
+- Monaco エディターでのより多くの言語のサポート
+
 ### 1.9.0 (2024 年 7 月)
 - SSH
    - プロキシジャンプ
