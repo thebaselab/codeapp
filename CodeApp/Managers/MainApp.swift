@@ -341,7 +341,10 @@ class MainApp: ObservableObject {
                 {
                     return
                 }
-                if isLanguageServiceConnected { monacoInstance.disconnectLanguageService() }
+                if isLanguageServiceConnected {
+                    monacoInstance.disconnectLanguageService()
+                    try? await Task.sleep(for: .seconds(5))
+                }
                 LanguageService.shared.candidateLanguageIdentifier =
                     languageServiceConfiguration.languageIdentifier
                 monacoInstance.connectLanguageService(
