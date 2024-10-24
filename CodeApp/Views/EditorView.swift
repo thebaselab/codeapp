@@ -158,8 +158,8 @@ struct EditorView: View {
                     }
 
                     Task {
+                        await App.saveCurrentFile()
                         if await App.monacoInstance.editorInFocus() {
-                            await App.saveCurrentFile()
                             await App.monacoInstance.blur()
                         }
                     }
