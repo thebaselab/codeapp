@@ -97,6 +97,7 @@ class WebViewBase: KBWebViewBase {
         }
 
         if let interactionView = findInteractionView(in: subviews) {
+            interactionView.pasteConfiguration = nil
             for interaction in interactionView.interactions {
                 if interaction is UIDragInteraction || interaction is UIDropInteraction {
                     interactionView.removeInteraction(interaction)
