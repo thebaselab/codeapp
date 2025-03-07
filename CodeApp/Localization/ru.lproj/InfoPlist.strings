@@ -1,0 +1,8 @@
+/*
+  InfoPlist.strings
+  Code
+
+  Created by Alexey Krainev on 7/3/2025.
+  
+*/
+"NSPhotoLibraryAddUsageDescription" = "Необходим доступ к медиатеке для сохранения изображений";
