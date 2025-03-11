@@ -1965,6 +1965,8 @@
 		94FF3370284348F1003DE5DD /* KBWebViewBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBWebViewBase.m; sourceTree = "<group>"; };
 		94FF337328435158003DE5DD /* SettingsFontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFontPicker.swift; sourceTree = "<group>"; };
 		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "Dependencies/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
+		9DA5FA622D7A51B30010CE11 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9DFB70332D7A78B2005A5BB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9F046C312922203E00BDE4E9 /* ToolbarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarManager.swift; sourceTree = "<group>"; };
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteExecutionExtension.swift; sourceTree = "<group>"; };
@@ -3445,6 +3447,7 @@
 				Base,
 				ko,
 				ja,
+				ru,
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
@@ -3984,6 +3987,7 @@
 				9425205C263E10490029427A /* de */,
 				73F80B102850F7EE000EF3FC /* ko */,
 				4F30816929662D58002708FD /* ja */,
+				9DFB70332D7A78B2005A5BB4 /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -3996,6 +4000,7 @@
 				94D7DEE12632C6B000FA0760 /* de */,
 				73F80B0F2850F7E5000EF3FC /* ko */,
 				4F30816829662CBF002708FD /* ja */,
+				9DA5FA622D7A51B30010CE11 /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
