@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.10.1 (October 2024)**
+##### **v1.10.2 (March 2025)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.10.2 (March 2025)
+- Russische Lokalisierung
+
 ### 1.10.1 (October 2024)
 - Fehlerbehebungen
 
