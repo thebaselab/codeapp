@@ -128,6 +128,7 @@ struct PanelView: View {
     @SceneStorage("panel.height") var panelHeight: Double = DefaultUIState.PANEL_HEIGHT
 
     @State var showSheet = false
+    @GestureState private var translation: CGFloat?
 
     var maxHeight: CGFloat {
         windowHeight
@@ -155,10 +156,12 @@ struct PanelView: View {
             .frame(height: min(CGFloat(panelHeight), maxHeight))
             .background(Color.init(id: "editor.background"))
             .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        let proposedNewHeight = panelHeight - value.translation.height
+                DragGesture(minimumDistance: 10.0, coordinateSpace: .global)
+                    .updating($translation) { value, gestureState, transaction in
+                        let proposedNewHeight =
+                            panelHeight - value.translation.height + (gestureState ?? 0)
                         evaluateProposedHeight(proposal: proposedNewHeight)
+                        gestureState = value.translation.height
                     }
             )
     }
