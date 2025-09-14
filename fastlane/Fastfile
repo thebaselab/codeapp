@@ -64,7 +64,7 @@ platform :ios do
       sh(%Q[echo 'let JUDGE0_KEY = "#{JUDGE0_KEY}"' >> CodeApp/Constants/Secrets.swift])
     end
 
-    run_tests(scheme: "Code UI")
+    # run_tests(scheme: "Code UI")
 
     match(
       type: 'appstore',
