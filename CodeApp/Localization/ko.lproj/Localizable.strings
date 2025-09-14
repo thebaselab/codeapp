@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.10.2 (2025년 3월)**
+##### **v1.10.3 (2025년 9월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.10.3 (2025년 9월)
+- 버그 수정
+
 ### 1.10.2 (2025년 3월)
 - 러시아어 현지화
 
