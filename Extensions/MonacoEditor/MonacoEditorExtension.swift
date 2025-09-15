@@ -14,35 +14,35 @@ class MonacoEditorAuxiliaryExtension: CodeAppExtension {
         let encodingStatusBarItem = StatusBarItem(
             extensionID: MONACO_EDITOR_EXTENSION_ID,
             view: AnyView(EncodingMenu()),
-            shouldDisplay: { app.activeEditor is TextEditorInstance },
+            shouldDisplay: { app in app.activeEditor is TextEditorInstance },
             positionPreference: .right,
             positionPrecedence: Int.max
         )
         let lineColumnIndicatorStatusBarItem = StatusBarItem(
             extensionID: MONACO_EDITOR_EXTENSION_ID,
             view: AnyView(EditorLineColumnIndicator()),
-            shouldDisplay: { app.activeEditor is TextEditorInstance },
+            shouldDisplay: { app in app.activeEditor is TextEditorInstance },
             positionPreference: .right,
             positionPrecedence: Int.max - 1
         )
         let readOnlyStatusBarItem = StatusBarItem(
             extensionID: MONACO_EDITOR_EXTENSION_ID,
             view: AnyView(Text("READ-ONLY")),
-            shouldDisplay: { app.editorOptions.value.readOnly },
+            shouldDisplay: { app in app.editorOptions.value.readOnly },
             positionPreference: .left,
             positionPrecedence: Int.max
         )
         let vimKeyBufferStatusBarItem = StatusBarItem(
             extensionID: MONACO_EDITOR_EXTENSION_ID,
             view: AnyView(VimKeyBufferLabel()),
-            shouldDisplay: { app.activeEditor is TextEditorInstance },
+            shouldDisplay: { app in app.activeEditor is TextEditorInstance },
             positionPreference: .right,
             positionPrecedence: Int.min
         )
         let vimModeStatusBarItem = StatusBarItem(
             extensionID: MONACO_EDITOR_EXTENSION_ID,
             view: AnyView(VimModeLabel()),
-            shouldDisplay: { app.activeEditor is TextEditorInstance },
+            shouldDisplay: { app in app.activeEditor is TextEditorInstance },
             positionPreference: .left,
             positionPrecedence: Int.min
         )

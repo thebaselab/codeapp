@@ -38,7 +38,7 @@ class SimpleWebPreviewExtension: CodeAppExtension {
                     app.safariManager.showSafari(url: urlToGo)
                 }
             },
-            shouldDisplay: {
+            shouldDisplay: { app in
                 guard self.webServer.isRunning else { return false }
                 guard let textEditor = app.activeEditor as? TextEditorInstance else {
                     return false

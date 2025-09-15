@@ -11,7 +11,7 @@ struct StatusBarItem: Identifiable {
     let id = UUID()
     var extensionID: String
     var view: AnyView
-    var shouldDisplay: () -> Bool
+    var shouldDisplay: (MainApp) -> Bool
     var positionPreference: PositionPreference
     var positionPrecedence: Int = 0
 

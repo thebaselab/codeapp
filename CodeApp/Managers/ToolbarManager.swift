@@ -15,7 +15,7 @@ struct ToolbarItem: Identifiable {
     var onClick: () -> Void
     var shortCut: KeyboardShortcut?
     var panelToFocusOnTap: String?
-    var shouldDisplay: () -> Bool
+    var shouldDisplay: (MainApp) -> Bool
 }
 
 class ToolbarManager: CodeAppContributionPointManager {

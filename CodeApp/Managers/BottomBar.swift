@@ -15,13 +15,13 @@ struct StatusBar: View {
 
     var leftMostItems: [StatusBarItem] {
         statusBarManager.items
-            .filter { $0.shouldDisplay() }
+            .filter { $0.shouldDisplay(App) }
             .filter { $0.positionPreference == .left }
             .sorted { $0.positionPrecedence > $1.positionPrecedence }
     }
     var rightMostItems: [StatusBarItem] {
         statusBarManager.items
-            .filter { $0.shouldDisplay() }
+            .filter { $0.shouldDisplay(App) }
             .filter { $0.positionPreference == .right }
             .sorted { $0.positionPrecedence < $1.positionPrecedence }
     }

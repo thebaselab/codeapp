@@ -48,7 +48,7 @@ class RemoteExecutionExtension: CodeAppExtension {
             },
             shortCut: nil,
             panelToFocusOnTap: PANEL_ID,
-            shouldDisplay: {
+            shouldDisplay: { app in
                 guard let textEditor = app.activeEditor as? TextEditorInstance else {
                     return false
                 }

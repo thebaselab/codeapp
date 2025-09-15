@@ -68,7 +68,7 @@ class MarkdownViewerExtension: CodeAppExtension {
                     app.appendAndFocusNewEditor(editor: instance, alwaysInNewTab: true)
                 }
             },
-            shouldDisplay: {
+            shouldDisplay: { app in
                 ["md", "markdown"].contains(app.activeTextEditor?.languageIdentifier.lowercased())
             }
         )

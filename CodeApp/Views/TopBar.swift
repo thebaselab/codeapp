@@ -62,7 +62,7 @@ struct TopBar: View {
             }
 
             ForEach(toolBarManager.items) { item in
-                if item.shouldDisplay() {
+                if item.shouldDisplay(App) {
                     ToolbarItemView(item: item)
                 }
             }

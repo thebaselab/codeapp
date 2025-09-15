@@ -12,7 +12,7 @@ class RemoteAuxiliaryExtension: CodeAppExtension {
         let item = StatusBarItem(
             extensionID: "REMOTE_AUX",
             view: AnyView(RemoteConnectedLabel()),
-            shouldDisplay: { app.workSpaceStorage.remoteConnected },
+            shouldDisplay: { app in app.workSpaceStorage.remoteConnected },
             positionPreference: .left,
             positionPrecedence: Int.min
         )

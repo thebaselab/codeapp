@@ -33,7 +33,7 @@ class LocalExecutionExtension: CodeAppExtension {
             },
             shortCut: .init("r", modifiers: [.command]),
             panelToFocusOnTap: "TERMINAL",
-            shouldDisplay: {
+            shouldDisplay: { app in
                 guard let activeTextEditor = app.activeTextEditor else { return false }
                 return activeTextEditor.url.isFileURL
                     && LOCAL_EXECUTION_COMMANDS[activeTextEditor.languageIdentifier] != nil

@@ -16,7 +16,7 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
             extenionID: EXTENSION_ID,
             icon: "arrow.2.squarepath",
             onClick: { onCompareWithPreviousItemClick(app: app) },
-            shouldDisplay: {
+            shouldDisplay: { app in
                 app.activeEditor is TextEditorInstance
                     && !(app.activeEditor is DiffTextEditorInstnace) && app.gitTracks.count > 0
             }
@@ -29,7 +29,7 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                     await app.monacoInstance.moveToPreviousDiff()
                 }
             },
-            shouldDisplay: {
+            shouldDisplay: { app in
                 app.activeEditor is DiffTextEditorInstnace
             }
         )
@@ -41,20 +41,20 @@ class SourceControlAuxiliaryExtension: CodeAppExtension {
                     await app.monacoInstance.moveToNextDiff()
                 }
             },
-            shouldDisplay: {
+            shouldDisplay: { app in
                 app.activeEditor is DiffTextEditorInstnace
             }
         )
         let aheadBehindIndicatorItem = StatusBarItem(
             extensionID: EXTENSION_ID,
             view: AnyView(AheadBehindIndicator()),
-            shouldDisplay: { app.aheadBehind != nil },
+            shouldDisplay: { app in app.aheadBehind != nil },
             positionPreference: .left
         )
         let checkoutMenuItem = StatusBarItem(
             extensionID: EXTENSION_ID,
             view: AnyView(CheckoutMenu()),
-            shouldDisplay: { !app.branch.isEmpty },
+            shouldDisplay: { app in !app.branch.isEmpty },
             positionPreference: .left,
             positionPrecedence: 1
         )
