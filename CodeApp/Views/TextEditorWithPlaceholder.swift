@@ -22,6 +22,7 @@ struct TextEditorWithPlaceholder: View {
         ZStack {
             if text.isEmpty {
                 TextEditor(text: $placeholder)
+                    .scrollContentBackground(.hidden)
                     .foregroundColor(.gray)
                     .disabled(true)
                     .if(customFont != nil) {
@@ -30,6 +31,7 @@ struct TextEditorWithPlaceholder: View {
             }
 
             TextEditor(text: $text)
+                .scrollContentBackground(.hidden)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .if(customFont != nil) {
