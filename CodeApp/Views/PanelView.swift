@@ -160,7 +160,7 @@ struct PanelView: View {
                     DragGesture(minimumDistance: 10.0, coordinateSpace: .global)
                         .updating($translation) { value, gestureState, transaction in
                             let proposedNewHeight =
-                                panelHeight - value.translation.height + (gestureState ?? 0)
+                                panelHeight - value.translation.height + (translation ?? 0)
                             evaluateProposedHeight(proposal: proposedNewHeight)
                             gestureState = value.translation.height
                         }
