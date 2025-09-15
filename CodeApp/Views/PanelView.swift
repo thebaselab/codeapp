@@ -152,17 +152,30 @@ struct PanelView: View {
     }
 
     var body: some View {
-        Implementation()
-            .frame(height: min(CGFloat(panelHeight), maxHeight))
-            .background(Color.init(id: "editor.background"))
-            .gesture(
-                DragGesture(minimumDistance: 10.0, coordinateSpace: .global)
-                    .updating($translation) { value, gestureState, transaction in
-                        let proposedNewHeight =
-                            panelHeight - value.translation.height + (gestureState ?? 0)
-                        evaluateProposedHeight(proposal: proposedNewHeight)
-                        gestureState = value.translation.height
-                    }
-            )
+        if #available(iOS 26.0, *) {
+            Implementation()
+                .frame(height: min(CGFloat(panelHeight), maxHeight))
+                .background(Color.init(id: "editor.background"))
+                .gesture(
+                    DragGesture(minimumDistance: 10.0, coordinateSpace: .global)
+                        .updating($translation) { value, gestureState, transaction in
+                            let proposedNewHeight =
+                                panelHeight - value.translation.height + (gestureState ?? 0)
+                            evaluateProposedHeight(proposal: proposedNewHeight)
+                            gestureState = value.translation.height
+                        }
+                )
+        } else {
+            Implementation()
+                .frame(height: min(CGFloat(panelHeight), maxHeight))
+                .background(Color.init(id: "editor.background"))
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            let proposedNewHeight = panelHeight - value.translation.height
+                            evaluateProposedHeight(proposal: proposedNewHeight)
+                        }
+                )
+        }
     }
 }
