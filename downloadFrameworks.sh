@@ -85,7 +85,7 @@ unzip -q python-lsp.zip
 rm -f python-lsp.zip
 
 # monaco editor
-curl -OL https://github.com/thebaselab/codeapp-monaco/releases/download/2024.8.16/monaco-textmate.bundle.zip
+curl -OL https://github.com/thebaselab/codeapp-monaco/releases/download/2025.9.20/monaco-textmate.bundle.zip
 unzip -q monaco-textmate.bundle.zip
 rm -f monaco-textmate.bundle.zip
 

@@ -117,7 +117,8 @@ struct MainScene: View {
                     guard var theme = themeManager.currentTheme else {
                         return
                     }
-                    Task { await App.monacoInstance.setVSTheme(theme: theme) }
+                    App.monacoInstance.theme = EditorTheme(
+                        dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme)
                     App.terminalInstance.applyTheme(rawTheme: theme.dictionary)
                 }
             )

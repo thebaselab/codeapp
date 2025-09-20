@@ -604,6 +604,14 @@ class MainApp: ObservableObject {
     }
 
     func compareWithPrevious(url: URL) async throws {
+        if let existingEditor = editorsWithURL.first(where: {
+            $0 is DiffTextEditorInstnace && $0.url == url
+        }) {
+            await MainActor.run {
+                activeEditor = existingEditor
+            }
+            return
+        }
         guard let provider = workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
@@ -612,7 +620,6 @@ class MainApp: ObservableObject {
     }
 
     func compareWithSelected(url: URL) async throws {
-
         guard let selectedURLForCompare else { return }
 
         let data = try await workSpaceStorage.contents(at: url)
@@ -624,13 +631,9 @@ class MainApp: ObservableObject {
     private func compareWithContent(url: URL, content: String) async throws {
         let data = try await workSpaceStorage.contents(at: url)
         let (original, encoding) = try decodeStringData(data: data)
-
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        components.scheme = "modified"
-
         let diffEditor = DiffTextEditorInstnace(
             editor: monacoInstance,
-            url: components.url!,
+            url: url,
             content: original,
             encoding: encoding,
             compareWith: content

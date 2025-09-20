@@ -424,13 +424,16 @@ extension MonacoImplementation: EditorImplementation {
     func switchToDiffMode(
         originalContent: String, modifiedContent: String, originalUrl: String, modifiedUrl: String
     ) async {
-        guard let original = originalContent.base64Encoded(),
-            let modified = modifiedContent.base64Encoded()
+        guard let base64Original = originalContent.base64Encoded(),
+            let base64Modified = modifiedContent.base64Encoded(),
+            let base64OriginalUrl = originalUrl.base64Encoded(),
+            let base64ModifiedUrl = modifiedUrl.base64Encoded()
         else {
             return
         }
         _ = try? await monacoWebView.evaluateJavaScriptAsync(
-            "switchToDiffView('\(original)','\(modified)','\(originalUrl)','\(modifiedUrl)')")
+            "switchToDiffView('\(base64Original)','\(base64Modified)','\(base64OriginalUrl)','\(base64ModifiedUrl)')"
+        )
     }
 
     func switchToInlineDiffView() async {
@@ -442,16 +445,16 @@ extension MonacoImplementation: EditorImplementation {
     }
 
     func moveToNextDiff() async {
-        _ = try? await monacoWebView.evaluateJavaScriptAsync("navi.next()")
+        _ = try? await monacoWebView.evaluateJavaScriptAsync("goToNextDiff()")
     }
 
     func moveToPreviousDiff() async {
-        _ = try? await monacoWebView.evaluateJavaScriptAsync("navi.previous()")
+        _ = try? await monacoWebView.evaluateJavaScriptAsync("goToPreviousDiff()")
     }
 
     func isEditorInDiffMode() async -> Bool {
         let result = try? await monacoWebView.evaluateJavaScriptAsync(
-            "editor.getEditorType() !== 'vs.editor.ICodeEditor'")
+            "document.getElementsByClassName('monaco-diff-editor').length > 0")
         return (result as? Bool) ?? false
     }
 
