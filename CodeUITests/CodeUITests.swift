@@ -17,6 +17,10 @@ final class CodeUITests: XCTestCase {
         // UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
     }
 
+    func testMinimal() {
+        XCTAssertTrue(true)
+    }
+
     /*
     //  https://github.com/thebaselab/codeapp/issues/746
     @MainActor
