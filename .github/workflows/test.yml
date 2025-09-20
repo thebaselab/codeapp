@@ -17,4 +17,4 @@ jobs:
       - name: Unit Tests
         run: fastlane tests
         env:
-          XCODE_PATH: "/Applications/Xcode_16.4.app"
+          XCODE_PATH: "/Applications/Xcode_26.0.app"
