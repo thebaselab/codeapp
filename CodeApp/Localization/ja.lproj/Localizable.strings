@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.10.3 (2025年9月)**
+##### **v1.10.4 (2025年9月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -18,11 +18,14 @@
 [ドキュメント](https://code.thebaselab.com)
 [GitHub](https://github.com/thebaselab/codeapp)
 [Email](mailto:support@thebaselab.com)
-[Twitter](https://twitter.com/thebaselab)
+[X](https://x.com/thebaselab)
 ";
 
 "Changelog.message" =
 "
+### 1.10.4 (2025 年 9 月)
+- diff エディターに関するバグ修正
+
 ### 1.10.3 (2025 年 9 月)
 - バグ修正
 

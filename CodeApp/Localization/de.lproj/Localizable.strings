@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.10.3 (September 2025)**
+##### **v1.10.4 (September 2025)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -18,11 +18,14 @@
 [Dokumentation](https://code.thebaselab.com)
 [GitHub](https://github.com/thebaselab/codeapp)
 [E-Mail](mailto:support@thebaselab.com)
-[Twitter](https://twitter.com/thebaselab)
+[X](https://x.com/thebaselab)
 ";
 
 "Changelog.message" =
 "
+### 1.10.4 (September 2025)
+- Fehlerbehebungen im Zusammenhang mit dem Diff-Editor
+
 ### 1.10.3 (September 2025)
 - Fehlerbehebungen
 

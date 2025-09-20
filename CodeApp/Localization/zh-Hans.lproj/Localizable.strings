@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.10.3 (2025 年 9 月)**
+##### **v1.10.4 (2025 年 9 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -18,11 +18,14 @@
 [说明文件](https://code.thebaselab.com)
 [GitHub](https://github.com/thebaselab/codeapp)
 [邮箱](mailto:support@thebaselab.com)
-[推特](https://twitter.com/thebaselab)
+[X](https://x.com/thebaselab)
 ";
 
 "Changelog.message" =
 "
+### 1.10.4 (2025 年 9 月)
+- 修复了 diff 编辑器相关的错误
+
 ### 1.10.3 (2025 年 9 月)
 - 错误修复
 

@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.10.3 (Сентябрь 2025)**
+##### **v1.10.4 (Сентябрь 2025)**
 #### Начало
 [Новый файл](https://thebaselab.com/code/newfile)
 [Открыть файл](https://thebaselab.com/code/openfile)
@@ -18,11 +18,14 @@
 [Документация](https://code.thebaselab.com)
 [GitHub](https://github.com/thebaselab/codeapp)
 [Email](mailto:support@thebaselab.com)
-[Twitter](https://twitter.com/thebaselab)
+[X](https://x.com/thebaselab)
 ";
 
 "Changelog.message" =
 "
+### 1.10.4 (Сентябрь 2025)
+- Исправлены ошибки, связанные с редактором различий
+
 ### 1.10.3 (Сентябрь 2025)
 - Исправления ошибок
 
