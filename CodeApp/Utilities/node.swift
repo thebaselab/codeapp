@@ -13,7 +13,8 @@ import ios_system
 
 typealias RequestCancellationBlock = @convention(block) (_ uuid: UUID?, _ error: Error?) -> Void
 typealias RequestInterruptionBlock = @convention(block) (_ uuid: UUID?) -> Void
-typealias RequestCompletionBlock = @convention(block) (_ uuid: UUID?, _ extensionItems: [Any]?) ->
+typealias RequestCompletionBlock =
+    @convention(block) (_ uuid: UUID?, _ extensionItems: [Any]?) ->
     Void
 typealias RequestBeginBlock = @convention(block) (_ uuid: UUID?) -> Void
 
