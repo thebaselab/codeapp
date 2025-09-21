@@ -551,6 +551,8 @@
 		9474D2952B6B461E00CCC530 /* MonacoImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */; };
 		9474D2972B6B4B1300CCC530 /* EditorImplemenationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */; };
 		9474D2982B6B4B1300CCC530 /* EditorImplemenationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */; };
+		947515E42E7E886A00822B33 /* Iconv2.icon in Resources */ = {isa = PBXBuildFile; fileRef = 947515E32E7E886A00822B33 /* Iconv2.icon */; };
+		947515E52E7E886A00822B33 /* Iconv2.icon in Resources */ = {isa = PBXBuildFile; fileRef = 947515E32E7E886A00822B33 /* Iconv2.icon */; };
 		94795C452931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C462931489C0057C12F /* ActivityBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C442931489C0057C12F /* ActivityBar.swift */; };
 		94795C4829314A0A0057C12F /* CompactSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94795C4729314A0A0057C12F /* CompactSidebar.swift */; };
@@ -1824,6 +1826,7 @@
 		9474D2902B6B454900CCC530 /* EditorImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorImplementation.swift; sourceTree = "<group>"; };
 		9474D2932B6B461E00CCC530 /* MonacoImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonacoImplementation.swift; sourceTree = "<group>"; };
 		9474D2962B6B4B1300CCC530 /* EditorImplemenationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorImplemenationView.swift; sourceTree = "<group>"; };
+		947515E32E7E886A00822B33 /* Iconv2.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Iconv2.icon; sourceTree = "<group>"; };
 		94795C442931489C0057C12F /* ActivityBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBar.swift; sourceTree = "<group>"; };
 		94795C4729314A0A0057C12F /* CompactSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactSidebar.swift; sourceTree = "<group>"; };
 		94795C4A293259080057C12F /* Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
@@ -2269,6 +2272,7 @@
 				94A5682D257CC367008A6530 /* Localization */,
 				94A777AE257B678A008FE7B2 /* Extensions */,
 				94A77799257ABC16008FE7B2 /* Utilities */,
+				947515E32E7E886A00822B33 /* Iconv2.icon */,
 				944EEBF32563C381009D77FE /* CodeApp.swift */,
 				944EEBF72563C386009D77FE /* Assets.xcassets */,
 				94A56834257CC60E008A6530 /* LaunchScreen.storyboard */,
@@ -3487,6 +3491,7 @@
 				941969A0280316C7008AAEB2 /* commandDictionary.plist in Resources */,
 				941969A1280316C7008AAEB2 /* ClangLib in Resources */,
 				941969A2280316C7008AAEB2 /* Settings.bundle in Resources */,
+				947515E42E7E886A00822B33 /* Iconv2.icon in Resources */,
 				941969A3280316C7008AAEB2 /* extraCommandsDictionary.plist in Resources */,
 				941969A4280316C7008AAEB2 /* npm.bundle in Resources */,
 				941969A6280316C7008AAEB2 /* terminal.bundle in Resources */,
@@ -3515,6 +3520,7 @@
 			files = (
 				9424437F2C6F2DF100BC862F /* python-lsp in Resources */,
 				94127C40280335C8008C7F82 /* Themes in Resources */,
+				947515E52E7E886A00822B33 /* Iconv2.icon in Resources */,
 				944EEBFB2563C386009D77FE /* Preview Assets.xcassets in Resources */,
 				94A56830257CC3A1008A6530 /* Localizable.strings in Resources */,
 				94252059263E103E0029427A /* InfoPlist.strings in Resources */,
@@ -4011,7 +4017,7 @@
 		94196B16280316C7008AAEB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Iconv2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -4039,7 +4045,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.10.4;
+				MARKETING_VERSION = 1.11.0;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4058,7 +4064,7 @@
 		94196B17280316C7008AAEB2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Iconv2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -4087,7 +4093,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.10.4;
+				MARKETING_VERSION = 1.11.0;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4297,7 +4303,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Iconv2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
@@ -4324,7 +4330,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.10.4;
+				MARKETING_VERSION = 1.11.0;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4343,7 +4349,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Iconv2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Code App.entitlements";
@@ -4371,7 +4377,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.10.4;
+				MARKETING_VERSION = 1.11.0;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";

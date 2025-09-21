@@ -39,7 +39,7 @@ jobs:
           JUDGE0_KEY: ""
           JUDGE0_ENDPOINT: ""
           DISTRIBUTE_EXTERNAL: "true"
-          XCODE_PATH: "/Applications/Xcode_16.4.app"
+          XCODE_PATH: "/Applications/Xcode_26.0.app"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
