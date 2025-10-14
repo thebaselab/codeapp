@@ -29,7 +29,7 @@ class LanguageService {
             Configuration(
                 languageIdentifier: "fsharp",
                 extensions: ["fs", "fsi", "fsx", "fsproj"],
-                args: ["dotnet", "fsi"] // Placeholder, update if using F# LSP
+                args: ["dotnet", "fsautocomplete"] // Uses fsautocomplete, the F# LSP server
             ),
     ]
 
