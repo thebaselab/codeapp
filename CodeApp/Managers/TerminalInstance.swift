@@ -320,9 +320,11 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 openSharedFilesApp(urlString: dir)
                 self.readLine()
             case let x where x.hasPrefix("history"):
-                let args = x.split(separator: " ").map(String.init)
+                let args = x.components(separatedBy: " ")
                 if args.count == 2 && args[1] == "-c" {
-                    // Clear command history
+                    // Clear command history stored in local-echo.js
+                    // This accesses the HistoryController instance (localEcho.history)
+                    // to reset both the entries array and cursor position
                     executeScript("localEcho.history.entries = []; localEcho.history.cursor = 0;")
                     self.readLine()
                 } else {
