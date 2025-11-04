@@ -329,11 +329,7 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                     self.readLine()
                 } else {
                     // Display history - pass to ios_system for default behavior
-                    executor?.dispatch(command: x, isInteractive: false) { _ in
-                        DispatchQueue.main.async {
-                            self.readLine()
-                        }
-                    }
+                    fallthrough
                 }
             default:
                 let command = result["Input"] as! String
