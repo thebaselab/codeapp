@@ -320,8 +320,8 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 openSharedFilesApp(urlString: dir)
                 self.readLine()
             case let x where x.hasPrefix("history"):
-                let args = x.components(separatedBy: " ")
-                if args.count > 1 && args[1] == "-c" {
+                let args = x.split(separator: " ").map(String.init)
+                if args.count == 2 && args[1] == "-c" {
                     // Clear command history
                     executeScript("localEcho.history.entries = []; localEcho.history.cursor = 0;")
                     self.readLine()
