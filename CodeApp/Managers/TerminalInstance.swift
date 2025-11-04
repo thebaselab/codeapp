@@ -319,6 +319,20 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 }
                 openSharedFilesApp(urlString: dir)
                 self.readLine()
+            case let x where x.hasPrefix("history"):
+                let args = x.components(separatedBy: " ")
+                if args.count > 1 && args[1] == "-c" {
+                    // Clear command history
+                    executeScript("localEcho.history.entries = []; localEcho.history.cursor = 0;")
+                    self.readLine()
+                } else {
+                    // Display history - pass to ios_system for default behavior
+                    executor?.dispatch(command: x, isInteractive: false) { _ in
+                        DispatchQueue.main.async {
+                            self.readLine()
+                        }
+                    }
+                }
             default:
                 let command = result["Input"] as! String
                 //                guard command.count > 0 else {
