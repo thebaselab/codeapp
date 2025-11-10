@@ -94,13 +94,15 @@ struct SettingsView: View {
                             UIApplication.shared.open(writeReviewURL)
                         }) {
                             Text(NSLocalizedString("Rate Code App", comment: ""))
-                        }
-                    }
+                }
+            }
 
-                    Section(header: Text(NSLocalizedString("Version Control", comment: ""))) {
-                        NavigationLink(destination: SourceControlIdentityConfiguration()) {
-                            Text("Author Identity")
-                        }
+            AIAssistantSettingsSection()
+
+            Section(header: Text(NSLocalizedString("Version Control", comment: ""))) {
+                NavigationLink(destination: SourceControlIdentityConfiguration()) {
+                    Text("Author Identity")
+                }
                         NavigationLink(destination: SourceControlAuthenticationConfiguration()) {
                             Text("Authentication")
                         }
@@ -375,6 +377,103 @@ struct SettingsView: View {
             )
             .configureToolbarBackground()
             .preferredColorScheme(themeManager.colorSchemePreference)
+        }
+    }
+}
+
+private struct AIAssistantSettingsSection: View {
+
+    @State private var openAIKey: String = ""
+    @State private var anthropicKey: String = ""
+    @State private var hasLoadedKeys = false
+    @State private var showSavedIndicator = false
+
+    var body: some View {
+        Section(
+            content: {
+                providerField(
+                    title: "OpenAI API Key",
+                    placeholder: "sk-...",
+                    text: $openAIKey,
+                    symbol: "sparkles")
+
+                providerField(
+                    title: "Anthropic API Key",
+                    placeholder: "sk-ant-...",
+                    text: $anthropicKey,
+                    symbol: "circle.hexagongrid")
+
+                Button {
+                    persistKeys()
+                } label: {
+                    Label("Save Keys", systemImage: "key.fill")
+                        .fontWeight(.semibold)
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(.vertical, 6)
+                .disabled(!hasChanges)
+
+                if showSavedIndicator {
+                    Label("Updated", systemImage: "checkmark.circle")
+                        .foregroundStyle(.secondary)
+                        .font(.footnote)
+                        .transition(.opacity)
+                }
+            },
+            header: { Text("AI Assistant") },
+            footer: {
+                Text(
+                    "Enter the API keys provided by each service. Keys stay on-device and are stored securely in the iOS Keychain."
+                )
+            }
+        )
+        .onAppear {
+            guard !hasLoadedKeys else { return }
+            openAIKey = CodeAssistantSettings.apiKey(for: .openAI)
+            anthropicKey = CodeAssistantSettings.apiKey(for: .anthropic)
+            hasLoadedKeys = true
+        }
+    }
+
+    private var hasChanges: Bool {
+        openAIKey != CodeAssistantSettings.apiKey(for: .openAI)
+            || anthropicKey != CodeAssistantSettings.apiKey(for: .anthropic)
+    }
+
+    private func providerField(
+        title: String,
+        placeholder: String,
+        text: Binding<String>,
+        symbol: String
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Label(title, systemImage: symbol)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+            SecureField(placeholder, text: text)
+                .textContentType(.password)
+                .autocorrectionDisabled()
+                .font(.system(.body, design: .monospaced))
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color(.secondarySystemGroupedBackground))
+                )
+        }
+        .padding(.vertical, 4)
+    }
+
+    private func persistKeys() {
+        CodeAssistantSettings.persist(apiKey: openAIKey, for: .openAI)
+        CodeAssistantSettings.persist(apiKey: anthropicKey, for: .anthropic)
+        withAnimation {
+            showSavedIndicator = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation {
+                showSavedIndicator = false
+            }
         }
     }
 }
