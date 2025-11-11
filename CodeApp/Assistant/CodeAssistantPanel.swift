@@ -2,7 +2,7 @@
 //  CodeAssistantPanel.swift
 //  CodeApp
 //
-//  Created by Codex.
+//  Created by Arya Mirsepasi.
 //
 
 import MarkdownUI
@@ -16,297 +16,342 @@ struct CodeAssistantPanel: View {
 
     @ObservedObject var viewModel: CodeAssistantViewModel
     @EnvironmentObject var app: MainApp
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     @State private var showsAttachmentPicker = false
-    @State private var modelDraft: String = ""
+    @State private var showsHistorySheet = false
+    @State private var showsModelPicker = false
 
     private let scrollViewID = "code-assistant-scroll"
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 0) {
+            // Simplified header with essential actions
             header
-            if !viewModel.history.isEmpty {
-                historySection
-            }
-            providerControls
+            
             Divider()
+            
+            // Main conversation view
             messagesView
+            
+            Divider()
+            
+            // Attachments (when present)
             attachmentsView
-            actionRow
-            inputRow
-            if let error = viewModel.errorMessage {
-                Text(error)
-                    .font(.footnote)
-                    .foregroundColor(.red)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .transition(.opacity)
-            }
+            
+            // Input area
+            inputSection
         }
-        .padding(16)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .shadow(color: Color.black.opacity(0.15), radius: 24, x: 0, y: 16)
-        .onAppear {
-            modelDraft = viewModel.currentModel
-        }
-        .onChange(of: viewModel.selectedProvider) { _ in
-            modelDraft = viewModel.currentModel
-        }
-        .onChange(of: viewModel.currentModel) { newValue in
-            guard newValue != modelDraft else { return }
-            modelDraft = newValue
-        }
         .sheet(isPresented: $showsAttachmentPicker) {
             AttachmentPickerView(root: app.workSpaceStorage.currentDirectory) { item in
                 viewModel.attach(item: item)
             }
         }
+        .sheet(isPresented: $showsHistorySheet) {
+            ChatHistoryView(viewModel: viewModel)
+        }
+        .sheet(isPresented: $showsModelPicker) {
+            ModelSelectionView(viewModel: viewModel)
+        }
     }
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Label("Code Assistant", systemImage: "bolt.horizontal.circle")
+        HStack(spacing: 12) {
+            // Title with streaming indicator
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Code Assistant")
                     .font(.headline)
-                Spacer()
-                if viewModel.isStreaming {
-                    ProgressView()
+                
+                HStack(spacing: 6) {
+                    if viewModel.isStreaming {
+                        ProgressView()
+                            .controlSize(.small)
+                    }
+                    Text(viewModel.activeConversationTitle)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
                 }
             }
-            HStack {
-                Text(viewModel.activeConversationTitle)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                Spacer()
-                historyMenu
-            }
-        }
-    }
-
-    private var historyMenu: some View {
-        Menu {
+            
+            Spacer()
+            
+            // Essential header actions
             Button {
                 viewModel.startNewConversation()
             } label: {
-                Label("New Chat", systemImage: "plus")
+                Label("New Chat", systemImage: "square.and.pencil")
             }
+            .labelStyle(.iconOnly)
+            .buttonStyle(.bordered)
+            
+            Button {
+                showsHistorySheet = true
+            } label: {
+                Label("History", systemImage: "clock.arrow.circlepath")
+            }
+            .labelStyle(.iconOnly)
+            .buttonStyle(.bordered)
 
-            if viewModel.history.isEmpty {
-                Text("No previous chats")
-                    .foregroundStyle(.secondary)
-            } else {
-                ForEach(viewModel.history) { conversation in
-                    Button {
-                        viewModel.loadConversation(conversation)
-                    } label: {
-                        Label(conversation.title, systemImage: "message")
-                    }
-                }
-                Divider()
-                Button(role: .destructive) {
-                    viewModel.clearHistory()
-                } label: {
-                    Label("Clear History", systemImage: "trash")
-                }
+            Button {
+                showsModelPicker = true
+            } label: {
+                Label("Model", systemImage: "brain")
             }
-        } label: {
-            Label("History", systemImage: "clock.arrow.circlepath")
+            .labelStyle(.iconOnly)
+            .buttonStyle(.bordered)
         }
-        .labelStyle(.iconOnly)
-        .buttonStyle(.plain)
-    }
-
-    private var historySection: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Recent Chats")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(viewModel.history) { conversation in
-                        HistoryChip(
-                            conversation: conversation,
-                            onSelect: { viewModel.loadConversation(conversation) },
-                            onDelete: { viewModel.deleteConversation(conversation) }
-                        )
-                    }
-                }
-                .padding(.vertical, 4)
-            }
-        }
-    }
-
-    private var providerControls: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Picker("Provider", selection: $viewModel.selectedProvider) {
-                ForEach(CodeAssistantProvider.allCases) { provider in
-                    Text(provider.displayName).tag(provider)
-                }
-            }
-            .pickerStyle(.menu)
-
-            HStack {
-                TextField("Model", text: $modelDraft)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                    .font(.system(.subheadline, design: .monospaced))
-                    .padding(10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color(.secondarySystemGroupedBackground))
-                    )
-                    .onSubmit {
-                        viewModel.updateModel(modelDraft)
-                    }
-
-                Menu {
-                    ForEach(viewModel.selectedProvider.suggestedModels, id: \.self) { model in
-                        Button(model) {
-                            modelDraft = model
-                            viewModel.updateModel(model)
-                        }
-                    }
-                } label: {
-                    Image(systemName: "arrow.triangle.swap")
-                        .font(.title3)
-                        .foregroundColor(.accentColor)
-                        .padding(8)
-                }
-
-                Button {
-                    viewModel.updateModel(modelDraft)
-                } label: {
-                    Text("Apply")
-                }
-                .buttonStyle(.bordered)
-            }
-        }
+        .padding()
     }
 
     private var messagesView: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(viewModel.messages) { message in
-                        MessageBubbleView(message: message)
+                if viewModel.messages.isEmpty {
+                    emptyStateView
+                } else {
+                    LazyVStack(spacing: 12) {
+                        ForEach(viewModel.messages) { message in
+                            MessageBubbleView(message: message)
+                        }
+                        Color.clear
+                            .frame(height: 1)
+                            .id(scrollViewID)
                     }
-                    Color.clear
-                        .frame(height: 1)
-                        .id(scrollViewID)
+                    .padding()
                 }
-                .padding(.vertical, 4)
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .background(Color(.systemBackground).opacity(0.001))  // keep scroll gestures
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(.systemBackground).opacity(0.001))
             .onChange(of: viewModel.messages.count) { _ in
-                withAnimation {
+                withAnimation(.easeOut(duration: 0.3)) {
                     proxy.scrollTo(scrollViewID, anchor: .bottom)
                 }
             }
             .onChange(of: viewModel.messages.last?.body ?? "") { _ in
                 if viewModel.isStreaming {
-                    withAnimation {
+                    withAnimation(.easeOut(duration: 0.2)) {
                         proxy.scrollTo(scrollViewID, anchor: .bottom)
                     }
                 }
             }
         }
     }
+    
+    private var emptyStateView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "sparkles")
+                .font(.system(size: 48))
+                .foregroundStyle(.secondary)
+            
+            Text("Ready to Assist")
+                .font(.title2.weight(.semibold))
+            
+            Text("Ask questions about your code, request refactoring, or get help with debugging.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 300)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
 
     private var attachmentsView: some View {
         Group {
-            if viewModel.attachments.isEmpty {
-                EmptyView()
-            } else {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(viewModel.attachments) { attachment in
-                            AttachmentChipView(
-                                attachment: attachment,
-                                onRemove: { viewModel.removeAttachment(attachment) })
+            if !viewModel.attachments.isEmpty {
+                VStack(spacing: 0) {
+                    Divider()
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(viewModel.attachments) { attachment in
+                                AttachmentChipView(
+                                    attachment: attachment,
+                                    onRemove: { viewModel.removeAttachment(attachment) })
+                            }
                         }
+                        .padding(.horizontal)
+                        .padding(.vertical, 8)
                     }
-                    .padding(.vertical, 4)
                 }
             }
         }
     }
 
-    private var actionRow: some View {
-        HStack {
-            Button {
-                if let active = app.activeTextEditor as? EditorInstanceWithURL {
-                    let item = WorkSpaceStorage.FileItemRepresentable(
-                        name: active.url.lastPathComponent,
-                        url: active.url.absoluteString,
-                        isDirectory: false)
-                    viewModel.attach(item: item)
-                } else {
-                    viewModel.errorMessage = "Open a file to attach it quickly."
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        viewModel.errorMessage = nil
+    private var inputSection: some View {
+        VStack(spacing: 8) {
+            // Error message (when present)
+            if let error = viewModel.errorMessage {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.orange)
+                    Text(error)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
+            }
+            
+            // Input controls
+            HStack(spacing: 8) {
+                // Attachment button
+                Menu {
+                    Button {
+                        if let active = app.activeTextEditor {
+                            let item = WorkSpaceStorage.FileItemRepresentable(
+                                name: active.url.lastPathComponent,
+                                url: active.url.absoluteString,
+                                isDirectory: false)
+                            viewModel.attach(item: item)
+                        } else {
+                            viewModel.errorMessage = "Open a file to attach it quickly."
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                viewModel.errorMessage = nil
+                            }
+                        }
+                    } label: {
+                        Label("Attach Active File", systemImage: "doc.text.fill")
                     }
+                    .disabled(app.activeTextEditor == nil)
+                    
+                    Button {
+                        showsAttachmentPicker = true
+                    } label: {
+                        Label("Browse Files", systemImage: "folder")
+                    }
+                } label: {
+                    Image(systemName: "paperclip")
+                        .font(.body)
                 }
-            } label: {
-                Label("Attach Active File", systemImage: "doc.text.fill")
-            }
-            .disabled(app.activeTextEditor == nil)
-
-            Button {
-                showsAttachmentPicker = true
-            } label: {
-                Label("Browse Files", systemImage: "paperclip")
-            }
-
-            Spacer()
-
-            Button(role: .destructive) {
-                viewModel.clearConversation()
-            } label: {
-                Label("Clear", systemImage: "trash")
-            }
-            .disabled(viewModel.messages.isEmpty)
-        }
-        .font(.footnote)
-    }
-
-    private var inputRow: some View {
-        HStack(alignment: .bottom, spacing: 12) {
-            TextField("Ask the assistant…", text: $viewModel.currentInput, axis: .vertical)
-                .lineLimit(1...5)
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(Color(.separator))
-                )
-                .onSubmit {
-                    viewModel.updateModel(modelDraft)
-                    viewModel.sendMessage()
+                .buttonStyle(.borderless)
+                
+                // Text input
+                TextField("Ask the assistant…", text: $viewModel.currentInput, axis: .vertical)
+                    .lineLimit(1...5)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .textFieldStyle(.plain)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color(.systemBackground))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .stroke(Color(.separator), lineWidth: 0.5)
+                    )
+                    .onSubmit {
+                        viewModel.sendMessage()
+                    }
+                
+                // Send/Stop button
+                Button {
+                    if viewModel.isStreaming {
+                        viewModel.stopStreaming()
+                    } else {
+                        viewModel.sendMessage()
+                    }
+                } label: {
+                    Image(systemName: viewModel.isStreaming ? "stop.circle.fill" : "paperplane.circle.fill")
+                        .font(.system(size: 28))
+                        .foregroundStyle(viewModel.canSend || viewModel.isStreaming ? Color.accentColor : Color.gray.opacity(0.5))
                 }
-
-            Button {
-                if viewModel.isStreaming {
-                    viewModel.stopStreaming()
-                } else {
-                    viewModel.updateModel(modelDraft)
-                    viewModel.sendMessage()
-                }
-            } label: {
-                Image(
-                    systemName: viewModel.isStreaming
-                        ? "stop.circle.fill" : "paperplane.circle.fill"
-                )
-                .font(.system(size: 32))
-                .foregroundStyle(viewModel.canSend ? Color.accentColor : Color.gray.opacity(0.5))
+                .buttonStyle(.plain)
+                .disabled(!viewModel.canSend && !viewModel.isStreaming)
             }
-            .disabled(!viewModel.canSend && !viewModel.isStreaming)
+            .padding(.horizontal)
+            .padding(.vertical, 12)
         }
     }
 }
+
+// MARK: - Model Selection View
+
+private struct ModelSelectionView: View {
+    @ObservedObject var viewModel: CodeAssistantViewModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var modelDraft: String = ""
+    
+    var body: some View {
+        NavigationStack {
+            List {
+                Section(header: Text("AI Provider"), footer: Text("Provider keys are managed in Settings.")) {
+                    Picker("Provider", selection: $viewModel.selectedProvider) {
+                        ForEach(CodeAssistantProvider.allCases) { provider in
+                            Text(provider.displayName).tag(provider)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                }
+                
+                Section(header: Text("Custom Model"), footer: Text("Currently using: \(viewModel.currentModel)")) {
+                    TextField("Model Name", text: $modelDraft)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .font(.body.monospaced())
+                    
+                    Button {
+                        applyModel()
+                        dismiss()
+                    } label: {
+                        Label("Use This Model", systemImage: "checkmark.circle.fill")
+                    }
+                    .disabled(modelDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    
+                    Button {
+                        modelDraft = viewModel.selectedProvider.defaultModel
+                    } label: {
+                        Label("Reset to Default", systemImage: "arrow.counterclockwise")
+                    }
+                }
+                
+                Section(header: Text("Suggested Models")) {
+                    ForEach(Array(viewModel.selectedProvider.suggestedModels.enumerated()), id: \.offset) { _, model in
+                        Button {
+                            modelDraft = model
+                        } label: {
+                            HStack {
+                                Text(model)
+                                    .font(.body.monospaced())
+                                    .foregroundStyle(.primary)
+                                Spacer()
+                                if modelDraft == model {
+                                    Image(systemName: "checkmark")
+                                        .foregroundStyle(.primary)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Select Model")
+            .toolbar(content: {
+                SwiftUI.ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") {
+                        applyModel()
+                        dismiss()
+                    }
+                }
+            })
+            .onAppear {
+                modelDraft = viewModel.currentModel
+            }
+        }
+    }
+    
+    private func applyModel() {
+        viewModel.updateModel(modelDraft)
+    }
+}
+
+// MARK: - Message Bubble View
 
 private struct MessageBubbleView: View {
     let message: CodeAssistantViewModel.Message
@@ -323,7 +368,6 @@ private struct MessageBubbleView: View {
                         .controlSize(.small)
                 } else {
                     Markdown(message.body.isEmpty ? "…" : message.body)
-                        .markdownTheme(.gitHub)
                         .markdownBlockStyle(\.codeBlock) { configuration in
                             CopyableCodeBlock(configuration: configuration)
                         }
@@ -420,24 +464,37 @@ private struct HistoryChip: View {
     let conversation: CodeAssistantViewModel.Conversation
     var onSelect: () -> Void
     var onDelete: () -> Void
+    var fillsWidth: Bool = false
 
     var body: some View {
         Button(action: onSelect) {
             HStack(spacing: 8) {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text(conversation.title)
-                        .font(.caption)
+                        .font(.subheadline.weight(.semibold))
                         .lineLimit(1)
-                    Text(conversation.createdAt, style: .date)
+                    HStack(spacing: 12) {
+                        Label {
+                            Text(conversation.createdAt, style: .date)
+                        } icon: {
+                            Image(systemName: "clock")
+                        }
                         .font(.caption2)
                         .foregroundStyle(.secondary)
+
+                        Label("\(conversation.messages.count)", systemImage: "bubble.left.and.bubble.right")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
                 }
+                Spacer()
                 Image(systemName: "chevron.right")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
+            .frame(maxWidth: fillsWidth ? .infinity : nil, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(Color(.tertiarySystemBackground))
@@ -454,18 +511,32 @@ private struct HistoryChip: View {
 
 private struct CopyableCodeBlock: View {
     let configuration: CodeBlockConfiguration
+    @EnvironmentObject private var app: MainApp
     @State private var didCopy = false
+    @State private var didInsert = false
+    private var plainText: String {
+        configuration.content
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text(configuration.language ?? "code")
-                    .font(.caption)
-                    .fontWeight(.semibold)
+                Text(configuration.language?.uppercased() ?? "CODE")
+                    .font(.caption.weight(.semibold))
                     .foregroundColor(.secondary)
                 Spacer()
                 Button {
-                    copyToClipboard(configuration.content)
+                    insertIntoActiveFile()
+                } label: {
+                    Label(
+                        didInsert ? "Inserted" : "Insert",
+                        systemImage: didInsert ? "checkmark.circle.fill" : "arrow.down.doc")
+                        .labelStyle(.titleAndIcon)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.mini)
+                Button {
+                    copyToClipboard(plainText)
                 } label: {
                     Label(
                         didCopy ? "Copied" : "Copy",
@@ -507,6 +578,27 @@ private struct CopyableCodeBlock: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             withAnimation(.easeInOut(duration: 0.2)) {
                 didCopy = false
+            }
+        }
+    }
+
+    private func insertIntoActiveFile() {
+        guard app.activeTextEditor != nil else {
+            app.notificationManager.showWarningMessage(
+                "Open a file in the editor to insert code.")
+            return
+        }
+        Task {
+            await app.monacoInstance.insertTextAtCurrentCursor(text: plainText)
+            await MainActor.run {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    didInsert = true
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    didInsert = false
+                }
             }
         }
     }
@@ -569,3 +661,244 @@ private struct AttachmentPickerNode: View {
         }
     }
 }
+
+private struct ChatHistoryView: View {
+    @ObservedObject var viewModel: CodeAssistantViewModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var searchText: String = ""
+
+    private var filteredHistory: [CodeAssistantViewModel.Conversation] {
+        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return viewModel.history
+        }
+        return viewModel.history.filter { conversation in
+            conversation.title.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                // Recent chats section (top 5)
+                if !viewModel.history.isEmpty && searchText.isEmpty {
+                    Section(header: Text("Recent")) {
+                        ForEach(viewModel.history.prefix(5)) { conversation in
+                            chatRow(for: conversation)
+                        }
+                    }
+                }
+                
+                // All chats section
+                if filteredHistory.isEmpty {
+                    VStack(spacing: 12) {
+                        Image(systemName: searchText.isEmpty ? "clock.arrow.circlepath" : "magnifyingglass")
+                            .font(.largeTitle)
+                            .foregroundStyle(.secondary)
+                        Text(searchText.isEmpty ? "No Chat History" : "No Results")
+                            .font(.headline)
+                        Text(searchText.isEmpty ? "Start a new conversation to get started." : "Try adjusting your search.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 32)
+                    .listRowBackground(Color.clear)
+                } else if searchText.isEmpty && viewModel.history.count > 5 {
+                    Section(header: Text("All Chats")) {
+                        ForEach(viewModel.history.dropFirst(5)) { conversation in
+                            chatRow(for: conversation)
+                        }
+                    }
+                } else if !searchText.isEmpty {
+                    Section(header: Text("Search Results")) {
+                        ForEach(filteredHistory) { conversation in
+                            chatRow(for: conversation)
+                        }
+                    }
+                }
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Chat History")
+            .searchable(text: $searchText, prompt: "Search chats")
+            .toolbar(content: {
+                SwiftUI.ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+                SwiftUI.ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        viewModel.startNewConversation()
+                        dismiss()
+                    } label: {
+                        Label("New Chat", systemImage: "square.and.pencil")
+                    }
+                }
+                SwiftUI.ToolbarItem(placement: .automatic) {
+                    Menu {
+                        Button(role: .destructive) {
+                            viewModel.clearHistory()
+                        } label: {
+                            Label("Clear All History", systemImage: "trash")
+                        }
+                    } label: {
+                        Label("More", systemImage: "ellipsis.circle")
+                    }
+                    .disabled(viewModel.history.isEmpty)
+                }
+            })
+        }
+    }
+    
+    private func chatRow(for conversation: CodeAssistantViewModel.Conversation) -> some View {
+        Button {
+            viewModel.loadConversation(conversation)
+            dismiss()
+        } label: {
+            ChatHistoryRow(conversation: conversation)
+        }
+        .buttonStyle(.plain)
+        #if os(iOS)
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button(role: .destructive) {
+                viewModel.deleteConversation(conversation)
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+        #endif
+        .contextMenu {
+            Button {
+                viewModel.loadConversation(conversation)
+                dismiss()
+            } label: {
+                Label("Open Chat", systemImage: "bubble.left.and.bubble.right")
+            }
+            
+            Divider()
+            
+            Button(role: .destructive) {
+                viewModel.deleteConversation(conversation)
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+    }
+}
+
+private struct ChatHistoryRow: View {
+    let conversation: CodeAssistantViewModel.Conversation
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(conversation.title)
+                .font(.body.weight(.medium))
+                .lineLimit(1)
+            HStack(spacing: 12) {
+                Label(
+                    conversation.createdAt.formatted(date: .abbreviated, time: .shortened),
+                    systemImage: "clock"
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+                Label("\(conversation.messages.count)", systemImage: "bubble.left.and.bubble.right")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 4)
+    }
+}
+
+#if DEBUG
+    struct CodeAssistantPanel_Previews: PreviewProvider {
+
+        static var previews: some View {
+            CodeAssistantPanel(viewModel: previewViewModel)
+                .environmentObject(previewApp)
+                .frame(width: 540, height: 760)
+                .padding()
+                .background(Color(.systemGroupedBackground))
+        }
+
+        private static let previewApp: MainApp = MainApp()
+
+        private static let sampleAttachment = CodeAssistantViewModel.Attachment(
+            url: URL(fileURLWithPath: "/tmp/Preview.swift"),
+            name: "Preview.swift",
+            byteCount: 132,
+            content: """
+            struct PreviewWidget: View {
+                var body: some View {
+                    Text("Hello, Preview")
+                }
+            }
+            """,
+            languageHint: "swift",
+            wasTruncated: false
+        )
+
+        private static let previewMessages: [CodeAssistantViewModel.Message] = [
+            CodeAssistantViewModel.Message(
+                role: .user,
+                body: "Refactor the assistant layout to feel great on iPad.",
+                payload: "Refactor the assistant layout to feel great on iPad.",
+                createdAt: Date().addingTimeInterval(-600),
+                attachments: [sampleAttachment]
+            ),
+            CodeAssistantViewModel.Message(
+                role: .assistant,
+                body: """
+                Here is a SwiftUI snippet:
+                ```swift
+                VStack(spacing: 12) {
+                    providerPicker
+                    modelSelector
+                }
+                ```
+                Keep paddings generous for compact size classes.
+                """,
+                payload: """
+                Here is a SwiftUI snippet:
+                ```swift
+                VStack(spacing: 12) {
+                    providerPicker
+                    modelSelector
+                }
+                ```
+                Keep paddings generous for compact size classes.
+                """,
+                createdAt: Date().addingTimeInterval(-550)
+            )
+        ]
+
+        private static let previewHistory: [CodeAssistantViewModel.Conversation] = [
+            CodeAssistantViewModel.Conversation(
+                id: UUID(),
+                title: "Improve Markdown Copy",
+                messages: previewMessages,
+                createdAt: Date().addingTimeInterval(-3_600)
+            ),
+            CodeAssistantViewModel.Conversation(
+                id: UUID(),
+                title: "API key storage",
+                messages: [],
+                createdAt: Date().addingTimeInterval(-8_000)
+            )
+        ]
+
+        private static var previewViewModel: CodeAssistantViewModel = {
+            let suiteName = "codeassistant.panel.preview"
+            let defaults = UserDefaults(suiteName: suiteName) ?? .standard
+            defaults.removePersistentDomain(forName: suiteName)
+            let viewModel = CodeAssistantViewModel(defaults: defaults)
+            viewModel.activeConversationTitle = "Preview Chat"
+            viewModel.history = previewHistory
+            viewModel.messages = previewMessages
+            viewModel.currentInput = "Add timeline style history chips."
+            return viewModel
+        }()
+    }
+#endif

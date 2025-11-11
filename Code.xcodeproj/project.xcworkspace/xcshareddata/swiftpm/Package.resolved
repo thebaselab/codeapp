@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "AIProxy",
+        "repositoryURL": "https://github.com/lzell/aiproxyswift",
+        "state": {
+          "branch": null,
+          "revision": "971c33725de546414a2991816bbc7b1b0f0e49dd",
+          "version": "0.131.1"
+        }
+      },
+      {
         "package": "CwlCatchException",
         "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
         "state": {
@@ -65,6 +74,15 @@
         }
       },
       {
+        "package": "NetworkImage",
+        "repositoryURL": "https://github.com/gonzalezreal/NetworkImage",
+        "state": {
+          "branch": null,
+          "revision": "2849f5323265386e200484b0d0f896e73c3411b9",
+          "version": "6.0.1"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
@@ -101,12 +119,30 @@
         }
       },
       {
+        "package": "cmark-gfm",
+        "repositoryURL": "https://github.com/swiftlang/swift-cmark",
+        "state": {
+          "branch": null,
+          "revision": "5d9bdaa4228b381639fff09403e39a04926e2dbe",
+          "version": "0.7.1"
+        }
+      },
+      {
         "package": "swift-collections",
         "repositoryURL": "https://github.com/apple/swift-collections.git",
         "state": {
           "branch": null,
           "revision": "3d2dc41a01f9e49d84f0a3925fb858bed64f702d",
           "version": "1.1.2"
+        }
+      },
+      {
+        "package": "swift-markdown-ui",
+        "repositoryURL": "https://github.com/gonzalezreal/swift-markdown-ui.git",
+        "state": {
+          "branch": null,
+          "revision": "5f613358148239d0292c0cef674a3c2314737f9e",
+          "version": "2.4.1"
         }
       },
       {

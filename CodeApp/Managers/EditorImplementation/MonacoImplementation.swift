@@ -385,8 +385,9 @@ extension MonacoImplementation: EditorImplementation {
     }
 
     func insertTextAtCurrentCursor(text: String) async {
+        guard let encoded = text.base64Encoded() else { return }
         _ = try? await monacoWebView.evaluateJavaScriptAsync(
-            "editor.trigger('keyboard', 'type', {text: decodeURIComponent(escape(window.atob('\(text)')))})"
+            "editor.trigger('keyboard', 'type', {text: decodeURIComponent(escape(window.atob('\(encoded)')))})"
         )
     }
 

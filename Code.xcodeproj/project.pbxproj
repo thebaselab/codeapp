@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4278754E2EC2141900474F8E /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4278754D2EC2141900474F8E /* MarkdownUI */; };
+		427875512EC2143F00474F8E /* AIProxy in Frameworks */ = {isa = PBXBuildFile; productRef = 427875502EC2143F00474F8E /* AIProxy */; };
+		427875532EC2145900474F8E /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 427875522EC2145900474F8E /* MarkdownUI */; };
+		427875552EC2145F00474F8E /* AIProxy in Frameworks */ = {isa = PBXBuildFile; productRef = 427875542EC2145F00474F8E /* AIProxy */; };
+		429FBC752EC2711500E8AD97 /* CodeAssistantConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC712EC2711500E8AD97 /* CodeAssistantConfiguration.swift */; };
+		429FBC762EC2711500E8AD97 /* CodeAssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC732EC2711500E8AD97 /* CodeAssistantViewModel.swift */; };
+		429FBC772EC2711500E8AD97 /* CodeAssistantPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC722EC2711500E8AD97 /* CodeAssistantPanel.swift */; };
+		429FBC782EC2711500E8AD97 /* CodeAssistantConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC712EC2711500E8AD97 /* CodeAssistantConfiguration.swift */; };
+		429FBC792EC2711500E8AD97 /* CodeAssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC732EC2711500E8AD97 /* CodeAssistantViewModel.swift */; };
+		429FBC7A2EC2711500E8AD97 /* CodeAssistantPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC722EC2711500E8AD97 /* CodeAssistantPanel.swift */; };
+		42F204F82EC2154300FCE150 /* AIAssistantExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F204F72EC2154300FCE150 /* AIAssistantExtension.swift */; };
+		42F204F92EC2154300FCE150 /* AIAssistantExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F204F72EC2154300FCE150 /* AIAssistantExtension.swift */; };
 		940C68252C646E0400089EA3 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940C68242C646E0400089EA3 /* System.swift */; };
 		940C68262C64704C00089EA3 /* String+toCString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B3CC425DEA89A00BC83B5 /* String+toCString.swift */; };
 		940C68272C65D36700089EA3 /* commandDictionary.plist in Resources */ = {isa = PBXBuildFile; fileRef = 948D11FF2583F20C008F877A /* commandDictionary.plist */; };
@@ -1402,6 +1414,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		429FBC712EC2711500E8AD97 /* CodeAssistantConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAssistantConfiguration.swift; sourceTree = "<group>"; };
+		429FBC722EC2711500E8AD97 /* CodeAssistantPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAssistantPanel.swift; sourceTree = "<group>"; };
+		429FBC732EC2711500E8AD97 /* CodeAssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAssistantViewModel.swift; sourceTree = "<group>"; };
+		42F204F72EC2154300FCE150 /* AIAssistantExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAssistantExtension.swift; sourceTree = "<group>"; };
 		4F30816829662CBF002708FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F30816929662D58002708FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		73F80B0F2850F7E5000EF3FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2051,6 +2067,7 @@
 				947BBC8C2C12ED7E00FFD0C5 /* TreeSitterMarkdownRunestone in Frameworks */,
 				9F6BD9522B46902B00E2F8BC /* GCDWebServers in Frameworks */,
 				947BBCA22C12ED7E00FFD0C5 /* TreeSitterSwiftRunestone in Frameworks */,
+				427875552EC2145F00474F8E /* AIProxy in Frameworks */,
 				947BBCA02C12ED7E00FFD0C5 /* TreeSitterSvelteRunestone in Frameworks */,
 				947BBCA82C12ED7E00FFD0C5 /* TreeSitterTypeScriptRunestone in Frameworks */,
 				947BBC962C12ED7E00FFD0C5 /* TreeSitterRRunestone in Frameworks */,
@@ -2059,6 +2076,7 @@
 				947BBCB02C12EE4700FFD0C5 /* TreeSitterElmRunestone in Frameworks */,
 				947BBCB22C12EE4700FFD0C5 /* TreeSitterJSDocRunestone in Frameworks */,
 				947BBC942C12ED7E00FFD0C5 /* TreeSitterRegexRunestone in Frameworks */,
+				427875532EC2145900474F8E /* MarkdownUI in Frameworks */,
 				947BBC702C12ED7D00FFD0C5 /* TreeSitterCSSRunestone in Frameworks */,
 				947BBC6A2C12ED7D00FFD0C5 /* TreeSitterBashRunestone in Frameworks */,
 				947BBC882C12ED7E00FFD0C5 /* TreeSitterLuaRunestone in Frameworks */,
@@ -2117,6 +2135,7 @@
 				947BBCF82C12F5AA00FFD0C5 /* TreeSitterYAMLRunestone in Frameworks */,
 				948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */,
 				947BBCB82C12F59F00FFD0C5 /* TreeSitterBashRunestone in Frameworks */,
+				427875512EC2143F00474F8E /* AIProxy in Frameworks */,
 				94FD17072BAED2C8003E1545 /* Runestone in Frameworks */,
 				947BBCD42C12F5A400FFD0C5 /* TreeSitterLaTeXRunestone in Frameworks */,
 				947BBCBC2C12F5A000FFD0C5 /* TreeSitterCSharpRunestone in Frameworks */,
@@ -2138,6 +2157,7 @@
 				947BBCEC2C12F5A800FFD0C5 /* TreeSitterSQLRunestone in Frameworks */,
 				947BBCF02C12F5A900FFD0C5 /* TreeSitterSwiftRunestone in Frameworks */,
 				947BBCEA2C12F5A800FFD0C5 /* TreeSitterSCSSRunestone in Frameworks */,
+				4278754E2EC2141900474F8E /* MarkdownUI in Frameworks */,
 				947BBCD22C12F5A400FFD0C5 /* TreeSitterJuliaRunestone in Frameworks */,
 				947BBCE42C12F5A700FFD0C5 /* TreeSitterRRunestone in Frameworks */,
 				945AEA3527ECCB3D00BA193E /* NodeMobile.xcframework in Frameworks */,
@@ -2174,6 +2194,16 @@
 				945E7E3727CA79C900BA1D95 /* NodeMobile.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		429FBC742EC2711500E8AD97 /* Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				429FBC712EC2711500E8AD97 /* CodeAssistantConfiguration.swift */,
+				429FBC722EC2711500E8AD97 /* CodeAssistantPanel.swift */,
+				429FBC732EC2711500E8AD97 /* CodeAssistantViewModel.swift */,
+			);
+			path = Assistant;
 			sourceTree = "<group>";
 		};
 		94369AFD25E3B933008419A0 /* NodeExtension */ = {
@@ -2279,6 +2309,7 @@
 				944EEBFC2563C386009D77FE /* Info.plist */,
 				944EEBF92563C386009D77FE /* Preview Content */,
 				941CF5FA2641CBDA001199C0 /* Settings.bundle */,
+				429FBC742EC2711500E8AD97 /* Assistant */,
 			);
 			path = CodeApp;
 			sourceTree = "<group>";
@@ -2451,6 +2482,7 @@
 			children = (
 				94A777B6257B6A43008FE7B2 /* View+cornerRadius.swift */,
 				94A777AF257B679C008FE7B2 /* String+base64EncodedDecoded.swift */,
+				42F204F72EC2154300FCE150 /* AIAssistantExtension.swift */,
 				94E3B96A25866C79006AC043 /* String.Encoding.swift */,
 				949B3CB825DADCB900BC83B5 /* URL+relativePath.swift */,
 				949B3CC425DEA89A00BC83B5 /* String+toCString.swift */,
@@ -3294,6 +3326,8 @@
 				947BBCAF2C12EE4700FFD0C5 /* TreeSitterElmRunestone */,
 				947BBCB12C12EE4700FFD0C5 /* TreeSitterJSDocRunestone */,
 				947BBCB32C12EE4700FFD0C5 /* TreeSitterJSON5Runestone */,
+				427875522EC2145900474F8E /* MarkdownUI */,
+				427875542EC2145F00474F8E /* AIProxy */,
 			);
 			productName = testfield;
 			productReference = 94196B18280316C7008AAEB2 /* CodeUI.app */;
@@ -3382,6 +3416,8 @@
 				947BBCF32C12F5A900FFD0C5 /* TreeSitterTSXRunestone */,
 				947BBCF52C12F5AA00FFD0C5 /* TreeSitterTypeScriptRunestone */,
 				947BBCF72C12F5AA00FFD0C5 /* TreeSitterYAMLRunestone */,
+				4278754D2EC2141900474F8E /* MarkdownUI */,
+				427875502EC2143F00474F8E /* AIProxy */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -3420,8 +3456,9 @@
 		944EEBE82563C381009D77FE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					9419692E280316C7008AAEB2 = {
 						LastSwiftMigration = 1330;
@@ -3463,6 +3500,8 @@
 				94FD17002BAED26A003E1545 /* XCRemoteSwiftPackageReference "Runestone" */,
 				946DAB982BBD2F9600E73257 /* XCRemoteSwiftPackageReference "treesitterlanguages" */,
 				94F88FD72C5B4F3400326AD0 /* XCLocalSwiftPackageReference "SwiftWS" */,
+				4278754C2EC2141900474F8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				4278754F2EC2143F00474F8E /* XCRemoteSwiftPackageReference "aiproxyswift" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -3665,6 +3704,7 @@
 				94196961280316C7008AAEB2 /* String.Encoding.swift in Sources */,
 				94196962280316C7008AAEB2 /* SettingsThemeConfiguration.swift in Sources */,
 				94196963280316C7008AAEB2 /* RemoteContainer.swift in Sources */,
+				42F204F82EC2154300FCE150 /* AIAssistantExtension.swift in Sources */,
 				94196964280316C7008AAEB2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3372284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				9F046C3E29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */,
@@ -3679,6 +3719,9 @@
 				9419696A280316C7008AAEB2 /* openFilesApp.swift in Sources */,
 				9419696B280316C7008AAEB2 /* View+If.swift in Sources */,
 				9419696C280316C7008AAEB2 /* WorkSpaceStorage.swift in Sources */,
+				429FBC782EC2711500E8AD97 /* CodeAssistantConfiguration.swift in Sources */,
+				429FBC792EC2711500E8AD97 /* CodeAssistantViewModel.swift in Sources */,
+				429FBC7A2EC2711500E8AD97 /* CodeAssistantPanel.swift in Sources */,
 				949D788B2C33DC3F006D7480 /* AppExtensionError.swift in Sources */,
 				94A045EF280480E800182275 /* RemoteListSection.swift in Sources */,
 				9419696D280316C7008AAEB2 /* DirectoryFolderMonitor.swift in Sources */,
@@ -3857,6 +3900,7 @@
 				94E3B96B25866C79006AC043 /* String.Encoding.swift in Sources */,
 				94B3DDF82604F90800C4F2B1 /* SettingsThemeConfiguration.swift in Sources */,
 				9437153F26BF9FC3000376FB /* RemoteContainer.swift in Sources */,
+				42F204F92EC2154300FCE150 /* AIAssistantExtension.swift in Sources */,
 				94A77819257BC332008FE7B2 /* CloudCodeExecutionManager.swift in Sources */,
 				94FF3371284348F1003DE5DD /* KBWebViewBase.m in Sources */,
 				9F046C3D29223E1500BDE4E9 /* CodeAppExtension.swift in Sources */,
@@ -3871,6 +3915,9 @@
 				94A777DC257B8C99008FE7B2 /* openFilesApp.swift in Sources */,
 				94B3DDFA260526D200C4F2B1 /* View+If.swift in Sources */,
 				94A777A2257ABDC3008FE7B2 /* WorkSpaceStorage.swift in Sources */,
+				429FBC752EC2711500E8AD97 /* CodeAssistantConfiguration.swift in Sources */,
+				429FBC762EC2711500E8AD97 /* CodeAssistantViewModel.swift in Sources */,
+				429FBC772EC2711500E8AD97 /* CodeAssistantPanel.swift in Sources */,
 				949D788A2C33DC3F006D7480 /* AppExtensionError.swift in Sources */,
 				94A045EE280480E800182275 /* RemoteListSection.swift in Sources */,
 				94A777A8257ABEBE008FE7B2 /* DirectoryFolderMonitor.swift in Sources */,
@@ -4027,7 +4074,8 @@
 				CURRENT_PROJECT_VERSION = 87;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				DEVELOPMENT_TEAM = MK2V998W66;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
@@ -4050,7 +4098,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/CodeUI-Bridging-Header.h";
@@ -4074,7 +4121,7 @@
 				CURRENT_PROJECT_VERSION = 87;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
@@ -4098,7 +4145,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore thebaselab.VS-Code";
-				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/CodeUI-Bridging-Header.h";
@@ -4117,8 +4163,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 87;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				DEVELOPMENT_TEAM = MK2V998W66;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_BITCODE = NO;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4153,8 +4202,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 87;
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_BITCODE = NO;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -4216,8 +4267,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4237,6 +4290,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -4278,8 +4332,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 69R94YG49H;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -4293,6 +4349,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -4302,7 +4359,6 @@
 		944EEC002563C386009D77FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = Iconv2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -4312,8 +4368,10 @@
 				CURRENT_PROJECT_VERSION = 87;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				DEVELOPMENT_TEAM = MK2V998W66;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_BITCODE = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4324,6 +4382,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CodeApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4335,7 +4394,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/Code-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4348,7 +4406,6 @@
 		944EEC012563C386009D77FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = Iconv2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -4358,8 +4415,9 @@
 				CURRENT_PROJECT_VERSION = 87;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"CodeApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_BITCODE = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4371,6 +4429,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CodeApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4382,7 +4441,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore thebaselab.VS-Code";
-				STRIP_STYLE = "non-global";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeApp/Utilities/Code-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -4398,7 +4456,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				DEVELOPMENT_TEAM = MK2V998W66;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MARKETING_VERSION = 1.0;
@@ -4418,7 +4476,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 69R94YG49H;
+				DEVELOPMENT_TEAM = MK2V998W66;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MARKETING_VERSION = 1.0;
@@ -4489,6 +4547,22 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4278754C2EC2141900474F8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+		4278754F2EC2143F00474F8E /* XCRemoteSwiftPackageReference "aiproxyswift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lzell/aiproxyswift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.130.0;
+			};
+		};
 		94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
@@ -4580,6 +4654,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4278754D2EC2141900474F8E /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4278754C2EC2141900474F8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+		427875502EC2143F00474F8E /* AIProxy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4278754F2EC2143F00474F8E /* XCRemoteSwiftPackageReference "aiproxyswift" */;
+			productName = AIProxy;
+		};
+		427875522EC2145900474F8E /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4278754C2EC2141900474F8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+		427875542EC2145F00474F8E /* AIProxy */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4278754F2EC2143F00474F8E /* XCRemoteSwiftPackageReference "aiproxyswift" */;
+			productName = AIProxy;
+		};
 		94196931280316C7008AAEB2 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;

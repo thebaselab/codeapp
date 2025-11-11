@@ -2,7 +2,7 @@
 //  CodeAssistantViewModel.swift
 //  CodeApp
 //
-//  Created by Codex.
+//  Created by Arya Mirsepasi.
 //
 
 import AIProxy
@@ -11,8 +11,8 @@ import Foundation
 @MainActor
 final class CodeAssistantViewModel: ObservableObject {
 
-    struct Message: Identifiable {
-        enum Role {
+    struct Message: Identifiable, Codable {
+        enum Role: String, Codable {
             case user
             case assistant
             case system
@@ -48,14 +48,32 @@ final class CodeAssistantViewModel: ObservableObject {
         }
     }
 
-    struct Attachment: Identifiable, Equatable {
-        let id = UUID()
+    struct Attachment: Identifiable, Equatable, Codable {
+        let id: UUID
         let url: URL
         let name: String
         let byteCount: Int
         let content: String
         let languageHint: String
         let wasTruncated: Bool
+
+        init(
+            id: UUID = UUID(),
+            url: URL,
+            name: String,
+            byteCount: Int,
+            content: String,
+            languageHint: String,
+            wasTruncated: Bool
+        ) {
+            self.id = id
+            self.url = url
+            self.name = name
+            self.byteCount = byteCount
+            self.content = content
+            self.languageHint = languageHint
+            self.wasTruncated = wasTruncated
+        }
 
         var formattedSize: String {
             byteCount > 1024 ? "\(byteCount / 1024) KB" : "\(byteCount) B"
@@ -92,7 +110,7 @@ final class CodeAssistantViewModel: ObservableObject {
         }
     }
 
-    struct Conversation: Identifiable {
+    struct Conversation: Identifiable, Codable {
         let id: UUID
         var title: String
         var messages: [Message]
@@ -110,7 +128,11 @@ final class CodeAssistantViewModel: ObservableObject {
     }
     @Published var isStreaming: Bool = false
     @Published var errorMessage: String?
-    @Published var history: [Conversation] = []
+    @Published var history: [Conversation] = [] {
+        didSet {
+            persistHistory()
+        }
+    }
     @Published var activeConversationTitle: String = "New Chat"
 
     var currentModel: String {
@@ -127,7 +149,22 @@ final class CodeAssistantViewModel: ObservableObject {
     private var streamTask: Task<Void, Never>?
     private let systemPrompt =
         """
-        You are Code App's on-device coding assistant. Give concise, actionable answers, use Markdown formatting, and prefer Swift and SwiftUI conventions that follow Apple's Human Interface Guidelines.
+        You are Code App's AI coding assistant. Provide concise, actionable answers using clear Markdown formatting. Follow best practices, robust patterns, and modern UI/UX principles. When offering code, prefer idiomatic, production-ready solutions with comments where helpful, and include brief explanations and alternatives when relevant.
+        
+        You specialize in the following runtimes and should tailor examples and guidance accordingly:
+        - Python 3.9.2
+        - Clang 14.0.0 (C/C++)
+        - PHP 8.3.2
+        - Node.js 18.19.0
+        - OpenJDK 8 (Java)
+        
+        Guidelines:
+        - Be precise and avoid unnecessary verbosity.
+        - Validate assumptions and ask for missing details when needed.
+        - Emphasize security, performance, readability, and maintainability.
+        - Provide step-by-step migration or debugging advice when appropriate.
+        - Use platform-appropriate tooling, testing, and packaging recommendations.
+        - When presenting code blocks, specify the correct language for syntax highlighting.
         """
 
     private static let providerDefaultsKey = "codeassistant.provider.active"
@@ -137,6 +174,7 @@ final class CodeAssistantViewModel: ObservableObject {
 
     private static let maxAttachmentCharacters = 24_000
     private var activeConversationID = UUID()
+    private static let historyDefaultsKey = "codeassistant.history.archive"
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -153,6 +191,7 @@ final class CodeAssistantViewModel: ObservableObject {
             let storedModel = defaults.string(forKey: Self.modelDefaultsKey(for: provider))
             modelOverrides[provider] = storedModel ?? provider.defaultModel
         }
+        loadHistory()
     }
 
     func updateModel(_ value: String) {
@@ -325,7 +364,7 @@ final class CodeAssistantViewModel: ObservableObject {
             temperature: 0.2
         )
 
-        let stream = try await service.streamingChatCompletionRequest(body: requestBody)
+        let stream = try await service.streamingChatCompletionRequest(body: requestBody, secondsToWait: 60)
         do {
             for try await chunk in stream {
                 guard let delta = chunk.choices.first?.delta.content else {
@@ -484,6 +523,21 @@ final class CodeAssistantViewModel: ObservableObject {
         return mapping[ext] ?? "text"
     }
 
+    private func persistHistory() {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        guard let data = try? encoder.encode(history) else { return }
+        defaults.set(data, forKey: Self.historyDefaultsKey)
+    }
+
+    private func loadHistory() {
+        guard let data = defaults.data(forKey: Self.historyDefaultsKey) else { return }
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        guard let stored = try? decoder.decode([Conversation].self, from: data) else { return }
+        history = stored
+    }
+
     private func archiveCurrentConversationIfNeeded() {
         guard !messages.isEmpty else { return }
         let snapshot = Conversation(
@@ -494,6 +548,9 @@ final class CodeAssistantViewModel: ObservableObject {
         )
         history.removeAll { $0.id == snapshot.id }
         history.insert(snapshot, at: 0)
+        if history.count > 20 {
+            history = Array(history.prefix(20))
+        }
     }
 
     private func deriveTitle(from messages: [Message]) -> String {

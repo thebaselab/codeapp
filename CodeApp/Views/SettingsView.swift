@@ -383,41 +383,14 @@ struct SettingsView: View {
 
 private struct AIAssistantSettingsSection: View {
 
-    @State private var openAIKey: String = ""
-    @State private var anthropicKey: String = ""
-    @State private var hasLoadedKeys = false
-    @State private var showSavedIndicator = false
-
     var body: some View {
         Section(
             content: {
-                providerField(
-                    title: "OpenAI API Key",
-                    placeholder: "sk-...",
-                    text: $openAIKey,
-                    symbol: "sparkles")
-
-                providerField(
-                    title: "Anthropic API Key",
-                    placeholder: "sk-ant-...",
-                    text: $anthropicKey,
-                    symbol: "circle.hexagongrid")
-
-                Button {
-                    persistKeys()
+                NavigationLink {
+                    AIAssistantKeyManagementView()
                 } label: {
-                    Label("Save Keys", systemImage: "key.fill")
-                        .fontWeight(.semibold)
-                }
-                .buttonStyle(.borderedProminent)
-                .padding(.vertical, 6)
-                .disabled(!hasChanges)
-
-                if showSavedIndicator {
-                    Label("Updated", systemImage: "checkmark.circle")
-                        .foregroundStyle(.secondary)
-                        .font(.footnote)
-                        .transition(.opacity)
+                    Label("AI Assistant API Keys", systemImage: "key.fill")
+                        .fontWeight(.medium)
                 }
             },
             header: { Text("AI Assistant") },
@@ -427,46 +400,73 @@ private struct AIAssistantSettingsSection: View {
                 )
             }
         )
-        .onAppear {
-            guard !hasLoadedKeys else { return }
-            openAIKey = CodeAssistantSettings.apiKey(for: .openAI)
-            anthropicKey = CodeAssistantSettings.apiKey(for: .anthropic)
-            hasLoadedKeys = true
-        }
     }
+}
+
+private struct AIAssistantKeyManagementView: View {
+
+    @State private var selectedProvider: CodeAssistantProvider = .openAI
+    @State private var apiKeyDraft: String = ""
+    @State private var showSavedIndicator = false
 
     private var hasChanges: Bool {
-        openAIKey != CodeAssistantSettings.apiKey(for: .openAI)
-            || anthropicKey != CodeAssistantSettings.apiKey(for: .anthropic)
+        apiKeyDraft != CodeAssistantSettings.apiKey(for: selectedProvider)
     }
 
-    private func providerField(
-        title: String,
-        placeholder: String,
-        text: Binding<String>,
-        symbol: String
-    ) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Label(title, systemImage: symbol)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+    var body: some View {
+        Form {
+            Section(header: Text("Provider")) {
+                Picker("Provider", selection: $selectedProvider) {
+                    ForEach(CodeAssistantProvider.allCases) { provider in
+                        Text(provider.displayName).tag(provider)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
 
-            SecureField(placeholder, text: text)
+            Section(
+                header: Text("API Key"),
+                footer: Text(
+                    "Use the provider dashboard to create and revoke API keys as needed. Keys are saved immediately on this device."
+                )
+            ) {
+                SecureField(
+                    "\(selectedProvider.displayName) Key",
+                    text: $apiKeyDraft
+                )
                 .textContentType(.password)
                 .autocorrectionDisabled()
                 .font(.system(.body, design: .monospaced))
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color(.secondarySystemGroupedBackground))
-                )
+
+                Button {
+                    persistKey()
+                } label: {
+                    Label("Save Key", systemImage: "checkmark.circle.fill")
+                        .fontWeight(.semibold)
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(!hasChanges)
+
+                if showSavedIndicator {
+                    Label("Updated", systemImage: "checkmark.circle")
+                        .foregroundStyle(.secondary)
+                        .font(.footnote)
+                        .transition(.opacity)
+                }
+            }
         }
-        .padding(.vertical, 4)
+        .navigationTitle("AI Assistant Keys")
+        .onAppear {
+            apiKeyDraft = CodeAssistantSettings.apiKey(for: selectedProvider)
+        }
+        .onChange(of: selectedProvider) { provider in
+            apiKeyDraft = CodeAssistantSettings.apiKey(for: provider)
+            showSavedIndicator = false
+        }
     }
 
-    private func persistKeys() {
-        CodeAssistantSettings.persist(apiKey: openAIKey, for: .openAI)
-        CodeAssistantSettings.persist(apiKey: anthropicKey, for: .anthropic)
+    private func persistKey() {
+        CodeAssistantSettings.persist(apiKey: apiKeyDraft, for: selectedProvider)
         withAnimation {
             showSavedIndicator = true
         }

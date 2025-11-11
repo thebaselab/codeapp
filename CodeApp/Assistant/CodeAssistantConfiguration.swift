@@ -2,7 +2,7 @@
 //  CodeAssistantConfiguration.swift
 //  CodeApp
 //
-//  Created by Codex.
+//  Created by Arya Mirsepasi.
 //
 
 import Foundation

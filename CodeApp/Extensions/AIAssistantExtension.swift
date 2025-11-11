@@ -2,7 +2,7 @@
 //  AIAssistantExtension.swift
 //  CodeApp
 //
-//  Created by Codex.
+//  Created by Arya Mirsepasi.
 //
 
 import SwiftUI
@@ -17,7 +17,7 @@ class AIAssistantExtension: CodeAppExtension {
     override func onInitialize(app: MainApp, contribution: CodeAppExtension.Contribution) {
         let toolbarItem = ToolbarItem(
             extenionID: AI_ASSISTANT_EXTENSION_ID,
-            icon: "bolt.horizontal.circle",
+            icon: "sparkles",
             onClick: {
                 NotificationCenter.default.post(name: .codeAssistantToggleRequested, object: nil)
             },
