@@ -389,7 +389,7 @@ private struct AIAssistantSettingsSection: View {
                 NavigationLink {
                     AIAssistantKeyManagementView()
                 } label: {
-                    Label("AI Assistant API Keys", systemImage: "key.fill")
+                    Label("AI Assistant API Keys", systemImage: "sparkles")
                         .fontWeight(.medium)
                 }
             },

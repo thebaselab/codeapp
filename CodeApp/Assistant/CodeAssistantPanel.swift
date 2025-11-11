@@ -49,6 +49,8 @@ struct CodeAssistantPanel: View {
             AttachmentPickerView(root: app.workSpaceStorage.currentDirectory) { item in
                 viewModel.attach(item: item)
             }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.hidden)
         }
         .sheet(isPresented: $showsHistorySheet) {
             ChatHistoryView(viewModel: viewModel)
@@ -277,58 +279,19 @@ private struct ModelSelectionView: View {
     @ObservedObject var viewModel: CodeAssistantViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var modelDraft: String = ""
+    @State private var showCustomModelField = false
+    @FocusState private var customModelFieldIsFocused: Bool
+
+    private var trimmedDraft: String {
+        modelDraft.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
     
     var body: some View {
         NavigationStack {
             List {
-                Section(header: Text("AI Provider"), footer: Text("Provider keys are managed in Settings.")) {
-                    Picker("Provider", selection: $viewModel.selectedProvider) {
-                        ForEach(CodeAssistantProvider.allCases) { provider in
-                            Text(provider.displayName).tag(provider)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                }
-                
-                Section(header: Text("Custom Model"), footer: Text("Currently using: \(viewModel.currentModel)")) {
-                    TextField("Model Name", text: $modelDraft)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                        .font(.body.monospaced())
-                    
-                    Button {
-                        applyModel()
-                        dismiss()
-                    } label: {
-                        Label("Use This Model", systemImage: "checkmark.circle.fill")
-                    }
-                    .disabled(modelDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                    
-                    Button {
-                        modelDraft = viewModel.selectedProvider.defaultModel
-                    } label: {
-                        Label("Reset to Default", systemImage: "arrow.counterclockwise")
-                    }
-                }
-                
-                Section(header: Text("Suggested Models")) {
-                    ForEach(Array(viewModel.selectedProvider.suggestedModels.enumerated()), id: \.offset) { _, model in
-                        Button {
-                            modelDraft = model
-                        } label: {
-                            HStack {
-                                Text(model)
-                                    .font(.body.monospaced())
-                                    .foregroundStyle(.primary)
-                                Spacer()
-                                if modelDraft == model {
-                                    Image(systemName: "checkmark")
-                                        .foregroundStyle(.primary)
-                                }
-                            }
-                        }
-                    }
-                }
+                providerSection
+                suggestedModelsSection
+                selectionSection
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Select Model")
@@ -341,13 +304,128 @@ private struct ModelSelectionView: View {
                 }
             })
             .onAppear {
-                modelDraft = viewModel.currentModel
+                syncDraftWithSelection()
+            }
+            .onChange(of: viewModel.selectedProvider) { _ in
+                syncDraftWithSelection()
             }
         }
     }
     
+    private var providerSection: some View {
+        Section(header: Text("AI Provider"), footer: Text("Provider keys are managed in Settings.")) {
+            Picker("Provider", selection: $viewModel.selectedProvider) {
+                ForEach(CodeAssistantProvider.allCases) { provider in
+                    HStack(spacing: 8) {
+                        Text(provider.displayName)
+                    }
+                    .tag(provider)
+                }
+            }
+            .pickerStyle(.menu)
+        }
+    }
+
+    private var suggestedModelsSection: some View {
+        Section(
+            header: Text("Model Presets"),
+            footer: Text(
+                "Need something else? Choose Custom to enter any model supported by \(viewModel.selectedProvider.displayName)."
+            )
+        ) {
+            ForEach(viewModel.selectedProvider.suggestedModels, id: \.self) { model in
+                Button {
+                    selectSuggestedModel(model)
+                } label: {
+                    HStack {
+                        Text(model)
+                            .font(.body.monospaced())
+                        Spacer()
+                        if !showCustomModelField && modelDraft == model {
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.primary)
+                        }
+                    }
+                }
+            }
+
+            Button {
+                enableCustomModelEntry()
+            } label: {
+                HStack {
+                    Text("Custom Model…")
+                    Spacer()
+                    if showCustomModelField {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(.primary)
+                    }
+                }
+            }
+        }
+    }
+
+    private var selectionSection: some View {
+        Section(
+            header: Text(showCustomModelField ? "Custom Model" : "Selected Model"),
+            footer: Text("Currently using: \(viewModel.currentModel)")
+        ) {
+            if showCustomModelField {
+                TextField("Model Name", text: $modelDraft)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .font(.body.monospaced())
+                    .focused($customModelFieldIsFocused)
+            } else {
+                Text(modelDraft)
+                    .font(.body.monospaced())
+                    .foregroundStyle(.secondary)
+            }
+
+            Button {
+                applyModel()
+                dismiss()
+            } label: {
+                Label("Use This Model", systemImage: "checkmark.circle.fill")
+            }
+            .disabled(trimmedDraft.isEmpty)
+
+            Button {
+                resetToDefault()
+            } label: {
+                Label("Reset to Default", systemImage: "arrow.counterclockwise")
+            }
+        }
+    }
+
     private func applyModel() {
-        viewModel.updateModel(modelDraft)
+        viewModel.updateModel(trimmedDraft)
+        syncDraftWithSelection()
+    }
+
+    private func selectSuggestedModel(_ model: String) {
+        modelDraft = model
+        showCustomModelField = false
+    }
+
+    private func enableCustomModelEntry() {
+        showCustomModelField = true
+        if viewModel.selectedProvider.suggestedModels.contains(modelDraft) {
+            modelDraft = ""
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            customModelFieldIsFocused = true
+        }
+    }
+
+    private func resetToDefault() {
+        modelDraft = viewModel.selectedProvider.defaultModel
+        showCustomModelField = false
+    }
+
+    private func syncDraftWithSelection() {
+        let current = viewModel.currentModel
+        modelDraft = current
+        showCustomModelField = !viewModel.selectedProvider.suggestedModels.contains(current)
     }
 }
 
@@ -610,7 +688,7 @@ private struct AttachmentPickerView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 AttachmentPickerNode(item: root, onSelect: handleSelect)
             }
@@ -623,7 +701,6 @@ private struct AttachmentPickerView: View {
                 }
             })
         }
-        .presentationDetents([.medium, .large])
     }
 
     private func handleSelect(_ item: WorkSpaceStorage.FileItemRepresentable) {

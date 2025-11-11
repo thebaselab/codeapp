@@ -319,6 +319,11 @@ final class CodeAssistantViewModel: ObservableObject {
                         history: conversationContext,
                         placeholderID: placeholder.id,
                         model: model)
+                case .openRouter:
+                    try await streamOpenRouter(
+                        history: conversationContext,
+                        placeholderID: placeholder.id,
+                        model: model)
                 }
             } catch {
                 await MainActor.run {
@@ -380,6 +385,39 @@ final class CodeAssistantViewModel: ObservableObject {
         }
     }
 
+    private func streamOpenRouter(
+        history: [Message],
+        placeholderID: UUID,
+        model: String
+    ) async throws {
+        let apiKey = CodeAssistantSettings.apiKey(for: .openRouter)
+        guard !apiKey.isEmpty else {
+            throw AssistantError.missingAPIKey(provider: .openRouter)
+        }
+
+        let service = AIProxy.openRouterDirectService(unprotectedAPIKey: apiKey)
+        let body = OpenRouterChatCompletionRequestBody(
+            messages: openRouterMessages(from: history),
+            models: [model],
+            temperature: 0.2
+        )
+
+        let stream = try await service.streamingChatCompletionRequest(body: body)
+        do {
+            for try await chunk in stream {
+                guard let delta = chunk.choices.first?.delta.content else {
+                    continue
+                }
+                if let index = messages.firstIndex(where: { $0.id == placeholderID }) {
+                    messages[index].body += delta
+                }
+            }
+            finalizeStream(for: placeholderID)
+        } catch {
+            throw error
+        }
+    }
+
     private func requestAnthropic(
         history: [Message],
         placeholderID: UUID,
@@ -416,6 +454,23 @@ final class CodeAssistantViewModel: ObservableObject {
 
     private func openAIMessages(from history: [Message]) -> [OpenAIChatCompletionRequestBody.Message] {
         var payload: [OpenAIChatCompletionRequestBody.Message] = [
+            .system(content: .text(systemPrompt))
+        ]
+        payload += history.compactMap { message in
+            switch message.role {
+            case .user:
+                return .user(content: .text(message.payload))
+            case .assistant:
+                return .assistant(content: .text(message.payload))
+            case .system:
+                return .system(content: .text(message.payload))
+            }
+        }
+        return payload
+    }
+
+    private func openRouterMessages(from history: [Message]) -> [OpenRouterChatCompletionRequestBody.Message] {
+        var payload: [OpenRouterChatCompletionRequestBody.Message] = [
             .system(content: .text(systemPrompt))
         ]
         payload += history.compactMap { message in

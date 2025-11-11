@@ -10,6 +10,7 @@ import Foundation
 enum CodeAssistantProvider: String, CaseIterable, Identifiable {
     case openAI
     case anthropic
+    case openRouter
 
     var id: String {
         rawValue
@@ -21,36 +22,57 @@ enum CodeAssistantProvider: String, CaseIterable, Identifiable {
             return "OpenAI"
         case .anthropic:
             return "Anthropic"
+        case .openRouter:
+            return "OpenRouter"
         }
     }
 
-    var iconSystemName: String {
+    var iconName: String {
         switch self {
         case .openAI:
-            return "sparkles"
+            return "openai"
         case .anthropic:
-            return "circle.hexagongrid"
+            return "anthropic"
+        case .openRouter:
+            return "o.circle"
+        }
+    }
+    
+    var isSystemIcon: Bool {
+        switch self {
+        case .openAI, .anthropic:
+            return false
+        case .openRouter:
+            return true
         }
     }
 
     var defaultModel: String {
         switch self {
         case .openAI:
-            return "gpt-4o-mini"
+            return "gpt-5"
         case .anthropic:
-            return "claude-3-5-sonnet-20240620"
+            return "claude-sonnet-4-5"
+        case .openRouter:
+            return "deepseek/deepseek-r1"
         }
     }
 
     var suggestedModels: [String] {
         switch self {
         case .openAI:
-            return ["gpt-4o-mini", "gpt-4o", "gpt-4.1"]
+            return ["gpt-5", "gpt-5-mini", "gpt-4.1"]
         case .anthropic:
             return [
-                "claude-3-5-sonnet-20240620",
-                "claude-3-5-haiku-20241022",
-                "claude-3-opus-20240229",
+                "claude-sonnet-4-5",
+                "claude-haiku-4-5",
+                "claude-opus-4-1",
+            ]
+        case .openRouter:
+            return [
+                "deepseek/deepseek-r1",
+                "deepseek/deepseek-chat",
+                "google/gemini-2.0-flash-exp:free",
             ]
         }
     }
@@ -63,6 +85,8 @@ enum CodeAssistantSettings {
             return "codeassistant.openai.apiKey"
         case .anthropic:
             return "codeassistant.anthropic.apiKey"
+        case .openRouter:
+            return "codeassistant.openrouter.apiKey"
         }
     }
 
