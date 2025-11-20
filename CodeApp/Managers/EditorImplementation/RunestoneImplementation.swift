@@ -602,6 +602,33 @@ extension RunestoneImplementation: EditorImplementation {
         }
     }
 
+    func currentModelValue() async -> String? {
+        return await MainActor.run {
+            textView.text
+        }
+    }
+
+    func selectionSnapshot() async -> EditorSelectionSnapshot? {
+        return await MainActor.run {
+            guard let range = textView.selectedTextRange else { return nil }
+            let start = textView.offset(from: textView.beginningOfDocument, to: range.start)
+            let end = textView.offset(from: textView.beginningOfDocument, to: range.end)
+            let text = textView.text(in: range) ?? ""
+            let startLocation = textView.textLocation(at: start)
+            let endLocation = textView.textLocation(at: end)
+
+            return EditorSelectionSnapshot(
+                text: text,
+                startOffset: start,
+                endOffset: end,
+                startLine: (startLocation?.lineNumber ?? 0) + 1,
+                startColumn: (startLocation?.column ?? 0) + 1,
+                endLine: (endLocation?.lineNumber ?? startLocation?.lineNumber ?? 0) + 1,
+                endColumn: (endLocation?.column ?? startLocation?.column ?? 0) + 1
+            )
+        }
+    }
+
     func pasteText(text: String) async {
         await MainActor.run {
             self.textView.insertText(text)

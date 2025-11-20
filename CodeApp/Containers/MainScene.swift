@@ -263,13 +263,13 @@ private struct MainView: View {
         .navigationTitle(
             URL(string: App.workSpaceStorage.currentDirectory.url)?.lastPathComponent ?? ""
         )
-        .onChange(of: colorScheme) { newValue in
+        .onChange(of: colorScheme) {
             App.updateView()
         }
-        .onChange(of: runeStoneEditorEnabled) { _ in
+        .onChange(of: runeStoneEditorEnabled) {
             App.setUpEditorInstance()
         }
-        .onChange(of: terminalOptions) { newValue in
+        .onChange(of: terminalOptions) { oldValue, newValue in
             App.terminalInstance.options = newValue.value
         }
         .hiddenScrollableContentBackground()
@@ -353,8 +353,8 @@ private struct MainView: View {
                 assistantViewModel.isPresented.toggle()
             }
         }
-        .onChange(of: assistantViewModel.isPresented) { presented in
-            if !presented {
+        .onChange(of: assistantViewModel.isPresented) { oldValue, newValue in
+            if !newValue {
                 assistantDragOffset = 0
             }
         }

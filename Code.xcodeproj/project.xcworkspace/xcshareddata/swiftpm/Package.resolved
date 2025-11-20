@@ -56,6 +56,15 @@
         }
       },
       {
+        "package": "Gzip",
+        "repositoryURL": "https://github.com/1024jp/GzipSwift",
+        "state": {
+          "branch": null,
+          "revision": "731037f6cc2be2ec01562f6597c1d0aa3fe6fd05",
+          "version": "6.0.1"
+        }
+      },
+      {
         "package": "Clibgit2",
         "repositoryURL": "https://github.com/thebaselab/LibGit2-On-iOS",
         "state": {
@@ -70,6 +79,24 @@
         "state": {
           "branch": "master",
           "revision": "bf73bf35a97ec6c63c4d73d99a7273858ebf3be5",
+          "version": null
+        }
+      },
+      {
+        "package": "mlx-swift",
+        "repositoryURL": "https://github.com/ml-explore/mlx-swift",
+        "state": {
+          "branch": null,
+          "revision": "072b684acaae80b6a463abab3a103732f33774bf",
+          "version": "0.29.1"
+        }
+      },
+      {
+        "package": "mlx-libraries",
+        "repositoryURL": "https://github.com/ml-explore/mlx-swift-examples/",
+        "state": {
+          "branch": "main",
+          "revision": "b0717631e37a7940b292eec11255d60029ed7a4d",
           "version": null
         }
       },
@@ -137,6 +164,15 @@
         }
       },
       {
+        "package": "Jinja",
+        "repositoryURL": "https://github.com/huggingface/swift-jinja.git",
+        "state": {
+          "branch": null,
+          "revision": "38b7beeec5d968accd19a8a70c1882cc89979d1c",
+          "version": "2.1.1"
+        }
+      },
+      {
         "package": "swift-markdown-ui",
         "repositoryURL": "https://github.com/gonzalezreal/swift-markdown-ui.git",
         "state": {
@@ -164,12 +200,30 @@
         }
       },
       {
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics",
+        "state": {
+          "branch": null,
+          "revision": "0c0290ff6b24942dadb83a929ffaaa1481df04a2",
+          "version": "1.1.1"
+        }
+      },
+      {
         "package": "swift-system",
         "repositoryURL": "https://github.com/apple/swift-system.git",
         "state": {
           "branch": null,
           "revision": "d2ba781702a1d8285419c15ee62fd734a9437ff5",
           "version": "1.3.2"
+        }
+      },
+      {
+        "package": "swift-transformers",
+        "repositoryURL": "https://github.com/huggingface/swift-transformers",
+        "state": {
+          "branch": null,
+          "revision": "d363e83a77bafe144808a3d01556139fe67cd8bc",
+          "version": "1.1.2"
         }
       },
       {

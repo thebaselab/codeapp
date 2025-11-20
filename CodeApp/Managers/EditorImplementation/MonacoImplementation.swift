@@ -377,6 +377,45 @@ extension MonacoImplementation: EditorImplementation {
                 "editor.getModel().getValueInRange(editor.getSelection())")) as? String ?? ""
     }
 
+    func currentModelValue() async -> String? {
+        return
+            (try? await monacoWebView.evaluateJavaScriptAsync(
+                "(() => { const model = editor.getModel(); return model ? model.getValue() : null; })();"
+            )) as? String
+    }
+
+    func selectionSnapshot() async -> EditorSelectionSnapshot? {
+        let script = """
+        (() => {
+            const editorModel = editor.getModel();
+            if (!editorModel) { return null; }
+            const selection = editor.getSelection();
+            if (!selection) { return null; }
+            const start = editorModel.getOffsetAt(selection.getStartPosition());
+            const end = editorModel.getOffsetAt(selection.getEndPosition());
+            return {
+                text: editorModel.getValueInRange(selection),
+                startOffset: start,
+                endOffset: end,
+                startLine: selection.startLineNumber,
+                startColumn: selection.startColumn,
+                endLine: selection.endLineNumber,
+                endColumn: selection.endColumn
+            };
+        })();
+        """
+        guard
+            let result = try? await monacoWebView.evaluateJavaScriptAsync(script),
+            let dict = result as? [String: Any]
+        else {
+            return nil
+        }
+        guard let data = try? JSONSerialization.data(withJSONObject: dict, options: []) else {
+            return nil
+        }
+        return try? JSONDecoder().decode(EditorSelectionSnapshot.self, from: data)
+    }
+
     func pasteText(text: String) async {
         guard let encoded = text.base64Encoded() else { return }
         _ = try? await monacoWebView.evaluateJavaScriptAsync(

@@ -21,6 +21,7 @@ struct CodeAssistantPanel: View {
     @State private var showsAttachmentPicker = false
     @State private var showsHistorySheet = false
     @State private var showsModelPicker = false
+    @State private var pendingPreview: AssistantApplyPreview?
 
     private let scrollViewID = "code-assistant-scroll"
 
@@ -57,6 +58,13 @@ struct CodeAssistantPanel: View {
         }
         .sheet(isPresented: $showsModelPicker) {
             ModelSelectionView(viewModel: viewModel)
+        }
+        .sheet(item: $pendingPreview) { preview in
+            AssistantApplyPreviewView(
+                preview: preview,
+                onCancel: { pendingPreview = nil },
+                onApply: { apply(preview: preview) }
+            )
         }
     }
 
@@ -117,7 +125,12 @@ struct CodeAssistantPanel: View {
                 } else {
                     LazyVStack(spacing: 12) {
                         ForEach(viewModel.messages) { message in
-                            MessageBubbleView(message: message)
+                            MessageBubbleView(
+                                message: message,
+                                onApply: { snippet, languageHint in
+                                    prepareApplyPreview(snippet: snippet, languageHint: languageHint)
+                                }
+                            )
                         }
                         Color.clear
                             .frame(height: 1)
@@ -128,12 +141,12 @@ struct CodeAssistantPanel: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(.systemBackground).opacity(0.001))
-            .onChange(of: viewModel.messages.count) { _ in
+            .onChange(of: viewModel.messages.count) {
                 withAnimation(.easeOut(duration: 0.3)) {
                     proxy.scrollTo(scrollViewID, anchor: .bottom)
                 }
             }
-            .onChange(of: viewModel.messages.last?.body ?? "") { _ in
+            .onChange(of: viewModel.messages.last?.body ?? "") {
                 if viewModel.isStreaming {
                     withAnimation(.easeOut(duration: 0.2)) {
                         proxy.scrollTo(scrollViewID, anchor: .bottom)
@@ -271,6 +284,114 @@ struct CodeAssistantPanel: View {
             .padding(.vertical, 12)
         }
     }
+
+    private func prepareApplyPreview(snippet: String, languageHint: String?) {
+        guard app.activeTextEditor != nil else {
+            app.notificationManager.showWarningMessage(
+                "Open a file in the editor to apply code.")
+            return
+        }
+        Task {
+            let selection = await app.monacoInstance.selectionSnapshot()
+            guard let liveFile = app.activeTextEditor else { return }
+            let liveText = await app.monacoInstance.currentModelValue() ?? liveFile.content
+            let plan = buildUpdatedText(
+                original: liveText,
+                selection: selection,
+                replacement: snippet
+            )
+            await MainActor.run {
+                pendingPreview = AssistantApplyPreview(
+                    fileURL: liveFile.url,
+                    originalText: liveText,
+                    updatedText: plan.updated,
+                    mode: plan.mode,
+                    selection: selection,
+                    languageHint: languageHint
+                )
+            }
+        }
+    }
+
+    private func apply(preview: AssistantApplyPreview) {
+        Task {
+            guard let activeFile = app.activeTextEditor else {
+                await MainActor.run { pendingPreview = nil }
+                app.notificationManager.showWarningMessage(
+                    "Open the target file before applying changes.")
+                return
+            }
+            guard activeFile.url == preview.fileURL else {
+                app.notificationManager.showWarningMessage(
+                    "Open \(preview.fileURL.lastPathComponent) to apply these changes.")
+                return
+            }
+            guard (await app.monacoInstance.currentModelValue() ?? activeFile.content)
+                == preview.originalText
+            else {
+                app.notificationManager.showWarningMessage(
+                    "The file changed after this preview was created. Re-open Apply to refresh the diff."
+                )
+                return
+            }
+            await app.monacoInstance.setValueForModel(
+                url: activeFile.url.absoluteString,
+                value: preview.updatedText
+            )
+            await MainActor.run { pendingPreview = nil }
+            let app = self.app
+            app.notificationManager.postActionNotification(
+                title: "Assistant changes applied",
+                level: .info,
+                primary: {
+                    Task {
+                        await app.monacoInstance.undo()
+                    }
+                },
+                primaryTitle: "Undo",
+                source: preview.fileURL.lastPathComponent
+            )
+        }
+    }
+
+    private func buildUpdatedText(
+        original: String,
+        selection: EditorSelectionSnapshot?,
+        replacement: String
+    ) -> (updated: String, mode: AssistantApplyMode) {
+        if let selection {
+            if let range = selectionRange(for: selection, in: original) {
+                let updated = original.replacingCharacters(in: range, with: replacement)
+                let mode: AssistantApplyMode = selection.isEmpty ? .insertAtCursor : .replaceSelection
+                return (updated, mode)
+            }
+            // Fallback: try to locate the selected text directly if offsets drifted.
+            if !selection.text.isEmpty, let textRange = original.range(of: selection.text) {
+                let updated = original.replacingCharacters(in: textRange, with: replacement)
+                let mode: AssistantApplyMode = selection.isEmpty ? .insertAtCursor : .replaceSelection
+                return (updated, mode)
+            }
+        }
+        if original.isEmpty {
+            return (replacement, .replaceDocument)
+        }
+        let separator = original.hasSuffix("\n") ? "" : "\n"
+        return (original + separator + replacement, .appendToDocument)
+    }
+
+    private func selectionRange(
+        for selection: EditorSelectionSnapshot, in text: String
+    ) -> Range<String.Index>? {
+        let lower = max(0, min(selection.startOffset, selection.endOffset))
+        let upper = min(text.utf16.count, max(selection.startOffset, selection.endOffset))
+        guard lower <= text.utf16.count, upper <= text.utf16.count else {
+            return nil
+        }
+        let startIndex = String.Index(utf16Offset: lower, in: text)
+        let endIndex = String.Index(utf16Offset: upper, in: text)
+        guard startIndex <= endIndex else { return nil }
+        return startIndex..<endIndex
+    }
 }
 
 // MARK: - Model Selection View
@@ -306,7 +427,7 @@ private struct ModelSelectionView: View {
             .onAppear {
                 syncDraftWithSelection()
             }
-            .onChange(of: viewModel.selectedProvider) { _ in
+            .onChange(of: viewModel.selectedProvider) {
                 syncDraftWithSelection()
             }
         }
@@ -433,6 +554,7 @@ private struct ModelSelectionView: View {
 
 private struct MessageBubbleView: View {
     let message: CodeAssistantViewModel.Message
+    var onApply: (String, String?) -> Void = { _, _ in }
 
     var body: some View {
         HStack {
@@ -447,7 +569,12 @@ private struct MessageBubbleView: View {
                 } else {
                     Markdown(message.body.isEmpty ? "…" : message.body)
                         .markdownBlockStyle(\.codeBlock) { configuration in
-                            CopyableCodeBlock(configuration: configuration)
+                            CopyableCodeBlock(
+                                configuration: configuration,
+                                onApply: { text in
+                                    onApply(text, configuration.language)
+                                }
+                            )
                         }
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -589,9 +716,11 @@ private struct HistoryChip: View {
 
 private struct CopyableCodeBlock: View {
     let configuration: CodeBlockConfiguration
+    var onApply: (String) -> Void = { _ in }
     @EnvironmentObject private var app: MainApp
     @State private var didCopy = false
     @State private var didInsert = false
+    @State private var didQueueApply = false
     private var plainText: String {
         configuration.content
     }
@@ -604,6 +733,16 @@ private struct CopyableCodeBlock: View {
                     .foregroundColor(.secondary)
                 Spacer()
                 Button {
+                    requestApply()
+                } label: {
+                    Label(
+                        didQueueApply ? "Ready" : "Apply",
+                        systemImage: didQueueApply ? "checkmark.circle.fill"
+                            : "doc.text.magnifyingglass")
+                        .labelStyle(.titleAndIcon)
+                }
+                .controlSize(.mini)
+                Button {
                     insertIntoActiveFile()
                 } label: {
                     Label(
@@ -611,7 +750,6 @@ private struct CopyableCodeBlock: View {
                         systemImage: didInsert ? "checkmark.circle.fill" : "arrow.down.doc")
                         .labelStyle(.titleAndIcon)
                 }
-                .buttonStyle(.bordered)
                 .controlSize(.mini)
                 Button {
                     copyToClipboard(plainText)
@@ -621,7 +759,6 @@ private struct CopyableCodeBlock: View {
                         systemImage: didCopy ? "checkmark.circle.fill" : "doc.on.doc")
                         .labelStyle(.titleAndIcon)
                 }
-                .buttonStyle(.bordered)
                 .controlSize(.mini)
             }
             .padding(.horizontal, 12)
@@ -660,6 +797,18 @@ private struct CopyableCodeBlock: View {
         }
     }
 
+    private func requestApply() {
+        onApply(plainText)
+        withAnimation(.easeInOut(duration: 0.2)) {
+            didQueueApply = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                didQueueApply = false
+            }
+        }
+    }
+
     private func insertIntoActiveFile() {
         guard app.activeTextEditor != nil else {
             app.notificationManager.showWarningMessage(
@@ -680,6 +829,242 @@ private struct CopyableCodeBlock: View {
             }
         }
     }
+}
+
+private struct AssistantApplyPreview: Identifiable {
+    let id = UUID()
+    let fileURL: URL
+    let originalText: String
+    let updatedText: String
+    let mode: AssistantApplyMode
+    let selection: EditorSelectionSnapshot?
+    let languageHint: String?
+
+    var fileName: String {
+        fileURL.lastPathComponent
+    }
+
+    var modeDescription: String {
+        switch mode {
+        case .replaceSelection:
+            if let selection {
+                return "Replace selected text (L\(selection.startLine):C\(selection.startColumn) to L\(selection.endLine):C\(selection.endColumn))"
+            }
+            return "Replace selected text"
+        case .insertAtCursor:
+            if let selection {
+                return "Insert at line \(selection.startLine), column \(selection.startColumn)"
+            }
+            return "Insert at cursor"
+        case .replaceDocument:
+            return "Replace entire file"
+        case .appendToDocument:
+            return "Append to current file"
+        }
+    }
+}
+
+private enum AssistantApplyMode {
+    case replaceSelection
+    case insertAtCursor
+    case replaceDocument
+    case appendToDocument
+}
+
+private struct AssistantApplyPreviewView: View {
+    let preview: AssistantApplyPreview
+    var onCancel: () -> Void
+    var onApply: () -> Void
+
+    private var diffLines: [DiffLine] {
+        lineDiff(original: preview.originalText, updated: preview.updatedText)
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Label(preview.fileName, systemImage: "doc.text")
+                        .font(.headline)
+                    Text(preview.modeDescription)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    if let selection = preview.selection {
+                        Text("Selection: L\(selection.startLine):C\(selection.startColumn) → L\(selection.endLine):C\(selection.endColumn)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    if let language = preview.languageHint {
+                        Text(language.uppercased())
+                            .font(.caption.monospaced())
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                if diffLines.isEmpty {
+                    VStack(spacing: 8) {
+                        Image(systemName: "checkmark.seal")
+                            .font(.largeTitle)
+                            .foregroundStyle(.secondary)
+                        Text("No changes detected")
+                            .font(.headline)
+                        Text("The assistant output matches the current file.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    Divider()
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 4) {
+                            ForEach(diffLines) { line in
+                                DiffLineView(line: line)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+            }
+            .padding()
+            .navigationTitle("Preview Changes")
+            .toolbar(content: {
+                SwiftUI.ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", action: onCancel)
+                }
+                SwiftUI.ToolbarItem(placement: .confirmationAction) {
+                    Button("Apply", action: onApply)
+                        .bold()
+                }
+            })
+        }
+    }
+}
+
+private struct DiffLine: Identifiable {
+    enum ChangeType {
+        case added
+        case removed
+        case unchanged
+    }
+
+    let id = UUID()
+    let type: ChangeType
+    let content: String
+    let oldIndex: Int?
+    let newIndex: Int?
+}
+
+private struct DiffLineView: View {
+    let line: DiffLine
+
+    private var indicator: String {
+        switch line.type {
+        case .added:
+            return "+"
+        case .removed:
+            return "−"
+        case .unchanged:
+            return " "
+        }
+    }
+
+    private var tint: Color {
+        switch line.type {
+        case .added:
+            return .green
+        case .removed:
+            return .red
+        case .unchanged:
+            return Color.secondary
+        }
+    }
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(line.oldIndex.map { String($0 + 1) } ?? "")
+                .foregroundStyle(.secondary)
+                .font(.caption2.monospaced())
+                .frame(width: 42, alignment: .trailing)
+            Text(line.newIndex.map { String($0 + 1) } ?? "")
+                .foregroundStyle(.secondary)
+                .font(.caption2.monospaced())
+                .frame(width: 42, alignment: .trailing)
+            Text(indicator)
+                .font(.caption.bold())
+                .foregroundColor(tint)
+                .frame(width: 12, alignment: .leading)
+            Text(line.content)
+                .font(.caption.monospaced())
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.vertical, 4)
+        .padding(.horizontal, 8)
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(tint.opacity(line.type == .unchanged ? 0.04 : 0.15))
+        )
+    }
+}
+
+private func lineDiff(original: String, updated: String) -> [DiffLine] {
+    // Lightweight LCS-based line diff for preview rendering.
+    let oldLines = original.components(separatedBy: .newlines)
+    let newLines = updated.components(separatedBy: .newlines)
+    let m = oldLines.count
+    let n = newLines.count
+
+    var lcs = Array(repeating: Array(repeating: 0, count: n + 1), count: m + 1)
+    for i in 0..<m {
+        for j in 0..<n {
+            if oldLines[i] == newLines[j] {
+                lcs[i + 1][j + 1] = lcs[i][j] + 1
+            } else {
+                lcs[i + 1][j + 1] = max(lcs[i][j + 1], lcs[i + 1][j])
+            }
+        }
+    }
+
+    var i = m
+    var j = n
+    var diffs: [DiffLine] = []
+
+    while i > 0 || j > 0 {
+        if i > 0 && j > 0 && oldLines[i - 1] == newLines[j - 1] {
+            diffs.append(
+                DiffLine(
+                    type: .unchanged,
+                    content: oldLines[i - 1],
+                    oldIndex: i - 1,
+                    newIndex: j - 1
+                )
+            )
+            i -= 1
+            j -= 1
+        } else if j > 0 && (i == 0 || lcs[i][j - 1] >= lcs[i - 1][j]) {
+            diffs.append(
+                DiffLine(
+                    type: .added,
+                    content: newLines[j - 1],
+                    oldIndex: nil,
+                    newIndex: j - 1
+                )
+            )
+            j -= 1
+        } else if i > 0 {
+            diffs.append(
+                DiffLine(
+                    type: .removed,
+                    content: oldLines[i - 1],
+                    oldIndex: i - 1,
+                    newIndex: nil
+                )
+            )
+            i -= 1
+        }
+    }
+
+    return diffs.reversed()
 }
 
 private struct AttachmentPickerView: View {

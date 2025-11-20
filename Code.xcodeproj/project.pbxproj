@@ -17,6 +17,17 @@
 		429FBC782EC2711500E8AD97 /* CodeAssistantConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC712EC2711500E8AD97 /* CodeAssistantConfiguration.swift */; };
 		429FBC792EC2711500E8AD97 /* CodeAssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC732EC2711500E8AD97 /* CodeAssistantViewModel.swift */; };
 		429FBC7A2EC2711500E8AD97 /* CodeAssistantPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429FBC722EC2711500E8AD97 /* CodeAssistantPanel.swift */; };
+		42DFBA4A2EC37158009D2E88 /* MLXEmbedders in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA492EC37158009D2E88 /* MLXEmbedders */; };
+		42DFBA4C2EC37158009D2E88 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA4B2EC37158009D2E88 /* MLXLLM */; };
+		42DFBA4E2EC37158009D2E88 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA4D2EC37158009D2E88 /* MLXLMCommon */; };
+		42DFBA502EC37158009D2E88 /* MLXMNIST in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA4F2EC37158009D2E88 /* MLXMNIST */; };
+		42DFBA522EC37158009D2E88 /* MLXVLM in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA512EC37158009D2E88 /* MLXVLM */; };
+		42DFBA542EC37173009D2E88 /* MLXEmbedders in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA532EC37173009D2E88 /* MLXEmbedders */; };
+		42DFBA562EC37173009D2E88 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA552EC37173009D2E88 /* MLXLLM */; };
+		42DFBA582EC37173009D2E88 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA572EC37173009D2E88 /* MLXLMCommon */; };
+		42DFBA5A2EC37173009D2E88 /* MLXMNIST in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA592EC37173009D2E88 /* MLXMNIST */; };
+		42DFBA5C2EC37173009D2E88 /* MLXVLM in Frameworks */ = {isa = PBXBuildFile; productRef = 42DFBA5B2EC37173009D2E88 /* MLXVLM */; };
+		42E100162F6C2C9800E2F8BC /* inline-completions.js in Resources */ = {isa = PBXBuildFile; fileRef = 42E101162F6C2C9800E2F8BC /* inline-completions.js */; };
 		42F204F82EC2154300FCE150 /* AIAssistantExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F204F72EC2154300FCE150 /* AIAssistantExtension.swift */; };
 		42F204F92EC2154300FCE150 /* AIAssistantExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F204F72EC2154300FCE150 /* AIAssistantExtension.swift */; };
 		940C68252C646E0400089EA3 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940C68242C646E0400089EA3 /* System.swift */; };
@@ -1417,6 +1428,7 @@
 		429FBC712EC2711500E8AD97 /* CodeAssistantConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAssistantConfiguration.swift; sourceTree = "<group>"; };
 		429FBC722EC2711500E8AD97 /* CodeAssistantPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAssistantPanel.swift; sourceTree = "<group>"; };
 		429FBC732EC2711500E8AD97 /* CodeAssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAssistantViewModel.swift; sourceTree = "<group>"; };
+		42E101162F6C2C9800E2F8BC /* inline-completions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "inline-completions.js"; sourceTree = "<group>"; };
 		42F204F72EC2154300FCE150 /* AIAssistantExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAssistantExtension.swift; sourceTree = "<group>"; };
 		4F30816829662CBF002708FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F30816929662D58002708FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2059,6 +2071,7 @@
 				947BBC8E2C12ED7E00FFD0C5 /* TreeSitterOCamlRunestone in Frameworks */,
 				94196991280316C7008AAEB2 /* ios_system.xcframework in Frameworks */,
 				946DABA82BBD997800E73257 /* TreeSitterCRunestone in Frameworks */,
+				42DFBA5A2EC37173009D2E88 /* MLXMNIST in Frameworks */,
 				947BBC782C12ED7D00FFD0C5 /* TreeSitterHaskellRunestone in Frameworks */,
 				947BBC7C2C12ED7E00FFD0C5 /* TreeSitterJavaRunestone in Frameworks */,
 				947BBC762C12ED7D00FFD0C5 /* TreeSitterGoRunestone in Frameworks */,
@@ -2078,6 +2091,7 @@
 				947BBC942C12ED7E00FFD0C5 /* TreeSitterRegexRunestone in Frameworks */,
 				427875532EC2145900474F8E /* MarkdownUI in Frameworks */,
 				947BBC702C12ED7D00FFD0C5 /* TreeSitterCSSRunestone in Frameworks */,
+				42DFBA562EC37173009D2E88 /* MLXLLM in Frameworks */,
 				947BBC6A2C12ED7D00FFD0C5 /* TreeSitterBashRunestone in Frameworks */,
 				947BBC882C12ED7E00FFD0C5 /* TreeSitterLuaRunestone in Frameworks */,
 				947BBC9A2C12ED7E00FFD0C5 /* TreeSitterRustRunestone in Frameworks */,
@@ -2085,6 +2099,7 @@
 				947BBC722C12ED7D00FFD0C5 /* TreeSitterElixirRunestone in Frameworks */,
 				947BBC982C12ED7E00FFD0C5 /* TreeSitterRubyRunestone in Frameworks */,
 				947BBCB42C12EE4700FFD0C5 /* TreeSitterJSON5Runestone in Frameworks */,
+				42DFBA582EC37173009D2E88 /* MLXLMCommon in Frameworks */,
 				947BBC822C12ED7E00FFD0C5 /* TreeSitterJSONRunestone in Frameworks */,
 				946DABA42BBD98BB00E73257 /* TreeSitterPythonRunestone in Frameworks */,
 				947BBC6E2C12ED7D00FFD0C5 /* TreeSitterCSharpRunestone in Frameworks */,
@@ -2092,8 +2107,10 @@
 				947BBC922C12ED7E00FFD0C5 /* TreeSitterPHPRunestone in Frameworks */,
 				947BBC842C12ED7E00FFD0C5 /* TreeSitterJuliaRunestone in Frameworks */,
 				94196995280316C7008AAEB2 /* Dynamic in Frameworks */,
+				42DFBA542EC37173009D2E88 /* MLXEmbedders in Frameworks */,
 				94196998280316C7008AAEB2 /* SwiftGit2 in Frameworks */,
 				947BBC7A2C12ED7D00FFD0C5 /* TreeSitterHTMLRunestone in Frameworks */,
+				42DFBA5C2EC37173009D2E88 /* MLXVLM in Frameworks */,
 				947BBC9E2C12ED7E00FFD0C5 /* TreeSitterSQLRunestone in Frameworks */,
 				947BBCAA2C12ED7E00FFD0C5 /* TreeSitterYAMLRunestone in Frameworks */,
 				94465DDC28094920001DACDF /* NMSSH.xcframework in Frameworks */,
@@ -2119,7 +2136,9 @@
 				94A7781C257BC452008FE7B2 /* ZIPFoundation in Frameworks */,
 				947BBCC42C12F5A100FFD0C5 /* TreeSitterGoRunestone in Frameworks */,
 				946DABAE2BBDADFE00E73257 /* TreeSitterJavaScriptRunestone in Frameworks */,
+				42DFBA4E2EC37158009D2E88 /* MLXLMCommon in Frameworks */,
 				947BBCBA2C12F59F00FFD0C5 /* TreeSitterCommentRunestone in Frameworks */,
+				42DFBA522EC37158009D2E88 /* MLXVLM in Frameworks */,
 				947BBCCC2C12F5A300FFD0C5 /* TreeSitterJSDocRunestone in Frameworks */,
 				946DABB02BBDADFF00E73257 /* TreeSitterPythonRunestone in Frameworks */,
 				947BBCC62C12F5A200FFD0C5 /* TreeSitterHaskellRunestone in Frameworks */,
@@ -2133,6 +2152,8 @@
 				947BBCE82C12F5A700FFD0C5 /* TreeSitterRustRunestone in Frameworks */,
 				947BBCE62C12F5A700FFD0C5 /* TreeSitterRubyRunestone in Frameworks */,
 				947BBCF82C12F5AA00FFD0C5 /* TreeSitterYAMLRunestone in Frameworks */,
+				42DFBA4C2EC37158009D2E88 /* MLXLLM in Frameworks */,
+				42DFBA4A2EC37158009D2E88 /* MLXEmbedders in Frameworks */,
 				948F174826B6A5AB00B277FC /* MarkdownView in Frameworks */,
 				947BBCB82C12F59F00FFD0C5 /* TreeSitterBashRunestone in Frameworks */,
 				427875512EC2143F00474F8E /* AIProxy in Frameworks */,
@@ -2146,6 +2167,7 @@
 				947BBCD02C12F5A300FFD0C5 /* TreeSitterJSONRunestone in Frameworks */,
 				947BBCE02C12F5A600FFD0C5 /* TreeSitterPHPRunestone in Frameworks */,
 				946DABAA2BBDADFC00E73257 /* TreeSitterCPPRunestone in Frameworks */,
+				42DFBA502EC37158009D2E88 /* MLXMNIST in Frameworks */,
 				94A7418C25F74A85007A9728 /* Dynamic in Frameworks */,
 				946DABAC2BBDADFD00E73257 /* TreeSitterCRunestone in Frameworks */,
 				947BBCC22C12F5A100FFD0C5 /* TreeSitterElmRunestone in Frameworks */,
@@ -2501,6 +2523,7 @@
 			isa = PBXGroup;
 			children = (
 				94EF4FDB2C6DF80700994D9C /* monaco-textmate.bundle */,
+				42E101162F6C2C9800E2F8BC /* inline-completions.js */,
 				94EF4FD92C6DF6A900994D9C /* python-lsp */,
 				9424437D2C6E337B00BC862F /* java-lsp */,
 				945D4DFE2B4B171200DE0DBA /* Java */,
@@ -3328,6 +3351,11 @@
 				947BBCB32C12EE4700FFD0C5 /* TreeSitterJSON5Runestone */,
 				427875522EC2145900474F8E /* MarkdownUI */,
 				427875542EC2145F00474F8E /* AIProxy */,
+				42DFBA532EC37173009D2E88 /* MLXEmbedders */,
+				42DFBA552EC37173009D2E88 /* MLXLLM */,
+				42DFBA572EC37173009D2E88 /* MLXLMCommon */,
+				42DFBA592EC37173009D2E88 /* MLXMNIST */,
+				42DFBA5B2EC37173009D2E88 /* MLXVLM */,
 			);
 			productName = testfield;
 			productReference = 94196B18280316C7008AAEB2 /* CodeUI.app */;
@@ -3418,6 +3446,11 @@
 				947BBCF72C12F5AA00FFD0C5 /* TreeSitterYAMLRunestone */,
 				4278754D2EC2141900474F8E /* MarkdownUI */,
 				427875502EC2143F00474F8E /* AIProxy */,
+				42DFBA492EC37158009D2E88 /* MLXEmbedders */,
+				42DFBA4B2EC37158009D2E88 /* MLXLLM */,
+				42DFBA4D2EC37158009D2E88 /* MLXLMCommon */,
+				42DFBA4F2EC37158009D2E88 /* MLXMNIST */,
+				42DFBA512EC37158009D2E88 /* MLXVLM */,
 			);
 			productName = testfield;
 			productReference = 944EEBF02563C381009D77FE /* Code.app */;
@@ -3502,6 +3535,7 @@
 				94F88FD72C5B4F3400326AD0 /* XCLocalSwiftPackageReference "SwiftWS" */,
 				4278754C2EC2141900474F8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				4278754F2EC2143F00474F8E /* XCRemoteSwiftPackageReference "aiproxyswift" */,
+				42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */,
 			);
 			productRefGroup = 944EEBF12563C381009D77FE /* Products */;
 			projectDirPath = "";
@@ -3532,6 +3566,7 @@
 				941969A2280316C7008AAEB2 /* Settings.bundle in Resources */,
 				947515E42E7E886A00822B33 /* Iconv2.icon in Resources */,
 				941969A3280316C7008AAEB2 /* extraCommandsDictionary.plist in Resources */,
+				42E100162F6C2C9800E2F8BC /* inline-completions.js in Resources */,
 				941969A4280316C7008AAEB2 /* npm.bundle in Resources */,
 				941969A6280316C7008AAEB2 /* terminal.bundle in Resources */,
 				941969A7280316C7008AAEB2 /* LaunchScreen.storyboard in Resources */,
@@ -4087,7 +4122,7 @@
 					"$(PROJECT_DIR)/Resources/Java/java-frameworks",
 				);
 				INFOPLIST_FILE = CodeUI.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4134,7 +4169,7 @@
 				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = CodeUI.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4563,6 +4598,14 @@
 				minimumVersion = 0.130.0;
 			};
 		};
+		42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift-examples/";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		94196932280316C7008AAEB2 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
@@ -4673,6 +4716,56 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4278754F2EC2143F00474F8E /* XCRemoteSwiftPackageReference "aiproxyswift" */;
 			productName = AIProxy;
+		};
+		42DFBA492EC37158009D2E88 /* MLXEmbedders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXEmbedders;
+		};
+		42DFBA4B2EC37158009D2E88 /* MLXLLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXLLM;
+		};
+		42DFBA4D2EC37158009D2E88 /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXLMCommon;
+		};
+		42DFBA4F2EC37158009D2E88 /* MLXMNIST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXMNIST;
+		};
+		42DFBA512EC37158009D2E88 /* MLXVLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXVLM;
+		};
+		42DFBA532EC37173009D2E88 /* MLXEmbedders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXEmbedders;
+		};
+		42DFBA552EC37173009D2E88 /* MLXLLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXLLM;
+		};
+		42DFBA572EC37173009D2E88 /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXLMCommon;
+		};
+		42DFBA592EC37173009D2E88 /* MLXMNIST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXMNIST;
+		};
+		42DFBA5B2EC37173009D2E88 /* MLXVLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42DFBA482EC37158009D2E88 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXVLM;
 		};
 		94196931280316C7008AAEB2 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;

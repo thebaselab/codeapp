@@ -74,6 +74,20 @@ struct MonacoResource: Decodable {
     var path: String
 }
 
+struct EditorSelectionSnapshot: Codable {
+    let text: String
+    let startOffset: Int
+    let endOffset: Int
+    let startLine: Int
+    let startColumn: Int
+    let endLine: Int
+    let endColumn: Int
+
+    var isEmpty: Bool {
+        startOffset == endOffset
+    }
+}
+
 protocol EditorImplementationDelegate: AnyObject {
     func didEnterFocus()
     func didFinishInitialising()
@@ -123,6 +137,8 @@ protocol EditorImplementation: AnyObject {
     func undo() async
     func redo() async
     func getSelectedValue() async -> String
+    func selectionSnapshot() async -> EditorSelectionSnapshot?
+    func currentModelValue() async -> String?
     func pasteText(text: String) async
     func insertTextAtCurrentCursor(text: String) async
     func moveCursor(direction: CursorDirection) async
