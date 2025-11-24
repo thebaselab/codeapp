@@ -359,6 +359,7 @@ struct CodeAssistantPanel: View {
         selection: EditorSelectionSnapshot?,
         replacement: String
     ) -> (updated: String, mode: AssistantApplyMode) {
+        // Strategy 1: Use explicit selection if available
         if let selection {
             if let range = selectionRange(for: selection, in: original) {
                 let updated = original.replacingCharacters(in: range, with: replacement)
@@ -372,9 +373,34 @@ struct CodeAssistantPanel: View {
                 return (updated, mode)
             }
         }
+
+        // Strategy 2: Try to find similar code block in the original file
+        // This uses line-by-line similarity matching to locate where the code should be applied
+        if let matchRange = findBestMatch(replacement: replacement, in: original, fuzzy: false) {
+            let updated = original.replacingCharacters(in: matchRange, with: replacement)
+            return (updated, .replaceMatchedCode)
+        }
+
+        // Strategy 3: Try fuzzy matching with normalized whitespace
+        // This handles cases where indentation or spacing differs
+        if let matchRange = findBestMatch(replacement: replacement, in: original, fuzzy: true) {
+            let updated = original.replacingCharacters(in: matchRange, with: replacement)
+            return (updated, .replaceMatchedCode)
+        }
+
+        // Strategy 4: Try to find longest common subsequence
+        // This helps when the AI is updating existing code by finding the most similar section
+        if let matchRange = findSimilarCodeBlock(replacement: replacement, in: original) {
+            let updated = original.replacingCharacters(in: matchRange, with: replacement)
+            return (updated, .replaceMatchedCode)
+        }
+
+        // Strategy 5: Empty document - replace entire content
         if original.isEmpty {
             return (replacement, .replaceDocument)
         }
+
+        // Strategy 6: Fallback - append to document
         let separator = original.hasSuffix("\n") ? "" : "\n"
         return (original + separator + replacement, .appendToDocument)
     }
@@ -391,6 +417,195 @@ struct CodeAssistantPanel: View {
         let endIndex = String.Index(utf16Offset: upper, in: text)
         guard startIndex <= endIndex else { return nil }
         return startIndex..<endIndex
+    }
+
+    /// Finds the best match for the replacement code in the original text
+    /// Returns the range to replace, or nil if no suitable match is found
+    private func findBestMatch(
+        replacement: String,
+        in original: String,
+        fuzzy: Bool
+    ) -> Range<String.Index>? {
+        // Don't try to match if replacement is too short or too long
+        let replacementLines = replacement.components(separatedBy: .newlines)
+        let originalLines = original.components(separatedBy: .newlines)
+
+        guard replacementLines.count > 0 && replacementLines.count <= originalLines.count else {
+            return nil
+        }
+
+        // For fuzzy matching, normalize whitespace
+        let normalize: (String) -> String = { text in
+            fuzzy ? text.trimmingCharacters(in: .whitespacesAndNewlines)
+                .components(separatedBy: .whitespacesAndNewlines)
+                .filter { !$0.isEmpty }
+                .joined(separator: " ")
+            : text
+        }
+
+        // Try to find a sequence of lines that match
+        let normalizedReplacementLines = replacementLines.map(normalize)
+        let normalizedOriginalLines = originalLines.map(normalize)
+
+        // Search for best matching subsequence using sliding window
+        var bestMatchRange: Range<Int>?
+        var bestMatchScore = 0
+
+        let windowSize = replacementLines.count
+        for i in 0...(originalLines.count - windowSize) {
+            let windowEnd = i + windowSize
+            let windowLines = Array(normalizedOriginalLines[i..<windowEnd])
+
+            // Calculate match score (number of matching lines)
+            var matchScore = 0
+            for (index, replacementLine) in normalizedReplacementLines.enumerated() {
+                if windowLines[index] == replacementLine {
+                    matchScore += 1
+                }
+            }
+
+            // For fuzzy matching, we accept partial matches (>50%)
+            // For exact matching, we need 100% match
+            let threshold = fuzzy ? (windowSize / 2) : windowSize
+            if matchScore >= threshold && matchScore > bestMatchScore {
+                bestMatchScore = matchScore
+                bestMatchRange = i..<windowEnd
+            }
+        }
+
+        guard let matchRange = bestMatchRange else {
+            return nil
+        }
+
+        // Convert line range to character range
+        return lineRangeToCharacterRange(
+            lineStart: matchRange.lowerBound,
+            lineEnd: matchRange.upperBound,
+            in: original
+        )
+    }
+
+    /// Converts a line range to a character range in the original text
+    private func lineRangeToCharacterRange(
+        lineStart: Int,
+        lineEnd: Int,
+        in text: String
+    ) -> Range<String.Index>? {
+        let lines = text.components(separatedBy: .newlines)
+        guard lineStart >= 0 && lineEnd <= lines.count else {
+            return nil
+        }
+
+        // Calculate character offset for start line
+        var startOffset = 0
+        for i in 0..<lineStart {
+            startOffset += lines[i].count + 1 // +1 for newline
+        }
+
+        // Calculate character offset for end line
+        var endOffset = startOffset
+        for i in lineStart..<lineEnd {
+            endOffset += lines[i].count
+            if i < lineEnd - 1 {
+                endOffset += 1 // +1 for newline between lines
+            }
+        }
+
+        // Include trailing newline if present
+        if lineEnd < lines.count {
+            endOffset += 1
+        }
+
+        guard startOffset <= text.count && endOffset <= text.count else {
+            return nil
+        }
+
+        let startIndex = text.index(text.startIndex, offsetBy: startOffset)
+        let endIndex = text.index(text.startIndex, offsetBy: endOffset)
+
+        return startIndex..<endIndex
+    }
+
+    /// Finds the most similar code block in the original text using similarity scoring
+    /// This helps when the AI is suggesting modifications to existing code
+    private func findSimilarCodeBlock(
+        replacement: String,
+        in original: String
+    ) -> Range<String.Index>? {
+        let replacementLines = replacement.components(separatedBy: .newlines)
+            .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+        let originalLines = original.components(separatedBy: .newlines)
+
+        // Don't try if replacement is too short or way too long
+        guard replacementLines.count >= 2 && replacementLines.count <= originalLines.count else {
+            return nil
+        }
+
+        var bestMatchRange: Range<Int>?
+        var bestSimilarity: Double = 0.0
+        let minSimilarity: Double = 0.4 // Require at least 40% similarity
+
+        // Slide a window through the original to find the most similar section
+        let windowSize = replacementLines.count
+        for i in 0...(originalLines.count - windowSize) {
+            let windowEnd = i + windowSize
+            let windowLines = Array(originalLines[i..<windowEnd])
+                .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+
+            // Calculate similarity between this window and the replacement
+            let similarity = calculateSimilarity(
+                lines1: windowLines,
+                lines2: replacementLines
+            )
+
+            if similarity > bestSimilarity && similarity >= minSimilarity {
+                bestSimilarity = similarity
+                bestMatchRange = i..<windowEnd
+            }
+        }
+
+        guard let matchRange = bestMatchRange else {
+            return nil
+        }
+
+        return lineRangeToCharacterRange(
+            lineStart: matchRange.lowerBound,
+            lineEnd: matchRange.upperBound,
+            in: original
+        )
+    }
+
+    /// Calculates similarity between two sets of code lines (0.0 to 1.0)
+    private func calculateSimilarity(lines1: [String], lines2: [String]) -> Double {
+        guard lines1.count == lines2.count, lines1.count > 0 else {
+            return 0.0
+        }
+
+        var totalSimilarity = 0.0
+
+        for (line1, line2) in zip(lines1, lines2) {
+            // Normalize by removing all whitespace for comparison
+            let normalized1 = line1.components(separatedBy: .whitespacesAndNewlines)
+                .joined()
+            let normalized2 = line2.components(separatedBy: .whitespacesAndNewlines)
+                .joined()
+
+            // Calculate character-level similarity
+            if normalized1 == normalized2 {
+                totalSimilarity += 1.0
+            } else if !normalized1.isEmpty && !normalized2.isEmpty {
+                // Use simple character overlap as similarity metric
+                let chars1 = Set(normalized1)
+                let chars2 = Set(normalized2)
+                let intersection = chars1.intersection(chars2).count
+                let union = chars1.union(chars2).count
+                if union > 0 {
+                    totalSimilarity += Double(intersection) / Double(union)
+                }
+            }
+        }
+
+        return totalSimilarity / Double(lines1.count)
     }
 }
 
@@ -860,6 +1075,8 @@ private struct AssistantApplyPreview: Identifiable {
             return "Replace entire file"
         case .appendToDocument:
             return "Append to current file"
+        case .replaceMatchedCode:
+            return "Replace matched code in file"
         }
     }
 }
@@ -869,6 +1086,7 @@ private enum AssistantApplyMode {
     case insertAtCursor
     case replaceDocument
     case appendToDocument
+    case replaceMatchedCode  // AI-matched code replacement
 }
 
 private struct AssistantApplyPreviewView: View {
