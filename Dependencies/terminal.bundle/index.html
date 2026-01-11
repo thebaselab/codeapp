@@ -154,6 +154,145 @@
       localEcho.addAutocompleteHandler(autocompleteCommonCommands);
       localEcho.addAutocompleteHandler(autocompleteCommonFiles);
 
+      var controlActive = false;
+      var controlGeneration = 0;
+      var altActive = false;
+      var altGeneration = 0;
+
+      function setControlActive(active, generation) {
+        controlActive = active;
+        controlGeneration = generation;
+      }
+
+      function setAltActive(active, generation) {
+        altActive = active;
+        altGeneration = generation;
+      }
+
+      function shouldApplyModifierToCsi(final, params) {
+        if (final >= "A" && final <= "D") {
+          return true;
+        }
+        if (final === "F" || final === "H") {
+          return true;
+        }
+        if (final === "~") {
+          var primaryParam = params.split(";")[0];
+          var keycode = parseInt(primaryParam, 10);
+          if (isNaN(keycode)) {
+            return false;
+          }
+          return keycode !== 200 && keycode !== 201;
+        }
+        return false;
+      }
+
+      function applyModifierToEscapeSequence(data, wasControlActive, wasAltActive) {
+        var modifier = 1 + (wasAltActive ? 2 : 0) + (wasControlActive ? 4 : 0);
+
+        // CSI sequences (ESC [ ...).
+        var csiMatch = data.match(/^\x1b\[([0-9;]*)([@-~])$/);
+        if (csiMatch) {
+          var params = csiMatch[1];
+          var final = csiMatch[2];
+
+          if (!shouldApplyModifierToCsi(final, params)) {
+            return data;
+          }
+
+          var parts = params.length ? params.split(";") : [];
+          if (parts.length === 0) {
+            parts = ["1", String(modifier)];
+          } else if (parts.length === 1) {
+            parts.push(String(modifier));
+          } else {
+            var lastIndex = parts.length - 1;
+            var existing = parseInt(parts[lastIndex], 10);
+            if (!isNaN(existing)) {
+              var modBits = Math.max(existing, 1) - 1;
+              if (wasAltActive) {
+                modBits |= 2;
+              }
+              if (wasControlActive) {
+                modBits |= 4;
+              }
+              parts[lastIndex] = String(modBits + 1);
+            } else {
+              parts.push(String(modifier));
+            }
+          }
+
+          return "\x1b[" + parts.join(";") + final;
+        }
+
+        // SS3 sequences (ESC O ...).
+        var ss3Match = data.match(/^\x1bO([A-Za-z])$/);
+        if (ss3Match) {
+          var final = ss3Match[1];
+          if (
+            (final >= "A" && final <= "D") ||
+            final === "F" ||
+            final === "H" ||
+            (final >= "P" && final <= "S")
+          ) {
+            return "\x1b[1;" + String(modifier) + final;
+          }
+        }
+
+        return data;
+      }
+
+      function applyModifierStates(data) {
+        // Capture which modifiers are active before resetting
+        var wasControlActive = controlActive;
+        var wasAltActive = altActive;
+
+        if (!wasControlActive && !wasAltActive) {
+          return data;
+        }
+
+        // Reset all active modifiers and notify Swift
+        if (wasControlActive) {
+          controlActive = false;
+          window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
+            Event: "ControlReset",
+            Generation: controlGeneration,
+          });
+        }
+        if (wasAltActive) {
+          altActive = false;
+          window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
+            Event: "AltReset",
+            Generation: altGeneration,
+          });
+        }
+
+        var result = data;
+
+        if (data.length === 1) {
+          // Apply Control: convert to control character (A-Z, @, [, \, ], ^, _)
+          if (wasControlActive) {
+            const code = result.toUpperCase().charCodeAt(0);
+            if (code >= 0x40 && code <= 0x5f) {
+              result = String.fromCharCode(code & 0x1f);
+            }
+          }
+
+          // Apply Alt: prepend ESC (meta key behavior)
+          if (wasAltActive) {
+            result = "\x1b" + result;
+          }
+        } else if (data.charCodeAt(0) === 0x1b) {
+          result = applyModifierToEscapeSequence(
+            data,
+            wasControlActive,
+            wasAltActive
+          );
+        }
+
+        return result;
+      }
+
       function startInteractive() {
         localEcho.detach();
       }
@@ -163,6 +302,7 @@
       }
 
       term.onData((data) => {
+        data = applyModifierStates(data);
         window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
           Event: "Data",
           Input: data,

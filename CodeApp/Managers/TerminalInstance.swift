@@ -233,6 +233,20 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 if let input = result["Input"] as? String {
                     ts.write(data: "\(input)".data(using: .utf8)!)
                 }
+            case "ControlReset":
+                let generation = result["Generation"] as? Int ?? 0
+                NotificationCenter.default.post(
+                    name: .terminalControlReset,
+                    object: self,
+                    userInfo: ["generation": generation]
+                )
+            case "AltReset":
+                let generation = result["Generation"] as? Int ?? 0
+                NotificationCenter.default.post(
+                    name: .terminalAltReset,
+                    object: self,
+                    userInfo: ["generation": generation]
+                )
             default:
                 return
             }
@@ -499,4 +513,17 @@ extension TerminalInstance {
     func moveCursor(codeSequence: String) {
         executeScript("term.input(String.fromCharCode(0x1b)+'\(codeSequence)')")
     }
+
+    func setControlActive(_ active: Bool, generation: Int) {
+        executeScript("setControlActive(\(active), \(generation))")
+    }
+
+    func setAltActive(_ active: Bool, generation: Int) {
+        executeScript("setAltActive(\(active), \(generation))")
+    }
+}
+
+extension Notification.Name {
+    static let terminalControlReset = Notification.Name("terminalControlReset")
+    static let terminalAltReset = Notification.Name("terminalAltReset")
 }
