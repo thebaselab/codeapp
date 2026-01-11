@@ -321,15 +321,37 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 self.readLine()
             case let x where x.hasPrefix("history"):
                 let args = x.components(separatedBy: " ")
-                if args.count == 2 && args[1] == "-c" {
-                    // Clear command history stored in local-echo.js
+                if args.count == 1 {
+                    // Display history with index in 2 tabbed columns (like ZSH)
+                    // Format: index\t\tcommand
+                    let script = """
+                        var historyEntries = localEcho.history.entries;
+                        if (historyEntries.length === 0) {
+                            localEcho.println('');
+                        } else {
+                            for (var i = 0; i < historyEntries.length; i++) {
+                                localEcho.println((i + 1) + '\\t\\t' + historyEntries[i]);
+                            }
+                        }
+                    """
+                    executeScript(script)
+                    self.readLine()
+                } else if args.count == 2 && args[1] == "-p" {
+                    // Clear command history stored in local-echo.js (ZSH behavior)
                     // This accesses the HistoryController instance (localEcho.history)
                     // to reset both the entries array and cursor position
                     executeScript("localEcho.history.entries = []; localEcho.history.cursor = 0;")
                     self.readLine()
+                } else if args.count == 2 && (args[1] == "-h" || args[1] == "--help") {
+                    // Display usage information
+                    let usageMessage = "Usage: history [option]\\nOptions:\\n  (no option)  Display command history with index\\n  -p           Clear command history\\n  -h, --help   Display this help message"
+                    executeScript("localEcho.println(`\(usageMessage)`);")
+                    self.readLine()
                 } else {
-                    // Display history - pass to ios_system for default behavior
-                    fallthrough
+                    // Invalid argument - show usage guidance
+                    let errorMessage = "history: invalid option\\nTry 'history --help' for more information."
+                    executeScript("localEcho.println(`\(errorMessage)`);")
+                    self.readLine()
                 }
             default:
                 let command = result["Input"] as! String
