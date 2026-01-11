@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.11.0 (2025 年 10 月)**
+##### **v1.11.0 (2026 年 1 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -22,7 +22,9 @@
 ";
 
 "Changelog.message" =
-"
+"### 1.11.0 (2026 年 1 月)
+- 采用 Liquid Glass 用户界面
+
 ### 1.10.4 (2025 年 9 月)
 - 修复了 diff 编辑器相关的错误
 

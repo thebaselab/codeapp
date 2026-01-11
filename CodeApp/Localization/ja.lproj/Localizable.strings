@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.11.0 (2025年10月)**
+##### **v1.11.0 (2026 年 1 月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -22,7 +22,9 @@
 ";
 
 "Changelog.message" =
-"
+"### 1.11.0 (2026 年 1 月)
+- Liquid Glass UI の採用
+
 ### 1.10.4 (2025 年 9 月)
 - diff エディターに関するバグ修正
 

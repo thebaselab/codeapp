@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.11.0 (Октябрь 2025)**
+##### **v1.11.0 (Январь 2026)**
 #### Начало
 [Новый файл](https://thebaselab.com/code/newfile)
 [Открыть файл](https://thebaselab.com/code/openfile)
@@ -22,7 +22,9 @@
 ";
 
 "Changelog.message" =
-"
+"### 1.11.0 (Январь 2026)
+- Принята Liquid Glass UI
+
 ### 1.10.4 (Сентябрь 2025)
 - Исправлены ошибки, связанные с редактором различий
 

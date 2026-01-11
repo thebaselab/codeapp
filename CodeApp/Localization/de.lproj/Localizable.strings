@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.11.0 (Oktober 2025)**
+##### **v1.11.0 (Januar 2026)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -22,7 +22,9 @@
 ";
 
 "Changelog.message" =
-"
+"### 1.11.0 (Januar 2026)
+- Liquid Glass-Benutzeroberfläche übernommen
+
 ### 1.10.4 (September 2025)
 - Fehlerbehebungen im Zusammenhang mit dem Diff-Editor
 
