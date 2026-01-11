@@ -182,6 +182,8 @@
           if (isNaN(keycode)) {
             return false;
           }
+          // Exclude bracketed paste mode sequences (ESC[200~ and ESC[201~).
+          // Modifying these would corrupt the paste protocol.
           return keycode !== 200 && keycode !== 201;
         }
         return false;
