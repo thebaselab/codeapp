@@ -323,13 +323,16 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                 let args = x.components(separatedBy: " ")
                 if args.count == 1 {
                     // Display history with index in 2 tabbed columns (like ZSH)
+                    // ZSH only displays the last 25 commands by default
                     // Format: index\t\tcommand
                     let script = """
                         var historyEntries = localEcho.history.entries;
                         if (historyEntries.length === 0) {
                             localEcho.println('');
                         } else {
-                            for (var i = 0; i < historyEntries.length; i++) {
+                            // Display only the last 25 commands (ZSH behavior)
+                            var startIndex = Math.max(0, historyEntries.length - 25);
+                            for (var i = startIndex; i < historyEntries.length; i++) {
                                 localEcho.println((i + 1) + '\\t\\t' + historyEntries[i]);
                             }
                         }
