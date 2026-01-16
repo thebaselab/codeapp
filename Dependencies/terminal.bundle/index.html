@@ -155,8 +155,10 @@
       localEcho.addAutocompleteHandler(autocompleteCommonFiles);
 
       var controlActive = false;
+      var controlLocked = false;
       var controlGeneration = 0;
       var altActive = false;
+      var altLocked = false;
       var altGeneration = 0;
 
       function setControlActive(active, generation) {
@@ -164,9 +166,17 @@
         controlGeneration = generation;
       }
 
+      function setControlLocked(locked) {
+        controlLocked = locked;
+      }
+
       function setAltActive(active, generation) {
         altActive = active;
         altGeneration = generation;
+      }
+
+      function setAltLocked(locked) {
+        altLocked = locked;
       }
 
       function shouldApplyModifierToCsi(final, params) {
@@ -245,7 +255,7 @@
       }
 
       function applyModifierStates(data) {
-        // Capture which modifiers are active before resetting
+        // Capture which modifiers are active before potentially resetting
         var wasControlActive = controlActive;
         var wasAltActive = altActive;
 
@@ -253,15 +263,15 @@
           return data;
         }
 
-        // Reset all active modifiers and notify Swift
-        if (wasControlActive) {
+        // Reset modifiers only if not locked, and notify Swift
+        if (wasControlActive && !controlLocked) {
           controlActive = false;
           window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
             Event: "ControlReset",
             Generation: controlGeneration,
           });
         }
-        if (wasAltActive) {
+        if (wasAltActive && !altLocked) {
           altActive = false;
           window.webkit.messageHandlers.toggleMessageHandler2.postMessage({
             Event: "AltReset",

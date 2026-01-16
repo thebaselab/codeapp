@@ -540,7 +540,7 @@ extension TerminalInstance: WKUIDelegate {
 extension TerminalInstance {
     func type(text: String) {
         guard let base64 = text.base64Encoded() else { return }
-        executeScript("term.input(base64ToString(`\(base64)`))")
+        executeScript("inputWithModifiers(base64ToString(`\(base64)`))")
     }
 
     func moveCursor(codeSequence: String) {
@@ -551,8 +551,16 @@ extension TerminalInstance {
         executeScript("setControlActive(\(active), \(generation))")
     }
 
+    func setControlLocked(_ locked: Bool) {
+        executeScript("setControlLocked(\(locked))")
+    }
+
     func setAltActive(_ active: Bool, generation: Int) {
         executeScript("setAltActive(\(active), \(generation))")
+    }
+
+    func setAltLocked(_ locked: Bool) {
+        executeScript("setAltLocked(\(locked))")
     }
 }
 
