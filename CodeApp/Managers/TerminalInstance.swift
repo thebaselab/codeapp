@@ -253,8 +253,27 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             return
         }
 
-        if self.executor?.state == .interactive && event == "Data" {
-            self.executor?.sendInput(input: result["Input"] as! String)
+        if self.executor?.state == .interactive {
+            switch event {
+            case "Data":
+                self.executor?.sendInput(input: result["Input"] as! String)
+            case "ControlReset":
+                let generation = result["Generation"] as? Int ?? 0
+                NotificationCenter.default.post(
+                    name: .terminalControlReset,
+                    object: self,
+                    userInfo: ["generation": generation]
+                )
+            case "AltReset":
+                let generation = result["Generation"] as? Int ?? 0
+                NotificationCenter.default.post(
+                    name: .terminalAltReset,
+                    object: self,
+                    userInfo: ["generation": generation]
+                )
+            default:
+                break
+            }
             return
         }
 
@@ -382,6 +401,20 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
                     executor?.kill()
                 }
             }
+        case "ControlReset":
+            let generation = result["Generation"] as? Int ?? 0
+            NotificationCenter.default.post(
+                name: .terminalControlReset,
+                object: self,
+                userInfo: ["generation": generation]
+            )
+        case "AltReset":
+            let generation = result["Generation"] as? Int ?? 0
+            NotificationCenter.default.post(
+                name: .terminalAltReset,
+                object: self,
+                userInfo: ["generation": generation]
+            )
         default:
             print("\(result) Event not handled")
         }
@@ -511,7 +544,7 @@ extension TerminalInstance {
     }
 
     func moveCursor(codeSequence: String) {
-        executeScript("term.input(String.fromCharCode(0x1b)+'\(codeSequence)')")
+        executeScript("inputWithModifiers(String.fromCharCode(0x1b)+'\(codeSequence)')")
     }
 
     func setControlActive(_ active: Bool, generation: Int) {

@@ -295,6 +295,10 @@
         return result;
       }
 
+      function inputWithModifiers(data) {
+        term.input(applyModifierStates(data));
+      }
+
       function startInteractive() {
         localEcho.detach();
       }
