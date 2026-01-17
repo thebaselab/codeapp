@@ -146,7 +146,8 @@ struct SourceControlContainer: View {
         guard let serviceProvider = App.workSpaceStorage.gitServiceProvider else {
             throw SourceControlError.gitServiceProviderUnavailable
         }
-        guard let gitURL = URL(string: urlString) else {
+        let normalizedURLString = LocalGitCredentialsHelper.normalizeRemoteURL(urlString)
+        guard let gitURL = URL(string: normalizedURLString) else {
             App.notificationManager.showErrorMessage("errors.source_control.invalid_url")
             throw SourceControlError.invalidURL
         }

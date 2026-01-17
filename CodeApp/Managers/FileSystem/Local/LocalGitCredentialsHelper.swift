@@ -204,10 +204,41 @@ final class LocalGitCredentialsHelper {
     }
 
     func credentialsForRemote(remote: Remote) throws -> Credentials {
-        guard let url = URL(string: remote.URL) else {
+        let normalizedURL = LocalGitCredentialsHelper.normalizeRemoteURL(remote.URL)
+        guard let url = URL(string: normalizedURL) else {
             throw HelperError.UnsupportedRemoteURL
         }
         return try credentialsForRemoteURL(url: url)
+    }
+
+    /// Normalizes a Git remote URL string to ensure proper parsing
+    /// Handles bare IP:port and hostname:port formats by adding http:// scheme
+    /// Preserves scp-like syntax (git@host:path) and fully-qualified URLs
+    static func normalizeRemoteURL(_ urlString: String) -> String {
+        // If URL already has a valid scheme and parses correctly, return as-is
+        if let url = URL(string: urlString),
+           let scheme = url.scheme,
+           ["http", "https", "ssh", "git", "file", "ftp", "ftps"].contains(scheme),
+           url.host != nil {
+            return urlString
+        }
+        
+        // Check if it's an scp-like URL (has @ but no ://)
+        // e.g., git@github.com:user/repo.git
+        if urlString.contains("@") && !urlString.contains("://") {
+            return urlString  // Let parseRemoteURL handle it
+        }
+        
+        // Check if it looks like bare IP:port or hostname:port
+        // Pattern matches: 192.1.1.1:3000/path or forgejo.local:3000/path
+        let pattern = #"^([a-zA-Z0-9\.\-]+):(\d+)(/.*)?$"#
+        if let regex = try? NSRegularExpression(pattern: pattern),
+           regex.firstMatch(in: urlString, range: NSRange(urlString.startIndex..., in: urlString)) != nil {
+            // Prepend http:// as default scheme
+            return "http://\(urlString)"
+        }
+        
+        return urlString
     }
 
     static func parseRemoteURL(url: URL) -> URL? {
