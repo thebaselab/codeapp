@@ -109,17 +109,6 @@ struct TerminalKeyboardToolBar: View {
     var body: some View {
         HStack(spacing: horizontalSizeClass == .compact ? 8 : 14) {
             Group {
-                if UIPasteboard.general.hasStrings || pasteBoardHasContent {
-                    Button(
-                        action: {
-                            if let string = UIPasteboard.general.string {
-                                typeAndResetModifiers(text: string)
-                            }
-                        },
-                        label: {
-                            Image(systemName: "doc.on.clipboard")
-                        })
-                }
                 Button(
                     action: {
                         typeAndResetModifiers(text: "\u{1b}")
@@ -134,7 +123,7 @@ struct TerminalKeyboardToolBar: View {
                         typeAndResetModifiers(text: "\t")
                     },
                     label: {
-                        Text("↹")
+                        Text("Tab")
                     })
                 Button(
                     action: {
@@ -142,7 +131,7 @@ struct TerminalKeyboardToolBar: View {
                     },
                     label: {
                         Text("Ctrl")
-                            .padding(.horizontal, 4)
+                            .padding(.horizontal, 2)
                             .background(
                                 controlActive ? Color.accentColor.opacity(0.3) : Color.clear
                             )
@@ -162,7 +151,7 @@ struct TerminalKeyboardToolBar: View {
                     },
                     label: {
                         Text("Alt")
-                            .padding(.horizontal, 4)
+                            .padding(.horizontal, 2)
                             .background(
                                 altActive ? Color.accentColor.opacity(0.3) : Color.clear
                             )
@@ -175,20 +164,31 @@ struct TerminalKeyboardToolBar: View {
                 )
                 .accessibilityLabel("Alt")
                 .accessibilityValue(altLocked ? "Locked" : (altActive ? "Active" : "Inactive"))
-                Button(
-                    action: {
-                        typeAndResetModifiers(text: "\u{1b}[3~")
-                    },
-                    label: {
-                        Text("Del")
-                    }
-                )
-                .accessibilityLabel("Delete")
             }
 
             Spacer()
 
             Group {
+                Button(
+                    action: {
+                        typeAndResetModifiers(text: "\u{1b}[3~")
+                    },
+                    label: {
+                        Image(systemName: "delete.right")
+                    }
+                )
+                .accessibilityLabel("Delete")
+                if UIPasteboard.general.hasStrings || pasteBoardHasContent {
+                    Button(
+                        action: {
+                            if let string = UIPasteboard.general.string {
+                                typeAndResetModifiers(text: string)
+                            }
+                        },
+                        label: {
+                            Image(systemName: "doc.on.clipboard")
+                        })
+                }
                 Button(
                     action: {
                         moveCursorAndResetModifiers(codeSequence: "[A")
