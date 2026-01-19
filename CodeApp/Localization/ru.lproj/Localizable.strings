@@ -364,131 +364,72 @@
 > Счастливого кодинга из Гонконга 🇭🇰
 ";
 
-"Send us an Email" = "Отправить электронное письмо";
-"Open an Issue on GitHub" = "Поделиться проблемой на GitHub";
-"Clear console" = "Очистить консоль";
-"Kill Process" = "Завершить процесс";
-"Sync" = "Синхронизировать";
-"Synchronize Changes" = "Синхронизировать изменения";
-"You don't have any open editor." = "Нет открытых редакторов.";
-"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "Это загрузит изменения с удаленного репозитория в локальный, а затем отправит локальные коммиты в вышестоящую ветку. Конфликты будут объединены и перезаписаны локальной копией.";
-"User Name" = "Имя пользователя";
-"Erase" = "Стереть";
-"This will erase all user settings, including author identity and credentials." = "Это удалит все пользовательские настройки, включая личность автора и учетные данные.";
-"Erase all settings" = "Стереть все настройки";
-"Release Notes" = "Заметки о выпуске";
-
-"New File" = "Новый файл";
-"Open File" = "Открытый файл";
-"Open Editors" = "Открытые редакторы";
-"EXPLORER" = "ПРОВОДНИК";
+/* Activity Bar */
 "Explorer" = "Проводник";
-"SEARCH" = "ПОИСК";
 "Search" = "Поиск";
-"Results" = "Результаты";
-"Search Text" = "Найти текст";
-"Search File" = "Найти файл";
-"Quick add" = "Быстро добавить";
-"Custom" = "Собственный";
-"Where" = "Куда";
-"Current Folder" = "Текущая папка";
-"Add File" = "Добавить файл";
-"INPUT" = "ВВОД";
-"PROBLEMS" = "ПРОБЛЕМЫ";
-"OUTPUT" = "ВЫВОД";
-"Options" = "Опции";
+"Source Control" = "Контроль версий";
+"Remotes" = "Подключения";
+"Port Forward" = "Переадресация портов";
+
+/* Top Bar */
 "Close All" = "Закрыть все";
 "Close Workspace" = "Закрыть рабочую область";
-"Preview in Safari" = "Показать в Safari";
-"Mini Map" = "Мини-карта";
-"Line Numbers" = "Номера строк";
-"OTHERS" = "ДРУГОЕ";
-"Tab Size" = "Размер табуляции";
+"Show Welcome Page" = "Показать приветствие";
+"Welcome" = "Приветствие";
+"Show Panel" = "Показать панель";
+"Hide Panel" = "Скрыть панель";
 
-"Settings" = "Настройки";
-"General" = "Основные";
-"Editor" = "Редактор";
-"Compiler" = "Компилятор";
-"Accent" = "Акцент";
-"Font Size" = "Размер шрифта";
-"Editor Font Size" = "Размер шрифта редактора";
-"Terminal Font Size" = "Размер шрифта консоли";
-"Bracket Completion" = "Автозакрытие скобок";
-"Theme" = "Тема";
-"Rate Code App" = "Оценить Code App";
-"About" = "О приложении";
-"Version" = "Версия";
+/* Editor Tabs */
+"Close Editor" = "Закрыть редактор";
+"Open Editors" = "Открытые редакторы";
 
-"Done" = "Готово";
-
-"Recent" = "Недавние";
+/* Editor Options */
+"Open in Tab" = "Открыть во вкладке";
 "Show in Files App" = "Показать в «Файлы»";
-"Copy Relative Path" = "Скопировать относительный путь";
-"Delete" = "Удалить";
-"Color Scheme" = "Цветовая схема";
-"Dark Theme" = "Тёмная тема";
-"Light Theme" = "Светлая тема";
-"Dark Themes" = "Тёмные темы";
-"Light Themes" = "Светлые темы";
-"Text Wrap" = "Переносить текст";
-"Render Whitespace" = "Отображать пробелы";
-
-"Share" = "Поделиться";
 "Rename" = "Переименовать";
+"Duplicate" = "Дублировать";
+"Delete" = "Удалить";
+"Copy Relative Path" = "Скопировать относительный путь";
+"New File" = "Новый файл";
+"Templates" = "Шаблоны";
+"Custom" = "Собственный";
+"Add File" = "Добавить файл";
+"Where" = "Куда";
+"New Folder" = "Новая папка";
 "Assign as workspace folder" = "Назначить рабочей областью";
 "Select For Compare" = "Выбрать для сравнения";
 "Compare With Selected" = "Сравнить с выбранным";
-"Version Control" = "Контроль версий";
-"Author Identity" = "Личность автора";
-"Authentication" = "Авторизация";
-"Name" = "Имя";
-"Email address" = "Электронная почта";
+
+/* Editor */
+"Filter" = "Фильтр";
+"You don't have any open editor." = "Нет открытых редакторов.";
+"Open File" = "Открыть файл";
 "Save" = "Сохранить";
-"Close Editor" = "Закрыть редактор";
 "Zoom in" = "Приблизить";
 "Zoom out" = "Отдалить";
-"Show Explorer" = "Показать проводник";
-"Show Search" = "Показать поиск";
-"Show Source Control" = "Показать контроль версий";
-"User Settings" = "Пользовательские настройки";
-"Show Panel" = "Показать панель";
-"Hide Panel" = "Скрыть панель";
-"Run Code" = "Запустить код";
-"New Folder" = "Новая папка";
+"PROBLEMS" = "ПРОБЛЕМЫ";
+"Recent" = "Недавние";
+"Done" = "Готово";
 
+/* Search */
+"Results" = "Результаты";
+
+/* Source Control */
 "The folder currently opened doesn't have a git repository." = "В текущей папке нет git-репозитория.";
-"Example: https://github.com/thebaselab/codeapp.git" = "Пример: https://github.com/thebaselab/codeapp.git";
 "Initialize Repository" = "Инициализировать";
+
 "Clone Repository" = "Клонировать репозиторий";
-"TERMINAL" = "ТЕРМИНАЛ";
-"Keyboard Toolbar" = "Инструменты над клавиатурой";
-"Always Open In New Tab" = "Всегда открывать в новой вкладке";
+"Example: https://github.com/thebaselab/codeapp.git" = "Пример: https://github.com/thebaselab/codeapp.git";
 "Changes" = "Изменения";
-"Message (⌘Enter to commit)" = "Сообщение (⌘Enter для фиксации)";
+"Stage All Changes" = "Индексировать все изменения";
 "Staged Changes" = "Индексированные изменения";
 "No changes are made in the working directory." = "В рабочей области нет изменений.";
 "Git checkout: Uncommitted Changes" = "Git checkout: незафиксированные изменения";
 "Uncommited changes will be lost. Do you wish to proceed?" = "Незафиксированные изменения будут потеряны. Хотите продолжить?";
-"No changes are made in this file" = "В этом файле нет изменений.";
-
-"Smooth Scrolling" = "Плавная прокрутка";
-"Stage All Changes" = "Индексировать все изменения";
 "Push" = "Отправить";
 "Fetch" = "Получить";
 
-"Welcome" = "Приветствие";
-"Themes" = "Темы";
-"Read-only Mode" = "Режим только для чтения";
-"Show Welcome Page" = "Показать приветствие";
-"UI State Restoration" = "Возвращать состояние интерфейса";
-"Open in Tab" = "Открыть во вкладке";
-"Show Command in Terminal" = "Показывать команду в терминале";
-"Duplicate" = "Дублировать";
-"Console Font Size" = "Размер шрифта консоли";
-
-"Custom Keyboard Shortcuts" = "Пользовательские сочетания клавиш";
-
-"Remotes" = "Подключения";
+/* Remotes */
 "You don't have any saved remote." = "Нет сохраненных подключений.";
 "New remote" = "Новое подключение";
 "Protocol" = "Протокол";
@@ -497,17 +438,67 @@
 "Username" = "Логин";
 "Password" = "Пароль";
 "Use Key Authentication" = "Авторизация по ключу";
+"Key passphrase" = "Парольная фраза";
 "Remember address" = "Запомнить адрес";
 "Connect" = "Подключиться";
 "Disconnect" = "Отключиться";
 "Current Remote" = "Текущее подключение";
 "Remember credentials" = "Запомнить учетные данные";
-"Key passphrase" = "Парольная фраза";
-"Show public key" = "Показать публичный ключ";
+"Address cannot be empty." = "Адрес не может быть пустым.";
+"Username cannot be empty." = "Имя пользователя не может быть пустым.";
+"Password cannot be empty." = "Пароль не может быть пустым.";
+"Invalid address." = "Недопустимый адрес.";
 
-"Experimental Features" = "Экспериментальные функции";
-"Enable spell check in text files" = "Включить проверку орфографии в текстовых файлах";
-"Spell checking on content changed" = "Проверка орфографии при изменении содержимого";
+/* Settings */
+"Settings" = "Настройки";
+"General" = "Основные";
+"Themes" = "Темы";
+"Dark Themes" = "Тёмные темы";
+"Light Themes" = "Светлые темы";
+"Color Scheme" = "Цветовая схема";
+"Editor Font Size" = "Размер шрифта редактора";
+"Console Font Size" = "Размер шрифта консоли";
+"Open an Issue on GitHub" = "Поделиться проблемой на GitHub";
+"Send us an Email" = "Отправить электронное письмо";
+"Rate Code App" = "Оценить Code App";
+
+"Version Control" = "Контроль версий";
+"Author Identity" = "Личность автора";
+"Name" = "Имя";
+"Email address" = "Электронная почта";
+"Authentication" = "Авторизация";
+
+"EXPLORER" = "ПРОВОДНИК";
+
+"Editor" = "Редактор";
+"Show all fonts" = "Показать все";
+"Custom Keyboard Shortcuts" = "Пользовательские сочетания клавиш";
+"Note: Keyboard shortcuts that clash with existing shortcuts will not apply." = "Примечание: конфликтующие сочетания клавиш не будут применены.";
+"Actions" = "Действия";
+"Not set" = "Не задано";
+"Tab Size" = "Размер табуляции";
+"Read-only Mode" = "Режим только для чтения";
+"UI State Restoration" = "Возвращать состояние интерфейса";
+"Bracket Completion" = "Автозакрытие скобок";
+"Mini Map" = "Мини-карта";
+"Line Numbers" = "Номера строк";
+"Keyboard Toolbar" = "Инструменты над клавиатурой";
+"Always Open In New Tab" = "Всегда открывать в новой вкладке";
+"Smooth Scrolling" = "Плавная прокрутка";
+"Text Wrap" = "Переносить текст";
+"Render Whitespace" = "Отображать пробелы";
+
+"TERMINAL" = "ТЕРМИНАЛ";
+"Show Command in Terminal" = "Показывать команду в терминале";
+
+"About" = "О приложении";
+"Release Notes" = "Заметки о выпуске";
+"Licenses" = "Лицензии";
+"Version" = "Версия";
+"Erase all settings" = "Стереть все настройки";
+"This will erase all user settings, including author identity and credentials." = "Это удалит все пользовательские настройки, включая личность автора и учетные данные.";
+"Erase" = "Стереть";
+"Code App by thebaselab" = "Code App от thebaselab";
 
 "common.configure" = "Настроить";
 "common.open_folder" = "Открыть папку";
@@ -588,7 +579,7 @@
 "errors.operation_cancelled_by_user" = "Операция отменена пользователем";
 "errors.sftp.invalid_host_url" = "Недопустимый URL хоста";
 "errors.sftp.invalid_jump_host_url" = "Недопустимый URL хоста прокси-сервера";
-"errors.sftp.unable_to_start_portforward_service" = "Не удалось запустить службу проброса портов";
+"errors.sftp.unable_to_start_portforward_service" = "Не удалось запустить службу переадресации портов";
 "errors.sftp.auth_failure" = "Ошибка авторизации";
 "errors.sftp.failed_to_perform_operation" = "Не удалось выполнить операцию";
 "errors.sftp.unable_to_start_shell" = "Не удалось запустить оболочку";
