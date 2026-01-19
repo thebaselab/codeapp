@@ -179,8 +179,9 @@ struct RemoteContainer: View {
                 App.loadRepository(url: hostUrl)
                 App.notificationManager.showInformationMessage(
                     "remote.connected")
-                App.terminalInstance.terminalServiceProvider =
-                    App.workSpaceStorage.terminalServiceProvider
+                // Set terminal service provider for the active terminal
+                App.terminalManager.setTerminalServiceProviderForAll(
+                    App.workSpaceStorage.terminalServiceProvider)
             }
             continuation.resume(returning: ())
         }

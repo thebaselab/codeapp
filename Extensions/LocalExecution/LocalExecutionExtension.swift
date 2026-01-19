@@ -44,7 +44,23 @@ class LocalExecutionExtension: CodeAppExtension {
 
     private func runCodeLocally(app: MainApp) async {
 
-        guard app.terminalInstance.executor?.state == .idle else { return }
+        guard let activeTerminal = app.terminalManager.activeTerminal else {
+            app.notificationManager.showErrorMessage("Cannot run: no active terminal.")
+            return
+        }
+
+        guard let executor = activeTerminal.executor else {
+            app.notificationManager.showErrorMessage(
+                "Cannot run: terminal '\(activeTerminal.name)' has no executor.")
+            return
+        }
+
+        guard executor.state == .idle else {
+            app.notificationManager.showWarningMessage(
+                "Cannot run: terminal '\(activeTerminal.name)' executor is \(executor.state.displayName) (expected idle)."
+            )
+            return
+        }
 
         guard let activeTextEditor = app.activeTextEditor else {
             return
@@ -71,14 +87,14 @@ class LocalExecutionExtension: CodeAppExtension {
         }
 
         if app.terminalOptions.value.shouldShowCompilerPath {
-            app.terminalInstance.executeScript(
+            activeTerminal.executeScript(
                 "localEcho.println(`\(parsedCommands.joined(separator: " && "))`);readLine('');")
         } else {
             let commandName =
                 parsedCommands.first?.components(separatedBy: " ").first
                 ?? activeTextEditor.languageIdentifier
-            app.terminalInstance.executeScript("localEcho.println(`\(commandName)`);readLine('');")
+            activeTerminal.executeScript("localEcho.println(`\(commandName)`);readLine('');")
         }
-        app.terminalInstance.executor?.evaluateCommands(parsedCommands)
+        executor.evaluateCommands(parsedCommands)
     }
 }

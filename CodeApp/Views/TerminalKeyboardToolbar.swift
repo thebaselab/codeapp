@@ -21,28 +21,38 @@ struct TerminalKeyboardToolBar: View {
     @State var altLastTapTime: Date?
     @State var altGeneration = 0
 
+    // Optional terminal ID - if nil, uses active terminal
+    var terminalId: UUID?
+
+    private var terminal: TerminalInstance? {
+        if let id = terminalId {
+            return App.terminalManager.terminals.first { $0.id == id }
+        }
+        return App.terminalManager.activeTerminal
+    }
+
     private let doubleTapInterval: TimeInterval = 0.3
 
     private func resetModifierStates() {
         controlActive = false
         controlLocked = false
-        App.terminalInstance.setControlActive(false, generation: controlGeneration)
-        App.terminalInstance.setControlLocked(false)
+        terminal?.setControlActive(false, generation: controlGeneration)
+        terminal?.setControlLocked(false)
         altActive = false
         altLocked = false
-        App.terminalInstance.setAltActive(false, generation: altGeneration)
-        App.terminalInstance.setAltLocked(false)
+        terminal?.setAltActive(false, generation: altGeneration)
+        terminal?.setAltLocked(false)
     }
 
     private func resetUnlockedModifiers() {
         // Reset modifiers only if they are not locked
         if !controlLocked {
             controlActive = false
-            App.terminalInstance.setControlActive(false, generation: controlGeneration)
+            terminal?.setControlActive(false, generation: controlGeneration)
         }
         if !altLocked {
             altActive = false
-            App.terminalInstance.setAltActive(false, generation: altGeneration)
+            terminal?.setAltActive(false, generation: altGeneration)
         }
     }
 
@@ -57,17 +67,17 @@ struct TerminalKeyboardToolBar: View {
             controlLocked = false
             controlActive = false
             controlGeneration += 1
-            App.terminalInstance.setControlLocked(false)
-            App.terminalInstance.setControlActive(false, generation: controlGeneration)
+            terminal?.setControlLocked(false)
+            terminal?.setControlActive(false, generation: controlGeneration)
         } else if isDoubleTap && controlActive {
             // Double tap while active: lock
             controlLocked = true
-            App.terminalInstance.setControlLocked(true)
+            terminal?.setControlLocked(true)
         } else {
             // Single tap: toggle active state
             controlActive.toggle()
             controlGeneration += 1
-            App.terminalInstance.setControlActive(controlActive, generation: controlGeneration)
+            terminal?.setControlActive(controlActive, generation: controlGeneration)
         }
     }
 
@@ -82,27 +92,27 @@ struct TerminalKeyboardToolBar: View {
             altLocked = false
             altActive = false
             altGeneration += 1
-            App.terminalInstance.setAltLocked(false)
-            App.terminalInstance.setAltActive(false, generation: altGeneration)
+            terminal?.setAltLocked(false)
+            terminal?.setAltActive(false, generation: altGeneration)
         } else if isDoubleTap && altActive {
             // Double tap while active: lock
             altLocked = true
-            App.terminalInstance.setAltLocked(true)
+            terminal?.setAltLocked(true)
         } else {
             // Single tap: toggle active state
             altActive.toggle()
             altGeneration += 1
-            App.terminalInstance.setAltActive(altActive, generation: altGeneration)
+            terminal?.setAltActive(altActive, generation: altGeneration)
         }
     }
 
     private func typeAndResetModifiers(text: String) {
-        App.terminalInstance.type(text: text)
+        terminal?.type(text: text)
         resetUnlockedModifiers()
     }
 
     private func moveCursorAndResetModifiers(codeSequence: String) {
-        App.terminalInstance.moveCursor(codeSequence: codeSequence)
+        terminal?.moveCursor(codeSequence: codeSequence)
         resetUnlockedModifiers()
     }
 
@@ -220,7 +230,7 @@ struct TerminalKeyboardToolBar: View {
                 Button(
                     action: {
                         resetModifierStates()
-                        App.terminalInstance.blur()
+                        terminal?.blur()
                     },
                     label: {
                         Image(systemName: "keyboard.chevron.compact.down")
@@ -246,7 +256,7 @@ struct TerminalKeyboardToolBar: View {
         .onReceive(
             NotificationCenter.default.publisher(
                 for: .terminalControlReset,
-                object: App.terminalInstance
+                object: terminal
             ),
             perform: { notification in
                 if let generation = notification.userInfo?["generation"] as? Int,
@@ -259,7 +269,7 @@ struct TerminalKeyboardToolBar: View {
         .onReceive(
             NotificationCenter.default.publisher(
                 for: .terminalAltReset,
-                object: App.terminalInstance
+                object: terminal
             ),
             perform: { notification in
                 if let generation = notification.userInfo?["generation"] as? Int,

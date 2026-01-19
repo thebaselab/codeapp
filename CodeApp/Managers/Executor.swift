@@ -16,7 +16,7 @@ class Executor {
         case interactive
     }
 
-    private let persistentIdentifier = "com.thebaselab.terminal"
+    private let persistentIdentifier: String
     private var pid: pid_t? = nil
 
     private var stdin_file: UnsafeMutablePointer<FILE>?
@@ -40,10 +40,13 @@ class Executor {
     }
 
     init(
-        root: URL, onStdout: @escaping ((_ data: Data) -> Void),
+        root: URL,
+        sessionIdentifier: String = "com.thebaselab.terminal",
+        onStdout: @escaping ((_ data: Data) -> Void),
         onStderr: @escaping ((_ data: Data) -> Void),
         onRequestInput: @escaping ((_ prompt: String) -> Void)
     ) {
+        persistentIdentifier = sessionIdentifier
         currentWorkingDirectory = root
         prompt = "\(root.lastPathComponent) $ "
         receivedStdout = onStdout
@@ -280,6 +283,19 @@ class Executor {
         }
         if let data = content.data(using: .utf8) {
             _onStdout(data: data)
+        }
+    }
+}
+
+extension Executor.State {
+    var displayName: String {
+        switch self {
+        case .idle:
+            return NSLocalizedString("Idle", comment: "Executor state label")
+        case .running:
+            return NSLocalizedString("Running", comment: "Executor state label")
+        case .interactive:
+            return NSLocalizedString("Interactive", comment: "Executor state label")
         }
     }
 }
