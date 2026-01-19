@@ -83,7 +83,9 @@ struct TerminalTabRow: View {
             // Icon
             Image(systemName: "terminal")
                 .font(.system(size: TerminalTabBarConstants.iconSize))
-                .foregroundColor(isActive ? Color(id: "list.activeSelectionForeground") : Color(id: "foreground"))
+                .foregroundColor(
+                    isActive ? Color(id: "list.activeSelectionForeground") : Color(id: "foreground")
+                )
                 .frame(width: 20, height: 20)
             Spacer()
         }
@@ -106,7 +108,11 @@ struct TerminalTabRow: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityAddTraits(isActive ? [.isSelected, .isButton] : [.isButton])
-        .accessibilityHint(NSLocalizedString("Double tap to switch to this terminal", comment: "Accessibility hint for terminal tab"))
+        .accessibilityHint(
+            NSLocalizedString(
+                "Double tap to switch to this terminal",
+                comment: "Accessibility hint for terminal tab")
+        )
         .contextMenu {
             if canClose {
                 Button(NSLocalizedString("Kill Terminal", comment: ""), role: .destructive) {
@@ -127,7 +133,10 @@ struct TerminalTabRow: View {
                 onClose()
             }
         } message: {
-            Text(NSLocalizedString("This terminal has a running process. Are you sure you want to kill it?", comment: ""))
+            Text(
+                NSLocalizedString(
+                    "This terminal has a running process. Are you sure you want to kill it?",
+                    comment: ""))
         }
     }
 }

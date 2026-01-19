@@ -7,11 +7,11 @@
 
 import Combine
 import CoreSpotlight
-import os.log
 import SwiftGit2
 import SwiftUI
 import UniformTypeIdentifiers
 import ios_system
+import os.log
 
 private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Code", category: "MainApp")
 
@@ -268,7 +268,9 @@ class MainApp: ObservableObject {
             if let terminal = self.terminalManager.remoteTerminal {
                 terminal.write(data: data)
             } else {
-                logger.warning("Remote terminal data dropped: no remote terminal available (\(data.count) bytes)")
+                logger.warning(
+                    "Remote terminal data dropped: no remote terminal available (\(data.count) bytes)"
+                )
             }
         }
         loadRepository(url: rootDir)

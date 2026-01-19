@@ -8,7 +8,8 @@
 import SwiftUI
 import os.log
 
-private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Code", category: "TerminalManager")
+private let logger = Logger(
+    subsystem: Bundle.main.bundleIdentifier ?? "Code", category: "TerminalManager")
 
 /// Manages multiple terminal instances.
 /// - Important: Access this class only from the main thread. Debug builds will assert this.
@@ -35,8 +36,9 @@ class TerminalManager: ObservableObject {
     /// Useful during initialization when @AppStorage properties aren't yet accessible.
     static func readTerminalOptionsFromDefaults() -> TerminalOptions {
         if let rawValue = UserDefaults.standard.string(forKey: "terminalOptions"),
-           let data = rawValue.data(using: .utf8),
-           let decoded = try? JSONDecoder().decode(TerminalOptions.self, from: data) {
+            let data = rawValue.data(using: .utf8),
+            let decoded = try? JSONDecoder().decode(TerminalOptions.self, from: data)
+        {
             return decoded
         }
         return TerminalOptions()
@@ -128,7 +130,8 @@ class TerminalManager: ObservableObject {
         while existingNames.contains(candidateName) && suffix < maxAttempts {
             suffix += 1
             candidateName = String(
-                format: NSLocalizedString("%@ (%d)", comment: "Terminal name with duplicate suffix"),
+                format: NSLocalizedString(
+                    "%@ (%d)", comment: "Terminal name with duplicate suffix"),
                 baseName, suffix
             )
         }
@@ -151,10 +154,13 @@ class TerminalManager: ObservableObject {
     func createTerminal(name: String? = nil) -> TerminalInstance {
         assertMainThread()
         guard terminals.count < TerminalManager.maxTerminals else {
-            logger.debug("create blocked: max reached (count: \(self.terminals.count, privacy: .public), max: \(TerminalManager.maxTerminals, privacy: .public))")
+            logger.debug(
+                "create blocked: max reached (count: \(self.terminals.count, privacy: .public), max: \(TerminalManager.maxTerminals, privacy: .public))"
+            )
             // Return the active terminal if at max capacity
             // Invariant: terminals array is never empty after init (enforced by closeTerminal guard)
-            precondition(!terminals.isEmpty, "TerminalManager must always have at least one terminal")
+            precondition(
+                !terminals.isEmpty, "TerminalManager must always have at least one terminal")
             return activeTerminal ?? terminals.first!
         }
 
@@ -162,7 +168,9 @@ class TerminalManager: ObservableObject {
         let terminal = createTerminalInstance(name: terminalName)
         terminals.append(terminal)
         setActiveTerminalId(terminal.id)
-        logger.info("created terminal name: \(terminal.name, privacy: .public) id: \(terminal.id, privacy: .public)")
+        logger.info(
+            "created terminal name: \(terminal.name, privacy: .public) id: \(terminal.id, privacy: .public)"
+        )
         return terminal
     }
 
@@ -170,7 +178,9 @@ class TerminalManager: ObservableObject {
         assertMainThread()
         // Don't allow closing the last terminal
         guard terminals.count > 1 else {
-            logger.debug("close blocked: last terminal (count: \(self.terminals.count, privacy: .public)) id: \(id, privacy: .public)")
+            logger.debug(
+                "close blocked: last terminal (count: \(self.terminals.count, privacy: .public)) id: \(id, privacy: .public)"
+            )
             return
         }
 
@@ -193,7 +203,9 @@ class TerminalManager: ObservableObject {
 
         terminals.remove(at: index)
         syncRemoteTerminalId()
-        logger.info("closed terminal name: \(terminal.name, privacy: .public) id: \(terminal.id, privacy: .public)")
+        logger.info(
+            "closed terminal name: \(terminal.name, privacy: .public) id: \(terminal.id, privacy: .public)"
+        )
     }
 
     /// Check if a terminal has a running process
@@ -209,7 +221,9 @@ class TerminalManager: ObservableObject {
             return
         }
         setActiveTerminalId(terminal.id)
-        logger.info("switched terminal name: \(terminal.name, privacy: .public) id: \(terminal.id, privacy: .public)")
+        logger.info(
+            "switched terminal name: \(terminal.name, privacy: .public) id: \(terminal.id, privacy: .public)"
+        )
     }
 
     func renameTerminal(id: UUID, name: String) {
@@ -286,7 +300,8 @@ class TerminalManager: ObservableObject {
         }
 
         if let currentId = remoteTerminalId,
-           terminals.contains(where: { $0.id == currentId && $0.terminalServiceProvider != nil }) {
+            terminals.contains(where: { $0.id == currentId && $0.terminalServiceProvider != nil })
+        {
             return
         }
 
