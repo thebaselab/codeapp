@@ -119,7 +119,7 @@ struct MainScene: View {
                     }
                     App.monacoInstance.theme = EditorTheme(
                         dark: ThemeManager.darkTheme, light: ThemeManager.lightTheme)
-                    App.terminalInstance.applyTheme(rawTheme: theme.dictionary)
+                    App.terminalManager.applyThemeToAll(rawTheme: theme.dictionary)
                 }
             )
     }
@@ -154,7 +154,7 @@ private struct MainView: View {
             panelHeight = 200
         }
         isPanelVisible.toggle()
-        App.terminalInstance.webView.becomeFirstResponder()
+        App.terminalManager.activeTerminal?.webView.becomeFirstResponder()
     }
 
     var body: some View {
@@ -232,7 +232,7 @@ private struct MainView: View {
             App.setUpEditorInstance()
         }
         .onChange(of: terminalOptions) { newValue in
-            App.terminalInstance.options = newValue.value
+            App.terminalManager.applyOptionsToAll(newValue.value)
         }
         .hiddenScrollableContentBackground()
         .onAppear {
