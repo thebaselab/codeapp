@@ -176,12 +176,7 @@ struct RemoteContainer: View {
             continuation.resume(throwing: error)
         } else {
             DispatchQueue.main.async {
-                App.loadRepository(url: hostUrl)
-                App.notificationManager.showInformationMessage(
-                    "remote.connected")
-                // Set terminal service provider for the active terminal
-                App.terminalManager.setTerminalServiceProviderForAll(
-                    App.workSpaceStorage.terminalServiceProvider)
+                App.loadFolder(url: hostUrl)
             }
             continuation.resume(returning: ())
         }

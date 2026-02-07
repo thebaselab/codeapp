@@ -273,6 +273,13 @@ class MainApp: ObservableObject {
                 )
             }
         }
+        workSpaceStorage.onRemoteDisconnect { [weak self] in
+            guard let self = self else { return }
+            Task { @MainActor in
+                let documentDir = getRootDirectory()
+                self.loadFolder(url: documentDir)
+            }
+        }
         loadRepository(url: rootDir)
 
         NotificationCancellable = notificationManager.objectWillChange.sink { [weak self] (_) in
@@ -504,7 +511,7 @@ class MainApp: ObservableObject {
                         self.stateManager.showsNewFileSheet.toggle()
                     },
                     onSelectFolderAsWorkspaceStorage: { url in
-                        self.loadFolder(url: url, resetEditors: true)
+                        self.loadFolder(url: url)
                     },
                     onSelectFolder: {
                         self.stateManager.showsDirectoryPicker.toggle()
@@ -803,7 +810,7 @@ class MainApp: ObservableObject {
         guard let url = URL(string: workSpaceStorage.currentDirectory.url) else {
             return
         }
-        loadFolder(url: url, resetEditors: false)
+        loadFolder(url: url, resetEditorsAndTerminals: false)
     }
 
     private func groupStatusEntries(entries: [StatusEntry]) -> (
@@ -944,49 +951,62 @@ class MainApp: ObservableObject {
         updateGitRepositoryStatus()
     }
 
-    func loadFolder(url: URL, resetEditors: Bool = true) {
-        let url = url.standardizedFileURL
-        if workSpaceStorage.remoteConnected && url.isFileURL {
-            workSpaceStorage.disconnect()
+    private func saveLocalURLToRecentFolders(url: URL) {
+        guard url.isFileURL,
+            let newBookmark = try? url.bookmarkData()
+        else {
+            return
+        }
+        if var bookmarks = UserDefaults.standard.value(forKey: "recentFolder") as? [Data] {
+            bookmarks = bookmarks.filter {
+                var isStale = false
+                guard
+                    let newURL = try? URL(
+                        resolvingBookmarkData: $0, bookmarkDataIsStale: &isStale)
+                else {
+                    return false
+                }
+                // We do not have a stable identity of a url due to sandboxing, compare lastPathComponent instead
+                return (newURL.lastPathComponent != url.lastPathComponent && !isStale)
+            }
+            bookmarks = [newBookmark] + bookmarks
+            if bookmarks.count > 5 {
+                bookmarks.removeLast()
+            }
+            UserDefaults.standard.setValue(bookmarks, forKey: "recentFolder")
+        } else {
+            UserDefaults.standard.setValue([newBookmark], forKey: "recentFolder")
+        }
+    }
+
+    /// Set the specified url as the root directory of the working space. The url can either be a local path or a remote path like sftp://xxxxx
+    @MainActor
+    func loadFolder(url: URL, resetEditorsAndTerminals: Bool = true) {
+        if resetEditorsAndTerminals {
+            self.closeAllEditors()
+            self.terminalManager.resetAndSetNewRootDirectory(url: url)
         }
 
-        ios_setDirectoryURL(url)
-
-        self.workSpaceStorage.updateDirectory(
-            name: url.lastPathComponent, url: url.absoluteString)
+        let url = url.standardizedFileURL
+        if url.isFileURL {
+            // Local urls
+            ios_setDirectoryURL(url)
+            if workSpaceStorage.remoteConnected && url.isFileURL {
+                workSpaceStorage.disconnect()
+            }
+            self.workSpaceStorage.updateDirectory(
+                name: url.lastPathComponent, url: url.absoluteString)
+            saveLocalURLToRecentFolders(url: url)
+        } else {
+            // Remote urls
+            notificationManager.showInformationMessage(
+                "remote.connected")
+            // Set terminal service provider for the active terminal
+            terminalManager.setTerminalServiceProviderForAll(
+                workSpaceStorage.terminalServiceProvider)
+        }
 
         loadRepository(url: url)
-
-        if url.isFileURL,
-            let newBookmark = try? url.bookmarkData()
-        {
-            if var bookmarks = UserDefaults.standard.value(forKey: "recentFolder") as? [Data] {
-                bookmarks = bookmarks.filter {
-                    var isStale = false
-                    guard
-                        let newURL = try? URL(
-                            resolvingBookmarkData: $0, bookmarkDataIsStale: &isStale)
-                    else {
-                        return false
-                    }
-                    // We do not have a stable identity of a url due to sandboxing, compare lastPathComponent instead
-                    return (newURL.lastPathComponent != url.lastPathComponent && !isStale)
-                }
-                bookmarks = [newBookmark] + bookmarks
-                if bookmarks.count > 5 {
-                    bookmarks.removeLast()
-                }
-                UserDefaults.standard.setValue(bookmarks, forKey: "recentFolder")
-            } else {
-                UserDefaults.standard.setValue([newBookmark], forKey: "recentFolder")
-            }
-        }
-        if resetEditors {
-            DispatchQueue.main.async {
-                self.closeAllEditors()
-                self.terminalManager.resetAndSetNewRootDirectory(url: url)
-            }
-        }
         extensionManager.onWorkSpaceStorageChanged(newUrl: url)
     }
 

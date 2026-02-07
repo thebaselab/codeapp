@@ -24,6 +24,7 @@ class WorkSpaceStorage: ObservableObject {
     private var directoryMonitor = DirectoryMonitor()
     private var onDirectoryChangeAction: ((String) -> Void)? = nil
     private var onTerminalDataAction: ((Data) -> Void)? = nil
+    private var onRemoteDisconnectAction: (() -> Void)? = nil
     private var directoryStorage: [String: [(FileItemRepresentable)]] = [:]
     private var fss: [String: FileSystemProvider] = [:]
     private var isConnecting = false
@@ -228,18 +229,27 @@ class WorkSpaceStorage: ObservableObject {
 
         fss[currentScheme!] = nil
 
-        let documentDir = getRootDirectory()
-        self.currentDirectory = FileItemRepresentable(
-            name: documentDir.lastPathComponent, url: documentDir.absoluteString, isDirectory: true)
-        self.requestDirectoryUpdateAt(id: documentDir.absoluteString)
+        onRemoteDisconnectAction?()
+
+        //        let documentDir = getRootDirectory()
+        //        self.currentDirectory = FileItemRepresentable(
+        //            name: documentDir.lastPathComponent, url: documentDir.absoluteString, isDirectory: true)
+        //        self.requestDirectoryUpdateAt(id: documentDir.absoluteString)
     }
 
+    /// Assign the callback that fires when a remote server has terminal data incoming
     func onTerminalData(_ action: @escaping (Data) -> Void) {
         onTerminalDataAction = action
     }
 
+    /// Assign the callback that fires when files changes are detected in the directory
     func onDirectoryChange(_ action: @escaping ((String) -> Void)) {
         onDirectoryChangeAction = action
+    }
+
+    /// Assign the callback that fires when a remote server is being disconnected
+    func onRemoteDisconnect(_ action: @escaping (() -> Void)) {
+        onRemoteDisconnectAction = action
     }
 
     /// Reload the whole directory and invalidate all existing cache

@@ -248,12 +248,14 @@ class TerminalManager: ObservableObject {
         }
     }
 
+    /// Close all terminals exepct the first one, and reset that terminal's state
     func resetAndSetNewRootDirectory(url: URL) {
         assertMainThread()
         rootURL = url
-        for terminal in terminals {
-            terminal.resetAndSetNewRootDirectory(url: url)
+        for terminal in terminals.suffix(terminals.count - 1) {
+            closeTerminal(id: terminal.id)
         }
+        terminals.first?.resetAndSetNewRootDirectory(url: url)
     }
 
     /// Sets the terminal service provider on the active terminal only.
