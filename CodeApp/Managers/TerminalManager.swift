@@ -281,6 +281,10 @@ class TerminalManager: ObservableObject {
         terminals.count < TerminalManager.maxTerminals && remoteTerminalId == nil
     }
 
+    var canReset: Bool {
+        terminalServiceProvider == nil
+    }
+
     private func setActiveTerminalId(_ id: UUID?) {
         activeTerminalId = id
         syncRemoteTerminalId()

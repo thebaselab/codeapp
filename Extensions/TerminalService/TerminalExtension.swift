@@ -32,14 +32,16 @@ private struct ToolbarView: View {
                 .help("New Terminal")
             }
 
-            Button(
-                action: {
-                    App.terminalManager.activeTerminal?.reset()
-                },
-                label: {
-                    Image(systemName: "trash")
-                }
-            ).keyboardShortcut("k", modifiers: [.command])
+            if App.terminalManager.canReset {
+                Button(
+                    action: {
+                        App.terminalManager.activeTerminal?.reset()
+                    },
+                    label: {
+                        Image(systemName: "trash")
+                    }
+                ).keyboardShortcut("k", modifiers: [.command])
+            }
         }
     }
 }
