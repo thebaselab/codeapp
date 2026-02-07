@@ -257,22 +257,19 @@ class TerminalManager: ObservableObject {
     }
 
     /// Sets the terminal service provider on the active terminal only.
-    func setTerminalServiceProviderForAll(_ provider: TerminalServiceProvider?) {
+    func setTerminalServiceProviderForActiveTerminal(_ provider: TerminalServiceProvider?) {
         assertMainThread()
         terminalServiceProvider = provider
-        let targetId = activeTerminalId ?? terminals.first?.id
-        for terminal in terminals {
-            terminal.terminalServiceProvider =
-                terminal.id == targetId ? provider : nil
-        }
+        activeTerminal?.terminalServiceProvider = provider
+
         // Track the active terminal as the remote terminal when connecting
         if let provider = provider {
             provider.onDisconnect { [weak self] in
                 DispatchQueue.main.async {
-                    self?.setTerminalServiceProviderForAll(nil)
+                    self?.setTerminalServiceProviderForActiveTerminal(nil)
                 }
             }
-            remoteTerminalId = targetId
+            remoteTerminalId = activeTerminal?.id
         } else {
             remoteTerminalId = nil
         }

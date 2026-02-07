@@ -998,7 +998,7 @@ class MainApp: ObservableObject {
             notificationManager.showInformationMessage(
                 "remote.connected")
             // Set terminal service provider for the active terminal
-            terminalManager.setTerminalServiceProviderForAll(
+            terminalManager.setTerminalServiceProviderForActiveTerminal(
                 workSpaceStorage.terminalServiceProvider)
         }
 
