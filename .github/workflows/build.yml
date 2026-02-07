@@ -10,7 +10,7 @@ concurrency:
 jobs:
   deploy:
     name: Deploying to TestFlight
-    runs-on: macOS-15
+    runs-on: macOS-26
 
     steps:
       - name: Checkout repository

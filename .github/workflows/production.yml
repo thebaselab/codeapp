@@ -8,7 +8,7 @@ concurrency:
 jobs:
   deploy:
     name: Deploying to App Store
-    runs-on: macOS-15
+    runs-on: macOS-26
 
     steps:
       - name: Checkout repository
