@@ -33,15 +33,6 @@ private struct ToolbarView: View {
 
             Button(
                 action: {
-                    App.terminalManager.activeTerminal?.sendInterrupt()
-                },
-                label: {
-                    Text("^C")
-                }
-            ).keyboardShortcut("c", modifiers: [.control])
-
-            Button(
-                action: {
                     App.terminalManager.activeTerminal?.reset()
                 },
                 label: {
