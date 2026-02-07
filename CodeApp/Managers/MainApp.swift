@@ -197,10 +197,6 @@ class MainApp: ObservableObject {
     let terminalManager: TerminalManager
     var monacoInstance: EditorImplementation! = nil
 
-    // Backward compatibility: returns the active terminal
-    var terminalInstance: TerminalInstance! {
-        terminalManager.activeTerminal
-    }
     var editorTypesMonitor: FolderMonitor? = nil
     let deviceSupportsBiometricAuth: Bool = biometricAuthSupported()
     let sceneIdentifier = UUID()
