@@ -656,3 +656,11 @@
 "remote.port_forward.address_example" = "例如 6000 或 127.0.0.1:6000";
 "remote.settings.ssh_remote" = "SSH 远程";
 "remote.settings.resolve_home_path" = "解析主目录路径";
+"terminal.tab.accessibility.active" = "活跃";
+"terminal.tab.accessibility.running" = "运行中";
+"terminal.tab.accessibility.hint" = "双击以切换到此终端";
+"terminal.tab.kill" = "关闭终端";
+"terminal.tab.kill_confirmation.title" = "关闭终端?";
+"terminal.tab.kill_confirmation.cancel" = "取消";
+"terminal.tab.kill_confirmation.kill" = "关闭";
+"terminal.tab.kill_confirmation.message" = "此终端有正在运行的进程。您确定要关闭它吗?";

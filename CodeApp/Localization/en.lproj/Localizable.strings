@@ -561,3 +561,11 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.port_forward.address_example" = "e.g. 6000 or 127.0.0.1:6000";
 "remote.settings.ssh_remote" = "SSH Remote";
 "remote.settings.resolve_home_path" = "Resolve Home Path";
+"terminal.tab.accessibility.active" = "Active";
+"terminal.tab.accessibility.running" = "Running";
+"terminal.tab.accessibility.hint" = "Double tap to switch to this terminal";
+"terminal.tab.kill" = "Kill Terminal";
+"terminal.tab.kill_confirmation.title" = "Kill Terminal?";
+"terminal.tab.kill_confirmation.cancel" = "Cancel";
+"terminal.tab.kill_confirmation.kill" = "Kill";
+"terminal.tab.kill_confirmation.message" = "This terminal has a running process. Are you sure you want to kill it?";

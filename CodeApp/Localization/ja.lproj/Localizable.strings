@@ -666,3 +666,12 @@
 "remote.port_forward.address_example" = "例えば 6000 または 127.0.0.1:6000";
 "remote.settings.ssh_remote" = "SSH リモート";
 "remote.settings.resolve_home_path" = "ホーム パスを解決する";
+
+"terminal.tab.accessibility.active" = "アクティブ";
+"terminal.tab.accessibility.running" = "実行中";
+"terminal.tab.accessibility.hint" = "ダブルタップしてこのターミナルに切り替える";
+"terminal.tab.kill" = "ターミナルを閉じる";
+"terminal.tab.kill_confirmation.title" = "ターミナルを閉じますか?";
+"terminal.tab.kill_confirmation.cancel" = "キャンセル";
+"terminal.tab.kill_confirmation.kill" = "閉じる";
+"terminal.tab.kill_confirmation.message" = "このターミナルは実行中のプロセスを持っています。本当に閉じますか?";

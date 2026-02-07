@@ -60,11 +60,11 @@ struct TerminalTabRow: View {
 
     private var accessibilityLabel: String {
         let activeLabel = NSLocalizedString(
-            "Active",
+            "terminal.tab.accessibility.active",
             comment: "Accessibility label for active terminal"
         )
         let runningLabel = NSLocalizedString(
-            "Running",
+            "terminal.tab.accessibility.running",
             comment: "Accessibility label for running terminal"
         )
         var parts = [terminal.name]
@@ -110,33 +110,33 @@ struct TerminalTabRow: View {
         .accessibilityAddTraits(isActive ? [.isSelected, .isButton] : [.isButton])
         .accessibilityHint(
             NSLocalizedString(
-                "Double tap to switch to this terminal",
+                "terminal.tab.accessibility.hint",
                 comment: "Accessibility hint for terminal tab")
         )
         .contextMenu {
             if canClose {
-                Button(NSLocalizedString("Kill Terminal", comment: ""), role: .destructive) {
+                Button(role: .destructive) {
                     if isTerminalBusy {
                         showingKillConfirmation = true
                     } else {
                         onClose()
                     }
+                } label: {
+                    Label("terminal.tab.kill", systemImage: "xmark")
                 }
             }
         }
         .alert(
-            NSLocalizedString("Kill Terminal?", comment: ""),
+            "terminal.tab.kill_confirmation.title",
             isPresented: $showingKillConfirmation
         ) {
-            Button(NSLocalizedString("Cancel", comment: ""), role: .cancel) {}
-            Button(NSLocalizedString("Kill", comment: ""), role: .destructive) {
+            Button("terminal.tab.kill_confirmation.cancel", role: .cancel) {}
+            Button("terminal.tab.kill_confirmation.kill", role: .destructive) {
                 onClose()
             }
         } message: {
             Text(
-                NSLocalizedString(
-                    "This terminal has a running process. Are you sure you want to kill it?",
-                    comment: ""))
+                "terminal.tab.kill_confirmation.message")
         }
     }
 }

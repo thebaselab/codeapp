@@ -666,3 +666,12 @@
 "remote.port_forward.address_example" = "z.B. 6000 oder 127.0.0.1:6000";
 "remote.settings.ssh_remote" = "SSH Remote";
 "remote.settings.resolve_home_path" = "Pfad auflösen";
+
+"terminal.tab.accessibility.active" = "Aktiv";
+"terminal.tab.accessibility.running" = "Läuft";
+"terminal.tab.accessibility.hint" = "Doppeltippen zum Wechseln zu diesem Terminal";
+"terminal.tab.kill" = "Terminal beenden";
+"terminal.tab.kill_confirmation.title" = "Terminal beenden?";
+"terminal.tab.kill_confirmation.cancel" = "Abbrechen";
+"terminal.tab.kill_confirmation.kill" = "Beenden";
+"terminal.tab.kill_confirmation.message" = "Dieses Terminal hat einen laufenden Prozess. Möchten Sie ihn wirklich beenden?";

@@ -703,3 +703,11 @@
 "remote.port_forward.address_example" = "пр. 6000 или 127.0.0.1:6000";
 "remote.settings.ssh_remote" = "SSH-подключение";
 "remote.settings.resolve_home_path" = "Открывать домашний каталог";
+"terminal.tab.accessibility.active" = "Активна";
+"terminal.tab.accessibility.running" = "Выполняется";
+"terminal.tab.accessibility.hint" = "Дважды коснитесь, чтобы переключиться на этот терминал";
+"terminal.tab.kill" = "Закрыть терминал";
+"terminal.tab.kill_confirmation.title" = "Закрыть терминал?";
+"terminal.tab.kill_confirmation.cancel" = "Отмена";
+"terminal.tab.kill_confirmation.kill" = "Закрыть";
+"terminal.tab.kill_confirmation.message" = "Этот терминал имеет запущенный процесс. Вы уверены, что хотите его закрыть?";
