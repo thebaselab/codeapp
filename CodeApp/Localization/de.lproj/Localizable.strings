@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.0 (Januar 2026)**
+##### **v1.12.0 (Februar 2026)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -22,7 +22,12 @@
 ";
 
 "Changelog.message" =
-"### 1.11.0 (Januar 2026)
+"### 1.12.0 (Feburary 2026)
+- Unterstützung für mehrere Terminals
+- Unterstützung für Terminal‑Modifikatortasten
+- Besonderer Dank an @ThalesMMS für den Beitrag
+
+### 1.11.0 (Januar 2026)
 - Liquid Glass-Benutzeroberfläche übernommen
 
 ### 1.10.4 (September 2025)
@@ -226,13 +231,15 @@
 
 ---
 
-### v1.2.3 (April 2021)
+### 1.12.0 (Februar 2026)
+- Unterstützung für mehrere Terminals
+- Unterstützung für Terminal‑Modifikatortasten
+- Besonderer Dank an @ThalesMMS für den Beitrag
+
 - Editor
   - 6 Additional Color Themes
   - Read-only mode
-  - Built-in types for Node.js
   - Support for @types definitions
-- Explorer
   - Multi-file searching
 - Python Runtime
   - Built-in Matplotlib, Pandas

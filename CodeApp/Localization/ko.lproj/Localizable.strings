@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.0 (2026년 1월)**
+##### **v1.12.0 (2026년 2월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -22,7 +22,12 @@
 ";
 
 "Changelog.message" =
-"### 1.11.0 (2026년 1월)
+"### 1.12.0 (Feburary 2026)
+- 멀티 터미널 지원
+- 터미널 키 모디파이어 지원
+- 기여해 주신 @ThalesMMS님께 특별한 감사
+
+### 1.11.0 (2026년 1월)
 - Liquid Glass UI 채택
 
 ### 1.10.4 (2025년 9월)
