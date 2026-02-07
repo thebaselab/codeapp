@@ -179,6 +179,17 @@
         altLocked = locked;
       }
 
+      function getModifierStates() {
+        return {
+          controlActive: controlActive,
+          controlLocked: controlLocked,
+          controlGeneration: controlGeneration,
+          altActive: altActive,
+          altLocked: altLocked,
+          altGeneration: altGeneration
+        };
+      }
+
       function shouldApplyModifierToCsi(final, params) {
         if (final >= "A" && final <= "D") {
           return true;

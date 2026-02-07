@@ -564,6 +564,15 @@ extension TerminalInstance {
     }
 }
 
+struct ModifierStates: Codable {
+    var controlActive: Bool
+    var controlLocked: Bool
+    var controlGeneration: Int
+    var altActive: Bool
+    var altLocked: Bool
+    var altGeneration: Int
+}
+
 // Keyboard toolbar methods
 
 extension TerminalInstance {
@@ -590,6 +599,27 @@ extension TerminalInstance {
 
     func setAltLocked(_ locked: Bool) {
         executeScript("setAltLocked(\(locked))")
+    }
+
+    /// Asynchronously obtains all modifier states from JavaScript in a single call
+    func getModifierStates() async -> ModifierStates {
+        guard
+            let dict = try? await webView.evaluateJavaScript("getModifierStates()")
+                as? [String: Any],
+            let jsonData = try? JSONSerialization.data(withJSONObject: dict),
+            let states = try? JSONDecoder().decode(ModifierStates.self, from: jsonData)
+        else {
+            return ModifierStates(
+                controlActive: false,
+                controlLocked: false,
+                controlGeneration: 0,
+                altActive: false,
+                altLocked: false,
+                altGeneration: 0
+            )
+        }
+
+        return states
     }
 }
 

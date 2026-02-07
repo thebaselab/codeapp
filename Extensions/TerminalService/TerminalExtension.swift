@@ -51,7 +51,7 @@ private struct _TerminalView: UIViewRepresentable {
 
     private func injectBarButtons(webView: WebViewBase) {
         let toolbar = UIHostingController(
-            rootView: TerminalKeyboardToolBar(terminalId: terminal.id).environmentObject(App))
+            rootView: TerminalKeyboardToolBar().environmentObject(App))
         toolbar.view.frame = CGRect(
             x: 0, y: 0, width: (webView.bounds.width), height: 40)
 

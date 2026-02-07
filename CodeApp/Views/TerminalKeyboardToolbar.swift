@@ -21,13 +21,7 @@ struct TerminalKeyboardToolBar: View {
     @State var altLastTapTime: Date?
     @State var altGeneration = 0
 
-    // Optional terminal ID - if nil, uses active terminal
-    var terminalId: UUID?
-
     private var terminal: TerminalInstance? {
-        if let id = terminalId {
-            return App.terminalManager.terminals.first { $0.id == id }
-        }
         return App.terminalManager.activeTerminal
     }
 
@@ -114,6 +108,22 @@ struct TerminalKeyboardToolBar: View {
     private func moveCursorAndResetModifiers(codeSequence: String) {
         terminal?.moveCursor(codeSequence: codeSequence)
         resetUnlockedModifiers()
+    }
+
+    private func syncModifierStatesFromTerminal() {
+        guard let terminal = terminal else { return }
+        Task {
+            let states = await terminal.getModifierStates()
+
+            await MainActor.run {
+                controlActive = states.controlActive
+                controlLocked = states.controlLocked
+                altActive = states.altActive
+                altLocked = states.altLocked
+                controlGeneration = states.controlGeneration
+                altGeneration = states.altGeneration
+            }
+        }
     }
 
     var body: some View {
@@ -277,6 +287,13 @@ struct TerminalKeyboardToolBar: View {
                 {
                     altActive = false
                 }
-            })
+            }
+        )
+        .onChange(of: App.terminalManager.activeTerminalId) { _ in
+            syncModifierStatesFromTerminal()
+        }
+        .onAppear {
+            syncModifierStatesFromTerminal()
+        }
     }
 }
