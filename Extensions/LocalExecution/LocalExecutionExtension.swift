@@ -49,15 +49,15 @@ class LocalExecutionExtension: CodeAppExtension {
             return
         }
 
-        guard let executor = activeTerminal.executor else {
+        guard let executor = await activeTerminal.executor else {
             app.notificationManager.showErrorMessage(
-                "Cannot run: terminal '\(activeTerminal.name)' has no executor.")
+                "Cannot run: terminal '\(await activeTerminal.name)' has no executor.")
             return
         }
 
         guard executor.state == .idle else {
             app.notificationManager.showWarningMessage(
-                "Cannot run: terminal '\(activeTerminal.name)' executor is \(executor.state.displayName) (expected idle)."
+                "Cannot run: terminal '\(await activeTerminal.name)' executor is \(executor.state.displayName) (expected idle)."
             )
             return
         }
