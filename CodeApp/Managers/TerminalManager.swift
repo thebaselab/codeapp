@@ -70,8 +70,9 @@ class TerminalManager: ObservableObject {
     var remoteTerminal: TerminalInstance? {
         if let id = remoteTerminalId {
             return terminals.first { $0.id == id }
+        } else {
+            return nil
         }
-        return terminals.first { $0.terminalServiceProvider != nil }
     }
 
     init(rootURL: URL, options: TerminalOptions) {
