@@ -282,7 +282,7 @@ class TerminalManager: ObservableObject {
     }
 
     var canCreateNewTerminal: Bool {
-        terminals.count < TerminalManager.maxTerminals
+        terminals.count < TerminalManager.maxTerminals && remoteTerminalId == nil
     }
 
     private func setActiveTerminalId(_ id: UUID?) {

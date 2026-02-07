@@ -23,13 +23,14 @@ private struct ToolbarView: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            Button(action: {
-                App.terminalManager.createTerminal()
-            }) {
-                Image(systemName: "plus")
+            if App.terminalManager.canCreateNewTerminal {
+                Button(action: {
+                    App.terminalManager.createTerminal()
+                }) {
+                    Image(systemName: "plus")
+                }
+                .help("New Terminal")
             }
-            .disabled(!App.terminalManager.canCreateNewTerminal)
-            .help("New Terminal")
 
             Button(
                 action: {
