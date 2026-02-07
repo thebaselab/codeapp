@@ -668,7 +668,7 @@
 
 "terminal.tab.accessibility.active" = "활성";
 "terminal.tab.accessibility.running" = "실행 중";
-"terminal.tab.accessibility.hint" = "이 터미널로 전환하려면 두 번 탭하세요";
+"terminal.tab.accessibility.hint" = "이 터미널로 전환하려면 탭하세요";
 "terminal.tab.kill" = "터미널 닫기";
 "terminal.tab.kill_confirmation.title" = "터미널을 닫으시겠습니까?";
 "terminal.tab.kill_confirmation.cancel" = "취소";

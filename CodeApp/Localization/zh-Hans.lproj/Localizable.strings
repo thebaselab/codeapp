@@ -658,7 +658,7 @@
 "remote.settings.resolve_home_path" = "解析主目录路径";
 "terminal.tab.accessibility.active" = "活跃";
 "terminal.tab.accessibility.running" = "运行中";
-"terminal.tab.accessibility.hint" = "双击以切换到此终端";
+"terminal.tab.accessibility.hint" = "点按以切换到此终端";
 "terminal.tab.kill" = "关闭终端";
 "terminal.tab.kill_confirmation.title" = "关闭终端?";
 "terminal.tab.kill_confirmation.cancel" = "取消";

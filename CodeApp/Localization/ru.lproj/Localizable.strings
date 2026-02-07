@@ -705,7 +705,7 @@
 "remote.settings.resolve_home_path" = "Открывать домашний каталог";
 "terminal.tab.accessibility.active" = "Активна";
 "terminal.tab.accessibility.running" = "Выполняется";
-"terminal.tab.accessibility.hint" = "Дважды коснитесь, чтобы переключиться на этот терминал";
+"terminal.tab.accessibility.hint" = "Нажмите, чтобы переключиться на этот терминал";
 "terminal.tab.kill" = "Закрыть терминал";
 "terminal.tab.kill_confirmation.title" = "Закрыть терминал?";
 "terminal.tab.kill_confirmation.cancel" = "Отмена";

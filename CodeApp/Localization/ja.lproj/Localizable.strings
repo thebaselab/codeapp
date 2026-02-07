@@ -669,7 +669,7 @@
 
 "terminal.tab.accessibility.active" = "アクティブ";
 "terminal.tab.accessibility.running" = "実行中";
-"terminal.tab.accessibility.hint" = "ダブルタップしてこのターミナルに切り替える";
+"terminal.tab.accessibility.hint" = "タップしてこのターミナルに切り替える";
 "terminal.tab.kill" = "ターミナルを閉じる";
 "terminal.tab.kill_confirmation.title" = "ターミナルを閉じますか?";
 "terminal.tab.kill_confirmation.cancel" = "キャンセル";

@@ -563,7 +563,7 @@ are licensed under [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_lice
 "remote.settings.resolve_home_path" = "Resolve Home Path";
 "terminal.tab.accessibility.active" = "Active";
 "terminal.tab.accessibility.running" = "Running";
-"terminal.tab.accessibility.hint" = "Double tap to switch to this terminal";
+"terminal.tab.accessibility.hint" = "Tap to switch to this terminal";
 "terminal.tab.kill" = "Kill Terminal";
 "terminal.tab.kill_confirmation.title" = "Kill Terminal?";
 "terminal.tab.kill_confirmation.cancel" = "Cancel";

@@ -669,7 +669,7 @@
 
 "terminal.tab.accessibility.active" = "Aktiv";
 "terminal.tab.accessibility.running" = "Läuft";
-"terminal.tab.accessibility.hint" = "Doppeltippen zum Wechseln zu diesem Terminal";
+"terminal.tab.accessibility.hint" = "Tippen, um zu diesem Terminal zu wechseln";
 "terminal.tab.kill" = "Terminal beenden";
 "terminal.tab.kill_confirmation.title" = "Terminal beenden?";
 "terminal.tab.kill_confirmation.cancel" = "Abbrechen";
