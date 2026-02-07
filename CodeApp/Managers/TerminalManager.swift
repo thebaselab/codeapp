@@ -91,9 +91,7 @@ class TerminalManager: ObservableObject {
 
     private func createTerminalInstance(name: String) -> TerminalInstance {
         let terminal = TerminalInstance(root: rootURL, options: options, name: name)
-        if let provider = terminalServiceProvider, terminal.id == remoteTerminalId {
-            terminal.terminalServiceProvider = provider
-        }
+        // We do not support creating remote terminal instances for now
         return terminal
     }
 
