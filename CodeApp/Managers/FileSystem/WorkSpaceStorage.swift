@@ -230,11 +230,6 @@ class WorkSpaceStorage: ObservableObject {
         fss[currentScheme!] = nil
 
         onRemoteDisconnectAction?()
-
-        //        let documentDir = getRootDirectory()
-        //        self.currentDirectory = FileItemRepresentable(
-        //            name: documentDir.lastPathComponent, url: documentDir.absoluteString, isDirectory: true)
-        //        self.requestDirectoryUpdateAt(id: documentDir.absoluteString)
     }
 
     /// Assign the callback that fires when a remote server has terminal data incoming
