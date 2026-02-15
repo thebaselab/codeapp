@@ -170,6 +170,10 @@ class TerminalManager: ObservableObject {
         logger.info(
             "created terminal name: \(terminal.name, privacy: .public) id: \(terminal.id, privacy: .public)"
         )
+        // Introduce delay to allow web view finishes loading before calling focus
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            terminal.focus()
+        }
         return terminal
     }
 
@@ -288,6 +292,7 @@ class TerminalManager: ObservableObject {
     private func setActiveTerminalId(_ id: UUID?) {
         activeTerminalId = id
         syncRemoteTerminalId()
+        activeTerminal?.focus()
     }
 
     private func syncRemoteTerminalId() {

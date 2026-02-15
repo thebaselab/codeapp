@@ -55,6 +55,10 @@ class TerminalInstance: NSObject, WKScriptMessageHandler, WKNavigationDelegate, 
         executeScript("document.getElementById('overlay').focus()")
     }
 
+    func focus() {
+        executeScript("term.focus()")
+    }
+
     func sendInterrupt() {
         executeScript("sendInterrupt()")
     }
