@@ -108,6 +108,13 @@ struct NewFileView: View {
                 import Swift
                 print("Hello, World!")
                 """
+        case 100:
+            name = "default.fsx"
+            content = """
+                // Created on \(UIDevice.current.name).
+
+                printfn "Hello, World!"
+                """
         case -2:
             name = "index.html"
             content = """
@@ -182,6 +189,7 @@ struct NewFileView: View {
         .init(code: 4, name: "PHP"),
         .init(code: 62, name: "Java"),
         .init(code: 83, name: "Swift"),
+        .init(code: 100, name: "F#"),
         .init(code: -2, name: "HTML"),
         .init(code: -3, name: "CSS"),
     ]
