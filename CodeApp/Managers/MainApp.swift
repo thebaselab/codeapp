@@ -529,7 +529,7 @@ class MainApp: ObservableObject {
         self.objectWillChange.send()
     }
 
-    func createFolder(at: URL, named: String = "New Folder") async throws {
+    func createFolder(at: URL, named: String = NSLocalizedString("New Folder", comment: "")) async throws {
         let folderURL = at.appendingPathComponent(named)
         let url = try await workSpaceStorage.urlWithSuffixIfExistingFileExist(url: folderURL)
         do {
