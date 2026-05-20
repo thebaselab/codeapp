@@ -1,0 +1,687 @@
+/* 
+  Localizable.strings
+  Code App
+
+  Created by Emir Ömer on 20/05/2026.
+  
+*/
+
+"Welcome Message" =
+"# Code App
+##### **v1.12.1 (Mart 2026)**
+#### Başlangıç
+[Yeni Dosya](https://thebaselab.com/code/newfile)
+[Dosya Aç](https://thebaselab.com/code/openfile)
+[Klasör Aç](https://thebaselab.com/code/openfolder)
+
+#### Yardım
+[Dökümantasyon](https://code.thebaselab.com)
+[GitHub](https://github.com/thebaselab/codeapp)
+[E-Mail](mailto:support@thebaselab.com)
+[X](https://x.com/thebaselab)
+";
+
+"Changelog.message" =
+"### 1.12.1 (Mart 2026)
+- SSH dizinleriyle ilgili bir hata düzeltildi.
+
+### 1.12.0 (Şubat 2026)
+- Çoklu terminal desteği
+- Terminal değiştirici tuşları desteği
+- Paylaşım için @ThalesMMS'e özel teşekkürler.
+
+### 1.11.0 (Ocak 2026)
+- Liquid Glass kullanıcı arayüzü benimsendi.
+
+### 1.10.4 (Eylül 2025)
+- Fark düzenleyiciyle ilgili hata düzeltmeleri.
+
+### 1.10.3 (Eylül 2025)
+- Hata düzeltmeleri
+
+### 1.10.2 (Mart 2025)
+- Rus yerelleştirmesi
+
+### 1.10.1 (Ekim 2024)
+- Hata düzeltmeleri
+
+### 1.10.0 (Ekim 2024)
+- Python ve Java için dil sunucuları
+- Monaco editöründe daha fazla dil desteği
+
+### 1.9.0 (Temmuz 2024)
+- SSH
+  - Proxy atlama
+  - 2FA / Klavye Etkileşimli Kimlik Doğrulama
+- Belirli SSH Git depolarının klonlanamaması sorununu giderir.
+
+### 1.8.0 (Haziran 2024)
+- Editör
+  - Runestone düzenleyici modu (yerleşik metin seçme kontrollerine sahip bir düzenleyici)
+  - Kotlin için sözdizimi vurgulama
+  - Klavye araç çubuğu artık uygulamayı yeniden başlatmaya gerek kalmadan etkinleştirilebilir/devre dışı bırakılabilir.
+- Terminal iyileştirmeleri
+  - Özel yazı tipi
+  - Klavye araç çubuğu
+
+### 1.7.4 (Mayıs 2024)
+- Klavye araç çubuğunu kullanarak metin yapıştırmayla ilgili bir sorunu düzeltir.
+
+### 1.7.3 (Mayıs 2024)
+- Klavye araç çubuğunun devre dışı bırakılamaması sorununu düzeltir.
+
+### 1.7.2 (Mayıs 2024)
+- Yerel Java / Node.js'de etkileşimli giriş
+- Birden fazla dosya kullanan Java programlarıyla ilgili bir sorunu düzeltir.
+
+### 1.7.1 (Mart 2024)
+- Çalışmakta olan C programlarını sonlandırma yeteneği
+
+### 1.7.0 (Şubat 2024)
+- Vim modu
+- Dosyaları ve klasörleri Dosya Gezgini'ne sürükleyip bırakın.
+- Kullanıcı tarafından yüklenen yazı tiplerini kullanabilme özelliği
+– stdc++.h dosyasındaki desteklenmeyen başlık dosyalarını kaldırın.
+- Editörde kaydırma işlemi iyileştirildi.
+
+### 1.6.0 (Ocak 2024)
+- Yerel dil iyileştirmeleri
+   - Yerel Java (OpenJDK 8)
+     - Artık "javac" ve "java" komutlarını kullanarak Java programlarını çevrimdışı olarak derleyebilir ve çalıştırabilirsiniz.
+   - Node.js 18.19.0
+   - PHP 8.3.2 (Zlib ile)
+– Dosya silme işlemi sırasında görüntülenen onay istemi artık isteğe bağlıdır ve varsayılan olarak devre dışıdır.
+
+### 1.5.3 (Aralık 2023)
+- Terminalin varsayılan olarak ~ işaretini kullanmasına neden olan bir hata düzeltildi.
+
+### 1.5.2 (Aralık 2023)
+- SSH Remote artık sembolik bağlantıları çözümlüyor.
+
+### 1.5.1 (Ekim 2023)
+- FTP uzaktan erişimiyle ilgili sorunları giderir.
+– "Port Yönlendirme" sekmesinin her zaman kompakt modda görüntülenmesine neden olan bir hata düzeltildi.
+
+### 1.5.0 (Ekim 2023)
+- SSH uzaktan bağlantısında port yönlendirme
+– Bazı SSH uzak bağlantılarının kimlik doğrulamasının yapılamaması sorununu giderir.
+– Uzaktan kumandaya bağlanırken ana yolu çözümleme seçeneği
+
+### 1.4.7 (Eylül 2023)
+- SSH uzaktan erişimindeki bazı sorunları giderir.
+
+### 1.4.6 (Ağustos 2023)
+- Sürüm kontrolü
+   - Kimlik doğrulama
+     - SSH anahtarı kimlik doğrulaması
+     - Çoklu kimlik bilgileri
+   - Yeni özelliklern
+     - Uzaktan kumandadan çekin.
+     - Çatışma çözümü
+     - Dalları ve etiketleri oluştur/sil
+     - Etiketleri taşı
+     - lg2 komutu
+- Daha fazla iyileştirme
+   - Ayarlanabilir kenar çubuğu genişliği
+   - Clang'deki bits/stdc++.h başlık dosyası
+   – Yerel derleyici yerine uzaktan bir C derleyici kullanma seçeneği
+   – Anahtar dosyalarının içe aktarılamamasına neden olan bir hata düzeltildi.
+   - iOS kilit modu desteği
+   
+### v1.4.5 (Temmuz 2023)
+- iCloud dosyalarını doğru şekilde kullanın
+- Kullanıcı arayüzü iyileştirmeleri
+
+### v1.4.4 (Mayıs 2023)
+- Yazı tipi ligatürlerini devre dışı bırakma seçeneği
+- Bellekteki özel SSH anahtarı
+- diğer iyileştirmeler
+
+### v1.4.3 (Ocak 2023)
+- Sorun giderme
+- Japonca yerelleştirme
+- Topluluk şablonları
+
+### v1.4.1 (Aralık 2022)
+- Sorun giderme
+
+### v1.4.0 (Aralık 2022)
+- PDF önizlemesi
+- Genel performans ve kararlılık iyileştirmeleri
+- Bölünmüş görünüm desteği
+
+### v1.3.6 (Ekim 2022)
+- Node.js sürümünü v16.17.0'a güncelleyin.
+- Svelte için sözdizimi vurgulama
+- Yeni düzenleyici temaları
+- Terminal sonlandırma sinyallerini doğru şekilde işleyin.
+- `Code` komutu kullanılarak dizinlerin açılmasını destekler.
+- Emmet'in çalışmasını engelleyen bir hata düzeltildi.
+### v1.3.5 (Eylül 2022)
+- Kullanıcı arayüzü iyileştirmeleri
+- Dosya Gezgini'nde dosya taşıma desteği
+- Uzak sunuculardan dosya indirme desteği
+- Git push işlemi için farklı uzak kontroller seçme seçeneği
+### v1.3.4 (Haziran 2022)
+- SFTP için terminal desteği
+- Fira Code ve özel yazı tipleri desteği
+- Kore yerelleştirmesi
+- Yeni dokümantasyon web sitesi
+- Genel iyileştirmeler
+### v1.3.3 (Mayıs 2022)
+- Hata düzeltmeleri
+### v1.3.2 (Mayıs 2022)
+- Mevcut kullanıcıların temalara erişmesini engelleyen bir hata düzeltildi.
+### v1.3.1 (Mayıs 2022)
+- Hata düzeltmeleri
+- Artık özel Java giriş sınıfı adını kullanabilirsiniz.
+- Code+'ı tanıtıyoruz - Code'u herkese ulaştırmamızı ve tüm temaların kilidini açmamızı sağlayan bir abonelik hizmeti. Mevcut kullanıcılar uygulamaya tam erişime sahip olmaya devam ediyor.
+### v1.3.0 (Mayıs 2022)
+- Uzaktan Destek (SFTP ve FTP)
+- Dinamik tip desteği
+- Deneysel özellik: Metin dosyaları için yazım denetimi
+### v1.2.13 (Mart 2022)
+- iOS 15.4 ile uyumluluk.
+- Node.js için uluslararasılaştırma desteği
+### v1.2.12 (Mart 2022)
+- Kritik hata düzeltmesi
+### v1.2.10 (Mart 2022)
+- Özel klavye kısayolları
+- Satır numaraları üzerinde kaydırarak metin seçimi
+- Kullanıcı arayüzü iyileştirmeleri
+- Editörün bazen yüklenmemesi sorununu giderir.
+- Node.js 16.13.2
+### v1.2.9 (Ocak 2022)
+- Aşağıdaki sorunları giderir:
+  - Avrupa klavye düzenlerinde bazı tuşlar çalışmaz (#237)
+  - `curl` artık çalışmıyor (#330)
+  - Varsayılan bir argüman bazı npm komutlarının çökmesine neden oluyor (#326)
+### v1.2.8 (Aralık 2021)
+- Aşağıdaki sorunları giderir:
+  - ssh-keygen terminalin takılmasına neden oluyor (#314)
+  - Editör bazen boş bir ekran gösteriyor.
+- Terraform için sözdizimi vurgulaması ekler (#319)
+### v1.2.7 (Aralık 2021)
+- Genel iyileştirmeler
+### v1.2.6 (Eylül 2021)
+- En son iOS sürümüyle uyumluluk.
+- Diğer iyileştirmeler
+### v1.2.5 (Temmuz 2021)
+- Terminal
+  - clang / clang++ ile ilgili bazı sorunlar düzeltildi.
+### v1.2.4 (Haziran 2021)
+- Editör
+  - Fare/izleme dörtlüsü seçiminin artık çalışmaması sorunu düzeltildi.
+  - TypeScript tanımı 4.2.4 sürümüne güncellendi.
+- Arayüz
+  - iPhone için yeni, kompakt yan çubuk tasarımı.
+  - Editör sekmelerinin sırasını değiştirme özelliği
+  - Xcode teması için geliştirilmiş okunabilirlik.
+  - Bağlam menüsünde dosya veya klasörleri çoğaltma özelliği
+- Performans
+  - Dosyalar Uygulamasından SMB sürücülerini açarken performans artışı.
+- Git
+  - Çeşitli uzak depolarla uyumluluk iyileştirildi.
+  - Sıralı fark göstergeleri
+  - Deneysel Git CLI aracı
+- Terminal
+  - Dosya yolu için otomatik tamamlama
+  - `code <dosya>` komutuyla kodu düzenleyicide açın.
+- Çalışma Zamanı
+  - Clang (C programını `clang main.c` ve `./a.out` komutlarıyla çalıştırın)
+  - Clang++ (C++ programını `clang++ main.cpp` ve `./a.out` komutlarıyla çalıştırın)
+  - PHP (PHP programını `php` komutuyla çalıştırın ve web sunucusunu `php -S localhost:<port>` komutuyla barındırın)
+
+---
+
+### 1.12.0 (Şubat 2026)
+- Çoklu terminal desteği
+- Terminal değiştirici tuşları için destek
+- Paylaşım için @ThalesMMS'e özel teşekkürler.
+
+- Editor
+  - 6 Ek Renk Teması
+  - Salt okuma modu
+  - @types tanımları için destek
+  - Çoklu dosya arama
+- Python Çalışma Zamanı
+  - Dahili Matplotlib, Pandas
+- Diğer
+  - Kullanıcı Arayüzü Durumunun Geri Yüklenmesi
+  - Almanca için yerelleştirme
+  - Hata düzeltmeleri ve diğer iyileştirmeler
+
+---
+
+### v1.2.1 (Mart 2021)
+- Node.js çalışma zamanı
+  - Javascript'i çevrimdışı çalıştır
+  - npm modüllerini yükleyin
+  - JavaScript komutlarını global olarak yükleyin (tsc, prettier vb.)
+  - Yeni terminal komutları: npm, npx, node
+- Python 3.9.2 çalışma zamanı
+  - Python'u çevrimdışı çalıştır
+  - Modülleri pip ile yükleyin.
+  - Python komutlarını global olarak yükle
+  - Yeni terminal komutları: pip, python, python3
+- Editör
+  - `Sorunlar` sekmesi
+  - Yeni Markdown stili
+  - Vue için sözdizimi vurgulama
+  - Yüksek yenileme hızına sahip cihazlar için yumuşak kaydırma seçeneği.
+- Terminal
+  - Artık açık renk şemasını destekliyor.
+- Dosya gezgini
+  - Satır yüksekliği azaltıldı
+- Hata düzeltmeleri
+
+---
+
+### v1.1.9 (Şubat 2021)
+- Dil
+  - Daha hızlı yürütme
+- Hata düzeltmeleri
+
+---
+
+### v1.1.8 (Şubat 2021)
+- Metin Düzenleyicisi
+  - TextMate dilbilgisine geçiş (Daha gelişmiş sözdizimi vurgulama)
+  - Daha fazla dil desteği (Groovy, HLSL, Log, Makefile, Shaderlab, Fortran, Matlab)
+  - Editörün bazen fare imleci tıklamalarını algılamamasına neden olan bir hata düzeltildi.
+  - Yeni klavye araç çubuğu
+- Sürüm Kontrolü
+  - Geliştirilmiş performans ve güvenilirlik
+  - Aşama değişiklikleri
+  - Anahtarlama şubesi
+  - Ayrılabilir kafa modu
+  - Değişiklikleri geri al
+- Dil
+  - Groovy desteği
+- Dahili terminal
+  - SSH desteği
+  - Hata düzeltmeleri
+- Dosya Gezgini
+  - Yan panel kapatıldığında, dizinler için katlanmış durumlar artık korunmaktadır.
+  - Klasör adına dokunarak klasörü genişletme özelliği
+- Diğer
+  - Kenar çubuğunun genişliği azaltıldı.
+  - Yeni sözdizimi vurgulama sistemini desteklemek amacıyla tema geçici olarak kaldırılmıştır.
+  - JSON Intellisense geçici olarak devre dışı bırakıldı.
+
+---
+
+### v1.1.7 (Ocak 2021)
+- Metin Düzenleyicisi
+  - Kodunuzu çalıştırdığınızda veya klavyeyi kapattığınızda değişiklikler artık diske yazılıyor.
+  - Sanal klavyenin bazen görünmemesi sorununu düzelttik.
+- Sürüm Kontrolü
+  - Özel depoları klonlama yeteneği
+  - Uzaktan kumandalardan veri gönderme, veri çekme ve senkronize etme yeteneği
+  - Klonlanan deponun doğru şekilde adlandırılmaması sorunu düzeltildi.
+- Dahili terminal
+  - 70'ten fazla Linux komutu (ls, cd, nslookup vb.)
+  - Bash benzeri kullanıcı temel işlevleri, örneğin borulama, geçmiş ve tamamlama.
+  - Tüm kullanılabilir komutları görüntülemek için sekme tuşuna basın.
+- Dosya Gezgini
+  - Dosyalar ve klasörler artık alfabetik olarak sıralanmıştır.
+  - Nokta ile başlayan dosyalar veya dizinler artık varsayılan olarak gizleniyor.
+  - İki parmakla kaydırma hareketiyle öğeleri seçme özelliği
+- Diğer iyileştirmeler
+  - Artık Dosyalar uygulamasından veya diğer uygulamalardan doğrudan Kod Uygulaması ile dosya açabilirsiniz.
+  - Artık ana ekrandaki uygulama simgesine basılı tutarak son kullanılan belgeleri görüntüleyebilirsiniz.
+  - Yazım hatası düzeltildi.
+";
+
+"Send us an Email" = "Bize bir e-posta gönderin";
+"Open an Issue on GitHub" = "GitHub'da bir sorun bildirin.";
+"Clear console" = "Konsolu temizle";
+"Kill Process" = "İşlemi öldür";
+"Sync" = "Senkronize";
+"Synchronize Changes" = "Değişiklikleri senkronize et";
+"You don't have any open editor." = "Açık bir editörünüz yok.";
+"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "Bu işlem, uzak depodaki değişiklikleri yerel deponuza aktarır ve yerel commit'leri ana dala yayar. Çakışmalar yerel kopyadan birleştirilir ve üzerine yazılır.";
+"User Name" = "Kullanıcı Adı";
+"Erase" = "Sil";
+"This will erase all user settings, including author identity and credentials." = "Bu işlem, yazar kimliği ve giriş bilgileri de dahil olmak üzere tüm kullanıcı ayarlarını silecektir.";
+"Erase all settings" = "Bütün Verileri Sil";
+"Release Notes" = "Değişiklik Notları";
+
+"New File" = "Yeni Dosya";
+"Open File" = "Dosya Aç";
+"Open Editors" = "Editörü Aç";
+"EXPLORER" = "DOSYA GEZGİNİ";
+"Explorer" = "Dosya Gezgini";
+"SEARCH" = "ARA";
+"Search" = "Ara";
+"Results" = "Sonuçlar";
+"Search Text" = "Metin Ara";
+"Search File" = "Dosya Ara";
+"Quick add" = "Hızlı ekle";
+"Custom" = "Özel";
+"Where" = "Nerede";
+"Current Folder" = "Mevcut Klasör";
+"Add File" = "Dosya Ekle";
+"INPUT" = "GİRİŞ";
+"PROBLEMS" = "HATALAR";
+"OUTPUT" = "ÇIKTI";
+"Options" = "Seçenekler";
+"Close All" = "Hepsini Kapat";
+"Close Workspace" = "Çalışma Alanını Kapat";
+"Preview in Safari" = "Safari İle Önizle";
+"Mini Map" = "Mini Harita";
+"Line Numbers" = "Satır Numaraları";
+"OTHERS" = "DİĞER";
+"Tab Size" = "Sekme Boyutu";
+
+"Settings" = "Ayarlar";
+"General" = "Genel";
+"Editor" = "Editör";
+"Compiler" = "Derleyici";
+"Accent" = "Aksan";
+"Font Size" = "Font Boyutu";
+"Editor Font Size" = "Editör Font Boyutu";
+"Terminal Font Size" = "Terminal Font Boyutu";
+"Bracket Completion" = "Parantez Tamamlama";
+"Theme" = "Tema";
+"Rate Code App" = "Code Uygulamasına Oy Ver";
+"About" = "Hakkında";
+"Version" = "Versiyon";
+
+"Done" = "Tamam";
+
+"Recent" = "Geçmiş";
+"Show in Files App" = "Dosyalar Uygulamasında göster";
+"Copy Relative Path" = "Bulunduğu yolu kopyala";
+"Delete" = "Sil";
+"Color Scheme" = "Renk Şeması";
+"Dark Theme" = "Siyah Tema";
+"Dark Themes" = "Siyah Temaları";
+"Light Theme" = "Beyaz Tema";
+"Light Themes" = "Beyaz Temaları";
+"Text Wrap" = "Metni Kaydır";
+"Render Whitespace" = "Boşlukları Göster";
+
+"Share" = "Paylaş";
+"Rename" = "Yeniden Adlandır";
+"Assign as workspace folder" = "Çalışma Alanına Dosyayı Ekle";
+"Select For Compare" = "Karışlaştırma İçin Seçin";
+"Compare With Selected" = "Seçili Olanla Karışlaştır";
+"Version Control" = "Versiyon Kontrol";
+"Author Identity" = "Yapımcı Kimliği";
+"Authentication" = "Yetkilendirme";
+"Name" = "İsim";
+"Email address" = "E-Mail Adresi";
+"Save" = "Kaydet";
+"Close Editor" = "Editörü Kapat";
+"Zoom in" = "Yakınlaştır";
+"Zoom out" = "Uzaklaştır";
+"Show Explorer" = "Gezgini Göster";
+"Show Search" = "Aramayı Göster";
+"Show Source Control" = "Kaynak Kontrolünü GÖster";
+"User Settings" = "Kullanıcı Ayarları";
+"Show Panel" = "Paneli Göster";
+"Hide Panel" = "Paneli Gizle";
+"Run Code" = "Kodu Çalıştır";
+"New Folder" = "Yeni Klasör";
+
+"The folder currently opened doesn't have a git repository." = "Şu anda açık olan klasörde Git deposu bulunmamaktadır.";
+"Example: https://github.com/thebaselab/codeapp.git" = "Örnek: https://github.com/thebaselab/codeapp.git";
+"Initialize Repository" = "Repo İlk Kurulumunu Yap";
+"Clone Repository" = "Repo Kopyala";
+"TERMINAL" = "TERMİNAL";
+"Keyboard Toolbar" = "Klavye Araçları";
+"Always Open In New Tab" = "Her Zaman Yeni Sekmede Aç";
+"Changes" = "Değişiklikler";
+"Message (⌘Enter to commit)" = "Mesaj (⌘Onaylamak için Enter tuşuna basın)";
+"Staged Changes" = "Aşamalı Değişiklikler";
+"No changes are made in the working directory." = "Çalışma dizininde herhangi bir değişiklik yapılmayacaktır.";
+"Git checkout: Uncommitted Changes" = "Git checkout: Henüz kaydedilmemiş değişiklikler";
+"Uncommited changes will be lost. Do you wish to proceed?" = "Kesinleşmeyen değişiklikler kaybolacaktır. Devam etmek istiyor musunuz?";
+"No changes are made in this file" = "Bu dosyada hiçbir değişiklik yapılmayacaktır";
+
+"Smooth Scrolling" = "Rahat Kaydırma";
+"Stage All Changes" = "Tüm Değişiklikleri Aşamalandır";
+"Push" = "Gönder";
+"Fetch" = "Getir";
+
+"Welcome" = "Hoş Geldin";
+"Licenses" = "Lisanslar";
+"Version" = "Versiyon";
+"Code App by thebaselab" = "Code App, thebaselab tarafından";
+"Themes" = "Temalar";
+"Read-only Mode" = "Satır Oku Modu";
+"Show Welcome Page" = "Başlangıç Sayfasını Göster";
+"UI State Restoration" = "Kullanıcı arayüzü durumunu geri yükleme";
+"Open in Tab" = "Sekmede Aç";
+"Show Command in Terminal" = "Komutu Terminalde Göster";
+"Duplicate" = "Çoğalt";
+"Console Font Size" = "Konsol Font Boyutu";
+
+"Custom Keyboard Shortcuts" = "Özel Klavye Kısayolları";
+
+"Remotes" = "Uzak Gezgin";
+"You don't have any saved remote." = "Kaydedilmiş uzaktan deponuz yok.";
+"New remote" = "Yeni Uzak Depo";
+"Protocol" = "Protokol";
+"Address" = "Adres";
+"Port" = "Bağlantı Noktası";
+"Username" = "Kullanıcı Adı";
+"Password" = "Şifre";
+"Use Key Authentication" = "Anahtar Kimlik Doğrulamasını Kullanın";
+"Remember address" = "Adresi Hatırla";
+"Connect" = "Bağlan";
+"Disconnect" = "Bağlantıyı Kes";
+"Current Remote" = "Geçerli Uzak Depo";
+"Remember credentials" = "Şifreleri Hatırla";
+"Key passphrase" = "Anahtar parolası";
+"Show public key" = "Herkese açık anahtarı göster";
+
+"Experimental Features" = "Deneysel işlevler";
+"Enable spell check in text files" = "Metin dosyalarında yazım denetimini etkinleştirin";
+"Spell checking on content changed" = "İçerik değiştirildiğinde yazım denetimi";
+
+"common.configure" = "Yapılandır";
+"common.open_folder" = "Klasörü Aç";
+"common.compare" = "Karşılaştır";
+"common.overwrite" = "Üzerine Yaz";
+"common.save" = "Kaydet";
+"common.dont_save" = "Kaydetme";
+"common.cancel" = "İptal";
+"common.revert" = "Geri Al";
+"common.delete" = "Sil";
+"common.reset" = "Sıfırla";
+"common.done" = "Tamamlandı";
+"common.import" = "İçeri Aktar";
+"common.add" = "Ekle";
+"common.create" = "Oluştur";
+"common.remove" = "Kaldır";
+"common.move" = "Taşı";
+"common.username" = "Kullanıcı Adı";
+"common.password" = "Şifre";
+"common.continue" = "Devam";
+
+"notification.source" = "Kaynak: %@";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "12 ay için: %@";
+"subscription.message" = "Kodu herkesin kullanımına açın ve tüm temaların kilidini açın. Kod açık kaynak kodlu kalacak ve mevcut özellikler abonelik gerektirmeden kullanılabilir olmaya devam edecektir.";
+"subscription.payment.description %@ %@" = "%@ tarihinde başlayarak, üyeliğiniz siz iptal edene kadar yıllık %@ karşılığında otomatik olarak yenilenecektir."
+"subscription.payment.disallowed" = "Cihazınızın yapılandırması ödeme yapılmasına izin vermiyor.";
+"subscription.join" = "Code+ katıl";
+"terms_of_use" = "Kullanım Koşulları";
+"code.and.privacy" = "Gizlilik Politikası";
+"credentials.note" = "Giriş bilgileriniz cihazınızdaki Güvenli Bölge'de saklanır. Bu bilgilere erişimimiz yoktur.";
+"settings.editor.font" = "Editör Fontu";
+"settings.editor.font.reset" = "Standart";
+"settings.editor.font.ligatures" = "Harf Bileşkeleri";
+"settings.editor.font.show_all_fonts" = "Bütün Fontları Göster";
+"settings.editor.vim.enabled" = "Vim Etkinleştirildi";
+"settings.explorer.confirm_before_delete" = "Silmeden önce onaylayın";
+"settings.explorer.show_hidden_files" = "Gizli Dosyaları Göster";
+"settings.runestone.editor" = "Runestone Editor";
+"settings.runestone.editor.notes" = "Runestone, yerleşik metin seçme desteğine sahip bir editördür. Bu modda bazı özellikler kullanılamaz.";
+"settings.terminal.font" = "Font";
+"settings.language_service" = "Dil Servisi";
+"settings.language_service.enable" = "Dil Servisini Etkinleştir";
+"settings.language_service.notes" = "Dil servisi; otomatik tamamlama, statik kod analizi ve diğer dil özelliklerini sunar. Bu özellik şu anda Python ve Java için kullanılabilir.";
+"settings.about.change_app_language" = "Uygulama Dilini Değiştir";
+
+"panels.no_panel_selected" = "Panel seçilmedi";
+"sidebar.no_section_selected" = "Hiçbir bölüm seçilmedi";
+
+"errors.script_already_running" = "Şu anda bir komut dosyası çalışıyor. Lütfen başka bir komut dosyası çalıştırmadan önce bunu durdurun.";
+"errors.fs.not_implemented" = "Bu özellik henüz uygulanmadı.";
+"errors.fs.scheme_not_registered" = "Dosya sistemi şeması kayıtlı değil.";
+"errors.fs.invalid_host" = "Geçersiz ana bilgisayar adı.";
+"errors.fs.unspported_encoding" = "Desteklenmeyen karakter kodlaması.";
+"errors.fs.unknown" = "Bilinmeyen hata.";
+"errors.fs.connection_failure" = "Bağlantı hatası.";
+"errors.fs.authentication_failure" = "Kimlik doğrulama hatası.";
+"errors.fs.attempting_to_copy_parent_to_child" = "Bir dizini kendi içine kopyalama girişimi.";
+"errors.fs.attempting_to_copy_oneself" = "Kendisini kopyalamaya çalışıyorsunuz.";
+"errors.fs.already_connecting_to_a_host" = "Zaten bir sunucuya bağlantı kuruluyor.";
+"errors.fs.jumping_not_supported_for_host" = "Bu sunucu için sıçrama (jumping) desteklenmiyor.";
+"errors.fs.missing_jumping_server" = "Sıçrama (jumping) sunucusu eksik.";
+"errors.source_control.authentication_failed" = "Kimlik doğrulama başarısız: Git kimlik bilgilerinizi yapılandırmanız gerekebilir.";
+"errors.source_control.clone_authentication_failed" = "Kimlik doğrulama başarısız: Depo (repository) URL'si yanlış olabilir veya Git kimlik bilgilerinizi yapılandırmanız gerekebilir.";
+"errors.source_control.no_staged_changes" = "Sahneye alınmış (staged) değişiklik yok.";
+"errors.source_control.empty_commit_message" = "Commit mesajı boş olamaz";
+"errors.source_control.invalid_url" = "geçersiz URL";
+"errors.unknown_file_format" = "Bilinmeyen Dosya Formatı";
+"errors.editor_does_not_exist" = "Editör mevcut değil";
+"errors.editor_is_not_ready" = "Editör hazır değil.";
+"errors.failed_to_save_file.encoding.failed" = "Dosya kaydedilirken hata oluştu. Karakter kodlaması desteklenmiyor olabilir.";
+"errors.file_modified_by_another_process" = "Dosya başka bir işlem tarafından değiştirildi.";
+"errors.failed_to_import_key" = "Anahtar içe aktarılırken hata oluştu.";
+"errors.port_forward.service_unavailable" = "hizmet kullanılamıyor";
+"errors.port_forward.invalid_address" = "Geçersiz adres";
+"errors.port_forward.address_already_in_use" = "Hata 48: Adres zaten kullanımda.";
+"errors.operation_cancelled_by_user" = "İşlem iptal edildi";
+"errors.sftp.invalid_host_url" = "Geçersiz sunucu URL'si";
+"errors.sftp.invalid_jump_host_url" = "Geçersiz atlama sunucusu URL'si";
+"errors.sftp.unable_to_start_portforward_service" = "Bağlantı noktası yönlendirme hizmeti başlatılamıyor.";
+"errors.sftp.auth_failure" = "Kimlik doğrulama hatası";
+"errors.sftp.failed_to_perform_operation" = "İşlem yürütülürken hata oluştu.";
+"errors.sftp.unable_to_start_shell" = "Kabuk başlatılamıyor";
+
+"file.copy" = "Şuraya kopyala...";
+"file.download" = "Şuraya indir...";
+"file.confirm_save %@" = "%@ üzerindeki değişiklikleri kaydetmek istiyor musunuz?";
+"file.confirm_delete %@" = "%@ ögesini silmek istediğinize emin misiniz?";
+"file.confirm_move_into %@ %@" = "%@ ögesini gerçekten %@ içine taşımak istiyor musunuz?";
+"file.reopen_with_encoding" = "Karakter kodlaması ile yeniden aç";
+"file.download_now" = "Şimdi indir";
+"file.upload" = "Yükle";
+
+"actions.new_window" = "Yeni Pencere";
+"actions.switch_to_monaco_editor" = "Monaco Editörüne Geç";
+"actions.switch_to_runestone_editor" = "Runestone Editörüne geçin";
+
+"remote.connecting" = "Ana bilgisayara bağlanılıyor";
+"remote.connected" = "Başarıyla bağlandı";
+"remote.ssh_key_not_found" = "SSH anahtarı Documents/.ssh/id_rsa içinde bulunamadı. Terminalde ssh-keygen komutunu çalıştırarak bir tane oluşturun.";
+"remote.reload_key" = "Anahtarı yeniden yükle";
+"remote.passphrase_for_private_key" = "Özel anahtar için parola";
+"remote.credentials_for %@" = "%@ için kimlik bilgileri";
+"remote.enter_credentials" = "Kimlik bilgilerinizi girin";
+"remote.authenticate_to %@" = "%@ için kimlik doğrulaması";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "Bir veya daha fazla ana bilgisayar bu ana bilgisayarı geçiş proxy’si olarak kullanıyor";
+"remote.confirm_delete_are_you_sure_to_delete" = "%@ öğesini silmek istediğinizden emin misiniz?";
+"remote.use_jump_server" = "Geçiş sunucusu kullan";
+"remote.jump_using" = "%@ kullanılarak bağlanılıyor";
+
+
+"source_control.title" = "Kaynak kontrolü";
+"source_control.username" = "Kullanıcı adı";
+"source_control.password_based_authentication" = "Parola ile kimlik doğrulama";
+"source_control.ssh_authentication" = "SSH kimlik doğrulaması";
+"source_control.private_key_content" = "Özel anahtar içeriği";
+"source_control.editing_ssh_private_key" = "SSH özel anahtarı düzenleniyor";
+"source_control.pat" = "kişisel erişim belirteci";
+"source_control.pat_or_password" = "kişisel erişim belirteci veya parola";
+"source_control.ssh_key_reset_confirmation" = "SSH anahtarını sıfırlamak istediğinizden emin misiniz?";
+"source_control.url_specific_credentials" = "URL’ye özel kimlik bilgileri";
+"source_control.add_new_credentials" = "Yeni kimlik bilgileri ekle";
+"source_control.git_authentication" = "Git kimlik doğrulaması";
+"source_control.repository_initialized" = "Depo başlatıldı";
+"source_control.commit_succeeded" = "İşleme başarılı";
+"source_control.uploading_objects" = "Nesneler yükleniyor";
+"source_control.pushing_to_remote" = "Uzak depoya gönderiliyor";
+"source_control.push_succeeded" = "Gönderme başarılı";
+"source_control.fetching_from_origin" = "Kök’den alınıyor";
+"source_control.fetch_succeeded" = "Alma işlemi başarılı";
+"source_control.clone_succeeded" = "Klonlama başarılı";
+"source_control.cloning_into" = "%@ içine klonlanıyor";
+"source_control.error" = "Klonlama hatası: %@";
+"source_control.revert_succeeded" = "Geri alma başarılı";
+"source_control.remote_credentials" = "Uzak sunucu kimlik bilgileri";
+"source_control.credentials.note" = "Birçok durumda kimlik doğrulaması için parola yerine kişisel erişim belirteci kullanmanız gerekir. Daha fazla bilgi için:";
+"source_control.confirm_revert %@" = "%@ öğesini geri almak istediğinizden emin misiniz?";
+"source_control.retrieving_changes" = "Değişiklikler alınıyor";
+"source_control.community_templates" = "Topluluk şablonları";
+"source_control.community_templates.description" = "Topluluk şablonları, GitHub üzerinde #codeapp-template etiketi taşıyan depolardır. Bunu ayarlar menüsünden devre dışı bırakabilirsiniz.";
+"source_control.clone" = "Klonla";
+"source_control.pull" = "Çek";
+"source_control.pulling_from_remote" = "Uzak sunucudan çekiliyor";
+"source_control.pull_succeeded" = "Çekme başarılı";
+"source_control.checkout.select_branch_or_tag" = "Bir sürüm veya etiket seçin";
+"source_control.public_key" = "Genel anahtar";
+"source_control.editing_public_key" = "Genel anahtar düzenleniyor";
+"source_control.key_content" = "Anahtar içeriği";
+"source_control.private_key" = "Özel anahtar";
+"source_control.passphrase_optional" = "Parola (isteğe bağlı)";
+"source_control.hostname" = "Ana bilgisayar adı";
+"source_control.credentials" = "Kimlik bilgileri";
+"source_control.new_credentials" = "Yeni kimlik bilgileri";
+"source_control.hostname_based_credentials" = "Ana bilgisayar adına dayalı kimlik bilgileri";
+"source_control.add_key_based_credentials" = "Anahtar tabanlı kimlik bilgileri ekle";
+"source_control.add_password_based_credentials" = "Parola tabanlı kimlik bilgileri ekle";
+"source_control.create_branch" = "Sürüm oluştur";
+"source_control.branch_name" = "Sürüm adı";
+"source_control.branch" = "Sürüm";
+"source_control.confirm_delete_branch %@" = "%@ sürüm’ünü silmek istediğinizden emin misiniz?";
+"source_control.branch_deleted" = "%@ sürüm’ü silindi";
+"source_control.tag" = "Etiket";
+"source_control.create_tag" = "Etiket oluştur";
+"source_control.tag_name" = "Etiket adı";
+"source_control.annotation_optional" = "Açıklama (isteğe bağlı)";
+"source_control.tag_created" = "%@ etiketi oluşturuldu";
+"source_control.confirm_delete_tag" = "%@ etiketini silmek istediğinizden emin misiniz?";
+"source_control.tag_deleted" = "%@ etiketi silindi";
+"source_control.pushing_tag_to_remote" = "%@ etiketi %@ adresine gönderiliyor";
+"source_control.push" = "Gönder";
+"source_control.commit" = "İşle";
+"source_control.message_command_enter_to_commit" = "Mesaj (işleme için ⌘Enter)";
+
+"panel.problems.no_problems_detected" = "Çalışma alanında sorun tespit edilmedi.";
+"panel.execution.press_play_to_execute_code" = "Kodu çalıştırmak için oynat düğmesine basın. Program girdisi çalıştırmadan önce doldurulmalıdır.";
+"panel.execution.program_input" = "Program girdisi..";
+"panel.execution.input" = "Girdi";
+"panel.execution.output" = "Çıktı";
+"panel.execution.split_view" = "Bölünmüş görünüm";
+"panel.execution.title" = "Çalıştırma";
+
+"local.execution.title" = "Yerel çalıştırma";
+
+"remote.setup_remote_server" = "Uzaktan erişim özelliği belgeleri";
+"remote.private_key_content" = "Özel anahtar içeriği";
+"remote.setup_note" = "Anahtar çiftleri oluşturmak için terminalde ssh-keygen komutunu çalıştırın. Parola yoksa boş bırakın.";
+"remote.import_from_file" = "Dosyadan içe aktar";
+"remote.port_forward.new_port_forward" = "Yeni bağlantı noktası yönlendirme";
+"remote.port_forward.local_port_or_address" = "Yerel bağlantı noktası veya adres";
+"remote.port_forward.remote_port_or_address" = "Uzak bağlantı noktası veya adres";
+"remote.port_forward.port_forwarding" = "Bağlantı Noktası yönlendirme";
+"remote.port_forward.configure_description" = "Bir bağlantı noktası yönlendirmesi yapılandırmak için yerel ve uzak adresi girin. Bir adres girerseniz bağlantı noktası 22 kullanılacaktır.";
+"remote.port_forward.address_example" = "örn. 6000 veya 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "SSH Bağlantısı";
+"remote.settings.resolve_home_path" = "Yolu çözümle";
+
+"terminal.tab.accessibility.active" = "Aktif";
+"terminal.tab.accessibility.running" = "Çalışıyor";
+"terminal.tab.accessibility.hint" = "Bu terminale geçmek için dokunun";
+"terminal.tab.kill" = "Terminali sonlandır";
+"terminal.tab.kill_confirmation.title" = "Terminal sonlandırılsın mı?";
+"terminal.tab.kill_confirmation.cancel" = "İptal";
+"terminal.tab.kill_confirmation.kill" = "Sonlandır";
+"terminal.tab.kill_confirmation.message" = "Bu terminalde çalışan bir işlem var. Gerçekten sonlandırmak istiyor musunuz?";

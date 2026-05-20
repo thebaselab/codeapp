@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  Code
+
+  Created by Emir Ömer on 20/05/2026.
+  
+*/
+"NSPhotoLibraryAddUsageDescription" = "Görüntüleri kaydetmek için fotoğraf kütüphanesine erişim gereklidir.";
