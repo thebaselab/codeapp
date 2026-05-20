@@ -506,7 +506,7 @@
 "subscription.codeplus" = "Code+";
 "subscription.title %@" = "12 ay için: %@";
 "subscription.message" = "Kodu herkesin kullanımına açın ve tüm temaların kilidini açın. Kod açık kaynak kodlu kalacak ve mevcut özellikler abonelik gerektirmeden kullanılabilir olmaya devam edecektir.";
-"subscription.payment.description %@ %@" = "%@ tarihinde başlayarak, üyeliğiniz siz iptal edene kadar yıllık %@ karşılığında otomatik olarak yenilenecektir."
+"subscription.payment.description %@ %@" = "%@ tarihinde başlayarak, üyeliğiniz siz iptal edene kadar yıllık %@ karşılığında otomatik olarak yenilenecektir.";
 "subscription.payment.disallowed" = "Cihazınızın yapılandırması ödeme yapılmasına izin vermiyor.";
 "subscription.join" = "Code+ katıl";
 "terms_of_use" = "Kullanım Koşulları";
