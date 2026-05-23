@@ -438,7 +438,7 @@
 "Staged Changes" = "ステージされている変更";
 "No changes are made in the working directory." = "作業ディレクトリに変更はありません。";
 "Git checkout: Uncommitted Changes" = "Git チェックアウト: コミットされていない変更";
-"Uncommited changes will be lost. Do you wish to proceed?" = "コミットされていない変更は失われます。続行しますか？";
+"Uncommitted changes will be lost. Do you wish to proceed?" = "コミットされていない変更は失われます。続行しますか？";
 "No changes are made in this file" = "このファイルは変更されていません";
 
 "Smooth Scrolling" = "滑らかなスクロール";

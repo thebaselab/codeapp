@@ -51,7 +51,7 @@ struct CheckoutMenu: View {
                             App.alertManager.showAlert(
                                 title: "Git checkout: Uncommitted Changes",
                                 message:
-                                    "Uncommited changes will be lost. Do you wish to proceed?",
+                                    "Uncommitted changes will be lost. Do you wish to proceed?",
                                 content: AnyView(
                                     Group {
                                         Button("Checkout", role: .destructive) {

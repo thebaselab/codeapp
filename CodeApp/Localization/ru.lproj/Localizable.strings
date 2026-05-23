@@ -476,7 +476,7 @@
 "Staged Changes" = "Индексированные изменения";
 "No changes are made in the working directory." = "В рабочей области нет изменений.";
 "Git checkout: Uncommitted Changes" = "Git checkout: незафиксированные изменения";
-"Uncommited changes will be lost. Do you wish to proceed?" = "Незафиксированные изменения будут потеряны. Хотите продолжить?";
+"Uncommitted changes will be lost. Do you wish to proceed?" = "Незафиксированные изменения будут потеряны. Хотите продолжить?";
 "No changes are made in this file" = "В этом файле нет изменений.";
 
 "Smooth Scrolling" = "Плавная прокрутка";

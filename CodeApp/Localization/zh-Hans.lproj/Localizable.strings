@@ -431,7 +431,7 @@
 "Staged Changes" = "缓存变更";
 "No changes are made in the working directory." = "没有任何未缓存的变更。";
 "Git checkout: Uncommitted Changes" = "Git checkout: 未提交的更改";
-"Uncommited changes will be lost. Do you wish to proceed?" = "未提交的更改将丢失。你要继续吗？";
+"Uncommitted changes will be lost. Do you wish to proceed?" = "未提交的更改将丢失。你要继续吗？";
 "No changes are made in this file" = "没有任何变更。";
 
 "Smooth Scrolling" = "平滑滚动";
@@ -525,7 +525,7 @@
 "errors.fs.not_implemented" = "文件系统不支持此操作。";
 "errors.fs.scheme_not_registered" = "文件系统方案未注册。";
 "errors.fs.invalid_host" = "无效的主机。";
-"errors.fs.unspported_encoding" = "不支持的编码。";
+"errors.fs.unsupported_encoding" = "不支持的编码。";
 "errors.fs.unknown" = "未知错误。";
 "errors.fs.connection_failure" = "连接失败。";
 "errors.fs.authentication_failure" = "身份验证失败。";

@@ -437,7 +437,7 @@
 "Staged Changes" = "Inszenierte Änderungen";
 "No changes are made in the working directory." = "Im Arbeitsverzeichnis werden keine Änderungen vorgenommen";
 "Git checkout: Uncommitted Changes" = "Git checkout: Uncommitted Changes";
-"Uncommited changes will be lost. Do you wish to proceed?" = "Nicht festgeschriebene Änderungen gehen verloren. Möchten Sie fortfahren?";
+"Uncommitted changes will be lost. Do you wish to proceed?" = "Nicht festgeschriebene Änderungen gehen verloren. Möchten Sie fortfahren?";
 "No changes are made in this file" = "In dieser Datei werden keine Änderungen vorgenommen";
 
 "Smooth Scrolling" = "flüssiges Scrollen";
@@ -534,7 +534,7 @@
 "errors.fs.not_implemented" = "Diese Funktion ist noch nicht implementiert.";
 "errors.fs.scheme_not_registered" = "Das Dateisystem-Schema ist nicht registriert.";
 "errors.fs.invalid_host" = "Ungültiger Hostname.";
-"errors.fs.unspported_encoding" = "Nicht unterstützte Zeichenkodierung.";
+"errors.fs.unsupported_encoding" = "Nicht unterstützte Zeichenkodierung.";
 "errors.fs.unknown" = "Unbekannter Fehler.";
 "errors.fs.connection_failure" = "Verbindungsfehler.";
 "errors.fs.authentication_failure" = "Authentifizierungsfehler.";

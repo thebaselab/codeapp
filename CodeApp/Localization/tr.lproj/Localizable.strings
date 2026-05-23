@@ -437,7 +437,7 @@
 "Staged Changes" = "Aşamalı Değişiklikler";
 "No changes are made in the working directory." = "Çalışma dizininde herhangi bir değişiklik yapılmayacaktır.";
 "Git checkout: Uncommitted Changes" = "Git checkout: Henüz kaydedilmemiş değişiklikler";
-"Uncommited changes will be lost. Do you wish to proceed?" = "Kesinleşmeyen değişiklikler kaybolacaktır. Devam etmek istiyor musunuz?";
+"Uncommitted changes will be lost. Do you wish to proceed?" = "Kesinleşmeyen değişiklikler kaybolacaktır. Devam etmek istiyor musunuz?";
 "No changes are made in this file" = "Bu dosyada hiçbir değişiklik yapılmayacaktır";
 
 "Smooth Scrolling" = "Rahat Kaydırma";
@@ -533,7 +533,7 @@
 "errors.fs.not_implemented" = "Bu özellik henüz uygulanmadı.";
 "errors.fs.scheme_not_registered" = "Dosya sistemi şeması kayıtlı değil.";
 "errors.fs.invalid_host" = "Geçersiz ana bilgisayar adı.";
-"errors.fs.unspported_encoding" = "Desteklenmeyen karakter kodlaması.";
+"errors.fs.unsupported_encoding" = "Desteklenmeyen karakter kodlaması.";
 "errors.fs.unknown" = "Bilinmeyen hata.";
 "errors.fs.connection_failure" = "Bağlantı hatası.";
 "errors.fs.authentication_failure" = "Kimlik doğrulama hatası.";
