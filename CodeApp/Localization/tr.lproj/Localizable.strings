@@ -87,7 +87,7 @@
 ### 1.6.0 (Ocak 2024)
 - Yerel dil iyileştirmeleri
    - Yerel Java (OpenJDK 8)
-     - Artık "javac" ve "java" komutlarını kullanarak Java programlarını çevrimdışı olarak derleyebilir ve çalıştırabilirsiniz.
+     - Artık \"javac\" ve \"java\" komutlarını kullanarak Java programlarını çevrimdışı olarak derleyebilir ve çalıştırabilirsiniz.
    - Node.js 18.19.0
    - PHP 8.3.2 (Zlib ile)
 – Dosya silme işlemi sırasında görüntülenen onay istemi artık isteğe bağlıdır ve varsayılan olarak devre dışıdır.
@@ -115,7 +115,7 @@
    - Kimlik doğrulama
      - SSH anahtarı kimlik doğrulaması
      - Çoklu kimlik bilgileri
-   - Yeni özelliklern
+   - Yeni özellikler
      - Uzaktan kumandadan çekin.
      - Çatışma çözümü
      - Dalları ve etiketleri oluştur/sil
@@ -405,8 +405,8 @@
 "Share" = "Paylaş";
 "Rename" = "Yeniden Adlandır";
 "Assign as workspace folder" = "Çalışma Alanına Dosyayı Ekle";
-"Select For Compare" = "Karışlaştırma İçin Seçin";
-"Compare With Selected" = "Seçili Olanla Karışlaştır";
+"Select For Compare" = "Karşılaştırma İçin Seçin";
+"Compare With Selected" = "Seçili Olanla Karşılaştır";
 "Version Control" = "Versiyon Kontrol";
 "Author Identity" = "Yapımcı Kimliği";
 "Authentication" = "Yetkilendirme";
@@ -418,7 +418,7 @@
 "Zoom out" = "Uzaklaştır";
 "Show Explorer" = "Gezgini Göster";
 "Show Search" = "Aramayı Göster";
-"Show Source Control" = "Kaynak Kontrolünü GÖster";
+"Show Source Control" = "Kaynak Kontrolünü Göster";
 "User Settings" = "Kullanıcı Ayarları";
 "Show Panel" = "Paneli Göster";
 "Hide Panel" = "Paneli Gizle";
@@ -447,7 +447,6 @@
 
 "Welcome" = "Hoş Geldin";
 "Licenses" = "Lisanslar";
-"Version" = "Versiyon";
 "Code App by thebaselab" = "Code App, thebaselab tarafından";
 "Themes" = "Temalar";
 "Read-only Mode" = "Satır Oku Modu";
