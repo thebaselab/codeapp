@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.1 (2026 年 3 月)**
+##### **v1.12.2 (2026 年 6 月)**
 #### 開始
 [新しいファイル](https://thebaselab.com/code/newfile)
 [ファイルを開く](https://thebaselab.com/code/openfile)
@@ -22,7 +22,11 @@
 ";
 
 "Changelog.message" =
-"### 1.12.1 (2026 年 3 月)
+"### 1.12.2 (2026 年 6 月)
+- トルコ語サポート
+- 貢献してくれた @iEmirRekt に特別感謝
+
+### 1.12.1 (2026 年 3 月)
 - SSH ディレクトリの不具合を修正
 
 ### 1.12.0 (Feburary 2026)

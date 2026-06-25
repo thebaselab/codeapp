@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.1 (2026 年 3 月)**
+##### **v1.12.2 (2026 年 6 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -22,7 +22,11 @@
 ";
 
 "Changelog.message" =
-"### 1.12.1 (2026 年 3 月)
+"### 1.12.2 (2026 年 6 月)
+- 支持土耳其语
+- 特别感谢 @iEmirRekt 的贡献
+
+### 1.12.1 (2026 年 3 月)
 - 修复了 SSH 目录错误
 
 ### 1.12.0 (Feburary 2026)

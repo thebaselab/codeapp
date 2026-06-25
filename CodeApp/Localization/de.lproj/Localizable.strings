@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.1 (März 2026)**
+##### **v1.12.2 (Juni 2026)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -22,7 +22,11 @@
 ";
 
 "Changelog.message" =
-"### 1.12.1 (März 2026)
+"### 1.12.2 (Juni 2026)
+- Unterstützung für die türkische Sprache
+- Besonderer Dank an @iEmirRekt für den Beitrag
+
+### 1.12.1 (März 2026)
 - Behebt einen Fehler mit SSH-Verzeichnissen
 
 ### 1.12.0 (Feburary 2026)
