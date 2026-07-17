@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.2 (2026년 6월)**
+##### **v1.12.2 (2026년 7월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,7 @@
 
 "Changelog.message" =
 "### 1.12.2 (2026년 6월)
+- Git GUI 버그 수정
 - 터키어 지원
 - 기여해 주신 @iEmirRekt님께 특별한 감사
 

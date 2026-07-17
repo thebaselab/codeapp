@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.2 (Haziran 2026)**
+##### **v1.12.2 (Temmuz 2026)**
 #### Başlangıç
 [Yeni Dosya](https://thebaselab.com/code/newfile)
 [Dosya Aç](https://thebaselab.com/code/openfile)
@@ -23,6 +23,7 @@
 
 "Changelog.message" =
 "### 1.12.2 (Haziran 2026)
+- Git arayüzündeki bir hata düzeltildi.
 - Türkçe dil desteği
 - Katkısı için @iEmirRekt'e özel teşekkürler.
 
