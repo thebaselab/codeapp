@@ -65,6 +65,7 @@ class WorkSpaceStorage: ObservableObject {
     }
 
     init(url: URL) {
+        let url = url.resolvingSymlinksInPath()
         let localFS = LocalFileSystemProvider()
         localFS.gitServiceProvider = LocalGitServiceProvider(root: url)
 
@@ -412,7 +413,7 @@ extension WorkSpaceStorage {
             subFolderItems != nil
         }
         var _url: URL? {
-            URL(string: url)
+            URL(string: url)?.resolvingSymlinksInPath()
         }
 
         init(name: String? = nil, url: String, isDirectory: Bool) {
