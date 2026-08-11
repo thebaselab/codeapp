@@ -17,7 +17,7 @@ See [code.thebaselab.com](https://code.thebaselab.com)
 Use [VS Code](https://github.com/microsoft/vscode) as a design template while providing key functionalities with [monaco-editor](https://github.com/microsoft/monaco-editor) and native code:
 
 - Version Control (Git clone, commits, diff editor, push, pull and gutter indicator) ✅
-- Embeded terminal (70+ commands avaliable) ✅
+- Embedded terminal (70+ commands available) ✅
 - Local web development environment (Node + PHP) ✅
 - Built in Python runtime ✅
 - C/C++ Runtime with WebAssembly (with clang) ✅
