@@ -6,13 +6,7 @@ import sys
 # for compatibility with easy_install; see #2198
 __requires__ = 'Cython==0.29.21'
 
-try:
-    from importlib.metadata import distribution
-except ImportError:
-    try:
-        from importlib_metadata import distribution
-    except ImportError:
-        from pkg_resources import load_entry_point
+from importlib.metadata import distribution
 
 
 def importlib_load_entry_point(spec, group, name):
