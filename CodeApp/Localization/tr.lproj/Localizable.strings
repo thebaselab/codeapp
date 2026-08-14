@@ -109,7 +109,7 @@
 
 ### 1.5.1 (Ekim 2023)
 - FTP uzaktan erişimiyle ilgili sorunları giderir.
-– "Port Yönlendirme" sekmesinin her zaman kompakt modda görüntülenmesine neden olan bir hata düzeltildi.
+– \"Port Yönlendirme\" sekmesinin her zaman kompakt modda görüntülenmesine neden olan bir hata düzeltildi.
 
 ### 1.5.0 (Ekim 2023)
 - SSH uzaktan bağlantısında port yönlendirme
