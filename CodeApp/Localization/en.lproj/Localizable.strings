@@ -23,6 +23,9 @@
 
 "Changelog.message" =
 "
+### 1.12.3 (July 2026)
+- Fixes Turkish language visibility in Settings
+
 ### 1.12.2 (June 2026)
 - Fixes a GUI git bug
 - Turkish language support

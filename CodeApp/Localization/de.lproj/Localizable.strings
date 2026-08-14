@@ -22,7 +22,11 @@
 ";
 
 "Changelog.message" =
-"### 1.12.2 (Juni 2026)
+"
+### 1.12.3 (Juli 2026)
+- Behebt die Sichtbarkeit der türkischen Sprache in den Einstellungen
+
+### 1.12.2 (Juni 2026)
 - Behebt einen GUI-Git-Fehler
 - Unterstützung für die türkische Sprache
 - Besonderer Dank an @iEmirRekt für den Beitrag
