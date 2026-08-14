@@ -1975,7 +1975,9 @@
 		94FF337328435158003DE5DD /* SettingsFontPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFontPicker.swift; sourceTree = "<group>"; };
 		94FF33882843744C003DE5DD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "Dependencies/monaco-textmate.bundle/fonts/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
 		9DA5FA622D7A51B30010CE11 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A1B2C3D52D90000100AA0002 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9DFB70332D7A78B2005A5BB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A1B2C3D42D90000100AA0001 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9F046C312922203E00BDE4E9 /* ToolbarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarManager.swift; sourceTree = "<group>"; };
 		9F046C3429222D8E00BDE4E9 /* ExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionManager.swift; sourceTree = "<group>"; };
 		9F046C3929223D1600BDE4E9 /* RemoteExecutionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteExecutionExtension.swift; sourceTree = "<group>"; };
@@ -3460,6 +3462,7 @@
 				ko,
 				ja,
 				ru,
+				tr,
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
@@ -4006,6 +4009,7 @@
 				73F80B102850F7EE000EF3FC /* ko */,
 				4F30816929662D58002708FD /* ja */,
 				9DFB70332D7A78B2005A5BB4 /* ru */,
+				A1B2C3D42D90000100AA0001 /* tr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -4019,6 +4023,7 @@
 				73F80B0F2850F7E5000EF3FC /* ko */,
 				4F30816829662CBF002708FD /* ja */,
 				9DA5FA622D7A51B30010CE11 /* ru */,
+				A1B2C3D52D90000100AA0002 /* tr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -4057,7 +4062,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.12.2;
+				MARKETING_VERSION = 1.12.3;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4105,7 +4110,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.12.2;
+				MARKETING_VERSION = 1.12.3;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4342,7 +4347,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.12.2;
+				MARKETING_VERSION = 1.12.3;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4389,7 +4394,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 1.12.2;
+				MARKETING_VERSION = 1.12.3;
 				OTHER_SWIFT_FLAGS = "-Xcc -Wno-incomplete-umbrella";
 				PRODUCT_BUNDLE_IDENTIFIER = "thebaselab.VS-Code";
 				PRODUCT_NAME = "$(TARGET_NAME)";
