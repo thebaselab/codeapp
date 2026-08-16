@@ -1,0 +1,730 @@
+/*
+  Localizable.strings
+  Code App
+
+  Created by Nabil Al Masri on 14/08/2026.
+  
+*/
+
+"Welcome Message" =
+"# Code App
+##### **v1.12.3 (Juillet 2026)**
+#### Démarrer
+[Nouveau fichier](https://thebaselab.com/code/newfile)
+[Ouvrir un fichier](https://thebaselab.com/code/openfile)
+[Ouvrir un dossier](https://thebaselab.com/code/openfolder)
+
+#### Aide
+[Documentation](https://code.thebaselab.com)
+[GitHub](https://github.com/thebaselab/codeapp)
+[E-mail](mailto:support@thebaselab.com)
+[X](https://x.com/thebaselab)
+";
+
+"Changelog.message" =
+"
+### 1.12.3 (Juillet 2026)
+- Correction de l’affichage de la langue turque dans les réglages
+
+### 1.12.2 (Juin 2026)
+- Correction d’un bug de l’interface graphique de Git
+- Prise en charge de la langue turque
+- Un grand merci à @iEmirRekt pour sa contribution
+
+### 1.12.1 (Mars 2026)
+- Correction d’un bug lié au répertoire SSH
+
+### 1.12.0 (Février 2026)
+- Prise en charge de plusieurs terminaux
+- Prise en charge des modificateurs de touches du terminal
+- Un grand merci à @ThalesMMS pour sa contribution
+
+### 1.11.0 (Janvier 2026)
+- Adoption de l’interface Liquid Glass
+
+### 1.10.4 (Septembre 2025)
+- Corrections de bugs concernant l’éditeur de comparaison
+
+### 1.10.3 (Septembre 2025)
+- Corrections de bugs
+
+### 1.10.2 (Mars 2025)
+- Localisation russe
+
+### 1.10.1 (Octobre 2024)
+- Corrections de bugs
+
+### 1.10.0 (Octobre 2024)
+- Serveurs de langage pour Python et Java
+- Prise en charge de davantage de langages dans l’éditeur Monaco
+
+### 1.9.0 (Juillet 2024)
+- SSH
+  - Proxy jump
+  - Authentification 2FA / interactive par clavier
+- Correction d’un problème empêchant le clonage de certains dépôts Git SSH
+
+### 1.8.0 (Juin 2024)
+- Éditeur
+  - Mode d’édition Runestone (un éditeur avec des contrôles natifs de sélection de texte)
+  - Coloration syntaxique pour Kotlin
+  - La barre d’outils du clavier peut désormais être activée/désactivée sans relancer l’application
+- Améliorations du terminal
+  - Police personnalisée
+  - Barre d’outils du clavier
+
+### 1.7.4 (Mai 2024)
+- Correction d’un problème lors du collage de texte à l’aide de la barre d’outils du clavier
+
+### 1.7.3 (Mai 2024)
+- Correction d’un problème empêchant la désactivation de la barre d’outils du clavier
+
+### 1.7.2 (Mai 2024)
+- Entrées interactives dans Java / Node.js en local
+- Correction d’un problème avec les programmes Java comportant plusieurs fichiers
+
+### 1.7.1 (Mars 2024)
+- Possibilité d’arrêter les programmes C en cours d’exécution
+
+### 1.7.0 (Février 2024)
+- Mode Vim
+- Glisser-déposer des fichiers et des dossiers dans l’explorateur
+- Possibilité d’utiliser les polices installées par l’utilisateur
+- Supprimer les en-têtes non pris en charge dans stdc++.h
+- Défilement amélioré de l’éditeur
+
+### 1.6.0 (Janvier 2024)
+- Améliorations des langues locales
+  - Java local (OpenJDK 8)
+    - Vous pouvez désormais compiler et exécuter des programmes Java hors ligne avec les commandes `javac` et `java`
+  - Node.js 18.19.0
+  - PHP 8.3.2 (avec Zlib)
+- La demande de confirmation lors de la suppression de fichiers est désormais facultative et désactivée par défaut
+
+### 1.5.3 (Décembre 2023)
+- Correction d’un bug où le terminal se trouvait par défaut dans ~
+
+### 1.5.2 (Décembre 2023)
+- Le serveur distant SSH résout désormais les liens symboliques
+
+### 1.5.1 (Octobre 2023)
+- Correction de problèmes avec le serveur distant FTP
+- Correction d’un bug où l’onglet de redirection de port s’affichait toujours sur les écrans compacts
+
+### 1.5.0 (Octobre 2023)
+- Redirection de port dans un serveur distant SSH
+- Correction d’un problème empêchant l’authentification sur certains serveurs distants SSH
+- Option permettant de résoudre le chemin du répertoire personnel lors de la connexion à un serveur distant
+
+### 1.4.7 (Septembre 2023)
+- Correction de quelques problèmes avec le serveur distant SSH
+
+### 1.4.6 (Août 2023)
+- Contrôle de version
+  - Authentification
+    - Authentification par clé SSH
+    - Identifiants multiples
+  - Nouvelles fonctionnalités
+    - Récupération depuis le dépôt distant
+    - Résolution des conflits
+    - Créer/supprimer des branches et des balises
+    - Envoi des balises vers le dépôt distant
+    - Commande lg2
+- Autres améliorations
+  - Largeur de la barre latérale ajustable
+  - En-tête bits/stdc++.h dans Clang
+  - Option permettant d’utiliser un compilateur C distant au lieu du compilateur local
+  - Correction d’un bug empêchant l’importation des fichiers de clés
+  - Prise en charge du mode Isolement d’iOS
+  
+### v1.4.5 (Juillet 2023)
+- Gérer correctement les fichiers iCloud
+- Améliorations de l’interface utilisateur
+
+### v1.4.4 (Mai 2023)
+- Option permettant de désactiver les ligatures de police
+- Clé privée SSH en mémoire
+- Autres améliorations
+
+### v1.4.3 (Janvier 2023)
+- Corrections de bugs
+- Localisation japonaise
+- Modèles communautaires
+
+### v1.4.1 (Décembre 2022)
+- Corrections de bugs
+
+### v1.4.0 (Décembre 2022)
+- Prise en charge de l’affichage fractionné
+- Aperçu des PDF
+- Améliorations générales des performances et de la stabilité
+
+### v1.3.6 (Octobre 2022)
+- Mise à niveau de Node.js vers la version 16.17.0
+- Coloration syntaxique pour Svelte
+- Nouveaux thèmes de l’éditeur
+- Gestion correcte des signaux d’arrêt du terminal
+- Prise en charge de l’ouverture de répertoires avec la commande `code`
+- Correction d’un bug qui empêchait Emmet de fonctionner
+
+### v1.3.5 (Septembre 2022)
+- Améliorations de l’interface utilisateur
+- Prise en charge du déplacement de fichiers dans l’explorateur
+- Prise en charge du téléchargement de fichiers depuis des serveurs distants
+- Possibilité de sélectionner différents serveurs distants pour l’envoi avec Git
+### v1.3.4 (Juin 2022)
+- Prise en charge du terminal pour SFTP
+- Prise en charge de Fira Code et des polices personnalisées
+- Localisation coréenne
+- Nouveau site web de documentation
+- Améliorations générales
+### v1.3.3 (Mai 2022)
+- Corrections de bugs
+### v1.3.2 (Mai 2022)
+- Correction d’un bug empêchant les utilisateurs existants d’accéder aux thèmes
+### v1.3.1 (Mai 2022)
+- Corrections de bugs
+- Vous pouvez désormais utiliser un nom de classe d’entrée Java personnalisé
+- Présentation de Code+ — un service d’abonnement qui nous permet de rendre Code accessible à tous et qui débloque tous les thèmes. Les utilisateurs existants continuent de bénéficier d’un accès complet à l’application.
+### v1.3.0 (Mai 2022)
+- Prise en charge des serveurs distants (SFTP et FTP)
+- Prise en charge de Dynamic Type
+- Fonctionnalité expérimentale : vérification orthographique des fichiers texte
+### v1.2.13 (Mars 2022)
+- Compatibilité avec iOS 15.4
+- Prise en charge de l’internationalisation pour Node.js
+### v1.2.12 (Mars 2022)
+- Correction d’un bug critique
+### v1.2.10 (Mars 2022)
+- Raccourcis clavier personnalisés
+- Sélection de texte en faisant glisser le doigt sur les numéros de ligne
+- Améliorations de l’interface utilisateur
+- Correction de problèmes empêchant parfois le chargement de l’éditeur
+- Node.js 16.13.2
+### v1.2.9 (Janvier 2022)
+- Correction de problèmes liés aux éléments suivants:
+  - certaines touches ne fonctionnent pas avec les dispositions de clavier européennes (#237)
+  - `curl` ne fonctionne plus (#330)
+  - un argument par défaut fait planter certaines commandes npm (#326)
+### v1.2.8 (Décembre 2021)
+- Correction de problèmes dans les cas suivants :
+  - `ssh-keygen` provoque le blocage du terminal (#314)
+  - l’éditeur affiche parfois un écran vide
+- Ajoute la coloration syntaxique pour Terraform (#319)
+### v1.2.7 (Décembre 2021)
+- Améliorations générales
+### v1.2.6 (Septembre 2021)
+- Compatibilité avec la dernière version d’iOS
+- Autres améliorations
+### v1.2.5 (Juillet 2021)
+- Terminal
+  - Correction de certains problèmes liés à clang / clang++
+### v1.2.4 (Juin 2021)
+- Éditeur
+  - Correction d’un problème empêchant la sélection avec la souris / le trackpad de fonctionner
+  - Mise à jour des définitions TypeScript vers la version 4.2.4
+- Interface
+  - Nouveau design compact de la barre latérale pour iPhone
+  - Possibilité de réorganiser les onglets de l’éditeur
+  - Lisibilité améliorée pour le thème Xcode
+  - Possibilité de dupliquer des fichiers ou des dossiers dans le menu contextuel
+- Performances
+  - Performances améliorées lors de l’ouverture de lecteurs SMB depuis l’application Fichiers
+- Git
+  - Compatibilité améliorée avec différents dépôts distants
+  - Indicateurs de différences en ligne
+  - Outil CLI Git expérimental
+- Terminal
+  - Autocomplétion des chemins de fichiers
+  - Ouverture du code dans l’éditeur avec `code <file>`
+- Environnement d’exécution
+  - Clang (exécuter un programme C avec `clang main.c` et `./a.out`)
+  - Clang++ (exécuter un programme C++ avec `clang++ main.cpp` et `./a.out`)
+  - PHP (exécuter un programme PHP avec `php` et héberger un serveur web avec `php -S localhost:<port>`)
+
+---
+
+### v1.2.3 (Avril 2021)
+- Éditeur
+  - 6 thèmes de couleurs supplémentaires
+  - Mode lecture seule
+  - Types intégrés pour Node.js
+  - Prise en charge des définitions @types
+- Explorateur
+  - Recherche dans plusieurs fichiers
+- Environnement d’exécution Python
+  - Matplotlib et Pandas intégrés
+- Autres
+  - Restauration de l’état de l’interface utilisateur
+  - Localisation en allemand
+  - Corrections de bugs et autres améliorations
+
+---
+
+### v1.2.1 (Mars 2021)
+- Environnement d’exécution Node.js
+  - Exécuter du JavaScript hors ligne
+  - Installer des modules npm
+  - Installer des commandes JavaScript globalement (tsc, prettier, etc.)
+  - Nouvelles commandes du terminal : npm, npx, node
+- Environnement d’exécution Python 3.9.2
+  - Exécuter Python hors ligne
+  - Installer des modules avec pip
+  - Installer des commandes Python globalement
+  - Nouvelles commandes du terminal : pip, python, python3
+- Éditeur
+  - Onglet `Problèmes`
+  - Nouveau style Markdown
+  - Coloration syntaxique pour Vue
+  - Option de défilement fluide pour les appareils avec un taux de rafraîchissement élevé
+- Terminal
+  - Prise en charge du thème clair
+- Explorateur de fichiers
+  - Hauteur des lignes réduite
+- Corrections de bugs
+
+---
+
+### v1.1.9 (Février 2021)
+- Langage
+  - Exécution plus rapide
+- Corrections de bugs
+
+---
+
+### v1.1.8 (Février 2021)
+- Éditeur de texte
+  - Migration vers la grammaire TextMate (coloration syntaxique plus avancée)
+  - Prise en charge de davantage de langages (Groovy, HLSL, Log, Makefile, Shaderlab, Fortran, Matlab)
+  - Correction d’un bug où l’éditeur ne répondait parfois pas aux clics du pointeur
+  - Nouvelle barre d’outils du clavier
+- Contrôle de version
+  - Performances et fiabilité améliorées
+  - Mise en staging des modifications
+  - Changement de branche
+  - Mode HEAD détaché
+  - Annulation des modifications
+- Langage
+  - Prise en charge de Groovy
+- Terminal intégré
+  - Prise en charge de SSH
+  - Corrections de bugs
+- Explorateur
+  - Les états de déploiement des dossiers sont désormais conservés lorsque la barre latérale est masquée
+  - Possibilité de développer un dossier en appuyant sur son nom
+- Autres
+  - Largeur de la barre latérale réduite
+  - Le thème est temporairement supprimé pour prendre en charge le nouveau système de coloration syntaxique
+  - IntelliSense JSON est temporairement désactivé
+
+---
+
+### v1.1.7 (Janvier 2021)
+- Éditeur de texte
+  - Les modifications sont désormais enregistrées sur le disque lorsque vous exécutez votre code ou masquez le clavier
+  - Correction d’un problème où le clavier virtuel ne s’affichait parfois pas
+- Contrôle de version
+  - Possibilité de cloner des dépôts privés
+  - Possibilité d’envoyer, de récupérer et de synchroniser depuis des dépôts distants
+  - Correction d’un problème où le dépôt cloné n’était pas correctement nommé
+- Terminal intégré
+  - Plus de 70 commandes Linux (ls, cd, nslookup, etc.)
+  - Primitives utilisateur de type Bash telles que les pipes, l’historique et l’autocomplétion
+  - Appuyez sur la touche Tab pour afficher toutes les commandes disponibles
+- Explorateur
+  - Les fichiers et les répertoires sont désormais triés par ordre alphabétique
+  - Les fichiers ou répertoires commençant par un point sont désormais masqués par défaut
+  - Possibilité de sélectionner des éléments avec un geste de déplacement à deux doigts
+- Autres améliorations
+  - Vous pouvez désormais ouvrir directement des fichiers avec Code App depuis l’application Fichiers ou d’autres applications
+  - Vous pouvez désormais maintenir l’icône de l’application sur l’écran d’accueil pour afficher les documents récents
+  - Correction d’une faute de frappe
+";
+
+"licenses" =
+"
+### Licenses
+---
+#### Runestone
+ - [Runestone](https://github.com/simonbs/Runestone) est sous licence [MIT License](https://github.com/simonbs/Runestone/blob/main/LICENSE).
+#### monokai-slate-vscode
+ - [monokai-slate-vscode] est sous licence [MIT License](https://github.com/hamxiaoz/monokai-slate-vscode/blob/master/LICENSE).
+#### gruvbox-material-vscode
+ - [gruvbox-material-vscode] est sous licence [MIT License](https://github.com/sainnhe/gruvbox-material-vscode/blob/master/LICENSE).
+#### catppuccin
+ - [catppuccin](https://github.com/catppuccin/vscode) est sous licence [MIT License](https://github.com/catppuccin/vscode/blob/main/LICENSE).
+#### vscode-terraform
+ - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) est sous licence [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE).
+#### GCDWebServer
+ - [GCDWebServer](https://github.com/swisspol/GCDWebServer) est sous licence [Custom License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
+#### holzschu/libgit2
+ - [libgit2](https://github.com/holzschu/libgit2) est sous licence [GPLv2 with a special Linking Exception](https://github.com/holzschu/libgit2/blob/main/COPYING).
+#### highlight.js
+ - [highlight.js](https://github.com/highlightjs/highlight.js) est sous licence [BSD-3-Clause License](https://github.com/highlightjs/highlight.js/blob/master/LICENSE).
+#### ios_system
+ - [ios_system](https://github.com/holzschu/ios_system) est sous licence [BSD-3-Clause license](https://github.com/holzschu/ios_system/blob/master/LICENSE).
+#### judge0
+ - [judge0](https://github.com/judge0/judge0) est sous licence [GNU General Public License v3.0](https://github.com/judge0/judge0/blob/master/LICENSE).
+#### libssh2
+ - [libssh2](https://github.com/libssh2/libssh2) est sous licence [BSD-3-Clause License](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE).
+#### MarkdownView
+ - [MarkdownView](https://github.com/keitaoouchi/MarkdownView) est sous licence [MIT License](https://github.com/keitaoouchi/MarkdownView/blob/master/LICENSE).
+#### Monaco Editor
+ - [Monaco Editor](https://github.com/microsoft/monaco-editor) est sous licence [MIT License](https://github.com/microsoft/monaco-editor/blob/master/LICENSE.md).
+#### Various Linux commands
+ - `egrep, fgrep, grep, gzip, gunzip, cat, chflag, compress, cp, date, echo, env, link, ln, printenv, pwd, ed, sed, tar, uncompress, uptime, chgrp, chksum, chmod, chown, df, du, groups, id, ls, mkdir, mv, readlink, rm, rmdir, stat, sum, touch, tr, uname, wc, whoami`
+sont sous licence [BSD-3-Clause License](https://en.wikipedia.org/wiki/BSD_licenses).
+#### ZIPFoundation
+ - [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) est sous licence [MIT License](https://github.com/weichsel/ZIPFoundation/blob/development/LICENSE).
+---
+> Ce projet n’aurait pas été possible sans les projets open source mentionnés ci-dessus.
+> Bon codage depuis Hong Kong 🇭🇰
+";
+
+"Send us an Email" = "Envoyez-nous un e-mail";
+"Open an Issue on GitHub" = "Ouvrir une issue sur GitHub";
+"Clear console" = "Effacer la console";
+"Kill Process" = "Terminer le processus";
+"Sync" = "Synchroniser";
+"Synchronize Changes" = "Synchroniser les modifications";
+"You don't have any open editor." = "Aucun éditeur n’est ouvert.";
+"This will pull remote changes down to your local repository and then push local commits to the upstream branch. Conflicts will be merged and overriden by the local copy." = "Cela récupérera les modifications distantes dans votre dépôt local, puis enverra les commits locaux vers la branche en amont. Les conflits seront fusionnés et remplacés par la copie locale.";
+"User Name" = "Nom d’utilisateur";
+"Erase" = "Effacer";
+"This will erase all user settings, including author identity and credentials." = "Cela effacera tous les paramètres utilisateur, y compris l’identité de l’auteur et les identifiants.";
+"Erase all settings" = "Effacer tous les paramètres";
+"Release Notes" = "Notes de version";
+
+"New File" = "Nouveau fichier";
+"Open File" = "Ouvrir un fichier";
+"Open Editors" = "Éditeurs ouverts";
+"EXPLORER" = "EXPLORATEUR";
+"Explorer" = "Explorateur";
+"SEARCH" = "RECHERCHE";
+"Search" = "Rechercher";
+"Results" = "Résultats";
+"Search Text" = "Rechercher du texte";
+"Search File" = "Rechercher un fichier";
+"Quick add" = "Ajout rapide";
+"Custom" = "Personnalisé";
+"Where" = "Où";
+"Current Folder" = "Dossier actuel";
+"Add File" = "Ajouter un fichier";
+"INPUT" = "ENTRÉE";
+"PROBLEMS" = "PROBLÈMES";
+"OUTPUT" = "SORTIE";
+"Options" = "Options";
+"Close All" = "Fermer tout";
+"Close Workspace" = "Fermer l’espace de travail";
+"Preview in Safari" = "Aperçu dans Safari";
+"Mini Map" = "Mini-carte";
+"Line Numbers" = "Numéros de ligne";
+"OTHERS" = "AUTRES";
+"Tab Size" = "Taille de tabulation";
+
+"Settings" = "Réglages";
+"General" = "Général";
+"Editor" = "Éditeur";
+"Compiler" = "Compilateur";
+"Accent" = "Accent";
+"Font Size" = "Taille de police";
+"Editor Font Size" = "Taille de police de l’éditeur";
+"Terminal Font Size" = "Taille de police du terminal";
+"Bracket Completion" = "Complétion des parenthèses";
+"Theme" = "Thème";
+"Rate Code App" = "Évaluer l’application Code";
+"About" = "À propos";
+"Version" = "Version";
+
+"Done" = "Terminé";
+
+"Recent" = "Récents";
+"Show in Files App" = "Afficher dans l’app Fichiers";
+"Copy Relative Path" = "Copier le chemin relatif";
+"Delete" = "Supprimer";
+"Color Scheme" = "Schéma de couleurs";
+"Dark Theme" = "Thème sombre";
+"Light Theme" = "Thème clair";
+"Dark Themes" = "Thèmes sombres";
+"Light Themes" = "Thèmes clairs";
+"Text Wrap" = "Retour à la ligne";
+"Render Whitespace" = "Afficher les espaces blancs";
+
+"Share" = "Partager";
+"Rename" = "Renommer";
+"Assign as workspace folder" = "Définir comme dossier de l’espace de travail";
+"Select For Compare" = "Sélectionner pour comparaison";
+"Compare With Selected" = "Comparer avec l’élément sélectionné";
+"Version Control" = "Contrôle de version";
+"Author Identity" = "Identité de l’auteur";
+"Authentication" = "Authentification";
+"Name" = "Nom";
+"Email address" = "Adresse e-mail";
+"Save" = "Enregistrer";
+"Close Editor" = "Fermer l’éditeur";
+"Zoom in" = "Zoom avant";
+"Zoom out" = "Zoom arrière";
+"Show Explorer" = "Afficher l’explorateur";
+"Show Search" = "Afficher la recherche";
+"Show Source Control" = "Afficher le contrôle de version";
+"User Settings" = "Paramètres utilisateur";
+"Show Panel" = "Afficher le panneau";
+"Hide Panel" = "Masquer le panneau";
+"Run Code" = "Exécuter le code";
+"New Folder" = "Nouveau dossier";
+
+"The folder currently opened doesn't have a git repository." = "Le dossier actuellement ouvert ne contient pas de dépôt Git.";
+"Example: https://github.com/thebaselab/codeapp.git" = "Par exemple : https://github.com/thebaselab/codeapp.git";
+"Initialize Repository" = "Initialiser le dépôt";
+"Clone Repository" = "Cloner le dépôt";
+"TERMINAL" = "TERMINAL";
+"Keyboard Toolbar" = "Barre d’outils du clavier";
+"Always Open In New Tab" = "Toujours ouvrir dans un nouvel onglet";
+"Changes" = "Modifications";
+"Message (⌘Enter to commit)" = "Message (⌘Entrée pour valider)";
+"Staged Changes" = "Modifications indexées";
+"No changes are made in the working directory." = "Aucune modification n’a été apportée au répertoire de travail.";
+"Git checkout: Uncommitted Changes" = "Git checkout : modifications non validées";
+"Uncommitted changes will be lost. Do you wish to proceed?" = "Les modifications non validées seront perdues. Voulez-vous continuer ?";
+"No changes are made in this file" = "Aucune modification n’a été apportée à ce fichier.";
+
+"Smooth Scrolling" = "Défilement fluide";
+"Stage All Changes" = "Indexer toutes les modifications";
+"Push" = "Envoyer";
+"Fetch" = "Récupérer";
+
+"Welcome" = "Bienvenue";
+"Themes" = "Thèmes";
+"Read-only Mode" = "Mode lecture seule";
+"Show Welcome Page" = "Afficher la page d’accueil";
+"UI State Restoration" = "Restauration de l’état de l’interface utilisateur";
+"Open in Tab" = "Ouvrir dans un onglet";
+"Show Command in Terminal" = "Afficher la commande dans le terminal";
+"Duplicate" = "Dupliquer";
+"Console Font Size" = "Taille de police de la console";
+
+"Custom Keyboard Shortcuts" = "Raccourcis clavier personnalisés";
+
+"Remotes" = "Dépôts distants";
+"You don't have any saved remote." = "Vous n’avez aucun dépôt distant enregistré.";
+"New remote" = "Nouveau dépôt distant";
+"Protocol" = "Protocole";
+"Address" = "Adresse";
+"Port" = "Port";
+"Username" = "Nom d’utilisateur";
+"Password" = "Mot de passe";
+"Use Key Authentication" = "Utiliser l’authentification par clé";
+"Remember address" = "Mémoriser l’adresse";
+"Connect" = "Se connecter";
+"Disconnect" = "Se déconnecter";
+"Current Remote" = "Dépôt distant actuel";
+"Remember credentials" = "Mémoriser les identifiants";
+"Key passphrase" = "Phrase secrète de la clé";
+"Show public key" = "Afficher la clé publique";
+
+"Experimental Features" = "Fonctionnalités expérimentales";
+"Enable spell check in text files" = "Activer la vérification orthographique dans les fichiers texte";
+"Spell checking on content changed" = "Vérification orthographique lors de la modification du contenu";
+
+"common.configure" = "Configurer";
+"common.open_folder" = "Ouvrir le dossier";
+"common.compare" = "Comparer";
+"common.overwrite" = "Écraser";
+"common.save" = "Enregistrer";
+"common.dont_save" = "Ne pas enregistrer";
+"common.cancel" = "Annuler";
+"common.revert" = "Rétablir";
+"common.delete" = "Supprimer";
+"common.reset" = "Réinitialiser";
+"common.done" = "Terminé";
+"common.import" = "Importer";
+"common.add" = "Ajouter";
+"common.create" = "Créer";
+"common.remove" = "Supprimer";
+"common.move" = "Déplacer";
+"common.username" = "Nom d’utilisateur";
+"common.password" = "Mot de passe";
+"common.continue" = "Continuer";
+
+"notification.source" = "Source : %@";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "12 mois pour %@.";
+"subscription.message" = "Rendre Code accessible à tous et débloquer tous les thèmes. Code demeure open source et les fonctionnalités existantes restent disponibles sans abonnement.";
+"subscription.payment.description %@ %@" = "À partir du %@, votre abonnement sera automatiquement renouvelé au tarif de %@ par an jusqu’à ce que vous l’annuliez.";
+"subscription.payment.disallowed" = "La configuration de votre appareil ne permet pas les paiements.";
+"subscription.join" = "Rejoindre Code+";
+"code.and.privacy" = "À propos de Code et de la confidentialité";
+"terms_of_use" = "Conditions d’utilisation";
+"credentials.note" = "Les identifiants sont stockés dans la Secure Enclave de votre appareil. Nous n’y avons pas accès.";
+"settings.editor.font" = "Police";
+"settings.editor.font.reset" = "Réinitialiser aux valeurs par défaut";
+"settings.editor.font.ligatures" = "Ligatures de police";
+"settings.editor.font.show_all_fonts" = "Afficher toutes les polices";
+"settings.editor.vim.enabled" = "Mode Vim";
+"settings.explorer.confirm_before_delete" = "Confirmer avant de supprimer";
+"settings.explorer.show_hidden_files" = "Afficher les fichiers cachés";
+"settings.runestone.editor" = "Éditeur Runestone";
+"settings.runestone.editor.notes" = "Runestone est un éditeur prenant en charge nativement la sélection de texte. Certaines fonctionnalités ne sont pas disponibles dans ce mode.";
+"settings.terminal.font" = "Police";
+"settings.language_service" = "Service de langage";
+"settings.language_service.enable" = "Activer le service de langage";
+"settings.language_service.notes" = "Le service de langage fournit la saisie semi-automatique, l’analyse statique du code et d’autres fonctionnalités liées au langage. Cette fonctionnalité est actuellement disponible pour Python et Java.";
+"settings.about.change_app_language" = "Changer la langue de l’application";
+
+"panels.no_panel_selected" = "Aucun panneau sélectionné";
+"sidebar.no_section_selected" = "Aucune section sélectionnée.";
+
+"errors.script_already_running" = "Un script est déjà en cours d’exécution. Terminez-le avant d’en exécuter un autre.";
+"errors.fs.not_implemented" = "Opération non implémentée";
+"errors.fs.scheme_not_registered" = "Le schéma d’URI de fichier n’est pas enregistré";
+"errors.fs.invalid_host" = "Hôte non valide";
+"errors.fs.unsupported_encoding" = "Encodage non pris en charge";
+"errors.fs.unknown" = "Erreur inconnue";
+"errors.fs.connection_failure" = "Échec de la connexion";
+"errors.fs.authentication_failure" = "Échec de l’authentification";
+"errors.fs.attempting_to_copy_parent_to_child" = "La source est un répertoire parent de la cible.";
+"errors.fs.attempting_to_copy_oneself" = "La source a le même chemin que le répertoire parent.";
+"errors.fs.already_connecting_to_a_host" = "Connexion déjà en cours à un hôte.";
+"errors.fs.jumping_not_supported_for_host" = "Le saut n’est pas pris en charge pour cet hôte.";
+"errors.fs.missing_jumping_server" = "Serveur de saut manquant";
+"errors.source_control.authentication_failed" = "Échec de l’authentification : vous devrez peut-être configurer vos identifiants Git.";
+"errors.source_control.clone_authentication_failed" = "Échec de l’authentification : vérifiez la configuration de vos identifiants.";
+"errors.source_control.no_staged_changes" = "Il n’y a aucune modification indexée.";
+"errors.source_control.empty_commit_message" = "Le message de commit ne peut pas être vide";
+"errors.source_control.invalid_url" = "URL non valide";
+"errors.unknown_file_format" = "Format de fichier inconnu";
+"errors.editor_does_not_exist" = "L’éditeur n’existe pas";
+"errors.editor_is_not_ready" = "L’éditeur n’est pas prêt";
+"errors.failed_to_save_file.encoding.failed" = "Échec de l’enregistrement du fichier. Échec de l’encodage.";
+"errors.file_modified_by_another_process" = "Fichier modifié par un autre processus";
+"errors.failed_to_import_key" = "Échec de l’importation de la clé";
+"errors.port_forward.service_unavailable" = "Service indisponible";
+"errors.port_forward.invalid_address" = "Adresse non valide";
+"errors.port_forward.address_already_in_use" = "Errno 48 : l’adresse est déjà utilisée";
+"errors.operation_cancelled_by_user" = "Opération annulée par l’utilisateur";
+"errors.sftp.invalid_host_url" = "URL d’hôte non valide";
+"errors.sftp.invalid_jump_host_url" = "URL de l’hôte de saut non valide";
+"errors.sftp.unable_to_start_portforward_service" = "Impossible de démarrer le service de transfert de port";
+"errors.sftp.auth_failure" = "Échec de l’authentification";
+"errors.sftp.failed_to_perform_operation" = "Échec de l’exécution de l’opération";
+"errors.sftp.unable_to_start_shell" = "Impossible de démarrer le shell";
+
+"file.copy" = "Copier vers…";
+"file.download" = "Télécharger vers…";
+"file.confirm_save %@" = "Voulez-vous enregistrer les modifications apportées à %@ ?";
+"file.confirm_delete %@" = "Êtes-vous sûr de vouloir supprimer %@ ?";
+"file.confirm_move_into %@ %@" = "Êtes-vous sûr de vouloir déplacer %@ vers %@ ?";
+"file.reopen_with_encoding" = "Rouvrir avec l’encodage";
+"file.download_now" = "Télécharger maintenant";
+"file.upload" = "Téléverser";
+
+"actions.new_window" = "Nouvelle fenêtre";
+"actions.switch_to_monaco_editor" = "Passer à l’éditeur Monaco";
+"actions.switch_to_runestone_editor" = "Passer à l’éditeur Runestone";
+
+"remote.connecting" = "Connexion à l’hôte en cours";
+"remote.connected" = "Connexion réussie";
+"remote.ssh_key_not_found" = "Clé SSH introuvable dans Documents/.ssh/id_rsa. Générez-en une en exécutant ssh-keygen dans le terminal.";
+"remote.reload_key" = "Recharger la clé";
+"remote.passphrase_for_private_key" = "Phrase secrète de la clé privée";
+"remote.credentials_for %@" = "Identifiants pour %@";
+"remote.enter_credentials" = "Saisir les identifiants";
+"remote.authenticate_to %@" = "S’authentifier auprès de %@";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "Un ou plusieurs hôtes utilisent cet hôte comme proxy de saut.";
+"remote.confirm_delete_are_you_sure_to_delete" = "Êtes-vous sûr de vouloir supprimer cet hôte ?";
+"remote.use_jump_server" = "Utiliser le serveur de saut";
+"remote.jump_using" = "Se connecter via";
+
+"source_control.title" = "Contrôle de version";
+"source_control.username" = "Nom d’utilisateur";
+"source_control.password_based_authentication" = "Authentification par mot de passe";
+"source_control.ssh_authentication" = "Authentification SSH";
+"source_control.private_key_content" = "Contenu de la clé privée";
+"source_control.editing_ssh_private_key" = "Modification de la clé privée SSH";
+"source_control.pat" = "Jeton d’accès personnel";
+"source_control.pat_or_password" = "Jeton d’accès personnel / mot de passe";
+"source_control.ssh_key_reset_confirmation" = "Êtes-vous sûr de vouloir réinitialiser la clé SSH ?";
+"source_control.url_specific_credentials" = "Identifiants spécifiques à l’URL";
+"source_control.add_new_credentials" = "Ajouter de nouveaux identifiants";
+"source_control.git_authentication" = "Authentification Git";
+"source_control.repository_initialized" = "Dépôt initialisé";
+"source_control.commit_succeeded" = "Commit réussi";
+"source_control.uploading_objects" = "Téléversement des objets en cours";
+"source_control.pushing_to_remote" = "Envoi vers le dépôt distant en cours";
+"source_control.push_succeeded" = "Envoi vers le dépôt distant réussi";
+"source_control.fetching_from_origin" = "Récupération depuis « origin » en cours";
+"source_control.fetch_succeeded" = "Récupération réussie";
+"source_control.clone_succeeded" = "Clonage réussi";
+"source_control.cloning_into" = "Clonage dans %@ en cours";
+"source_control.error" = "Erreur de clonage : %@";
+"source_control.revert_succeeded" = "Rétablissement réussi";
+"source_control.remote_credentials" = "Identifiants du dépôt distant";
+"source_control.credentials.note" = "Dans de nombreux cas, vous devez utiliser un jeton d’accès personnel au lieu d’un mot de passe pour vous authentifier. Pour en savoir plus :";
+"source_control.confirm_revert %@" = "Êtes-vous sûr de vouloir annuler les modifications apportées à %@ ?";
+"source_control.retrieving_changes" = "Récupération des modifications en cours";
+"source_control.community_templates" = "Modèles de la communauté";
+"source_control.community_templates.description" = "Les modèles de la communauté sont des dépôts sur GitHub portant le tag #codeapp-template. Vous pouvez désactiver cette fonctionnalité dans le menu des réglages.";
+"source_control.clone" = "Cloner";
+"source_control.pull" = "Récupérer";
+"source_control.pulling_from_remote" = "Récupération depuis le dépôt distant en cours";
+"source_control.pull_succeeded" = "Récupération réussie";
+"source_control.checkout.select_branch_or_tag" = "Sélectionnez une branche ou une balise à utiliser";
+"source_control.public_key" = "Clé publique";
+"source_control.editing_public_key" = "Modification de la clé publique";
+"source_control.key_content" = "Contenu de la clé";
+"source_control.private_key" = "Clé privée";
+"source_control.passphrase_optional" = "Phrase secrète (facultative)";
+"source_control.hostname" = "Nom d’hôte";
+"source_control.credentials" = "Identifiants";
+"source_control.new_credentials" = "Nouveaux identifiants";
+"source_control.hostname_based_credentials" = "Identifiants basés sur le nom d’hôte";
+"source_control.add_key_based_credentials" = "Ajouter des identifiants basés sur une clé";
+"source_control.add_password_based_credentials" = "Ajouter des identifiants basés sur un mot de passe";
+"source_control.create_branch" = "Créer une branche";
+"source_control.branch_name" = "Nom de la branche";
+"source_control.branch" = "Branche";
+"source_control.confirm_delete_branch %@" = "Êtes-vous sûr de vouloir supprimer la branche %@ ?";
+"source_control.branch_deleted" = "Branche %@ supprimée";
+"source_control.tag" = "Balise";
+"source_control.create_tag" = "Créer une balise";
+"source_control.tag_name" = "Nom de la balise";
+"source_control.annotation_optional" = "Annotation (facultative)";
+"source_control.tag_created" = "Balise %@ créée";
+"source_control.confirm_delete_tag" = "Êtes-vous sûr de vouloir supprimer la balise %@ ?";
+"source_control.tag_deleted" = "Balise %@ supprimée";
+"source_control.pushing_tag_to_remote" = "Envoi de la balise %@ vers %@ en cours";
+"source_control.push" = "Envoyer";
+"source_control.commit" = "Valider";
+"source_control.message_command_enter_to_commit" = "Message (⌘Entrée pour valider)";
+
+"panel.problems.no_problems_detected" = "Aucun problème détecté dans l’espace de travail.";
+"panel.execution.press_play_to_execute_code" = "Appuyez sur le bouton de lecture pour exécuter le code. L’entrée du programme doit être renseignée avant l’exécution.";
+"panel.execution.program_input" = "Entrée du programme…";
+"panel.execution.input" = "Entrée";
+"panel.execution.output" = "Sortie";
+"panel.execution.split_view" = "Vue fractionnée";
+"panel.execution.title" = "Exécution";
+
+"local.execution.title" = "Exécution locale";
+
+"remote.setup_remote_server" = "Documentation sur la fonctionnalité d’accès à distance";
+"remote.private_key_content" = "Contenu de la clé privée";
+"remote.setup_note" = "Pour générer des paires de clés, exécutez ssh-keygen dans le terminal. Laissez la phrase secrète vide si vous n’en souhaitez pas.";
+"remote.import_from_file" = "Importer depuis un fichier";
+"remote.port_forward.new_port_forward" = "Nouveau transfert de port";
+"remote.port_forward.local_port_or_address" = "Port ou adresse locale";
+"remote.port_forward.remote_port_or_address" = "Port ou adresse distante";
+"remote.port_forward.port_forwarding" = "Redirection de port";
+"remote.port_forward.configure_description" = "Configurez la redirection de port pour accéder à un port sur la machine distante.";
+"remote.port_forward.address_example" = "Par exemple : 6000 ou 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "SSH distant";
+"remote.settings.resolve_home_path" = "Résoudre le chemin du répertoire personnel";
+"terminal.tab.accessibility.active" = "Actif";
+"terminal.tab.accessibility.running" = "En cours d’exécution";
+"terminal.tab.accessibility.hint" = "Appuyez pour basculer vers ce terminal";
+"terminal.tab.kill" = "Arrêter le terminal";
+"terminal.tab.kill_confirmation.title" = "Arrêter le terminal ?";
+"terminal.tab.kill_confirmation.cancel" = "Annuler";
+"terminal.tab.kill_confirmation.kill" = "Terminer";
+"terminal.tab.kill_confirmation.message" = "Ce terminal exécute actuellement un processus. Êtes-vous sûr de vouloir le terminer ?";
