@@ -23,7 +23,7 @@ Use [VS Code](https://github.com/microsoft/vscode) as a design template while pr
 - C/C++ Runtime with WebAssembly (with clang) ✅
 - Local Java (OpenJDK) ✅
 - SSH Support ✅
-- [LSP](https://microsoft.github.io/language-server-protocol) support (Python & Java) ✅ 
+- [LSP](https://microsoft.github.io/language-server-protocol) support (Python, Java & F#) ✅ 
 
 ## Building the project
 
@@ -41,3 +41,4 @@ The source code of the built-in languages are hosted on these repositories.
 | PHP 8.3.2 | [php-src](https://github.com/bummoblizard/php-src/tree/PHP-8.3.2)|
 | Node.js 18.19.0 | [nodejs-mobile](https://github.com/1Conan/nodejs-mobile)|
 | OpenJDK 8 | [android-openjdk-build-multiarch](https://github.com/thebaselab/android-openjdk-build-multiarch)|
+| F# (.NET SDK) | [dotnet/fsharp](https://github.com/dotnet/fsharp) |
