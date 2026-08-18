@@ -80,4 +80,48 @@ final class CodeUITests: XCTestCase {
         XCTAssertEqual(parsed!.scheme, "ssh")
         XCTAssertEqual(parsed!.path, "/codeapp.git")
     }
+    
+    func testNormalizeRemoteURL_bareIPWithPort() throws {
+        let urlString = "192.1.1.1:3000/repo.git"
+        let normalized = LocalGitCredentialsHelper.normalizeRemoteURL(urlString)
+        
+        XCTAssertEqual(normalized, "http://192.1.1.1:3000/repo.git")
+        XCTAssertNotNil(URL(string: normalized))
+        XCTAssertEqual(URL(string: normalized)!.host, "192.1.1.1")
+        XCTAssertEqual(URL(string: normalized)!.port, 3000)
+    }
+    
+    func testNormalizeRemoteURL_hostnameWithPort() throws {
+        let urlString = "forgejo.local:3000/user/repo.git"
+        let normalized = LocalGitCredentialsHelper.normalizeRemoteURL(urlString)
+        
+        XCTAssertEqual(normalized, "http://forgejo.local:3000/user/repo.git")
+        XCTAssertNotNil(URL(string: normalized))
+        XCTAssertEqual(URL(string: normalized)!.host, "forgejo.local")
+        XCTAssertEqual(URL(string: normalized)!.port, 3000)
+    }
+    
+    func testNormalizeRemoteURL_scpLikeSyntax() throws {
+        let urlString = "git@github.com:user/repo.git"
+        let normalized = LocalGitCredentialsHelper.normalizeRemoteURL(urlString)
+        
+        // Should not be modified - let parseRemoteURL handle it
+        XCTAssertEqual(normalized, urlString)
+    }
+    
+    func testNormalizeRemoteURL_fullyQualifiedHTTPS() throws {
+        let urlString = "https://github.com/user/repo.git"
+        let normalized = LocalGitCredentialsHelper.normalizeRemoteURL(urlString)
+        
+        // Should not be modified - already valid
+        XCTAssertEqual(normalized, urlString)
+    }
+    
+    func testNormalizeRemoteURL_fullyQualifiedHTTP() throws {
+        let urlString = "http://192.1.1.1:3000/repo.git"
+        let normalized = LocalGitCredentialsHelper.normalizeRemoteURL(urlString)
+        
+        // Should not be modified - already valid
+        XCTAssertEqual(normalized, urlString)
+    }
 }
