@@ -1,0 +1,8 @@
+/*
+  InfoPlist.strings
+  Code
+
+  Created by Nabil Al Masri on 14/08/2026.
+  
+*/
+"NSPhotoLibraryAddUsageDescription" = "L’accès à la photothèque est requis pour enregistrer les images.";
