@@ -26,6 +26,11 @@ class LanguageService {
             languageIdentifier: "java",
             extensions: ["java"],
             args: ["java", "-jar", "${JAVA_LSP_FAT_JAR_PATH}"]),
+            Configuration(
+                languageIdentifier: "fsharp",
+                extensions: ["fs", "fsi", "fsx", "fsproj"],
+                args: ["dotnet", "fsautocomplete"] // Uses fsautocomplete, the F# LSP server
+            ),
     ]
 
     static func configurationFor(url: URL) -> Configuration? {
