@@ -1,0 +1,588 @@
+/* 
+  Localizable.strings
+  Code App
+
+  Created by Ken Chung on 6/12/2020.
+  
+*/
+
+"Welcome Message" =
+"# برنامهٔ Code App
+##### **v1.12.3 (سپتامبر ۲۰۲۶)**
+#### شروع
+[فایل جدید](https://thebaselab.com/code/newfile)
+[باز کردن فایل](https://thebaselab.com/code/openfile)
+[باز کردن پوشه](https://thebaselab.com/code/openfolder)
+
+#### راهنما
+[مستندات](https://code.thebaselab.com)
+[GitHub](https://github.com/thebaselab/codeapp)
+[ایمیل](mailto:support@thebaselab.com)
+[X](https://x.com/thebaselab)
+";
+
+"Changelog.message" =
+"
+### 1.12.3 (سپتامبر ۲۰۲۶)
+- رفع مشکل نمایش زبان ترکی در تنظیمات
+- بهبود سازگاری با iOS 27
+
+### 1.12.2 (ژوئن ۲۰۲۶)
+- رفع یک باگ در رابط گرافیکی git
+- پشتیبانی از زبان ترکی
+- تشکر ویژه از @iEmirRekt برای مشارکت
+
+### 1.12.1 (مارس ۲۰۲۶)
+- رفع باگ پوشه در SSH
+
+### 1.12.0 (فوریه ۲۰۲۶)
+- پشتیبانی از چند ترمینال
+- پشتیبانی از کلیدهای تغییردهنده در ترمینال
+- تشکر ویژه از @ThalesMMS برای مشارکت
+
+### 1.11.0 (ژانویه ۲۰۲۶)
+- به‌کارگیری رابط کاربری Liquid Glass
+
+### 1.10.4 (سپتامبر ۲۰۲۵)
+- رفع باگ‌های مربوط به ویرایشگر diff
+
+### 1.10.3 (سپتامبر ۲۰۲۵)
+- رفع باگ‌ها
+
+### 1.10.2 (مارس ۲۰۲۵)
+- بومی‌سازی روسی
+
+### 1.10.1 (اکتبر ۲۰۲۴)
+- رفع باگ‌ها
+
+### 1.10.0 (اکتبر ۲۰۲۴)
+- سرورهای زبان برای Python و Java
+- پشتیبانی از زبان‌های بیشتر در Monaco Editor
+
+### 1.9.0 (ژوئیه ۲۰۲۴)
+- SSH
+  - پرش از طریق پروکسی
+  - احراز هویت دو مرحله‌ای (2FA) / احراز هویت تعاملی با صفحه‌کلید
+- رفع مشکلی که در آن برخی مخازن git در SSH کلون نمی‌شدند
+
+### 1.8.0 (ژوئن ۲۰۲۴)
+- ویرایشگر
+  - حالت ویرایشگر Runestone (ویرایشگری با کنترل‌های بومی انتخاب متن)
+  - برجسته‌سازی نگارش برای Kotlin
+  - امکان فعال/غیرفعال کردن نوار ابزار صفحه‌کلید بدون راه‌اندازی مجدد برنامه
+- بهبودهای ترمینال
+  - قلم سفارشی
+  - نوار ابزار صفحه‌کلید
+
+### 1.7.4 (مه ۲۰۲۴)
+- رفع مشکل چسباندن متن با استفاده از نوار ابزار صفحه‌کلید
+
+### 1.7.3 (مه ۲۰۲۴)
+- رفع مشکلی که در آن نوار ابزار صفحه‌کلید غیرفعال نمی‌شد
+
+### 1.7.2 (مه ۲۰۲۴)
+- ورودی‌های تعاملی در Java / Node.js محلی
+- رفع مشکل در برنامه‌های چندفایلی Java
+
+### 1.7.1 (مارس ۲۰۲۴)
+- قابلیت توقف برنامه‌های در حال اجرای C
+
+### 1.7.0 (فوریه ۲۰۲۴)
+- حالت Vim
+- کشیدن و رها کردن فایل‌ها و پوشه‌ها در کاوشگر
+- امکان استفاده از قلم‌های نصب‌شده توسط کاربر
+- حذف هدرهای پشتیبانی‌نشده در stdc++.h
+- بهبود پیمایش در ویرایشگر
+
+### 1.6.0 (ژانویه ۲۰۲۴)
+- بهبودهای زبان‌های محلی
+  - Java محلی (OpenJDK 8)
+    - اکنون می‌توانید برنامه‌های Java را به صورت آفلاین با دستورهای `javac` و `java` کامپایل و اجرا کنید
+  - Node.js 18.19.0
+  - PHP 8.3.2 (همراه با Zlib)
+- پیام تأیید هنگام حذف فایل‌ها اکنون اختیاری است و به طور پیش‌فرض غیرفعال است
+
+### 1.5.3 (دسامبر ۲۰۲۳)
+- رفع باگی که در آن ترمینال به طور پیش‌فرض روی ~ باز می‌شد
+
+### 1.5.2 (دسامبر ۲۰۲۳)
+- راه‌دور SSH اکنون پیوندهای نمادین را حل می‌کند
+
+### 1.5.1 (اکتبر ۲۰۲۳)
+- رفع مشکلات راه‌دور FTP
+- رفع باگی که در آن برگهٔ فوروارد درگاه همیشه در صفحهٔ جمع‌وجور نمایش داده می‌شد
+
+### 1.5.0 (اکتبر ۲۰۲۳)
+- فوروارد درگاه در راه‌دور SSH
+- رفع مشکلی که در آن برخی راه‌دورهای SSH احراز هویت نمی‌شدند
+- گزینهٔ حل مسیر آغازین (home path) هنگام اتصال به راه‌دور
+
+### 1.4.7 (سپتامبر ۲۰۲۳)
+- رفع چند مشکل در راه‌دور SSH
+
+### 1.4.6 (اوت ۲۰۲۳)
+- کنترل نسخه
+  - احراز هویت
+    - احراز هویت با کلید SSH
+    - اطلاعات ورود چندگانه
+  - ویژگی‌های جدید
+    - دریافت تغییرات (pull) از راه‌دور
+    - حل ناسازگاری‌ها
+    - ایجاد/حذف شاخه‌ها و برچسب‌ها
+    - ارسال (push) برچسب‌ها
+    - دستور lg2
+  - سایر بهبودها
+    - عرض قابل تنظیم نوار کناری
+    - هدر bits/stdc++.h در Clang
+    - گزینهٔ استفاده از کامپایلر راه‌دور C به جای کامپایلر محلی
+    - رفع باگی که فایل‌های کلید وارد نمی‌شدند
+    - پشتیبانی از حالت Lockdown در iOS
+  
+### v1.4.5 (ژوئیه ۲۰۲۳)
+- مدیریت مناسب فایل‌های iCloud
+- بهبودهای رابط کاربری
+
+### v1.4.4 (مه ۲۰۲۳)
+- گزینهٔ غیرفعال کردن اتصال حروف قلم
+- کلید خصوصی SSH در حافظه
+- سایر بهبودها
+
+### v1.4.3 (ژانویه ۲۰۲۳)
+- رفع باگ‌ها
+- بومی‌سازی ژاپنی
+- الگوهای جامعهٔ کاربری
+
+### v1.4.1 (دسامبر ۲۰۲۲)
+- رفع باگ‌ها
+
+### v1.4.0 (دسامبر ۲۰۲۲)
+- پشتیبانی از Split View
+- پیش‌نمایش PDF
+- بهبود کلی عملکرد و پایداری
+
+### v1.3.6 (اکتبر ۲۰۲۲)
+- ارتقای Node.js به v16.17.0
+- برجسته‌سازی نگارش برای svelte
+- پوسته‌های جدید ویرایشگر
+- مدیریت صحیح سیگنال‌های توقف ترمینال
+- پشتیبانی از باز کردن پوشه‌ها با دستور `code`
+- رفع باگی که مانع کارکرد emmet می‌شد
+
+### v1.3.5 (سپتامبر ۲۰۲۲)
+- بهبودهای رابط کاربری
+- پشتیبانی از جابه‌جایی فایل‌ها در کاوشگر
+- پشتیبانی از دانلود فایل‌ها از سرورهای راه‌دور
+- امکان انتخاب راه‌دورهای مختلف برای git push
+### v1.3.4 (ژوئن ۲۰۲۲)
+- پشتیبانی ترمینال از SFTP
+- پشتیبانی از Fira Code و قلم‌های سفارشی
+- بومی‌سازی کره‌ای
+- وب‌سایت جدید مستندات
+- بهبودهای عمومی
+### v1.3.3 (مه ۲۰۲۲)
+- رفع باگ‌ها
+### v1.3.2 (مه ۲۰۲۲)
+- رفع باگی که مانع دسترسی کاربران فعلی به پوسته‌ها می‌شد
+### v1.3.1 (مه ۲۰۲۲)
+- رفع باگ‌ها
+- اکنون می‌توانید از نام کلاس ورودی سفارشی Java استفاده کنید
+- معرفی Code+‎ - سرویس اشتراکی که به ما امکان می‌دهد Code را به همگان عرضه کنیم و همهٔ پوسته‌ها را باز کند. کاربران فعلی همچنان دسترسی کامل به برنامه خواهند داشت.
+### v1.3.0 (مه ۲۰۲۲)
+- پشتیبانی از راه‌دور (SFTP و FTP)
+- پشتیبانی از Dynamic Type
+- ویژگی آزمایشی: بررسی املا برای فایل‌های متنی
+### v1.2.13 (مارس ۲۰۲۲)
+- سازگاری با iOS 15.4
+- پشتیبانی از بین‌المللی‌سازی برای Node.js
+### v1.2.12 (مارس ۲۰۲۲)
+- رفع باگ حیاتی
+### v1.2.10 (مارس ۲۰۲۲)
+- کلیدهای میانبر سفارشی صفحه‌کلید
+- انتخاب متن با کشیدن انگشت روی شماره خطوط
+- بهبودهای رابط کاربری
+- رفع مشکلاتی که گاهی مانع بارگذاری ویرایشگر می‌شد
+- Node.js 16.13.2
+### v1.2.9 (ژانویه ۲۰۲۲)
+- رفع مشکلاتی که در آن‌ها:
+  - برخی کلیدها در چیدمان صفحه‌کلید اروپایی کار نمی‌کردند (#237)
+  - دستور `curl` دیگر کار نمی‌کرد (#330)
+  - یک آرگومان پیش‌فرض باعث خرابی برخی دستورهای npm می‌شد (#326)
+### v1.2.8 (دسامبر ۲۰۲۱)
+- رفع مشکلاتی که در آن‌ها:
+  - دستور ssh-keygen باعث توقف ترمینال می‌شد (#314)
+  - ویرایشگر گاهی صفحهٔ خالی نشان می‌داد
+- افزودن برجسته‌سازی نگارش برای Terraform (#319)
+### v1.2.7 (دسامبر ۲۰۲۱)
+- بهبودهای عمومی
+### v1.2.6 (سپتامبر ۲۰۲۱)
+- سازگاری با آخرین نسخهٔ iOS
+- سایر بهبودها
+### v1.2.5 (ژوئیه ۲۰۲۱)
+- ترمینال
+  - رفع برخی مشکلات مربوط به clang / clang++
+### v1.2.4 (ژوئن ۲۰۲۱)
+- ویرایشگر
+  - رفع مشکلی که انتخاب با ماوس / ترک‌پد دیگر کار نمی‌کرد
+  - به‌روزرسانی تعاریف TypeScript به 4.2.4
+  - رابط کاربری
+  - طراحی نوار کناری جمع‌وجور جدید برای iPhone
+  - قابلیت مرتب‌سازی مجدد برگه‌های ویرایشگر
+  - بهبود خوانایی پوستهٔ Xcode
+  - امکان تکثیر فایل‌ها یا پوشه‌ها در منوی متنی
+- عملکرد
+  - بهبود عملکرد هنگام باز کردن درایوهای SMB از برنامهٔ Files
+- Git
+  - بهبود سازگاری با راه‌دورهای مختلف مخازن
+  - نشانگرهای درون‌خطی Diff
+  - ابزار خط فرمان آزمایشی Git
+- ترمینال
+  - تکمیل خودکار مسیر فایل
+  - باز کردن کد در ویرایشگر با `code <file>`
+- محیط اجرا
+  - Clang (اجرای برنامهٔ C با `clang main.c` و `./a.out`)
+  - Clang++ (اجرای برنامهٔ C++ با `clang++ main.cpp` و `./a.out`)
+  - PHP (اجرای برنامهٔ PHP با `php` و میزبانی سرور وب با `php -S localhost:<port>`)
+
+---
+
+### v1.2.3 (آوریل ۲۰۲۱)
+- ویرایشگر
+  - ۶ پوستهٔ رنگی دیگر
+  - حالت فقط‌خواندنی
+  - انواع درون‌ساخت برای Node.js
+  - پشتیبانی از تعاریف types@
+- کاوشگر
+  - جستجو در چند فایل
+- محیط اجرای Python
+  - Matplotlib و Pandas درون‌ساخت
+- سایر موارد
+  - بازیابی وضعیت رابط کاربری
+  - بومی‌سازی برای آلمانی
+  - رفع باگ‌ها و سایر بهبودها
+
+---
+
+### v1.2.1 (مارس ۲۰۲۱)
+- محیط اجرای Node.js
+  - اجرای آفلاین جاوااسکریپت
+  - نصب ماژول‌های npm
+  - نصب سراسری دستورهای جاوااسکریپت (tsc، prettier و غیره)
+  - دستورهای جدید ترمینال: npm، npx، node
+- محیط اجرای Python 3.9.2
+  - اجرای آفلاین پایتون
+  - نصب ماژول‌ها با pip
+  - نصب سراسری دستورهای پایتون
+  - دستورهای جدید ترمینال: pip، python، python3
+- ویرایشگر
+  - برگهٔ Problems
+  - سبک جدید Markdown
+  - برجسته‌سازی نگارش برای Vue
+  - گزینهٔ پیمایش روان برای دستگاه‌هایی با نرخ نوسازی بالا
+- ترمینال
+  - پشتیبانی از طرح رنگی روشن
+- کاوشگر فایل
+  - کاهش ارتفاع ردیف
+- رفع باگ‌ها
+
+---
+
+### v1.1.9 (فوریه ۲۰۲۱)
+- زبان
+  - اجرای سریع‌تر
+- رفع باگ‌ها
+
+---
+
+### v1.1.8 (فوریه ۲۰۲۱)
+- ویرایشگر متن
+  - مهاجرت به دستور زبان TextMate (برجسته‌سازی پیشرفته‌تر نگارش)
+  - پشتیبانی از زبان‌های بیشتر (Groovy, HLSL, Log, Makefile, Shaderlab, Fortran, Matlab)
+  - رفع باگی که در آن ویرایشگر گاهی به کلیک‌های اشاره‌گر پاسخ نمی‌داد
+  - نوار ابزار جدید صفحه‌کلید
+- کنترل نسخه
+  - بهبود عملکرد و پایداری
+  - آماده‌سازی تغییرات (Staging)
+  - تعویض شاخه
+  - حالت Detached head
+  - بازگردانی تغییرات
+- زبان
+  - پشتیبانی از Groovy
+- ترمینال درون‌ساخت
+  - پشتیبانی از SSH
+  - رفع باگ‌ها
+- کاوشگر
+  - حفظ وضعیت جمع‌شدن پوشه‌ها هنگام بستن نوار کناری
+  - قابلیت باز کردن پوشه با ضربه زدن روی نام آن
+- سایر موارد
+  - کاهش عرض نوار کناری
+  - پوسته به طور موقت برای پشتیبانی از سیستم جدید برجسته‌سازی نگارش حذف شده است
+  - غیرفعال شدن موقت JSON Intellisense
+
+---
+
+### v1.1.7 (ژانویه ۲۰۲۱)
+- ویرایشگر متن
+  - ذخیرهٔ تغییرات در دیسک هنگام اجرای کد یا بستن صفحه‌کلید
+  - رفع مشکلی که صفحه‌کلید مجازی گاهی ظاهر نمی‌شد
+- کنترل نسخه
+  - امکان کلون کردن مخازن خصوصی
+  - امکان push، pull و sync از راه‌دورها
+  - رفع مشکلی که در آن مخزن کلون‌شده به درستی نام‌گذاری نمی‌شد
+- ترمینال درون‌ساخت
+  - بیش از ۷۰ دستور لینوکس (ls، cd، nslookup و غیره)
+  - ساختارهای پایه‌ای کاربر شبیه به Bash مانند لوله‌کشی (piping)، تاریخچه و تکمیل خودکار
+  - فشردن کلید Tab برای نمایش همهٔ دستورهای موجود
+- کاوشگر
+  - مرتب‌سازی الفبایی فایل‌ها و پوشه‌ها
+  - پنهان بودن فایل‌ها یا پوشه‌های شروع‌شده با نقطه به طور پیش‌فرض
+  - قابلیت انتخاب موارد با ژست لمسی دو انگشتی
+- سایر بهبودها
+  - امکان باز کردن فایل‌ها با برنامهٔ Code App مستقیماً از برنامهٔ Files یا برنامه‌های دیگر
+  - امکان نگه‌داشتن آیکون برنامه در صفحهٔ اصلی برای نمایش اسناد اخیر
+  - رفع یک غلط املایی
+";
+
+"licenses" =
+"
+### مجوزها
+---
+#### Runestone
+ - [Runestone](https://github.com/simonbs/Runestone) تحت [مجوز MIT](https://github.com/simonbs/Runestone/blob/main/LICENSE) منتشر شده است.
+#### monokai-slate-vscode
+ - [monokai-slate-vscode] تحت [مجوز MIT](https://github.com/hamxiaoz/monokai-slate-vscode/blob/master/LICENSE) منتشر شده است.
+#### gruvbox-material-vscode
+ - [gruvbo-material-vscode] تحت [مجوز MIT](https://github.com/sainnhe/gruvbox-material-vscode/blob/master/LICENSE) منتشر شده است.
+#### catppuccin
+ - [catppuccin](https://github.com/catppuccin/vscode) تحت [مجوز MIT](https://github.com/catppuccin/vscode/blob/main/LICENSE) منتشر شده است.
+#### vscode-terraform
+ - [vscode-terraform](https://github.com/hashicorp/vscode-terraform) تحت [MPL-2.0](https://github.com/hashicorp/vscode-terraform/blob/main/LICENSE) منتشر شده است.
+#### GCDWebServer
+ - [GCDWebServer](https://github.com/swisspol/GCDWebServer) تحت [مجوز سفارشی](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE) منتشر شده است.
+#### holzschu/libgit2
+ - [libgit2](https://github.com/holzschu/libgit2) تحت [GPLv2 همراه با استثنای پیوند خاص](https://github.com/holzschu/libgit2/blob/main/COPYING) منتشر شده است.
+#### highlight.js
+ - [highlight.js](https://github.com/highlightjs/highlight.js) تحت [مجوز BSD-3-Clause](https://github.com/highlightjs/highlight.js/blob/master/LICENSE) منتشر شده است.
+#### ios_system
+ - [ios_system](https://github.com/holzschu/ios_system) تحت [مجوز BSD-3-Clause](https://github.com/holzschu/ios_system/blob/master/LICENSE) منتشر شده است.
+#### judge0
+ - [judge0](https://github.com/judge0/judge0) تحت [GNU General Public License v3.0](https://github.com/judge0/judge0/blob/master/LICENSE) منتشر شده است.
+#### libssh2
+ - [libssh2](https://github.com/libssh2/libssh2) تحت [مجوز BSD-3-Clause](https://github.com/swisspol/GCDWebServer/blob/master/LICENSE) منتشر شده است.
+#### MarkdownView
+ - [MarkdownView](https://github.com/keitaoouchi/MarkdownView) تحت [مجوز MIT](https://github.com/keitaoouchi/MarkdownView/blob/master/LICENSE) منتشر شده است.
+#### Monaco Editor
+ - [Monaco Editor](https://github.com/microsoft/monaco-editor) تحت [مجوز MIT](https://github.com/microsoft/monaco-editor/blob/master/LICENSE.md) منتشر شده است.
+#### Various Linux commands
+ - `egrep, fgrep, grep, gzip, gunzip, cat, chflag, compress, cp, date, echo, env, link, ln, printenv, pwd, ed, sed, tar, uncompress, uptime, chgrp, chksum, chmod, chown, df, du, groups, id, ls, mkdir, mv, readlink, rm, rmdir, stat, sum, touch, tr, uname, wc, whoami`
+تحت [مجوز BSD-3-Clause](https://en.wikipedia.org/wiki/BSD_licenses) منتشر شده‌اند.
+#### ZIPFoundation
+ - [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) تحت [مجوز MIT](https://github.com/weichsel/ZIPFoundation/blob/development/LICENSE) منتشر شده است.
+---
+> این پروژه بدون پروژه‌های متن‌باز بالا امکان‌پذیر نبود.
+> با آرزوی کدنویسی لذت‌بخش از هنگ کنگ 🇭🇰
+";
+
+"common.configure" = "پیکربندی";
+"common.open_folder" = "باز کردن پوشه";
+"common.compare" = "مقایسه";
+"common.overwrite" = "بازنویسی";
+"common.save" = "ذخیره";
+"common.dont_save" = "ذخیره نشود";
+"common.cancel" = "لغو";
+"common.revert" = "واگردانی";
+"common.delete" = "حذف";
+"common.reset" = "بازنشانی";
+"common.done" = "انجام شد";
+"common.import" = "وارد کردن";
+"common.add" = "افزودن";
+"common.create" = "ایجاد";
+"common.remove" = "حذف";
+"common.move" = "انتقال";
+"common.username" = "نام کاربری";
+"common.password" = "رمز عبور";
+"common.continue" = "ادامه";
+
+"notification.source" = "منبع: %@";
+
+"subscription.codeplus" = "Code+";
+"subscription.title %@" = "۱۲ ماه به قیمت %@.";
+"subscription.message" = "امکان دسترسی همگان به Code و باز کردن قفل همهٔ پوسته‌ها. برنامهٔ Code متن‌باز می‌ماند و ویژگی‌های کنونی بدون اشتراک در دسترس خواهند بود.";
+"subscription.payment.description %@ %@" = "از تاریخ %@، اشتراک شما به طور خودکار با هزینهٔ %@ در سال تمدید خواهد شد مگر اینکه آن را لغو کنید.";
+"subscription.payment.disallowed" = "پیکربندی دستگاه شما اجازهٔ پرداخت را نمی‌دهد.";
+"subscription.join" = "پیوستن به Code+";
+"code.and.privacy" = "دربارهٔ Code و حریم خصوصی";
+"terms_of_use" = "شرایط استفاده";
+"credentials.note" = "اطلاعات ورود در Secure Enclave دستگاه شما ذخیره می‌شوند. ما به آن‌ها دسترسی نداریم.";
+"settings.editor.font" = "قلم";
+"settings.editor.font.reset" = "بازنشانی به حالت پیش‌فرض";
+"settings.editor.font.ligatures" = "اتصال حروف قلم";
+"settings.editor.font.show_all_fonts" = "نمایش همهٔ قلم‌ها";
+"settings.editor.vim.enabled" = "حالت Vim";
+"settings.explorer.confirm_before_delete" = "تأیید پیش از حذف";
+"settings.explorer.show_hidden_files" = "نمایش فایل‌های پنهان";
+"settings.runestone.editor" = "ویرایشگر Runestone";
+"settings.runestone.editor.notes" = "ویرایشگر Runestone ویرایشگری با پشتیبانی از انتخاب بومی متن است. برخی از ویژگی‌ها در این حالت در دسترس نیستند.";
+"settings.terminal.font" = "قلم";
+"settings.language_service" = "سرویس زبان";
+"settings.language_service.enable" = "فعال‌سازی سرویس زبان";
+"settings.language_service.notes" = "سرویس زبان ویژگی‌هایی مانند تکمیل خودکار، تحلیل ایستا و سایر قابلیت‌های زبان را ارائه می‌دهد. این ویژگی در حال حاضر برای Python و Java در دسترس است.";
+"settings.about.change_app_language" = "تغییر زبان برنامه";
+
+"panels.no_panel_selected" = "هیچ پانلی انتخاب نشده است";
+"sidebar.no_section_selected" = "هیچ بخشی انتخاب نشده است.";
+
+"errors.script_already_running" = "یک اسکریپت از قبل در حال اجرا است. پیش از اجرای اسکریپتی دیگر، آن را به پایان برسانید.";
+"errors.fs.not_implemented" = "عملیات پیاده‌سازی نشده است";
+"errors.fs.scheme_not_registered" = "طرح‌وارهٔ URI فایل ثبت نشده است";
+"errors.fs.invalid_host" = "میزبان نامعتبر است";
+"errors.fs.unsupported_encoding" = "کدگذاری پشتیبانی نمی‌شود";
+"errors.fs.unknown" = "خطای ناشناخته";
+"errors.fs.connection_failure" = "اتصال برقرار نشد";
+"errors.fs.authentication_failure" = "احراز هویت ناموفق بود";
+"errors.fs.attempting_to_copy_parent_to_child" = "مبدأ والد مقصد است.";
+"errors.fs.attempting_to_copy_oneself" = "مبدأ مسیر یکسانی با والد دارد.";
+"errors.fs.already_connecting_to_a_host" = "اتصال به یک میزبان از قبل در حال انجام است.";
+"errors.fs.jumping_not_supported_for_host" = "پرش برای این میزبان پشتیبانی نمی‌شود.";
+"errors.fs.missing_jumping_server" = "سرور پرش وجود ندارد";
+"errors.source_control.authentication_failed" = "احراز هویت ناموفق بود: ممکن است نیاز باشد اطلاعات ورود git خود را پیکربندی کنید.";
+"errors.source_control.clone_authentication_failed" = "احراز هویت ناموفق بود: پیکربندی اطلاعات ورود خود را بررسی کنید.";
+"errors.source_control.no_staged_changes" = "هیچ تغییر آماده‌ای وجود ندارد.";
+"errors.source_control.empty_commit_message" = "پیام commit نمی‌تواند خالی باشد";
+"errors.source_control.invalid_url" = "آدرس URL نامعتبر است";
+"errors.unknown_file_format" = "فرمت فایل ناشناخته است";
+"errors.editor_does_not_exist" = "ویرایشگر وجود ندارد";
+"errors.editor_is_not_ready" = "ویرایشگر آماده نیست";
+"errors.failed_to_save_file.encoding.failed" = "ذخیرهٔ فایل ناموفق بود. کدگذاری با شکست مواجه شد.";
+"errors.file_modified_by_another_process" = "فایل توسط فرایند دیگری تغییر یافته است";
+"errors.failed_to_import_key" = "وارد کردن کلید ناموفق بود";
+"errors.port_forward.service_unavailable" = "سرویس در دسترس نیست";
+"errors.port_forward.invalid_address" = "آدرس نامعتبر است";
+"errors.port_forward.address_already_in_use" = "خطای Errno 48: آدرس در حال حاضر در حال استفاده است";
+"errors.operation_cancelled_by_user" = "عملیات توسط کاربر لغو شد";
+"errors.sftp.invalid_host_url" = "آدرس URL میزبان نامعتبر است";
+"errors.sftp.invalid_jump_host_url" = "آدرس URL میزبان پرش نامعتبر است";
+"errors.sftp.unable_to_start_portforward_service" = "راه‌اندازی سرویس فوروارد درگاه ممکن نیست";
+"errors.sftp.auth_failure" = "شکست در احراز هویت";
+"errors.sftp.failed_to_perform_operation" = "انجام عملیات ناموفق بود";
+"errors.sftp.unable_to_start_shell" = "راه‌اندازی شل (Shell) ممکن نیست";
+
+"file.copy" = "کپی به…";
+"file.download" = "دانلود به…";
+"file.confirm_save %@" = "آیا می‌خواهید تغییرات اعمال‌شده در %@ ذخیره شوند؟";
+"file.confirm_delete %@" = "آیا از حذف %@ مطمئن هستید؟";
+"file.confirm_move_into %@ %@" = "آیا از انتقال %@ به %@ مطمئن هستید؟";
+"file.reopen_with_encoding" = "باز کردن مجدد با کدگذاری";
+"file.download_now" = "اکنون دانلود شود";
+"file.upload" = "بارگذاری";
+
+"actions.new_window" = "پنجرهٔ جدید";
+"actions.switch_to_monaco_editor" = "تغییر به ویرایشگر Monaco";
+"actions.switch_to_runestone_editor" = "تغییر به ویرایشگر Runestone";
+
+"remote.connecting" = "در حال اتصال به میزبان";
+"remote.connected" = "اتصال با موفقیت برقرار شد";
+"remote.ssh_key_not_found" = "کلید SSH در مسیر Documents/.ssh/id_rsa یافت نشد. با اجرای ssh-keygen در ترمینال، یک کلید تولید کنید.";
+"remote.reload_key" = "بارگذاری مجدد کلید";
+"remote.passphrase_for_private_key" = "عبارت عبور برای کلید خصوصی";
+"remote.credentials_for %@" = "اطلاعات ورود برای %@";
+"remote.enter_credentials" = "وارد کردن اطلاعات ورود";
+"remote.authenticate_to %@" = "احراز هویت در %@";
+"remote.one_or_more_hosts_use_this_host_as_jump_proxy" = "یک یا چند میزبان از این میزبان به عنوان پروکسی پرش استفاده می‌کنند.";
+"remote.confirm_delete_are_you_sure_to_delete" = "آیا از حذف این میزبان مطمئن هستید؟";
+"remote.use_jump_server" = "استفاده از سرور پرش";
+"remote.jump_using" = "پرش با استفاده از";
+
+
+
+"source_control.title" = "کنترل نسخه";
+"source_control.username" = "نام کاربری";
+"source_control.password_based_authentication" = "احراز هویت مبتنی بر رمز عبور";
+"source_control.ssh_authentication" = "احراز هویت SSH";
+"source_control.private_key_content" = "محتوای کلید خصوصی";
+"source_control.editing_ssh_private_key" = "ویرایش کلید خصوصی SSH";
+"source_control.pat" = "توکن دسترسی شخصی (PAT)";
+"source_control.pat_or_password" = "توکن دسترسی شخصی / رمز عبور";
+"source_control.ssh_key_reset_confirmation" = "آیا از بازنشانی کلید SSH مطمئن هستید؟";
+"source_control.url_specific_credentials" = "اطلاعات ورود مختص URL";
+"source_control.add_new_credentials" = "افزودن اطلاعات ورود جدید";
+"source_control.git_authentication" = "احراز هویت Git";
+"source_control.repository_initialized" = "مخزن راه‌اندازی شد";
+"source_control.commit_succeeded" = "ثبت تغییرات (commit) با موفقیت انجام شد";
+"source_control.uploading_objects" = "در حال بارگذاری اشیا";
+"source_control.pushing_to_remote" = "در حال ارسال (push) به راه‌دور";
+"source_control.push_succeeded" = "ارسال (push) با موفقیت انجام شد";
+"source_control.fetching_from_origin" = "در حال دریافت (fetch) از origin";
+"source_control.fetch_succeeded" = "دریافت (fetch) با موفقیت انجام شد";
+"source_control.clone_succeeded" = "کلون کردن با موفقیت انجام شد";
+"source_control.cloning_into" = "در حال کلون کردن در %@";
+"source_control.error" = "خطای کلون کردن: %@";
+"source_control.revert_succeeded" = "واگردانی با موفقیت انجام شد";
+"source_control.remote_credentials" = "اطلاعات ورود راه‌دور";
+"source_control.credentials.note" = "در بسیاری از موارد، برای احراز هویت باید به جای رمز عبور از یک توکن دسترسی شخصی استفاده کنید. برای اطلاعات بیشتر در این مورد:";
+"source_control.confirm_revert %@" = "آیا از واگردانی تغییرات در %@ مطمئن هستید؟";
+"source_control.retrieving_changes" = "در حال دریافت تغییرات";
+"source_control.community_templates" = "الگوهای جامعهٔ کاربری";
+"source_control.community_templates.description" = "الگوهای جامعهٔ کاربری مخازنی در GitHub با برچسب codeapp-template# هستند. می‌توانید این مورد را در منوی تنظیمات غیرفعال کنید.";
+"source_control.clone" = "کلون کردن";
+"source_control.pull" = "دریافت تغییرات (pull)";
+"source_control.pulling_from_remote" = "در حال دریافت تغییرات (pull) از راه‌دور";
+"source_control.pull_succeeded" = "دریافت تغییرات (pull) با موفقیت انجام شد";
+"source_control.checkout.select_branch_or_tag" = "شاخه یا برچسبی را برای checkout انتخاب کنید";
+"source_control.public_key" = "کلید عمومی";
+"source_control.editing_public_key" = "ویرایش کلید عمومی";
+"source_control.key_content" = "محتوای کلید";
+"source_control.private_key" = "کلید خصوصی";
+"source_control.passphrase_optional" = "عبارت عبور (اختیاری)";
+"source_control.hostname" = "نام میزبان";
+"source_control.credentials" = "اطلاعات ورود";
+"source_control.new_credentials" = "اطلاعات ورود جدید";
+"source_control.hostname_based_credentials" = "اطلاعات ورود مبتنی بر نام میزبان";
+"source_control.add_key_based_credentials" = "افزودن اطلاعات ورود مبتنی بر کلید";
+"source_control.add_password_based_credentials" = "افزودن اطلاعات ورود مبتنی بر رمز عبور";
+"source_control.create_branch" = "ایجاد شاخه";
+"source_control.branch_name" = "نام شاخه";
+"source_control.branch" = "شاخه";
+"source_control.confirm_delete_branch %@" = "آیا از حذف شاخهٔ %@ مطمئن هستید؟";
+"source_control.branch_deleted" = "شاخهٔ %@ حذف شد";
+"source_control.tag" = "برچسب";
+"source_control.create_tag" = "ایجاد برچسب";
+"source_control.tag_name" = "نام برچسب";
+"source_control.annotation_optional" = "یادداشت حاشیه‌ای (اختیاری)";
+"source_control.tag_created" = "برچسب %@ ایجاد شد";
+"source_control.confirm_delete_tag" = "آیا از حذف برچسب %@ مطمئن هستید؟";
+"source_control.tag_deleted" = "برچسب %@ حذف شد";
+"source_control.pushing_tag_to_remote" = "در حال ارسال برچسب %@ به %@";
+"source_control.push" = "ارسال (push)";
+"source_control.commit" = "ثبت تغییرات (commit)";
+"source_control.message_command_enter_to_commit" = "پیام (⌘Enter برای ثبت تغییرات)";
+
+"panel.problems.no_problems_detected" = "هیچ مشکلی در فضای کاری شناسایی نشد.";
+"panel.execution.press_play_to_execute_code" = "دکمهٔ پخش را برای اجرای کد فشار دهید. ورودی برنامه باید پیش از اجرا پر شود.";
+"panel.execution.program_input" = "ورودی برنامه…";
+"panel.execution.input" = "ورودی";
+"panel.execution.output" = "خروجی";
+"panel.execution.split_view" = "نمای دونیم (Split View)";
+"panel.execution.title" = "اجرا";
+
+"local.execution.title" = "اجرای محلی";
+
+"remote.setup_remote_server" = "مستندات ویژگی دسترسی راه‌دور";
+"remote.private_key_content" = "محتوای کلید خصوصی";
+"remote.setup_note" = "برای تولید جفت‌کلید، ssh-keygen را در ترمینال اجرا کنید. در صورتی که عبارت عبور وجود ندارد، آن را خالی بگذارید.";
+"remote.import_from_file" = "وارد کردن از فایل";
+"remote.port_forward.new_port_forward" = "فوروارد درگاه جدید";
+"remote.port_forward.local_port_or_address" = "درگاه یا آدرس محلی";
+"remote.port_forward.remote_port_or_address" = "درگاه یا آدرس راه‌دور";
+"remote.port_forward.port_forwarding" = "فوروارد درگاه";
+"remote.port_forward.configure_description" = "برای دسترسی به درگاهی در دستگاه راه‌دور، فوروارد درگاه را پیکربندی کنید.";
+"remote.port_forward.address_example" = "مانند 6000 یا 127.0.0.1:6000";
+"remote.settings.ssh_remote" = "راه‌دور SSH";
+"remote.settings.resolve_home_path" = "حل مسیر پوشهٔ آغازین (Home)";
+"terminal.tab.accessibility.active" = "فعال";
+"terminal.tab.accessibility.running" = "در حال اجرا";
+"terminal.tab.accessibility.hint" = "برای رفتن به این ترمینال ضربه بزنید";
+"terminal.tab.kill" = "توقف ترمینال";
+"terminal.tab.kill_confirmation.title" = "توقف ترمینال؟";
+"terminal.tab.kill_confirmation.cancel" = "لغو";
+"terminal.tab.kill_confirmation.kill" = "توقف";
+"terminal.tab.kill_confirmation.message" = "این ترمینال یک فرایند در حال اجرا دارد. آیا از توقف آن مطمئن هستید؟";
