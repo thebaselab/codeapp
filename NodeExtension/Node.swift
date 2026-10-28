@@ -12,7 +12,7 @@ let sharedURL = FileManager.default.containerURL(forSecurityApplicationGroupIden
 class NodeLauncher {
     static let shared = NodeLauncher()
     
-    func launchNode(args: [String]){
+    func launchNode(args: [String], environment: [String: String] = [:]) -> Int32 {
         setenv("npm_config_prefix", sharedURL.appendingPathComponent("lib").path, 1)
         setenv("npm_config_cache", FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!.path, 1)
         setenv("npm_config_userconfig", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(".npmrc").path, 1)
@@ -22,8 +22,17 @@ class NodeLauncher {
         setenv("HOME", sharedURL.path, 1)
         setenv("FORCE_COLOR", "3", 1)
         let injectionJSPath = Bundle.main.path(forResource: "injection", ofType: "js")!
-        setenv("NODE_OPTIONS", "--jitless --require \"\(injectionJSPath)\"", 1)
+        var nodeOptions = "--jitless --require \"\(injectionJSPath)\""
+        for (key, value) in environment {
+            // The injection script must always load, so user NODE_OPTIONS are appended instead of replacing it.
+            if key == "NODE_OPTIONS" {
+                nodeOptions += " " + value
+            } else {
+                setenv(key, value, 1)
+            }
+        }
+        setenv("NODE_OPTIONS", nodeOptions, 1)
         
-        NodeRunner.startEngine(withArguments: args)
+        return NodeRunner.startEngine(withArguments: args)
     }
 }

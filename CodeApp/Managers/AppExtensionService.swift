@@ -68,11 +68,34 @@ class AppExtensionService: NSObject {
         try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
     }
 
+    /// The extension exits after every command and is relaunched by the interruption handler,
+    /// so a command started right after another one has to wait for the server to listen again.
+    private func connect(sending firstMessage: String) async throws -> URLSessionWebSocketTask {
+        let url = URL(string: "ws://127.0.0.1:\(String(AppExtensionService.PORT))/websocket")!
+        var attempt = 0
+        while true {
+            let task = URLSession.shared.webSocketTask(with: url)
+            self.task = task
+            task.resume()
+            do {
+                try await task.send(.string(firstMessage))
+                return task
+            } catch let error as URLError
+                where error.code == .cannotConnectToHost && attempt < 40
+            {
+                task.cancel()
+                attempt += 1
+                try await Task.sleep(nanoseconds: 250_000_000)
+            }
+        }
+    }
+
     func call(
         args: [String],
         t_stdin: UnsafeMutablePointer<FILE>,
-        t_stdout: UnsafeMutablePointer<FILE>
-    ) async throws {
+        t_stdout: UnsafeMutablePointer<FILE>,
+        environment: [String: String] = [:]
+    ) async throws -> Int32 {
         await prepareServer()
 
         defer {
@@ -86,10 +109,18 @@ class AppExtensionService: NSObject {
         }
         signal(SIGINT, signalCallback)
 
-        let task = URLSession.shared.webSocketTask(
-            with: URL(string: "ws://127.0.0.1:\(String(AppExtensionService.PORT))/websocket")!)
-        self.task = task
-        task.resume()
+        let frame = ExecutionRequestFrame(
+            args: args,
+            redirectStderr: true,
+            workingDirectoryBookmark: try? URL(
+                fileURLWithPath: FileManager.default.currentDirectoryPath
+            ).bookmarkData(),
+            isLanguageService: false,
+            environment: environment
+        )
+
+        let task = try await connect(sending: frame.stringRepresentation)
+        print("Sending -> \(frame.stringRepresentation)")
 
         let handle = FileHandle(fileDescriptor: fileno(t_stdin), closeOnDealloc: false)
         handle.readabilityHandler = { fileHandle in
@@ -101,19 +132,6 @@ class AppExtensionService: NSObject {
             }
         }
 
-        let frame = ExecutionRequestFrame(
-            args: args,
-            redirectStderr: true,
-            workingDirectoryBookmark: try? URL(
-                fileURLWithPath: FileManager.default.currentDirectoryPath
-            ).bookmarkData(),
-            isLanguageService: false
-        )
-
-        try await task.send(.string(frame.stringRepresentation))
-
-        print("Sending -> \(frame.stringRepresentation)")
-
         while let message = try? await task.receive() {
             switch message {
             case .string(let text):
@@ -123,5 +141,8 @@ class AppExtensionService: NSObject {
                 continue
             }
         }
+
+        let closeCode = task.closeCode.rawValue
+        return (4000..<5000).contains(closeCode) ? Int32(closeCode - 4000) : 0
     }
 }
