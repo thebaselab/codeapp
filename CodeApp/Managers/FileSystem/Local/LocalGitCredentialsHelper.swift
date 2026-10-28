@@ -34,7 +34,8 @@ final class LocalGitCredentialsHelper {
         case https, ssh
 
         init?(rawValue: String) {
-            if rawValue == "https" {
+            // Plain http remotes (e.g. self-hosted Forgejo on a LAN) use the same plaintext credentials.
+            if rawValue == "https" || rawValue == "http" {
                 self = .https
             } else if rawValue == "ssh" {
                 self = .ssh

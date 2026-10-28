@@ -134,7 +134,8 @@ class MonacoImplementation: NSObject {
         await applyOptions(options: "minimap: {enabled: \(options.miniMapEnabled)}")
         await applyOptions(options: "lineNumbers: \(options.lineNumbersEnabled)")
         await applyOptions(options: "smoothScrolling: \(options._smoothScrollingEnabled)")
-        await applyOptions(options: "readOnly: \(options.readOnly)")
+        await applyOptions(
+            options: "readOnly: \(options.readOnly), domReadOnly: \(options.readOnly)")
         await applyOptions(options: "tabSize: \(String(options.tabRenderSize))")
         await applyOptions(options: "renderWhitespace: '\(options.renderWhiteSpaces)'")
         await applyOptions(options: "wordWrap: '\(options.wordWrap)'")

@@ -179,7 +179,7 @@ struct ExplorerFileTree: View {
         ) { _ in
             let pasteboard = UIPasteboard.general
             guard let targetURL = URL(string: item.url),
-                let baseURL = (App.activeEditor as? EditorInstanceWithURL)?.url
+                let baseURL = URL(string: App.workSpaceStorage.currentDirectory.url)
             else {
                 return
             }

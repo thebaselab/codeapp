@@ -84,6 +84,7 @@ class SFTPTerminalServiceProvider: NSObject, TerminalServiceProvider {
                 } catch {
                     print("Unable to start shell,", error)
                     continuation.resume(throwing: SFTPError.UnableToStartShell)
+                    return
                 }
 
                 continuation.resume()
