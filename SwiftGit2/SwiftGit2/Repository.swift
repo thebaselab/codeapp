@@ -216,7 +216,7 @@ public final class Repository {
 		
 		guard result == GIT_OK.rawValue else{
 			git_reference_free(pointer)
-			return Result.failure(NSError(gitError: value, pointOfFailure: "git_branch_create"))
+			return Result.failure(NSError(gitError: result, pointOfFailure: "git_branch_create"))
 		}
 		
 		let finalResult = referenceWithLibGit2Reference(pointer!)
@@ -226,6 +226,49 @@ public final class Repository {
 		
 		return Result.success(finalResult as! Branch)
 	}
+    
+    /// Returns the local branch for `remoteBranch` (e.g. `main` for `origin/main`), creating it
+    /// with its upstream set when it does not exist yet, like `git checkout main` does.
+    public func localTrackingBranch(for remoteBranch: Branch) -> Result<Branch, NSError> {
+        guard remoteBranch.isRemote, let separator = remoteBranch.name.firstIndex(of: "/") else {
+            return .failure(NSError(
+                domain: libGit2ErrorDomain,
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "\(remoteBranch.name) is not a remote branch."]
+            ))
+        }
+        let localName = String(remoteBranch.name[remoteBranch.name.index(after: separator)...])
+
+        // Only create the branch when it is really missing, since createBranch force-overwrites.
+        var existingPointer: OpaquePointer? = nil
+        let existingResult = git_reference_lookup(&existingPointer, self.pointer, "refs/heads/\(localName)")
+        if existingResult == GIT_OK.rawValue, let existingPointer {
+            defer { git_reference_free(existingPointer) }
+            guard let existing = Branch(existingPointer) else {
+                return .failure(NSError(gitError: existingResult, pointOfFailure: "git_branch_name"))
+            }
+            return .success(existing)
+        } else if existingResult != GIT_ENOTFOUND.rawValue {
+            return .failure(NSError(gitError: existingResult, pointOfFailure: "git_reference_lookup"))
+        }
+
+        return commit(remoteBranch.commit.oid)
+            .flatMap { createBranch(at: $0, branchName: localName) }
+            .flatMap { localBranch in
+                var referencePointer: OpaquePointer? = nil
+                let lookupResult = git_reference_lookup(&referencePointer, self.pointer, localBranch.longName)
+                guard lookupResult == GIT_OK.rawValue else {
+                    return .failure(NSError(gitError: lookupResult, pointOfFailure: "git_reference_lookup"))
+                }
+                defer { git_reference_free(referencePointer) }
+
+                let upstreamResult = git_branch_set_upstream(referencePointer, remoteBranch.name)
+                guard upstreamResult == GIT_OK.rawValue else {
+                    return .failure(NSError(gitError: upstreamResult, pointOfFailure: "git_branch_set_upstream"))
+                }
+                return .success(localBranch)
+            }
+    }
     
     public func deleteBranch(branch: Branch) throws {
         var refPointer: OpaquePointer? = nil
@@ -431,6 +474,40 @@ public final class Repository {
         return referenceWithLibGit2Reference(newReferencePointer!)
     }
     
+    /// Returns nil for unrelated histories, which are then merged without a common ancestor.
+    private func mergeBase(_ one: OID, _ two: OID) throws -> OID? {
+        var base = git_oid()
+        var one = one.oid
+        var two = two.oid
+        let result = git_merge_base(&base, self.pointer, &one, &two)
+        if result == GIT_ENOTFOUND.rawValue {
+            return nil
+        }
+        guard result == GIT_OK.rawValue else {
+            throw NSError(gitError: result, pointOfFailure: "git_merge_base")
+        }
+        return OID(base)
+    }
+    
+    private func ensureCleanWorkingTree() throws {
+        let trackedChanges: Diff.Status = [
+            .indexNew, .indexModified, .indexDeleted, .indexRenamed, .indexTypeChange,
+            .workTreeModified, .workTreeDeleted, .workTreeRenamed, .workTreeTypeChange,
+            .conflicted,
+        ]
+        // Empty options exclude untracked files, matching git's own pull safety check.
+        let entries = try status(options: []).get()
+        guard !entries.contains(where: { !$0.status.intersection(trackedChanges).isEmpty }) else {
+            throw NSError(
+                domain: libGit2ErrorDomain,
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Your local changes would be overwritten by pull. Commit or discard them before pulling.",
+                ]
+            )
+        }
+    }
+    
     private func mergeBranchIntoCurrentBranch(branch: Branch, signature: Signature) throws {
         let localBranch = try self.currentBranch()
         
@@ -443,7 +520,12 @@ public final class Repository {
         if (analysis.contains(.upToDate)){
             // Do nothing
             return
-        }else if (analysis.contains(.fastForward) || analysis.contains(.unborn)){
+        }
+
+        // Both merge paths below force-checkout the result, which would discard local edits.
+        try ensureCleanWorkingTree()
+
+        if (analysis.contains(.fastForward) || analysis.contains(.unborn)){
             // Fast-forward branch
             let newReference = try updateReferenceTarget(
                 reference: localBranch,
@@ -457,11 +539,10 @@ public final class Repository {
             let localTree = try safeTreeForCommitId(localBranch.commit.oid).get()
             let remoteTree = try safeTreeForCommitId(branch.commit.oid).get()
             
-            // TODO: Find common ancestor
-            let ancestorTree: Tree? = nil
+            let ancestorCommit = try mergeBase(localBranch.commit.oid, branch.commit.oid)
             
             // Merge
-            let index = try mergeTree(tree: localTree, otherTree: remoteTree, ancestor: ancestorTree)
+            let index = try mergeTree(tree: localTree, otherTree: remoteTree, ancestorCommit: ancestorCommit)
             defer { git_index_free(index) }
             
             // Check for conflict
@@ -504,11 +585,10 @@ public final class Repository {
                 try commit(branch.commit.oid).get()
             ]
             
-            // FIXME: This is stepping on the local tree
             _ = try self.commit(
                 tree: newTree.oid,
                 parents: parents,
-                message: "Merge branch \(localBranch.name)",
+                message: "Merge branch '\(branch.name)' into \(localBranch.name)",
                 signature: signature
             ).get()
             
@@ -1481,12 +1561,13 @@ public final class Repository {
     /// Returns an index which represents the result of the merge, or nil if an error
     /// occurred.
     ///
-    private func mergeTree(tree: Tree, otherTree: Tree, ancestor: Tree?) throws -> OpaquePointer {
+    private func mergeTree(tree: Tree, otherTree: Tree, ancestorCommit: OID?) throws -> OpaquePointer {
         var index: OpaquePointer? = nil
         
         return try withGitObjects([tree.oid, otherTree.oid],
             type: GIT_OBJECT_TREE){ objects in
-                let ancestorTreePointer = (ancestor == nil ? nil : try unsafeTreeForCommitId(ancestor!.oid).get())
+                let ancestorTreePointer = try ancestorCommit.map { try unsafeTreeForCommitId($0).get() }
+                defer { git_object_free(ancestorTreePointer) }
                 
                 let gitResult = git_merge_trees (
                     &index,
