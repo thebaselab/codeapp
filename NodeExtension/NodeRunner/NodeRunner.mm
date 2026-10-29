@@ -8,7 +8,7 @@
 @implementation NodeRunner
 
 //node's libUV requires all arguments being on contiguous memory.
-+ (void) startEngineWithArguments:(NSArray*)arguments
++ (int) startEngineWithArguments:(NSArray*)arguments
 {
     int c_arguments_size=0;
     
@@ -48,7 +48,8 @@
     }
     
     //Start node, with argc and argv.
-    node_start(argument_count,argv);
+    int exitCode = node_start(argument_count,argv);
     free(args_buffer);
+    return exitCode;
 }
 @end

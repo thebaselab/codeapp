@@ -23,6 +23,7 @@ struct ExecutionRequestFrame: Codable {
     var redirectStderr: Bool
     var workingDirectoryBookmark: Data?
     var isLanguageService: Bool
+    var environment: [String: String]? = nil
 }
 
 enum AppExtensionError: String {

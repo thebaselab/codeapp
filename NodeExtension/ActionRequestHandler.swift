@@ -52,7 +52,8 @@ class BinaryExecutor {
         pythonLibraryDirectory: URL?,
         redirectStderr: Bool,
         ws: SwiftWS.WebSocket,
-        isLanguageService: Bool
+        isLanguageService: Bool,
+        environment: [String: String]
     ){
         atexit {
             // Allow stdout to properly print before exit
@@ -106,18 +107,21 @@ class BinaryExecutor {
         }
         
         DispatchQueue.global(qos: isLanguageService ? .utility : .default).async {
+            var exitCode: Int32 = 0
             switch executable {
             case "java", "javac":
                 JavaLauncher.shared.launchJava(args: args, frameworkDirectory: sharedFrameworksDirectory, currentDirectory: workingDirectory)
             case "node":
-                NodeLauncher.shared.launchNode(args: args)
+                exitCode = NodeLauncher.shared.launchNode(args: args, environment: environment)
             default:
                 SystemCommandLauncher.shared.launchSystemCommand(args: args, pythonLibraryDirectoryURL: pythonLibraryDirectory)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.listener.onStdout = nil
                 self.listener.closeConsolePipe()
-                ws.close(code: 1000, reason: "finished")
+                // Close codes 4000-4999 are application-defined; the app decodes the exit status from them.
+                let closeCode = exitCode == 0 ? 1000 : 4000 + Int(min(max(exitCode, 1), 999))
+                ws.close(code: closeCode, reason: "finished")
             }
         }
     }
@@ -188,7 +192,8 @@ class ActionRequestHandler: NSObject, NSExtensionRequestHandling {
                     }
                     
                     binaryExecutor.executeBinary(args: request.args, workingDirectory: workingDirectoryUrl, sharedFrameworksDirectory: frameworkDirectoryURL,
-                                                 pythonLibraryDirectory: pythonLibraryDirectoryURL ,redirectStderr: request.redirectStderr, ws: message.target, isLanguageService: request.isLanguageService)
+                                                 pythonLibraryDirectory: pythonLibraryDirectoryURL ,redirectStderr: request.redirectStderr, ws: message.target, isLanguageService: request.isLanguageService,
+                                                 environment: request.environment ?? [:])
                 }
             }
             

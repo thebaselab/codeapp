@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NodeRunner : NSObject {}
-+ (void) startEngineWithArguments:(NSArray*)arguments;
++ (int) startEngineWithArguments:(NSArray*)arguments;
 @end
 
 #endif

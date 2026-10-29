@@ -297,7 +297,12 @@ class LocalGitServiceProvider: GitServiceProvider {
     func checkout(reference: ReferenceType) async throws {
         try await WorkerQueueTask {
             let repository = try self.checkedRepository()
-            try repository.checkout(reference, strategy: [.Safe]).get()
+            var target = reference
+            // Checking out a remote branch directly leaves HEAD detached; use a local tracking branch instead.
+            if let branch = reference as? Branch, branch.isRemote, !branch.name.hasSuffix("/HEAD") {
+                target = try repository.localTrackingBranch(for: branch).get()
+            }
+            try repository.checkout(target, strategy: [.Safe]).get()
             self.contentCache.removeAllObjects()
         }
     }
@@ -350,13 +355,14 @@ class LocalGitServiceProvider: GitServiceProvider {
         return try await WorkerQueueTask {
             let repository = try self.checkedRepository()
 
-            if let cached = self.contentCache.object(forKey: path as NSString) {
-                return (cached as String)
-            }
             let path =
                 try path
                 .replacingOccurrences(of: self.workingURL.absoluteString, with: "")
                 .removingPercentEncoding
+
+            if let cached = self.contentCache.object(forKey: path as NSString) {
+                return (cached as String)
+            }
 
             let oid = try self.fileOidAtPathForLastCommit(path: path)
             let blob = try repository.blob(oid).get()
