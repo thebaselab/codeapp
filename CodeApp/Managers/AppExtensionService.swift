@@ -120,14 +120,12 @@ class AppExtensionService: NSObject {
         )
 
         let task = try await connect(sending: frame.stringRepresentation)
-        print("Sending -> \(frame.stringRepresentation)")
 
         let handle = FileHandle(fileDescriptor: fileno(t_stdin), closeOnDealloc: false)
         handle.readabilityHandler = { fileHandle in
             if let str = String(data: fileHandle.availableData, encoding: .utf8) {
                 Task {
                     try await task.send(.string(str))
-                    print("Sending -> \(str)")
                 }
             }
         }
@@ -135,7 +133,6 @@ class AppExtensionService: NSObject {
         while let message = try? await task.receive() {
             switch message {
             case .string(let text):
-                print("Receiving <- \(text)")
                 fputs(text, t_stdout)
             default:
                 continue
