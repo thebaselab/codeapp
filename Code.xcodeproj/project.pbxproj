@@ -1758,6 +1758,7 @@
 		94251DBA263E019F0029427A /* pythonA-pandas._libs.window.aggregations.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "pythonA-pandas._libs.window.aggregations.framework"; sourceTree = "<group>"; };
 		9425205A263E103E0029427A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9425205C263E10490029427A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3411FCF58BB03C48EFC68DF7 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		942A1884285B90650018801F /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		942ACB9C281312900067114D /* SpellChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellChecker.swift; sourceTree = "<group>"; };
 		942E31F728086FE800233441 /* KeyChainAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainAccessor.swift; sourceTree = "<group>"; };
@@ -1951,6 +1952,7 @@
 		94D7DEC02631D0CA00FA0760 /* libpng.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libpng.xcframework; sourceTree = "<group>"; };
 		94D7DED42631D16C00FA0760 /* harfbuzz.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = harfbuzz.xcframework; sourceTree = "<group>"; };
 		94D7DEE12632C6B000FA0760 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C3DBE36D5F2F7FCA87915DDD /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
 		94E3B96A25866C79006AC043 /* String.Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.Encoding.swift; sourceTree = "<group>"; };
 		94E6CC7A2806FBAF00939E4F /* SFTPFileSystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFTPFileSystemProvider.swift; sourceTree = "<group>"; };
 		94E6CC842807502A00939E4F /* ActivityBarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityBarItemView.swift; sourceTree = "<group>"; };
@@ -3466,6 +3468,7 @@
 				ru,
 				tr,
 				fr,
+				fa,
 			);
 			mainGroup = 944EEBE72563C381009D77FE;
 			packageReferences = (
@@ -4009,6 +4012,7 @@
 			children = (
 				9425205A263E103E0029427A /* zh-Hans */,
 				9425205C263E10490029427A /* de */,
+				3411FCF58BB03C48EFC68DF7 /* fa */,
 				73F80B102850F7EE000EF3FC /* ko */,
 				4F30816929662D58002708FD /* ja */,
 				9DFB70332D7A78B2005A5BB4 /* ru */,
@@ -4024,6 +4028,7 @@
 				94A56831257CC3A1008A6530 /* zh-Hans */,
 				94A56833257CC3AF008A6530 /* en */,
 				94D7DEE12632C6B000FA0760 /* de */,
+				C3DBE36D5F2F7FCA87915DDD /* fa */,
 				73F80B0F2850F7E5000EF3FC /* ko */,
 				4F30816829662CBF002708FD /* ja */,
 				9DA5FA622D7A51B30010CE11 /* ru */,
