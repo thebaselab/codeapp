@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.3 (2026 年 9 月)**
+##### **v1.12.4 (2026 年 11 月)**
 #### 开始
 [新文件](https://thebaselab.com/code/newfile)
 [打开文件](https://thebaselab.com/code/openfile)
@@ -23,6 +23,11 @@
 
 "Changelog.message" =
 "
+### 1.12.4 (2026 年 11 月)
+- 支持波斯语
+- 修复了多个错误
+- 特别感谢 @YONN2222 的贡献
+
 ### 1.12.3 (2026 年 9 月)
 - 修复了土耳其语未在设置中显示的问题
 - 改进了与 iOS 27 的兼容性
