@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.3 (September 2026)**
+##### **v1.12.4 (November 2026)**
 #### Start
 [Neue Datei](https://thebaselab.com/code/newfile)
 [Datei öffnen](https://thebaselab.com/code/openfile)
@@ -23,6 +23,11 @@
 
 "Changelog.message" =
 "
+### 1.12.4 (November 2026)
+- Unterstützung für die persische Sprache
+- Verschiedene Fehlerbehebungen
+- Besonderer Dank an @YONN2222 für den Beitrag
+
 ### 1.12.3 (September 2026)
 - Behebt die Sichtbarkeit der türkischen Sprache in den Einstellungen
 - Verbesserte Kompatibilität mit iOS 27

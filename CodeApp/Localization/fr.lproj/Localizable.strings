@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.3 (Juillet 2026)**
+##### **v1.12.4 (Novembre 2026)**
 #### Démarrer
 [Nouveau fichier](https://thebaselab.com/code/newfile)
 [Ouvrir un fichier](https://thebaselab.com/code/openfile)
@@ -23,6 +23,11 @@
 
 "Changelog.message" =
 "
+### 1.12.4 (Novembre 2026)
+- Prise en charge de la langue persane
+- Diverses corrections de bugs
+- Un grand merci à @YONN2222 pour sa contribution
+
 ### 1.12.3 (Juillet 2026)
 - Correction de l’affichage de la langue turque dans les réglages
 

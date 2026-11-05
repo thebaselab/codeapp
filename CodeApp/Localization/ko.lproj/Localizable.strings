@@ -8,7 +8,7 @@
 
 "Welcome Message" =
 "# Code App
-##### **v1.12.3 (2026년 9월)**
+##### **v1.12.4 (2026년 11월)**
 #### 시작
 [새 파일...](https://thebaselab.com/code/newfile)
 [파일 열기...](https://thebaselab.com/code/openfile)
@@ -23,6 +23,11 @@
 
 "Changelog.message" =
 "
+### 1.12.4 (2026년 11월)
+- 페르시아어 지원
+- 다양한 버그 수정
+- 기여해 주신 @YONN2222님께 특별한 감사
+
 ### 1.12.3 (2026년 9월)
 - 설정에서 터키어가 표시되지 않던 문제 수정
 - iOS 27 호환성 개선
